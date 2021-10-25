@@ -27,8 +27,22 @@ public class Main {
         for (int i = 0; i < temperaturas.length; i++) {
             System.out.print("\n Ciudad: " + ciudades[i]);
             for (int j = 0; j < 2; j++) {
-                System.out.print(" Temperaturas: " +temperaturas[i][j] +" ");
+                System.out.print(" Temperaturas: " +temperaturas[i][j] +"º ");
             }
         }
+
+        int min = 0;
+        int max = 0;
+
+        for (int i = 0; i < temperaturas.length; i++) {
+            if (temperaturas[max][1] < temperaturas[i][1]){
+                max = i;
+            }
+            if (temperaturas[min][0] > temperaturas[i][0]) {
+                min = i;
+            }
+        }
+        System.out.print("\n Ciudad con temperatura maxima: " + ciudades[max] + " con " + temperaturas[max][1] +"º ");
+        System.out.print("\n Ciudad con temperatura minima: " + ciudades[min] + " con " + temperaturas[min][0] +"º ");
     }
 }
