@@ -12,7 +12,7 @@ Cada desarrolador cuenta con un branch con la estructura ya creada a su nombre p
    
 3. Subir la rama que crearon
    
-   `git push -u origin <apellido_nombre>`
+   `git push -u origin  apellido_nombre`
 
 4. Luego trabajar con el flujo habitual 
 
