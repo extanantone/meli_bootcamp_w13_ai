@@ -16,9 +16,7 @@ public class Main {
                 {-1, 31},
                 {-10, 35}};
 
-        // busco el menor en todas las ciudades
         int contadorCiudadesMin = 0;
-
         int contadorCiudadesMax = 0;
         int menor = valores[0][0];
         int mayor = valores[0][1];
@@ -28,13 +26,14 @@ public class Main {
             if (valores[i][0] < menor) {
                 menor = valores[i][0];
                 contadorCiudadesMin = i;
-                // identifico si es la ciudad con la mayor temperatura
             }
+            // identifico si es la ciudad con la mayor temperatura
             if (valores[i][1] > mayor) {
                 mayor = valores[i][1];
                 contadorCiudadesMax = i;
             }
         }
+        // salida en consola
         System.out.println("La ciudad con la temperatura menor es : " +
                 ciudades[contadorCiudadesMin] + " = " +
                 String.valueOf(valores[contadorCiudadesMin][0]) +
