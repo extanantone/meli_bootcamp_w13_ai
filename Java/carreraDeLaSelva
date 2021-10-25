@@ -1,0 +1,43 @@
+package carreraDeLaSelva;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+
+public class CarreraDeLaSelva {
+	
+	
+
+	public static void main(String[] args) {
+		Persona persona = new Persona();
+		int opcion = 1;
+		LinkedList<Persona> inscriptosChico = new LinkedList<>();
+		LinkedList<Persona> inscriptosMedio = new LinkedList<>();
+		LinkedList<Persona> inscriptosGrande = new LinkedList<Persona>();
+		HashMap<Integer,Persona> inscriptos;
+		boolean esMenor = false;
+		if(isNull(inscriptos.get(persona.getDni()))) {
+			switch(opcion) {
+				case 1:
+					inscriptosChico.add(persona);
+					break;
+				
+				case 2:
+					inscriptosMedio.add(persona);
+					break;
+				
+				case 3:
+					if(persona.getEdad() => 18) {
+						inscriptosGrande.add(persona);
+					}
+					else {
+						esMenor = true;
+					}
+					break;
+			}
+			if(!esMenor) {
+				inscriptos.put(persona.getDni(), 1);
+			}
+		}	
+	}
+
+}
