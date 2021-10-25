@@ -12,3 +12,4 @@ public class Ejercicio1 {
   System.out.println("La temperatura minima la tuvo " + cities[min] + " con " + temperatures[min][0] + " grados");
  }
 }
+
