@@ -25,7 +25,7 @@ public class Principal {
             System.out.println(ciudades[i]);
         }
 
-        System.out.println("Por favor ingresa las temperaturas: ");
+        System.out.println("Por favor ingresa las temperaturas mínima y máxima de cada ciudad: ");
         for(int i = 0; i < temperaturas.length; i++){
             for(int j = 0; j < 2; j++){
                 temperaturas[i][j] = teclado.nextInt();
@@ -40,14 +40,19 @@ public class Principal {
         }
 
         int temp_sig;
+        int temp_actual;
         for(int i = 0; i < temperaturas.length; i++){
             for(int j = 0; j < 2; j++){
-                temp_min = temperaturas[i][j];
+                temp_actual = temperaturas[i][j];
+                if(temp_actual > temp_min){
+                    temp_actual = temp_min;
+                }
                 temp_sig = temperaturas[i][j+1];
-                if(temp_min > temp_sig){
+                if(temp_actual > temp_sig){
                     temp_min = temp_sig;
                     break;
                 }
+                temp_min = temp_actual;
                 break;
             }
         }
@@ -56,9 +61,12 @@ public class Principal {
 
         for(int i = 0; i < temperaturas.length; i++){
             for(int j = 0; j < 2; j++){
-                temp_max = temperaturas[i][j];
+                temp_actual = temperaturas[i][j];
+                if(temp_max > temp_actual){
+                    temp_actual = temp_max;
+                }
                 temp_sig = temperaturas[i][j+1];
-                if(temp_max < temp_sig){
+                if(temp_actual < temp_sig){
                     temp_max = temp_sig;
                     break;
                 }
@@ -66,6 +74,6 @@ public class Principal {
             }
         }
 
-        System.out.println("\nLa temperatura máxima de entre todas las ciudades fue: " + temp_max);
+        System.out.println("La temperatura máxima de entre todas las ciudades fue: " + temp_max);
     }
 }
