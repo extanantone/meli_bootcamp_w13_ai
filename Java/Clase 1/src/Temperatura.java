@@ -33,10 +33,12 @@ public class Temperatura {
         for (int f=0; f<matriz.length; f++) {
             for (int c=0; c<matriz[0].length; c++) {
                 int numeroActual = matriz[f][c];
-                if (numeroActual > mayor)
+                if (numeroActual > mayor){
                     mayor = numeroActual;
-                if (numeroActual < menor)
+                }
+                if (numeroActual < menor){
                     menor = numeroActual;
+                }
             }
         }
         System.out.printf("La mayor temperatura %d y la menor es %d",mayor,menor);
