@@ -10,7 +10,7 @@ public class ClassOne {
                 index = i;
             }
         }
-        System.out.println("La menor temperatura es de " + cities[index] + " con " + tmp);
+        System.out.println("La mayor temperatura es de " + cities[index] + " con " + tmp);
 
     }
 
