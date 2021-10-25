@@ -7,12 +7,20 @@ public class Main {
 
     static String [] circuitos = new String []{
         "chico",
-        "mediano",
+        "medio",
         "avanzado"
     };
 
     public static void main(String[] args) {
-        //cargarDatos();
+
+        String resp;
+        do{
+            cargarDatos();
+            System.out.println("Desea cargar más datos (S/N)");
+            Scanner sc = new Scanner(System.in);
+            resp = sc.next();
+        }while (resp.equals("S"));
+
         agregarPersona(new Persona(3024312, "Pedro", "Martinez", (short) 29, "352-1523423", "352-1523423", "A+", circuitos[0]));
         agregarPersona(new Persona(3965464, "Gaston", "Alvez", (short) 14, "352-1523423", "352-1523423", "B-", circuitos[1]));
         agregarPersona(new Persona(1854645, "Laura", "Rosales", (short) 45, "352-1523423", "352-1523423", "A-", circuitos[1]));
@@ -26,7 +34,6 @@ public class Main {
         mostrarInscriptos(circuitos[1]);
 
     }
-/*
     private static void cargarDatos(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Agregue los siguiente datos presionando 'enter' al termino del ingreso de cada uno (dni, nombre, apellido, edad, celular, nroEmergencia, grupoSanguineo)");
@@ -41,9 +48,9 @@ public class Main {
         System.out.println("Ingrese la categoría que desea competir (chico/medio/avanzado)");
         String cat = sc.next();
         Persona per = new Persona(dni, nombre, apellido, edad, celular, nroEmergencia, grupoSanguineo, cat);
+        agregarPersona(per);
 
     }
-*/
     private static void agregarPersona(Persona persona){
         short pago = 0;
         boolean inscribio = true;
@@ -55,7 +62,7 @@ public class Main {
                     pago = 1500;
                 break;
             }
-            case "mediano":{
+            case "medio":{
                 if(persona.edad < 18)
                     pago = 2000;
                 else
