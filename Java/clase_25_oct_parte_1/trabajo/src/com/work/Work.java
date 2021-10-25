@@ -41,6 +41,8 @@ class Work{
                 indexMaxCityTemperature = i;
             }
         }
+        System.out.println();
+        System.out.println();
         System.out.println("Ciudad max temperatura: "+citys[indexMaxCityTemperature]);
         System.out.println("Temperatura: "+temperature[indexMaxCityTemperature][1]);
         System.out.println();
