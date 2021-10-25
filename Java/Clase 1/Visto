@@ -1,0 +1,116 @@
+Estructuras de control
+
+ public static void main(String[] args) {
+
+        int numero1 = 12;
+        int numero2 = 5;
+
+        if( numero1 < numero2 ){
+           System.out.println("hola");
+       }
+
+
+        /*********************/
+
+       if(numero1<numero2){
+           System.out.println("hola");
+       }else{
+           System.out.println("adios");
+       }
+
+        /*********************/
+
+        String día = "Enero";
+
+        switch (día){
+           case "Lunes" :
+               System.out.println("comenzamos Java");
+               break;
+           case "Martes" :
+               System.out.println("dia 2 Java");
+               break;
+           case "Miercoles" :
+               System.out.println("dia 3 Java");
+               break;
+           case "Jueves" :
+               System.out.println("dia 4 Java");
+               break;
+           case "Viernes" :
+               System.out.println("comenzamos Spring!");
+               break;
+           case "Sábado" :
+           System.out.println("descansamos");
+           break;
+           case "Domingo" :
+               System.out.println("comemos asado");
+               break;
+
+            default:
+                System.out.println(día);
+       }
+
+        /*********************/
+
+        int numero = 1;
+        do{
+            System.out.println("el valor de la variable es: " +numero);
+            numero++;
+        }while (numero > 4);
+
+        while(numero > 8){
+            System.out.println("el valor de la variable es: " + numero);
+            numero++;
+        }
+
+        /*********************/
+
+        /* inicia en i=0
+        termina cuando no se cumple la condicion i<3
+        incremento mi variable: i = i +1 --> i++
+         */
+        for (int i = 0; i< 3; i++){
+            System.out.println("i no existe fuera de este bloque de código..el valor de la variable es: " +i);
+        }
+
+
+    }
+(edited)
+New
+12:30
+vectores  y matrices
+int numeros[] =  {1,2,3,4,5,6};
+        System.out.println(numeros[2]);
+
+        numeros[2] = 87;
+        System.out.println(numeros[2]);
+
+        /* ----------- recorro un vector -------------- */
+
+        for (int i=0; i<numeros.length; i++){
+            System.out.println("estoy en el indice: "+ i);
+            System.out.println("tengo guardado el numero: "+ numeros[i]);
+        }
+
+       /* ----------- cargar por teclado -------------- */
+
+        Scanner scan = new Scanner(System.in);
+        for (int i=0; i<numeros.length; i++) {
+            System.out.println("ingrese el valor para la posicion " + i);
+            numeros[i] = scan.nextInt();
+        }
+
+        /* ----------- MATRICES -------------- */
+
+
+        int matriz[][] = new int [3][2];
+
+        Scanner scan2 = new Scanner(System.in);
+
+        for (int f=0; f<matriz.length; f++) {
+            for (int c=0; c<matriz[0].length; c++) {
+                System.out.println("ingrese el valor para la posicion " + f + " "+c);
+                matriz[f][c] = scan2.nextInt();
+            }
+        }
+
+    }
