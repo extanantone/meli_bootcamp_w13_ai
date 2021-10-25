@@ -12,16 +12,7 @@ public class Persona{
 
     @Override
     public String toString() {
-        return "Persona{" +
-                "dni=" + dni +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", edad=" + edad +
-                ", celular='" + celular + '\'' +
-                ", nroEmergencia='" + nroEmergencia + '\'' +
-                ", grupoSanguineo='" + grupoSanguineo + '\'' +
-                ", categoria='" + categoria + '\'' +
-                '}';
+        return String.format("DNI: %d, Nombre: %s, Apellido: %s, Edad: %d, Celular: %s, Emergencia: %s, Grupo Sanguineo: %s", dni, nombre, apellido, edad, celular, nroEmergencia, grupoSanguineo);
     }
 
     public Persona(int dni, String nombre, String apellido, short edad, String celular, String nroEmergencia, String grupoSanguineo, String categoria){
@@ -35,7 +26,4 @@ public class Persona{
         this.categoria = categoria;
     }
 
-    void mostrarDatos(){
-        System.out.format("DNI: %d, Nombre: %s, Apellido: %s, Edad: %d, Celular: %s, Emergencia: %s, Grupo Sanguineo: %s", dni, nombre, apellido, edad, celular, nroEmergencia, grupoSanguineo);
-    }
 }
