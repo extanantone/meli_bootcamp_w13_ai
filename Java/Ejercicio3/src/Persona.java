@@ -21,12 +21,13 @@ public class Persona {
     //Construcctor por defecto
     public Persona() {
         nombre="Sin definir";
+
     }
-    //Método principal
-    public static void main(String[] args) {
-        Persona p1 = new Persona();
-        System.out.println("Nombre: "+ p1.getNombre());
-        p1.setNombre("Juan David Ortiz");
-        System.out.println("Nombre: " + p1.getNombre());
+    public Persona (String nombre, int  edad, String dni){
+        this.nombre = nombre;
+        this.edad = edad;
+        this.dni = dni;
     }
+
 }
+
