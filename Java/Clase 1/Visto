@@ -114,3 +114,68 @@ int numeros[] =  {1,2,3,4,5,6};
         }
 
     }
+
+   package com.dh;
+
+   import com.dh.person.Person;
+
+   import java.util.LinkedList;
+   import java.util.List;
+   import java.util.Map;
+   import java.util.HashMap;
+
+   public class Main {
+
+       public static void main(String[] args) {
+
+           //List<Integer> listInt = new LinkedList<>();
+           List<Integer> listInt = List.of(5,12);
+
+           List<Person> listPersons = new LinkedList<>();
+
+
+           /*for (Integer a: listInt) {
+               System.out.println(a);
+           }*/
+
+           Person leo = new Person(332345433, "Lio", "Messi");
+
+           listPersons.add(leo);
+
+
+
+           listPersons.add(new Person(213345433, "Cristiano", "Ronaldo"));
+
+           //listPersons.add(leo);
+
+           /*int i0 = 0;
+           for (Person p: listPersons) {
+               System.out.println("Vamos1 " + p.getNombre() + "! " + i0);
+               i0++;
+           }
+
+           for (int i = 0; i < listPersons.size(); i++) {
+               System.out.println("Vamos2 " + listPersons.get(i).getNombre() + "! " +i );
+           }*/
+
+           /*Person leo = new Person(332345433, "Lio", "Messi");
+
+           Person cr7 = new Person(213345433, "Cristiano", "Ronaldo");*/
+
+
+
+           Map<Integer, Person> myMap = new HashMap();
+
+           for (int i = 0; i < listPersons.size(); i++) {
+               myMap.put(listInt.get(i), listPersons.get(i));
+           }
+
+           for (Map.Entry<Integer, Person> kv: myMap.entrySet()) {
+               System.out.println(
+                       "Key: " +
+                       kv.getKey() +
+                       ", Value: " +
+                       kv.getValue().getNombre() );
+           }
+       }
+   }
