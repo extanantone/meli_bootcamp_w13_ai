@@ -9,7 +9,8 @@ public class practicaExcepciones {
         try{
             int resultado = b/a;
         }catch(ArithmeticException e){
-            System.out.println("No se puede dividir por cero");
+            System.out.println("incorrecto");
+            throw new IllegalArgumentException("No se puede dividir por cero");
         }finally{
             System.out.println("Programa finalizado");
         }
