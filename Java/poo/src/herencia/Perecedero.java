@@ -29,11 +29,11 @@ public class Perecedero extends Producto {
     public double calcular(int cantidadDeProductos) {
         double result;
         if(this.diasPorCaducar==1){
-            result= (cantidadDeProductos*this.getPrecio())-(this.getPrecio()/4);
+            result= (cantidadDeProductos*(this.getPrecio()/4));
         }else if(this.diasPorCaducar==1){
-            result= (cantidadDeProductos*this.getPrecio())-(this.getPrecio()/3);
+            result= (cantidadDeProductos*(this.getPrecio()/3));
         }else {
-            result= (cantidadDeProductos*this.getPrecio())-(this.getPrecio()/2);
+            result= (cantidadDeProductos*(this.getPrecio()/2));
         }
         return result;
     }
