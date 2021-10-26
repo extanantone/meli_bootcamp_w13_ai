@@ -42,12 +42,7 @@ public class PersonaC2P1 {
     }
 
     public boolean esMayorDeEdad(){
-        if (this.edad>=18){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return this.edad>=18;
     }
 
     @Override
