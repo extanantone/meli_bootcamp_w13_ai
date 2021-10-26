@@ -16,6 +16,7 @@ public class Main {
             System.out.println("Programa finalizado");
         }
 */
+
         Producto arroz = new Producto("Arroz",100);
         Producto leche = new Pereceredo("Leche",120,2);
         Producto harina = new NoPerecedero("Harina", 180, "Refinados");
