@@ -10,8 +10,7 @@ public class Main {
 
         System.out.println("Persona 1:");
 
-
-        System.out.printf(p1.toString()+"\n");
+        System.out.print(p1.toString()+"\n");
         if (p1.calcularIMC()==1)
         {
             System.out.println("Sobrepeso");
