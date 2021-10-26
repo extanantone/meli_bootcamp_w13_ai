@@ -1,4 +1,6 @@
-public class Temperaturas {
+package TempGlobales;
+
+public class TemperaturasGlobales {
     final static int FILA = 10;
     final static int COLUMNA = 2;
 
