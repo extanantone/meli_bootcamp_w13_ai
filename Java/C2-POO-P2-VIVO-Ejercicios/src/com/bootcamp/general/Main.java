@@ -2,6 +2,8 @@ package com.bootcamp.general;
 
 import com.bootcamp.models.Persona;
 
+import java.util.HashMap;
+
 public class Main {
 
     //Ejercicio 3
@@ -20,6 +22,16 @@ public class Main {
         elias.toString();
     procesarImcObtenido(elias.calcularIMC());
     informarSiEsMayorDeEdad(elias.esMayorDeEdad());
+
+
+    //Segunda opcion interesante pasada por un compañero, utilizando un diccionario:
+
+        HashMap<Integer,String> resultadoIMC = new HashMap<>();
+        resultadoIMC.put(-1,"bajo peso");
+        resultadoIMC.put(0,"peso saludable");
+        resultadoIMC.put(1,"sobrepeso");
+        System.out.println("Hola "+elias.getNombre()+" usted es"+(elias.esMayorDeEdad()?" mayor ":" menor ")+"de edad y teniendo en cuenta su IMC, usted tiene "+resultadoIMC.get(elias.calcularIMC()));
+
 
     }
 
