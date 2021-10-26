@@ -46,5 +46,14 @@ public class Main {
                 }
             }
         }
+        for(int i = 0; i < chico.size(); i++){
+            System.out.println(("En el circuito 'Chico' participa: " + chico.get(i).nombre));
+        }
+        for(int i = 0; i < medio.size(); i++){
+            System.out.println(("En el circuito 'Medio' participa: " + medio.get(i).nombre));
+        }
+        for(int i = 0; i < avanzado.size(); i++){
+            System.out.println(("En el circuito 'Avanzado' participa: " + avanzado.get(i).nombre));
+        }
     }
 }
