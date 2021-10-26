@@ -1,4 +1,4 @@
-package com.bootcamp;
+package AM;
 
 public class TemperaturasGlobales {
 

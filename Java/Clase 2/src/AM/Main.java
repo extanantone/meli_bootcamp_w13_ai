@@ -1,4 +1,4 @@
-package com.bootcamp.poo;
+package AM;
 
 public class Main {
     public static void main(String[] args) {

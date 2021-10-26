@@ -1,4 +1,4 @@
-package com.bootcamp.poo;
+package AM;
 
 public class Persona {
     private String nombre;
