@@ -1,6 +1,6 @@
 package com.bootcamp;
 
-public class temperaturasGlobales {
+public class TemperaturasGlobales {
 
     public static void main(String[] args) {
 
