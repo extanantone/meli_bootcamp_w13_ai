@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -7,10 +6,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        HashMap<Integer,Participante> participantes = new HashMap<Integer, Participante>();
-        HashMap<Integer,Carrera> carreras = new HashMap<Integer,Carrera>();
+        HashMap<Integer, Participante> participantes = new HashMap<Integer, Participante>();
+        HashMap<Integer, Carrera> carreras = new HashMap<Integer, Carrera>();
 
-        HashMap<Participante,Carrera> participantesEnCarrera = new HashMap<Participante,Carrera>();
+        HashMap<Participante, Carrera> participantesEnCarrera = new HashMap<Participante, Carrera>();
 
         int opcion = Integer.MAX_VALUE;
 
@@ -34,13 +33,13 @@ public class Main {
                     crearParticipante(participantes);
                     break;
                 case 2:
-                    asignarParticipanteACarrera(participantesEnCarrera,participantes,carreras);
+                    asignarParticipanteACarrera(participantesEnCarrera, participantes, carreras);
                     break;
                 case 3:
-                    elimianrParticipanteDeCarrera();
+                    elimianrParticipanteDeCarrera(participantesEnCarrera, participantes, carreras);
                     break;
                 case 4:
-                    mostrarParticipantesDeCategoria(participantesEnCarrera,carreras);
+                    mostrarParticipantesDeCategoria(participantesEnCarrera, carreras);
                     break;
                 case 5:
                     crearCarrera(carreras);
@@ -63,7 +62,19 @@ public class Main {
         System.out.println("ingrese Nombre/Descripcion de la carrera");
         String nombre = teclado.next();
 
-        Carrera carrera = new Carrera(nombre);
+        System.out.println("ingrese edad minima para el ingreso a la carrera");
+        int edadMin = teclado.nextInt();
+
+        System.out.println("ingrese edad maxima para el ingreso a la carrra");
+        int edadMax = teclado.nextInt();
+
+        System.out.println("ingrese monto para menores de edad");
+        int montoMenores = teclado.nextInt();
+
+        System.out.println("ingrese monto para mayores de edad");
+        int montoMayores = teclado.nextInt();
+
+        Carrera carrera = new Carrera(nombre,edadMin,edadMax,montoMenores,montoMayores);
 
         carreras.put(carrera.getCodigoCarrera(),carrera);
     }
@@ -71,9 +82,46 @@ public class Main {
     private static void mostrarParticipantesDeCategoria(HashMap<Participante,Carrera> participanteEnCarrera,
                                                         HashMap<Integer,Carrera> carreras) {
 
+        final int PARTICIPANTE_18_ANIOS = 18;
+
         Scanner teclado = new Scanner(System.in);
 
         System.out.println("Lista de categorias");
+
+        for (Map.Entry<Integer, Carrera> entrada : carreras.entrySet()) {
+            Carrera c = entrada.getValue();
+            System.out.println(c.getCodigoCarrera() + " - " + c.getNombreCategoria());
+        }
+
+        System.out.println("Seleccione el CODIGO de carrera al que desea asignar al participante");
+
+        int codCarrera = teclado.nextInt();
+
+        for (Map.Entry<Participante, Carrera> entrada : participanteEnCarrera.entrySet()) {
+
+            Carrera c = entrada.getValue();
+
+            System.out.println("Lista de participantes");
+            System.out.println("DNI    MONTO ABONADO");
+
+            if (c.getCodigoCarrera() == codCarrera) {
+                System.out.print(entrada.getKey().getDni());
+                if (entrada.getKey().getEdad() >= PARTICIPANTE_18_ANIOS)
+                    System.out.print(entrada.getValue().getMontoMayores());
+                else
+                    System.out.print(entrada.getValue().getMontoMenores());
+            }
+        }
+    }
+
+    private static void elimianrParticipanteDeCarrera(HashMap<Participante,Carrera> participanteEnCarrera,
+                                                      HashMap<Integer,Participante> participantes,
+                                                      HashMap<Integer,Carrera> carreras) {
+
+        Scanner teclado = new Scanner(System.in);
+
+        System.out.println("Lista de carreras");
+        System.out.println("Cod. carrera   Nombre/Descripcion");
 
         for(Map.Entry<Integer,Carrera> entrada : carreras.entrySet()) {
             Carrera c = entrada.getValue();
@@ -84,20 +132,24 @@ public class Main {
 
         int codCarrera = teclado.nextInt();
 
-        for(Map.Entry<Participante,Carrera> entrada : participanteEnCarrera.entrySet()) {
+        Carrera carrera  = carreras.get(codCarrera);
 
-            Carrera c = entrada.getValue();
+        System.out.println("Lista de participantes");
 
-            System.out.println("Lista de participantes");
-
-            if(c.getCodigoCarrera() == codCarrera)
-                System.out.println(entrada.getKey().getDni());
-
+        for (Map.Entry<Integer,Participante> entrada : participantes.entrySet()){
+            Participante p = entrada.getValue();
+            System.out.println(p.getDni() + " - " + p.getApellido() + " " + p.getNombre());
         }
 
-    }
+        System.out.println("Seleccione el participante ingresando el numero de dni");
 
-    private static void elimianrParticipanteDeCarrera() {
+        int dni = teclado.nextInt();
+
+        Participante participante  = participantes.get(dni);
+
+        participanteEnCarrera.remove(participante);
+
+        return;
 
     }
 
@@ -133,6 +185,11 @@ public class Main {
         int codCarrera = teclado.nextInt();
 
         Carrera carrera  = carreras.get(codCarrera);
+
+        if(carrera.getMaxEdad() > participante.getEdad()){
+            System.out.println("El participante no cumple con el requisito de edad");
+            return;
+        }
 
         participanteEnCarrera.put(participante,carrera);
 
