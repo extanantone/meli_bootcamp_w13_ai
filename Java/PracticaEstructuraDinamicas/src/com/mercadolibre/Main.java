@@ -1,7 +1,6 @@
 package com.mercadolibre;
 
 import com.mercadolibre.dominio.Persona;
-
 import java.util.*;
 
 public class Main {
@@ -17,7 +16,6 @@ public class Main {
         boolean salir = false;
         do{
             int cantInscriptos = inscripciones.size() + 1; //Solo sumo 1 para que arranque las inscripciones con 1
-            System.out.println("cant inscriptos: " + cantInscriptos);
             mostrarMenuOpciones();
             Scanner input = new Scanner(System.in);
             System.out.println("Ingrese una opcion: ");
