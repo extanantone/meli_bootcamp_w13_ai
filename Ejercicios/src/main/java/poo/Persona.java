@@ -1,4 +1,6 @@
-public class Persona{
+package poo;
+
+public class Persona {
     private String nombre;
     private int edad;
     private String dni;
@@ -22,12 +24,13 @@ public class Persona{
         this.altura = altura;
     }
 
-    public int calcularIMC(){
+    public String calcularIMC() {
         double IMC = peso / (altura * altura);
         return (IMC < 20) ? "Bajo peso" : (IMC > 25) ? "Sobrepeso" : "Saludable";
     }
-    public Boolean esMayorDeEdad(){
-        return this.edad  >= 18;
+
+    public Boolean esMayorDeEdad() {
+        return this.edad >= 18;
     }
 
     @Override
