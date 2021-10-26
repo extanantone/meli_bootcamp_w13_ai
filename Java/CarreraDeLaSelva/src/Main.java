@@ -59,8 +59,6 @@ public class Main {
     private static void crearCarrera(HashMap<Integer,Carrera> carreras) {
 
         Scanner teclado = new Scanner(System.in);
-        System.out.println("ingrese Nombre/Descripcion de la carrera");
-        String nombre = teclado.next();
 
         System.out.println("ingrese edad minima para el ingreso a la carrera");
         int edadMin = teclado.nextInt();
@@ -73,6 +71,9 @@ public class Main {
 
         System.out.println("ingrese monto para mayores de edad");
         int montoMayores = teclado.nextInt();
+
+        System.out.println("ingrese Nombre/Descripcion de la carrera");
+        String nombre = teclado.next();
 
         Carrera carrera = new Carrera(nombre,edadMin,edadMax,montoMenores,montoMayores);
 
@@ -93,13 +94,15 @@ public class Main {
             System.out.println(c.getCodigoCarrera() + " - " + c.getNombreCategoria());
         }
 
-        System.out.println("Seleccione el CODIGO de carrera al que desea asignar al participante");
+        System.out.println("Seleccione el CODIGO de carrera");
 
         int codCarrera = teclado.nextInt();
 
         for (Map.Entry<Participante, Carrera> entrada : participanteEnCarrera.entrySet()) {
 
             Carrera c = entrada.getValue();
+
+            System.out.println(c.getCodigoCarrera());
 
             System.out.println("Lista de participantes");
             System.out.println("DNI    MONTO ABONADO");
@@ -128,7 +131,7 @@ public class Main {
             System.out.println(c.getCodigoCarrera() + " - " + c.getNombreCategoria());
         }
 
-        System.out.println("Seleccione el CODIGO de carrera al que desea asignar al participante");
+        System.out.println("Seleccione el CODIGO de carrera al que desea eliminar al participante");
 
         int codCarrera = teclado.nextInt();
 
@@ -207,7 +210,7 @@ public class Main {
         String apellido = teclado.next();
         System.out.println("Ingrese número de emergencia del participante, sin guiones o espacios");
         int nroEmergencia = teclado.nextInt();
-        System.out.println("Ingrese grupo sanguineo del participante");
+        System.out.println("Ingrese grupo sangui1neo del participante");
         String grupoSanguineo = teclado.next();
         System.out.println("Ingrese celular del participante, sin guiones o espacios");
         int celular = teclado.nextInt();
