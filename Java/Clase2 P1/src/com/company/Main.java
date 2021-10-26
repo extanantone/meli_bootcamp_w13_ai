@@ -7,6 +7,8 @@ public class Main {
         Persona perBasica = new Persona("35738012", "Damian", (short)35);
         Persona perCompleta = new Persona("2582192", "Laura", (short)44, 56, (float) 1.65);
 
+        System.out.println(perCompleta.toString());
+
         short imc = perCompleta.calcularIMC();
         if(imc == -1)
             System.out.println("Posee un índice de masa corporal demasiado bajo. Está bajo de peso");
