@@ -1,3 +1,5 @@
+package Ejercicio2;
+
 public class Producto {
     private String nombre;
     private double precio;
@@ -25,7 +27,7 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto {" +
+        return "Ejercicio2.Producto {" +
                 "nombre='" + nombre + '\'' +
                 ", precio=" + precio +
                 '}';

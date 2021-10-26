@@ -1,3 +1,5 @@
+package Ejercicio2;
+
 public class Perecedero extends Producto {
     private int diasPorCalcular;
 
@@ -16,7 +18,7 @@ public class Perecedero extends Producto {
 
     @Override
     public String toString() {
-        return "Perecedero {" +
+        return "Ejercicio2.Perecedero {" +
                 "diasPorCalcular=" + diasPorCalcular +
                 '}';
     }

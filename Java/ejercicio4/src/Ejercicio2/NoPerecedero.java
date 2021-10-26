@@ -1,3 +1,5 @@
+package Ejercicio2;
+
 public class NoPerecedero extends Producto {
     private String tipo;
 
