@@ -6,7 +6,22 @@ public class Perecedero extends Producto{
     @Override
     double calcular(int cantidadDeProductos) {
         //manejar los dias por caducar.
-        return (cantidadDeProductos * this.getPrecio());
+        return this.reducirPrecio(cantidadDeProductos * this.getPrecio());
+    }
+
+    public double reducirPrecio(double total) {
+        if( this.getDiasPorCaducar() == 1 ) {
+            total = (total-(this.getPrecio()*3));
+        }else {
+            if( this.getDiasPorCaducar() == 2 ) {
+                total = (total-(this.getPrecio()*2));
+            } else {
+                if ( this.getDiasPorCaducar() == 3 ) {
+                    total = (total-(this.getPrecio()*0.5));
+                }
+            }
+        }
+        return total;
     }
 
     public Perecedero(String nombre, double precio) {
