@@ -19,7 +19,7 @@ public class NoPerecedero extends Producto{
 
     @Override
     public String toString() {
-        return "NoPerecederos: " + '\n' +
+        return "NoPerecedero: " + '\n' +
                 " - tipo=" + tipo + '\n' +
                 " - nombre=" + nombre + '\n' +
                 " - precio=" + precio;

@@ -19,7 +19,7 @@ public class Perecedero extends Producto{
     @Override
     public String toString() {
         return "Perecedero: " + '\n' +
-                " - diasPorCaducar=" + diasPorCaducar +
+                " - dias por caducar=" + diasPorCaducar + '\n' +
                 " - nombre=" + nombre + '\n' +
                 " - precio=" + precio;
     }

@@ -7,9 +7,9 @@ public class Distribuidora {
     public static void main(String[] args) throws Exception {
         ArrayList<Producto> productos = new ArrayList<>();
 
-        productos.add(new Perecedero("Carne", 500, 5));
+        productos.add(new Perecedero("Carne", 500, 1));
         productos.add(new Perecedero("Pollo", 760, 3));
-        productos.add(new Perecedero("Pescado", 800, 7));
+        productos.add(new Perecedero("Pescado", 800, 2));
         productos.add(new Perecedero("Cerdo", 455, 3));
         productos.add(new Perecedero("Caballo", 352, 4));
 
