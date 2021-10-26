@@ -4,14 +4,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Persona p1 = new Persona ("Andres","445566",15,80.5,1.83);
+        Persona p1 = new Persona ("Andres","445566",15,80.5,1.4);
         Persona p2 = new Persona("Juan","778855",10);
         Persona p3 = new Persona();
 
         System.out.println("Persona 1:");
 
 
-        System.out.printf(p1.toString());
+        System.out.printf(p1.toString()+"\n");
         if (p1.calcularIMC()==1)
         {
             System.out.println("Sobrepeso");
@@ -33,8 +33,6 @@ public class Main {
         else {
             System.out.println("Es menor de edad");
         }
-
-
 
         /*System.out.println("\n\nPersona 2:");
 
