@@ -26,6 +26,7 @@ public class Distrbuidora {
             Perecederos perecederos = new Perecederos(nombPerecederos,precPerecederos,diasPerecederos);
             arrProducto.add(perecederos);
             double valPer = perecederos.calcular(5);
+            System.out.println("Producto perecedero: "+nombPerecederos+" valor final "+valPer);
             valFinalPer += valPer;
 
             //Crea no perecederos
@@ -35,6 +36,7 @@ public class Distrbuidora {
             NoPerecederos noPerecederos = new NoPerecederos(nombNoPerecederos,precNoPerecederos,tipNoPerecederos);
             arrProducto.add(noPerecederos);
             double valNoPer = noPerecederos.calcular(5);
+            System.out.println("Producto no perecedero: "+nombNoPerecederos+" valor final "+valNoPer);
             valFinalNoPer += valNoPer;
         }
 
