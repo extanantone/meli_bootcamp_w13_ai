@@ -52,6 +52,7 @@ public class Persona {
             return false;
     }
 
+    @Override
     public String toString(){
         return "DNI: "+this.dni+", \nNombre: "+this.nombre+", \nEdad: "+this.edad+
                 ", \nPeso: "+this.peso+", \nAltura: "+this.altura;

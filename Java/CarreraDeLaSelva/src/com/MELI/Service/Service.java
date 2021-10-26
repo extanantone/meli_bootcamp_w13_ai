@@ -62,6 +62,7 @@ public class Service {
             }
             else{
                 System.err.println("Debe ingresar un número entero mayor que cero.");
+                scanner.next();
                 costoMay = -1.0;
             }
         }
@@ -80,6 +81,7 @@ public class Service {
             }
             else{
                 System.err.println("Debe ingresar un número entero mayor que cero.");
+                scanner.next();
                 costoMen = -1.0;
             }
         }
