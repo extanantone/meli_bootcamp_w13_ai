@@ -101,19 +101,21 @@ public class Main {
         for (Map.Entry<Participante, Carrera> entrada : participanteEnCarrera.entrySet()) {
 
             Carrera c = entrada.getValue();
+            Participante p = entrada.getKey();
 
             System.out.println(c.getCodigoCarrera());
 
             System.out.println("Lista de participantes");
-            System.out.println("DNI    MONTO ABONADO");
+            System.out.println("DNI   MONTO ABONADO");
 
             if (c.getCodigoCarrera() == codCarrera) {
-                System.out.print(entrada.getKey().getDni());
-                if (entrada.getKey().getEdad() >= PARTICIPANTE_18_ANIOS)
-                    System.out.print(entrada.getValue().getMontoMayores());
+                System.out.print(p.getDni());
+                if (p.getEdad() >= PARTICIPANTE_18_ANIOS)
+                    System.out.print(c.getMontoMayores());
                 else
-                    System.out.print(entrada.getValue().getMontoMenores());
+                    System.out.print(c.getMontoMenores());
             }
+            System.out.println("");
         }
     }
 
@@ -189,7 +191,7 @@ public class Main {
 
         Carrera carrera  = carreras.get(codCarrera);
 
-        if(carrera.getMaxEdad() > participante.getEdad()){
+        if(participante.getEdad() <= carrera.getMinEdad() ){
             System.out.println("El participante no cumple con el requisito de edad");
             return;
         }
