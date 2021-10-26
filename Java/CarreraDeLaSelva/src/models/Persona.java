@@ -70,4 +70,17 @@ public class Persona {
     public void setGrupoSanguineo(String grupoSanguineo) {
         this.grupoSanguineo = grupoSanguineo;
     }
+
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "dni=" + dni +
+                ", telefono=" + telefono +
+                ", telEmergencia=" + telEmergencia +
+                ", edad=" + edad +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", grupoSanguineo='" + grupoSanguineo + '\'' +
+                '}';
+    }
 }

@@ -40,13 +40,19 @@ public class EjercicioSelva {
 
 
         listaCircuitoChico.add(inscripcion1);
+        inscripcionesCircuitoChico.put(inscripcion1.getParticipante().getDni(),1);
         listaCircuitoChico.add(inscripcion2);
+        inscripcionesCircuitoChico.put(inscripcion2.getParticipante().getDni(),2);
 
         listaCircuitoMedio.add(inscripcion3);
+        inscripcionesCircuitoMediano.put(inscripcion3.getParticipante().getDni(),1);
         listaCircuitoMedio.add(inscripcion4);
+        inscripcionesCircuitoMediano.put(inscripcion4.getParticipante().getDni(),2);
 
         listaCircuitoAvanzado.add(inscripcion5);
+        inscripcionesCircuitoAvanzado.put(inscripcion5.getParticipante().getDni(),1);
         listaCircuitoAvanzado.add(inscripcion6);
+        inscripcionesCircuitoAvanzado.put(inscripcion6.getParticipante().getDni(),2);
 
         int opcion = Integer.MAX_VALUE;
 
@@ -71,14 +77,12 @@ public class EjercicioSelva {
                     showParticipantsByCircuitID();
                     break;
                 case 3:
-                    //elimianrParticipanteDeCarrera();
+                    elimianrParticipanteDeCarrera();
                     break;
                 case 4:
-                    //mostrarParticipantesDeCategoria(participantesEnCarrera,carreras);
+                    mostrarParticipantesDeCategoria();
                     break;
-                case 5:
-                    //crearCarrera(carreras);
-                    break;
+
                 default:
                     System.out.println("Error al ingresar por teclado, intente nuevamente");
                     break;
@@ -169,12 +173,57 @@ public class EjercicioSelva {
         if(inscripcionesCircuitoChico.get(dni)!=null){
 
             int index = inscripcionesCircuitoChico.get(dni).intValue();
+            inscripcionesCircuitoChico.remove(dni);
+            int indiceEnLista = index-1;
+            listaCircuitoChico.remove(indiceEnLista);
 
-            inscripcionesCircuitoChico.remove(39879820);
+            //Actualizamos los numeros de los participantes
+            for(int i = indiceEnLista-1; i<listaCircuitoChico.size();i++){
+                 listaCircuitoChico.get(i).setNumeroInscripcion(i+1);
+            }
 
-            for(int i = index; i<listaCircuitoChico.size();i++){
 
-                //listaCircuitoChico.get(i).setNumeroInscripcion();
+        } else if (inscripcionesCircuitoMediano.get(dni) != null) {
+
+            int index = inscripcionesCircuitoMediano.get(dni).intValue();
+            inscripcionesCircuitoMediano.remove(dni);
+            listaCircuitoMedio.remove(index);
+
+            for(int i = index-1; i<listaCircuitoMedio.size();i++){
+
+                listaCircuitoMedio.get(i).setNumeroInscripcion(i+1);
+            }
+
+        }
+        else{
+            int index = inscripcionesCircuitoAvanzado.get(dni).intValue();
+            inscripcionesCircuitoAvanzado.remove(dni);
+            listaCircuitoAvanzado.remove(index);
+            for(int i = index-1; i<listaCircuitoAvanzado.size();i++){
+
+                listaCircuitoAvanzado.get(i).setNumeroInscripcion(i+1);
+            }
+
+
+        }
+
+    }
+
+    public static void mostrarParticipantesDeCategoria(){
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Ingrese el ID de la categoria que desea consultar: ");
+        System.out.println("1- Circuito Chico ");
+        System.out.println("2- Circuito Medio ");
+        System.out.println("3- Circuito Avanzado ");
+        int id = teclado.nextInt();
+
+
+        if(id == 1){
+            for(Inscripcion insc : listaCircuitoChico){
+
+                System.out.println(insc.getNumeroInscripcion());
+                System.out.println(insc.getParticipante().toString());
+
             }
 
 
@@ -184,5 +233,8 @@ public class EjercicioSelva {
 
 
     }
+
+
+
 
 }
