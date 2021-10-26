@@ -3,15 +3,15 @@ public class Java_II {
                 String nombre;
                 int edad;
                 int dni;
-                int peso;
-                int altura;
+                double peso;
+                double altura;
                 public Persona(){}
                 public Persona(String nombre, int edad, int dni){
                         this.nombre = nombre;
                         this.edad = edad;
                         this.dni = dni;
                 }
-                public Persona(String nombre, int edad, int dni, int peso, int altura) {
+                public Persona(String nombre, int edad, int dni, double peso, double altura) {
                         this.nombre = nombre;
                         this.edad = edad;
                         this.dni = dni;
@@ -19,7 +19,7 @@ public class Java_II {
                         this.altura = altura;
                 }
                 public int calcularIMC(){
-                        double imc = ((double)peso/(altura * altura)) * 100;
+                        double imc = (peso/(altura * altura));
                         int forReturn = 0;
                         if(imc < 20) {forReturn = -1;}
                         if(imc > 25) {forReturn = 1;}
@@ -42,8 +42,8 @@ public class Java_II {
         public static void main(String[] args) {
                 Persona personaVacia = new Persona();
                 Persona personaSemi = new Persona("Jhon Due",30,30987279);
-                Persona personaCompleta = new Persona("Jhon Doe",23,3456789,6000,170);
-                System.out.println(personaCompleta.toString());
+                Persona personaCompleta = new Persona("Jhon Doe",23,3456789,53.00,1.70);
+                System.out.println(personaCompleta);
                 switch (personaCompleta.calcularIMC()){
                         case -1:
                                 System.out.println("Bajo de peso");
