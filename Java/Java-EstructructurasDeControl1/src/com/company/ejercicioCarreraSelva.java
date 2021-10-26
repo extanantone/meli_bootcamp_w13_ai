@@ -74,7 +74,7 @@ public class ejercicioCarreraSelva {
 
 
     public static void main(String[] args) {
-        new ejercicioCarreraSelva().inscribirParticipantes();
+       // new ejercicioCarreraSelva().inscribirParticipantes();
     }
 
 }

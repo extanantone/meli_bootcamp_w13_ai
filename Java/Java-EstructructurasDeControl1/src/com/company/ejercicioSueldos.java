@@ -27,7 +27,8 @@ public class ejercicioSueldos {
         }
 
         public static void main(String[] args) {
-            new ejercicioSueldos().calcularAumento();
+
+            //new ejercicioSueldos().calcularAumento();
         }
 
 

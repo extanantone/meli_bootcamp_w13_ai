@@ -33,7 +33,7 @@ public class ejercicioFacturas {
         }
 
         public static void main(String[] args) {
-            new ejercicioFacturas().calcularMontoFactura();
+           // new ejercicioFacturas().calcularMontoFactura();
         }
 
 
