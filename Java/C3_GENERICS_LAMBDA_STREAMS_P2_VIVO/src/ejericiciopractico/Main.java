@@ -42,12 +42,15 @@ public class Main {
         Double sumaTotal = miGaraje.getListaVehiculos().stream().reduce(0.0, (acumulador, vh) -> acumulador + vh.getCosto(), Double::sum);
         Double promedio = sumaTotal / miGaraje.getListaVehiculos().size();
 
+        Double promedio2 = miGaraje.getListaVehiculos().stream().collect(Collectors.averagingDouble(Vehiculo::getCosto));
+
         System.out.printf("el promedio total es: %.2f\n", promedio);
+        System.out.printf("el promedio total es: %.2f\n", promedio2);
 
         System.out.println("los baratos: ");
-        baratos.stream().forEach(System.out::println);
+        baratos.forEach(System.out::println);
         System.out.println("los caros: ");
-        caros.stream().forEach(System.out::println);
+        caros.forEach(System.out::println);
 
 
     }
