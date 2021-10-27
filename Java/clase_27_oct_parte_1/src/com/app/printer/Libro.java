@@ -1,6 +1,9 @@
 package com.app.printer;
 
 import java.util.List;
+import java.util.jar.Pack200;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Libro implements Imprimible {
 
@@ -12,7 +15,7 @@ public class Libro implements Imprimible {
 
     @Override
     public void imprimir() {
-        
+        List<Pagina> p= paginas.stream().sorted((x,y)->x.getPages()<y.getPages()?-1:1).collect(Collectors.toList());
         
     }
 
