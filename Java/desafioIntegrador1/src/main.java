@@ -1,32 +1,44 @@
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.*;
 
 public class main {
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
-        ArrayList<Cliente> clientes = new ArrayList();
+        List<Cliente> clientes = new ArrayList<Cliente>();
         clientes.add(new Cliente(1234, "pepito", "perez"));
         clientes.add(new Cliente(1235, "pablito", "bochica"));
         clientes.add(new Cliente(1236, "juanito", "redencion"));
         mostrar_clientes(clientes);
-        clientes = eliminar_cliente(clientes, 0);
+        System.out.println("Digite el dni del cliente que quiere borrar:");
+        int borrar = scan.nextInt();
+        clientes = eliminar_cliente(clientes, borrar);
         System.out.println("Digite el dni del cliente que quiere buscar:");
         int dni = scan.nextInt();
         buscar_cliente(clientes, dni);
     }
-    public static void mostrar_clientes(ArrayList<Cliente> clientes){
+    public static void mostrar_clientes(List<Cliente> clientes){
         for (Cliente cl: clientes) {
             System.out.println(cl.toString());
         }
     }
-    public static ArrayList<Cliente> eliminar_cliente(ArrayList<Cliente> clientes, int indice){
-        clientes.remove(indice);
+    public static List<Cliente> eliminar_cliente(List<Cliente> clientes, int dni){
+        int i=0;
+        boolean flag = false;
+        for (Cliente cl: clientes) {
+            if(cl.getDni()==dni){
+                clientes.remove(i);
+                flag=true;
+                System.out.println("Se eliminó con exito");
+                break;
+            }
+            i++;
+        }
+        if(!flag){
+            System.out.println("El cliente no existe");
+        }
         mostrar_clientes(clientes);
         return clientes;
     }
-    public static void buscar_cliente(ArrayList<Cliente> clientes, int dni){
+    public static void buscar_cliente(List<Cliente> clientes, int dni){
         boolean flag=false;
         for (Cliente cl: clientes) {
             if(cl.getDni()==dni){
