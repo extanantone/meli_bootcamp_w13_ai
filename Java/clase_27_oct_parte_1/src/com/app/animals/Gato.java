@@ -13,5 +13,11 @@ public class Gato extends Animal implements Carnivoro{
         // TODO Auto-generated method stub
         return "miau";
     }
+
+    @Override
+    public void comerCarne() {
+        // TODO Auto-generated method stub
+        
+    }
     
 }
