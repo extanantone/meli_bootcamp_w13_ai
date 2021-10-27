@@ -34,4 +34,13 @@ public class Vehiculo {
     public Double getPrecio() {
         return precio;
     }
+
+    @Override
+    public String toString() {
+        return "Vehiculo{" +
+                "modelo='" + modelo + '\'' +
+                ", marca='" + marca + '\'' +
+                ", precio=" + precio +
+                '}';
+    }
 }

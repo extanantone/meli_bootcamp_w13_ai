@@ -51,7 +51,7 @@ public class Main {
         listaVehiculo.stream().filter(x -> x.getPrecio().compareTo(1000.0)==-1).forEach(x->{System.out.print(x.getModelo());
             System.out.print(" - "+x.getMarca());
             System.out.println(" - "+x.getPrecio());});
-        
+
         System.out.println();
         System.out.println("Vehiculos con precio mayor igual a 1000");
         listaVehiculo.stream().filter(x -> x.getPrecio().compareTo(1000.0)>=0).forEach(System.out::println);
@@ -59,7 +59,7 @@ public class Main {
             System.out.print(" - "+x.getMarca());
             System.out.println(" - "+x.getPrecio());});*/
         System.out.println();
-        System.out.println("Promedio de precios: "+listaVehiculo.stream().mapToDouble(x->x.getPrecio()).average());
+        System.out.println("Promedio de precios: "+listaVehiculo.stream().mapToDouble(x->x.getPrecio()).average().orElse(0));
 
     }
 }
