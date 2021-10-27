@@ -1,0 +1,56 @@
+@startuml
+interface Transaccion {
+    + transaccionOk()
+    + transaccionNoOk()
+}
+class Deposito
+class Transferencia 
+class "Retiro de Efectivo" as efectivo
+class "Consulta de Saldo" as consulta
+class "Pago de Servicios" as pago
+class Banco 
+abstract Cliente 
+class Ejecutivo
+class Basic
+class Cobradores
+Transaccion <|.. Deposito
+Transaccion <|.. Transferencia
+Transaccion <|.. efectivo
+Transaccion <|.. consulta
+Transaccion <|.. pago
+Cliente <|-- Ejecutivo
+Cliente <|-- Basic
+Cliente <|-- Cobradores
+Cliente <.o Banco
+Ejecutivo --> Deposito
+Ejecutivo --> Transferencia
+Basic --> consulta
+Basic --> pago
+Basic --> efectivo
+Cobradores --> efectivo
+Cobradores --> saldo
+@enduml
+@startuml
+interface Imprimible{
+    + imprimir()
+}
+class Curriculum{
+    - datosPersona
+    - habilidades : List
+}
+class "Libro en PDF" as pdf{
+    - cantPaginas
+    - autor 
+    - titulo 
+    - genero
+}
+class Informe{
+    - texto 
+    - cantPaginas 
+    - autor 
+    - revisor
+}
+Imprimible <|.. Curriculum
+Imprimible <|.. pdf 
+Imprimible <|.. Informe
+@enduml
