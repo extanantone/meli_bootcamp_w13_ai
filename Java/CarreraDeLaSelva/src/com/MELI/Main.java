@@ -4,9 +4,7 @@ import com.MELI.models.Circuito;
 import com.MELI.models.Inscripcion;
 import com.MELI.models.Participante;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
 
@@ -34,6 +32,12 @@ public class Main {
         Inscripcion inscripcion = new Inscripcion(1, chico, p1);
         Inscripcion inscripcion2 = new Inscripcion(3, medio, p3);
         Inscripcion inscripcion3 = new Inscripcion(4, avanzado, p2);
+
+        Map<Circuito, Participante> inscripcion = new HashMap<>();
+
+        if()
+        inscripcion.put(chico, p1);
+        inscripcion.put(avanzado, p2);
 
         System.out.println(chico.getParticipantes());
         System.out.println(inscripcion2);
