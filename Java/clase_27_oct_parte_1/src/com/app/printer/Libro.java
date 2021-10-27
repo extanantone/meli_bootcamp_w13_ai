@@ -15,5 +15,10 @@ public class Libro implements Imprimible {
         
         
     }
+
+    @Override
+    public String toString() {
+        return "Libro{\npaginas:"+paginas.toString()+"\n}";
+    }
     
 }

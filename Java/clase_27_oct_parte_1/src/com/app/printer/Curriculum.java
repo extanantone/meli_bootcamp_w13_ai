@@ -15,8 +15,12 @@ public class Curriculum implements Imprimible{
 
     @Override
     public void imprimir() {
-        // TODO Auto-generated method stub
-        
+        System.out.println(toString());
+    }
+
+    @Override
+    public String toString() {
+        return "Curriculum{\npersona: "+persona.toString()+"\nhabilities: "+habilities.toString()+"\n}";
     }
     
 }
