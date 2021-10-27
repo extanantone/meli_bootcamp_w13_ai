@@ -1,6 +1,7 @@
 package com.app;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -27,7 +28,8 @@ public class Garage{
     public static void main(String[] args) {
         Garage g = new Garage();
         List<Vehicle> vehiclesSortedByPrice = g.getVehicles().stream()
-                                    .sorted((x,y)->x.getPrecio()<y.getPrecio()?-1:(x.getPrecio()<y.getPrecio()?x.getMarca().compareToIgnoreCase(y.getMarca()):1)).collect(Collectors.toList());
+                                    .sorted(Comparator.comparing(Vehicle::getMarca).thenComparing(Vehicle::getPrecio))
+                                    .collect(Collectors.toList());
 
         System.out.println(vehiclesSortedByPrice);
 
