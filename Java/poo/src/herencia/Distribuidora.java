@@ -19,7 +19,7 @@ public class Distribuidora {
         for (Producto p:productos) {
             randomNum = ThreadLocalRandom.current().nextInt(1, 10 + 1);
             System.out.println(p.toString());
-            System.out.println("Precio final: "+p.calcular(randomNum));
+            System.out.println(randomNum+" unidades - Precio final: "+p.calcular(randomNum));
         }
 
     }
