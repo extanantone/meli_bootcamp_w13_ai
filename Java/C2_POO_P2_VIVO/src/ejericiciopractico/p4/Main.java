@@ -25,9 +25,10 @@ public class Main {
         double precioAcumulado = 0.0;
         for(Producto elementos:productos)
         {
+            double precioCalculado = elementos.calcular(cantidadVendidos);
             System.out.println("el precio de vender " + cantidadVendidos + " de "
-                    + elementos.getNombre() +" es: " + elementos.calcular(cantidadVendidos));
-            precioAcumulado = precioAcumulado+elementos.calcular(cantidadVendidos);
+                    + elementos.getNombre() +" es: " + precioCalculado);
+            precioAcumulado = precioAcumulado+precioCalculado;
         }
         System.out.println("el total de todo lo vendido es: " + precioAcumulado);
 
