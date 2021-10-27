@@ -36,30 +36,26 @@ public class Main {
 
         Garage garage = new Garage(1,listaVehiculo);
         System.out.println("Vehiculos ordenados por precio");
-        listaVehiculo.stream().sorted((x,y) -> x.getPrecio().compareTo(y.getPrecio())).forEach(x->{System.out.print(x.getModelo());
+        garage.getListaVehiculos().stream().sorted((x,y) -> x.getPrecio().compareTo(y.getPrecio())).forEach(x->{System.out.print(x.getModelo());
             System.out.print(" - "+x.getModelo());
             System.out.println(" - "+x.getPrecio());});
         System.out.println();
         System.out.println("Vehiculos ordenados por Marca y precio");
-        listaVehiculo.stream().sorted(Comparator.comparing(Vehiculo::getModelo).thenComparing(Vehiculo::getPrecio))
+        garage.getListaVehiculos().stream().sorted(Comparator.comparing(Vehiculo::getModelo).thenComparing(Vehiculo::getPrecio))
                 .forEach(x->{System.out.print(x.getModelo());
-            //System.out.print(" - "+x.getMarca());
-            System.out.println(" - "+x.getPrecio());});
+                             System.out.println(" - "+x.getPrecio());});
 
         System.out.println();
         System.out.println("Vehiculos con precio menor a 1000");
-        listaVehiculo.stream().filter(x -> x.getPrecio().compareTo(1000.0)==-1).forEach(x->{System.out.print(x.getModelo());
+        garage.getListaVehiculos().stream().filter(x -> x.getPrecio().compareTo(1000.0)==-1).forEach(x->{System.out.print(x.getModelo());
             System.out.print(" - "+x.getMarca());
             System.out.println(" - "+x.getPrecio());});
 
         System.out.println();
         System.out.println("Vehiculos con precio mayor igual a 1000");
-        listaVehiculo.stream().filter(x -> x.getPrecio().compareTo(1000.0)>=0).forEach(System.out::println);
-        /*listaVehiculo.stream().filter(x -> x.getPrecio().compareTo(1000.0)>=0).forEach(x->{System.out.print(x.getModelo());
-            System.out.print(" - "+x.getMarca());
-            System.out.println(" - "+x.getPrecio());});*/
+        garage.getListaVehiculos().stream().filter(x -> x.getPrecio().compareTo(1000.0)>=0).forEach(System.out::println);
         System.out.println();
-        System.out.println("Promedio de precios: "+listaVehiculo.stream().mapToDouble(x->x.getPrecio()).average().orElse(0));
+        System.out.println("Promedio de precios: "+garage.getListaVehiculos().stream().mapToDouble(x->x.getPrecio()).average().orElse(0));
 
     }
 }
