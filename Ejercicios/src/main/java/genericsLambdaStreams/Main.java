@@ -1,7 +1,5 @@
 package genericsLambdaStreams;
 
-import javax.xml.transform.SourceLocator;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Main {
