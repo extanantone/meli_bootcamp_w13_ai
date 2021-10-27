@@ -16,6 +16,10 @@ public class Vehicle {
         return precio;
     }
 
+    public String getMarca() {
+        return marca;
+    }
+
     @Override
     public String toString() {
         return "Vehiculo{\nmarca:"+marca+"\nmodelo:"+modelo+"\nprecio:"+precio+"\n}";

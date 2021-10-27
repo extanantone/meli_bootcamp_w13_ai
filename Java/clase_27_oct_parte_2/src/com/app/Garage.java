@@ -27,7 +27,7 @@ public class Garage{
     public static void main(String[] args) {
         Garage g = new Garage();
         List<Vehicle> vehiclesSortedByPrice = g.getVehicles().stream()
-                                    .sorted((x,y)->x.getPrecio()<y.getPrecio()?-1:(x.getPrecio()<y.getPrecio()?0:1)).collect(Collectors.toList());
+                                    .sorted((x,y)->x.getPrecio()<y.getPrecio()?-1:(x.getPrecio()<y.getPrecio()?x.getMarca().compareToIgnoreCase(y.getMarca()):1)).collect(Collectors.toList());
 
         System.out.println(vehiclesSortedByPrice);
 
