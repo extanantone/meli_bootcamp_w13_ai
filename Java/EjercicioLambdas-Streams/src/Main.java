@@ -55,8 +55,8 @@ public class Main {
                 .filter( x -> x.getPrecio() >= 3000)
                 .forEach(System.out::println);
 
-        System.out.println(vehiculos.stream().mapToDouble(number -> number.getPrecio())
-                .average().getAsDouble());
+        System.out.println(vehiculos.stream().mapToDouble(Vehiculo::getPrecio)
+                .average().orElse(-1));
 
 
     }
