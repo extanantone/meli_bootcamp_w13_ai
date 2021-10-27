@@ -39,7 +39,7 @@ public class Garage{
         List<Vehicle> lessMil = g.getVehicles().stream()
                               .filter(x->x.getPrecio()<1000).collect(Collectors.toList());   
 
-        avg =  g.getVehicles().stream().mapToDouble(Vehicle::getPrecio).average().getAsDouble()
+        avg =  g.getVehicles().stream().mapToDouble(Vehicle::getPrecio).average().getAsDouble();
         System.out.println(">= 1000");
         System.out.println(bigMil);
         System.out.println("<1000");
