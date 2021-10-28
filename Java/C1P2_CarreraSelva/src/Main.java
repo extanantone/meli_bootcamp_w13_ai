@@ -183,7 +183,7 @@ public class Main {
         do {
             System.out.println("Ingrese opción: 1-Inscribir; 2-Mostrar; 3-Desincribir; 4-Salir ->");
             int opcion = entradaEscaner.nextInt();
-            
+
             switch (opcion) {
                 case 1:
                     Competidor comp = inscribirCompetidor();
