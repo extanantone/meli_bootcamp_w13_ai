@@ -13,23 +13,27 @@ public class Main {
         clientes.add(new Cliente("34213512", "Rosa", "Galan"));
         clientes.add(new Cliente("38123942", "Veronica", "Pitinari"));
 
+        Repositorio repositorio = new Repositorio(new ArrayList<>(), clientes);
+
         System.out.println("Lista de clientes original");
-        clientes.forEach(System.out::println);
+        repositorio.imprimirClientes();
 
         System.out.println("\n Lista de clientes sin rosa");
-        clientes.remove(1);
-        clientes.forEach(System.out::println);
+        repositorio.clientes.remove(1);
+        repositorio.imprimirClientes();
 
-        Scanner sc = new Scanner(System.in);
-        System.out.println("\n Ingrese el dni del cliente a buscar (sin puntos) : ");
-        String dni = sc.next();
+//        Scanner sc = new Scanner(System.in);
+//        System.out.println("\n Ingrese el dni del cliente a buscar (sin puntos) : ");
+//        String dni = sc.next();
+//        repositorio.imprimirClienteBuscado(dni);
 
-        List<Cliente> clientesEncontrados = clientes.stream().filter(c -> c.getDni().equals(dni)).collect(Collectors.toList());
-        if(clientesEncontrados.size() > 0){
-            System.out.println("Se encontraron los siguientes clientes con ese DNI ");
-            clientesEncontrados.forEach(System.out::println);
-        }
-        else
-            System.out.println("No se encontró ningún cliente con el dni provisto");
+        System.out.println("---------------");
+
+        List<Item> items = new ArrayList<>();
+        items.add(new Item("3fs01", "Arroz", 3, 43.4));
+        items.add(new Item("f12312", "Milanesa", 2, 230.d));
+        items.add(new Item("1sd68ss", "Lata de birra", 6, 130.5));
+        items.add(new Item("1253ds", "Bolsa de mani", 1, 80.d));
+        System.out.println("Total factura : $" + repositorio.agregarFactura(new Factura(new Cliente("2820123", "Damian", "Paez"), items )));
     }
 }
