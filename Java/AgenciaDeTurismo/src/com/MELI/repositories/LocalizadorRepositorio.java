@@ -15,5 +15,5 @@ public class LocalizadorRepositorio {
     public void agregarLocalizador(Localizador localizador){
         localizadores.add(localizador);
     }
-    
+
 }
