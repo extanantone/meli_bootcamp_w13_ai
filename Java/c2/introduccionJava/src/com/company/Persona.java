@@ -24,7 +24,7 @@ public class Persona {
         this.altura = altura;
     }
 
-    public double calcularIMC() {
+    public int calcularIMC() {
         double imc = this.peso/(Math.pow(this.altura, 2));
         if (imc < 20) {
             return -1;
