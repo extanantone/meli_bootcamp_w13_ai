@@ -17,7 +17,7 @@ public class Distribuidora {
         double precioFinal = 0;
         for (Producto producto : productos) {
             double precioLocal = producto.calcular(5);
-            System.out.println("Los 5 productos " + producto.nombre + " cuestan " + precioLocal);
+            System.out.println("Los 5 productos " + producto.getNombre() + " cuestan " + precioLocal);
             precioFinal += precioLocal;
         }
         System.out.println("El precio a pagar es: " + precioFinal);

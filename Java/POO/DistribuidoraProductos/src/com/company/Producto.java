@@ -1,8 +1,8 @@
 package com.company;
 
 public class Producto {
-    String nombre;
-    double precio;
+    private String nombre;
+    private double precio;
 
     public Producto(String nombre, double precio) {
         this.nombre = nombre;

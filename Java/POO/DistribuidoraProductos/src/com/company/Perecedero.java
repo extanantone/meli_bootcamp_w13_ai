@@ -1,7 +1,7 @@
 package com.company;
 
 public class Perecedero extends Producto{
-    int diasPorCaducar;
+    private int diasPorCaducar;
 
     @Override
     public String toString() {
@@ -25,7 +25,7 @@ public class Perecedero extends Producto{
 
     @Override
     public double calcular(int cantidadDeProductos){
-        double precioFinal = cantidadDeProductos * this.precio;
+        double precioFinal = cantidadDeProductos * this.getPrecio();
         if (this.diasPorCaducar == 1) {
             precioFinal /= 4;
         } else if (this.diasPorCaducar == 2) {
