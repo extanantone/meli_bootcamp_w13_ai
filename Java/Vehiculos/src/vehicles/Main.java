@@ -2,7 +2,6 @@ package vehicles;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -54,7 +53,7 @@ public class Main {
         System.out.println("Lista por encima de 1000:");
         System.out.println(vehiclesOver1000);
 
-        double avgVehiclePrice = vehicles.stream().mapToDouble(v -> v.price).average().getAsDouble();
+        double avgVehiclePrice = vehicles.stream().mapToDouble(v -> v.price).average().orElse(-1);
 
         System.out.println("Precio promedio:");
         System.out.println(avgVehiclePrice);
