@@ -1,58 +1,35 @@
 package com.company;
 
 import com.company.model.Cliente;
-import com.company.model.Factura;
-import com.company.model.Item;
+import com.company.repository.ClienteImp;
+import com.company.repository.FacturaImp;
+import com.company.repository.ItemImp;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
+        ClienteImp clienteImp = new ClienteImp();
+        FacturaImp facturaImp = new FacturaImp();
+        ItemImp itemImp = new ItemImp();
+
         Cliente azul = new Cliente(34534534L, "Azul", "Smith");
         Cliente juan = new Cliente(4566567L, "Juan", "Pérez");
         Cliente facundo = new Cliente(21334556L, "Facundo", "Pérez");
 
-        List<Cliente> clientes = new ArrayList();
+        clienteImp.save(azul);
+        clienteImp.mostrarPantalla();
 
-        clientes.add(azul);
-        clientes.add(juan);
-        clientes.add(facundo);
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Ingrese el dni a buscar");
+        Long dniBuscado = teclado.nextLong();
+        clienteImp.buscar(dniBuscado);
 
-        for (Cliente cliente :clientes) {
-            System.out.println(cliente.toString());
-        }
-
-        clientes.remove(juan);
-
-        System.out.println("\n");
-
-        for (Cliente cliente :clientes) {
-            System.out.println(cliente.toString());
-        }
-
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Ingresar DNI: ");
-
-        Long dniABuscar = scan.nextLong();
-
-        scan.close();
-
-        boolean encontrado = false;
-
-        for (Cliente cliente :clientes) {
-            if (!(cliente.getDni().equals(dniABuscar))) continue;
-            System.out.println(cliente.toString());
-            encontrado = true;
-            break;
-        }
-
-        if (!encontrado) {
-            System.out.println("\nNo se ha encontrado al cliente");
-        }
+        System.out.println("Ingrese el dni a buscar para eliminar");
+        Long dniBorrado = teclado.nextLong();
+        clienteImp.eliminar(dniBorrado);
 
     }
 }

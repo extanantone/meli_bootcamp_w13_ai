@@ -15,4 +15,36 @@ public class Item {
         this.cantidad = cantidad;
         this.costo = costo;
     }
+
+    public Long getCodigo() {
+        return codigo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public double getCosto() {
+        return costo;
+    }
+
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setCosto(double costo) {
+        this.costo = costo;
+    }
 }
