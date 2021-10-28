@@ -1,5 +1,7 @@
 package JAVA.C1.P1.EJ1;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class EjercicioC1P1 {
