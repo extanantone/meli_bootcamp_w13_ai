@@ -1,5 +1,6 @@
 package autoPartes;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class Main {
@@ -38,5 +39,6 @@ public class Main {
 
         System.out.println("\nPromedio de costos de todos los vehículos\n");
         garage.getVehiculos().stream().mapToDouble(v -> v.getCosto()).average().getAsDouble();
+
     }
 }
