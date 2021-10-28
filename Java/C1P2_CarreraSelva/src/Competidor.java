@@ -11,7 +11,7 @@ public class Competidor {
     int pagoInscripcion;
 
     public Competidor(int dni, String nombre, String apellido, int edad, int celular, int numEmerg, String gSanguineo) {
-        this.numParticipante = 0;
+        this.numParticipante = 1;
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -28,6 +28,10 @@ public class Competidor {
 
     public int getDni() {
         return dni;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     public int getEdad() {

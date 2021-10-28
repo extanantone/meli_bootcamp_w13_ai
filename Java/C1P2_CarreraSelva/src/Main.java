@@ -4,17 +4,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    Scanner entradaEscaner = new Scanner(System.in);
 
-    public static void main(String[] args){
-        Scanner entradaEscaner = new Scanner(System.in);
+    List<Competidor> cChico = new ArrayList<Competidor>();
+    List<Competidor> cMedio = new ArrayList<Competidor>();
+    List<Competidor> cAvanzado = new ArrayList<Competidor>();
 
-        List<Competidor> cChico = new ArrayList<Competidor>();
-        List<Competidor> cMedio = new ArrayList<Competidor>();
-        List<Competidor> cAvanzado = new ArrayList<Competidor>();
-
-        Competidor comp1 = new Competidor(1234,"Ana","Lopez",19,1234567,9876543,"O+");
-        cAvanzado.add(comp1);
-
+    public Competidor inscribirCompetidor(){
         System.out.println("Ingrese DNI: ");
         int dni = entradaEscaner.nextInt();
         System.out.println("Ingrese nombre: ");
@@ -32,11 +28,17 @@ public class Main {
 
         Competidor comp = new Competidor(dni,nombre,apellido,edad,celular,numEmergencia,gsanguineo);
 
+        return comp;
+    }
+
+    public Boolean verificarCompetidor( Competidor comp ){
+        boolean band = false;
         for( int i = 0; i < cChico.size(); i++){
             if( cChico.get(i).getDni() == comp.getDni() ){
                 System.out.println("El participante con DNI " +
                         comp.getDni() +
                         " ya se encuentra inscrito en el circuito chico.");
+                band = true;
             }
 
         }
@@ -46,6 +48,7 @@ public class Main {
                 System.out.println("El participante con DNI " +
                         comp.getDni() +
                         " ya se encuentra inscrito en el circuito medio.");
+                band = true;
             }
 
         }
@@ -55,10 +58,14 @@ public class Main {
                 System.out.println("El participante con DNI " +
                         comp.getDni() +
                         " ya se encuentra inscrito en el circuito avanzado.");
+                band = true;
             }
 
         }
+        return band;
+    }
 
+    public void inscribirCompetidor(Competidor comp){
         System.out.println("Ingrese tipo circuito: 1-Chico; 2-Medio; 3-Avanzado ->");
         int tipoCircuito = entradaEscaner.nextInt();
         int numCompetidor = 0;
@@ -112,6 +119,107 @@ public class Main {
             default:
                 System.out.println("¡Introdujo una opción incorrecta!");
         }
+    }
+
+    public void mostrarInscritos(){
+        System.out.println("Ingrese tipo circuito: 1-Chico; 2-Medio; 3-Avanzado ->");
+        int tipoCircuito = entradaEscaner.nextInt();
+        List<Competidor> competidores = new ArrayList<Competidor>();
+
+        switch (tipoCircuito){
+            case 1:
+                competidores = cChico;
+                break;
+            case 2:
+                competidores = cMedio;
+                break;
+            case 3:
+                competidores = cAvanzado;
+                break;
+            default:
+                System.out.println("¡Introdujo una opción incorrecta!");
+        }
+
+        System.out.println("# \t DNI \t Nombre \t Edad");
+        for(Competidor comp : competidores){
+            System.out.println(comp.getNumParticipante() + "\t" + comp.getDni() +"\t" + comp.getNombre() + "\t" + comp.getEdad());
+        }
+    }
+
+    public void eliminarCompetidor(){
+        System.out.println("Ingrese tipo circuito: 1-Chico; 2-Medio; 3-Avanzado ->");
+        int tipoCircuito = entradaEscaner.nextInt();
+
+        System.out.println("Ingrese número competidor: ");
+        int numCompetidor = entradaEscaner.nextInt();
+
+        List<Competidor> competidores = new ArrayList<Competidor>();
+
+        switch (tipoCircuito){
+            case 1:
+                competidores = cChico;
+                break;
+            case 2:
+                competidores = cMedio;
+                break;
+            case 3:
+                competidores = cAvanzado;
+                break;
+            default:
+                System.out.println("¡Introdujo una opción incorrecta!");
+        }
+
+        competidores.remove(numCompetidor-1);
+
+        for( int i = 1; i <= competidores.size(); i++){
+            competidores.get(i-1).setNumParticipante(i);
+        }
+    }
+
+    public void menu(){
+
+        boolean salir = false;
+
+        do {
+            System.out.println("Ingrese opción: 1-Inscribir; 2-Mostrar; 3-Desincribir; 4-Salir ->");
+            int opcion = entradaEscaner.nextInt();
+            
+            switch (opcion) {
+                case 1:
+                    Competidor comp = inscribirCompetidor();
+
+                    boolean vCompetidor = verificarCompetidor(comp);
+
+                    if (!vCompetidor) {
+                        inscribirCompetidor(comp);
+                    }
+
+                    break;
+                case 2:
+                    mostrarInscritos();
+                    break;
+                case 3:
+                    eliminarCompetidor();
+                    break;
+                case 4:
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("¡Introdujo una opción incorrecta!");
+
+            }
+        }while (!salir);
+    }
+
+    public static void main(String[] args){
+
+        Main main = new Main();
+
+        Competidor comp1 = new Competidor(1234,"Ana","Lopez",19,1234567,9876543,"O+");
+        main.cAvanzado.add(comp1);
+
+        main.menu();
+
     }
 
 }
