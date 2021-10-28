@@ -1,8 +1,8 @@
 public class Item {
-    private int codigo;
-    private String nombre;
-    private int cantidad;
-    private double costo;
+     int codigo;
+     String nombre;
+     int cantidad;
+     double costo;
 
     public Item(int codigo, String nombre, int cantidad, double costo) {
         this.codigo = codigo;
@@ -41,5 +41,15 @@ public class Item {
 
     public void setCosto(double costo) {
         this.costo = costo;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "codigo=" + codigo +
+                ", nombre='" + nombre + '\'' +
+                ", cantidad=" + cantidad +
+                ", costo=" + costo
+                ;
     }
 }

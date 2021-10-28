@@ -1,7 +1,7 @@
 public class Cliente {
-    private int dni;
-    private String nombre;
-    private String apellido;
+     int dni;
+     String nombre;
+     String apellido;
 
     public Cliente(int dni, String nombre, String apellido) {
         this.dni = dni;
@@ -35,10 +35,9 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" +
+        return
                 "dni=" + dni +
                 ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                '}';
+                ", apellido='" + apellido + '\'';
     }
 }

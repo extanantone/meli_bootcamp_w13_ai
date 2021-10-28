@@ -1,13 +1,14 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Factura {
     Cliente cliente;
-    ArrayList<Item> items;
+    List<Item> items;
     double total;
 
-    public Factura(Cliente cliente, ArrayList<Item> items, double total) {
+    public Factura(Cliente cliente, List<Item> items, double total) {
         this.cliente = cliente;
-        this.items = new ArrayList<>();
+        this.items = items;
         this.total = total;
     }
 
@@ -19,11 +20,13 @@ public class Factura {
         this.cliente = cliente;
     }
 
-    public ArrayList<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<Item> items) {
+
+
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 
@@ -33,5 +36,14 @@ public class Factura {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "Factura{" +
+                "cliente=" + cliente +
+                ", items=" + items +
+                ", total=" + total +
+                '}';
     }
 }
