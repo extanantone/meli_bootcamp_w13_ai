@@ -1,14 +1,18 @@
 package com.company;
 
 public class ReservaComida implements Reserva{
-    int tipoReserva = 3;
+    static int tipoReserva = 3;
 
-    public ReservaComida(int tipoReserva) {
-        this.tipoReserva = tipoReserva;
+    public ReservaComida() {
     }
 
     @Override
     public Integer getTipoReserva() {
         return tipoReserva;
+    }
+
+    @Override
+    public String getNombreReserva() {
+        return "comida";
     }
 }
