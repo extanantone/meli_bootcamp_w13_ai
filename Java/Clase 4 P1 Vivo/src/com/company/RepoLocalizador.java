@@ -25,10 +25,10 @@ public class RepoLocalizador {
             System.out.println("Se aplicó un descuento del 5% por tener dos reservas de hotel y dos reservas de boleto");
         }
         // Descuento por tener una reserva de cada tipo
-        if (localizador.getReservas().stream().filter(r -> r.getTipoReserva().equals(TipoReserva.HOTEL)).count() > 0 &&
-                localizador.getReservas().stream().filter(r -> r.getTipoReserva().equals(TipoReserva.BOLETOS)).count() > 0 &&
-                localizador.getReservas().stream().filter(r -> r.getTipoReserva().equals(TipoReserva.COMIDA)).count() > 0 &&
-                localizador.getReservas().stream().filter(r -> r.getTipoReserva().equals(TipoReserva.TRANSPORTE)).count() > 0){
+        if (localizador.getReservas().stream().anyMatch(r -> r.getTipoReserva().equals(TipoReserva.HOTEL)) &&
+                localizador.getReservas().stream().anyMatch(r -> r.getTipoReserva().equals(TipoReserva.BOLETOS)) &&
+                localizador.getReservas().stream().anyMatch(r -> r.getTipoReserva().equals(TipoReserva.COMIDA)) &&
+                localizador.getReservas().stream().anyMatch(r -> r.getTipoReserva().equals(TipoReserva.TRANSPORTE))){
             porcDescuento += 10;
             System.out.println("Se aplicó un descuento del 10% por tener un paquete completo");
         }

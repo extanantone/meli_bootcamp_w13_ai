@@ -41,8 +41,8 @@ public class Main {
         System.out.println("Localizadores vendidos : " + repoLocalizador.cantidadLocalizadoresVendidos());
         System.out.println("Reservas vendidas : " + repoLocalizador.cantidadReservasVendidas());
         repoLocalizador.imprimirReservasPorTipo();
-        System.out.println("Total de ventas : " + repoLocalizador.totalVentas());
-        System.out.println("Promedio de ventas : " + repoLocalizador.promedioVentas());
+        System.out.println("Total de ventas : $" + repoLocalizador.totalVentas());
+        System.out.println("Promedio de ventas : $" + repoLocalizador.promedioVentas());
 
     }
 }
