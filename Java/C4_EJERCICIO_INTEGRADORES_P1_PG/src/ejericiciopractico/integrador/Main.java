@@ -1,6 +1,7 @@
 package ejericiciopractico.integrador;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -25,6 +26,13 @@ public class Main {
 
         // menu pedir dni cliente a consultar
         consultarCliente(collecionClientes);
+
+        // crear factura integrador parte 2
+
+        Item cosa1 = new Item("1","panelas",2,200.0);
+        Factura fact1 = new Factura(uno, List.of(cosa1));
+
+
     }
 
     private static void consultarCliente(Map<String, Cliente> collecionClientes) {

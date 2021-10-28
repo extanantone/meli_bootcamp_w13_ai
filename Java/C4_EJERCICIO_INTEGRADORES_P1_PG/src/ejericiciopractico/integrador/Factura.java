@@ -7,10 +7,11 @@ public class Factura {
     List<Item> objetos;
     double totalCompra;
 
-    public Factura(Cliente dueno, List<Item> objetos, double totalCompra) {
+    public Factura(Cliente dueno, List<Item> objetos) {
         this.dueno = dueno;
         this.objetos = objetos;
-        this.totalCompra = totalCompra;
+        this.totalCompra = objetos.stream().reduce(
+                0.0,(acumulador,x)->{return (x.getCantidad()*x.getCostoUnitario());},Double::sum);
     }
 
     public Cliente getDueno() {
