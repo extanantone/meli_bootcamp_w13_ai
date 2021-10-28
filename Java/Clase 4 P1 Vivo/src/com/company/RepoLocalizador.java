@@ -47,4 +47,32 @@ public class RepoLocalizador {
     public void removeLocalizador(Localizador localizador){
         localizadores.add(localizador);
     }
+
+    public int cantidadLocalizadoresVendidos(){
+        return localizadores.size();
+    }
+
+    public int cantidadReservasVendidas(){
+        return (int) localizadores.stream().mapToInt(l -> l.getReservas().size()).count();
+    }
+
+    public void imprimirReservasPorTipo(){
+        System.out.print("La cantidad de reservas de hotel fue de ");
+        System.out.print(localizadores.stream().map(Localizador::getReservas).mapToLong(r -> r.stream().filter(re -> re.getTipoReserva().equals(TipoReserva.HOTEL)).count()).sum() + " reservas \n");
+        System.out.print("La cantidad de reservas de boletos de viaje fue de ");
+        System.out.print(localizadores.stream().map(Localizador::getReservas).mapToLong(r -> r.stream().filter(re -> re.getTipoReserva().equals(TipoReserva.BOLETOS)).count()).sum() + " reservas \n");
+        System.out.print("La cantidad de reservas de comida fue de ");
+        System.out.print(localizadores.stream().map(Localizador::getReservas).mapToLong(r -> r.stream().filter(re -> re.getTipoReserva().equals(TipoReserva.COMIDA)).count()).sum() + " reservas \n");
+        System.out.print("La cantidad de reservas de transporte fue de ");
+        System.out.print(localizadores.stream().map(Localizador::getReservas).mapToLong(r -> r.stream().filter(re -> re.getTipoReserva().equals(TipoReserva.TRANSPORTE)).count()).sum() + " reservas \n");
+    }
+
+    public double totalVentas(){
+        return localizadores.stream().mapToDouble(Localizador::getTotal).sum();
+    }
+
+    public double promedioVentas(){
+        return localizadores.stream().mapToDouble(Localizador::getTotal).average().orElse(-1);
+    }
 }
+

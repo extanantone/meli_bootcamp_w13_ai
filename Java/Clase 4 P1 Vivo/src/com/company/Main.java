@@ -38,7 +38,11 @@ public class Main {
         repoLocalizador.addLocalizador(new Localizador(reservas3, repoCliente.getCliente(0)));
         repoLocalizador.addLocalizador(new Localizador(reservas4, repoCliente.getCliente(0)));
 
-
+        System.out.println("Localizadores vendidos : " + repoLocalizador.cantidadLocalizadoresVendidos());
+        System.out.println("Reservas vendidas : " + repoLocalizador.cantidadReservasVendidas());
+        repoLocalizador.imprimirReservasPorTipo();
+        System.out.println("Total de ventas : " + repoLocalizador.totalVentas());
+        System.out.println("Promedio de ventas : " + repoLocalizador.promedioVentas());
 
     }
 }
