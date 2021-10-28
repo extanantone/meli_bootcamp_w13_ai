@@ -35,4 +35,13 @@ public class Vehiculo {
     public void setCosto(int costo) {
         this.costo = costo;
     }
+
+    @Override
+    public String toString() {
+        return "Vehiculo{" +
+                "modelo='" + modelo + '\'' +
+                ", marca='" + marca + '\'' +
+                ", costo=" + costo +
+                '}';
+    }
 }
