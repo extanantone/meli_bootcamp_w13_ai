@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.model.Cliente;
+import com.company.repository.ClientImp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,57 +11,29 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
+        ClientImp clientManager = new ClientImp();
+
         Cliente cliente1 = new Cliente(123456L, "Feli", "Prado");
         Cliente cliente2 = new Cliente(123457L, "Isa", "Burbano");
         Cliente cliente3 = new Cliente(123458L, "Feli", "Cubillos");
 
-        List<Cliente> listClientes = new ArrayList<Cliente>();
-        listClientes.add(cliente1);
-        listClientes.add(cliente2);
-        listClientes.add(cliente3);
 
-        for (Cliente c: listClientes){
-            System.out.println("Dni "+ c.getDni() + " Nombre: " + c.getNombre() + " Apellido: " + c.getApellido());
-        }
+        clientManager.save(cliente1);
+        clientManager.save(cliente2);
+        clientManager.save(cliente3);
 
-        // borrar
+        clientManager.view();
         Scanner scan = new Scanner(System.in);
-        System.out.println("Ingresa el DNI a borrar");
+        System.out.println("Ingresa el DNI a buscar");
+        long dniSearchValue = scan.nextLong();
+        clientManager.search(dniSearchValue);
+        System.out.println("Ingresa el DNI a buscar");
         long dniValue = scan.nextLong();
-        boolean flag = false;
-
-        for (Cliente c: listClientes){
-            if (c.getDni().equals(dniValue)){
-                listClientes.remove(c);
-                flag = true;
-                break;
-            }
-        }
-
-        if (flag) {
-            System.out.println("DNI borrado");
-        } else System.out.println("DNI incorrecto");
-
-        for (Cliente c: listClientes){
-            System.out.println("Dni "+ c.getDni() + " Nombre: " + c.getNombre() + " Apellido: " + c.getApellido());
-        }
+        clientManager.delete(dniValue);
 
 
-        System.out.println("Ingresa el dni que quieras buscar");
-        Scanner scanTwo = new Scanner(System.in);
 
-        long dniSearchValue =scanTwo.nextLong();;
-        for (Cliente c: listClientes){
-            if (c.getDni().equals(dniSearchValue)){
-                System.out.println("Cliente encontrado");
-                System.out.println("Dni "+c.getDni() + " Nombre:" + c.getNombre() + "Apellido" + c.getApellido());
-                break;
-            }
-        }
 
-        for (Cliente c: listClientes){
-            System.out.println("Dni "+ c.getDni() + " Nombre: " + c.getNombre() + " Apellido: " + c.getApellido());
-        }
 
 
 
