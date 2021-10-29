@@ -1,0 +1,7 @@
+
+N	java:S106("9Replace this use of System.out or System.err by a logger.(ÅÆÎ
+M	java:S106)"9Replace this use of System.out or System.err by a logger.(ó²öB
+t
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Äàê²ûÿÿÿÿ
+G
+java:S1153("1Directly append the argument of String.valueOf().(ÅÆÎ
