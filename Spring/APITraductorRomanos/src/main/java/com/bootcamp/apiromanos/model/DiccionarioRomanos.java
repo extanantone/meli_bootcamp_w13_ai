@@ -41,6 +41,7 @@ public class DiccionarioRomanos {
         romanos.put(3, "II");
         romanos.put(2, "II");
         romanos.put(1, "I");
+        romanos.put(0, "");
     }
 
     public String getRomano(int n){
