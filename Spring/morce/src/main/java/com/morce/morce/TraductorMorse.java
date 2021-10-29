@@ -23,8 +23,8 @@ public class TraductorMorse {
         String[] phrases = morse.split("   ");
         String endPhrase = "";
         for (String p: phrases){
-            String[] q = p.split(" ");
-            for (String s: q)endPhrase=endPhrase+dictionary.get(s);
+            String[] letras = p.split(" ");
+            for (String letra: letras)endPhrase=endPhrase+dictionary.get(letra);
             endPhrase=endPhrase+" ";
         }
         return endPhrase.trim();
