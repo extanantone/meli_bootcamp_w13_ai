@@ -1,4 +1,4 @@
-package JAVA.C2.P1;
+package JAVA.C2.P1.EJ1;
 
 public class EjercicioC2P1 {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package JAVA.C2.P1;
+package JAVA.C2.P1.EJ1;
 
 //tuve que crear la clase en minúscula porque intelijj me tiraba error con "Persona".
 public class persona {
