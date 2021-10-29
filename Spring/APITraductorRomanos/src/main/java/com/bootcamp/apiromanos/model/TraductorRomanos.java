@@ -27,7 +27,7 @@ public class TraductorRomanos {
 
         this.romano = dr.getRomano(m) + dr.getRomano(c) + dr.getRomano(d) + dr.getRomano(u);
 
-        if(n.getMiles()<4){
+        if(n.getMiles()<4 || entero<1){
             return "Entero: " + entero + " , Romano : " + romano;
         }else{
             return "Número fuera de rango";
