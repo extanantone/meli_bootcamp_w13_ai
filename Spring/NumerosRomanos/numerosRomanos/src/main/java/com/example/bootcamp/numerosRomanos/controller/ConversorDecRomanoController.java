@@ -10,15 +10,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class ConversorDecRomanoController {
 
         @GetMapping("/{number}")
-        public String convertIntegerToRoman(@PathVariable int number){
+        public String convertIntegerToRoman(@PathVariable int number) {
 
-            String resultado = "";
+            if (number > 0 && number < 3999) {
 
-            NumeroRomano numeroRomano = new NumeroRomano();
-            resultado =  numeroRomano.toRoman(number);
+                String resultado = "";
+
+                NumeroRomano numeroRomano = new NumeroRomano();
+                resultado = numeroRomano.toRoman(number);
 
 
-            return resultado;
+                return resultado;
+            }
+
+            return "El valor ingresado debe estar entre 0 y 3999";
         }
+
+
 
 }
