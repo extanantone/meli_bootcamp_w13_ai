@@ -17,7 +17,8 @@ public class ConvertirController {
         String s = "";
         while (numero >= 1000) {
             s += "M";
-            numero -= 1000;        }
+            numero -= 1000;
+        }
         while (numero >= 900) {
             s += "CM";
             numero -= 900;
