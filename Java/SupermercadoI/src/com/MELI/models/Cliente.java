@@ -11,6 +11,10 @@ public class Cliente {
         this.DNI = DNI;
     }
 
+    public Cliente() {
+
+    }
+
     public String getNombre() {
         return nombre;
     }

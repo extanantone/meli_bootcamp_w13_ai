@@ -3,23 +3,23 @@ package com.MELI.models;
 import java.util.UUID;
 
 public class Item {
-    private UUID codigo;
+    private long codigo;
     private String nombre;
     private int cantidad;
     private double costoUnitario;
 
     public Item(String nombre, int cantidad, double costoUnitario) {
-        this.codigo = UUID.randomUUID();
+        this.codigo = UUID.randomUUID().getMostSignificantBits();
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.costoUnitario = costoUnitario;
     }
 
-    public UUID getCodigo() {
+    public long getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(UUID codigo) {
+    public void setCodigo(long codigo) {
         this.codigo = codigo;
     }
 
