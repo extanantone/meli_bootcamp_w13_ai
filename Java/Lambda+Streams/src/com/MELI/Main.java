@@ -44,6 +44,7 @@ public class Main {
         vehiculos.stream().filter(x -> x.getCosto() <= 1000).forEach(System.out::println);
 
 
+	    
         System.out.println('\n' + "Promedio" + '\n' );
 
         //Promedio Total del precio de todos los vehiculos
