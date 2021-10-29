@@ -14,7 +14,7 @@ public class RomanNumeralController {
     }
 
     @GetMapping("/{number}")
-    public String integerToRoman(@PathVariable Integer number) {
+    public String integerToRoman(@PathVariable int number) {
         return "Number: " + number +
                 " - " +
                 "Roman: " + romanNumeralService.integerToRoman(number);
