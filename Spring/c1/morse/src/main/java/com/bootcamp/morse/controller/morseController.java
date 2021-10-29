@@ -22,12 +22,11 @@ public class morseController {
             String letrasDivididas[] = pd.split(" ");
             for (String ld : letrasDivididas) {
                 for (int j = 0; j < morse.length; j++) {
-                    System.out.println(morse[j].equals(ld));
+                    // System.out.println(morse[j].equals(ld));
                     if (morse[j].equals(ld)) {
                         salida.append(alphabet.charAt(j));
                     }
                 }
-
             }
             salida.append(" ");
         }
