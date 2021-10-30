@@ -1,7 +1,5 @@
 package Supermercado;
 
-// Sin BONUS
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -11,15 +9,15 @@ public class Main {
     public static void main(String[] args) {
 
         // Crear lista, agregar Clientes y mostrar
-        ArrayList<Cliente> listaClientes = new ArrayList<>();
-        listaClientes.add(new Cliente(387, "Jhon", "Doe"));
-        listaClientes.add(new Cliente(40777475, "Jhin", "Une"));
-        listaClientes.add(new Cliente(50777475, "Jhen", "Cue"));
+        ListaClientes listaClientes = new ListaClientes();
+        listaClientes.alta(new Cliente(387, "Jhon", "Doe"));
+        listaClientes.alta(new Cliente(40777475, "Jhin", "Une"));
+        listaClientes.alta(new Cliente(50777475, "Jhen", "Cue"));
 
-        System.out.println(Arrays.toString(listaClientes.toArray()));
+        System.out.println(listaClientes);
         // Quitar un Cliente y mostrar
-        listaClientes.remove(1);
-        System.out.println(Arrays.toString(listaClientes.toArray()));
+        listaClientes.baja(40777475);
+        System.out.println(listaClientes);
 
         // Solicitar dni por consola
        /* Scanner sc = new Scanner(System.in);
@@ -33,10 +31,9 @@ public class Main {
 
         //crear nueva factura
         Cliente cliente4 = new Cliente(12, "Jhun", "Tre");
-        ArrayList<Item> listItem = new ArrayList<>();
-        listItem.add(new Item(12312,"Pepsi",300,3));
-        listItem.add(new Item(12313,"Sprite",350,2));
-        Factura factura = new Factura(cliente4, listaClientes, listItem);
+        Factura factura = new Factura(cliente4, listaClientes.getListaClientes());
+        factura.alta(new Item(12312,"Pepsi",300,3));
+        factura.alta(new Item(12313,"Sprite",350,2));
         System.out.println(factura);
         System.out.println(listaClientes);
     }

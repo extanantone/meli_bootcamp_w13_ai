@@ -1,6 +1,6 @@
 package Supermercado;
 
-public class Item {
+public class Item{
     private int codigo;
     private String nombre;
     private int costo;

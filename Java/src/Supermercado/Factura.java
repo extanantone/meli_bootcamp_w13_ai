@@ -1,21 +1,19 @@
 package Supermercado;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
-public class Factura {
+
+public class Factura implements CRUD<Item, Integer> {
     private Cliente cliente;
-    private ArrayList<Item> listaItems;
-    private int precioTotal;
+    private HashMap<Integer, Item> listaItems = new HashMap();
+    private int precioTotal = 0;
 
-    public Factura(Cliente cliente, List<Cliente> list, ArrayList<Item> listaItems) {
+    public Factura(Cliente cliente, HashMap<Integer, Cliente> list) {
         this.cliente = cliente;
-        this.listaItems = listaItems;
-        this.precioTotal = listaItems.stream()
-                .reduce(0,(acc,cv)->(acc += cv.getCosto() * cv.getCantidad()), Integer::sum);
-        boolean exist = list.stream()
-                .reduce(false, (acc,cv) -> (cv.getDni() == cliente.getDni()) || acc, Boolean::logicalOr );
-        if(!exist){list.add(cliente);}
+        if (list.containsKey(cliente.getDni())) {
+            list.put(cliente.getDni(), cliente);
+        }
     }
 
     @Override
@@ -25,5 +23,34 @@ public class Factura {
                 ", listaItems=" + listaItems +
                 ", precioTotal=" + precioTotal +
                 '}';
+    }
+
+    @Override
+    public void alta(Item data) {
+        listaItems.put(data.getCodigo(), data);
+        precioTotal += data.getCantidad() * data.getCosto();
+    }
+
+    @Override
+    public Item consulta(Integer info) {
+        return listaItems.get(info);
+    }
+
+    @Override
+    public void modificacion(Item data) {
+        Item remove = listaItems.get(data.getCodigo());
+        if (remove != null) {
+            precioTotal -= remove.getCantidad() * remove.getCosto();
+            listaItems.put(data.getCodigo(), data);
+            precioTotal += data.getCantidad() * data.getCosto();
+        }
+    }
+
+    @Override
+    public Item baja(Integer info) {
+        Item data = listaItems.remove(info);
+        ;
+        precioTotal -= data.getCantidad() * data.getCosto();
+        return data;
     }
 }

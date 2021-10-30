@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Localizador {
     private Cliente cliente;
-    private int total = 0;
+    private double total = 0;
     private ArrayList<Reserva> listaReservas = new ArrayList<>();
 
     public Localizador(Cliente cliente) {
@@ -22,6 +22,14 @@ public class Localizador {
 
     public ArrayList<Reserva> getListaReservas() {
         return listaReservas;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     @Override
