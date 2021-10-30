@@ -63,6 +63,7 @@ public class AbcMorse {
             pasaje.put("@", ".--.-.");
             pasaje.put("=", "-...-");
             pasaje.put("!", "−.−.−−");
+            pasaje.put(" ", " // ");
 
         for(char ch : clave.toCharArray()) { //Foreach descompone String en char
 
@@ -72,7 +73,7 @@ public class AbcMorse {
             if (valor == null) {
                 return "La " + clave + " no existe";
             }
-            claveCompleta=claveCompleta+valor; //concateno
+            claveCompleta=claveCompleta+valor+" "; //concateno
         }
 
 
