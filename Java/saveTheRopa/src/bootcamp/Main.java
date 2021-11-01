@@ -6,6 +6,8 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        System.out.println("¡Bienvenidos a Save The Ropa!");
+
         Prenda campera = new Campera("Adidas", "ad025");
         Prenda sweater = new Sweater("Polo", "my polo store");
         List<Prenda> prendasAle = new ArrayList<>();
