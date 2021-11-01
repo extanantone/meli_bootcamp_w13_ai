@@ -21,9 +21,6 @@ public class GestorCliente {
         Cliente cliente2 = new Cliente (39888222,"Rodrigo","Dimare");
         Cliente cliente3 = new Cliente (33222111,"Facundo","Lopez");
 
-        //listaClientes.add(cliente1);
-        //listaClientes.add(cliente2);
-        //listaClientes.add(clienteDenso);
     }
 
     public static void agregarCliente(Cliente c){
