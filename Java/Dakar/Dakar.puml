@@ -1,0 +1,47 @@
+@startuml Dakar
+
+skinparam ClassAttributeIconSize 0
+
+abstract class Vehiculo <<abstract>>{
+    - Velocidad : double
+    - Aceleracion : double
+    - AnguloDeGiro : double
+    - Patente : String
+    - Peso : double
+    - Ruedas : int
+}
+
+class Carrera{
+    - Distancia : double
+    - PremioEnDolares : double
+    - Nombre : String
+    - CantidadDeVehiculosPermitidos : int
+    - ListaVehiculos : List<Vehiculo>
+    - socorristaAuto : SocorristaAuto
+    - socorristaMoto : SocorristaMoto
+
+    + darDeAltaAuto(velocidad,aceleracion,AnguloDeGiro,patente) 
+    + darDeAltaMoto(velocidad,aceleracion,AnguloDeGiro,patente)
+    + eliminarVehiculo(Vehiculo vehiculo)
+    + eliminarVehiculoConPatente(String unaPatente)
+    + definirGanador() : Vehiculo
+    + socorrerAuto(String patente)
+    + socorrerMoto(String patente)
+}
+
+class Moto
+class Auto
+class SocorristaAuto{
+    + socorrer(Auto unAuto)
+}
+class SocorristaMoto{
+    + socorrer(Moto unaMoto)
+}
+
+Carrera o-> Vehiculo
+Vehiculo <|-- Auto
+Vehiculo <|-- Moto
+Carrera --> SocorristaAuto
+Carrera --> SocorristaMoto
+
+@enduml
