@@ -19,7 +19,7 @@ public class GestorCliente {
 
         Cliente cliente1 = new Cliente (39879820,"Pablo","Guayta");
         Cliente cliente2 = new Cliente (39888222,"Rodrigo","Dimare");
-        Cliente clienteDenso = new Cliente (33222111,"Facundo","Ruiz");
+        Cliente cliente3 = new Cliente (33222111,"Facundo","Lopez");
 
         //listaClientes.add(cliente1);
         //listaClientes.add(cliente2);
