@@ -4,14 +4,20 @@ Cada desarrolador cuenta con un branch con la estructura ya creada a su nombre p
 
 1. Clonar el repositorio (branch y estructura)
    
-   git clone -b <apellido_nombre> git@github.com:extanantone/meli_bootcamp_w13_ai.git
+   `git clone git@github.com:extanantone/meli_bootcamp_w13_ai.git`
    
-2. Luego trabajar con el flujo habitual 
+2. Entrar a la carpeta del proyecto clonado y crear el branch con su apellido y nombre
 
-   git pull origin <apellido_nombre>
+   `git checkout -b <apellido_nombre>`
    
-   git add .
+3. Subir la rama que crearon
    
-   git commit -m "mensaje de commit" 
+   `git push -u origin <apellido_nombre>`
+
+4. Luego trabajar con el flujo habitual 
+
+   `git add .`
    
-   git push origin <apellido_nombre>
+   `git commit -m "mensaje de commit"`
+   
+   `git push`
