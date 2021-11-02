@@ -1,0 +1,12 @@
+El patron composite es un patron que ayuda a que las estructuras de datos conocidas sepan como comportarse desde estrucutras mas grande
+su core se basa en una interface comun que implementan todos sus miembros, asi aseguramos que si se reuqiere hacer bucles o recursividad los metodos estan implementados y correctos
+este patron se usa en casos deestrucutras de datos en arbol
+ejemplo: cajas y productos. las cajas pueden tener cajas adentro
+ejemplo: naves y flotas de naves. Las flotas pueden tener flotas adentro
+
+elementos clave:
+
+objeto minimo: es el objeto real que suele ser quien realiza la accion final ej: productos, naves, soldados, etc.
+composite: es el compuesto o elelemtno que se componen de varios compuestos o elementos reales ej: flotas, cajas, pelotones, etc.
+interface comun: es la que indica como se deben comportar todos los elementos. los compuestos y los minimos deberan implementar la interface comun
+

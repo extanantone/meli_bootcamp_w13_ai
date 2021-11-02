@@ -1,0 +1,37 @@
+El patron decorador es un patron estrucutral que tiene por objetivo añadir funcionalidades especiales con cada capa adicional añadida al objeto
+
+las funcionalidades adiconales se deben poder utilizar al mismo tiempo una tras otra
+
+ej: imagina un notificador de eventos
+el caso inical indica que el notificador envia un email al involucrado en el evento
+
+ahora se desea que el evneto se envie a varias plataofrmas distintas ala vez ej: sms, facebook,slack
+
+este patron se llama tambien patron wrapper
+
+El wrapper o decorador tiene los mismos metodos que el objetivo a envolver, pero el graper puede interceptar la ejecucion del metodo del objetivo y hacer cosas antes
+
+el patron decorador involucra una interface comun entre el objetivo y los wrappers
+
+el patron involucra
+
+un decorador base, que ayudara a instanciar sobre el objetivo los wappers
+clases wrappers
+clase objetivo
+
+todos deben impleemntar la interface comun
+los wrappers heredan del decorador base
+
+en donde esta la magia?
+    El decorador base debe hacer una agregacion y una implementacion de la interface comun. usando el constructor,
+     todas las clases que heredan del decorador base heredan el mismo constructor por lo cual cuando se crea la instancia,
+     se puede apilar un constructor tras otro para añadir funcionalidades en los metodos de la interface comun
+
+para que se usa? para que el lciente pueda elegir que adicionales quiere aplciar a la funcion prinicpal
+esto quiere decir que el cliente peude elegir que acciones ejecutar una tras otra al ejecutar los metodos de la interface.
+
+
+
+
+
+
