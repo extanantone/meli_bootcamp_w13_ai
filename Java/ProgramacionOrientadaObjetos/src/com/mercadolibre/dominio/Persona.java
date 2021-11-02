@@ -42,10 +42,10 @@ public class Persona {
 
     @Override
     public String toString() {
-        return " Nombre='" + nombre + '\'' +
-                ", Edad=" + edad +
-                ", DNI='" + dni + '\'' +
-                ", Peso=" + peso +
-                ", Altura=" + altura;
+        return " Nombre='" + nombre + '\n' +
+                "Edad=" + edad +'\n' +
+                "DNI='" + dni + '\n' +
+                "Peso=" + peso +'\n' +
+                "Altura=" + altura;
     }
 }
