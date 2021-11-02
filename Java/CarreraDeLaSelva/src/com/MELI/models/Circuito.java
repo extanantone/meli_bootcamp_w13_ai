@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Circuito {
+    private int nInscripcion;
     private String tipo;
     private int distancia;
     private double costoMenor;
@@ -17,8 +18,10 @@ public class Circuito {
         this.costoMayor = costoMayor;
         this.participantes = new HashSet<>();
     }
+
     //inscribir participantes
     public void addParticipantes(Participante participante){
+        this.nInscripcion = participantes.size() + 1;
         this.participantes.add(participante);
     }
 
@@ -26,6 +29,7 @@ public class Circuito {
     public void desinscribirParticipante(Participante participante) {
         this.participantes.remove(participante);
     }
+
     public String getTipo() {
         return tipo;
     }
@@ -66,14 +70,22 @@ public class Circuito {
         this.participantes = participantes;
     }
 
+    public int getnInscripcion() {
+        return nInscripcion;
+    }
+
+    public void setnInscripcion(int nInscripcion) {
+        this.nInscripcion = nInscripcion;
+    }
+
     @Override
     public String toString() {
-        return
-                "tipo='" + tipo + '\'' +
-                ", distancia=" + distancia +
-                ", costoMenor=" + costoMenor +
-                ", costoMayor=" + costoMayor +
-                ", participantes=" + participantes +
-                '}';
+        return "Circuito: " +
+                "\nNumero de Inscripcion=" + nInscripcion +
+                ",\n tipo='" + tipo + '\'' +
+                ",\n distancia=" + distancia +
+                ",\n costoMenor=" + costoMenor +
+                ",\n costoMayor=" + costoMayor +
+                ",\n participantes=" + participantes;
     }
 }

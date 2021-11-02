@@ -1,6 +1,7 @@
 package com.MELI.models;
 
 public class Participante {
+    private int nInscripcion;
     private int dni;
     private String nombre;
     private String apellido;
@@ -10,14 +11,17 @@ public class Participante {
     private String factorSanguineo;
 
     public Participante(int dni, String nombre, String apellido,
-                        int cel, int years, long numEmergencia, String factorSanguineo) {
+                        int cel, int edad, long numEmergencia, String factorSanguineo) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.celular = celular;
+        this.celular = cel;
         this.edad = edad;
         this.numEmergencia = numEmergencia;
         this.factorSanguineo = factorSanguineo;
+    }
+
+    public Participante() {
     }
 
     public int getDni() {
@@ -76,16 +80,24 @@ public class Participante {
         this.factorSanguineo = factorSanguineo;
     }
 
+    public int getnInscripcion() {
+        return nInscripcion;
+    }
+
+    public void setnInscripcion(int nInscripcion) {
+        this.nInscripcion = nInscripcion;
+    }
+
     @Override
     public String toString() {
-        return
-                "dni=" + dni +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", celular=" + celular +
-                ", edad=" + edad +
-                ", numEmergencia=" + numEmergencia +
-                ", factorSanguineo='" + factorSanguineo + '\'' +
-                '}';
+        return "Participante: " +
+                "\n Numero de inscripcion= " + nInscripcion +
+                "\n dni=" + dni +
+                ", \n nombre='" + nombre + '\'' +
+                ", \n apellido='" + apellido + '\'' +
+                ", \n celular=" + celular +
+                ", \n edad=" + edad +
+                ", \n numEmergencia=" + numEmergencia +
+                ", \n factorSanguineo='" + factorSanguineo;
     }
 }

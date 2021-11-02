@@ -27,7 +27,7 @@ public class Main {
                 }
             }
         }
-        
+
         System.out.println(Arrays.toString(ciudades));
         System.out.println("La menor temperatura la tuvo " + ciudadMenTemp + ", con " + tempMenor + "ºC.");
         System.out.println("La mayor temperatura la tuvo " + ciudadMayTemp + ", con " + tempMayor + "ºC.");

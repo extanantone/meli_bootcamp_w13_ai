@@ -1,24 +1,16 @@
 package com.MELI.models;
 
 public class Inscripcion {
-    private int numeroInscripcion;
+    private int nInscripcion;
     private Circuito circuito;
     private Participante participante;
     private double valorInscripcion;
 
-    public Inscripcion(int numeroInscripcion, Circuito circuito, Participante participante) {
-        this.numeroInscripcion = numeroInscripcion;
-        this.circuito = participante.getEdad() < 18 && circuito.getTipo() == "Avanzado" ? null : circuito;
+    public Inscripcion(Circuito circuito, Participante participante, double valorInscripcion) {
+        this.circuito = circuito;
+        this.nInscripcion = circuito.getnInscripcion();
         this.participante = participante;
-        this.valorInscripcion = participante.getEdad() >= 18 ? circuito.getCostoMayor() : circuito.getCostoMenor();
-    }
-
-    public int getNumeroInscripcion() {
-        return numeroInscripcion;
-    }
-
-    public void setNumeroInscripcion(int numeroInscripcion) {
-        this.numeroInscripcion = numeroInscripcion;
+        this.valorInscripcion = valorInscripcion;
     }
 
     public Circuito getCircuito() {
@@ -45,15 +37,20 @@ public class Inscripcion {
         this.valorInscripcion = valorInscripcion;
     }
 
-    @Override
-    public String toString() {
-        return
-                "numeroInscripcion=" + numeroInscripcion +
-                ", circuito=" + circuito +
-                ", participante=" + participante +
-                ", valorInscripcion=" + valorInscripcion +
-                '}';
+    public int getnInscripcion() {
+        return nInscripcion;
     }
 
+    public void setnInscripcion(int nInscripcion) {
+        this.nInscripcion = nInscripcion;
+    }
 
+    @Override
+    public String toString() {
+        return "Inscripcion: " +
+                " \n Numero de Inscripcion=" + nInscripcion +
+                ", \n circuito=" + circuito +
+                ", \n participante=" + participante +
+                ", \n valorInscripcion=" + valorInscripcion;
+    }
 }
