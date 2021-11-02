@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.example.demo.utils.utils.RomanNumerals;
 
+import static com.example.demo.utils.utils.englishToMorse;
+
 @RestController
 public class HelloWorld {
     @GetMapping("/{name}")
@@ -17,6 +19,12 @@ public class HelloWorld {
     public String toRoman(@PathVariable Integer num){
     String romanNumber = RomanNumerals(num);
         return "The new number in roman is: "+ romanNumber;
+}
+
+@GetMapping("/englishToMorse/{string}")
+    public String englishToMorse(@PathVariable String string){
+    String morse = englishToMorse(string);
+        return "The morse code of " + string + " is: " + morse;
 }
 
 }

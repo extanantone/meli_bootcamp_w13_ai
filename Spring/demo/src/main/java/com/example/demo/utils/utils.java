@@ -1,6 +1,7 @@
 package com.example.demo.utils;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class utils {
@@ -36,5 +37,34 @@ public class utils {
             sb.append(s);
         }
         return sb.toString();
+    }
+    public static List<String> englishToMorse( String string){
+        // store the all the alphabet in an array
+        char[] letter = { 'a', 'b', 'c', 'd', 'e', 'f',
+                'g', 'h', 'i', 'j', 'k', 'l',
+                'm', 'n', 'o', 'p', 'q', 'r',
+                's', 't', 'u', 'v', 'w', 'x',
+                'y', 'z', '1', '2', '3', '4',
+                '5', '6', '7', '8', '9', '0' };
+        // Morse code by indexing
+        String[] code
+                = { ".-",   "-...", "-.-.", "-..",  ".",
+                "..-.", "--.",  "....", "..",   ".---",
+                "-.-",  ".-..", "--",   "-.",   "---",
+                ".--.", "--.-", ".-.",  "...",  "-",
+                "..-",  "...-", ".--",  "-..-", "-.--",
+                "--..", "|" };
+
+        List<String> tmp = null;
+
+        for (int i = 0; i < string.length(); i++) {
+            for (int j = 0; j < letter.length; j++) {
+                if (string.charAt(i) == letter[j]) {
+                    tmp.add(code[j]);
+                    break;
+                }
+            }
+        }
+        return tmp;
     }
 }
