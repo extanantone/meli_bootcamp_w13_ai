@@ -1,6 +1,6 @@
 package ejericiciopractico.integrador;
 
-public class Item {
+public class Item{
 
     String codigo;
     String nombre;

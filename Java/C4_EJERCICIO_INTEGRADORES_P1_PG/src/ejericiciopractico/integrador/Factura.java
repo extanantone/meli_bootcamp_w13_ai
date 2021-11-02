@@ -2,12 +2,22 @@ package ejericiciopractico.integrador;
 
 import java.util.List;
 
-public class Factura {
+public class Factura{
+    Long numeroFactura;
     Cliente dueno;
     List<Item> objetos;
     double totalCompra;
 
-    public Factura(Cliente dueno, List<Item> objetos) {
+    public Long getNumeroFactura() {
+        return numeroFactura;
+    }
+
+    public void setNumeroFactura(Long numeroFactura) {
+        this.numeroFactura = numeroFactura;
+    }
+
+    public Factura(Long numeroFactura, Cliente dueno, List<Item> objetos) {
+        this.numeroFactura = numeroFactura;
         this.dueno = dueno;
         this.objetos = objetos;
         this.totalCompra = objetos.stream().reduce(
@@ -46,4 +56,5 @@ public class Factura {
                 ", totalCompra=" + totalCompra +
                 '}';
     }
+
 }

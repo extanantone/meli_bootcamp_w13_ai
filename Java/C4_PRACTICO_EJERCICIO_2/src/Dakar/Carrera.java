@@ -121,14 +121,10 @@ public class Carrera {
     }
 
     public void ejecutarSocorro(Vehiculo vhDanado){
-        try{
-            System.out.println("Enviando Socorrista Moto");
-            socMoto.socorrer((Moto)vhDanado);
-        }catch(ClassCastException e)
-        {
-            System.out.println("No es el socorrista correcto");
-            System.out.println("Enviando Socorrista Autos");
-            socAuto.socorrer((Auto)vhDanado);
-        }
+            System.out.println("Enviando Socorrista");
+            if(vhDanado instanceof Moto)
+                socMoto.socorrer((Moto)vhDanado);
+            else
+                socAuto.socorrer((Auto)vhDanado);
     }
 }

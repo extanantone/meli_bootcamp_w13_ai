@@ -10,4 +10,5 @@ public class SocorristaAuto extends Vehiculo implements Socorrista<Auto>{
     public void socorrer(Auto vehiculo) {
         System.out.println(this.getPatente() + " Socorriendo Auto de la patente: " + vehiculo.getPatente());
     }
+
 }
