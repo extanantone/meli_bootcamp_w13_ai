@@ -1,4 +1,4 @@
-package Ejercicio;
+package Ejercicio1;
 
 public class PersonalDeAseo {
 
