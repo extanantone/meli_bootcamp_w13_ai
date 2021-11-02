@@ -4,36 +4,54 @@ import com.mercadolibre.dominio.Persona;
 import java.util.*;
 
 public class Main {
-
+    private static String CIRCUITO_CHICO = "Circuito Chico";
+    private static String CIRCUITO_MEDIO = "Circuito Medio";
+    private static String CIRCUITO_AVANZADO = "Circuito Avanzado";
     public static void main(String[] args) {
         menuPrincipal();
     }
 
     private static void menuPrincipal() {
-        String[]categoriasDefault = {"Circuito Chico","Circuito Medio","Circuito Avanzado"};
+        int cantInscriptos = 1; //Solo sumo 1 para que arranque las inscripciones con 1
+        String[]categoriasDefault = {CIRCUITO_CHICO,CIRCUITO_MEDIO,CIRCUITO_AVANZADO};
         List<String> categoria = new ArrayList<>(Arrays.asList(categoriasDefault));
         Map<Integer,Persona> inscripciones = new HashMap<>();
         boolean salir = false;
         do{
-            int cantInscriptos = inscripciones.size() + 1; //Solo sumo 1 para que arranque las inscripciones con 1
             mostrarMenuOpciones();
             Scanner input = new Scanner(System.in);
             System.out.println("Ingrese una opcion: ");
             int option = input.nextInt();
+            int idParticipante;
             switch (option){
                 case 1:
                     Persona persona = new Persona();
+                    persona.setIdIncripcion(cantInscriptos);
+                    System.out.println("id: "  +persona.getIdIncripcion());
                     Persona personaInscripta= incribirPersona(persona,categoria);
-                    inscripciones.put(cantInscriptos,personaInscripta); //Aca ya tengo el numero que le voy a asignar al participante y los datos del mismo
+                    boolean existeParticipante = inscripciones.values().stream().anyMatch(persona1 -> persona1.getDni() == persona.getDni());
+                    if(!existeParticipante){
+                        inscripciones.put(cantInscriptos,personaInscripta);
+                        cantInscriptos ++;
+                    } else {
+                        System.out.println("El numero de DNI " + (int) persona.getDni() + " ya se encuentra registrado");
+                    }
                     break;
                 case 2:
                     mostrarIncriptos(inscripciones);
                     break;
                 case 3:
-                    //TODO crear metodo desinscribir participante, puedo buscarlo por el numero o dni y removerlo de mi hash
+                    idParticipante = findPersonById(inscripciones);
+                    desinscribirParticipante(inscripciones,idParticipante);
                     break;
                 case 4:
-                    //TODO en base a la edad del participante y la categoria en la que se inscriba mostrar monto a abonar
+                    //TODO en base a la edad del participante y la categoria en la
+                    // que se inscriba mostrar monto a abonar, no tengo claro si es la lista total con monto a abonar o realizar el calculo por cada participante
+                    idParticipante = findPersonById(inscripciones);
+                    double monto = calcularMontoAbonar(idParticipante,inscripciones);
+                    if(monto == -1) inscripciones.remove(idParticipante);
+                    else System.out.println("El monto total a abonar es de $" + monto);
+                    //TODO se deberia optimizar y no permitir el registro del participante cuando indica la edad y el circuito, dandole la posibilidad de cambiar
                     break;
                 case 0:
                     salir = true;
@@ -42,6 +60,60 @@ public class Main {
                     System.out.println("La opcion ingresada es incorrecta");
             }
         } while(!salir);
+    }
+
+    private static double calcularMontoAbonar(int idParticipante, Map<Integer, Persona> inscripciones) {
+        double montoTotal = 0;
+        if(inscripciones.get(idParticipante).getEdad()<18){
+            if(inscripciones.get(idParticipante).getCategoria().equals(CIRCUITO_CHICO)){
+                montoTotal = 1300;
+            } else if(inscripciones.get(idParticipante).getCategoria().equals(CIRCUITO_MEDIO)){
+                montoTotal = 2000;
+            } else{
+                System.out.println("No se permiten inscripciones de menores de 18 años al circuito avanzado");
+                montoTotal = -1; //TODO como esta ahora debo eliminar la incripcion del participante
+            }
+        } else{
+            if(inscripciones.get(idParticipante).getCategoria().equals(CIRCUITO_CHICO)){
+                montoTotal = 1500;
+            } else if(inscripciones.get(idParticipante).getCategoria().equals(CIRCUITO_MEDIO)){
+                montoTotal = 2300;
+            } else{
+                montoTotal = 2800;
+            }
+        }
+        return montoTotal;
+    }
+
+    private static int findPersonById(Map<Integer, Persona> inscripciones) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Ingrese el numero de documento del participante: ");
+        double dni = input.nextDouble();
+        if(inscripciones.size()!=0){
+            for (Map.Entry<Integer,Persona>participante : inscripciones.entrySet()) {
+                if(participante.getValue().getDni() == dni){
+                    return participante.getValue().getIdIncripcion();
+                }
+            }
+            return -1;
+        } else{
+            return 0;
+        }
+
+
+    }
+
+    private static void desinscribirParticipante(Map<Integer, Persona> inscripciones, int idInscripcion) {
+        if(inscripciones.size()==0){
+            System.out.println("No hay ningún participante inscripto a la carrera");
+        } else {
+              if(idInscripcion!=-1 && idInscripcion!=0){
+                  System.out.println("voy a eliminar al participante: " + inscripciones.get(idInscripcion));
+                  inscripciones.remove(idInscripcion);
+              } else{
+                  System.out.println("El participante no se encuentra registrado");
+              }
+        }
     }
 
     /* Metodo: mostrarIncriptos
@@ -60,25 +132,25 @@ public class Main {
         Scanner input = new Scanner(System.in);
         Scanner inputDatos = new Scanner(System.in);
         Scanner inputNumeros= new Scanner(System.in);
+        boolean salir = true;
         int numCategoria = input.nextInt();
         if(numCategoria<=0 || numCategoria>categorias.size()){
             System.out.println("El numero ingresado no pertenece a ninguna categoria");
         } else {
-            String categoria = categorias.get(numCategoria - 1);
-            //persona.setCategoria(categorias.get(numCategoria - 1));
-            System.out.println("Ingrese el nombre: ");
-            String nombre = inputDatos.nextLine();
-            System.out.println("Ingrese el apellido: ");
-            String apellido = inputDatos.nextLine();
-            System.out.println("Ingrese la edad de la persona: ");
-            int edad = input.nextInt();
-            System.out.println("Ingrese el grupo sanguineo: ");
-            String grupoSanguineo = inputDatos.nextLine();
             System.out.println("Ingrese el dni de la persona: ");
-            int dni = input.nextInt();
+            persona.setDni(input.nextInt());
+            //TODO deberia crear alguna validacion y solo inscribir al participante si no se encuentra registrado dni
+            persona.setCategoria(categorias.get(numCategoria - 1));
+            System.out.println("Ingrese el nombre: ");
+            persona.setNombre(inputDatos.nextLine());
+            System.out.println("Ingrese el apellido: ");
+            persona.setApellido(inputDatos.nextLine());
+            System.out.println("Ingrese la edad de la persona: ");
+            persona.setEdad(input.nextInt());
+            System.out.println("Ingrese el grupo sanguineo: ");
+            persona.setGrupoSanguineo(inputDatos.nextLine());
             System.out.println("Ingrese un numero de emergencia: ");
-            double numeroEmergencia = inputNumeros.nextDouble();
-            persona = new Persona(nombre,apellido,dni,edad,numeroEmergencia,grupoSanguineo,categoria);
+            persona.setNumeroEmergencia(inputNumeros.nextDouble());
         }
         return persona;
     }

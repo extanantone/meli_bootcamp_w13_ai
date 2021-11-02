@@ -1,6 +1,7 @@
 package com.mercadolibre.dominio;
 
 public class Persona {
+    private int idIncripcion;
     private String nombre;
     private String apellido;
     private int dni;
@@ -21,15 +22,6 @@ public class Persona {
         this.grupoSanguineo = grupoSanguineo;
     }
 
-    public Persona(String nombre, String apellido, int dni, int edad, double numeroEmergencia, String grupoSanguineo, String categoria) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.edad = edad;
-        this.numeroEmergencia = numeroEmergencia;
-        this.grupoSanguineo = grupoSanguineo;
-        this.categoria = categoria;
-    }
 
     public String getNombre() {
         return nombre;
@@ -87,14 +79,25 @@ public class Persona {
         this.categoria = categoria;
     }
 
+    public int getIdIncripcion() {
+        return idIncripcion;
+    }
+
+    public void setIdIncripcion(int idIncripcion) {
+        this.idIncripcion = idIncripcion;
+    }
+
     @Override
     public String toString() {
-        return " Nombre: '" + nombre + '\'' +
-                ", Apellido: '" + apellido + '\'' +
-                ", DNI: " + dni +
-                ", Edad: " + edad +
-                ", Numero de emergencia: " + numeroEmergencia +
-                ", Grupo sanguineo:'" + grupoSanguineo + '\'' +
-                ", Categoria maraton: '" + categoria + '\'';
+        return "Persona{" +
+                "idIncripcion=" + idIncripcion +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", dni=" + dni +
+                ", edad=" + edad +
+                ", numeroEmergencia=" + numeroEmergencia +
+                ", grupoSanguineo='" + grupoSanguineo + '\'' +
+                ", categoria='" + categoria + '\'' +
+                '}';
     }
 }
