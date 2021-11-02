@@ -17,8 +17,11 @@ public class NoPerecedero extends Producto {
 
     @Override
     public String toString() {
-        return "NoPerecedero{" +
-                "tipo='" + tipo + '\'' +
-                '}';
+        return " es un producto " + tipo + '\'';
+    }
+
+    @Override
+    public double calcular(int cantidadDeProductos) {
+        return super.calcular(cantidadDeProductos);
     }
 }
