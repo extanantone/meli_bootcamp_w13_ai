@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Java/Ejercicio1_TemperaturasGlobales/Ejercicio1_TemperaturasGlobales.iml" filepath="$PROJECT_DIR$/Java/Ejercicio1_TemperaturasGlobales/Ejercicio1_TemperaturasGlobales.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/EjercicioPracticoRepasoPOO/EjercicioPracticoRepasoPOO.iml" filepath="$PROJECT_DIR$/Java/EjercicioPracticoRepasoPOO/EjercicioPracticoRepasoPOO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/Ejercicio_carreraDeLaSelva/Ejercicio_carreraDeLaSelva.iml" filepath="$PROJECT_DIR$/Java/Ejercicio_carreraDeLaSelva/Ejercicio_carreraDeLaSelva.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/Pruebas/Pruebas.iml" filepath="$PROJECT_DIR$/Java/Pruebas/Pruebas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/meli_bootcamp_w13_ai.iml" filepath="$PROJECT_DIR$/.idea/meli_bootcamp_w13_ai.iml" />
+    </modules>
+  </component>
+</project>
