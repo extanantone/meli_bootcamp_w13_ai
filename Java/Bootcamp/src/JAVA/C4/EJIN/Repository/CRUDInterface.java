@@ -10,4 +10,6 @@ public interface CRUDInterface<T> {
     public void consultaGeneral();
 
     public void consultaParticular(Integer identificador);
+
+    public List<T> traerLista();
 }

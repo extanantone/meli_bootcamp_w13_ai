@@ -3,7 +3,7 @@ package JAVA.C4.P2.EJ1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ejercicio1C3P2 {
+public class Ejercicio1C4P2 {
     public static void main(String[] args) {
         Prenda prenda1 = new Prenda("adidas", "remera");
         Prenda prenda2 = new Prenda("nike", "pantalón");

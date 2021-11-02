@@ -6,12 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Item implements CRUDInterface<Item> {
+public class Item {
     private int codigo;
     private String nombre;
     private int cantidadComprada;
     private double costoUnitario;
-    private List<Item> listaItem = new ArrayList<>();
 
     public Item(int codigo, String nombre, int cantidadComprada, double costoUnitario) {
         this.codigo = codigo;
@@ -61,34 +60,5 @@ public class Item implements CRUDInterface<Item> {
         this.costoUnitario = costoUnitario;
     }
 
-    @Override
-    public void alta(Item item) {
-        listaItem.add(item);
-    }
 
-    @Override
-    public void baja(Integer codigo) {
-        listaItem.remove(listaItem.stream()
-                                    .filter(item -> getCodigo() == codigo)
-                                    .collect(Collectors.toList()));
-    }
-
-    @Override
-    public void consultaGeneral() {
-        listaItem.forEach(System.out::println);
-    }
-
-    @Override
-    public void consultaParticular(Integer identificador) {
-        System.out.println(listaItem.stream()
-                                    .filter(item -> getCodigo() == codigo)
-                                    .collect(Collectors.toList()));
-    }
-
-    public double costoTotal(List<Item> listaItems){
-        double totalCompra;
-        return  totalCompra = listaItems.stream()
-                                                .mapToDouble(i -> i.getCostoUnitario() * i.getCantidadComprada())
-                                                .sum();
-    }
 }

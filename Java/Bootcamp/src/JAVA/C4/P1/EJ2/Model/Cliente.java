@@ -1,10 +1,4 @@
-package JAVA.C4.EJIN.Model;
-
-import JAVA.C4.EJIN.Repository.CRUDInterface;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+package JAVA.C4.P1.EJ2.Model;
 
 public class Cliente {
     private int dni;
@@ -19,10 +13,11 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente, " +
-                "DNI: " + dni +
-                ", nombre: " + nombre +
-                ", apellido: " + apellido;
+        return "Cliente{" +
+                "dni=" + dni +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                '}';
     }
 
     public int getDni() {
@@ -48,5 +43,4 @@ public class Cliente {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-
 }
