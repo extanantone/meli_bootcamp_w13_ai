@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c06872d3-85e6-4392-a218-ee3674169cab" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/google-java-format.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/AgenciaTurismo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/Reserva.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Reserva.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/ReservaBoletos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/ReservaBoletos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/ReservaComida.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/ReservaComida.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/ReservaHotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/ReservaHotel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/ReservaTransporte.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/ReservaTransporte.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +21,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="208efkqPZzt8zWCPRC3QQPrd85B" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -87,10 +92,17 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.company" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.company" />
     </key>
@@ -106,13 +118,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -132,6 +146,7 @@
       <option name="presentableId" value="Default" />
       <updated>1635430749576</updated>
       <workItem from="1635430750843" duration="9774000" />
+      <workItem from="1635869849995" duration="7881000" />
     </task>
     <servers />
   </component>

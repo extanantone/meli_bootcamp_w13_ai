@@ -25,8 +25,10 @@ public class Main {
         listaReservas.add(r);
         r = new ReservaComida();
         listaReservas.add(r);
+        listaReservas.add(r);
 
         l.setListaReserva(listaReservas);
+        repositorioCliente.add(l);
         repositorioCliente.add(l);
         return repositorioCliente;
     }
@@ -80,6 +82,10 @@ public class Main {
         //Preparo parametros de prueba
         List<Localizador> repositorioCliente = prepararPrueba();
         System.out.println("Las reservas del cliente son las siguientes:");
-        mostrarResultados(repositorioCliente);
+        AgenciaTurismo agencia = new AgenciaTurismo(repositorioCliente);
+        agencia.diccionarioReservasClasificadasPorTipo();
+        //mostrarResultados(repositorioCliente);
+
+
     }
 }
