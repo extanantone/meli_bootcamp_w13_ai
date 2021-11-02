@@ -63,7 +63,7 @@ public class Main {
     }
 
     private static double calcularMontoAbonar(int idParticipante, Map<Integer, Persona> inscripciones) {
-        double montoTotal = 0;
+        double montoTotal;
         if(inscripciones.get(idParticipante).getEdad()<18){
             if(inscripciones.get(idParticipante).getCategoria().equals(CIRCUITO_CHICO)){
                 montoTotal = 1300;
