@@ -14,5 +14,19 @@ public class ImparSerie extends Serie{
         val++;
         return current;
     }
+
+    @Override
+    public void restart() {
+        val=1;
+        
+    }
+
+    @Override
+    public void restarWithValue(Number n) {
+        val = n.intValue();
+        
+    }
+
+    
     
 }

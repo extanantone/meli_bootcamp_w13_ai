@@ -14,5 +14,11 @@ public class App{
         System.out.println("Third serie");
         Serie tSerie = new ThirdSerie();
         for(int i=0;i<20;i++) System.out.println(tSerie.next());
+        tSerie.restart();
+        System.out.println("Restart");
+        for(int i=0;i<20;i++) System.out.println(tSerie.next());
+        tSerie.restarWithValue(6.0);
+        System.out.println("Restart with value");
+        for(int i=0;i<20;i++) System.out.println(tSerie.next());
     }
 }
