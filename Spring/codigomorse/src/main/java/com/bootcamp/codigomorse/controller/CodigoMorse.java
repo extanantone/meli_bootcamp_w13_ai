@@ -61,7 +61,6 @@ public class CodigoMorse {
             characters.stream().forEach(c -> res.append(map.get(c)));
             res.append(" ");
         }
-
         return res.toString();
     }
 }
