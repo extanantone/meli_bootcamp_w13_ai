@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -17,8 +18,12 @@ public class PeopleController {
 
     @GetMapping("/findSportsPersons")
     public ResponseEntity<?> getSportPerson(){
-        return ResponseEntity.ok(peopleService.getPeoples().stream()
-        .map(i->new DeportistDto(i.getName(),i.getLastName(),i.getSport().getName())).collect(Collectors.toList()));
+
+        List<DeportistDto> dtos =peopleService.getPeoples().stream()
+                .map(i->new DeportistDto(i.getName(),i.getLastName(),i.getSport().getName()))
+                .collect(Collectors.toList());
+        
+        return ResponseEntity.ok(dtos);
     }
 
 }
