@@ -1,8 +1,10 @@
 package com.example.demo.utils;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class utils {
     public static String RomanNumerals(int Int) {
@@ -66,5 +68,14 @@ public class utils {
             }
         }
         return tmp;
+    }
+    public static String checkDateBetween(String date) throws ParseException {
+        System.out.println(date);
+        LocalDate d1 = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+        LocalDate d2 = LocalDate.parse("2021-11-03", DateTimeFormatter.ISO_LOCAL_DATE);
+        Duration diff = Duration.between(d1.atStartOfDay(),d2.atStartOfDay());
+        long diffDays = diff.toDays();
+
+        return "years: "+diffDays/365;
     }
 }

@@ -4,9 +4,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+
 import static com.example.demo.utils.utils.RomanNumerals;
 
 import static com.example.demo.utils.utils.englishToMorse;
+import static com.example.demo.utils.utils.checkDateBetween;
 
 @RestController
 public class HelloWorld {
@@ -25,6 +28,13 @@ public class HelloWorld {
     public String englishToMorse(@PathVariable String string){
     String morse = englishToMorse(string);
         return "The morse code of " + string + " is: " + morse;
+}
+
+@GetMapping("/dates/{year}/{month}/{day}")
+    public String getYearsWithDate(@PathVariable String year,@PathVariable String month,@PathVariable String day) throws ParseException {
+        String date = year + "-" + month + "-" + day;
+        String years = checkDateBetween(date);
+        return years;
 }
 
 }
