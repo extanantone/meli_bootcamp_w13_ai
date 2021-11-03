@@ -11,16 +11,16 @@ import java.time.temporal.ChronoUnit;
 @RestController
 public class EdadController {
     @GetMapping("{dia}/{mes}/{year}")
-    public long obtenerEdadFecha(@PathVariable("dia") Integer inDia,
-                                 @PathVariable("mes") Integer inMes,
-                                 @PathVariable("year") Integer inYear){
+    public String obtenerEdadFecha(@PathVariable("dia") Integer inDia,
+                                   @PathVariable("mes") Integer inMes,
+                                   @PathVariable("year") Integer inYear){
 
 
         LocalDateTime hoy = LocalDateTime.now();
         LocalDate diaDeNacimiento = LocalDate.of(inYear,inMes,inDia);
         long outEdad = diaDeNacimiento.until(hoy, ChronoUnit.YEARS);
 
-        return outEdad;
+        return "La edad es " + outEdad + "años";
     }
 
 
