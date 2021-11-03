@@ -12,4 +12,13 @@ import lombok.Setter;
 public class Deporte {
     private String nombre;
     private Integer nivel;
+
+
+    @Override
+    public String toString() {
+        return "Deporte{" +
+                "nombre='" + nombre + '\'' +
+                ", nivel=" + nivel +
+                '}';
+    }
 }
