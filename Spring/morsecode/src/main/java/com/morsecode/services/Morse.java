@@ -45,7 +45,7 @@ public class Morse {
         translator.put("---..", "8");
         translator.put("----.", "9");
         translator.put("-----", "0");
-        
+
         translator.put("..--..", "?");
         translator.put("-.-.--", "!");
         translator.put(".-.-.-", ".");
