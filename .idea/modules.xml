@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Spring/Clase2/Clase2.iml" filepath="$PROJECT_DIR$/Spring/Clase2/Clase2.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/meli_bootcamp_w13_ai.iml" filepath="$PROJECT_DIR$/.idea/meli_bootcamp_w13_ai.iml" />
     </modules>
   </component>
