@@ -1,0 +1,13 @@
+package com.C2P2VIVO.deportistas;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class DeportistasApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
