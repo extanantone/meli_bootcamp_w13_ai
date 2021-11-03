@@ -14,10 +14,13 @@ public class EdadController {
     public long obtenerEdadFecha(@PathVariable("dia") Integer inDia,
                                  @PathVariable("mes") Integer inMes,
                                  @PathVariable("year") Integer inYear){
-        Integer outEdad = 0;
+
+
         LocalDateTime hoy = LocalDateTime.now();
         LocalDate diaDeNacimiento = LocalDate.of(inYear,inMes,inDia);
-        return diaDeNacimiento.until(hoy, ChronoUnit.YEARS);
+        long outEdad = diaDeNacimiento.until(hoy, ChronoUnit.YEARS);
+
+        return outEdad;
     }
 
 
