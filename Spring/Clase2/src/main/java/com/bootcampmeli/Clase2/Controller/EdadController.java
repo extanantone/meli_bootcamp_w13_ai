@@ -20,7 +20,7 @@ public class EdadController {
         LocalDate diaDeNacimiento = LocalDate.of(inYear,inMes,inDia);
         long outEdad = diaDeNacimiento.until(hoy, ChronoUnit.YEARS);
 
-        return "La edad es " + outEdad + "años";
+        return "La edad es " + outEdad + " años";
     }
 
 
