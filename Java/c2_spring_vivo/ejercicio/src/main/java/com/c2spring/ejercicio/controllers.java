@@ -1,7 +1,5 @@
 package com.c2spring.ejercicio;
 
-import org.apache.tomcat.jni.Local;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
