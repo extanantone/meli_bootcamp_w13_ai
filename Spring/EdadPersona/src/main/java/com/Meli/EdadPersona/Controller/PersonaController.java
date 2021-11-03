@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PersonaController {
 
-    @GetMapping("/Edad/{day}/{month}/{year}")
+    @GetMapping("/api/v1/edad/{day}/{month}/{year}")
     public long obtenerEdad(@PathVariable int day,@PathVariable int month,@PathVariable int year) {
         return PersonaService.calcularEdad(day, month, year);
     }
