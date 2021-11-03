@@ -18,6 +18,8 @@ public class EdadController {
 
         LocalDate fecha = LocalDate.of(anio, mes, dia);
         return LocalDate.now().compareTo(fecha);
-                //2021 - anio;
+
+        //No contempla si cumpliste o no años
+        //return LocalDate.now().getYear() - anio;
     }
 }
