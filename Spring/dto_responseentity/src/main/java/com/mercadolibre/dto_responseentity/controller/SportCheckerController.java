@@ -27,7 +27,7 @@ public class SportCheckerController {
         String uri= "http://localhost:8080/findSport/" + tempPersonaDTO.get("nombre_deporte");
         RestTemplate restTemplate= new RestTemplate();
         try{
-            mArrayDeportes.add(new DeporteDTO("Rugby", "Alto rendimiento"));
+            //mArrayDeportes.add(new DeporteDTO("Rugby", "Alto rendimiento"));
             ResponseEntity<DeporteDTO[]> response= restTemplate.getForEntity(uri, DeporteDTO[].class);
             mArrayPersonas.add(new PersonaDTO(tempPersonaDTO.get("nombre"), tempPersonaDTO.get("apellido"),
                     Integer.parseInt(tempPersonaDTO.get("edad")), response.getBody()[0]));
@@ -39,7 +39,7 @@ public class SportCheckerController {
         return new ResponseEntity("La persona " + tempPersonaDTO.toString() + " ha sido creada", HttpStatus.OK);
     }
 
-    @PostMapping("/createSport/")
+    @PostMapping("/createSport")
     public ResponseEntity<DeporteDTO> createSport(@RequestBody DeporteDTO tempDeporteDTO){
         mArrayDeportes.add(tempDeporteDTO);
         return new ResponseEntity("El deporte " + tempDeporteDTO.toString() + " ha sido creada", HttpStatus.OK);
