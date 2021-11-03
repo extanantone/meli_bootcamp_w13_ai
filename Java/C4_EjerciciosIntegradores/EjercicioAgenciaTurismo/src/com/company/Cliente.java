@@ -1,5 +1,8 @@
 package com.company;
 
+import lombok.Getter;
+
+@Getter
 public class Cliente {
     String nombre;
 
