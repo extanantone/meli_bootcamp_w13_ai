@@ -31,4 +31,8 @@ public class Persona {
     public void empezarDeporte(Deporte d){
         this.deportesQueRealiza.add(d);
     }
+
+    public boolean esDeportista(){
+        return this.deportesQueRealiza.size() > 0;
+    }
 }

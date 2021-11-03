@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Deporte {
     private String nombre;
-    private Nivel nivel;
+    private String nivel; //ALEVIN, CADETE, JUVENIL, PROFESIONAL, ESTRELLA, LEYENDA
 
     @Override
     public String toString() {
