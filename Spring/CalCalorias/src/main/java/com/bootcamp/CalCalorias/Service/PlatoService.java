@@ -1,5 +1,7 @@
 package com.bootcamp.CalCalorias.Service;
 
+import com.bootcamp.CalCalorias.Exceptions.NotFoundException;
+import com.bootcamp.CalCalorias.Exceptions.NullException;
 import com.bootcamp.CalCalorias.Model.Ingredientes;
 import com.bootcamp.CalCalorias.Model.Plato;
 import com.bootcamp.CalCalorias.Model.InfoPlato;
@@ -34,7 +36,11 @@ public class PlatoService implements IPlatoService{
     private void calculoCalorias(Ingredientes ingredient) {
         ingredient.setCalorias(0);
         Ingredientes ingrRepo = ingredienteRepository.getNombreIngrediente(ingredient.getNombre());
-        if (ingrRepo != null)
+        if (ingrRepo != null){
             ingredient.setCalorias((int) (ingredient.getPeso() * ingrRepo.getCalorias() / 100.f));
+        }else{
+            throw new NullException("Ingredientes no puede ser nulo! "+ingrRepo);
+        }
+
     }
 }

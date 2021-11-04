@@ -1,5 +1,7 @@
 package com.bootcamp.CalCalorias.Controller;
 
+import com.bootcamp.CalCalorias.Exceptions.NotFoundException;
+import com.bootcamp.CalCalorias.Exceptions.NullException;
 import com.bootcamp.CalCalorias.Model.Plato;
 import com.bootcamp.CalCalorias.Model.InfoPlato;
 import com.bootcamp.CalCalorias.Service.PlatoService;
@@ -20,8 +22,8 @@ public class CalCaloriasController {
 
     @PostMapping("/calculo")
     public ResponseEntity<InfoPlato> calCaloria(@RequestBody Plato plato){
-        if (plato.getNombre() == null){
-            return new ResponseEntity("Error debe ingresar un plato!", HttpStatus.BAD_REQUEST);
+        if (plato.getNombre().equals("")){
+            throw new NullException("Se debe enviar el nombre del plato! ");
         }
         return new ResponseEntity(platoService.calculo(plato), HttpStatus.OK);
     }

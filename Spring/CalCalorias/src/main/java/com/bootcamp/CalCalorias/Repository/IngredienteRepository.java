@@ -1,5 +1,6 @@
 package com.bootcamp.CalCalorias.Repository;
 
+import com.bootcamp.CalCalorias.Exceptions.NotFoundException;
 import com.bootcamp.CalCalorias.Model.Ingredientes;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,8 +46,12 @@ public class IngredienteRepository implements IIngredienteRepository{
         Optional<Ingredientes> ingre = baseIngedientes.stream()
                 .filter(ingredientes -> ingredientes.getNombre().equals(nombre)).findFirst();
         Ingredientes ingrediente = null;
-        if (ingre.isPresent())
+        if (ingre.isPresent()){
             ingrediente = ingre.get();
+        } else {
+            throw new NotFoundException("Ingrediente: "+nombre+" no encontrado! ");
+        }
+
         return ingrediente;
     }
 }
