@@ -1,7 +1,6 @@
-package com.c3spring.ejercicio.repository;
+package com.c3spring.ejercicio.manana.repository;
 
-import com.c3spring.ejercicio.dto.PersonajeDTO;
-import com.c3spring.ejercicio.model.Personaje;
+import com.c3spring.ejercicio.manana.model.Personaje;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Primary;
@@ -11,7 +10,6 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;

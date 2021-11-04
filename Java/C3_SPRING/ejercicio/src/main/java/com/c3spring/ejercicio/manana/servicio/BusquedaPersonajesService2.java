@@ -1,16 +1,13 @@
-package com.c3spring.ejercicio.servicio;
+package com.c3spring.ejercicio.manana.servicio;
 
-import com.c3spring.ejercicio.dto.PersonajeDTO;
-import com.c3spring.ejercicio.model.Personaje;
-import com.c3spring.ejercicio.repository.IObtenerData;
+import com.c3spring.ejercicio.manana.dto.PersonajeDTO;
+import com.c3spring.ejercicio.manana.repository.IObtenerData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 @Service
 @Component("BusquedaPersonajesService2")

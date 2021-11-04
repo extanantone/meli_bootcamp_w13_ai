@@ -1,6 +1,6 @@
-package com.c3spring.ejercicio.repository;
+package com.c3spring.ejercicio.manana.repository;
 
-import com.c3spring.ejercicio.model.Personaje;
+import com.c3spring.ejercicio.manana.model.Personaje;
 
 import java.util.List;
 

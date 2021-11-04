@@ -1,6 +1,6 @@
-package com.c3spring.ejercicio.dto;
+package com.c3spring.ejercicio.manana.dto;
 
-import com.c3spring.ejercicio.model.Personaje;
+import com.c3spring.ejercicio.manana.model.Personaje;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

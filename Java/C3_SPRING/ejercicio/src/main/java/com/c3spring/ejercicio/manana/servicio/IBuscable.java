@@ -1,6 +1,6 @@
-package com.c3spring.ejercicio.servicio;
+package com.c3spring.ejercicio.manana.servicio;
 
-import com.c3spring.ejercicio.dto.PersonajeDTO;
+import com.c3spring.ejercicio.manana.dto.PersonajeDTO;
 
 import java.util.List;
 

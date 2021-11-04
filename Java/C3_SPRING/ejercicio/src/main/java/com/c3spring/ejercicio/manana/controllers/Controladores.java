@@ -1,7 +1,7 @@
-package com.c3spring.ejercicio.controllers;
+package com.c3spring.ejercicio.manana.controllers;
 
-import com.c3spring.ejercicio.dto.PersonajeDTO;
-import com.c3spring.ejercicio.servicio.IBuscable;
+import com.c3spring.ejercicio.manana.dto.PersonajeDTO;
+import com.c3spring.ejercicio.manana.servicio.IBuscable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -32,6 +32,7 @@ public class Controladores {
 
     @GetMapping("/")
     public String hola(){
+        //hola mundo probando staging
         return "Hola mundo";
     }
 
@@ -39,5 +40,9 @@ public class Controladores {
     public ResponseEntity<List<PersonajeDTO>> buscarPersonajes(@PathVariable("nombre") String nombre){
         List<PersonajeDTO> lista = personajesService.encontrar(nombre);
         return new ResponseEntity<>(lista,HttpStatus.OK);
+
+
+
+
     }
 }
