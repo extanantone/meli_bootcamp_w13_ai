@@ -1,0 +1,1 @@
+Correcto no fue hacerlo en los services, tendriamos que haber implementado una clase que hiciera de base de datos para guardar las listas, pero fue el metodo que encontramos con el equipo para finalizar en tiempo.
