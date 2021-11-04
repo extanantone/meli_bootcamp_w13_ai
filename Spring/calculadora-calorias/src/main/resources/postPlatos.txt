@@ -1,0 +1,39 @@
+{
+  "nombre": "Plato 1",
+  "ingredientes": [
+    {
+      "nombre": "Aceitunas negras",
+      "calorias": 349
+    },
+    {
+      "nombre": "Aceitunas verdes",
+      "calorias": 132
+    },
+    {
+      "nombre": "Acelgas",
+      "calorias": 33
+    }
+  ]
+}
+
+{
+  "nombre": "Plato 2",
+  "ingredientes": [
+    {
+      "nombre": "Apio",
+      "calorias": 20
+    },
+    {
+      "nombre": "Berenjena",
+      "calorias": 29
+    },
+    {
+      "nombre": "Berros",
+      "calorias": 21
+    },
+    {
+      "nombre": "Brócoli",
+      "calorias": 31
+    }
+  ]
+}
