@@ -18,7 +18,7 @@ public class PlatoController {
         this.platoService = platoService;
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Plato> crear(@RequestBody Plato nuevoPlato) {
         Plato plato = platoService.guardarPlato(nuevoPlato);
         if (plato == null) return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
