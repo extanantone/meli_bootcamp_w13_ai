@@ -28,6 +28,6 @@ public class FoodRepository implements IFoodRepository{
 
     @Override
     public Food getFootByName(String name) {
-        return foods.stream().filter(it->it.getName().equals(name)).findFirst().orElse(null);
+        return foods.stream().filter(it->it.getName().equals(name)).findFirst().orElse(new Food());
     }
 }
