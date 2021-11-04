@@ -3,12 +3,14 @@ package com.starwars.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.starwars.model.Personaje;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Repository
 public class PersonajeRepository implements IPersonajeRepository{
 
     private ObjectMapper mapper= new ObjectMapper();
@@ -23,6 +25,7 @@ public class PersonajeRepository implements IPersonajeRepository{
             while ((s = in.readLine()) != null) {
                 result = result + s;
             }
+            in.close();
             System.out.println(result);
             personajes = mapper.readerForListOf(Personaje.class).readValue(result);
             System.out.println(personajes);
