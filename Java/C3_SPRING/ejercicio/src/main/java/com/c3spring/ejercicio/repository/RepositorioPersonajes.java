@@ -1,8 +1,10 @@
 package com.c3spring.ejercicio.repository;
 
+import com.c3spring.ejercicio.dto.PersonajeDTO;
 import com.c3spring.ejercicio.model.Personaje;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -11,11 +13,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 @Repository
+@Primary
 public class RepositorioPersonajes implements IObtenerData {
 
-    List<Personaje> listaPersonajes = new ArrayList<>();
+    List<Personaje> listaPersonajes;
 
     RepositorioPersonajes(){
         this.listaPersonajes = leerArchivo();
@@ -43,7 +48,7 @@ public class RepositorioPersonajes implements IObtenerData {
     // se emula que la consulta se hace en el repositorio o base de datos, atraves del orm o consultas sql
     @Override
     public List<Personaje> obtenerOrigenDatos(String nombre) {
-        return this.listaPersonajes;
+        return listaPersonajes.stream().filter(x->x.getName().toLowerCase(Locale.ROOT).contains(nombre.toLowerCase(Locale.ROOT))).collect(Collectors.toList());
     }
 
 

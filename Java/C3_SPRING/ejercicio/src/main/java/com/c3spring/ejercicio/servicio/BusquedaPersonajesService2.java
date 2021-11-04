@@ -13,8 +13,8 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
-@Component("BusquedaPersonajesService")
-public class BusquedaPersonajesService implements IBuscable{
+@Component("BusquedaPersonajesService2")
+public class BusquedaPersonajesService2 implements IBuscable{
 
     @Autowired
     IObtenerData repoPersonas;
@@ -22,7 +22,7 @@ public class BusquedaPersonajesService implements IBuscable{
     @Override
     public List<PersonajeDTO> encontrar(String nombre) {
         List<PersonajeDTO> salida = new ArrayList<>();
-        System.out.println("estoy en la clase 1");
+        System.out.println("estoy en la clase 2");
         repoPersonas.obtenerOrigenDatos(nombre).forEach(x->salida.add(new PersonajeDTO(x)));
         return salida;
     }

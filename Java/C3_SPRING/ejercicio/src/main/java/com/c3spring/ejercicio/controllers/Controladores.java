@@ -3,6 +3,7 @@ package com.c3spring.ejercicio.controllers;
 import com.c3spring.ejercicio.dto.PersonajeDTO;
 import com.c3spring.ejercicio.servicio.IBuscable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +20,15 @@ public class Controladores {
     // esto es una instancia pero la crea el framework
     // inyeccion de dependencias
     // aplicando inversion de control
+    @Autowired
+    @Qualifier("BusquedaPersonajesService2")
     IBuscable personajesService;
 
-    // s epeude de dos formas usando Autowired o usando el constructor
-    public Controladores(IBuscable personajesService)
+    // se peude de dos formas usando Autowired o usando el constructor
+    /*public Controladores(IBuscable personajesService)
     {
         this.personajesService = personajesService;
-    }
+    }*/
 
     @GetMapping("/")
     public String hola(){
