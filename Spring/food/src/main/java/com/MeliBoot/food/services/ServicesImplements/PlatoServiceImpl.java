@@ -1,16 +1,21 @@
 package com.MeliBoot.food.services.ServicesImplements;
 
+import com.MeliBoot.food.models.Ingrediente;
 import com.MeliBoot.food.models.Plato;
+import com.MeliBoot.food.repository.IngredienteRepository;
 import com.MeliBoot.food.services.PlatoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PlatoServiceImpl implements PlatoService {
 
-    List<Plato> platosAGuardar = new ArrayList<>();
+    @Autowired
+    IngredienteRepository ingredienteRepository;
+
+/*    List<Plato> platosAGuardar = new ArrayList<>();
 
     public void inicializarPlatos(){
         Plato p = new Plato("Salmon con Brócoli");
@@ -31,6 +36,23 @@ public class PlatoServiceImpl implements PlatoService {
     public List<Plato> getPlatos(String plato) {
         inicializarPlatos();
         return platosAGuardar.stream().filter(x -> x.getNombreDelPlato() == plato).collect(Collectors.toList());
-    }
+    }*/
 
+    @Override
+    public int calculo(Plato plato) {
+        List<Ingrediente> ingredientes = ingredienteRepository.getIngredientesBD();
+        List<Ingrediente> ingredientesPlato = plato.getIngredientes();
+
+        int calorias = 0;
+
+        for (int i = 0; i < ingredientesPlato.size(); i++) {
+            for (int j = 0; j < ingredientes.size(); j++) {
+
+                if (ingredientes.get(j).getNombre().equals(ingredientesPlato.get(i).getNombre())) {
+                    calorias += (ingredientes.get(j).getCalorias() * ingredientesPlato.get(i).getPeso()) / 100;
+                }
+            }
+        }
+        return calorias;
+    }
 }

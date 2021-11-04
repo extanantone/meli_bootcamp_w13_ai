@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface PlatoService {
 
-    List<Plato> getPlatos(String plato);
+    public int calculo(Plato plato);
 
 }
