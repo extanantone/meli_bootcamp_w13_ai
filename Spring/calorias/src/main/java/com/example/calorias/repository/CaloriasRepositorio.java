@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Repository
 public class CaloriasRepositorio implements ICaloriasRepositorio{
 
@@ -40,5 +42,8 @@ public class CaloriasRepositorio implements ICaloriasRepositorio{
 
     public Ingredientes obtenerIngrediente(String nombre) {
         return this.ingredientes.stream().filter(p -> p.getName().toLowerCase().contains(nombre.toLowerCase())).findFirst().orElse(null);
+    }
+    public List<Ingredientes> todosLosIngredientes() {
+        return this.ingredientes.stream().collect(Collectors.toList());
     }
 }

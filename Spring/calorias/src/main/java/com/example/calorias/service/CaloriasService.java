@@ -25,4 +25,17 @@ public class CaloriasService implements ICaloriasService{
         }
         return calorias;
     }
+
+    public Ingredientes obtenerIngredienteConMasCalorias() {
+        int calorias =0;
+        Ingredientes ingredi = new Ingredientes();
+        List<Ingredientes> ingredientesPlato = repo.todosLosIngredientes();;
+        for (Ingredientes in: ingredientesPlato) {
+            if(in.getCalories()>calorias){
+                calorias = in.getCalories();
+                ingredi = in;
+            }
+        }
+        return ingredi;
+    }
 }
