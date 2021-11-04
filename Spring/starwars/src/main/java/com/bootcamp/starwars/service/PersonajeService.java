@@ -1,0 +1,25 @@
+package com.bootcamp.starwars.service;
+
+import com.bootcamp.starwars.dto.PersonajeDTO;
+import com.bootcamp.starwars.model.Personaje;
+import com.bootcamp.starwars.repository.IPersonajeRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class PersonajeService implements IPersonajeService {
+
+    IPersonajeRepository personajeRepository;
+
+    public PersonajeService(IPersonajeRepository personajeRepository) {
+        this.personajeRepository = personajeRepository;
+    }
+
+    @Override
+    public List<PersonajeDTO> obtenerPersonaje(String name) {
+        List<Personaje> personajes =this.personajeRepository.buscarPersonaje(name);
+        return personajes.stream().map(PersonajeDTO::new).collect(Collectors.toList());
+    }
+}
