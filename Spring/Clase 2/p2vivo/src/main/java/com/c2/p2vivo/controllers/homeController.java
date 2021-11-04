@@ -1,8 +1,7 @@
 package com.c2.p2vivo.controllers;
 
-import com.c2.p2vivo.dtos.DeporteDto;
 import com.c2.p2vivo.dtos.DeportistasDto;
-import com.c2.p2vivo.dtos.NivelDeporteDto;
+import com.c2.p2vivo.models.Deporte;
 import com.c2.p2vivo.services.queryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,19 +22,16 @@ public class homeController {
     }
 
     @GetMapping("/findSports")
-    public ResponseEntity<List<DeporteDto> > verDeportes(){
-        List<DeporteDto> deporteDtoList = new ArrayList<>();
-        service.getDeportesList().forEach(d -> deporteDtoList.add(new DeporteDto(d.getNombre(), d.getNivel())));
-        return new ResponseEntity<>(deporteDtoList, HttpStatus.OK);
+    public ResponseEntity<List<Deporte> > verDeportes(){
+        List<Deporte> deporteList = service.getDeportesList();
+        return new ResponseEntity<>(deporteList, HttpStatus.OK);
     }
 
     @GetMapping("/findSports/{name}")
-    public ResponseEntity<NivelDeporteDto> consultarNivelDeporte(@PathVariable String name){
+    public ResponseEntity<String> consultarNivelDeporte(@PathVariable String name){
         String nivel = service.getNivelDeporte(name);
         if (nivel != null){
-            NivelDeporteDto nivelDeporteDto = new NivelDeporteDto();
-            nivelDeporteDto.setNivel(nivel);
-            return new ResponseEntity<>(nivelDeporteDto, HttpStatus.OK);
+            return new ResponseEntity<>(nivel, HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
