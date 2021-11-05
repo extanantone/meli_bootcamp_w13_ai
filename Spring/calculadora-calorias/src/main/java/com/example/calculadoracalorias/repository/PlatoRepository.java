@@ -13,8 +13,9 @@ public class PlatoRepository implements IRespositorio<Plato> {
 
     @Override
     public Plato guardarElemento(Plato plato) {
-        platos.put(plato.getNombre(), plato);
-        return plato;
+        Plato platoReemplazado = platos.put(plato.getNombre(), plato);
+        if (platoReemplazado == null) return plato;
+        return platoReemplazado;
     }
 
     @Override
