@@ -6,4 +6,6 @@ public interface ILinkRepository {
 
     public Integer agregarListaLinks(Link link);
 
+    public Link findById(int idLink);
+
 }

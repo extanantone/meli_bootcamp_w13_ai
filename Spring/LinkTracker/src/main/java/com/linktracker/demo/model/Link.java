@@ -13,5 +13,7 @@ public class Link {
 
     String link;
     Boolean isValid;
+    String password;
+    int contadorRedirects;
 
 }

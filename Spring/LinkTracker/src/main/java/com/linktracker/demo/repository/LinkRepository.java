@@ -21,4 +21,18 @@ public class LinkRepository implements ILinkRepository{
 
     }
 
+    @Override
+    public Link findById(int idLink) throws RuntimeException{
+
+        if(!listaLinks.isEmpty()){
+            try{
+                return listaLinks.get(idLink);
+            }catch (Exception e) {
+                throw new RuntimeException("No existe un link con el ID ingresado");
+            }
+        }
+
+        throw new RuntimeException("La lista de URLs está vacía");
+    }
+
 }
