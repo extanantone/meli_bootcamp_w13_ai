@@ -9,10 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntradaBlog {
-    private int id;
-    private String titulo;
-    private String nombreAutor;
-    private String fechaPublicacion;
+public class Link {
+    private int linkId;
+    private String link;
+    private String contrasena;
+    private int contador;
 
 }
