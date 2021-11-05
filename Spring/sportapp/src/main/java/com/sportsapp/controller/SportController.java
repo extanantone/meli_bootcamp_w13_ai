@@ -1,5 +1,6 @@
 package com.sportsapp.controller;
 
+import com.sportsapp.dto.SportAndLevelDto;
 import com.sportsapp.dto.SportDto;
 import com.sportsapp.model.Sport;
 import com.sportsapp.service.SportService;
@@ -16,7 +17,7 @@ public class SportController {
 
     @GetMapping("/findSports")
     public ResponseEntity<?> getAllSports(){
-        return ResponseEntity.ok(sportService.getSports());
+        return ResponseEntity.ok(sportService.getSports().stream().map(i->new SportAndLevelDto(i.getName(),i.getLevel())));
     }
 
     @GetMapping("/findSport/{name}")
