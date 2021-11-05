@@ -36,4 +36,5 @@ public class Ingrediente
         this.calories = ingrediente.getCalories();
         this.peso = ingrediente.getPeso();
     }
+
 }

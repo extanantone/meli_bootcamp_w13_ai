@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1")
 public class CaloriasController
@@ -19,10 +21,8 @@ public class CaloriasController
    ICaloriasService caloriasService;
 
     @PostMapping("calorias")
-    public ResponseEntity<CaloriasDTO> consultCallorias(@RequestBody Plato plato)
+    public ResponseEntity<List<CaloriasDTO>> consultCallorias(@RequestBody List<Plato> platos)
     {
-        CaloriasDTO caloriasDTO = new CaloriasDTO();
-        System.out.println(plato);
-        return new ResponseEntity<>(caloriasDTO, HttpStatus.OK);
+        return new ResponseEntity<>(caloriasService.calcularParametros(platos), HttpStatus.OK);
     }
 }

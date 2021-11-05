@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class CaloriasRepository implements ICaloriasRepository
@@ -39,8 +41,19 @@ public class CaloriasRepository implements ICaloriasRepository
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(ingredientes);
         return ingredientes;
     }
 
+    @Override
+    public List<Ingrediente> ingredientesList()
+    {
+        return this.ingredientes = getJsonData();
+    }
+
+    @Override
+    public Map<String, Integer> ingredientesDict()
+    {
+        return ingredientesList().stream().
+                collect(Collectors.toMap(x -> x.getName().toLowerCase(Locale.ROOT), Ingrediente::getCalories));
+    }
 }

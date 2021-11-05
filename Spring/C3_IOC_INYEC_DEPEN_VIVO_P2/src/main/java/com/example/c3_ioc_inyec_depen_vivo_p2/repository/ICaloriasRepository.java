@@ -8,5 +8,7 @@ import java.util.Map;
 
 public interface ICaloriasRepository
 {
-    public List<Ingrediente> getJsonData();
+    public List<Ingrediente> ingredientesList();
+
+    public Map<String, Integer> ingredientesDict();
 }
