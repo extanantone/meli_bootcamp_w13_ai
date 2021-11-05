@@ -19,7 +19,7 @@ public class UrlService implements IUrlService{
 
     @Override
     public UrlResponseDto addUrl(UrlDto dto) {
-        Url url = new Url(0,dto.getUrl(),true,0);
+        Url url = new Url(0,dto.getUrl(),true,dto.getPassword(),0);
         url = iUrlRepository.addUrl(url);
         return new UrlResponseDto(url.getId(),url.getUrl());
     }
@@ -49,6 +49,13 @@ public class UrlService implements IUrlService{
 
     @Override
     public String getUrlByIdAndPassword(int id, String password) {
-        return null;
+        Url url = iUrlRepository.findById(id);
+        if(url==null)
+            throw new UrlNotFoundException("Not found");
+        else if(!url.isActive() || !url.getPassword().equals(password))
+            throw new InvalidateUrlException("Not valid");
+        url.setActive(false);
+        iUrlRepository.update(url);
+        return url.getUrl();
     }
 }

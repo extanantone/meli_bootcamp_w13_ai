@@ -11,6 +11,7 @@ public class Url {
     private int id;
     private String url;
     private boolean active;
+    private String password;
     private int redirectNumber;
 
 }

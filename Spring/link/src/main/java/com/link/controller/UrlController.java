@@ -25,7 +25,7 @@ public class UrlController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> redirect(@PathVariable int id,@RequestParam String password){
+    public ResponseEntity<?> redirect(@PathVariable int id,@RequestParam(defaultValue = "") String password){
         HttpHeaders h = new HttpHeaders();
         h.add("Location",iUrlService.getUrlByIdAndPassword(id,password));
         return new ResponseEntity<>(h, HttpStatus.MOVED_PERMANENTLY);
