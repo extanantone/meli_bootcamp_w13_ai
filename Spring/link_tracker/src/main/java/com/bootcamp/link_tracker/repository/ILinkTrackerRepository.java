@@ -1,10 +1,12 @@
 package com.bootcamp.link_tracker.repository;
 
+import com.bootcamp.link_tracker.model.Link;
+
 public interface ILinkTrackerRepository {
 
-    public void buscarLink();
+    Link buscarLink(Integer id);
 
-    public void guardarLink();
+    void guardarLink(Link link);
 
-    public void eliminarLink();
+    void eliminarLink(Link link);
 }

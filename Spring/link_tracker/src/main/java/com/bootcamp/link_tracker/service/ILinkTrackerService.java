@@ -6,9 +6,11 @@ public interface ILinkTrackerService {
 
     //boolean validarLink(LinkDTO link);
 
-    void invalidarLink();
+    //void invalidarLink();
 
-    Integer crearLink(LinkDTO link, String password);
+    Integer crearLink(String url, String password);
 
+    void eliminarLink(Integer id);
 
+    Integer getEstadisticas(Integer id);
 }

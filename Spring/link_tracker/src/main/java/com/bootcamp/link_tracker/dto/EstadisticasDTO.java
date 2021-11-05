@@ -1,17 +1,16 @@
-package com.bootcamp.link_tracker.model;
+package com.bootcamp.link_tracker.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class Link {
+@NoArgsConstructor
+public class EstadisticasDTO {
 
-    private Integer id;
-    private String url;
     private Integer cantRedirecciones;
-    private String password;
 
 }

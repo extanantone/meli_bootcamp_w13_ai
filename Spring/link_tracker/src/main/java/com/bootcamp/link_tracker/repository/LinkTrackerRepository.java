@@ -15,8 +15,9 @@ public class LinkTrackerRepository implements ILinkTrackerRepository{
     }
 
     @Override
-    public void buscarLink() {
-
+    public Link buscarLink(Integer id) {
+        Link linkBuscado = this.listaLinks.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
+        return linkBuscado;
     }
 
     @Override
@@ -25,13 +26,10 @@ public class LinkTrackerRepository implements ILinkTrackerRepository{
     }
 
     @Override
-    public void eliminarLink(Integer id) {
-        //this.listaLinks.stream().filter(x -> x.getId().equals(id)).findFirst().orElse();//FIXME
-        for (Link i : this.listaLinks) {
-            if(i.getId().equals(id)){
-                this.listaLinks.remove(i);
-            }
-            break;
-        }
+    public void eliminarLink(Link link) {
+      //  Link linkEliminar = buscarLink(id);
+       // if(linkEliminar != null){
+            this.listaLinks.remove(link);
+       // }
     }
 }
