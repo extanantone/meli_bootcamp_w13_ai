@@ -7,7 +7,6 @@ import com.MeliBoot.StarWars.services.PersonajeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +15,7 @@ public class PersonajeServiceImpl implements PersonajeService {
 
     PersonajeRepository personajeRepository;
 
-    public void PersonajeService(PersonajeRepository personajeRepository){
+    public PersonajeServiceImpl(PersonajeRepository personajeRepository){
         this.personajeRepository = personajeRepository;
     }
 
@@ -28,11 +27,11 @@ public class PersonajeServiceImpl implements PersonajeService {
     }
 
     public ResponseEntity<?> getPersonajePorNombre(String nombre){
-        List<Personaje> personajesPorNombre = personajeRepository.buscarPorNombre(nombre).stream().filter(x -> x.getName().contains(nombre)).collect(Collectors.toList());
-      //  if(personajesPorNombre.size() > 0) {
+        List<Personaje> personajesPorNombre = personajeRepository.buscarPorNombre(nombre);
+        if(personajesPorNombre.size() > 0) {
            List<PersonajeDTO> personajeDTOS = personajesPorNombre.stream().map(PersonajeDTO::new).collect(Collectors.toList());
             return new ResponseEntity<>(personajeDTOS, HttpStatus.OK);
-        //}
-  //      return new ResponseEntity<>("El personaje no existe", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>("El personaje no existe", HttpStatus.NOT_FOUND);
     }
 }

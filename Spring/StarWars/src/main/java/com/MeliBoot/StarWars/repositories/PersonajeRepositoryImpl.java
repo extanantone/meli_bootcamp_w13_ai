@@ -16,11 +16,11 @@ public class PersonajeRepositoryImpl implements PersonajeRepository{
 
     List<Personaje> baseDeDatosPersonajes;
 
-    void PersonajeRepository(){
+    PersonajeRepositoryImpl(){
         this.baseDeDatosPersonajes = abrirPersonajesJSON();
     }
 
-    List<Personaje> abrirPersonajesJSON() {
+    protected List<Personaje> abrirPersonajesJSON() {
         File file = null;
         try {
             file = ResourceUtils.getFile("classpath:starwars_characters.json");
@@ -28,7 +28,7 @@ public class PersonajeRepositoryImpl implements PersonajeRepository{
             e.printStackTrace();
         }
         ObjectMapper objectMapper = new ObjectMapper();
-        TypeReference<List<Personaje>> typeRef = new TypeReference<>() {};
+        TypeReference<List<Personaje>> typeRef = new TypeReference<>(){};
         List<Personaje> personajes = null;
         try {
             personajes = objectMapper.readValue(file, typeRef);
@@ -45,6 +45,6 @@ public class PersonajeRepositoryImpl implements PersonajeRepository{
 
     @Override
     public List<Personaje> buscarPorNombre(String nombre) {
-        return baseDeDatosPersonajes.stream().filter(x -> x.getName().contains(nombre)).collect(Collectors.toList());
+        return baseDeDatosPersonajes.stream().filter(x -> x.getName().toLowerCase().contains(nombre.toLowerCase())).collect(Collectors.toList());
     }
 }
