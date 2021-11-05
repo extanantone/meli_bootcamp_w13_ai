@@ -28,7 +28,7 @@ public class UrlController {
     public ResponseEntity<?> redirect(@PathVariable int id,@RequestParam(defaultValue = "") String password){
         HttpHeaders h = new HttpHeaders();
         h.add("Location",iUrlService.getUrlByIdAndPassword(id,password));
-        return new ResponseEntity<>(h, HttpStatus.MOVED_PERMANENTLY);
+        return new ResponseEntity<>(h, HttpStatus.FOUND);
     }
 
     @PostMapping("/invalidate/{id}")

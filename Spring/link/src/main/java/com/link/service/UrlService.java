@@ -55,7 +55,6 @@ public class UrlService implements IUrlService{
             throw new UrlNotFoundException("Not found");
         else if(!url.isActive() || !url.getPassword().equals(password))
             throw new InvalidateUrlException("Not valid");
-        url.setActive(false);
         url.setRedirectNumber(url.getRedirectNumber()+1);
         iUrlRepository.update(url);
         return url.getUrl();
