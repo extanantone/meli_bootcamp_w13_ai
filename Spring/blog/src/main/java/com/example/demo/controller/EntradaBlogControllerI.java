@@ -2,21 +2,18 @@ package com.example.demo.controller;
 
 import com.example.demo.dtos.EntradaBlogDTO;
 import com.example.demo.exception.NotFoundException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RequestMapping("/api/v1/blogs")
 public interface EntradaBlogControllerI {
 
-    @PostMapping("/blogs")
+    @PostMapping("/")
     EntradaBlogDTO nuevoBlog(@RequestBody EntradaBlogDTO entradaBlogDTO);
 
-    @GetMapping("/blogs/{id}")
+    @GetMapping("/{id}")
     EntradaBlogDTO getBlog(@PathVariable Long id);
 
-    @GetMapping("/blogs")
+    @GetMapping("/")
     List<EntradaBlogDTO> getBlogs();
 }

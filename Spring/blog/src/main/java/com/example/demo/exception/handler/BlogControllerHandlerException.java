@@ -1,6 +1,9 @@
-package com.example.demo.exception;
+package com.example.demo.exception.handler;
 
 import com.example.demo.controller.EntradaBlogController;
+import com.example.demo.dtos.exception.ErrorDTO;
+import com.example.demo.exception.DuplicateException;
+import com.example.demo.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 @ControllerAdvice(assignableTypes = EntradaBlogController.class)
-public class GlobalHandlerException {
+public class BlogControllerHandlerException {
 
     @ExceptionHandler(DuplicateException.class)
     public ResponseEntity<?> duplicateHandlerException(DuplicateException e){
@@ -17,7 +20,8 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<?> NotFoundException(){
-        return new ResponseEntity<>("todo mal", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> NotFoundException(NotFoundException e){
+        ErrorDTO error = new ErrorDTO("Not Found Exception - Blog", "The id " + e.getId() + " is incorrect");
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

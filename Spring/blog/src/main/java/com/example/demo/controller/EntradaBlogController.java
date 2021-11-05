@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/blogs")
+
 public class EntradaBlogController implements EntradaBlogControllerI {
 
     @Autowired
     private EntradaBlogService service;
 
-    @GetMapping("/{id}")
     public EntradaBlogDTO nuevoBlog(@RequestBody EntradaBlogDTO entradaBlogDTO){
         return service.crearNuevoBLog(entradaBlogDTO);
     }

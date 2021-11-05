@@ -6,12 +6,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class DuplicateException extends RuntimeException {
+    private Long id;
 
-    Long id;
-    String msg;
-
-    public DuplicateException(Long id, String msg) {
+    public DuplicateException(Long id) {
         this.id = id;
-        this.msg = msg;
     }
 }
