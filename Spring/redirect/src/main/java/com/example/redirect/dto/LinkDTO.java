@@ -12,7 +12,7 @@ import lombok.Setter;
 public class LinkDTO {
     String url;
     String pass;
-    Integer metrics;
+    Integer metrics = 0;
 
 
 }

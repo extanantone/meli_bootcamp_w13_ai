@@ -1,15 +1,13 @@
 package com.example.redirect.model;
 
 import com.example.redirect.dto.LinkDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
+@ToString
 public class Link {
     String url;
     String pass;
