@@ -1,5 +1,6 @@
 package com.link.service;
 
+import com.link.dtos.DtoUrlMetrics;
 import com.link.dtos.UrlDto;
 import com.link.dtos.UrlResponseDto;
 import com.link.exception.InvalidateUrlException;
@@ -55,7 +56,17 @@ public class UrlService implements IUrlService{
         else if(!url.isActive() || !url.getPassword().equals(password))
             throw new InvalidateUrlException("Not valid");
         url.setActive(false);
+        url.setRedirectNumber(url.getRedirectNumber()+1);
         iUrlRepository.update(url);
         return url.getUrl();
     }
+
+    @Override
+    public DtoUrlMetrics getUrlMetricsById(int id) {
+        Url url = iUrlRepository.findById(id);
+        if(url==null)
+            throw new UrlNotFoundException("Not found");
+        return new DtoUrlMetrics(url.getUrl(),url.getRedirectNumber());
+    }
+
 }
