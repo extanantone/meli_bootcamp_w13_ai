@@ -44,10 +44,13 @@ public class Distribuidora {
         productos.add(crema);
         productos.add(alfajor);
         productos.add(harina);
+        productos.add(yogourth);
 
         double totalCompra = 0;
         for(Producto item :productos) {
-            System.out.println(item + " total: "+ item.calcular(5));
+            System.out.println(item.getNombre() + " total: "+ item.calcular(5));
+            totalCompra = totalCompra + (item.calcular(5));
+            System.out.println(Math.floor(totalCompra));
         }
     }
 
