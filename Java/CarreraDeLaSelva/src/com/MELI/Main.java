@@ -122,28 +122,28 @@ public class Main {
                 );
 
                 int tipoDeCircuitoADesinscribir = scanner.nextInt();
-                System.out.println("Ingrese el Documento del participante: ");
+                if(tipoDeCircuitoADesinscribir > 0 && tipoDeCircuitoADesinscribir < 4) {
 
-                int dniPartAEliminar = scanner.nextInt();
-                Participante part = participantes.stream().filter(x -> x.getDni() == dniPartAEliminar).findFirst().get();
+                    System.out.println("Ingrese el Documento del participante: ");
 
-                if(tipoDeCircuitoADesinscribir == 1 && chico.getParticipantes().stream().filter(x -> x == part).findFirst() != null) {
-                    chico.desinscribirParticipante(part);
-                    System.out.println("El participante se desinscribio correctamente");
-                } else if(tipoDeCircuitoADesinscribir == 2 && medio.getParticipantes().stream().filter(x -> x == part).findFirst() != null) {
-                    chico.desinscribirParticipante(part);
-                    System.out.println("El participante se desinscribio correctamente");
+                    int dniPartAEliminar = scanner.nextInt();
+                    Participante part = participantes.stream().filter(x -> x.getDni() == dniPartAEliminar).findFirst().orElse(null);
 
-                } else {
-                    chico.desinscribirParticipante(avanzado.getParticipantes().stream().filter(x -> x == part).findFirst().orElse(null));
-                    System.out.println("El participante se desinscribio correctamente");
-
+                    if (tipoDeCircuitoADesinscribir == 1) {
+                        desinscribirParticipante(chico, part);
+                    } else if (tipoDeCircuitoADesinscribir == 2) {
+                        desinscribirParticipante(medio, part);
+                    } else {
+                        desinscribirParticipante(avanzado, part);
+                    }
+                } else
+                {
+                    System.out.println("El circuito no existe");
                 }
-
                 break;
             default:
-                System.out.println("La opcion ingresada es incorrecta");
-        }
+                    System.out.println("La opcion ingresada es incorrecta");
+            }
 
 
     }
@@ -176,6 +176,19 @@ public class Main {
     private static void mostrarInscriptos(Circuito circuito){
         System.out.println("---------------------Inscriptos al Circuito " + circuito.getTipo() + "---------------------");
         System.out.println(circuito.getParticipantes());
+    }
+    private static void desinscribirParticipante(Circuito circuito, Participante participante) {
+        boolean isInscripto = circuito.getParticipantes().stream().filter(x -> x.getDni() == participante.getDni()).findFirst().isPresent();
+        System.out.println(participante);
+        System.out.println(isInscripto);
+        if(participante != null && isInscripto) {
+            circuito.desinscribirParticipante(participante);
+            System.out.println("El participante se desinscribio exitosamente");
+            System.out.println(circuito.getParticipantes());
+        } else {
+
+            System.out.println("El participante no existe en ese circuito");
+        }
     }
 
 }
