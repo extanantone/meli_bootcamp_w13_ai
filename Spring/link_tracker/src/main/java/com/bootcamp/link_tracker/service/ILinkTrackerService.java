@@ -4,10 +4,6 @@ import com.bootcamp.link_tracker.dto.LinkReqDTO;
 
 public interface ILinkTrackerService {
 
-    //boolean validarLink(LinkDTO link);
-
-    //void invalidarLink();
-
     Integer crearLink(LinkReqDTO link);
 
     void invalidarLink(Integer id);

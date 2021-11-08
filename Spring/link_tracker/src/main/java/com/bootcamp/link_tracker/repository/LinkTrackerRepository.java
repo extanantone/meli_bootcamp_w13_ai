@@ -25,12 +25,4 @@ public class LinkTrackerRepository implements ILinkTrackerRepository{
         this.listaLinks.add(link);
     }
 
-   /* @Override
-    public void eliminarLink(Link link) {
-      //  Link linkEliminar = buscarLink(id);
-       // if(linkEliminar != null){
-            this.listaLinks.remove(link);
-       // }
-    }*/
-
 }
