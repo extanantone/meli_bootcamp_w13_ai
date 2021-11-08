@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Java/AgenciaDeTurismo/AgenciaDeTurismo.iml" filepath="$PROJECT_DIR$/Java/AgenciaDeTurismo/AgenciaDeTurismo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/SaveTheRopaSA/SaveTheRopaSA.iml" filepath="$PROJECT_DIR$/Java/SaveTheRopaSA/SaveTheRopaSA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/SerieNumerica/SerieNumerica.iml" filepath="$PROJECT_DIR$/Java/SerieNumerica/SerieNumerica.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/Supermercado/Supermercado.iml" filepath="$PROJECT_DIR$/Java/Supermercado/Supermercado.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/estructuras-dinamicas/estructuras-dinamicas.iml" filepath="$PROJECT_DIR$/Java/estructuras-dinamicas/estructuras-dinamicas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/meli_bootcamp_w13_ai.iml" filepath="$PROJECT_DIR$/.idea/meli_bootcamp_w13_ai.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/objetos.p1/objetos.p1.iml" filepath="$PROJECT_DIR$/Java/objetos.p1/objetos.p1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/objetos.p2/objetos.p2.iml" filepath="$PROJECT_DIR$/Java/objetos.p2/objetos.p2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/streams.p1/streams.p1.iml" filepath="$PROJECT_DIR$/Java/streams.p1/streams.p1.iml" />
+    </modules>
+  </component>
+</project>

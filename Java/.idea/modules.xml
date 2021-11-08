@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AgenciaDeTurismo/AgenciaDeTurismo.iml" filepath="$PROJECT_DIR$/AgenciaDeTurismo/AgenciaDeTurismo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Java.iml" filepath="$PROJECT_DIR$/.idea/Java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SaveTheRopaSA/SaveTheRopaSA.iml" filepath="$PROJECT_DIR$/SaveTheRopaSA/SaveTheRopaSA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SerieNumerica/SerieNumerica.iml" filepath="$PROJECT_DIR$/SerieNumerica/SerieNumerica.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Supermercado/Supermercado.iml" filepath="$PROJECT_DIR$/Supermercado/Supermercado.iml" />
+      <module fileurl="file://$PROJECT_DIR$/estructuras-dinamicas/estructuras-dinamicas.iml" filepath="$PROJECT_DIR$/estructuras-dinamicas/estructuras-dinamicas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/objetos.p1/objetos.p1.iml" filepath="$PROJECT_DIR$/objetos.p1/objetos.p1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/objetos.p2/objetos.p2.iml" filepath="$PROJECT_DIR$/objetos.p2/objetos.p2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/streams.p1/streams.p1.iml" filepath="$PROJECT_DIR$/streams.p1/streams.p1.iml" />
+    </modules>
+  </component>
+</project>
