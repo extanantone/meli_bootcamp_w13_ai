@@ -9,7 +9,7 @@ public interface ILinkService
 {
     public LinkDTO createLink(InputLinkDTO link);
 
-    public ResponseEntity<Void> redirectLink(Integer linkId);
+    public ResponseEntity<Void> redirectLink(Integer linkId, String password);
 
     public MetricsDTO metricsLink(Integer linkId);
 

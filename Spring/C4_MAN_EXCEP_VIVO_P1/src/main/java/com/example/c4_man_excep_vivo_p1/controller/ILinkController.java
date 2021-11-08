@@ -6,6 +6,8 @@ import com.example.c4_man_excep_vivo_p1.dto.MetricsDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
+
 @RequestMapping("api/v1/links")
 public interface ILinkController
 {
@@ -13,7 +15,8 @@ public interface ILinkController
     public LinkDTO createLink(@RequestBody InputLinkDTO inputLinkDTO);
 
     @GetMapping("/{linkId}")
-    public ResponseEntity<Void> redirectLink(@PathVariable Integer linkId);
+    public ResponseEntity<Void> redirectLink(@PathVariable Integer linkId,
+                                             @RequestParam @NotNull String password);
 
     @GetMapping("/metrics/{linkId}")
     public MetricsDTO metricsLink(@PathVariable Integer linkId);

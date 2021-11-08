@@ -44,11 +44,11 @@ public class LinkService implements ILinkService
 }
 
     @Override
-    public ResponseEntity<Void> redirectLink(Integer linkId) throws NotFoundException
+    public ResponseEntity<Void> redirectLink(Integer linkId, String password) throws NotFoundException
     {
         Map<Integer, Link> linkMap = LinkRepository.getMap();
         Link currentLink;
-        if (linkMap.containsKey(linkId) && linkMap.get(linkId).isValid())
+        if (linkMap.containsKey(linkId) && linkMap.get(linkId).isValid() && password.equals(linkMap.get(linkId).getPassword()))
         {
             currentLink = linkMap.get(linkId);
             currentLink.increaseCounter();
