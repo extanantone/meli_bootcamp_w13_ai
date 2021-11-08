@@ -1,8 +1,9 @@
 package com.bootcamp.link_tracker.service;
 
-import com.bootcamp.link_tracker.dto.LinkDTO;
+import com.bootcamp.link_tracker.dto.LinkReqDTO;
 import com.bootcamp.link_tracker.excepciones.LinkInexistenteException;
 import com.bootcamp.link_tracker.excepciones.LinkInvalidoException;
+import com.bootcamp.link_tracker.excepciones.PasswordIncorrectException;
 import com.bootcamp.link_tracker.model.Link;
 import com.bootcamp.link_tracker.repository.ILinkTrackerRepository;
 import org.apache.commons.validator.UrlValidator;
@@ -22,44 +23,55 @@ public class LinkTrackerService implements ILinkTrackerService{
     }
 
     @Override
-    public Integer crearLink(String url, String password){
-        if(validarLink(url)){
+    public Integer crearLink(LinkReqDTO link){
+        if(validarUrl(link.getUrl())){
             contadorId++;
-            this.linkTrackerRepository.guardarLink(new Link(contadorId, url, 0, password));
+            //al crear el link se setea como valido
+            this.linkTrackerRepository.guardarLink(new Link(contadorId, link.getUrl(), 0, link.getPassword(), true));
             return contadorId;
         }else{
-            throw new LinkInvalidoException();
+            throw new LinkInvalidoException("El link no es valido");
         }
-
     }
 
-    //true si el link es valido, false caso contrario
-    private boolean validarLink(String link) {
-       /* String[] schemes = {"http","https"};
+    //true si la url del link es valida, false caso contrario
+    private boolean validarUrl(String url) {
+        String[] schemes = {"http","https"};
         UrlValidator urlValidator = new UrlValidator(schemes);
 
-        return urlValidator.isValid(link.getUrl());//FIXME
-
-        */
-        return true;
+        return urlValidator.isValid(url);
     }
 
     @Override
-    //primero chequea si esta el link y luego elimina de la lista
-    public void eliminarLink(Integer id){
-        Link linkEliminar = this.linkTrackerRepository.buscarLink(id);
-        if(linkEliminar == null){
-            throw new LinkInexistenteException();
+    //primero chequea si esta el link y luego lo invalida, NO elimina
+    public void invalidarLink(Integer id){
+        Link linkInvalidar = this.linkTrackerRepository.buscarLink(id);
+        if(linkInvalidar == null){
+            throw new LinkInexistenteException("No existe el link");
         }
-        this.linkTrackerRepository.eliminarLink(linkEliminar);
+        linkInvalidar.setValid(false);
     }
 
     @Override
     public Integer getEstadisticas(Integer id) {
         Link linkEstadisticas = this.linkTrackerRepository.buscarLink(id);
         if(linkEstadisticas == null){
-            throw new LinkInexistenteException();
+            throw new LinkInexistenteException("No existe el link");
         }
         return linkEstadisticas.getCantRedirecciones();
+    }
+
+    @Override
+    public String redireccionar(Integer id, String password) {
+        Link link = this.linkTrackerRepository.buscarLink(id);
+        if(link == null){
+            throw new LinkInexistenteException("No existe el link");
+        }else if(!link.getPassword().equals(password)){ //se chequea que coincidan las contraseñas
+            throw new PasswordIncorrectException("La password es incorrecta");
+        } else if(!link.isValid()){
+            throw new LinkInvalidoException("El link no es valido");
+        }
+        link.incrementarRedirecciones();
+        return link.getUrl();
     }
 }

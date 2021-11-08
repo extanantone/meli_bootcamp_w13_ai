@@ -8,5 +8,5 @@ public interface ILinkTrackerRepository {
 
     void guardarLink(Link link);
 
-    void eliminarLink(Link link);
+    //void invalidarLink(Link link);
 }

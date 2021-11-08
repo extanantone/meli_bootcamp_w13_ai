@@ -3,9 +3,9 @@ package com.bootcamp.link_tracker.excepciones;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class LinkInexistenteException extends RuntimeException{
+public class PasswordIncorrectException extends RuntimeException{
 
-    public LinkInexistenteException(String mensaje){
+    public PasswordIncorrectException(String mensaje){
         super(mensaje);
     }
 

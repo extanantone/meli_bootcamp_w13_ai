@@ -1,6 +1,6 @@
 package com.bootcamp.link_tracker.service;
 
-import com.bootcamp.link_tracker.dto.LinkDTO;
+import com.bootcamp.link_tracker.dto.LinkReqDTO;
 
 public interface ILinkTrackerService {
 
@@ -8,9 +8,11 @@ public interface ILinkTrackerService {
 
     //void invalidarLink();
 
-    Integer crearLink(String url, String password);
+    Integer crearLink(LinkReqDTO link);
 
-    void eliminarLink(Integer id);
+    void invalidarLink(Integer id);
 
     Integer getEstadisticas(Integer id);
+
+    String redireccionar(Integer id, String password);
 }

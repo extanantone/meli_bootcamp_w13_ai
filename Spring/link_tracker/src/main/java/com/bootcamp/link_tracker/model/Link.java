@@ -2,6 +2,7 @@ package com.bootcamp.link_tracker.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -13,5 +14,10 @@ public class Link {
     private String url;
     private Integer cantRedirecciones;
     private String password;
+    private boolean isValid;
+
+    public void incrementarRedirecciones(){
+        this.cantRedirecciones++;
+    }
 
 }

@@ -1,10 +1,12 @@
 package com.bootcamp.link_tracker.controller;
 
 import com.bootcamp.link_tracker.dto.EstadisticasDTO;
-import com.bootcamp.link_tracker.dto.LinkDTO;
-import com.bootcamp.link_tracker.dto.LinkResponseDTO;
+import com.bootcamp.link_tracker.dto.LinkInvalidadoResDTO;
+import com.bootcamp.link_tracker.dto.LinkReqDTO;
+import com.bootcamp.link_tracker.dto.LinkIdResDTO;
 import com.bootcamp.link_tracker.service.ILinkTrackerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +19,19 @@ public class LinkTrackerController {
     private ILinkTrackerService linkTrackerService;
 
     @PostMapping("/link")
-    public ResponseEntity<?> crearLink(@RequestBody String url, @RequestParam String password){
-        Integer id = this.linkTrackerService.crearLink(url, password);
-        LinkResponseDTO linkCreado = new LinkResponseDTO(id);
+    public ResponseEntity<?> crearLink(@RequestBody LinkReqDTO link){
+        Integer id = this.linkTrackerService.crearLink(link);
+        LinkIdResDTO linkCreado = new LinkIdResDTO(id);
         return new ResponseEntity<>(linkCreado, HttpStatus.OK);
     }
 
     @GetMapping("/link/{linkID}")
-    public ResponseEntity<?> redireccionar(@PathVariable Integer linkID){
-        return null;
+    public ResponseEntity<?> redireccionar(@PathVariable Integer linkID, @RequestParam String password){
+        String nuevaUrl = this.linkTrackerService.redireccionar(linkID, password);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", nuevaUrl);
+        return new ResponseEntity<>(headers, HttpStatus.PERMANENT_REDIRECT); //codigo 308
     }
 
     @GetMapping("/metrics/{linkID}")
@@ -37,9 +43,14 @@ public class LinkTrackerController {
 
     @PostMapping("/invalidate/{linkID}")
     public ResponseEntity<?> invalidarLink(@PathVariable Integer linkID){
-        this.linkTrackerService.eliminarLink(linkID);
-        return new ResponseEntity<>("Link eliminado correctamente", HttpStatus.OK);
+        this.linkTrackerService.invalidarLink(linkID);
+       /* JSONObject jsonResponse = new JSONObject();
+        try {
+            jsonResponse.put("message", "Link eliminado correctamente");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+        return new ResponseEntity<>(new LinkInvalidadoResDTO("Link invalidado correctamente"), HttpStatus.OK);
     }
-
 
 }
