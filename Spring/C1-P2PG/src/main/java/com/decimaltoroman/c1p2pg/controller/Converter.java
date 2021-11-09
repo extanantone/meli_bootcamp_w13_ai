@@ -9,7 +9,10 @@ public class Converter {
         String roman[] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
         if (iRoman == 0) {
-            return "N";
+            return "No existe representación para el '0' en números romanos";
+        }
+        if (iRoman < 0 || iRoman > 3999){
+            return "El número debe ser mayor a 0, y menor a 3999";
         }
 
         while (iRoman > 0) {
