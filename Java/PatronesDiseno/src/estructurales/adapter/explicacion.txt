@@ -1,0 +1,6 @@
+El adaptador tiene por objetivo acoplar interfaces incompatibles.
+
+Se basa en el principio de composicion de objetos: el adaptador implementa la interface de un objeto y envuelve el otro.
+un ejemplo clasicp de adaptador es cuando convertimos un Object[] en un List<Object> Arrays.asList(), List.of(), etc.
+
+e
