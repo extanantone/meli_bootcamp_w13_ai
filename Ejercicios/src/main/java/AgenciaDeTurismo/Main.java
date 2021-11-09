@@ -8,7 +8,7 @@ public class Main {
         Registro reg = new Registro();
 
         System.out.println("Caso paquete completo (compra de Marcos)");
-        Cliente marcos = new Cliente("Marcos", "Suarez", "34832231");
+        Cliente marcos = new Cliente("Marcos", "Suarez", "34832231 ");
         ArrayList<Reserva> reservasDeMarcos = new ArrayList<>();
         for(int i = 0; i < 4; i++) {
             reservasDeMarcos.add(new Reserva(i+1));
@@ -29,7 +29,7 @@ public class Main {
         System.out.println(repoViajeDeMarcos.imprimirCompra());
         reg.nuevoRepoVendido(repoViajeDeMarcos);
 
-        System.out.println("Caso una resrva más para Marcos");
+        System.out.println("Caso una reserva más para Marcos");
         ArrayList<Reserva> unaReservaMas = new ArrayList<>();
         unaReservaMas.add(new Reserva(1));
         Localizador reservaUnitDeMarcos = new Localizador(unaReservaMas, marcos, 300);
@@ -41,7 +41,7 @@ public class Main {
         System.out.println(reg.cantidadLocalizadoresVendidos());
         System.out.print("Cantidad total de reservas: ");
         System.out.println(reg.cantTotalReservas());
-        System.out.println("Diccionario de reservas vendidas por tipo:");
+        System.out.println("Diccionario de reservas vendidas por tipo: ");
         HashMap<String,Integer> diccReservas = reg.cantReservasPorTipo();
         System.out.println("Hotel: " + diccReservas.get("Hotel"));
         System.out.println("Comida: " + diccReservas.get("Comida"));
