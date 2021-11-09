@@ -51,8 +51,17 @@ public class IngredienteRepository implements IIngredienteRepository{
     @Override
     public int obtenerCaloriasPorNombreIngrediente(String nombreIngrediente) {
 
-       return ingredientesDisponibles.stream().filter(i -> i.getName().toLowerCase() == nombreIngrediente.toLowerCase())
-                .findFirst().orElse(null).getCalories();
+        int calorias=0;
+        Ingrediente ing = new Ingrediente();
+
+        ing = ingredientesDisponibles.stream().filter(i -> i.getName().toLowerCase().equals(nombreIngrediente.toLowerCase()))
+                .findFirst().orElse(null);
+
+        if(ing != null){
+            calorias = ing.getCalories();
+        }
+
+        return calorias;
 
     }
 

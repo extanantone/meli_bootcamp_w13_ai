@@ -1,6 +1,7 @@
 package com.example.bootcamp.comida.dto;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,9 +9,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class IngredienteDTO {
+@AllArgsConstructor
+public class PlatoPesoDTO {
 
-    private String nombreIngrediente;
-    private int calorias;
+    private String name;
+    private int weight;
 
 }

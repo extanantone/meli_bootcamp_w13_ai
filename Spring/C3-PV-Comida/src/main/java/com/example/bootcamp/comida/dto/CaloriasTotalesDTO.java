@@ -7,11 +7,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 
-public class CantCaloriasDto {
+public class CaloriasTotalesDTO {
 
+private int totalCalorias;
 
 
 }

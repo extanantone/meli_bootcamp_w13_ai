@@ -1,5 +1,6 @@
 package com.example.bootcamp.comida.dto;
 
+import com.example.bootcamp.comida.model.Ingrediente;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 public class PlatoDTO {
 
 public String name;
-public List<IngredienteDTO> ingrendients;
+public List<Ingrediente> ingrendients;
 
 
 

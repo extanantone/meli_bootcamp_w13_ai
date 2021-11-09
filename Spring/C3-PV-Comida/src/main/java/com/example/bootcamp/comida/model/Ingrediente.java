@@ -16,9 +16,9 @@ import lombok.Setter;
 
 public class Ingrediente {
 
+
     private String name;
     private int calories;
-
 
 
 

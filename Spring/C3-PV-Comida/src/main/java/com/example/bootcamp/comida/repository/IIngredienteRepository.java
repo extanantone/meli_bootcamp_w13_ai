@@ -11,4 +11,5 @@ public interface IIngredienteRepository {
     public int obtenerCaloriasPorNombreIngrediente(String nombreIngrediente);
 
 
+
 }
