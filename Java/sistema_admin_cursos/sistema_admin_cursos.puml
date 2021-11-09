@@ -1,0 +1,22 @@
+@startuml Sistema de administracion de cursos
+
+skinparam ClassAttributeIconSize 0
+
+abstract class "Miembro del personal" as miembro <<abstract>>
+
+class Estudiante 
+class Profesor 
+class "Personal de mantenimiento" as mantenimiento
+class "Personal de soporte técnico" as soporte
+
+interface Tutor <<interface>>
+interface "Estudiante técnico" as tecnico <<interface>>
+
+miembro <|-- Estudiante
+miembro <|-- Profesor
+miembro <|-- mantenimiento
+Tutor <|.. Estudiante
+tecnico <|.. Estudiante
+miembro <|-- soporte
+
+@enduml
