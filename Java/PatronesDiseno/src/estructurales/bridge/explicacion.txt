@@ -1,0 +1,21 @@
+Problema a resolver: se intenta extender clases con caracteristicas que tienen varias dimesiones de propiedades, ej: formas, colores, tipos, generos, etc.
+
+Bridge intenta solucionar este caso extrayendo una de las dimensiones a una jerarquia de clases separada.
+
+intenta dividir clases muy grandes en diferentes jerarquias que se peuden desarrollar de manera separada
+
+Existira una jerarquia prinicpal uqe se ejecutara atraves de extends, y las demas caracteristicas de las demas jerarquias se usaran con implements
+
+como todas las demas jerarquias comparten unamisma interface comun, es facil intercambiarlas apra crear clases dinamicas
+
+Bridge: se usa para aplicaciones multiplataforma, diferentes servidores de bases de datos, o varios proveedores de apis de negocio.
+
+ej: controles y dispositivos: Los dispositivos tienen su propia jerarquia de metodos e interfaces que los ejecutan y modifican
+Los controles no modifican estos metodos y tampoco los implementan directamente,
+ lo que se hace es abstraer a una clase dispositivo generico que debera tener todos los metodos importantes de los dispositivos,
+  para uqe las interfaces de los contorles ebstraigan su uso y los peudan usar de diferentes formas pero haciendo lo mismo.
+   agrupando funciones y gneerando accioens mas complejas. Sin modificar a los dispositivos. Se debe analizar muy bien el diseño inical de los dispositivos para la futura utilizacion de sus metodos en diferentes lugares.
+   los controles en este caso peuden ser interfaces GUI de difenrets aplicaciones que usen la misma API de negocio. en diferente orden y logica final.
+
+
+
