@@ -10,16 +10,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class PersonajeService implements PersonajeServiceInterfaz {
-  PersonajeRepositoryInterfaz personajeRepository;
+    PersonajeRepositoryInterfaz personajeRepository; //INTERFAZ DE PERSONAJE REPOSITORY
 
-    public PersonajeService(PersonajeRepositoryInterfaz personajeRepository) {
+    public PersonajeService(PersonajeRepositoryInterfaz personajeRepository) { //INTERFAZ DE PERSONAJE REPOSITORY
         this.personajeRepository = personajeRepository;
     }
 
     @Override
     public List<PersonajeDTO> obtenerPersonaje(String name) {
-        List<Personaje> personajes = this.personajeRepository.buscarPersonajes(name);
-        List<PersonajeDTO> personajeDTOS =  personajes.stream().map(personaje -> new PersonajeDTO(personaje)).collect(Collectors.toList());
+        List<Personaje> personajes = this.personajeRepository.buscarPersonajes(name); //PERSONAJE
+        List<PersonajeDTO> personajeDTOS = personajes.stream()
+                .map(personaje -> new PersonajeDTO(personaje))
+                .collect(Collectors.toList()); //PERSONAJEDTO
         return personajeDTOS;
     }
 }

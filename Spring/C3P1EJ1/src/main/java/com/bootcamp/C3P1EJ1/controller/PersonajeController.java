@@ -15,15 +15,15 @@ import java.util.List;
 @RequestMapping("/api/personaje")
 public class PersonajeController {
 
-    PersonajeServiceInterfaz personajeService;
+    PersonajeServiceInterfaz personajeService; //INTERFAZ PERSONAJE SERVICE
 
-    public PersonajeController(PersonajeServiceInterfaz psi){
-        this.personajeService = psi;
-    }
+    public PersonajeController(PersonajeServiceInterfaz personajeService){
+        this.personajeService = personajeService;
+    } //INTERFAZ PERSONAJE SERVICE
 
     @GetMapping("/{name}")
-    public ResponseEntity<List<PersonajeDTO>> mostrarPersonaje(@PathVariable("name") String name) {
-        return new ResponseEntity<>(personajeService.obtenerPersonaje(name), HttpStatus.OK);
+    public ResponseEntity<List<PersonajeDTO>> mostrarPersonaje(@PathVariable("name") String name) { //PERSONAJEDTO
+        return new ResponseEntity<>(personajeService.obtenerPersonaje(name), HttpStatus.OK); //INTERFAZ PERSONAJE SERVICE
     }
 
 }

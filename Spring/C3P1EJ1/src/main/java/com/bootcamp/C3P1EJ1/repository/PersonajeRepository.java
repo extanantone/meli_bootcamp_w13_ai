@@ -1,8 +1,7 @@
 package com.bootcamp.C3P1EJ1.repository;
 
-import com.bootcamp.C3P1EJ1.dto.PersonajeDTO;
+
 import com.bootcamp.C3P1EJ1.model.Personaje;
-import com.bootcamp.C3P1EJ1.service.PersonajeServiceInterfaz;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Repository;
@@ -12,14 +11,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Repository
 public class PersonajeRepository implements PersonajeRepositoryInterfaz {
 
-    List<Personaje> listaPersonajes;
+    List<Personaje> listaPersonajes; //PERSONAJE
 
-    public PersonajeRepository() {
+    PersonajeRepository() {
         this.listaPersonajes = abrirPersonajeJSON();
     }
 
@@ -30,9 +30,9 @@ public class PersonajeRepository implements PersonajeRepositoryInterfaz {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        TypeReference<List<Personaje>> typeRef = new TypeReference<>() {
-        }; //lo referenciado va a ser una lista de personajes
+        ObjectMapper objectMapper = new ObjectMapper(); //mapea lo que está en el archivo al objeto, en este caso al objeto personaje.
+        TypeReference<List<Personaje>> typeRef = new TypeReference<>() { //acá referencia a la lista de personaje
+        };
         List<Personaje> personajes = null;
         try {
             personajes = objectMapper.readValue(file, typeRef); //leer el valor del archivo a través del typeRef
