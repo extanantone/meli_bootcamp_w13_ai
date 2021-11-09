@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface ILinkService {
     LinkDto crearLink(String link, String contrasena );
-    ResponseEntity<?> redireccionar(int id);
+    String redireccionar(int id);
+    int estadistica(int id);
 
 }

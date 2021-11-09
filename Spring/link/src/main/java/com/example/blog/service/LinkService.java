@@ -1,6 +1,7 @@
 package com.example.blog.service;
 
 import com.example.blog.dto.LinkDto;
+import com.example.blog.exceptions.NullPointerException;
 import com.example.blog.repository.ILinkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,14 +19,20 @@ public class LinkService implements ILinkService{
         repositorioLink.añadirLinks(nuevoLink);
         return nuevoLink;
     }
-    public ResponseEntity<String> redireccionar(int id){
-        String mensaje="";
+    public String redireccionar(int id){
         LinkDto encuentra = repositorioLink.buscarLink(id);
         if(encuentra == null){
-            mensaje= "invalido";
-            return new ResponseEntity<String>(mensaje, HttpStatus.BAD_REQUEST);
+            throw new NullPointerException("La url que busca no existe");
         }
-        mensaje="redirect:"+encuentra.getLink();
-        return new ResponseEntity<String>(mensaje, HttpStatus.PERMANENT_REDIRECT);
+        encuentra.setContador(encuentra.getContador()+1);
+        return encuentra.getLink();
+    }
+
+    public int estadistica(int id){
+        LinkDto encuentra = repositorioLink.buscarLink(id);
+        if(encuentra == null){
+            throw new NullPointerException("La url que busca no existe");
+        }
+        return encuentra.getContador();
     }
 }

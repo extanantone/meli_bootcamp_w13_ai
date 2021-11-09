@@ -4,9 +4,12 @@ import com.example.blog.dto.LinkDto;
 import com.example.blog.model.Link;
 import com.example.blog.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 public class LinkController {
@@ -20,8 +23,13 @@ public class LinkController {
     }
     @GetMapping("/link/{linkId}")
     private ResponseEntity<String> crearEntrada(@PathVariable int  linkId){
-        ResponseEntity<String> linkNuevo= servicioLink.redireccionar(linkId);
-        return linkNuevo;
+        HttpHeaders outHeaders = new HttpHeaders();
+        outHeaders.setLocation(URI.create(this.servicioLink.redireccionar(linkId)));
+        return new ResponseEntity<>(outHeaders, HttpStatus.FOUND);
     }
-
+    @GetMapping("/metrics/{linkId}")
+    private ResponseEntity<String> estadisctica(@PathVariable int  linkId){
+        int red = servicioLink.estadistica(linkId);
+        return new ResponseEntity<>("Se redireccionó al link del id "+linkId+", "+red+" veces.", HttpStatus.FOUND);
+    }
 }
