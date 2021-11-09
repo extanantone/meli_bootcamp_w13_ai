@@ -6,7 +6,7 @@ import com.bootcamp.linktracker.dto.LinkMetricsDTO;
 
 public interface ILinkServices {
     public LinkIdDTO createLink(LinkDTO link);
-    public String redirect(int linkId);
+    public String redirect(int linkId, String password);
     public LinkMetricsDTO getMetrics(int linkId);
-    public void invalidateLink(LinkIdDTO linkId);
+    public boolean invalidateLink(int linkId);
 }

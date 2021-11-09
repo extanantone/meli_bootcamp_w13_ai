@@ -7,10 +7,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LinkMapper {
-    public Link LinkDTOtoLink(LinkDTO link){
-        return new Link(link.getLink(), "" ,0,false);
+    public Link LinkDTOtoLink(LinkDTO link) {
+        return new Link(link.getLink(), link.getPassword(), 0, false);
     }
-    public LinkMetricsDTO LinkToLinkMetricsDTO(Link link){
+
+    public LinkDTO LinktoLinkDTO(Link link) {
+        return new LinkDTO(link.getLink(), link.getPassword());
+    }
+
+    public LinkMetricsDTO LinkToLinkMetricsDTO(Link link) {
         return new LinkMetricsDTO(link.getLink(), link.getCount());
     }
 }
