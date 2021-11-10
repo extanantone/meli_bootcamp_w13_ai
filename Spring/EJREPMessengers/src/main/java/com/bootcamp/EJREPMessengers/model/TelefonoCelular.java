@@ -7,6 +7,9 @@ import lombok.Setter;
 @Setter
 public class TelefonoCelular extends AMensajero {
 
+    int bateria = 0;
+    int cantDatos = 0;
+
     public TelefonoCelular() {
     }
 
@@ -20,6 +23,12 @@ public class TelefonoCelular extends AMensajero {
     public String convertirMensaje(String mensaje) {
         if (getMensajeParticular()==null){
             setMensajeParticular("");
+        }else{
+        if(bateria > 1 && cantDatos > 1){
+            return "descansando";
+        }
+        this.bateria--;
+        this.cantDatos--;
         }
         return this.getMensajeParticular() + " " + mensaje;
     }

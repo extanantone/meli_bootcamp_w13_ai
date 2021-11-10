@@ -6,6 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Telegrafo extends AMensajero {
+
+    boolean enchufado = true;
+
     public Telegrafo() {
     }
 
@@ -19,6 +22,10 @@ public class Telegrafo extends AMensajero {
     public String convertirMensaje(String mensaje) {
         if (getMensajeParticular()==null){
             setMensajeParticular("");
+        }else {
+            if (enchufado) {
+                return "descansando";
+            }
         }
         return this.getMensajeParticular() + " " + mensaje;
     }
