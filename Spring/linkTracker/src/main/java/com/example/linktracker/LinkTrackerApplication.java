@@ -1,13 +1,13 @@
-package com.example.platos;
+package com.example.linktracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PlatosApplication {
+public class LinkTrackerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PlatosApplication.class, args);
+        SpringApplication.run(LinkTrackerApplication.class, args);
     }
 
 }
