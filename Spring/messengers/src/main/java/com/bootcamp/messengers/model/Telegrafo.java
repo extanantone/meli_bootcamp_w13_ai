@@ -8,9 +8,11 @@ import lombok.Setter;
 public class Telegrafo implements Mensajero{
     private Integer id;
     private final String tipo = "Telegrafo";
+    private boolean enchufado;
 
-    public Telegrafo(Integer id) {
+    public Telegrafo(Integer id, boolean enchufado) {
         this.id = id;
+        this.enchufado = enchufado;
     }
 
     @Override
@@ -27,4 +29,10 @@ public class Telegrafo implements Mensajero{
     public String toString(){
         return String.format("Telegrafo - ID: %s", this.id);
     }
+
+    @Override
+    public boolean puedoEnviarMsj() {
+        return this.enchufado;
+    }
+
 }

@@ -6,6 +6,7 @@ import com.bootcamp.messengers.model.TelefonoCelular;
 import com.bootcamp.messengers.model.Telegrafo;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,10 @@ public class MessengersRepository implements IMessengersRepository{
 
     public MessengersRepository() {
         this.listaMensajeros = new ArrayList<>();
-        this.listaMensajeros.add(new PalomaMensajera(1));
-        this.listaMensajeros.add(new PalomaMensajera(2));
-        this.listaMensajeros.add(new TelefonoCelular(3));
-        this.listaMensajeros.add(new Telegrafo(4));
+        this.listaMensajeros.add(new PalomaMensajera(1, 5, Instant.MIN));
+        this.listaMensajeros.add(new PalomaMensajera(2, 2, Instant.MIN));
+        this.listaMensajeros.add(new TelefonoCelular(3, 3, 2));
+        this.listaMensajeros.add(new Telegrafo(4, true));
     }
 
     @Override
