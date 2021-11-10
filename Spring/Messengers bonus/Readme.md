@@ -16,6 +16,8 @@ Inicialmente va a enviar error por que los elementos no cuentan con las condicio
 
 ### Actualizar paloma
 
+http://localhost:8080/palomas/1
+
 PUT
 
 Payload
