@@ -1,8 +1,10 @@
 package com.fecNac.demo.Controller;
 
 
+import com.fecNac.demo.Service.Calculador;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
@@ -14,24 +16,15 @@ import java.time.LocalDate;
 public class EdadController {
 
 
+    Calculador calculador = new Calculador();
+
     @GetMapping("fecha/{dia}/{mes}/{year}")
     public Integer obtenerEdadDeFecha(@PathVariable("dia") Integer inDia,
                                       @PathVariable("mes") Integer inMes,
                                       @PathVariable("year") Integer inYear){
 
-          Integer outEdad =0;
-        LocalDate hoy = LocalDate.now();
-        LocalDate diaDeNacimiento = LocalDate.of(inYear,inMes,inDia);
+        return calculador.calcularEdad(inDia,inMes,inYear);
 
-        if(hoy.getYear() - diaDeNacimiento.getYear() > 0 ){
-            outEdad= hoy.getYear() - diaDeNacimiento.getYear() - 1;
-            if(hoy.getMonthValue() > diaDeNacimiento.getMonthValue())
-            {
-                outEdad++;}
-                else if (hoy.getMonthValue() == diaDeNacimiento.getMonthValue() && !(hoy.getDayOfMonth() < diaDeNacimiento.getDayOfMonth()))
-                    outEdad++;
-            }
 
-        return outEdad;
     }
 }
