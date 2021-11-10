@@ -4,7 +4,8 @@ package estructurales.bridge;
  * El control implementado podra estar disponible para cualquier dispositivo
  * y de este control basico pueden heredar muchos mas complejos que usen las actividades basicas de este
  * el control sabe como trabajar con cualquier dispositivo gracias a la interface de dispositivos
- * El puente es segun mi opinion el uso del device en el control implementado, es el que permite usar los emtodos de las implementaciones de las clases en acciones mas completas
+ * El puente es segun mi opinion el uso del device en el control implementado,
+ * es el que permite usar los emtodos de las implementaciones de las clases en acciones mas completas
  * o agrupadas. EL PUENTE ES LA AGREGACION DEL DISPOSITIVO
  */
 public class ControlBasico implements Controles{

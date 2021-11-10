@@ -1,0 +1,28 @@
+La idea de facade es disminuir la complejidad de uso de algunas librerias de terceros
+para que no quede fuertemente acoplado el codigo al codigo de terceros
+
+"ofrecer una fachada simple a un subsistema complejo con funcionalidad limitada pero oc lo mas importante"
+
+librerias gigantes de las cuales solo necesitas algunas funciones especificas
+
+"disminuyela dificultad de actualziar versiones de frameworks y librerias porque solo hay que cambiar la fachada, el cliente no se entera de esos cambios"
+
+Pasos de implementacion:
+
+1. comprobar si es posible hacer una interface que simplifique los objetivos generales de los subsistemas
+2. implementar esta interface en una clase fachada. la Fachada dbera ser capaz de inicializar el subsistema y configurarlo, admisnitrar su tiemp ode vida ,etc. en caso de ser necesario
+3. La fachada debera ser el unico punto de contacto de los subsistemas con el cliente
+4. si la fachada se vuelve muy grande es buena idea crear una nueva fachada mas refinada en base a la fachada antigua. con objetivos mas especificos
+
+Diferencias entre patrones:
+
+1. facade y adapter: Adapter se basa en herencia para usar una interface existente e incompatible y facade crea una interface nueva y simplificada del mismo sistema
+2. una facade puede vovlerse un singleton ya que una unica fachada es suficiente para todos los casos (uso de estaticos)
+3. los demas los ire viendo cuando los conozca
+
+ejemplo: en las clases se creo un Codec y una serie de clases que supuestmaente hace actividades requeridas para convertir un archivo de vodeio de un formato a otro.
+la fachada reune todas esas librerias y relaiza todas las acciones requeridas para covnertir por completo el archivo, para el cliente es sencillo simplemente llamar la fachada y ejecutar la conversion compelta
+
+
+
+

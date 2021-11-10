@@ -1,3 +1,6 @@
+"El objetivo de bridge es intentar añadir caracteristicas entre jerarquias de clases diferentes,
+ algo parecido a relaizar herencia multiple pero a traves de la composicion"
+
 Problema a resolver: se intenta extender clases con caracteristicas que tienen varias dimesiones de propiedades, ej: formas, colores, tipos, generos, etc.
 
 Bridge intenta solucionar este caso extrayendo una de las dimensiones a una jerarquia de clases separada.

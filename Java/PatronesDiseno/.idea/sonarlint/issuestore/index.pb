@@ -29,3 +29,17 @@ f
 +src/estructurales/adapter/HuecoRedondo.java,c/d/cd2465e4465277976c76d25f1989ef3b85350631
 [
 +src/estructurales/adapter/PiezaRedonda.java,6/4/647cfef656f027e44bc800643bf71b8769ee877e
+Y
+)src/estructurales/adapter/explicacion.txt,c/c/cc982139a3f8dbb638b2c338e5d50cc3f74b862c
+\
+,src/estructurales/adapter/PiezaCuadrada.java,1/7/17be9d29813272834c7abf2dd2b1b0bc291ac592
+e
+5src/estructurales/adapter/PiezaCuadradaAdaptador.java,7/6/7675a0d318fc095b179ef1b4792fcd99d099c8d3
+Z
+*src/estructurales/adapter/MainAdapter.java,b/2/b203d3eca0b06adefba3f612a81a84f5d2625b60
+Y
+)src/estructurales/bridge/Dispositivo.java,4/d/4d12b10f4ac89a97a0af2f5d45df48cc776a5b5d
+S
+#src/estructurales/bridge/Radio.java,f/1/f19faaef82252f10dc81c23485980eeed9679209
+X
+(src/estructurales/bridge/Television.java,8/3/83b71b409b353f04298bff181594249e8509a7bf
