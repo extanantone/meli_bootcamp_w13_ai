@@ -37,7 +37,6 @@ public class LinkServices implements ILinkServices {
     @Override
     public String redirect(int linkId, String password) {
         Link link = linkRepository.getLink(linkId);
-        System.out.println(link);
         if (link.isDisable()) {
             throw new DisabledLinkException();
         }
@@ -56,9 +55,7 @@ public class LinkServices implements ILinkServices {
     @Override
     public boolean invalidateLink(int linkId) {
         Link link = linkRepository.getLink(linkId);
-        System.out.println(link);
         link.setDisable(true);
-        System.out.println(link);
         return true;
     }
 
