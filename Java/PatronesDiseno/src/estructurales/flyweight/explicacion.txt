@@ -1,0 +1,25 @@
+Flyweight(Peso Mosca)
+Es un patron que intenta explicar como ahorrar recursos de memoria
+separando las clases en elementos con carateristicas intrinsecas y extrinsecas
+
+caracteristicas:
+ 1. intrinsecas: son datos que no cambian con el tiempo
+ y hacen parte de la definicion del objeto y solo se usan en su creacion: ej: formas, colores, generos, sprintes, etc.
+
+ 2. Extrinsecas: se refiere a tod ala infromacion que puede variar y que peude cambiar en cada objeto en su comportamiento.
+    ej: posicion, velocidad, aceleracion, estado, salud, etc.
+
+Como implementar el patron:
+1. dividir las clases en objetos flyweight(caracteristicas intrinsecas que se pueden reusar)
+    y objetos de estado extrinseco (habra miles de ellos)
+2. los objetos flyweight no deben tener setters para garantizar su inmutabilidad (Flyweight debe ser inmutable)
+3. El patron puro recomienda no guardar datos en los objetos extrinsecos y mas bien siempre calcularlos en tiempo real con metodos
+
+
+"El patron flyweight puede reconocerse por un metodo de creacion de objetos que en vez de crearlos los trae de cache o de memoria"
+
+ejemplo: en el ejemplo se crea una factory de tipos de arboles. la factory controla que solo exista 1 tipo de arbol que guarda el color y el resto de dato que indentifica
+ a un arbol de su tipo cuando se crea un arbol en el main, se garantiza que la fabrica no va a tener tipos repetidos y usando la clave unica,
+ trae los que ya conoce desde la cache asi se ahorra en crear cientos de arboles todos con toda la data del tipo de arbol y se ahorra memoria.
+ Los arboles existen bajo el tipo de arbol que se les carga, por lo cual todos los arboles comparten el mismo tipo.
+
