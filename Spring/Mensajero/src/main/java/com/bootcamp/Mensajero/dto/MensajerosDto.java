@@ -12,5 +12,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MensajerosDto {
     private Long id;
-    private Mensajero nombre;
+    private String nombre;
 }

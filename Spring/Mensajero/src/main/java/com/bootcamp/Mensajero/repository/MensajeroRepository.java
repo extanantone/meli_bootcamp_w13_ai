@@ -1,26 +1,23 @@
 package com.bootcamp.Mensajero.repository;
 
-import com.bootcamp.Mensajero.model.Celular;
-import com.bootcamp.Mensajero.model.Mensajero;
-import com.bootcamp.Mensajero.model.Paloma;
-import com.bootcamp.Mensajero.model.Telegrafo;
+import com.bootcamp.Mensajero.model.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
 public class MensajeroRepository implements IMensajeroRepository {
-    Map<Long, Mensajero> mensajeros = new HashMap<>();
+    Map<Long, MensajeroAbstracto> mensajeros = new HashMap<>();
 
     public MensajeroRepository() {
-        mensajeros.put(0L, new Paloma());
-        mensajeros.put(1L, new Paloma());
-        mensajeros.put(2L, new Celular());
-        mensajeros.put(3L, new Telegrafo());
+        mensajeros.put(0L, new Paloma("Paloma", 50,10));
+        mensajeros.put(1L, new Paloma("Paloma",20,4));
+        mensajeros.put(2L, new Celular("Celular"));
+        mensajeros.put(3L, new Telegrafo("Telegrafo"));
     }
     @Override
-    public Set<Map.Entry<Long, Mensajero>> listarMensajeros() {
-        return mensajeros.entrySet();
+    public Map<Long, MensajeroAbstracto> listarMensajeros() {
+        return mensajeros;
     }
 
     @Override

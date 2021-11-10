@@ -4,13 +4,14 @@ import com.bootcamp.Mensajero.dto.MensajeroDto;
 import com.bootcamp.Mensajero.dto.MensajerosDto;
 import com.bootcamp.Mensajero.exception.NotFoundMensajero;
 import com.bootcamp.Mensajero.model.Mensajero;
+import com.bootcamp.Mensajero.model.MensajeroAbstracto;
 import com.bootcamp.Mensajero.repository.IMensajeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Service
 public class MensajeroService implements IMensajeroService {
@@ -20,10 +21,10 @@ public class MensajeroService implements IMensajeroService {
 
     @Override
     public List<MensajerosDto> listar() {
-        Set<Map.Entry<Long, Mensajero>> entries = mensajeroRepository.listarMensajeros();
-        List<MensajerosDto> mensajeros = null;
-        for(Map.Entry<Long,Mensajero> kv : entries){
-            MensajerosDto msj = new MensajerosDto(kv.getKey(), kv.getValue());
+        Map<Long, MensajeroAbstracto> entries = mensajeroRepository.listarMensajeros();
+        List<MensajerosDto> mensajeros = new ArrayList<>();
+        for (Map.Entry<Long, MensajeroAbstracto > entry : entries.entrySet()) {
+            MensajerosDto msj = new MensajerosDto(entry.getKey(), entry.getValue().getTipo());
             mensajeros.add(msj);
         }
         return mensajeros;

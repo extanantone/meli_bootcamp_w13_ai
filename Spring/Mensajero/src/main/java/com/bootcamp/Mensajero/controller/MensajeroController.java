@@ -33,8 +33,7 @@ public class MensajeroController {
         return new ResponseEntity<>(servicio.retornarMensaje(mensaje, mensajero), HttpStatus.OK);
     }
     @GetMapping("/mensaje/{msj}/mensajero/{id}")
-    public ResponseEntity<MensajeroDto> retornarMensaje2(@RequestParam String msj, @RequestParam Long id) throws Exception {
-
+    public ResponseEntity<MensajeroDto> retornarMensaje2(@PathVariable("msj") String msj, @PathVariable("id") Long id) throws Exception {
         return new ResponseEntity<>(servicio.retornarMensaje(msj, id), HttpStatus.OK);
     }
 }

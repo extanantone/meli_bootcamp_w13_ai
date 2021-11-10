@@ -1,13 +1,15 @@
 package com.bootcamp.Mensajero.model;
 
-public class Telegrafo implements Mensajero {
+import lombok.Getter;
+import lombok.Setter;
 
-    String convertirAMorse(String msg){
-        return "Piripi<<"+msg+">>";
+@Getter
+@Setter
+public class Telegrafo extends MensajeroAbstracto {
+    private boolean enchufado;
+    public Telegrafo(String tipo) {
+        super("Piripi <<",tipo);
     }
 
-    @Override
-    public String emitirMensaje(String msg) {
-        return convertirAMorse(msg);
-    }
+
 }
