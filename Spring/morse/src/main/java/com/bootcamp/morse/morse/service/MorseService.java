@@ -3,7 +3,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MorseService {
-    private static char morseCharATexto(String morseChar) {
+
+    private static Map getMorseMap() {
         Map<String, Character> morseMap = new HashMap();
 
         morseMap.put(".-", 'A');
@@ -45,28 +46,31 @@ public class MorseService {
         morseMap.put(".-.-", '.');
         morseMap.put("--..--", ',');
         morseMap.put("..--..", '?');
+        return morseMap;
+    }
 
-        return morseMap.get(morseChar);
+    private static char morseCharATexto(String morseChar, Map morseMap) {
+
+        return (char) morseMap.get(morseChar);
     }
 
     public static String morseATexto (String morseString) {
-        //StringBuilder texto = new StringBuilder();
+        Map morseMap = MorseService.getMorseMap();
+        StringBuilder texto = new StringBuilder();
 
-        //String[] morseWords = morseString.split("   ");
+        String[] morseWords = morseString.split("   ");
 
-        //for (String morseWord : morseWords)
-        //{
-            //for (String morseChar : morseWord.split(""))
-            //{
-                //char letra = MorseService.morseCharATexto(morseChar);
-                //texto.append(letra);
-            //}
-            //texto.append(" ");
-        //}
+        for (String morseWord : morseWords)
+        {
+            for (String morseChar : morseWord.split(" "))
+            {
+                char letra = MorseService.morseCharATexto(morseChar, morseMap);
+                texto.append(letra);
+            }
+            texto.append(" ");
+        }
 
-        //return texto.toString();
-
-        return MorseService.morseATexto(morseString);
+        return texto.toString();
 
     }
 }

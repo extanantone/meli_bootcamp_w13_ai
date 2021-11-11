@@ -1,2 +1,2 @@
-package com.company;public class PracticaExcepciones {
-}
+package com.company;
+
