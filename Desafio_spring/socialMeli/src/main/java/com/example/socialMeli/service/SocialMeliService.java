@@ -1,5 +1,6 @@
 package com.example.socialMeli.service;
 
+import com.example.socialMeli.dto.CantidadFollowsDTO;
 import com.example.socialMeli.dto.RespuestaSimpleDTO;
 import com.example.socialMeli.exceptions.UsuarioNoEncontradoError;
 import com.example.socialMeli.model.Comprador;
@@ -44,14 +45,15 @@ public class SocialMeliService implements  ISocialMeliService{
         }
         return rta;
     }
-    public RespuestaSimpleDTO contar (int id_vendedor){
-        RespuestaSimpleDTO rta = new RespuestaSimpleDTO();
+    public CantidadFollowsDTO contar (int id_vendedor){
+        CantidadFollowsDTO rta = new CantidadFollowsDTO();
         Vendedor vende = SMRepositorio.buscarVendedor(id_vendedor);
         if(vende == null ){
             throw new UsuarioNoEncontradoError("El id del usuario vendedor es incorrecto");
         }
-        rta.setMensaje("El vendedor "+id_vendedor+" tiene "+vende.getSeguidores().size()+" seguidor/es.");
-        rta.setStatusCode(200);
+        rta.setUser_id(id_vendedor);
+        rta.setUser_name(vende.getName());
+        rta.setFollowers_count(vende.getSeguidores().size());
         return rta;
     }
 }

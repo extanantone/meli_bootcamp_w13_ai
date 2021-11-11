@@ -1,5 +1,6 @@
 package com.example.socialMeli.controller;
 
+import com.example.socialMeli.dto.CantidadFollowsDTO;
 import com.example.socialMeli.dto.RespuestaSimpleDTO;
 import com.example.socialMeli.service.ISocialMeliService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class SocialMeliController {
         return new ResponseEntity<>(rta, HttpStatus.OK);
     }
     @GetMapping("/users/{user_id}/followers/count")
-    public ResponseEntity<RespuestaSimpleDTO> contar(@PathVariable int user_id){
-        RespuestaSimpleDTO cantidad = SMservicio.contar(user_id);
+    public ResponseEntity<CantidadFollowsDTO> contar(@PathVariable int user_id){
+        CantidadFollowsDTO cantidad = SMservicio.contar(user_id);
         return new ResponseEntity<>(cantidad, HttpStatus.OK);
     }
 }
