@@ -1,6 +1,6 @@
 package Imprimir;
 
-public class Datos {
+public class DatosDeLaPersona {
     int documento;
     String nombre;
     String apellido;
@@ -15,7 +15,7 @@ public class Datos {
         this.nombre = nombre;
     }
 
-    public Datos(int documento, String nombre, String apellido, String trabajo) {
+    public DatosDeLaPersona(int documento, String nombre, String apellido, String trabajo) {
         this.documento = documento;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -24,7 +24,7 @@ public class Datos {
 
     @Override
     public String toString() {
-        return "datos {" +
+        return "datos de la persona {" +
                 "documento=" + documento +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
