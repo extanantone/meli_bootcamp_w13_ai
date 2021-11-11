@@ -44,4 +44,14 @@ public class SocialMeliService implements  ISocialMeliService{
         }
         return rta;
     }
+    public RespuestaSimpleDTO contar (int id_vendedor){
+        RespuestaSimpleDTO rta = new RespuestaSimpleDTO();
+        Vendedor vende = SMRepositorio.buscarVendedor(id_vendedor);
+        if(vende == null ){
+            throw new UsuarioNoEncontradoError("El id del usuario vendedor es incorrecto");
+        }
+        rta.setMensaje("El vendedor "+id_vendedor+" tiene "+vende.getSeguidores().size()+" seguidor/es.");
+        rta.setStatusCode(200);
+        return rta;
+    }
 }

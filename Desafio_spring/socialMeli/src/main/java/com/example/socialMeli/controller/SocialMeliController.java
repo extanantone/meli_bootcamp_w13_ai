@@ -23,4 +23,9 @@ public class SocialMeliController {
         RespuestaSimpleDTO rta = SMservicio.seguir(user_id, user_id_to_follow);
         return new ResponseEntity<>(rta, HttpStatus.OK);
     }
+    @GetMapping("/users/{user_id}/followers/count")
+    public ResponseEntity<RespuestaSimpleDTO> contar(@PathVariable int user_id){
+        RespuestaSimpleDTO cantidad = SMservicio.contar(user_id);
+        return new ResponseEntity<>(cantidad, HttpStatus.OK);
+    }
 }
