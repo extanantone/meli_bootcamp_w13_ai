@@ -4,7 +4,7 @@ Para esta prueba decidí que solo los usuarios de tipo comprador podrán seguir 
 En ese orden de ideas, los usuarios vendedores son aquellos que tienen seguidores y pueden hacer publicaciones.
 Los usuarios compradores sólo pueden seguir vendedores, dejarlos de seguir y ver publicaciones de los vendedores.
 
-Para iniciar y cargar los datos creé una especie de endpoint inicial que se puede llamar así:
+Para iniciar y cargar los datos creé una especie de endpoint inicial que se puede llamar con un GET así:
 ```java
 localhost:8080/cargar
 ```
