@@ -28,7 +28,7 @@ public class UserService implements IUserService {
         return userRepository.follow(user_id, user_id_to_follow);
     }
 
-    @Override
+    /*@Override
     public FollowersCountDTO followersCount(Integer user_id) {
         return userRepository.followersCount(user_id);
     }
