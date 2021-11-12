@@ -1,10 +1,10 @@
-package com.bootcamp.SocialMeli.service;
+package com.bootcamp.SocialMeli.service.usuario;
 
-import com.bootcamp.SocialMeli.dto.FollowedListDTO;
-import com.bootcamp.SocialMeli.dto.FollowerCountDTO;
-import com.bootcamp.SocialMeli.dto.FollowerListDTO;
-import com.bootcamp.SocialMeli.dto.UsuarioDTO;
-import com.bootcamp.SocialMeli.repository.IUsuarioRepository;
+import com.bootcamp.SocialMeli.dto.usuario.FollowedListDTO;
+import com.bootcamp.SocialMeli.dto.usuario.FollowerCountDTO;
+import com.bootcamp.SocialMeli.dto.usuario.FollowerListDTO;
+import com.bootcamp.SocialMeli.dto.usuario.UsuarioDTO;
+import com.bootcamp.SocialMeli.repository.usuario.IUsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -50,5 +50,4 @@ public class UsuarioService implements IUsuarioService {
         return followedListDTO;
     }
 
-    
 }

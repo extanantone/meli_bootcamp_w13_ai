@@ -1,10 +1,8 @@
-package com.bootcamp.SocialMeli.service;
+package com.bootcamp.SocialMeli.service.usuario;
 
-import com.bootcamp.SocialMeli.dto.FollowedListDTO;
-import com.bootcamp.SocialMeli.dto.FollowerCountDTO;
-import com.bootcamp.SocialMeli.dto.FollowerListDTO;
-
-import java.util.List;
+import com.bootcamp.SocialMeli.dto.usuario.FollowedListDTO;
+import com.bootcamp.SocialMeli.dto.usuario.FollowerCountDTO;
+import com.bootcamp.SocialMeli.dto.usuario.FollowerListDTO;
 
 public interface IUsuarioService {
     public void realizarFollow(Integer userId, Integer userIdToFollow);

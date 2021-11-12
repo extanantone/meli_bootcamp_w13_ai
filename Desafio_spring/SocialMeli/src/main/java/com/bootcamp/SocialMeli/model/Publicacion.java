@@ -7,16 +7,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class Producto {
-    private Integer productId;
-    private String productName;
-    private String type;
-    private String brand;
-    private String color;
-    private String notes;
+public class Publicacion {
+    private Integer userId;
+    private Integer idPost;
+    private LocalDate date;
+    private Producto detail;
+    private Integer category;
+    private Double price;
 }

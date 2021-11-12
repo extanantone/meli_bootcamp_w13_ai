@@ -1,4 +1,4 @@
-package com.bootcamp.SocialMeli.dto;
+package com.bootcamp.SocialMeli.dto.usuario;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -12,8 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class FollowerCountDTO {
+public class UsuarioDTO {
     private Integer userId;
     private String userName;
-    private Integer userCount;
 }

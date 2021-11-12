@@ -1,4 +1,4 @@
-package com.bootcamp.SocialMeli.repository;
+package com.bootcamp.SocialMeli.repository.usuario;
 
 import com.bootcamp.SocialMeli.model.Usuario;
 import com.fasterxml.jackson.core.type.TypeReference;

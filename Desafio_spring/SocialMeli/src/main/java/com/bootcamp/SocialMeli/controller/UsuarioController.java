@@ -1,10 +1,10 @@
 package com.bootcamp.SocialMeli.controller;
 
-import com.bootcamp.SocialMeli.dto.FollowedListDTO;
-import com.bootcamp.SocialMeli.dto.FollowerCountDTO;
-import com.bootcamp.SocialMeli.dto.FollowerListDTO;
+import com.bootcamp.SocialMeli.dto.usuario.FollowedListDTO;
+import com.bootcamp.SocialMeli.dto.usuario.FollowerCountDTO;
+import com.bootcamp.SocialMeli.dto.usuario.FollowerListDTO;
 import com.bootcamp.SocialMeli.exception.handler.BadRequestException;
-import com.bootcamp.SocialMeli.service.IUsuarioService;
+import com.bootcamp.SocialMeli.service.usuario.IUsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
