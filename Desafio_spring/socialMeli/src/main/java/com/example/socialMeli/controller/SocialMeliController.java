@@ -31,12 +31,12 @@ public class SocialMeliController {
         return new ResponseEntity<>(cantidad, HttpStatus.OK);
     }
     @GetMapping("/users/{user_id}/followers/list")
-    public ResponseEntity<SeguidoresDTO> quienMeSigue(@PathVariable int user_id) throws UsuarioNoEncontradoError {
-        SeguidoresDTO seguidores = SMservicio.buscarSeguidores(user_id);
+    public ResponseEntity<SeguidoresDTO> quienMeSigue(@PathVariable int user_id, @RequestParam(required = false) String order) throws UsuarioNoEncontradoError {
+        SeguidoresDTO seguidores = SMservicio.buscarSeguidores(user_id, order);
         return new ResponseEntity<>(seguidores, HttpStatus.OK);
     }
     @GetMapping("/users/{user_id}/followed/list")
-    public ResponseEntity<SeguidosDTO> aQuienSigo(@PathVariable int user_id) throws UsuarioNoEncontradoError {
+    public ResponseEntity<SeguidosDTO> aQuienSigo(@PathVariable int user_id, @RequestParam(required = false) String order) throws UsuarioNoEncontradoError {
         SeguidosDTO seguidos = SMservicio.buscarSeguidos(user_id);
         return new ResponseEntity<>(seguidos, HttpStatus.OK);
     }
@@ -46,7 +46,7 @@ public class SocialMeliController {
         return new ResponseEntity<>(rta, HttpStatus.OK);
     }
     @GetMapping("/products/followed/{user_id}/list")
-    public ResponseEntity<List<PublicacionesVendedoresDTO> > postsRecientes(@PathVariable int user_id) throws UsuarioNoEncontradoError {
+    public ResponseEntity<List<PublicacionesVendedoresDTO> > postsRecientes(@PathVariable int user_id, @RequestParam(required = false) String order) throws UsuarioNoEncontradoError {
         List<PublicacionesVendedoresDTO>  posts = SMservicio.obtenerPublicaciones(user_id);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
@@ -55,4 +55,5 @@ public class SocialMeliController {
         RespuestaSimpleDTO rta = SMservicio.dejarDeSeguir(user_id, user_id_to_unfollow);
         return new ResponseEntity<>(rta, HttpStatus.OK);
     }
+
 }

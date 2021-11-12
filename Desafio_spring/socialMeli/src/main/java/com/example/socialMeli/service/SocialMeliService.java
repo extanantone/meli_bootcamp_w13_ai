@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.time.temporal.ChronoUnit.*;
+import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -66,7 +66,7 @@ public class SocialMeliService implements  ISocialMeliService{
         rta.setFollowers_count(vende.getSeguidores().size());
         return rta;
     }
-    public SeguidoresDTO buscarSeguidores (int id) throws UsuarioNoEncontradoError{
+    public SeguidoresDTO buscarSeguidores (int id, String order ) throws UsuarioNoEncontradoError{
         SeguidoresDTO seguidores = new SeguidoresDTO();
         Vendedor vende = errorVendedor(id);
         seguidores.setUser_id(id);
@@ -75,7 +75,11 @@ public class SocialMeliService implements  ISocialMeliService{
         for (Comprador c:vende.getSeguidores()) {
             compradoresQueSiguen.add(new CompradoresDTO(c.getUser_id(),c.getName()));
         }
-        seguidores.setFollowers(compradoresQueSiguen);
+        if(order == null ||order.equals("name_asc")){
+            seguidores.setFollowers(compradoresQueSiguen.stream().sorted(Comparator.comparing(x->x.getUser_name())).collect(Collectors.toList()));
+        }else  if(order.equals("name_desc")){
+            seguidores.setFollowers(compradoresQueSiguen.stream().sorted(Collections.reverseOrder(Comparator.comparing(x->x.getUser_name()))).collect(Collectors.toList()));
+        }
         return seguidores;
     }
     public SeguidosDTO buscarSeguidos (int id) throws UsuarioNoEncontradoError{
@@ -156,5 +160,11 @@ public class SocialMeliService implements  ISocialMeliService{
             }
         }
         return rta;
+    }
+    public SeguidoresDTO ordenarSeguidores (int id, String order) throws UsuarioNoEncontradoError{
+        SeguidoresDTO  seg = null;
+        List<CompradoresDTO> seguidores = seg.getFollowers();
+        //seg.setFollowers(seguidores.stream().sorted(Comparator.comparing(x-> x.getUser_name())).collect(Collectors.toList()));
+        return seg;
     }
 }
