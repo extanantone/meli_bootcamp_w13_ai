@@ -14,8 +14,8 @@ public class Comprador extends Usuario{
         super(id,nombre);
     }
 
-    public void setSeguido(int idVendedor, Vendedor vendedor){
-        seguidos.put(idVendedor,vendedor);
+    public void setSeguido(Vendedor vendedor){
+        seguidos.put(vendedor.getId(), vendedor);
     }
 
     public Set<Map.Entry<Integer, Vendedor>> getSeguidos(){

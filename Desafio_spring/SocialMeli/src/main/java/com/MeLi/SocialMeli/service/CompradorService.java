@@ -28,8 +28,8 @@ public class CompradorService implements CompradorServiceImplement {
     public SeguimientoDTO seguir(int idSeguidor, int idSeguido) throws NotFoundCompradorException, NotFoundVendedorException {
         Comprador comprador = compradorRepositoryImplement.find(idSeguidor).orElseThrow(() -> new NotFoundCompradorException(idSeguidor));
         Vendedor vendedor = vendedorRepositoryImplement.find(idSeguido).orElseThrow(()->new NotFoundVendedorException(idSeguido));
-        comprador.setSeguido(idSeguido,vendedor);
-        vendedor.setSeguidor(idSeguidor,comprador);
+        comprador.setSeguido(vendedor);
+        vendedor.setSeguidor(comprador);
         return new SeguimientoDTO(comprador.getId(),comprador.getNombre(),vendedor.getId(),vendedor.getNombre(),"Seguimiento exitoso.");
     }
 

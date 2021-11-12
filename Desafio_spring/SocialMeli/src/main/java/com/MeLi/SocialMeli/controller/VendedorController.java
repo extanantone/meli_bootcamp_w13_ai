@@ -1,5 +1,6 @@
 package com.MeLi.SocialMeli.controller;
 
+import com.MeLi.SocialMeli.DTO.DatosSeguidoresDTO;
 import com.MeLi.SocialMeli.DTO.SeguidoresDTO;
 import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
 import com.MeLi.SocialMeli.service.VendedorServiceImplement;
@@ -21,5 +22,10 @@ public class VendedorController {
     @GetMapping("/users/{user_id}/followers/count")
     public ResponseEntity<SeguidoresDTO> getCantSeguidores(@PathVariable int user_id) throws NotFoundVendedorException {
         return new ResponseEntity<>(vendedorServiceImplement.contarSeguidores(user_id), HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{user_id}/followers/list")
+    public ResponseEntity<DatosSeguidoresDTO> getInfoSeguidores(@PathVariable int user_id) throws NotFoundVendedorException {
+        return new ResponseEntity<>(vendedorServiceImplement.getInfoSeguidores(user_id), HttpStatus.OK);
     }
 }
