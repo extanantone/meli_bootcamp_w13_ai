@@ -3,9 +3,10 @@ package com.example.socialmeli.demo.controller;
 
 
 import com.example.socialmeli.demo.dto.controllerToService.FollowUserDTO;
+import com.example.socialmeli.demo.dto.controllerToService.UnfollowerDTO;
 import com.example.socialmeli.demo.dto.controllerToService.UserIdDTO;
 import com.example.socialmeli.demo.dto.serviceToController.UserFollowerCountDTO;
-import com.example.socialmeli.demo.dto.serviceToController.UserFollowersList;
+import com.example.socialmeli.demo.dto.serviceToController.UserFollowersListDTO;
 import com.example.socialmeli.demo.service.IFollowerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class FollowerController {
     request.setUser_id(user_id);
     request.setUser_id_to_follow(user_id_to_follow);
 
-    return iFollowerService.seguirUsuario(request);
+    return iFollowerService.followUser(request);
     }
 
 
@@ -46,9 +47,9 @@ public class FollowerController {
 
     //US 0003
     @GetMapping("/users/{user_id}/followers/list")
-    public ResponseEntity<UserFollowersList> getFollowersListByUserId(@PathVariable int user_id){
+    public ResponseEntity<UserFollowersListDTO> getFollowersListByUserId(@PathVariable int user_id){
 
-        UserFollowersList response = new UserFollowersList();
+        UserFollowersListDTO response = new UserFollowersListDTO();
 
         UserIdDTO request = new UserIdDTO();
         request.setUser_id(user_id);
@@ -56,6 +57,43 @@ public class FollowerController {
         response = iFollowerService.getFollowersListByUserID(request);
 
         return new ResponseEntity<>(response,HttpStatus.OK);
+
+    }
+
+    //US 0004
+    @GetMapping("/users/{user_id}/followed/list")
+    public ResponseEntity<UserFollowersListDTO> getFollowedUsersFromUserId(@PathVariable int user_id){
+
+        UserFollowersListDTO response = new UserFollowersListDTO();
+
+        UserIdDTO request = new UserIdDTO();
+        request.setUser_id(user_id);
+
+        response = iFollowerService.getFollowedUsersFromUserId(request);
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+
+    }
+
+
+
+
+
+    //US 0007
+    @PostMapping("/users/{user_id}/unfollow/{user_id_to_unfollow}")
+    public ResponseEntity unFollowUser(@PathVariable int user_id, @PathVariable int user_id_to_unfollow){
+
+        UnfollowerDTO request = new UnfollowerDTO();
+        request.setUser_id(user_id);
+        request.setUser_id_to_unfollow(user_id_to_unfollow);
+
+        try{
+            iFollowerService.unFollowUser(request);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 

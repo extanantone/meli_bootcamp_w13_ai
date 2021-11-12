@@ -2,6 +2,7 @@ package com.example.socialmeli.demo.repository;
 
 
 import com.example.socialmeli.demo.dto.controllerToService.FollowUserDTO;
+import com.example.socialmeli.demo.dto.controllerToService.UnfollowerDTO;
 import com.example.socialmeli.demo.model.FollowerCompradorVendedor;
 import com.example.socialmeli.demo.model.Followers;
 import com.example.socialmeli.demo.model.Usuarios;
@@ -76,9 +77,16 @@ public class FollowerRepository implements IFollowerRepository{
 
 
     @Override
-    public void unFollowUser(int userId, int userToUnfollowId) {
+    public void unFollowUser(UnfollowerDTO request) {
 
-        listaDeFollowers.get(userId).getUsuariosSeguidos().remove(userToUnfollowId);
+        int userId = request.getUser_id();
+        int userToUnfollowId = request.getUser_id_to_unfollow();
+
+        try {
+            listaDeFollowers.get(userId).getUsuariosSeguidos().remove(userToUnfollowId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //Opcion B: con lista
         //List<FollowerCompradorVendedor> aux;
@@ -105,6 +113,23 @@ public class FollowerRepository implements IFollowerRepository{
         //listaDeFollows.stream().filter(x -> x.getVendedorId() == vendedorUserId).collect(Collectors.toList()).size();
 
         return seguidoresDelVendedor;
+
+    }
+
+    @Override
+    public List<Usuarios> getUsersFollowedByUserId(int userId) {
+
+        Followers userFollowers = new Followers();
+        List<Usuarios> response = new ArrayList<>();
+
+        userFollowers = listaDeFollowers.get(userId);
+
+        if(userFollowers!= null){
+            response = new ArrayList<>(userFollowers.getUsuariosSeguidos().values());
+        }
+
+        return response;
+
 
     }
 

@@ -4,9 +4,10 @@ package com.example.socialmeli.demo.service;
 
 import com.example.socialmeli.demo.dto.UsuarioDTO;
 import com.example.socialmeli.demo.dto.controllerToService.FollowUserDTO;
+import com.example.socialmeli.demo.dto.controllerToService.UnfollowerDTO;
 import com.example.socialmeli.demo.dto.controllerToService.UserIdDTO;
 import com.example.socialmeli.demo.dto.serviceToController.UserFollowerCountDTO;
-import com.example.socialmeli.demo.dto.serviceToController.UserFollowersList;
+import com.example.socialmeli.demo.dto.serviceToController.UserFollowersListDTO;
 import com.example.socialmeli.demo.model.Usuarios;
 import com.example.socialmeli.demo.repository.IFollowerRepository;
 import com.example.socialmeli.demo.repository.IUsuarioRepository;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +31,7 @@ IUsuarioRepository usuarioRepository;
 
 
     @Override
-    public ResponseEntity seguirUsuario(FollowUserDTO requestDTO) {
+    public ResponseEntity followUser(FollowUserDTO requestDTO) {
 
         if(requestDTO.getUser_id() == requestDTO.getUser_id_to_follow())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -80,12 +82,12 @@ IUsuarioRepository usuarioRepository;
     }
 
     @Override
-    public UserFollowersList getFollowersListByUserID(UserIdDTO request) {
+    public UserFollowersListDTO getFollowersListByUserID(UserIdDTO request) {
 
         int userID = request.getUser_id();
         String userName;
         List<Usuarios> userFollowers;
-        UserFollowersList response = new UserFollowersList();
+        UserFollowersListDTO response = new UserFollowersListDTO();
 
         //Vamos a obtener el usuario solicitado
         Usuarios user = usuarioRepository.obtenerUsuarioPorID(userID);
@@ -111,6 +113,51 @@ IUsuarioRepository usuarioRepository;
 
 
         return response;
+    }
+
+    @Override
+    public UserFollowersListDTO getFollowedUsersFromUserId(UserIdDTO request) {
+
+        UserFollowersListDTO response = new UserFollowersListDTO();
+        List<Usuarios> followedUsers = new ArrayList<>();
+        int userId = request.getUser_id();
+        String userName;
+
+        followedUsers = followerRepository.getUsersFollowedByUserId(userId);
+
+        //Vamos a obtener el usuario solicitado
+        Usuarios searchedUser = usuarioRepository.obtenerUsuarioPorID(userId);
+
+        if(searchedUser == null)
+            throw new RuntimeException();
+
+        userName = searchedUser.getUsername();
+
+        for (Usuarios u: followedUsers) {
+
+            UsuarioDTO uDTO = new UsuarioDTO();
+            uDTO.setUser_id(u.getId());
+            uDTO.setUser_name(u.getUsername());
+
+            response.addFollowerToList(uDTO);
+        }
+
+        response.setUser_id(userId);
+        response.setUser_name(userName);
+
+        return response;
+    }
+
+    @Override
+    public ResponseEntity unFollowUser(UnfollowerDTO request) {
+
+        try{
+            followerRepository.unFollowUser(request);
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+
+        return null;
     }
 
 

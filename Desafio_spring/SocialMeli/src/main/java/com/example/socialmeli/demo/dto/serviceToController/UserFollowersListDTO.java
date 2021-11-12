@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserFollowersList {
+public class UserFollowersListDTO {
 
     private int user_id;
     private String user_name;
