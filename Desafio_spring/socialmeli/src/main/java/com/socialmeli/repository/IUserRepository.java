@@ -9,4 +9,6 @@ public interface IUserRepository {
     User getUserById(int id);
     List<User> followedUser(User user);
     List<Post> getPostLastTwoWeeksOfFollowed(int idUser);
+
+    List<Post> getPromoPostByUserId(int userId);
 }

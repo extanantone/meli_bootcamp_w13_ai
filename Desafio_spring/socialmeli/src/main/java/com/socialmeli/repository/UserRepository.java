@@ -39,4 +39,10 @@ public class UserRepository implements IUserRepository{
         return users.stream().filter(u->u.isFollower(getUserById(idUser))).flatMap(u->u.getPosts().stream())
                     .filter(l->l.getDate().isAfter(LocalDate.now().minusWeeks(2))).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Post> getPromoPostByUserId(int userId) {
+        return users.stream().flatMap(u->u.getPosts().stream()).filter(p->p.isHasDiscount())
+                .collect(Collectors.toList());
+    }
 }

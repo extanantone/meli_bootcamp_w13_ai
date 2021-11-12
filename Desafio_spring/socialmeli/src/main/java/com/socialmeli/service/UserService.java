@@ -76,7 +76,7 @@ public class UserService implements IUserService{
         DetailDto detail = dto.getDetail();
         user.addPost(new Post(dto.getPostId(), LocalDate.parse(dto.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),detail.getProductId(),detail.getProductName(),
                 detail.getType(),detail.getBrand(),detail.getColor(),detail.getNotes(),dto.getCategory(),
-                dto.getPrice()));
+                dto.getPrice(),false,0));
     }
 
     @Override
@@ -153,5 +153,47 @@ public class UserService implements IUserService{
                 .map(u->new FollowedItemDto(u.getId(),u.getName()))
                 .collect(Collectors.toList());
         return new FollowedListDto(user.getId(),user.getName(),items);
+    }
+
+    @Override
+    public ListPostDto getListDtoSubscriptionByUserAndOrderByDateAsc(int id) {
+        if(iUserRepository.getUserById(id)==null)
+            throw new NotFoundUserException("Not exist user");
+        List<Post> posts =  iUserRepository.getPostLastTwoWeeksOfFollowed(id);
+        List<PostDtoWithoutUser> pdtos = posts.stream().sorted(Comparator.comparing(Post::getDate))
+                .map(i->new PostDtoWithoutUser(i.getId(),i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),i.getPrice())).collect(Collectors.toList());
+        return new ListPostDto(id,pdtos);
+    }
+
+    @Override
+    public ListPostDto getListDtoSubscriptionByUserAndOrderByDateDesc(int id) {
+        if(iUserRepository.getUserById(id)==null)
+            throw new NotFoundUserException("Not exist user");
+        List<Post> posts =  iUserRepository.getPostLastTwoWeeksOfFollowed(id);
+        List<PostDtoWithoutUser> pdtos = posts.stream().sorted(Comparator.comparing(Post::getDate).reversed())
+                .map(i->new PostDtoWithoutUser(i.getId(),i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),i.getPrice())).collect(Collectors.toList());
+        return new ListPostDto(id,pdtos);
+    }
+
+    @Override
+    public void addPostDiscount(DicountPostDto dto) {
+        User user = iUserRepository.getUserById(dto.getUserId());
+        if(user==null)
+            throw new NotFoundUserException("Not exist user");
+        DetailDto detail = dto.getDetail();
+        user.addPost(new Post(dto.getPostId(), LocalDate.parse(dto.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),detail.getProductId(),detail.getProductName(),
+                detail.getType(),detail.getBrand(),detail.getColor(),detail.getNotes(),dto.getCategory(),
+                dto.getPrice(),dto.isHasDiscount(),dto.getDiscount()));
+    }
+
+    @Override
+    public PostCount getCountPromoDiscount(int userId) {
+        User user = iUserRepository.getUserById(userId);
+        if(user==null)
+            throw new NotFoundUserException("No exist user with given id");
+        else if(!user.isSeller())
+            throw  new InvalidSellerException("The user isn't seller");
+        List<Post> post = iUserRepository.getPromoPostByUserId(userId);
+        return new PostCount(userId,user.getName(),post.size());
     }
 }

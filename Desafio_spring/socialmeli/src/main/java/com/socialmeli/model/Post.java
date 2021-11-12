@@ -23,6 +23,8 @@ public class Post {
     private String notes;
     private int category;
     private int price;
+    private boolean hasDiscount;
+    private double discount;
 
     @Override
     public boolean equals(Object o) {

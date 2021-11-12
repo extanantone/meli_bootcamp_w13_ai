@@ -51,7 +51,9 @@ public class UserController {
     }
 
     @GetMapping("/products/followed/{id}/list")
-    public ListPostDto getListPostTwoWeeks(@PathVariable int id){
+    public ListPostDto getListPostTwoWeeks(@PathVariable int id,@RequestParam(defaultValue = "") String order){
+        if(order.equals("date_asc")) return iUserService.getListDtoSubscriptionByUserAndOrderByDateAsc(id);
+        else if(order.equals("date_desc")) return iUserService.getListDtoSubscriptionByUserAndOrderByDateDesc(id);
         return iUserService.getListDtoSubscriptionByUser(id);
     }
 
@@ -59,5 +61,16 @@ public class UserController {
     public void unfollow(@PathVariable int id,@PathVariable int seller){
         iUserService.unfollowSeller(id,seller);
     }
+
+    @PostMapping("/products/promo-post")
+    public void  addPromoPost(@RequestBody DicountPostDto dto){
+        iUserService.addPostDiscount(dto);
+    }
+
+    @GetMapping("/products/{id}/promo-post/count")
+    public PostCount getCountPromoDiscount(@PathVariable int id){
+        return iUserService.getCountPromoDiscount(id);
+    }
+
 
 }
