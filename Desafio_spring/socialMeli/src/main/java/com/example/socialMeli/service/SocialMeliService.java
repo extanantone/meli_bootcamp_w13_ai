@@ -14,6 +14,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.temporal.ChronoUnit.*;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class SocialMeliService implements  ISocialMeliService{
@@ -25,17 +28,24 @@ public class SocialMeliService implements  ISocialMeliService{
         SMRepositorio.agregarVendedores();
         SMRepositorio.agregarCompradores();
     }
-
-    public RespuestaSimpleDTO seguir (int id_comprado, int id_vendedor) throws UsuarioNoEncontradoError {
-        RespuestaSimpleDTO rta = new RespuestaSimpleDTO();
-        Comprador compra = SMRepositorio.buscarComprador(id_comprado);
-        Vendedor vende = SMRepositorio.buscarVendedor(id_vendedor);
-
-        if(vende == null ){
-            throw new UsuarioNoEncontradoError("El id del usuario vendedor es incorrecto");
-        }else if(compra == null){
+    public Comprador errorComprador(int id) throws UsuarioNoEncontradoError {
+        Comprador compra = SMRepositorio.buscarComprador(id);
+        if(compra == null ){
             throw new UsuarioNoEncontradoError("El id del usuario comprador es incorrecto");
         }
+        return compra;
+    }
+    public Vendedor errorVendedor(int id) throws UsuarioNoEncontradoError {
+        Vendedor vende = SMRepositorio.buscarVendedor(id);
+        if(vende == null ){
+            throw new UsuarioNoEncontradoError("El id del usuario vendedor es incorrecto");
+        }
+        return vende;
+    }
+    public RespuestaSimpleDTO seguir (int id_comprado, int id_vendedor) throws UsuarioNoEncontradoError {
+        RespuestaSimpleDTO rta = new RespuestaSimpleDTO();
+        Comprador compra = errorComprador(id_comprado);
+        Vendedor vende = errorVendedor(id_vendedor);
         Comprador yaSeguidor = SMRepositorio.buscarSeguidor(vende.getSeguidores(), id_comprado);
         if(yaSeguidor != null){
             throw new UsuarioNoEncontradoError("El comprador "+id_comprado+" ya seguia al vendedor "+id_vendedor);
@@ -50,10 +60,7 @@ public class SocialMeliService implements  ISocialMeliService{
     }
     public CantidadFollowsDTO contar (int id_vendedor) throws UsuarioNoEncontradoError {
         CantidadFollowsDTO rta = new CantidadFollowsDTO();
-        Vendedor vende = SMRepositorio.buscarVendedor(id_vendedor);
-        if(vende == null ){
-            throw new UsuarioNoEncontradoError("El id del usuario vendedor es incorrecto");
-        }
+        Vendedor vende = errorVendedor(id_vendedor);
         rta.setUser_id(id_vendedor);
         rta.setUser_name(vende.getName());
         rta.setFollowers_count(vende.getSeguidores().size());
@@ -61,10 +68,7 @@ public class SocialMeliService implements  ISocialMeliService{
     }
     public SeguidoresDTO buscarSeguidores (int id) throws UsuarioNoEncontradoError{
         SeguidoresDTO seguidores = new SeguidoresDTO();
-        Vendedor vende = SMRepositorio.buscarVendedor(id);
-        if(vende == null ){
-            throw new UsuarioNoEncontradoError("El id del usuario vendedor es incorrecto");
-        }
+        Vendedor vende = errorVendedor(id);
         seguidores.setUser_id(id);
         seguidores.setUser_name(vende.getName());
         List<CompradoresDTO> compradoresQueSiguen = new ArrayList<>();
@@ -76,10 +80,7 @@ public class SocialMeliService implements  ISocialMeliService{
     }
     public SeguidosDTO buscarSeguidos (int id) throws UsuarioNoEncontradoError{
         SeguidosDTO seguidos = new SeguidosDTO();
-        Comprador compra = SMRepositorio.buscarComprador(id);
-        if(compra == null ){
-            throw new UsuarioNoEncontradoError("El id del usuario comprador es incorrecto");
-        }
+        Comprador compra = errorComprador(id);
         seguidos.setUser_id(id);
         seguidos.setUser_name(compra.getName());
         List<CompradoresDTO> vendedoresQueSiguen = new ArrayList<>();
@@ -91,10 +92,7 @@ public class SocialMeliService implements  ISocialMeliService{
     }
     public RespuestaSimpleDTO añadirPost (PublicacionDTO pub) throws UsuarioNoEncontradoError{
         RespuestaSimpleDTO rta = new RespuestaSimpleDTO();
-        Vendedor vende = SMRepositorio.buscarVendedor(pub.getUser_id());
-        if(vende == null ){
-            throw new UsuarioNoEncontradoError("El id del usuario vendedor es incorrecto");
-        }
+        Vendedor vende = errorVendedor(pub.getUser_id());
         Producto productos = new Producto(pub.getDetail().getProduct_id(), pub.getDetail().getProduct_name(), pub.getDetail().getType(), pub.getDetail().getBrand(),
                                            pub.getDetail().getColor(), pub.getDetail().getNotes() );
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
@@ -111,5 +109,36 @@ public class SocialMeliService implements  ISocialMeliService{
             }
         }
         return rta;
+    }
+    public boolean verificarVendedorYFecha(LocalDate fecha){
+        boolean flag = false;
+        LocalDate currentDate = LocalDate.now();
+        long numberOFDays = DAYS.between(fecha, currentDate);
+        if(numberOFDays <= 14){
+            flag=true;
+        }
+        return flag;
+    }
+    public List<PublicacionesVendedoresDTO> obtenerPublicaciones (int id) throws UsuarioNoEncontradoError{
+        boolean flag;
+        List<PublicacionDTO> publicacionesDTO = new ArrayList<>();
+        List<PublicacionesVendedoresDTO>  posts = new ArrayList<>();
+        Comprador compra = errorComprador(id);
+        List<Vendedor> vendedores = compra.getSiguiendo();
+        for (Vendedor ve: vendedores) {
+            PublicacionesVendedoresDTO retorno = new PublicacionesVendedoresDTO(ve.getUser_id());
+            for (Publicacion p:ve.getPublicaciones()) {
+                flag = verificarVendedorYFecha(p.getFecha());
+                if(flag){
+                    ProductoDTO producto = new ProductoDTO(p.getDetalle().getId_producto(),p.getDetalle().getNombre_producto(), p.getDetalle().getTipo(), p.getDetalle().getMarca(), p.getDetalle().getColor(), p.getDetalle().getNotas());
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+                    String formattedString = p.getFecha().format(formatter);
+                    publicacionesDTO.add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio()));
+                    retorno.getPosts().add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio()));
+                }
+            }
+            posts.add(retorno);
+        }
+        return posts;
     }
 }

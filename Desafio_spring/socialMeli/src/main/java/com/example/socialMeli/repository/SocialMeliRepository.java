@@ -6,6 +6,7 @@ import com.example.socialMeli.model.Publicacion;
 import com.example.socialMeli.model.Vendedor;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -14,12 +15,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+@Getter
 @Repository
 public class SocialMeliRepository implements  ISocialMeliRepository{
     List<Comprador> compradores;
     List<Vendedor> vendedores;
-    List<Publicacion> publicaciones;
     @Override
     public List<Vendedor> abrirJsonVendedores() {
         File file = null;
@@ -86,12 +86,12 @@ public class SocialMeliRepository implements  ISocialMeliRepository{
     }
 
     @Override
-    public Publicacion buscarPublicacion(int id) {
-        return this.publicaciones.stream().filter(p -> p.getId_publicacion() == id).findFirst().orElse(null);
-    }
-    @Override
     public Comprador buscarSeguidor(List<Comprador>seguidores, int idComprador){
         return seguidores.stream().filter(p -> p.getUser_id() == idComprador).findFirst().orElse(null);
+    }
+    @Override
+    public Vendedor buscarSiguiendo(List<Vendedor>siguiendo, int idVendedor){
+        return siguiendo.stream().filter(p -> p.getUser_id() == idVendedor).findFirst().orElse(null);
     }
     @Override
     public Publicacion buscarPost(List<Publicacion> publi, int idPub){

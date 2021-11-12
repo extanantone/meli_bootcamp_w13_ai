@@ -45,4 +45,9 @@ public class SocialMeliController {
         RespuestaSimpleDTO rta = SMservicio.añadirPost(pub);
         return new ResponseEntity<>(rta, HttpStatus.OK);
     }
+    @GetMapping("/products/followed/{user_id}/list")
+    public ResponseEntity<List<PublicacionesVendedoresDTO> > postsRecientes(@PathVariable int user_id) throws UsuarioNoEncontradoError {
+        List<PublicacionesVendedoresDTO>  posts = SMservicio.obtenerPublicaciones(user_id);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
 }

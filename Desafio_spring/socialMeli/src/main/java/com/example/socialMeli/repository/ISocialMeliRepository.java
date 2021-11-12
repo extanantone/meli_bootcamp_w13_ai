@@ -13,8 +13,8 @@ public interface ISocialMeliRepository {
     public void agregarCompradores();
     public Comprador buscarComprador(int id);
     public Vendedor buscarVendedor(int id);
-    public Publicacion buscarPublicacion(int id);
     public Comprador buscarSeguidor(List<Comprador>seguidores, int idComprador);
+    public Vendedor buscarSiguiendo(List<Vendedor>siguiendo, int idVendedor);
     public Publicacion buscarPost(List<Publicacion> publi, int idPub);
     public boolean seguir (Comprador compra, Vendedor vende);
     public void imprimirSeguidores (Vendedor vende);
