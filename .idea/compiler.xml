@@ -6,19 +6,28 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="SocialMeli" />
+        <module name="starwars" />
+        <module name="calculadora-calorias" />
         <module name="Clase2" />
         <module name="Clase3" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="calculadora-calorias" target="11" />
       <module name="Clase2" target="11" />
       <module name="Clase3" target="11" />
+      <module name="SocialMeli" target="11" />
+      <module name="starwars" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Clase2" options="-parameters" />
       <module name="Clase3" options="-parameters" />
+      <module name="SocialMeli" options="-parameters" />
+      <module name="calculadora-calorias" options="-parameters" />
+      <module name="starwars" options="-parameters" />
     </option>
   </component>
 </project>
