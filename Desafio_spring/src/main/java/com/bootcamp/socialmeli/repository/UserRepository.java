@@ -59,4 +59,24 @@ public class UserRepository implements IUserRepository{
 
     }
 
+    @Override
+    public List<User> getFollowersFromUser(int idUser) {
+
+        List<User> listFollowers = new ArrayList<>();
+
+        if(!listUsers.isEmpty()){
+
+            for (User u : listUsers) {
+                if(u.getListFolows().containsKey(idUser))
+                    listFollowers.add(u);
+            }
+
+            return listFollowers;
+
+        }
+
+        throw new RuntimeException("La lista de Usuarios está vacía");
+
+    }
+
 }

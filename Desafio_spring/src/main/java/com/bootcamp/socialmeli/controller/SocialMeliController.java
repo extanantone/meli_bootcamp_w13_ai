@@ -1,7 +1,9 @@
 package com.bootcamp.socialmeli.controller;
 
 import com.bootcamp.socialmeli.DTO.DTOCount;
+import com.bootcamp.socialmeli.DTO.DTOFollowers;
 import com.bootcamp.socialmeli.service.IServiceFollower;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,12 @@ public class SocialMeliController {
 
             return iServiceFollower.getCountFollowersOfuser(userId);
 
+    }
+
+    @GetMapping("/user/{userId}/followers/list")
+    public ResponseEntity<DTOFollowers> getFollowersFromUser(@PathVariable int userId){
+
+        return iServiceFollower.getFollowersFromUser(userId);
     }
 
 }

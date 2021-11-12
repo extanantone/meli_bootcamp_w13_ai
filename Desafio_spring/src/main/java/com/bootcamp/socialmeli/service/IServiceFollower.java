@@ -9,4 +9,6 @@ public interface IServiceFollower {
 
     ResponseEntity getCountFollowersOfuser(int idUser);
 
+    ResponseEntity getFollowersFromUser(int idUser);
+
 }

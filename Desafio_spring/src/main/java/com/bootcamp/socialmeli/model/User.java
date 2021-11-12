@@ -14,12 +14,12 @@ import java.util.HashMap;
 public class User {
 
     private int userId;
-    private String name;
+    private String userName;
     private HashMap<Integer,User> listFolows = new HashMap<Integer,User>();
 
     public User(int userId, String nombre) {
         this.userId = userId;
-        this.name = nombre;
+        this.userName = nombre;
     }
 
     public boolean addListFollows(Integer userIdToFollow, User userToFollow){
