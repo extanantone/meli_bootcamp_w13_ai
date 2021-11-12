@@ -1,6 +1,7 @@
 package com.sprint.SocialMeli.model;
 
-import com.sprint.SocialMeli.dto.PostDtoIn;
+import com.sprint.SocialMeli.dto.in.PostDtoIn;
+import com.sprint.SocialMeli.dto.in.PromoPostDtoIn;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -39,6 +40,21 @@ public class Post {
         color = postDtoIn.getDetail().getColor();
         category = postDtoIn.getCategory();
         price = postDtoIn.getPrice();
+    }
+
+    public Post(PromoPostDtoIn promoPostDtoIn){
+        user_id = promoPostDtoIn.getUser_id();
+        id_post = promoPostDtoIn.getId_post();
+        date = LocalDate.parse(promoPostDtoIn.getDate());
+        product_id = promoPostDtoIn.getDetail().getProduct_id();
+        product_name = promoPostDtoIn.getDetail().getProduct_name();
+        type = promoPostDtoIn.getDetail().getType();
+        brand = promoPostDtoIn.getDetail().getBrand();
+        color = promoPostDtoIn.getDetail().getColor();
+        category = promoPostDtoIn.getCategory();
+        price = promoPostDtoIn.getPrice();
+        has_promo = promoPostDtoIn.isHas_promo();
+        discount = promoPostDtoIn.getDiscount();
     }
 
 }
