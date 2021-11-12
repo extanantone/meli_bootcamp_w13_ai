@@ -26,8 +26,9 @@ public class ControladorApiEdad {
         LocalDate fechaNac = LocalDate.parse(fecha, fmt);
         LocalDate ahora = LocalDate.now();
         Period periodo = Period.between(fechaNac, ahora);
-        return "Tu edad es: "+ periodo.getYears() + " años.";
+        return String.format("Tu edad es: %d años %d meses %d dias", periodo.getYears(), periodo.getMonths(), periodo.getDays());
 
     }
+
 
     }
