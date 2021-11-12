@@ -11,4 +11,6 @@ public interface UserRepository {
     User getById(int id);
 
     List<User> getFollowers(int id) throws Exception;
+
+    List<User> getFolloweds(int user_id) throws Exception;
 }

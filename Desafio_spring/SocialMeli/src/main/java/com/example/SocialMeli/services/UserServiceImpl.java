@@ -40,4 +40,12 @@ public class UserServiceImpl implements UserService {
         return new UserFollowersDTO(user_id, userFinal.getUser_name(), followersDTO );
         }
 
+    @Override
+    public UserFollowersDTO listFolloweds(int user_id) throws Exception {
+        List<User> followers = this.userRepository.getFolloweds(user_id);
+        List<UserDTO> followedsDTO = new ArrayList<>();
+        followers.forEach(user -> followedsDTO.add(new UserDTO(Math.toIntExact(user.getUser_id()), user.getUser_name())));
+        User userFinal = this.userRepository.getById(user_id);
+        return new UserFollowersDTO(user_id, userFinal.getUser_name(), followedsDTO );    }
+
 }

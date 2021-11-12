@@ -43,4 +43,15 @@ public class UserRepositoryImpl implements UserRepository{
         return followers;
     }
 
+    @Override
+    public List<User> getFolloweds(int user_id) throws Exception {
+        User usr = this.getById(user_id);
+        if(usr == null) throw new Exception();
+        List<User> followeds = new ArrayList<>();
+        for (Long u: usr.getSeguidos()
+        ) {
+            followeds.add(this.getById(Math.toIntExact(u)));
+        }
+        return followeds;    }
+
 }

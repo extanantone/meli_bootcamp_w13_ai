@@ -28,4 +28,9 @@ public class UserController {
     public ResponseEntity<UserFollowersDTO> listFollowers(@PathVariable int user_id) throws Exception {
         return ResponseEntity.ok(this.userService.listFollowers(user_id));
     }
+
+    @GetMapping("/{user_id}/followed/list")
+    public ResponseEntity<UserFollowersDTO> listFolloweds(@PathVariable int user_id) throws Exception {
+        return ResponseEntity.ok(this.userService.listFolloweds(user_id));
+    }
 }

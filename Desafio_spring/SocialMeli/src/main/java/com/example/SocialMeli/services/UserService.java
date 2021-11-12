@@ -10,4 +10,6 @@ public interface UserService {
     UserCountFollowersDTO countFollowers(int user_id) throws Exception;
 
     UserFollowersDTO listFollowers(int user_id) throws Exception;
+
+    UserFollowersDTO listFolloweds(int user_id) throws Exception;
 }
