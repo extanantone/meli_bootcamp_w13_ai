@@ -20,7 +20,7 @@ public class SocialMeliController {
         SMservicio.cargarDatos();
         return "Cargados con exito";
     }
-    @GetMapping("/users/{user_id}/follow/{user_id_to_follow}")
+    @PostMapping("/users/{user_id}/follow/{user_id_to_follow}")
     public ResponseEntity<RespuestaSimpleDTO> seguir(@PathVariable int user_id, @PathVariable int user_id_to_follow) throws UsuarioNoEncontradoError {
         RespuestaSimpleDTO rta = SMservicio.seguir(user_id, user_id_to_follow);
         return new ResponseEntity<>(rta, HttpStatus.OK);
@@ -40,7 +40,7 @@ public class SocialMeliController {
         SeguidosDTO seguidos = SMservicio.buscarSeguidos(user_id);
         return new ResponseEntity<>(seguidos, HttpStatus.OK);
     }
-    @PostMapping("products/post")
+    @PostMapping("/products/post")
     public ResponseEntity<RespuestaSimpleDTO> postear(@RequestBody PublicacionDTO pub) throws UsuarioNoEncontradoError {
         RespuestaSimpleDTO rta = SMservicio.añadirPost(pub);
         return new ResponseEntity<>(rta, HttpStatus.OK);
@@ -49,5 +49,10 @@ public class SocialMeliController {
     public ResponseEntity<List<PublicacionesVendedoresDTO> > postsRecientes(@PathVariable int user_id) throws UsuarioNoEncontradoError {
         List<PublicacionesVendedoresDTO>  posts = SMservicio.obtenerPublicaciones(user_id);
         return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+    @PostMapping("/users/{user_id}/unfollow/{user_id_to_unfollow}")
+    public ResponseEntity<RespuestaSimpleDTO> unfolow(@PathVariable int user_id, @PathVariable int user_id_to_unfollow) throws UsuarioNoEncontradoError {
+        RespuestaSimpleDTO rta = SMservicio.dejarDeSeguir(user_id, user_id_to_unfollow);
+        return new ResponseEntity<>(rta, HttpStatus.OK);
     }
 }

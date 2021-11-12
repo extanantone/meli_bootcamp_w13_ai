@@ -116,4 +116,10 @@ public class SocialMeliRepository implements  ISocialMeliRepository{
         vende.getPublicaciones().add(post);
         return true;
     }
+    @Override
+    public boolean dejarDeSeguir (Comprador compra, Vendedor vende){
+        vende.getSeguidores().remove(compra);
+        compra.getSiguiendo().remove(vende);
+        return true;
+    }
 }

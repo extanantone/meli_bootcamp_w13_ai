@@ -19,4 +19,5 @@ public interface ISocialMeliRepository {
     public boolean seguir (Comprador compra, Vendedor vende);
     public void imprimirSeguidores (Vendedor vende);
     public boolean postear (Vendedor vende, Publicacion post);
+    public boolean dejarDeSeguir (Comprador compra, Vendedor vende);
 }

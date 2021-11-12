@@ -141,4 +141,20 @@ public class SocialMeliService implements  ISocialMeliService{
         }
         return posts;
     }
+    public RespuestaSimpleDTO dejarDeSeguir (int id_comprado, int id_vendedor) throws UsuarioNoEncontradoError {
+        RespuestaSimpleDTO rta = new RespuestaSimpleDTO();
+        Comprador compra = errorComprador(id_comprado);
+        Vendedor vende = errorVendedor(id_vendedor);
+        Comprador yaSeguidor = SMRepositorio.buscarSeguidor(vende.getSeguidores(), id_comprado);
+        if(yaSeguidor == null){
+            throw new UsuarioNoEncontradoError("El comprador "+id_comprado+" no sigue al vendedor "+id_vendedor);
+        }else{
+            boolean flag =SMRepositorio.dejarDeSeguir(compra, vende);
+            if(flag){
+                rta.setMensaje("El comprador "+id_comprado+" ha dejado de seguir con exito al vendedor "+id_vendedor);
+                rta.setStatusCode(200);
+            }
+        }
+        return rta;
+    }
 }
