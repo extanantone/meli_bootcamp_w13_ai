@@ -1,0 +1,29 @@
+[
+  {
+    "user_id": 1,
+    "followers_count": 0,
+    "user_name": "Marina",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  },
+  {
+    "user_id": 2,
+    "followers_count": 0,
+    "user_name": "Rex",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  },
+  {
+    "user_id": 3,
+    "followers_count": 0,
+    "user_name": "Bronco",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  }
+]
