@@ -15,6 +15,8 @@ public interface ISocialMeliRepository {
     public Vendedor buscarVendedor(int id);
     public Publicacion buscarPublicacion(int id);
     public Comprador buscarSeguidor(List<Comprador>seguidores, int idComprador);
+    public Publicacion buscarPost(List<Publicacion> publi, int idPub);
     public boolean seguir (Comprador compra, Vendedor vende);
     public void imprimirSeguidores (Vendedor vende);
+    public boolean postear (Vendedor vende, Publicacion post);
 }

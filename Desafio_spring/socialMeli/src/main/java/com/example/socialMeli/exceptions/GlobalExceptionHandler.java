@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UsuarioNoEncontradoError.class)
     public ResponseEntity<ErrorDTO> get(UsuarioNoEncontradoError e) {
-        ErrorDTO error = new ErrorDTO(e.getMessage(),"400");
+        ErrorDTO error = new ErrorDTO(e.getMessage(),400);
         return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST );
 
     }

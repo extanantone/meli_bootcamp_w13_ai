@@ -7,5 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ErrorDTO {
     private String mensaje;
-    private String statusCode;
+    private int statusCode;
 }

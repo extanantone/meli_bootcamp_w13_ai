@@ -63,6 +63,7 @@ public class SocialMeliRepository implements  ISocialMeliRepository{
         this.vendedores = abrirJsonVendedores();
         for (Vendedor v: this.vendedores) {
             v.setSeguidores(new ArrayList<Comprador>());
+            v.setPublicaciones(new ArrayList<Publicacion>());
         }
     }
 
@@ -93,6 +94,10 @@ public class SocialMeliRepository implements  ISocialMeliRepository{
         return seguidores.stream().filter(p -> p.getUser_id() == idComprador).findFirst().orElse(null);
     }
     @Override
+    public Publicacion buscarPost(List<Publicacion> publi, int idPub){
+        return publi.stream().filter(p -> p.getId_publicacion()== idPub).findFirst().orElse(null);
+    }
+    @Override
     public boolean seguir (Comprador compra, Vendedor vende){
         vende.getSeguidores().add(compra);
         compra.getSiguiendo().add(vende);
@@ -105,5 +110,10 @@ public class SocialMeliRepository implements  ISocialMeliRepository{
             System.out.println(c.getName());
             System.out.println(i++);
         }
+    }
+    @Override
+    public boolean postear (Vendedor vende, Publicacion post){
+        vende.getPublicaciones().add(post);
+        return true;
     }
 }

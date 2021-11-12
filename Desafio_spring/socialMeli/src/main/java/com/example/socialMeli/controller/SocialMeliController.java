@@ -1,17 +1,15 @@
 package com.example.socialMeli.controller;
 
-import com.example.socialMeli.dto.CantidadFollowsDTO;
-import com.example.socialMeli.dto.RespuestaSimpleDTO;
-import com.example.socialMeli.dto.SeguidoresDTO;
-import com.example.socialMeli.dto.SeguidosDTO;
+import com.example.socialMeli.dto.*;
 import com.example.socialMeli.exceptions.UsuarioNoEncontradoError;
 import com.example.socialMeli.service.ISocialMeliService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 public class SocialMeliController {
@@ -41,5 +39,10 @@ public class SocialMeliController {
     public ResponseEntity<SeguidosDTO> aQuienSigo(@PathVariable int user_id) throws UsuarioNoEncontradoError {
         SeguidosDTO seguidos = SMservicio.buscarSeguidos(user_id);
         return new ResponseEntity<>(seguidos, HttpStatus.OK);
+    }
+    @PostMapping("products/post")
+    public ResponseEntity<RespuestaSimpleDTO> postear(@RequestBody PublicacionDTO pub) throws UsuarioNoEncontradoError {
+        RespuestaSimpleDTO rta = SMservicio.añadirPost(pub);
+        return new ResponseEntity<>(rta, HttpStatus.OK);
     }
 }
