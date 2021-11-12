@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter
-public abstract class Usuario {
+public abstract class User {
     int user_id;
     String user_name;
 
-    abstract TipoUsuario getUserType();
+    public abstract UserType getUserType();
 }

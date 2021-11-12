@@ -1,15 +1,15 @@
 package com.sprint.SocialMeli.repository;
 
 import com.sprint.SocialMeli.model.Post;
-import com.sprint.SocialMeli.model.Usuario;
+import com.sprint.SocialMeli.model.User;
+import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class SocialRepository {
-    Map<Integer, Usuario> users;
+@Repository
+public class SocialRepository implements ISocialRepository{
+    Map<Integer, User> users;
     Map<Integer, Post> posts;
 
     public SocialRepository(){
@@ -25,16 +25,16 @@ public class SocialRepository {
         return posts.containsKey(post_id);
     }
 
-    public Usuario getUser(int user_id){
+    public User getUser(int user_id){
         return users.get(user_id);
     }
 
-    public void putUser(Usuario usuario){
-        users.put(usuario.getUser_id(), usuario);
+    public void putUser(User user){
+        users.put(user.getUser_id(), user);
     }
 
-    public void putPost(Usuario usuario){
-        users.put(usuario.getUser_id(), usuario);
+    public void putPost(User user){
+        users.put(user.getUser_id(), user);
     }
 
 

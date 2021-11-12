@@ -2,26 +2,23 @@ package com.sprint.SocialMeli.model;
 
 import java.util.*;
 
-public class Vendedor extends Usuario{
+public class Seller extends User {
     List<Integer> followersIds;
     List<Integer> postsIds;
 
-    public Vendedor(int user_id, String user_name) {
+    public Seller(int user_id, String user_name) {
         super(user_id, user_name);
         followersIds = new ArrayList<>();
         postsIds = new ArrayList<>();
     }
 
     public void addFollower(int user_id){
-        followersIds.add(user_id);
+        if(!followersIds.contains(user_id))
+            followersIds.add(user_id);
     }
 
     public Integer followersCount(){
         return followersIds.size();
-    }
-
-    public boolean existsFollower(int user_id){
-        return followersIds.contains(user_id);
     }
 
     public List<Integer> getFollowersIds(){
@@ -29,11 +26,8 @@ public class Vendedor extends Usuario{
     }
 
     public void addPost(int post_id){
-        postsIds.add(post_id);
-    }
-
-    public boolean existsPost(int post_id){
-        return postsIds.contains(post_id);
+        if(!postsIds.contains(post_id))
+            postsIds.add(post_id);
     }
 
     public List<Integer> getPostsIds(){
@@ -41,7 +35,7 @@ public class Vendedor extends Usuario{
     }
 
     @Override
-    TipoUsuario getUserType() {
-        return TipoUsuario.VENDEDOR;
+    public UserType getUserType() {
+        return UserType.SELLER;
     }
 }
