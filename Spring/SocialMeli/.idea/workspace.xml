@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6b5049ab-a0e0-46c6-a238-7a3c2d86d969" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeli/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeli/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeli/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeli/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeli/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeli/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeli/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeli/src/main/java/bootcamp/SocialMeli/SocialMeliApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeli/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeli/src/test/java/bootcamp/SocialMeli/SocialMeliApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalculadoraDeCalorias/src/main/java/bootcamp/demo/controller/CaloriasController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CalculadoraDeCalorias/src/main/java/bootcamp/demo/model/Ingrediente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/C3_P1_ClasesAbstractasInterfaces/src/Transaccion.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java/C3_P1_ClasesAbstractasInterfaces/src/Transaccion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/Ejercicio_Java_1/.idea/$PRODUCT_WORKSPACE_FILE$" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/Ejercicio_Java_1/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/Ejercicio_Java_1/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/Ejercicio_Java_1/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/Ejercicio_Java_1/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/Ejercicio_Java_1/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/Ejercicio_Java_1/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/Ejercicio_Java_1/Ejercicio_1_TemperaturasGlobales.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/Ejercicio_Java_1/src/bootcamp_jdmichiel/Temperaturas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring.md" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="20opyY6B8Z00d9yIeTsdEKRqdQR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Desafio_spring/SocialMeli" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SocialMeliApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="SocialMeli" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="bootcamp.SocialMeli.SocialMeliApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file enabled="true" id="idea.log" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6b5049ab-a0e0-46c6-a238-7a3c2d86d969" name="Default Changelist" comment="" />
+      <created>1636721049462</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1636721049462</updated>
+      <workItem from="1636721051081" duration="1274000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
