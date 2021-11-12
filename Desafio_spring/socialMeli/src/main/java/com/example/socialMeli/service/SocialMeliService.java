@@ -1,7 +1,9 @@
 package com.example.socialMeli.service;
 
 import com.example.socialMeli.dto.CantidadFollowsDTO;
+import com.example.socialMeli.dto.CompradoresDTO;
 import com.example.socialMeli.dto.RespuestaSimpleDTO;
+import com.example.socialMeli.dto.SeguidoresDTO;
 import com.example.socialMeli.exceptions.UsuarioNoEncontradoError;
 import com.example.socialMeli.model.Comprador;
 import com.example.socialMeli.model.Vendedor;
@@ -9,6 +11,7 @@ import com.example.socialMeli.repository.ISocialMeliRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -55,5 +58,20 @@ public class SocialMeliService implements  ISocialMeliService{
         rta.setUser_name(vende.getName());
         rta.setFollowers_count(vende.getSeguidores().size());
         return rta;
+    }
+    public SeguidoresDTO buscarSeguidores (int id) throws UsuarioNoEncontradoError{
+        SeguidoresDTO seguidores = new SeguidoresDTO();
+        Vendedor vende = SMRepositorio.buscarVendedor(id);
+        if(vende == null ){
+            throw new UsuarioNoEncontradoError("El id del usuario vendedor es incorrecto");
+        }
+        seguidores.setUser_id(id);
+        seguidores.setUser_name(vende.getName());
+        List<CompradoresDTO> compradoresQueSiguen = new ArrayList<>();
+        for (Comprador c:vende.getSeguidores()) {
+            compradoresQueSiguen.add(new CompradoresDTO(c.getUser_id(),c.getName()));
+        }
+        seguidores.setSeguidores(compradoresQueSiguen);
+        return seguidores;
     }
 }

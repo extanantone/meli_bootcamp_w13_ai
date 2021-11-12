@@ -2,6 +2,7 @@ package com.example.socialMeli.controller;
 
 import com.example.socialMeli.dto.CantidadFollowsDTO;
 import com.example.socialMeli.dto.RespuestaSimpleDTO;
+import com.example.socialMeli.dto.SeguidoresDTO;
 import com.example.socialMeli.exceptions.UsuarioNoEncontradoError;
 import com.example.socialMeli.service.ISocialMeliService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,10 @@ public class SocialMeliController {
     public ResponseEntity<CantidadFollowsDTO> contar(@PathVariable int user_id) throws UsuarioNoEncontradoError {
         CantidadFollowsDTO cantidad = SMservicio.contar(user_id);
         return new ResponseEntity<>(cantidad, HttpStatus.OK);
+    }
+    @GetMapping("/users/{user_id}/followers/list")
+    public ResponseEntity<SeguidoresDTO> quienMeSigue(@PathVariable int user_id) throws UsuarioNoEncontradoError {
+        SeguidoresDTO seguidores = SMservicio.buscarSeguidores(user_id);
+        return new ResponseEntity<>(seguidores, HttpStatus.OK);
     }
 }

@@ -69,6 +69,9 @@ public class SocialMeliRepository implements  ISocialMeliRepository{
     @Override
     public void agregarCompradores() {
         this.compradores = abrirJsonCompradores();
+        for (Comprador c: this.compradores) {
+            c.setSiguiendo(new ArrayList<Vendedor>());
+        }
     }
 
     @Override
