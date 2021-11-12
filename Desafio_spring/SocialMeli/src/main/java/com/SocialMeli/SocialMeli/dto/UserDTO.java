@@ -15,6 +15,18 @@ import java.util.List;
 public class UserDTO {
     private Integer user_id;
     private String user_name;
-    List<UserDTO> followers;
-    List<UserDTO> followed;
+    /*List<UserDTO> followers;
+    List<UserDTO> followed;*/
+    List<Integer> followers;
+    List<Integer> followed;
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "user_id=" + user_id +
+                ", user_name='" + user_name + '\'' +
+                ", followers=" + followers +
+                ", followed=" + followed +
+                '}';
+    }
 }

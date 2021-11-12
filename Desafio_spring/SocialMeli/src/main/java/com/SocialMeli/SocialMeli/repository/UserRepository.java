@@ -24,7 +24,9 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public UserDTO findUserByUserId(Integer user_id) {
-        UserDTO userDTO = database.get(user_id);
+        UserDTO userDTO = database.get(user_id-1);
+        //System.out.println(userDTO.toString());
+
         return userDTO;
     }
 
@@ -34,11 +36,31 @@ public class UserRepository implements IUserRepository{
         UserDTO current_user = findUserByUserId(user_id);
         UserDTO follow_user = findUserByUserId(user_id_to_follow);
 
-        if( current_user != null && follow_user != null ){
-            //Al usuario actual
-            List<UserDTO> followedList = current_user.getFollowed();
-            followedList.add(follow_user);
-            current_user.setFollowed(followedList);
+        if( current_user != null && follow_user != null && user_id != user_id_to_follow ){
+            //Al usuario actual se le agrega el usuario a seguir
+            //List<UserDTO> followedList = current_user.getFollowed();
+            List<Integer> followedList = current_user.getFollowed();
+            if( followedList == null ){
+                followedList = new ArrayList<>();
+            }
+            if( !followedList.contains(follow_user.getUser_id())  ){
+                followedList.add(follow_user.getUser_id());
+                current_user.setFollowed(followedList);
+            }
+
+
+            //Al usuario seguido se le agrega al usuario quién lo sigue
+            //List<UserDTO> followersList = follow_user.getFollowers();
+            List<Integer> followersList = follow_user.getFollowers();
+            if( followersList == null ){
+                followersList = new ArrayList<>();
+            }
+            if( !followersList.contains(current_user.getUser_id()) ){
+                followersList.add(current_user.getUser_id());
+                follow_user.setFollowers(followersList);
+            }
+
+
         }
 
         return current_user;
