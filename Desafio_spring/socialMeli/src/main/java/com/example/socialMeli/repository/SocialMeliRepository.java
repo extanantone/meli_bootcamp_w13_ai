@@ -20,6 +20,7 @@ import java.util.List;
 public class SocialMeliRepository implements  ISocialMeliRepository{
     List<Comprador> compradores;
     List<Vendedor> vendedores;
+    List<Publicacion> publicacion;
     @Override
     public List<Vendedor> abrirJsonVendedores() {
         File file = null;
@@ -65,6 +66,7 @@ public class SocialMeliRepository implements  ISocialMeliRepository{
             v.setSeguidores(new ArrayList<Comprador>());
             v.setPublicaciones(new ArrayList<Publicacion>());
         }
+        this.publicacion = new ArrayList<>();
     }
 
     @Override
@@ -90,12 +92,12 @@ public class SocialMeliRepository implements  ISocialMeliRepository{
         return seguidores.stream().filter(p -> p.getUser_id() == idComprador).findFirst().orElse(null);
     }
     @Override
-    public Vendedor buscarSiguiendo(List<Vendedor>siguiendo, int idVendedor){
-        return siguiendo.stream().filter(p -> p.getUser_id() == idVendedor).findFirst().orElse(null);
+    public List<Publicacion> retornarPublicaciones(){
+        return this.publicacion;
     }
     @Override
-    public Publicacion buscarPost(List<Publicacion> publi, int idPub){
-        return publi.stream().filter(p -> p.getId_publicacion()== idPub).findFirst().orElse(null);
+    public Publicacion buscarPost(List<Publicacion> publi, int idPub) {
+        return publi.stream().filter(p -> p.getId_publicacion() == idPub).findFirst().orElse(null);
     }
     @Override
     public boolean seguir (Comprador compra, Vendedor vende){
@@ -114,6 +116,7 @@ public class SocialMeliRepository implements  ISocialMeliRepository{
     @Override
     public boolean postear (Vendedor vende, Publicacion post){
         vende.getPublicaciones().add(post);
+        this.publicacion.add(post);
         return true;
     }
     @Override

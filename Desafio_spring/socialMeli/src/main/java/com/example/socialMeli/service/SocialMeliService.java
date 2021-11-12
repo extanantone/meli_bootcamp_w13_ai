@@ -127,25 +127,33 @@ public class SocialMeliService implements  ISocialMeliService{
         }
         return flag;
     }
-    public List<PublicacionesVendedoresDTO> obtenerPublicaciones (int id) throws UsuarioNoEncontradoError{
+    public List<PublicacionesVendedoresDTO> obtenerPublicaciones (int id, String order) throws UsuarioNoEncontradoError{
         boolean flag;
+        List<Publicacion> guardadas = SMRepositorio.retornarPublicaciones();
+        if(order == null ||order.equals("date_asc")){
+            guardadas = guardadas.stream().sorted(Comparator.comparing(x->x.getFecha())).collect(Collectors.toList());
+        }else  if(order.equals("date_desc")){
+            guardadas = guardadas.stream().sorted(Collections.reverseOrder(Comparator.comparing(x->x.getFecha()))).collect(Collectors.toList());
+        }
         List<PublicacionDTO> publicacionesDTO = new ArrayList<>();
         List<PublicacionesVendedoresDTO>  posts = new ArrayList<>();
         Comprador compra = errorComprador(id);
         List<Vendedor> vendedores = compra.getSiguiendo();
-        for (Vendedor ve: vendedores) {
-            PublicacionesVendedoresDTO retorno = new PublicacionesVendedoresDTO(ve.getUser_id());
-            for (Publicacion p:ve.getPublicaciones()) {
-                flag = verificarVendedorYFecha(p.getFecha());
-                if(flag){
-                    ProductoDTO producto = new ProductoDTO(p.getDetalle().getId_producto(),p.getDetalle().getNombre_producto(), p.getDetalle().getTipo(), p.getDetalle().getMarca(), p.getDetalle().getColor(), p.getDetalle().getNotas());
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
-                    String formattedString = p.getFecha().format(formatter);
-                    publicacionesDTO.add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio()));
-                    retorno.getPosts().add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio()));
+        for(Publicacion pun:guardadas){
+            for (Vendedor ve: vendedores) {
+                for (Publicacion p:ve.getPublicaciones()) {
+                    flag = verificarVendedorYFecha(p.getFecha());
+                    if(flag && pun.getId_publicacion()==p.getId_publicacion()){
+                        PublicacionesVendedoresDTO retorno = new PublicacionesVendedoresDTO(ve.getUser_id());
+                        ProductoDTO producto = new ProductoDTO(p.getDetalle().getId_producto(),p.getDetalle().getNombre_producto(), p.getDetalle().getTipo(), p.getDetalle().getMarca(), p.getDetalle().getColor(), p.getDetalle().getNotas());
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+                        String formattedString = p.getFecha().format(formatter);
+                        publicacionesDTO.add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio()));
+                        retorno.getPosts().add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio()));
+                        posts.add(retorno);
+                    }
                 }
             }
-            posts.add(retorno);
         }
         return posts;
     }

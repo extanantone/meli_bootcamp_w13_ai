@@ -47,7 +47,7 @@ public class SocialMeliController {
     }
     @GetMapping("/products/followed/{user_id}/list")
     public ResponseEntity<List<PublicacionesVendedoresDTO> > postsRecientes(@PathVariable int user_id, @RequestParam(required = false) String order) throws UsuarioNoEncontradoError {
-        List<PublicacionesVendedoresDTO>  posts = SMservicio.obtenerPublicaciones(user_id);
+        List<PublicacionesVendedoresDTO>  posts = SMservicio.obtenerPublicaciones(user_id, order);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
     @PostMapping("/users/{user_id}/unfollow/{user_id_to_unfollow}")
