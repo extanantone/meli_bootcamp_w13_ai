@@ -22,7 +22,7 @@ public class SocialMeliService implements  ISocialMeliService{
         SMRepositorio.agregarCompradores();
     }
 
-    public RespuestaSimpleDTO seguir (int id_comprado, int id_vendedor){
+    public RespuestaSimpleDTO seguir (int id_comprado, int id_vendedor) throws UsuarioNoEncontradoError {
         RespuestaSimpleDTO rta = new RespuestaSimpleDTO();
         Comprador compra = SMRepositorio.buscarComprador(id_comprado);
         Vendedor vende = SMRepositorio.buscarVendedor(id_vendedor);
@@ -45,7 +45,7 @@ public class SocialMeliService implements  ISocialMeliService{
         }
         return rta;
     }
-    public CantidadFollowsDTO contar (int id_vendedor){
+    public CantidadFollowsDTO contar (int id_vendedor) throws UsuarioNoEncontradoError {
         CantidadFollowsDTO rta = new CantidadFollowsDTO();
         Vendedor vende = SMRepositorio.buscarVendedor(id_vendedor);
         if(vende == null ){
