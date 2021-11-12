@@ -1,6 +1,6 @@
 # Documentacion
 
-## Follow user
+### Follow user
 
 POST
 
@@ -23,3 +23,28 @@ Si lo puede seguir envia 200
 Ejemplo:
 
 http://localhost:8080/users/1/follow/4
+
+### Count users follow to seller (followers of seller)
+
+GET
+
+URL http://localhost:8080/users/{user_id}/followers/count
+
+
+Estado correcto
+
+Ejemplo:
+
+http://localhost:8080/users/4/followers/count
+
+Error 404 cuando no existe en usuario
+
+Ejemplo:
+
+http://localhost:8080/users/5/followers/count
+
+Error 400 cuando el usuario no es un vendedor
+
+Ejemplo:
+
+http://localhost:8080/users/1/followers/count
