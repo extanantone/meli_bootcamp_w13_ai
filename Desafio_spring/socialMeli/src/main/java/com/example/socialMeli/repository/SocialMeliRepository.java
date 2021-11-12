@@ -94,7 +94,9 @@ public class SocialMeliRepository implements  ISocialMeliRepository{
     }
     @Override
     public boolean seguir (Comprador compra, Vendedor vende){
-        return vende.getSeguidores().add(compra);
+        vende.getSeguidores().add(compra);
+        compra.getSiguiendo().add(vende);
+        return true;
     }
     @Override
     public void imprimirSeguidores (Vendedor vende){

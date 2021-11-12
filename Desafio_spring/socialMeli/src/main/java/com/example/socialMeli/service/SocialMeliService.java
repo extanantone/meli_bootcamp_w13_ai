@@ -1,9 +1,6 @@
 package com.example.socialMeli.service;
 
-import com.example.socialMeli.dto.CantidadFollowsDTO;
-import com.example.socialMeli.dto.CompradoresDTO;
-import com.example.socialMeli.dto.RespuestaSimpleDTO;
-import com.example.socialMeli.dto.SeguidoresDTO;
+import com.example.socialMeli.dto.*;
 import com.example.socialMeli.exceptions.UsuarioNoEncontradoError;
 import com.example.socialMeli.model.Comprador;
 import com.example.socialMeli.model.Vendedor;
@@ -71,7 +68,22 @@ public class SocialMeliService implements  ISocialMeliService{
         for (Comprador c:vende.getSeguidores()) {
             compradoresQueSiguen.add(new CompradoresDTO(c.getUser_id(),c.getName()));
         }
-        seguidores.setSeguidores(compradoresQueSiguen);
+        seguidores.setFollowers(compradoresQueSiguen);
         return seguidores;
+    }
+    public SeguidosDTO buscarSeguidos (int id) throws UsuarioNoEncontradoError{
+        SeguidosDTO seguidos = new SeguidosDTO();
+        Comprador compra = SMRepositorio.buscarComprador(id);
+        if(compra == null ){
+            throw new UsuarioNoEncontradoError("El id del usuario comprador es incorrecto");
+        }
+        seguidos.setUser_id(id);
+        seguidos.setUser_name(compra.getName());
+        List<CompradoresDTO> vendedoresQueSiguen = new ArrayList<>();
+        for (Vendedor c:compra.getSiguiendo()) {
+            vendedoresQueSiguen.add(new CompradoresDTO(c.getUser_id(),c.getName()));
+        }
+        seguidos.setFollowed(vendedoresQueSiguen);
+        return seguidos;
     }
 }

@@ -1,6 +1,5 @@
 package com.example.socialMeli.dto;
 
-import com.example.socialMeli.model.Comprador;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +10,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SeguidoresDTO {
+public class SeguidosDTO {
     private int user_id;
     private String user_name;
-    private List<CompradoresDTO> followers;
+    private List<CompradoresDTO> followed;
 }
