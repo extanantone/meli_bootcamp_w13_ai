@@ -1,0 +1,37 @@
+[
+  {
+    "user_name": "vendedor1",
+    "seller": true,
+    "user_id": 1,
+    "followers_count": 0,
+    "followers": [
+      {
+        "user_id": 2,
+        "user_name": "comprador1"
+      },
+      {
+        "user_id": 3,
+        "user_name": "comprado2"
+      }
+
+    ],
+    "followed": []
+  },
+  {
+    "user_name": "comprador1",
+    "seller": false,
+    "user_id": 2,
+    "followers_count": 0,
+    "followers": [],
+    "followed": []
+  },
+  {
+    "user_name": "comprado2",
+    "seller": false,
+    "user_id": 3,
+    "followers_count": 0,
+    "followers": [],
+    "followed": []
+  }
+
+]
