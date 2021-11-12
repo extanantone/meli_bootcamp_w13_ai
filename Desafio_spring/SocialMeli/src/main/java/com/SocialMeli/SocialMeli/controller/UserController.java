@@ -1,16 +1,12 @@
 package com.SocialMeli.SocialMeli.controller;
 
+import com.SocialMeli.SocialMeli.dto.FollowersCountDTO;
+import com.SocialMeli.SocialMeli.dto.SellersDTO;
 import com.SocialMeli.SocialMeli.dto.UserDTO;
 import com.SocialMeli.SocialMeli.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -21,12 +17,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("create")
-    public UserDTO create(@RequestBody UserDTO user){
-        return userService.create(user);
+    @PostMapping("users/followed/create")
+    public UserDTO createBuyers(@RequestBody UserDTO user){
+        return userService.createBuyers(user);
     }
 
-    @PostMapping("users/{user_id}/follow/{user_id_to_follow}")
+    @PostMapping("users/followers/create")
+    public UserDTO createSellers(@RequestBody UserDTO user){
+        return userService.createSellers(user);
+    }
+
+    /*@PostMapping("users/{user_id}/follow/{user_id_to_follow}")
     public ResponseEntity<String> followUser(@PathVariable Integer user_id, @PathVariable Integer user_id_to_follow) {
         Boolean statusFollow = userService.followUser(user_id,user_id_to_follow);
         if( statusFollow )
@@ -34,4 +35,14 @@ public class UserController {
 
         return new ResponseEntity<>("Los usuarios no pueden seguirse.", HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("users/{user_id}/followers/count")
+    public FollowersCountDTO followersCount(@PathVariable Integer user_id){
+        return userService.followersCount(user_id);
+    }
+
+    @GetMapping("/users/{user_id}/followers/list")
+    public SellersDTO followersList(@PathVariable Integer user_id){
+        return userService.followersList(user_id);
+    }*/
 }
