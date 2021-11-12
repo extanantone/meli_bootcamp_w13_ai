@@ -1,5 +1,7 @@
 package com.bootcamp.socialmeli.model;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,12 +13,13 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class User {
 
-    private long user_id;
-    private String user_name;
+    private long userId;
+    private String userName;
     private boolean seller;
-    private Integer followers_count;
+    private Integer followersCount;
     private List<User> followers;
     private List<User> followed;
 

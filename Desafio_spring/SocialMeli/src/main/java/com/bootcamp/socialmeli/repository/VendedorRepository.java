@@ -44,7 +44,7 @@ public class VendedorRepository implements IVendedorRepository {
     @Override
     public Optional<User> findSellerById(Long id) {
         for (User i: this.users) {
-            if (id.equals(i.getUser_id())) return Optional.of(i);
+            if (id.equals(i.getUserId())) return Optional.of(i);
         }
         return Optional.empty();
     }
