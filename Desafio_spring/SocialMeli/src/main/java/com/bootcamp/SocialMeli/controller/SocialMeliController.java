@@ -22,8 +22,7 @@ public class SocialMeliController {
 
     @GetMapping("/users/{user_id}/followers/count")
     public ResponseEntity<?> getCantSeguidores(@PathVariable("user_id") Integer userId){
-        this.socialMeliService.getCantSeguidores(userId);
-        return null;
+        return new ResponseEntity<>(this.socialMeliService.getCantSeguidores(userId), HttpStatus.OK);
     }
 
 

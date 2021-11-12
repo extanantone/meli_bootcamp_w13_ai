@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class SeguidoresDTO {
+public class CantSeguidoresDTO {
     private Integer userId;
     private String userName;
     private Integer followersCount;

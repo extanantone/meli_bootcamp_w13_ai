@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class SocialMeliRepository implements ISocialMeliRepository{
@@ -54,13 +55,15 @@ public class SocialMeliRepository implements ISocialMeliRepository{
         return this.usuarios.get(idUsuario);
     }
 
-    public List<Usuario> buscarSeguidores(Integer userId){
-       // this.usuarios.values().stream().filter(x -> x.getVendedoresSeguidos().)
-        return null;
+    public List<Usuario> buscarSeguidores(Usuario vendedor){
+        List<Usuario> seguidores = this.usuarios.values().stream()
+                                        .filter(x -> x.getVendedoresSeguidos().contains(vendedor))
+                                        .collect(Collectors.toList());
+        return seguidores;
     }
 
-    public void seguirUsuario(Integer idSeguidor, Integer idVendedor){
+    /*public void seguirUsuario(Integer idSeguidor, Integer idVendedor){
        // this.usuarios.get(idSeguidor).seguirVendedor();
-    }
+    }*/
 
 }

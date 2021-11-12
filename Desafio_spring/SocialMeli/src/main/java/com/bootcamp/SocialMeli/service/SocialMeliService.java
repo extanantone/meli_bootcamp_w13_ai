@@ -1,7 +1,9 @@
 package com.bootcamp.SocialMeli.service;
 
+import com.bootcamp.SocialMeli.dto.response.CantSeguidoresDTO;
 import com.bootcamp.SocialMeli.dto.response.SuccessDTO;
 import com.bootcamp.SocialMeli.exception.AlreadyFollowException;
+import com.bootcamp.SocialMeli.exception.EqualsUserSellerException;
 import com.bootcamp.SocialMeli.exception.NotFollowException;
 import com.bootcamp.SocialMeli.exception.UserNotFoundException;
 import com.bootcamp.SocialMeli.model.Usuario;
@@ -26,7 +28,9 @@ public class SocialMeliService implements ISocialMeliService{
         Usuario vendedor = this.socialMeliRepository.buscarUsuario(idVendedor);
         //TODO verificar que sea vendedor (tenga publicaciones)
         //TODO verificar que antes no lo seguia
-        if(seguidor == null){
+        if(idSeguidor.equals(idVendedor)) {
+            throw new EqualsUserSellerException();
+        }else if(seguidor == null){
             throw new UserNotFoundException("No existe el usuario seguidor");
         }else if(vendedor == null){
             throw new UserNotFoundException("No existe el vendedor");
@@ -41,12 +45,16 @@ public class SocialMeliService implements ISocialMeliService{
     }
 
     @Override
-    public void getCantSeguidores(Integer userId) {
+    public CantSeguidoresDTO getCantSeguidores(Integer userId) {
+        //TODO chequear que se le pase un vendedor
         Usuario vendedor = this.socialMeliRepository.buscarUsuario(userId);
         if(vendedor == null){
             throw new UserNotFoundException("No existe un vendedor con Id: " + userId);
         }
-        //vendedor.get
+        CantSeguidoresDTO cantSeguidoresDTO = new CantSeguidoresDTO(vendedor.getUserId(), vendedor.getUserName(),
+                                                    this.socialMeliRepository.buscarSeguidores(vendedor).size());
+
+        return cantSeguidoresDTO;
     }
 
     @Override
@@ -55,7 +63,9 @@ public class SocialMeliService implements ISocialMeliService{
         Usuario vendedor = this.socialMeliRepository.buscarUsuario(idVendedor);
         //TODO verificar que sea vendedor (tenga publicaciones)
         //TODO verificar que antes lo seguia
-        if(seguidor == null){
+        if(idSeguidor.equals(idVendedor)){
+            throw new EqualsUserSellerException();
+        }else if(seguidor == null){
             throw new UserNotFoundException("No existe el usuario seguidor");
         }else if(vendedor == null){
             throw new UserNotFoundException("No existe el vendedor");
