@@ -1,0 +1,17 @@
+[
+  {
+    "userId" : 1,
+    "userName" : "Martin Palermo",
+    "vendedoresSeguidos" : []
+  },
+  {
+    "userId" : 2,
+    "userName" : "Juan Roman Riquelme",
+    "vendedoresSeguidos" : []
+  },
+  {
+    "userId" : 3,
+    "userName" : "Lionel Messi",
+    "vendedoresSeguidos" : []
+  }
+]

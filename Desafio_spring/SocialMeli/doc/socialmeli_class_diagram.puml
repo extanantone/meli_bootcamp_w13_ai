@@ -1,0 +1,36 @@
+@startuml SocialMeli
+
+skinparam ClassAttributeIconSize 0
+
+class Usuario {
+    - int userId
+    - String userName 
+}
+
+class Vendedor {
+    - List<Post> publicaciones 
+}
+
+class Post {
+    - int idPost
+    - LocalDate date 
+    - double price
+    - Producto producto
+}
+
+class Producto {
+    - int productId
+    - String productName
+    - String type
+    - String brand
+    - String color
+    - String notes
+    - String category
+}
+
+Usuario <|-- Vendedor
+
+Post o.> Producto
+
+
+@enduml
