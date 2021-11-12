@@ -2,6 +2,7 @@ package com.socialmeli.controller;
 
 import com.socialmeli.dto.FollowedListDto;
 import com.socialmeli.dto.FollowerListDto;
+import com.socialmeli.dto.PostDto;
 import com.socialmeli.dto.SellerFollowersCountDto;
 import com.socialmeli.service.IUserService;
 import lombok.Getter;
@@ -36,6 +37,12 @@ public class UserController {
     @GetMapping("/users/{userId}/followed/list")
     public FollowedListDto getFollowed(@PathVariable int userId){
         return  iUserService.getFollowed(userId);
+    }
+
+    @PostMapping("/products/post")
+    public void addPost(@RequestBody PostDto dto){
+        System.out.println(dto.getDate());
+        iUserService.addPost(dto);
     }
 
 }

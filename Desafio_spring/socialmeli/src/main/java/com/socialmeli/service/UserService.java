@@ -3,10 +3,13 @@ package com.socialmeli.service;
 import com.socialmeli.dto.*;
 import com.socialmeli.exception.InvalidSellerException;
 import com.socialmeli.exception.NotFoundUserException;
+import com.socialmeli.model.Post;
 import com.socialmeli.model.User;
 import com.socialmeli.repository.IUserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,5 +65,16 @@ public class UserService implements IUserService{
                             .stream().map(u->new FollowedItemDto(u.getId(),u.getName()))
                             .collect(Collectors.toList());
         return new FollowedListDto(user.getId(),user.getName(),items);
+    }
+
+    @Override
+    public void addPost(PostDto dto) {
+        User user = iUserRepository.getUserById(dto.getUserId());
+        if(user==null)
+            throw new NotFoundUserException("Not exist user");
+        DetailDto detail = dto.getDetail();
+        user.addPost(new Post(dto.getPostId(), LocalDate.parse(dto.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),detail.getProductId(),detail.getProductName(),
+                detail.getType(),detail.getBrand(),detail.getColor(),detail.getNotes(),dto.getCategory(),
+                dto.getPrice()));
     }
 }

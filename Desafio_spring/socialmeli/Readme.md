@@ -80,3 +80,88 @@ http://localhost:8080/users/1/followed/list
 Si el usuario no existe 404
 
 http://localhost:8080/users/20/followed/list
+
+### Add new post
+
+POST
+
+URL http://localhost:8080/products/post
+
+payload
+
+    {
+        "user_id": 3,
+        "id_post": 18,
+        "date": "29-04-2021",
+        "detail": {
+            "product_id": 1,
+            "product_name": "Silla Gamer",
+            "type": "Gamer",
+            "brand": "Racer",
+            "color": "Red & Black",
+            "notes": "Special Edition"
+        },
+        "category": 100,
+        "price": 1500.50
+    }
+
+If not exist user send 404
+    
+Payload 
+
+Ejemplo:
+
+    {
+    "user_id": 30,
+    "id_post": 18,
+    "date": "29-04-2021",
+    "detail": {
+        "product_id": 1,
+        "product_name": "Silla Gamer",
+        "type": "Gamer",
+        "brand": "Racer",
+        "color": "Red & Black",
+        "notes": "Special Edition"
+    },
+    "category": 100,
+    "price": 1500.50
+    }
+
+If user is not seller send 400
+
+    {
+    "user_id": 1,
+    "id_post": 18,
+    "date": "29-04-2021",
+    "detail": {
+        "product_id": 1,
+        "product_name": "Silla Gamer",
+        "type": "Gamer",
+        "brand": "Racer",
+        "color": "Red & Black",
+        "notes": "Special Edition"
+    },
+    "category": 100,
+    "price": 1500.50
+    }
+
+If is a seller and not have post with same id send status 200
+
+    {
+    "user_id": 3,
+    "id_post": 18,
+    "date": "29-04-2021",
+    "detail": {
+        "product_id": 1,
+        "product_name": "Silla Gamer",
+        "type": "Gamer",
+        "brand": "Racer",
+        "color": "Red & Black",
+        "notes": "Special Edition"
+    },
+    "category": 100,
+    "price": 1500.50
+    }
+
+if is seller and exist post with same id send 400
+

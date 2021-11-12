@@ -1,6 +1,7 @@
 package com.socialmeli.controller;
 
 import com.socialmeli.dto.ErrorDto;
+import com.socialmeli.exception.InvalidPostException;
 import com.socialmeli.exception.InvalidSellerException;
 import com.socialmeli.exception.NotFoundUserException;
 import org.springframework.http.HttpStatus;
@@ -18,5 +19,10 @@ public class ExceptionHandlerController {
     @ExceptionHandler(NotFoundUserException.class)
     public ResponseEntity<?> handlerNotFoundUser(NotFoundUserException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidPostException.class)
+    public ResponseEntity<?> handleInvalidPost(InvalidPostException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDto(e.getMessage()));
     }
 }

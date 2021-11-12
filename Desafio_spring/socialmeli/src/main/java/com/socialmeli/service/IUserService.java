@@ -1,8 +1,6 @@
 package com.socialmeli.service;
 
-import com.socialmeli.dto.FollowedListDto;
-import com.socialmeli.dto.FollowerListDto;
-import com.socialmeli.dto.SellerFollowersCountDto;
+import com.socialmeli.dto.*;
 import com.socialmeli.dto.SellerFollowersCountDto;
 
 public interface IUserService {
@@ -12,4 +10,5 @@ public interface IUserService {
     FollowerListDto getFollowerList(int idSeller);
     FollowedListDto getFollowed(int userId);
 
+    void addPost(PostDto dto);
 }

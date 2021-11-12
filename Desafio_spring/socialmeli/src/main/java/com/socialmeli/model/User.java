@@ -1,5 +1,6 @@
 package com.socialmeli.model;
 
+import com.socialmeli.exception.InvalidPostException;
 import com.socialmeli.exception.InvalidSellerException;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,10 +20,12 @@ public class User {
     private String email;
     private List<User> followers;
     private boolean seller;
+    private List<Post> posts;
 
     public User(){
         id=++cont;
         followers = new ArrayList<>();
+        posts = new ArrayList<>();
     }
 
     public User(String name,String email,boolean seller){
@@ -55,5 +58,13 @@ public class User {
 
     public boolean isFollower(User user){
         return  followers.contains(user);
+    }
+
+    public void addPost(Post post){
+        if(!seller)
+            throw new InvalidSellerException("The user is not a seller");
+        if (posts.contains(post))
+            throw new InvalidPostException("Exist a post with same id for this user");
+        posts.add(post);
     }
 }
