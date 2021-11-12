@@ -1,8 +1,11 @@
 package com.socialmeli.repository;
 
+import com.socialmeli.model.Post;
 import com.socialmeli.model.User;
+import org.apache.el.lang.FunctionMapperImpl;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,5 +32,11 @@ public class UserRepository implements IUserRepository{
     @Override
     public List<User> followedUser(User user) {
         return users.stream().filter(u->u.isFollower(user)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Post> getPostLastTwoWeeksOfFollowed(int idUser) {
+        return users.stream().filter(u->u.isFollower(getUserById(idUser))).flatMap(u->u.getPosts().stream())
+                    .filter(l->l.getDate().isAfter(LocalDate.now().minusWeeks(2))).collect(Collectors.toList());
     }
 }

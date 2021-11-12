@@ -2,6 +2,7 @@ package com.socialmeli.model;
 
 import com.socialmeli.exception.InvalidPostException;
 import com.socialmeli.exception.InvalidSellerException;
+import com.socialmeli.exception.NotFoundUserException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -66,5 +67,11 @@ public class User {
         if (posts.contains(post))
             throw new InvalidPostException("Exist a post with same id for this user");
         posts.add(post);
+    }
+
+    public void unfollow(User user) {
+        if(!followers.contains(user))
+            throw new NotFoundUserException("user is not follower of seller");
+        followers.remove(user);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,5 +77,81 @@ public class UserService implements IUserService{
         user.addPost(new Post(dto.getPostId(), LocalDate.parse(dto.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),detail.getProductId(),detail.getProductName(),
                 detail.getType(),detail.getBrand(),detail.getColor(),detail.getNotes(),dto.getCategory(),
                 dto.getPrice()));
+    }
+
+    @Override
+    public ListPostDto getListDtoSubscriptionByUser(int iduser) {
+        if(iUserRepository.getUserById(iduser)==null)
+            throw new NotFoundUserException("Not exist user");
+        List<Post> posts =  iUserRepository.getPostLastTwoWeeksOfFollowed(iduser);
+        List<PostDtoWithoutUser> pdtos = posts.stream().map(i->new PostDtoWithoutUser(i.getId(),i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),i.getPrice())).collect(Collectors.toList());
+        return new ListPostDto(iduser,pdtos);
+    }
+
+    @Override
+    public void unfollowSeller(int id, int idseller) {
+        User user = iUserRepository.getUserById(id);
+        User seller = iUserRepository.getUserById(idseller);
+        if(user==null || seller==null)
+            throw new NotFoundUserException("Not exist some user");
+        else if(!seller.isSeller())
+            throw  new InvalidSellerException("Not is seller user");
+        seller.unfollow(user);
+    }
+
+    @Override
+    public FollowerListDto getFollowerListOrderByNameAsc(int userId) {
+        User seller = iUserRepository.getUserById(userId);
+        if(seller==null)
+            throw new NotFoundUserException("Not exist this user");
+        else if(!seller.isSeller())
+            throw new InvalidSellerException("Not is a seller");
+
+        List<FollowerItemDto> items = seller.getFollowers().stream()
+                .sorted(Comparator.comparing(User::getName))
+                .map(i->new FollowerItemDto(i.getId(),i.getName()))
+                .collect(Collectors.toList());
+
+        return new FollowerListDto(seller.getId(),seller.getName(), items);
+    }
+
+    @Override
+    public FollowerListDto getFollowerListOrderByNameDesc(int userId) {
+        User seller = iUserRepository.getUserById(userId);
+        if(seller==null)
+            throw new NotFoundUserException("Not exist this user");
+        else if(!seller.isSeller())
+            throw new InvalidSellerException("Not is a seller");
+
+        List<FollowerItemDto> items = seller.getFollowers().stream()
+                .sorted(Comparator.comparing(User::getName).reversed())
+                .map(i->new FollowerItemDto(i.getId(),i.getName()))
+                .collect(Collectors.toList());
+
+        return new FollowerListDto(seller.getId(),seller.getName(), items);
+    }
+
+    @Override
+    public FollowedListDto getFollowedListOrderByNameAsc(int userId) {
+        User user = iUserRepository.getUserById(userId);
+        if(user==null)
+            throw new NotFoundUserException("Not exist user");
+        List<FollowedItemDto> items = iUserRepository.followedUser(user)
+                .stream().sorted(Comparator.comparing(User::getName))
+                .map(u->new FollowedItemDto(u.getId(),u.getName()))
+                .collect(Collectors.toList());
+        return new FollowedListDto(user.getId(),user.getName(),items);
+    }
+
+    @Override
+    public FollowedListDto getFollowedListOrderByNameDesc(int userId) {
+        User user = iUserRepository.getUserById(userId);
+        if(user==null)
+            throw new NotFoundUserException("Not exist user");
+        List<FollowedItemDto> items = iUserRepository.followedUser(user)
+                .stream().sorted(Comparator.comparing(User::getName).reversed())
+                .map(u->new FollowedItemDto(u.getId(),u.getName()))
+                .collect(Collectors.toList());
+        return new FollowedListDto(user.getId(),user.getName(),items);
     }
 }

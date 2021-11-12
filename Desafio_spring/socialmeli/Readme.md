@@ -165,3 +165,7 @@ If is a seller and not have post with same id send status 200
 
 if is seller and exist post with same id send 400
 
+### List pushing by user in the last 2 weeks
+
+
+
