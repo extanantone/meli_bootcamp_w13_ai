@@ -1,7 +1,6 @@
 package com.bootcamp.SocialMeli.service;
 
-import com.bootcamp.SocialMeli.dto.response.CantSeguidoresDTO;
-import com.bootcamp.SocialMeli.dto.response.SuccessDTO;
+import com.bootcamp.SocialMeli.dto.response.*;
 import com.bootcamp.SocialMeli.exception.AlreadyFollowException;
 import com.bootcamp.SocialMeli.exception.EqualsUserSellerException;
 import com.bootcamp.SocialMeli.exception.NotFollowException;
@@ -11,6 +10,10 @@ import com.bootcamp.SocialMeli.model.Vendedor;
 import com.bootcamp.SocialMeli.repository.ISocialMeliRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 public class SocialMeliService implements ISocialMeliService{
@@ -58,12 +61,69 @@ public class SocialMeliService implements ISocialMeliService{
     }
 
     @Override
+    public SeguidoresDTO getSeguidores(Integer userId) {
+        //TODO chequear que se le pase un vendedor
+        Usuario vendedor = this.socialMeliRepository.buscarUsuario(userId);
+        if(vendedor == null){
+            throw new UserNotFoundException("No existe un vendedor con Id: " + userId);
+        }
+
+        List<UsuarioDTO> listaUsuarioDTO = new ArrayList<>();
+        for (Usuario user : this.socialMeliRepository.buscarSeguidores(vendedor)) {
+            listaUsuarioDTO.add(new UsuarioDTO(user.getUserId(), user.getUserName()));
+        }
+
+        SeguidoresDTO seguidoresDTO = new SeguidoresDTO(vendedor.getUserId(), vendedor.getUserName(), listaUsuarioDTO);
+        return seguidoresDTO;
+    }
+
+    @Override
+    public SeguidoresDTO getSeguidores(Integer userId, String order) {
+        SeguidoresDTO seguidoresDTO = getSeguidores(userId);
+        if(order.equals("name_asc")){
+            seguidoresDTO.getFollowers().sort(Comparator.comparing(UsuarioDTO::getUserName));
+        }else if(order.equals("name_desc")){
+            seguidoresDTO.getFollowers().sort(Comparator.comparing(UsuarioDTO::getUserName).reversed());
+        }else{
+            throw new IllegalArgumentException("Argumento invalido en 'order'");
+        }
+        return seguidoresDTO;
+    }
+
+    @Override
+    public SeguidosDTO getVendedoresSeguidos(Integer userId) {
+        Usuario usuario = this.socialMeliRepository.buscarUsuario(userId);
+        if(usuario == null){
+            throw new UserNotFoundException("No existe un usuario con Id: " + userId);
+        }
+        List<UsuarioDTO> listaUsuarioDTO = new ArrayList<>();
+        for (Usuario user : usuario.getVendedoresSeguidos()) {
+            listaUsuarioDTO.add(new UsuarioDTO(user.getUserId(), user.getUserName()));
+        }
+        SeguidosDTO seguidosDTO = new SeguidosDTO(usuario.getUserId(), usuario.getUserName(), listaUsuarioDTO);
+        return seguidosDTO;
+    }
+
+    @Override
+    public SeguidosDTO getVendedoresSeguidos(Integer userId, String order) {
+        SeguidosDTO seguidosDTO = getVendedoresSeguidos(userId);
+        if(order.equals("name_asc")){
+            seguidosDTO.getFollowed().sort(Comparator.comparing(UsuarioDTO::getUserName));
+        }else if(order.equals("name_desc")){
+            seguidosDTO.getFollowed().sort(Comparator.comparing(UsuarioDTO::getUserName).reversed());
+        }else{
+            throw new IllegalArgumentException("Argumento invalido en 'order'");
+        }
+        return seguidosDTO;
+    }
+
+    @Override
     public SuccessDTO unfollowVendedor(Integer idSeguidor, Integer idVendedor) {
         Usuario seguidor = this.socialMeliRepository.buscarUsuario(idSeguidor);
         Usuario vendedor = this.socialMeliRepository.buscarUsuario(idVendedor);
         //TODO verificar que sea vendedor (tenga publicaciones)
         //TODO verificar que antes lo seguia
-        if(idSeguidor.equals(idVendedor)){
+        if(idSeguidor.equals(idVendedor)){ //no se puede dejar de seguir a si mismo
             throw new EqualsUserSellerException();
         }else if(seguidor == null){
             throw new UserNotFoundException("No existe el usuario seguidor");

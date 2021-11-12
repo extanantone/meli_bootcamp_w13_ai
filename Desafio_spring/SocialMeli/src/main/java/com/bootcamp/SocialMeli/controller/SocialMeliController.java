@@ -4,10 +4,7 @@ import com.bootcamp.SocialMeli.service.ISocialMeliService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class SocialMeliController {
@@ -25,6 +22,28 @@ public class SocialMeliController {
         return new ResponseEntity<>(this.socialMeliService.getCantSeguidores(userId), HttpStatus.OK);
     }
 
+    /*@GetMapping("/users/{user_id}/followers/list")
+    public ResponseEntity<?> getSeguidores(@PathVariable("user_id") Integer userId){
+        return new ResponseEntity<>(this.socialMeliService.getSeguidores(userId), HttpStatus.OK);
+    }*/
+
+    @GetMapping("/users/{user_id}/followers/list")
+    public ResponseEntity<?> getSeguidores(@PathVariable("user_id") Integer userId,
+                                           @RequestParam(value = "order", required = false) String order){
+        if(order == null){
+            return new ResponseEntity<>(this.socialMeliService.getSeguidores(userId), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(this.socialMeliService.getSeguidores(userId, order), HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{user_id}/followed/list")
+    public ResponseEntity<?> getVendedoresSeguidos(@PathVariable("user_id") Integer userId,
+                                                   @RequestParam(value = "order", required = false) String order){
+        if(order == null){
+            return new ResponseEntity<>(this.socialMeliService.getVendedoresSeguidos(userId), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(this.socialMeliService.getVendedoresSeguidos(userId, order), HttpStatus.OK);
+    }
 
     @PostMapping("/users/{user_id}/unfollow/{user_id_to_unfollow}")
     public ResponseEntity<?> unfollowVendedor(@PathVariable("user_id") Integer userId, @PathVariable("user_id_to_unfollow") Integer userIdToUnfollow){

@@ -2,20 +2,22 @@ package com.bootcamp.SocialMeli.dto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class CantSeguidoresDTO extends UsuarioDTO{
-    private Integer followersCount;
+public class SeguidosDTO extends UsuarioDTO {
+    private List<UsuarioDTO> followed;
 
-    public CantSeguidoresDTO(Integer userId, String userName, Integer followersCount) {
+    public SeguidosDTO(Integer userId, String userName, List<UsuarioDTO> followed) {
         super(userId, userName);
-        this.followersCount = followersCount;
+        this.followed = followed;
     }
+
 }

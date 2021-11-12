@@ -1,17 +1,32 @@
 [
   {
-    "userId" : 1,
-    "userName" : "Martin Palermo",
-    "vendedoresSeguidos" : []
+    "user_id" : 1,
+    "user_name" : "Martin Palermo",
+    "vendedores_seguidos" : []
   },
   {
-    "userId" : 2,
-    "userName" : "Juan Roman Riquelme",
-    "vendedoresSeguidos" : []
+    "user_id" : 2,
+    "user_name" : "Juan Roman Riquelme",
+    "vendedores_seguidos" : []
   },
   {
-    "userId" : 3,
-    "userName" : "Lionel Messi",
-    "vendedoresSeguidos" : []
+    "user_id" : 3,
+    "user_name" : "Lionel Messi",
+    "vendedores_seguidos" : []
+  },
+  {
+    "user_id" : 4,
+    "user_name" : "Lautaro Martinez",
+    "vendedores_seguidos" : []
+  },
+  {
+    "user_id" : 5,
+    "user_name" : "Ángel Di Maria",
+    "vendedores_seguidos" : []
+  },
+  {
+    "user_id" : 6,
+    "user_name" : "Leandro Paredes",
+    "vendedores_seguidos" : []
   }
 ]

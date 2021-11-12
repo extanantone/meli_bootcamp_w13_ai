@@ -10,12 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class CantSeguidoresDTO extends UsuarioDTO{
-    private Integer followersCount;
-
-    public CantSeguidoresDTO(Integer userId, String userName, Integer followersCount) {
-        super(userId, userName);
-        this.followersCount = followersCount;
-    }
+public class UsuarioDTO {
+    private Integer userId;
+    private String userName;
 }

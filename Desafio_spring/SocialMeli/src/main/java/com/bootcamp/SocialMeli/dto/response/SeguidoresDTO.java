@@ -7,15 +7,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class CantSeguidoresDTO extends UsuarioDTO{
-    private Integer followersCount;
+public class SeguidoresDTO extends UsuarioDTO{
+    private List<UsuarioDTO> followers;
 
-    public CantSeguidoresDTO(Integer userId, String userName, Integer followersCount) {
+    public SeguidoresDTO(Integer userId, String userName, List<UsuarioDTO> followers) {
         super(userId, userName);
-        this.followersCount = followersCount;
+        this.followers = followers;
     }
 }
