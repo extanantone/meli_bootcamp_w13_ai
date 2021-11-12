@@ -1,7 +1,7 @@
 package com.bootcamp.socialmeli.service;
 
 import com.bootcamp.socialmeli.DTO.DTOCount;
-import com.bootcamp.socialmeli.DTO.DTOFollowers;
+import com.bootcamp.socialmeli.DTO.DTOFollower;
 import com.bootcamp.socialmeli.DTO.DTOUser;
 import com.bootcamp.socialmeli.model.User;
 import com.bootcamp.socialmeli.repository.IUserRepository;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ServiceFollower implements IServiceFollower{
@@ -21,18 +20,18 @@ public class ServiceFollower implements IServiceFollower{
     IUserRepository iUserRepository;
 
     @Override
-    public ResponseEntity<String> userToFollow(int idUser, int idUserToFollow) {
+    public ResponseEntity<String> userToFollow(int userId, int userIdToFollow) {
 
-        if(idUser == idUserToFollow)
+        if(userId == userIdToFollow)
             return new ResponseEntity("No puedes seguirte a ti mismo", HttpStatus.BAD_REQUEST);
 
         try{
 
-            User user = iUserRepository.findById(idUser);
+            User user = iUserRepository.findById(userId);
 
-            User userToFollows = iUserRepository.findById(idUserToFollow);
+            User userToFollows = iUserRepository.findById(userIdToFollow);
 
-            boolean userFollowed = user.addListFollows(idUserToFollow,userToFollows);
+            boolean userFollowed = user.addListFollows(userIdToFollow,userToFollows);
 
             if(!userFollowed)
                 return new ResponseEntity("El usuario ya sigue al vendedor " + userToFollows.getUserName(), HttpStatus.BAD_REQUEST);
@@ -69,7 +68,7 @@ public class ServiceFollower implements IServiceFollower{
     }
 
     @Override
-    public ResponseEntity<DTOFollowers> getFollowersFromUser(int idUser) {
+    public ResponseEntity<DTOFollower> getFollowersFromUser(int idUser) {
 
         try {
 
@@ -82,7 +81,7 @@ public class ServiceFollower implements IServiceFollower{
             for (User u : followerList)
                 listDtoUsers.add(new DTOUser(u.getUserId(),u.getUserName()));
 
-            return new ResponseEntity(new DTOFollowers(user.getUserId(), user.getUserName(),listDtoUsers), HttpStatus.OK);
+            return new ResponseEntity(new DTOFollower(user.getUserId(), user.getUserName(),listDtoUsers), HttpStatus.OK);
 
         }catch(Exception e){
 
@@ -90,5 +89,39 @@ public class ServiceFollower implements IServiceFollower{
 
         }
 
+    }
+
+    @Override
+    public ResponseEntity userToUnfollow(int userId, int userIdToUnfollow) {
+
+        try {
+
+            User user = iUserRepository.findById(userId);
+
+            if(user.getListFolows().containsKey(userIdToUnfollow))
+                user.getListFolows().remove(userIdToUnfollow);
+            else {
+                try {
+
+                    User userToUnfollow = iUserRepository.findById(userIdToUnfollow);
+
+                    return new ResponseEntity("No sigue al vendedor", HttpStatus.BAD_REQUEST);
+
+                } catch (Exception e){
+
+                    return new ResponseEntity("El vendedor no existe", HttpStatus.BAD_REQUEST);
+
+                }
+            }
+
+
+
+        } catch(Exception e){
+
+            return new ResponseEntity("Usuario inexistente", HttpStatus.BAD_REQUEST);
+
+        }
+
+        return null;
     }
 }

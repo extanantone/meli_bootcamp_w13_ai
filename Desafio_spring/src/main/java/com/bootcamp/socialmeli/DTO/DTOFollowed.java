@@ -1,6 +1,7 @@
 package com.bootcamp.socialmeli.DTO;
 
-import com.bootcamp.socialmeli.model.User;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,11 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DTOFollowers {
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class DTOFollowed {
 
     private int userId;
     private String userName;
-    private List<DTOUser> followers;
+    private List<DTOUser> followedList;
 
 }

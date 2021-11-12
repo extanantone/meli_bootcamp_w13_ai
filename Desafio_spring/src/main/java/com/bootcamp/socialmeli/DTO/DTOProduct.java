@@ -1,5 +1,6 @@
 package com.bootcamp.socialmeli.DTO;
 
+import com.bootcamp.socialmeli.model.Product;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -9,13 +10,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class DTOCount {
+public class DTOProduct {
 
-    private int userId;
-    private String name;
-    private int followersCount;
+    private int productId;
+    private String productName;
+    private String Type;
+    private String brand;
+    private String color;
+    private String notes;
 
 }

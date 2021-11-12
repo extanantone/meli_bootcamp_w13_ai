@@ -1,14 +1,15 @@
 package com.bootcamp.socialmeli.service;
 
-
 import org.springframework.http.ResponseEntity;
 
 public interface IServiceFollower {
 
-    ResponseEntity userToFollow(int idUser, int idUserToFollow);
+    ResponseEntity userToFollow(int userId, int userIdToFollow);
 
     ResponseEntity getCountFollowersOfuser(int idUser);
 
     ResponseEntity getFollowersFromUser(int idUser);
+
+    ResponseEntity userToUnfollow(int userId, int userIdToUnfollow);
 
 }

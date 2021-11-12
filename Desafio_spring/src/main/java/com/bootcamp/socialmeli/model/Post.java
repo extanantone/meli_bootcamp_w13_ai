@@ -1,4 +1,4 @@
-package com.bootcamp.socialmeli.DTO;
+package com.bootcamp.socialmeli.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -7,15 +7,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Locale;
+
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class DTOCount {
+@NoArgsConstructor
+@JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
+public class Post {
 
     private int userId;
-    private String name;
-    private int followersCount;
+    private int idPost;
+    private Locale date;
+    private Product detail;
+    private int category;
+    private double price;
 
 }

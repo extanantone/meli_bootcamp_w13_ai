@@ -32,7 +32,7 @@ public class UserRepository implements IUserRepository{
             try{
                 return listUsers.get(idUser - 1);
             }catch (Exception e) {
-                throw new RuntimeException("Usuario no encontrado");
+                throw new RuntimeException("Usuario" + idUser + "no encontrado");
             }
         }
 

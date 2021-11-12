@@ -7,15 +7,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.Locale;
+
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class DTOCount {
+public class DTOPostProduct {
 
     private int userId;
-    private String name;
-    private int followersCount;
+    private int idPost;
+    private Locale date;
+    private DTOProduct detail;
+    private int category;
+    private double price;
 
 }
