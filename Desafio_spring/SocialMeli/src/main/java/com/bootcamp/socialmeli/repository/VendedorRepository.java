@@ -41,6 +41,27 @@ public class VendedorRepository implements IVendedorRepository {
         return users;
     }
 
+    // US0001
+    @Override
+    public Optional<User> addFollowerToSeller(Long actualUserId, Long userToFollowId) {
+        for (User i: this.users) {
+            // TODO: check if user exist in memory
+
+            if(userToFollowId.equals(i.getUserId())) {
+
+            }
+
+        }
+        return Optional.empty();
+    }
+
+    // US0002
+    @Override
+    public Optional<User> getSellerFollowersCount(Long id) {
+        return Optional.empty();
+    }
+
+    // US0003
     @Override
     public Optional<User> findSellerById(Long id) {
         for (User i: this.users) {
@@ -48,6 +69,10 @@ public class VendedorRepository implements IVendedorRepository {
         }
         return Optional.empty();
     }
+
+
+
+
 
 
 }
