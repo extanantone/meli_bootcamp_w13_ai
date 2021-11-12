@@ -24,17 +24,26 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public UserDTO findUserByUserId(Integer user_id) {
-        UserDTO userDTO = database.get(user_id-1);
-        //System.out.println(userDTO.toString());
+        UserDTO userDTO = null;
+        try{
+            userDTO = database.get(user_id-1);
+            //System.out.println(userDTO.toString());
+            throw new IndexOutOfBoundsException("El usuario no existe con id -> " + user_id );
+
+        }catch (IndexOutOfBoundsException e){
+            System.out.println(e.getMessage());
+        }
+
 
         return userDTO;
     }
 
 
     @Override
-    public UserDTO follow(Integer user_id, Integer user_id_to_follow) {
+    public Boolean follow(Integer user_id, Integer user_id_to_follow) {
         UserDTO current_user = findUserByUserId(user_id);
         UserDTO follow_user = findUserByUserId(user_id_to_follow);
+        Boolean band = false;
 
         if( current_user != null && follow_user != null && user_id != user_id_to_follow ){
             //Al usuario actual se le agrega el usuario a seguir
@@ -46,6 +55,7 @@ public class UserRepository implements IUserRepository{
             if( !followedList.contains(follow_user.getUser_id())  ){
                 followedList.add(follow_user.getUser_id());
                 current_user.setFollowed(followedList);
+                band = true;
             }
 
 
@@ -55,14 +65,16 @@ public class UserRepository implements IUserRepository{
             if( followersList == null ){
                 followersList = new ArrayList<>();
             }
-            if( !followersList.contains(current_user.getUser_id()) ){
+            if( !followersList.contains(current_user.getUser_id()) && band ){
                 followersList.add(current_user.getUser_id());
                 follow_user.setFollowers(followersList);
+            }else{
+                band = false;
             }
 
 
         }
 
-        return current_user;
+        return band;
     }
 }

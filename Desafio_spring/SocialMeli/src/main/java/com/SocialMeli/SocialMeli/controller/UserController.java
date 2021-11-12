@@ -27,8 +27,11 @@ public class UserController {
     }
 
     @PostMapping("users/{user_id}/follow/{user_id_to_follow}")
-    public ResponseEntity<UserDTO> followUser(@PathVariable Integer user_id, @PathVariable Integer user_id_to_follow) {
-        UserDTO user = userService.followUser(user_id,user_id_to_follow);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<String> followUser(@PathVariable Integer user_id, @PathVariable Integer user_id_to_follow) {
+        Boolean statusFollow = userService.followUser(user_id,user_id_to_follow);
+        if( statusFollow )
+            return new ResponseEntity<>("Usuarios seguidos.", HttpStatus.OK);
+
+        return new ResponseEntity<>("Los usuarios no pueden seguirse.", HttpStatus.BAD_REQUEST);
     }
 }

@@ -19,7 +19,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserDTO followUser(Integer user_id, Integer user_id_to_follow) {
+    public Boolean followUser(Integer user_id, Integer user_id_to_follow) {
         return userRepository.follow(user_id, user_id_to_follow);
     }
 }
