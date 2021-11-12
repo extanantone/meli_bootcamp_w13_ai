@@ -16,7 +16,5 @@ public class DicountPostDto extends PostDto{
     private boolean hasDiscount;
     private double discount;
 
-    public DicountPostDto(int userId, int postId, String date, DetailDto detail, int category, int price) {
-        super(userId, postId, date, detail, category, price);
-    }
+
 }

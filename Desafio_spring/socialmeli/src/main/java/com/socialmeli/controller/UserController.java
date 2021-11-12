@@ -67,9 +67,14 @@ public class UserController {
         iUserService.addPostDiscount(dto);
     }
 
-    @GetMapping("/products/{id}/promo-post/count")
-    public PostCount getCountPromoDiscount(@PathVariable int id){
-        return iUserService.getCountPromoDiscount(id);
+    @GetMapping("/products/{userId}/promo-post/count")
+    public PostCount getCountPromoDiscount(@PathVariable int userId){
+        return iUserService.getCountPromoDiscount(userId);
+    }
+
+    @GetMapping("/products/{seller}/list")
+    public ProductDiscountListDto getProductDiscountListDto(@PathVariable int seller){
+        return iUserService.getProductDiscountListDto(seller);
     }
 
 

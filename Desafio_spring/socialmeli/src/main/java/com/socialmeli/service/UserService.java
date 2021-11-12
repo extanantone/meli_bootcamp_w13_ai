@@ -196,4 +196,18 @@ public class UserService implements IUserService{
         List<Post> post = iUserRepository.getPromoPostByUserId(userId);
         return new PostCount(userId,user.getName(),post.size());
     }
+
+    @Override
+    public ProductDiscountListDto getProductDiscountListDto(int seller) {
+        User user = iUserRepository.getUserById(seller);
+        if(user==null)
+            throw new NotFoundUserException("Not exist user with given id");
+        else if (!user.isSeller())
+            throw new InvalidSellerException("Not is user seller");
+        List<Post> posts = iUserRepository.getPromoPostByUserId(seller);
+        List<DiscountDtoWithoutUser> dtos = posts.stream().map(i->
+                new DiscountDtoWithoutUser(i.getId(), i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),i.getPrice(),i.isHasDiscount(),i.getDiscount()))
+                .collect(Collectors.toList());
+        return new ProductDiscountListDto(seller,user.getName(),dtos);
+    }
 }

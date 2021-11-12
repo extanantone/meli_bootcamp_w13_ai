@@ -27,4 +27,6 @@ public interface IUserService {
     void addPostDiscount(DicountPostDto dto);
 
     PostCount getCountPromoDiscount(int userId);
+
+    ProductDiscountListDto getProductDiscountListDto(int seller);
 }
