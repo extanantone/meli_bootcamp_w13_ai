@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "username": "juan_perez",
+    "email": "juan_perez@mail.com",
+    "password": "9r8guwibef",
+    "followers": [],
+    "following": []
+  },
+  {
+    "id": 2,
+    "username": "adriana_gonzalez",
+    "email": "adriana_gonzalez@mail.com",
+    "password": "8w9fhniwef9",
+    "followers": [],
+    "following": []
+  },
+  {
+    "id": 3,
+    "username": "mateo_sanchez",
+    "email": "mateo_sanchez@mail.com",
+    "password": "w0e8fhionkd",
+    "followers": [],
+    "following": []
+  }
+]
