@@ -167,5 +167,87 @@ if is seller and exist post with same id send 400
 
 ### List pushing by user in the last 2 weeks
 
+GET
 
+URL http://localhost:8080/products/followed/{user_id}/list
+
+CORRECT
+
+http://localhost:8080/products/followed/1/list
+
+404 if not exist 
+
+http://localhost:8080/products/followed/90/list
+
+#### Unfollow user
+
+POST
+
+URL http://localhost:8080/users/{subscriptor}/unfollow/{seller}
+
+
+If user unsubscribe user not seller 400
+
+If user not is subscriber of seller 404
+
+If user is subscribe a seller 200
+
+### Implements orders in previos listing methods
+
+whatch pdf
+
+### Publish a promo post
+
+POST
+
+URL http://localhost:8080/products/promo-post
+
+Payload
+
+    {
+        "user_id": 3,
+        "id_post": 18,
+        "date": "11-11-2021",
+        "detail": {
+            "product_id": 1,
+            "product_name": "Silla Gamer",
+            "type": "Gamer",
+            "brand": "Racer",
+            "color": "Red & Black",
+            "notes": "Special Edition"
+        },
+        "category": 100,
+        "price": 1500.50,
+        "has_discount":true,
+        "discount":0.25
+    }
+
+If not exist user id 404
+
+if exist same id in user post send 400
+
+
+### count all promo post
+
+GET
+
+URL http://localhost:8080/products/{seller}/promo-post/count
+
+if seller not exist send 404
+
+if user isn`t seller send 400
+
+else send 200
+
+### List promo list
+
+GET
+
+URL http://localhost:8080/products/{seller}/list
+
+if seller not exist send 404
+
+if user is not seller send 400
+
+else send 200
 
