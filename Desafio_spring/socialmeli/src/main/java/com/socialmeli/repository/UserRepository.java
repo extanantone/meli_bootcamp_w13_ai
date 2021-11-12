@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepository implements IUserRepository{
@@ -23,5 +24,10 @@ public class UserRepository implements IUserRepository{
     public User getUserById(int id) {
         return users.stream().filter(i->i.getId()==id)
                 .findFirst().orElse(null);
+    }
+
+    @Override
+    public List<User> followedUser(User user) {
+        return users.stream().filter(u->u.isFollower(user)).collect(Collectors.toList());
     }
 }

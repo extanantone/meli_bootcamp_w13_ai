@@ -52,4 +52,8 @@ public class User {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public boolean isFollower(User user){
+        return  followers.contains(user);
+    }
 }

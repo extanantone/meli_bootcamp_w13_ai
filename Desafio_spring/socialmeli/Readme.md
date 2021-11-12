@@ -48,3 +48,35 @@ Error 400 cuando el usuario no es un vendedor
 Ejemplo:
 
 http://localhost:8080/users/1/followers/count
+
+## Lista de seguidores
+
+GET 
+
+URL http://localhost:8080/users/{userId}/followers/list
+
+Correcto
+
+http://localhost:8080/users/3/followers/list
+
+404 si no existe el usuario
+
+http://localhost:8080/users/20/followers/list
+
+400 si no es un vendedor
+
+http://localhost:8080/users/1/followers/list
+
+### Lista de seguidos
+
+GET
+
+URL http://localhost:8080/users/{userId}/followed/list
+
+Correcto
+
+http://localhost:8080/users/1/followed/list
+
+Si el usuario no existe 404
+
+http://localhost:8080/users/20/followed/list
