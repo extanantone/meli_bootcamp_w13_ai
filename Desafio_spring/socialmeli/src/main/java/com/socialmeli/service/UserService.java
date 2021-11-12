@@ -74,7 +74,8 @@ public class UserService implements IUserService{
         if(user==null)
             throw new NotFoundUserException("Not exist user");
         DetailDto detail = dto.getDetail();
-        user.addPost(new Post(dto.getPostId(), LocalDate.parse(dto.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),detail.getProductId(),detail.getProductName(),
+        System.out.println(dto.getIdPost());
+        user.addPost(new Post(dto.getIdPost(), LocalDate.parse(dto.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),detail.getProductId(),detail.getProductName(),
                 detail.getType(),detail.getBrand(),detail.getColor(),detail.getNotes(),dto.getCategory(),
                 dto.getPrice(),false,0));
     }
@@ -181,7 +182,7 @@ public class UserService implements IUserService{
         if(user==null)
             throw new NotFoundUserException("Not exist user");
         DetailDto detail = dto.getDetail();
-        user.addPost(new Post(dto.getPostId(), LocalDate.parse(dto.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),detail.getProductId(),detail.getProductName(),
+        user.addPost(new Post(dto.getIdPost(), LocalDate.parse(dto.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),detail.getProductId(),detail.getProductName(),
                 detail.getType(),detail.getBrand(),detail.getColor(),detail.getNotes(),dto.getCategory(),
                 dto.getPrice(),dto.isHasDiscount(),dto.getDiscount()));
     }

@@ -2,6 +2,7 @@ package com.socialmeli.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Post {
     private int id;
     private LocalDate date;
@@ -36,6 +38,6 @@ public class Post {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return 1;
     }
 }

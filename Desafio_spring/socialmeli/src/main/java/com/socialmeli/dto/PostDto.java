@@ -21,7 +21,7 @@ import java.util.Date;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PostDto {
     private int userId;
-    private int postId;
+    private int idPost;
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     private String date;
     private DetailDto detail;
