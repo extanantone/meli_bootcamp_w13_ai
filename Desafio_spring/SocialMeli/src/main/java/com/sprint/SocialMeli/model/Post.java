@@ -1,5 +1,6 @@
 package com.sprint.SocialMeli.model;
 
+import com.sprint.SocialMeli.dto.PostDtoIn;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,5 +22,23 @@ public class Post {
     double price;
     boolean has_promo;
     double discount;
+
+    public Post(){
+        has_promo = false;
+        discount = 0;
+    }
+
+    public Post(PostDtoIn postDtoIn){
+        user_id = postDtoIn.getUser_id();
+        id_post = postDtoIn.getId_post();
+        date = LocalDate.parse(postDtoIn.getDate());
+        product_id = postDtoIn.getDetail().getProduct_id();
+        product_name = postDtoIn.getDetail().getProduct_name();
+        type = postDtoIn.getDetail().getType();
+        brand = postDtoIn.getDetail().getBrand();
+        color = postDtoIn.getDetail().getColor();
+        category = postDtoIn.getCategory();
+        price = postDtoIn.getPrice();
+    }
 
 }

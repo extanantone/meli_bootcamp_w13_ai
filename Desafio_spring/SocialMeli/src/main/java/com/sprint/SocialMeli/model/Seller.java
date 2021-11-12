@@ -8,13 +8,18 @@ public class Seller extends User {
 
     public Seller(int user_id, String user_name) {
         super(user_id, user_name);
-        followersIds = new ArrayList<>();
-        postsIds = new ArrayList<>();
+        followersIds = new LinkedList<>();
+        postsIds = new LinkedList<>();
     }
 
     public void addFollower(int user_id){
         if(!followersIds.contains(user_id))
             followersIds.add(user_id);
+    }
+
+    public void deleteFollower(int user_id){
+        if(!followersIds.contains(user_id))
+            followersIds.remove(user_id);
     }
 
     public Integer followersCount(){

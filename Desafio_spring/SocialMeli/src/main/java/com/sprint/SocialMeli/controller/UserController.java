@@ -21,7 +21,7 @@ public class UserController {
 
     @PostMapping("/{user_id}/follow/{user_id_to_follow}")
     public HttpStatus followSeller(@PathVariable int user_id, @PathVariable int user_id_to_follow) throws WrongTypeException, NotFoundException {
-        socialService.followVendedor(user_id, user_id_to_follow);
+        socialService.followSeller(user_id, user_id_to_follow);
         return HttpStatus.OK;
     }
 
@@ -38,6 +38,12 @@ public class UserController {
     @GetMapping("/{user_id}/followed/list")
     public ResponseEntity<FollowedListDto> followedList(@PathVariable int user_id) throws WrongTypeException, NotFoundException {
         return ResponseEntity.status(HttpStatus.OK).body(socialService.getBuyerFollowedList(user_id));
+    }
+
+    @PostMapping("/{user_id}/unfollow/{user_id_to_unfollow}")
+    public HttpStatus unfollowSeller(@PathVariable int user_id, @PathVariable int user_id_to_unfollow) throws WrongTypeException, NotFoundException {
+        socialService.unfollowSeller(user_id, user_id_to_unfollow);
+        return HttpStatus.OK;
     }
 
 }

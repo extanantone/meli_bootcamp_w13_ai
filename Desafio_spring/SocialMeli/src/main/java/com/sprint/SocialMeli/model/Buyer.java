@@ -1,6 +1,7 @@
 package com.sprint.SocialMeli.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Buyer extends User {
@@ -8,12 +9,17 @@ public class Buyer extends User {
 
     public Buyer(int user_id, String user_name) {
         super(user_id, user_name);
-        followedIds = new ArrayList<>();
+        followedIds = new LinkedList<>();
     }
 
     public void addFollowed(int user_id){
         if(!followedIds.contains(user_id))
             followedIds.add(user_id);
+    }
+
+    public void deleteFollowed(int user_id){
+        if(!followedIds.contains(user_id))
+            followedIds.remove(user_id);
     }
 
     public Integer followedCount() {

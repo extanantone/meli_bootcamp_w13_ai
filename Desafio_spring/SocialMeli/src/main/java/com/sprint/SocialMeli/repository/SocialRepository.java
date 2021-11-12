@@ -21,8 +21,8 @@ public class SocialRepository implements ISocialRepository{
         return users.containsKey(user_id);
     }
 
-    public boolean existsPost(int post_id){
-        return posts.containsKey(post_id);
+    public boolean existsPost(int id_post){
+        return posts.containsKey(id_post);
     }
 
     public User getUser(int user_id){
@@ -33,8 +33,13 @@ public class SocialRepository implements ISocialRepository{
         users.put(user.getUser_id(), user);
     }
 
-    public void putPost(User user){
-        users.put(user.getUser_id(), user);
+    public void putPost(Post post){
+        posts.put(post.getId_post(), post);
+    }
+
+    @Override
+    public Post getPost(int id_post) {
+        return posts.get(id_post);
     }
 
 
