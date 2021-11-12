@@ -27,7 +27,6 @@ public class UserRepository implements  IUserRepository{
 
     @Override
     public Seguidor setSeguidor(Seguidor seguidor) {
-
         seguidors.add(seguidor);
         return  seguidor;
     }
@@ -35,12 +34,13 @@ public class UserRepository implements  IUserRepository{
     @Override
     public User getUser(int id) {
         if(users.stream().filter(user -> user.getId() == id).count() >0){
-
           return users.stream().filter(user1 -> user1.getId()==id).findFirst().get();
-
-
-
         }
          return null;
+    }
+
+    @Override
+    public List<Seguidor> getSegidor() {
+        return seguidors;
     }
 }

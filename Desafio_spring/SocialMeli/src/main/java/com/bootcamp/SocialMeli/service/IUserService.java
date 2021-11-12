@@ -1,5 +1,7 @@
 package com.bootcamp.SocialMeli.service;
 
+import com.bootcamp.SocialMeli.dto.MesiguenCabtidadDTO;
+import com.bootcamp.SocialMeli.dto.MesiguenDTO;
 import com.bootcamp.SocialMeli.dto.SeguidorDTO;
 import com.bootcamp.SocialMeli.exception.NotFoundExceptionUsers;
 import com.bootcamp.SocialMeli.model.Seguidor;
@@ -7,4 +9,7 @@ import com.bootcamp.SocialMeli.model.Seguidor;
 public interface IUserService {
 
     SeguidorDTO setSeguidor(int idSeguidor, int idSeguido);
+    MesiguenCabtidadDTO getSequidores(int id);
+    MesiguenDTO getMeSiguen(int id);
+    MesiguenDTO getAquienSiguo(int id);
 }

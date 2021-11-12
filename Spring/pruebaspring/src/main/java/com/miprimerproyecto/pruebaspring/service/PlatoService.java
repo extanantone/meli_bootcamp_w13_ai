@@ -34,7 +34,6 @@ public class PlatoService implements IPlatoService{
 
             ));
         }
-
         platoDevueltoDTO.setIngredientes(ingredientes);
         platoDevueltoDTO.setCaloriastotal((int) ingredientes.stream().mapToDouble(i-> i.getCalories()).sum());
         platoDevueltoDTO.setIngredienteConMasCalorias(

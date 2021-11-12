@@ -10,7 +10,6 @@ import java.util.PrimitiveIterator;
 @Getter
 @AllArgsConstructor
 public class SeguidorDTO {
-
     private String nameSeguidor;
     private int idSeguidor;
     private String nameSeguido;
