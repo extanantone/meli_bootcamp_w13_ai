@@ -1,5 +1,6 @@
 package com.sprint.SocialMeli.controller;
 
+import com.sprint.SocialMeli.dto.FollowedListDto;
 import com.sprint.SocialMeli.dto.FollowersCountDto;
 import com.sprint.SocialMeli.dto.FollowersListDto;
 import com.sprint.SocialMeli.exceptions.NotFoundException;
@@ -32,6 +33,11 @@ public class UserController {
     @GetMapping("/{user_id}/followers/list")
     public ResponseEntity<FollowersListDto> followersList(@PathVariable int user_id) throws WrontTypeException, NotFoundException {
         return ResponseEntity.status(HttpStatus.OK).body(socialService.getSellerFollowersList(user_id));
+    }
+
+    @GetMapping("/{user_id}/followed/list")
+    public ResponseEntity<FollowedListDto> followedList(@PathVariable int user_id) throws WrontTypeException, NotFoundException {
+        return ResponseEntity.status(HttpStatus.OK).body(socialService.getBuyerFollowedList(user_id));
     }
 
 }
