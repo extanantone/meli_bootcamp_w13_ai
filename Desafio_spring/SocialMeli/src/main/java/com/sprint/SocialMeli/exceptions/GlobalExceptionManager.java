@@ -11,6 +11,16 @@ public class GlobalExceptionManager {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<?> NotFoundException(Exception e){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(WrongTypeException.class)
+    public ResponseEntity<?> WrongTypeException(Exception e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> Exception(Exception e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error no especificado");
     }
 }
