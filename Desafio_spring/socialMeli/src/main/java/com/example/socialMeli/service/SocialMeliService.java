@@ -82,7 +82,7 @@ public class SocialMeliService implements  ISocialMeliService{
         }
         return seguidores;
     }
-    public SeguidosDTO buscarSeguidos (int id) throws UsuarioNoEncontradoError{
+    public SeguidosDTO buscarSeguidos (int id, String order) throws UsuarioNoEncontradoError{
         SeguidosDTO seguidos = new SeguidosDTO();
         Comprador compra = errorComprador(id);
         seguidos.setUser_id(id);
@@ -91,7 +91,11 @@ public class SocialMeliService implements  ISocialMeliService{
         for (Vendedor c:compra.getSiguiendo()) {
             vendedoresQueSiguen.add(new CompradoresDTO(c.getUser_id(),c.getName()));
         }
-        seguidos.setFollowed(vendedoresQueSiguen);
+        if(order == null ||order.equals("name_asc")){
+            seguidos.setFollowed(vendedoresQueSiguen.stream().sorted(Comparator.comparing(x->x.getUser_name())).collect(Collectors.toList()));
+        }else  if(order.equals("name_desc")){
+            seguidos.setFollowed(vendedoresQueSiguen.stream().sorted(Collections.reverseOrder(Comparator.comparing(x->x.getUser_name()))).collect(Collectors.toList()));
+        }
         return seguidos;
     }
     public RespuestaSimpleDTO añadirPost (PublicacionDTO pub) throws UsuarioNoEncontradoError{

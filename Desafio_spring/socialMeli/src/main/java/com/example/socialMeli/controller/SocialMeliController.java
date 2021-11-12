@@ -37,7 +37,7 @@ public class SocialMeliController {
     }
     @GetMapping("/users/{user_id}/followed/list")
     public ResponseEntity<SeguidosDTO> aQuienSigo(@PathVariable int user_id, @RequestParam(required = false) String order) throws UsuarioNoEncontradoError {
-        SeguidosDTO seguidos = SMservicio.buscarSeguidos(user_id);
+        SeguidosDTO seguidos = SMservicio.buscarSeguidos(user_id, order);
         return new ResponseEntity<>(seguidos, HttpStatus.OK);
     }
     @PostMapping("/products/post")
