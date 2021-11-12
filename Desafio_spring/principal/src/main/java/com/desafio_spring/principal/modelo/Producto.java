@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Producto implements Comparable<String>{
+public class Producto{
     private int productId;
     private String productName;
     private String type;
@@ -17,8 +17,4 @@ public class Producto implements Comparable<String>{
     private String color;
     private String notes;
 
-    @Override
-    public int compareTo(String o) {
-        return this.productName.compareTo(o);
-    }
 }

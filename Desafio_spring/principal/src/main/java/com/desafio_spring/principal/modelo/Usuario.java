@@ -11,12 +11,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario implements Comparable<String>{
+public class Usuario{
     private int userId;
     private String userName;
 
-    @Override
-    public int compareTo(String o) {
-        return this.userName.compareTo(o);
-    }
 }

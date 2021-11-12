@@ -12,7 +12,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class UsuarioDTO {
-    private int userId;
-    private String userName;
+public class ProductoDTO {
+    private int productId;
+    private String productName;
+    private String type;
+    private String brand;
+    private String color;
+    private String notes;
 }

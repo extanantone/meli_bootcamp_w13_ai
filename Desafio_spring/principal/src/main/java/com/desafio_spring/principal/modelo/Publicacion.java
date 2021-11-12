@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Publicacion implements Comparable<LocalDate>{
+public class Publicacion{
 
     private int idPost;
     private LocalDate date;
@@ -20,9 +20,7 @@ public class Publicacion implements Comparable<LocalDate>{
     private String category;
     private Double price;
     private Usuario userdueno;
+    private boolean hasPromo;
+    private double discount;
 
-    @Override
-    public int compareTo(LocalDate o) {
-        return o.compareTo(this.date);
-    }
 }
