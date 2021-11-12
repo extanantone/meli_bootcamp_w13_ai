@@ -1,9 +1,9 @@
 package com.example.SocialMeli.controller;
 
+import com.example.SocialMeli.dto.UserCountFollowersDTO;
 import com.example.SocialMeli.dto.UserFollowersDTO;
 import com.example.SocialMeli.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,12 @@ public class UserController {
     }
 
     @GetMapping("/{user_id}/followers/count")
-    public ResponseEntity<UserFollowersDTO> countFollowers(@PathVariable int user_id) throws Exception {
+    public ResponseEntity<UserCountFollowersDTO> countFollowers(@PathVariable int user_id) throws Exception {
         return ResponseEntity.ok(this.userService.countFollowers(user_id));
+    }
+
+    @GetMapping("/{user_id}/followers/list")
+    public ResponseEntity<UserFollowersDTO> listFollowers(@PathVariable int user_id) throws Exception {
+        return ResponseEntity.ok(this.userService.listFollowers(user_id));
     }
 }

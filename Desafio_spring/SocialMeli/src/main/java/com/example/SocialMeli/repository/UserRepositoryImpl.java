@@ -31,4 +31,16 @@ public class UserRepositoryImpl implements UserRepository{
         return this.usuarios.stream().filter(user -> user.getUser_id() == id).findFirst().orElse(null);
     }
 
+    @Override
+    public List<User> getFollowers(int id) throws Exception {
+        User usr = this.getById(id);
+        if(usr == null) throw new Exception();
+        List<User> followers = new ArrayList<>();
+        for (Long u: usr.getSeguidores()
+             ) {
+            followers.add(this.getById(Math.toIntExact(u)));
+        }
+        return followers;
+    }
+
 }
