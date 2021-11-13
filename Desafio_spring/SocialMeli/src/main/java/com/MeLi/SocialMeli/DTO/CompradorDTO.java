@@ -5,27 +5,27 @@ import com.MeLi.SocialMeli.model.Usuario;
 
 public class CompradorDTO{
 
-    private int id;
-    private String nombre;
+    private int user_id;
+    private String user_name;
 
     public CompradorDTO(int id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
+        this.user_id = id;
+        this.user_name = nombre;
     }
 
     public int getId() {
-        return id;
+        return user_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.user_id = id;
     }
 
     public String getNombre() {
-        return nombre;
+        return user_name;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.user_name = nombre;
     }
 }

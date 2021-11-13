@@ -1,16 +1,22 @@
 package com.MeLi.SocialMeli.service;
 
-import com.MeLi.SocialMeli.DTO.SeguimientoDTO;
-import com.MeLi.SocialMeli.DTO.VendedorDTO;
+import com.MeLi.SocialMeli.DTO.*;
 import com.MeLi.SocialMeli.exception.NotFoundCompradorException;
 import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
+import com.MeLi.SocialMeli.mapper.CompradorMapper;
+import com.MeLi.SocialMeli.mapper.DatosSeguidoresMapper;
+import com.MeLi.SocialMeli.mapper.InfoSeguidosMapper;
+import com.MeLi.SocialMeli.mapper.VendedorMapper;
 import com.MeLi.SocialMeli.model.Comprador;
 import com.MeLi.SocialMeli.model.Vendedor;
 import com.MeLi.SocialMeli.repository.CompradorRepositoryImplement;
 import com.MeLi.SocialMeli.repository.VendedorRepositoryImplement;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CompradorService implements CompradorServiceImplement {
@@ -34,8 +40,16 @@ public class CompradorService implements CompradorServiceImplement {
     }
 
     @Override
-    public List<VendedorDTO> verSeguidos() {
-        return null;
+    public InfoSeguidosDTO verSeguidos(int idComprador) throws NotFoundCompradorException, NotFoundVendedorException {
+        Comprador comprador = compradorRepositoryImplement.find(idComprador).orElseThrow(() -> new NotFoundCompradorException(idComprador));
+        HashMap<Integer, String> seguidores = comprador.getSeguidos();
+        List<VendedorDTO> seguidosDatos = new ArrayList<>();
+
+        for (Map.Entry<Integer, String> entry : seguidores.entrySet()) {
+            Vendedor vendedor = vendedorRepositoryImplement.find(entry.getKey()).orElseThrow(() -> new NotFoundVendedorException(entry.getKey()));
+            seguidosDatos.add(VendedorMapper.vendedorToVendedorDTO(vendedor));
+        }
+        return InfoSeguidosMapper.infoSeguidosToInfoSeguidosDTO(comprador, seguidosDatos);
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.MeLi.SocialMeli.model.Comprador;
 
 public class CompradorMapper {
 
-    public static CompradorDTO CompradorToCompradorDTO(Comprador comprador){
+    public static CompradorDTO compradorToCompradorDTO(Comprador comprador){
         return new CompradorDTO(comprador.getId(),comprador.getNombre());
     }
 }

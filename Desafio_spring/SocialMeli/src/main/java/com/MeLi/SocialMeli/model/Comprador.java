@@ -8,17 +8,17 @@ import java.util.Set;
 public class Comprador extends Usuario{
 
 
-    HashMap<Integer,Vendedor> seguidos = new HashMap<>();
+    HashMap<Integer, String> seguidos = new HashMap<>();
 
     public Comprador(int id, String nombre){
         super(id,nombre);
     }
 
     public void setSeguido(Vendedor vendedor){
-        seguidos.put(vendedor.getId(), vendedor);
+        seguidos.put(vendedor.getId(), vendedor.getNombre());
     }
 
-    public Set<Map.Entry<Integer, Vendedor>> getSeguidos(){
-        return seguidos.entrySet();
+    public HashMap<Integer, String> getSeguidos(){
+        return seguidos;
     }
 }

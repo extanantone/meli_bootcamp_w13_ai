@@ -4,6 +4,9 @@ import com.MeLi.SocialMeli.DTO.CompradorDTO;
 import com.MeLi.SocialMeli.DTO.DatosSeguidoresDTO;
 import com.MeLi.SocialMeli.DTO.SeguidoresDTO;
 import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
+import com.MeLi.SocialMeli.mapper.CompradorMapper;
+import com.MeLi.SocialMeli.mapper.DatosSeguidoresMapper;
+import com.MeLi.SocialMeli.mapper.SeguidoresMapper;
 import com.MeLi.SocialMeli.model.Comprador;
 import com.MeLi.SocialMeli.model.Vendedor;
 import com.MeLi.SocialMeli.repository.CompradorRepositoryImplement;
@@ -29,7 +32,7 @@ public class VendedorService implements VendedorServiceImplement{
     @Override
     public SeguidoresDTO contarSeguidores(int idVendedor) throws NotFoundVendedorException {
         Vendedor vendedor = vendedorRepositoryImplement.find(idVendedor).orElseThrow(() -> new NotFoundVendedorException(idVendedor));
-        return new SeguidoresDTO(vendedor.getId(),vendedor.getNombre(),vendedor.getCantSeguidores());
+        return SeguidoresMapper.seguidoresToSeguidoresDTO(vendedor);
     }
 
     public DatosSeguidoresDTO getInfoSeguidores(int idVendedor) throws NotFoundVendedorException {
@@ -39,9 +42,11 @@ public class VendedorService implements VendedorServiceImplement{
 
         for (Map.Entry<Integer, String> entry : seguidores.entrySet()) {
             Comprador comprador = compradorRepositoryImplement.find(entry.getKey()).orElseThrow(() -> new NotFoundVendedorException(idVendedor));
-            seguidoresDatos.add(new CompradorDTO(comprador.getId(),comprador.getNombre()));
+            seguidoresDatos.add(CompradorMapper.compradorToCompradorDTO(comprador));
         }
-
-        return new DatosSeguidoresDTO(vendedor.getId(), vendedor.getNombre(), seguidoresDatos);
+        return DatosSeguidoresMapper.dataVendedorToDatosSeguidoresDTO(vendedor,seguidoresDatos);
     }
+
+
+
 }

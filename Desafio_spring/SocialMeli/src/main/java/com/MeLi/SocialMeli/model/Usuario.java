@@ -4,27 +4,27 @@ import java.util.HashMap;
 
 public class Usuario {
 
-    private int id;
-    private String nombre;
+    private int user_id;
+    private String user_name;
 
-    public Usuario(int id, String nombre){
-        this.nombre = nombre;
-        this.id = id;
+    public Usuario(int user_id, String user_name){
+        this.user_id = user_id;
+        this.user_name = user_name;
     }
 
-    public void setId(int id){
-        this.id = id;
+    public void setId(int user_id){
+        this.user_id = user_id;
     }
 
     public int getId(){
-        return this.id;
+        return this.user_id;
     }
 
     public void setNombre(String nombre){
-        this.nombre = nombre;
+        this.user_name = user_name;
     }
 
     public String getNombre(){
-        return this.nombre;
+        return this.user_name;
     }
 }

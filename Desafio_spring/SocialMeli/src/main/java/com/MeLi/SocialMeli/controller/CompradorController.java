@@ -1,5 +1,6 @@
 package com.MeLi.SocialMeli.controller;
 
+import com.MeLi.SocialMeli.DTO.InfoSeguidosDTO;
 import com.MeLi.SocialMeli.DTO.SeguimientoDTO;
 import com.MeLi.SocialMeli.exception.NotFoundCompradorException;
 import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
@@ -23,5 +24,10 @@ public class CompradorController {
     @GetMapping("/users/{user_id}/follow/{user_id_to_follow}")
     public ResponseEntity<SeguimientoDTO> seguirVendedor(@PathVariable int user_id, @PathVariable int user_id_to_follow) throws NotFoundVendedorException, NotFoundCompradorException {
         return new ResponseEntity<>(compradorServiceImplement.seguir(user_id,user_id_to_follow), HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{user_id}/followed/list")
+    public ResponseEntity<InfoSeguidosDTO> seguirVendedor(@PathVariable int user_id) throws NotFoundVendedorException, NotFoundCompradorException {
+        return new ResponseEntity<>(compradorServiceImplement.verSeguidos(user_id), HttpStatus.OK);
     }
 }

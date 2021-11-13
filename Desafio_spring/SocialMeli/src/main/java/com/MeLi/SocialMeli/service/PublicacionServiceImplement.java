@@ -1,4 +1,4 @@
 package com.MeLi.SocialMeli.service;
 
-public class PublicacionServiceImplement {
+public interface PublicacionServiceImplement {
 }
