@@ -1,6 +1,7 @@
 package com.bootcamp.SocialMeli.dto;
 
 import com.bootcamp.SocialMeli.model.Detail;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +13,11 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class PostDTO {
-    private int idUser;
-    private int idPost;
+    private int user_id;
+    private int id_post;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
     private DetailDTO detail;
     private int category;

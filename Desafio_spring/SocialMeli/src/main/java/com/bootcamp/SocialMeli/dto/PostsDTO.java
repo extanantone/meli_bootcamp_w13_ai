@@ -5,15 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.PrimitiveIterator;
+import java.time.LocalDate;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SeguidorDTO {
-    private String nameSeguidor;
-    private int idSeguidor;
-    private String nameSeguido;
-    private int idSeguido;
+public class PostsDTO {
+
+    private int id_post;
+    private LocalDate date;
+    private DetailDTO detail;
 }

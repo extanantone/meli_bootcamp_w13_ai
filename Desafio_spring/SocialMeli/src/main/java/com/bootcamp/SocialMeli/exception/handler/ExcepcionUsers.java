@@ -1,5 +1,6 @@
 package com.bootcamp.SocialMeli.exception.handler;
 
+import com.bootcamp.SocialMeli.exception.DuplicateIdException;
 import com.bootcamp.SocialMeli.exception.NotFoundExceptionUsers;
 import com.bootcamp.SocialMeli.exception.exceptiondto.ErrorUserDTO;
 import org.springframework.http.HttpStatus;
@@ -15,10 +16,20 @@ public class ExcepcionUsers {
 
         return new ResponseEntity<>(
                 new ErrorUserDTO(
-                        "ERROR 404",
+                        "ERROR "+e.hashCode(),
                         e.getMessage()
                 ), HttpStatus.BAD_REQUEST
         );
+    }
 
+    @ExceptionHandler(DuplicateIdException.class)
+    public ResponseEntity<ErrorUserDTO> get(DuplicateIdException e){
+
+        return new ResponseEntity<>(
+                new ErrorUserDTO(
+                        "ERROR "+e.hashCode(),
+                        e.getMessage()
+                ), HttpStatus.BAD_REQUEST
+        );
     }
 }

@@ -1,11 +1,11 @@
 package com.bootcamp.SocialMeli.service;
 
-import com.bootcamp.SocialMeli.dto.MesiguenCabtidadDTO;
-import com.bootcamp.SocialMeli.dto.MesiguenDTO;
-import com.bootcamp.SocialMeli.dto.SeguidorDTO;
-import com.bootcamp.SocialMeli.dto.UserDTO;
+import com.bootcamp.SocialMeli.dto.*;
+import com.bootcamp.SocialMeli.exception.DuplicateIdException;
 import com.bootcamp.SocialMeli.exception.NotFoundExceptionUsers;
+import com.bootcamp.SocialMeli.mapper.PostMater;
 import com.bootcamp.SocialMeli.mapper.UserMapper;
+import com.bootcamp.SocialMeli.model.Post;
 import com.bootcamp.SocialMeli.model.Seguidor;
 import com.bootcamp.SocialMeli.model.User;
 import com.bootcamp.SocialMeli.repository.IUserRepository;
@@ -75,5 +75,14 @@ public class UserServicie implements IUserService{
         return new MesiguenDTO(user.getUser_id(),user.getUser_name(),usersDTO);
     }
 
+    @Override
+    public SeguidorDTO dejarDeSeguir(int idSeguidor, int idSeguido) {
 
+        if(iUserRepository.getUser(idSeguidor) ==null){throw new NotFoundExceptionUsers(idSeguidor); }
+        if(iUserRepository.getUser(idSeguido) ==null){throw new NotFoundExceptionUsers(idSeguido);}
+
+        iUserRepository.dejarDeSeguir(idSeguidor,idSeguido);
+
+        return new SeguidorDTO("",idSeguidor,"",idSeguido);
+    }
 }

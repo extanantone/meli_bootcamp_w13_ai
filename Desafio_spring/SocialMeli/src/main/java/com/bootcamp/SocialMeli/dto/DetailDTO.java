@@ -10,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DetailDTO {
-    private int idproduct;
-    private String producName;
+    private int product_id;
+    private String product_name;
     private String type;
     private String brand;
     private String color;
