@@ -1,27 +1,38 @@
 package com.bootcamp.socialmeli.repository;
 
-import com.bootcamp.socialmeli.entitiy.Comprador;
-import com.bootcamp.socialmeli.entitiy.Publicacion;
-import com.bootcamp.socialmeli.entitiy.Vendedor;
+import com.bootcamp.socialmeli.entitiy.Purchaser;
+import com.bootcamp.socialmeli.entitiy.Post;
+import com.bootcamp.socialmeli.entitiy.Seller;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 public interface ISocialMeliRepository {
 
-    boolean follow(Integer id_Comprador, Integer id_vendedor);
-    boolean unFollow(Integer id_Comprador, Integer id_vendedor);
-    List<Comprador> vendedorFollowers (Integer id_vendedor);
-    List<Vendedor> compradorFollowed (Integer id_comprador);
-    boolean newPost (Integer id_venderdor, Publicacion publicacion);
-    List<Publicacion> postByVendedorOfComprador (Integer id_comprador);
+    Purchaser getPurchaser(Integer purchaserId);
 
-    List<Comprador> vendedorFollowersOrderByName (Integer id_vendedor, String orden);
-    List<Vendedor> compradorFollowedOrderByName (Integer id_comprador, String orden);
+    Seller getSeller(Integer sellerId);
 
-    List<Publicacion> postByVendedorOfCompradorOrderByDate (Integer id_comprador, String orden);
+    boolean follow(Integer purchaserId, Integer sellerId);
 
-    Comprador getComprador(Integer id_comprador);
-    Vendedor getVendedor(Integer id_vendedor);
+    boolean unFollow(Integer purchaserId, Integer sellerId);
+
+    List<Purchaser> getSellerFollowers(Integer sellerId);
+
+    List<Seller> gerPurchaserFollowed(Integer purchaserId);
+
+//    Optional<Integer> getFollowerCountPerSeller(Integer sellerId);
+
+/*    boolean newPost (Integer sellerId, Post post);
+
+    List<Post> postBySellerOfPurchaser (Integer purchaserId);
+
+    List<Purchaser> vendedorFollowersOrderByName (Integer sellerId, String orden);
+    List<Seller> compradorFollowedOrderByName (Integer purchaserId, String orden);
+
+    List<Post> postByVendedorOfCompradorOrderByDate (Integer purchaserId, String orden);*/
+
 
 
 }

@@ -1,45 +1,51 @@
 package com.bootcamp.socialmeli.repository;
 
-import com.bootcamp.socialmeli.entitiy.Comprador;
-import com.bootcamp.socialmeli.entitiy.Publicacion;
-import com.bootcamp.socialmeli.entitiy.Vendedor;
+import com.bootcamp.socialmeli.entitiy.Purchaser;
+import com.bootcamp.socialmeli.entitiy.Post;
+import com.bootcamp.socialmeli.entitiy.Seller;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
 
-    Map<Integer, Comprador> compradores;
-    Map<Integer, Vendedor> vendedores;
+    private Map<Integer, Purchaser> purchasers;
+    private Map<Integer, Seller> sellers;
 
     public SocialMeliRepositoryImpl() {
 
-        this.compradores = new HashMap<>();
-        this.vendedores = new HashMap<>();
-        compradores.put(1,new Comprador(1,"juan525c"));
-        compradores.put(2,new Comprador(2,"andres747c"));
-        compradores.put(3,new Comprador(3,"brian8474c"));
-        vendedores.put(4,new Vendedor(4,"Lucas323v"));
-        vendedores.put(5,new Vendedor(5,"David323v"));
+        this.purchasers = new HashMap<>();
+        this.sellers = new HashMap<>();
+        purchasers.put(1,new Purchaser(1,"juan525c"));
+        purchasers.put(2,new Purchaser(2,"andres747c"));
+        purchasers.put(3,new Purchaser(3,"brian8474c"));
+        sellers.put(4,new Seller(4,"Lucas323v"));
+        sellers.put(5,new Seller(5,"David323v"));
 
     }
 
     @Override
-    public boolean follow(Integer id_comprador, Integer id_vendedor) {
+    public Purchaser getPurchaser(Integer purchaserId) {
+        return purchasers.get(purchaserId);
+    }
 
+    @Override
+    public Seller getSeller(Integer sellerId) {
+        return sellers.get(sellerId);
+    }
 
+    @Override
+    public boolean follow(Integer purchaserId, Integer sellerId) {
 
-        if(compradores.containsKey(id_comprador) || vendedores.containsKey(id_vendedor))
-        {return false;}
-        else{
-            Comprador comprador = compradores.get(id_comprador);
-            comprador.addFollowed(id_vendedor);
+        if(!purchasers.containsKey(purchaserId) || !sellers.containsKey(sellerId)) {
+            return false;
+        }else{
+            Purchaser purchaser = purchasers.get(purchaserId);
+            purchaser.addFollowed(sellerId);
 
-            Vendedor vendedor = vendedores.get(id_vendedor);
-            vendedor.addFollower(id_comprador);
+            Seller seller = sellers.get(sellerId);
+            seller.addFollower(purchaserId);
 
             return true;
         }
@@ -47,52 +53,45 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     }
 
     @Override
-    public boolean unFollow(Integer id_Comprador, Integer id_vendedor) {
-        return false;
+    public boolean unFollow(Integer purchaserId, Integer sellerId) {
+
+        if(!purchasers.containsKey(purchaserId) || !sellers.containsKey(sellerId)) {
+            return false;
+        }else{
+            Purchaser purchaser = purchasers.get(purchaserId);
+            purchaser.deleteFollowed(sellerId);
+
+            Seller seller = sellers.get(sellerId);
+            seller.deleteFollower(purchaserId);
+            return true;
+        }
+
     }
 
     @Override
-    public List<Comprador> vendedorFollowers(Integer id_vendedor) {
-        return null;
+    public List<Purchaser> getSellerFollowers(Integer sellerId) {
+        var s = sellers.get(sellerId).getFollowers();
+        List <Purchaser> followers = new ArrayList<>();
+        s.stream().forEach(e -> {
+            followers.add(purchasers.get(e));
+        });
+        return followers;
     }
 
     @Override
-    public List<Vendedor> compradorFollowed(Integer id_comprador) {
-        return null;
+    public List<Seller> gerPurchaserFollowed(Integer purchaserId) {
+        var s = purchasers.get(purchaserId).getFollowed();
+        List<Seller> followed = new ArrayList<>();
+        s.stream().forEach(e->{
+            followed.add(sellers.get(e));
+        });
+        return followed;
     }
 
-    @Override
-    public boolean newPost(Integer id_venderdor, Publicacion publicacion) {
-        return false;
-    }
-
-    @Override
-    public List<Publicacion> postByVendedorOfComprador(Integer id_comprador) {
-        return null;
-    }
-
-    @Override
-    public List<Comprador> vendedorFollowersOrderByName(Integer id_vendedor, String orden) {
-        return null;
-    }
-
-    @Override
-    public List<Vendedor> compradorFollowedOrderByName(Integer id_comprador, String orden) {
-        return null;
-    }
-
-    @Override
-    public List<Publicacion> postByVendedorOfCompradorOrderByDate(Integer id_comprador, String orden) {
-        return null;
-    }
-
-    @Override
-    public Comprador getComprador(Integer id_comprador) {
-         return compradores.get(id_comprador);
-    }
-
-    @Override
-    public Vendedor getVendedor(Integer id_vendedor) {
-        return vendedores.get(id_vendedor);
-    }
+//    @Override
+//    public Optional<Integer> getFollowerCountPerSeller(Integer sellerId) {
+//        return (sellers.containsKey(sellerId))
+//                ? Optional.of(sellers.get(sellerId).getFollowers().size())
+//                :Optional.empty();
+//    }
 }

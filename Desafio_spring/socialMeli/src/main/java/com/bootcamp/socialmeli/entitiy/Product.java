@@ -7,12 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public abstract class Usuario {
+@AllArgsConstructor
+public class Product {
 
-    private int userID;
-    private String user_name;
-
+    private int productId;
+    private String productName, type, brand, color, notes;
 
 }

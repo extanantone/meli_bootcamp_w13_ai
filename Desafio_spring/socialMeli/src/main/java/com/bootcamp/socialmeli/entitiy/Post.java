@@ -11,13 +11,12 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Publicacion {
+public class Post {
 
-    private int id_post,category;
+    private int postId,category;
     private double price;
     private LocalDate date;
-    private Producto detail;
-
+    private Product detail;
 
 }
 

@@ -1,4 +1,4 @@
-package com.bootcamp.socialmeli.dto;
+package com.bootcamp.socialmeli.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ErrorDTO {
-    String code;
-    String mensaje;
+    private String code;
+    private String message;
 }
