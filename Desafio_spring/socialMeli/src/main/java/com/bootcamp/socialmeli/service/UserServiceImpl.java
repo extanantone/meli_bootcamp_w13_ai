@@ -1,6 +1,7 @@
 package com.bootcamp.socialmeli.service;
 
 import com.bootcamp.socialmeli.dto.response.user.BasicUserInfo;
+import com.bootcamp.socialmeli.dto.response.user.PurchaserFollowedListDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersInfoDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersListDTO;
 import com.bootcamp.socialmeli.exception.UserException.NotFoundUsuarioException;
@@ -74,5 +75,24 @@ public class UserServiceImpl implements IUserService {
         });
 
         return new SellerFollowersListDTO(sellerId, seller.getUserName(), followers);
+    }
+
+    @Override
+    public PurchaserFollowedListDTO getPurchaserFollowedList(Integer purchaserId) {
+
+        Purchaser purchaser = socialMeliRepository.getPurchaser(purchaserId);
+
+        if(purchaser == null)
+        {
+            throw new NotFoundUsuarioException(purchaserId);
+        }
+
+        List<BasicUserInfo> followed = new ArrayList<>();
+
+        socialMeliRepository.gerPurchaserFollowed(purchaserId).stream().forEach(follow ->{
+            followed.add(new BasicUserInfo(follow.getUserID(),follow.getUserName()));
+        });
+        
+        return new PurchaserFollowedListDTO(purchaserId,purchaser.getUserName(),followed);
     }
 }

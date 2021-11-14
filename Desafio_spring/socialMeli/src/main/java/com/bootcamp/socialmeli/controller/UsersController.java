@@ -1,6 +1,7 @@
 package com.bootcamp.socialmeli.controller;
 
 
+import com.bootcamp.socialmeli.dto.response.user.PurchaserFollowedListDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersInfoDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersListDTO;
 import com.bootcamp.socialmeli.service.IUserService;
@@ -30,11 +31,17 @@ public class UsersController {
     public ResponseEntity<SellerFollowersInfoDTO> getSellerFollowersInfo(@PathVariable Integer user_id){
         return  ResponseEntity.ok(service.getSellerFollowersCount(user_id));
     }
-    
+
     @GetMapping(path = "/{user_id}/followers/list")
     public ResponseEntity<SellerFollowersListDTO> getSellerFollowersList(@PathVariable Integer user_id){
         return  ResponseEntity.ok(service.getSellerFollowersList(user_id));
     }
 
+//    /users/{user_id}/followed/list
+
+    @GetMapping(path = "/{user_id}/followed/list")
+    public ResponseEntity<PurchaserFollowedListDTO> getPurcharserFollowedList(@PathVariable Integer user_id){
+        return ResponseEntity.ok(service.getPurchaserFollowedList(user_id));
+    }
 
 }

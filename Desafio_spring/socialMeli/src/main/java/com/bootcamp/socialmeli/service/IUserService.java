@@ -1,5 +1,6 @@
 package com.bootcamp.socialmeli.service;
 
+import com.bootcamp.socialmeli.dto.response.user.PurchaserFollowedListDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersInfoDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersListDTO;
 
@@ -10,6 +11,10 @@ public interface IUserService {
     SellerFollowersInfoDTO getSellerFollowersCount (Integer sellerId);
 
     SellerFollowersListDTO getSellerFollowersList(Integer sellerId);
+
+    PurchaserFollowedListDTO getPurchaserFollowedList(Integer purchaserId);
+
+
 
 
 }

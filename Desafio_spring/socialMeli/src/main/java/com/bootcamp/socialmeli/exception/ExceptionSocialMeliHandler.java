@@ -17,7 +17,7 @@ public class ExceptionSocialMeliHandler {
                 new ErrorDTO(
                         "Status Code 400: not_found_user",
                         e.getMessage() ),
-                HttpStatus.NOT_FOUND );
+                HttpStatus.resolve(400));
 
     }
 }
