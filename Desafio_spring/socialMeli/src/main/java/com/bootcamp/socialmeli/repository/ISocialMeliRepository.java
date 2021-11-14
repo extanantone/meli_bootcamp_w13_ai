@@ -22,7 +22,6 @@ public interface ISocialMeliRepository {
 
     List<Seller> gerPurchaserFollowed(Integer purchaserId);
 
-//    Optional<Integer> getFollowerCountPerSeller(Integer sellerId);
 
 /*    boolean newPost (Integer sellerId, Post post);
 

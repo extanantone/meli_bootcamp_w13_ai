@@ -88,10 +88,5 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
         return followed;
     }
 
-//    @Override
-//    public Optional<Integer> getFollowerCountPerSeller(Integer sellerId) {
-//        return (sellers.containsKey(sellerId))
-//                ? Optional.of(sellers.get(sellerId).getFollowers().size())
-//                :Optional.empty();
-//    }
+
 }

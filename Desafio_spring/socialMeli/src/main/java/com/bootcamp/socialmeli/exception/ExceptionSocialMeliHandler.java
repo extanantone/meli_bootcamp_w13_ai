@@ -1,6 +1,6 @@
 package com.bootcamp.socialmeli.exception;
 
-import com.bootcamp.socialmeli.dto.response.ErrorDTO;
+import com.bootcamp.socialmeli.dto.response.error.ErrorDTO;
 import com.bootcamp.socialmeli.exception.UserException.NotFoundUsuarioException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

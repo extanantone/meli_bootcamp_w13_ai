@@ -1,4 +1,4 @@
-package com.bootcamp.socialmeli.dto.response;
+package com.bootcamp.socialmeli.dto.response.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
