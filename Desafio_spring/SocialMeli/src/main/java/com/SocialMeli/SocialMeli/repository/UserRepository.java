@@ -75,41 +75,42 @@ public class UserRepository implements IUserRepository{
     }
 
 
-    /*@Override
+    @Override
     public Boolean follow(Integer user_id, Integer user_id_to_follow) {
-        UserDTO buyerUser = findUserByUserId(user_id);
-        UserDTO follow_user = findUserByUserId(user_id_to_follow);
+        BuyersDTO buyerUser = findBuyerByUserId(user_id);
+        SellersDTO sellerUser = findSellerByUserId(user_id_to_follow);
         Boolean band = false;
 
-        if( current_user != null && follow_user != null && user_id != user_id_to_follow ){
-            //Al usuario actual se le agrega el usuario a seguir
+        if( buyerUser != null && sellerUser != null ){
+            //Al buyer se le agrega el usuario a seguir(seller)
             //List<UserDTO> followedList = current_user.getFollowed();
-            /*List<Integer> followedList = current_user.getFollowed();
+            List<UserDTO> followedList = buyerUser.getFollowed();
             if( followedList == null ){
-                followedList = new ArrayList<>();
+                followedList = new ArrayList<UserDTO>();
             }
-            if( !followedList.contains(follow_user.getUser_id())  ){
-                followedList.add(follow_user.getUser_id());
-                current_user.setFollowed(followedList);
+            if( !followedList.contains(sellerUser)  ){
+                followedList.add(sellerUser);
+                buyerUser.setFollowed(followedList);
                 band = true;
-            }*/
-    /*        BuyersDTO followedList = new BuyersDTO();
-            followedList.setUser_id(current_user.getUser_id());
-            followedList.setUser_name(current_user.getUser_name());
-            List<UserDTO> followedUsersList = current_user.getFollowed();*/
+            }
+            /*
+            BuyersDTO followedList = new BuyersDTO();
+            followedList.setUser_id(buyerUser.getUser_id());
+            followedList.setUser_name(buyerUser.getUser_name());
+            List<UserDTO> followedUsersList = buyerUser.getFollowed();*/
 
 
 
 
-            //Al usuario seguido se le agrega al usuario quién lo sigue
+            //Al vendedor se le agrega al usuario comprador
             //List<UserDTO> followersList = follow_user.getFollowers();
-    /*        List<Integer> followersList = follow_user.getFollowers();
+            List<UserDTO> followersList = sellerUser.getFollowers();
             if( followersList == null ){
                 followersList = new ArrayList<>();
             }
-            if( !followersList.contains(current_user.getUser_id()) && band ){
-                followersList.add(current_user.getUser_id());
-                follow_user.setFollowers(followersList);
+            if( !followersList.contains(buyerUser) && band ){
+                followersList.add(buyerUser);
+                sellerUser.setFollowers(followersList);
             }else{
                 band = false;
             }

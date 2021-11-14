@@ -27,14 +27,14 @@ public class UserController {
         return userService.createSellers(user);
     }
 
-    /*@PostMapping("users/{user_id}/follow/{user_id_to_follow}")
+    @PostMapping("users/{user_id}/follow/{user_id_to_follow}")
     public ResponseEntity<String> followUser(@PathVariable Integer user_id, @PathVariable Integer user_id_to_follow) {
         Boolean statusFollow = userService.followUser(user_id,user_id_to_follow);
-        /*if( statusFollow )
-            return new ResponseEntity<>("Usuarios seguidos.", HttpStatus.OK);*/
+        if( statusFollow )
+            return new ResponseEntity<>("Usuarios seguidos.", HttpStatus.OK);
 
-        /*return new ResponseEntity<>("Los usuarios no pueden seguirse.", HttpStatus.BAD_REQUEST);
-    }*/
+        return new ResponseEntity<>("Los usuarios no pueden seguirse.", HttpStatus.BAD_REQUEST);
+    }
 
     /*@GetMapping("users/{user_id}/followers/count")
     public FollowersCountDTO followersCount(@PathVariable Integer user_id){

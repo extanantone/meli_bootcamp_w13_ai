@@ -23,7 +23,7 @@ public class UserService implements IUserService {
         return userRepository.createSellers(user);
     }
 
-    /*@Override
+    @Override
     public Boolean followUser(Integer user_id, Integer user_id_to_follow) {
         return userRepository.follow(user_id, user_id_to_follow);
     }
