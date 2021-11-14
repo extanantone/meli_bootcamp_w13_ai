@@ -1,5 +1,6 @@
 package com.SocialMeli.SocialMeli.controller;
 
+import com.SocialMeli.SocialMeli.dto.BuyersDTO;
 import com.SocialMeli.SocialMeli.dto.FollowersCountDTO;
 import com.SocialMeli.SocialMeli.dto.SellersDTO;
 import com.SocialMeli.SocialMeli.dto.UserDTO;
@@ -44,5 +45,10 @@ public class UserController {
     @GetMapping("/users/{user_id}/followers/list")
     public SellersDTO followersList(@PathVariable Integer user_id){
         return userService.followersList(user_id);
+    }
+
+    @GetMapping("/users/{user_id}/followed/list")
+    public BuyersDTO followedList(@PathVariable Integer user_id){
+        return userService.followedList(user_id);
     }
 }

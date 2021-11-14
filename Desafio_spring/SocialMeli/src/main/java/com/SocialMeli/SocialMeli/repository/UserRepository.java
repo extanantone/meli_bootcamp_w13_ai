@@ -88,10 +88,15 @@ public class UserRepository implements IUserRepository{
             if( followedList == null ){
                 followedList = new ArrayList<UserDTO>();
             }
-            if( !followedList.contains(sellerUser)  ){
-                //System.out.println(sellerUser);
-                UserDTO userDTO = new UserDTO(sellerUser.getUser_id(), sellerUser.getUser_name());
 
+            UserDTO userDTO = followedList.stream()
+                    .filter( user -> sellerUser.getUser_id() == user.getUser_id() )
+                    .findAny()
+                    .orElse(null);
+
+            if( userDTO == null ){
+                userDTO = new UserDTO(sellerUser.getUser_id(), sellerUser.getUser_name());
+                //System.out.println(sellerUser);
                 //System.out.println(userDTO);
                 followedList.add(userDTO);
                 buyerUser.setFollowed(followedList);
@@ -112,10 +117,16 @@ public class UserRepository implements IUserRepository{
             if( followersList == null ){
                 followersList = new ArrayList<>();
             }
-            if( !followersList.contains(buyerUser) && band ){
+
+            UserDTO userDTO2 = followersList.stream()
+                    .filter( user -> buyerUser.getUser_id() == user.getUser_id() )
+                    .findAny()
+                    .orElse(null);
+            if( userDTO2 == null && band ){
+                userDTO2 = new UserDTO(buyerUser.getUser_id(), buyerUser.getUser_name());
                 //System.out.println(buyerUser);
-                UserDTO userDTO = new UserDTO(buyerUser.getUser_id(), buyerUser.getUser_name());
-                followersList.add(userDTO);
+
+                followersList.add(userDTO2);
                 sellerUser.setFollowers(followersList);
             }else{
                 band = false;
@@ -168,5 +179,10 @@ public class UserRepository implements IUserRepository{
         }
 
         return sellersDTO;
+    }
+
+    @Override
+    public BuyersDTO followedList(Integer user_id) {
+        return findBuyerByUserId(user_id);
     }
 }

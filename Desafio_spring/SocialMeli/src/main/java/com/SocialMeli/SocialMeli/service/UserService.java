@@ -1,5 +1,6 @@
 package com.SocialMeli.SocialMeli.service;
 
+import com.SocialMeli.SocialMeli.dto.BuyersDTO;
 import com.SocialMeli.SocialMeli.dto.FollowersCountDTO;
 import com.SocialMeli.SocialMeli.dto.SellersDTO;
 import com.SocialMeli.SocialMeli.dto.UserDTO;
@@ -38,5 +39,10 @@ public class UserService implements IUserService {
     @Override
     public SellersDTO followersList(Integer user_id) {
         return userRepository.followersList(user_id);
+    }
+
+    @Override
+    public BuyersDTO followedList(Integer user_id) {
+        return userRepository.followedList(user_id);
     }
 }
