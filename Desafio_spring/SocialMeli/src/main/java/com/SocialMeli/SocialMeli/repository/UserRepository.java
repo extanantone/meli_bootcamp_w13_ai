@@ -121,24 +121,24 @@ public class UserRepository implements IUserRepository{
         return band;
     }
 
-    /*@Override
+    @Override
     public FollowersCountDTO followersCount(Integer user_id) {
-        UserDTO userDTO = findUserByUserId(user_id);
+        SellersDTO sellersDTO = findSellerByUserId(user_id);
         FollowersCountDTO user = new FollowersCountDTO();
         Integer count = 0;
 
-        if( userDTO != null ){
-            user.setUser_id(userDTO.getUser_id());
-            user.setUser_name(userDTO.getUser_name());
-            if( userDTO.getFollowers() != null ){
-                count = userDTO.getFollowers().size();
+        if( sellersDTO != null ){
+            user.setUser_id(sellersDTO.getUser_id());
+            user.setUser_name(sellersDTO.getUser_name());
+            if( sellersDTO.getFollowers() != null ){
+                count = sellersDTO.getFollowers().size();
             }
             //System.out.println(count);
             user.setFollowers_count(count);
         }
 
         return user;
-    }*/
+    }
 
     /*@Override
     public SellersDTO followersList(Integer user_id) {

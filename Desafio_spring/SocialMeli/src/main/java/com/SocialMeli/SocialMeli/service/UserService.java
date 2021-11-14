@@ -1,5 +1,6 @@
 package com.SocialMeli.SocialMeli.service;
 
+import com.SocialMeli.SocialMeli.dto.FollowersCountDTO;
 import com.SocialMeli.SocialMeli.dto.UserDTO;
 import com.SocialMeli.SocialMeli.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -28,12 +29,12 @@ public class UserService implements IUserService {
         return userRepository.follow(user_id, user_id_to_follow);
     }
 
-    /*@Override
+    @Override
     public FollowersCountDTO followersCount(Integer user_id) {
         return userRepository.followersCount(user_id);
     }
 
-    @Override
+    /*@Override
     public SellersDTO followersList(Integer user_id) {
         return userRepository.followersList(user_id);
     }*/

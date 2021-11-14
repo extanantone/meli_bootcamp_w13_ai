@@ -10,6 +10,6 @@ public interface IUserRepository {
     UserDTO findBuyerByUserId(Integer user_id);
     UserDTO findSellerByUserId(Integer user_id);
     Boolean follow(Integer user_id, Integer user_id_to_follow);
-    /*FollowersCountDTO followersCount(Integer user_id);
-    SellersDTO followersList(Integer user_id);*/
+    FollowersCountDTO followersCount(Integer user_id);
+    /*SellersDTO followersList(Integer user_id);*/
 }

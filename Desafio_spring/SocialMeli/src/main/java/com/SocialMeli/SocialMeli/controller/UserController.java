@@ -36,12 +36,12 @@ public class UserController {
         return new ResponseEntity<>("Los usuarios no pueden seguirse.", HttpStatus.BAD_REQUEST);
     }
 
-    /*@GetMapping("users/{user_id}/followers/count")
+    @GetMapping("users/{user_id}/followers/count")
     public FollowersCountDTO followersCount(@PathVariable Integer user_id){
         return userService.followersCount(user_id);
     }
 
-    @GetMapping("/users/{user_id}/followers/list")
+    /*@GetMapping("/users/{user_id}/followers/list")
     public SellersDTO followersList(@PathVariable Integer user_id){
         return userService.followersList(user_id);
     }*/
