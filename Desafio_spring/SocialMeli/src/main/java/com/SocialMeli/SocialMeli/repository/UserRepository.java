@@ -89,7 +89,11 @@ public class UserRepository implements IUserRepository{
                 followedList = new ArrayList<UserDTO>();
             }
             if( !followedList.contains(sellerUser)  ){
-                followedList.add(sellerUser);
+                //System.out.println(sellerUser);
+                UserDTO userDTO = new UserDTO(sellerUser.getUser_id(), sellerUser.getUser_name());
+
+                //System.out.println(userDTO);
+                followedList.add(userDTO);
                 buyerUser.setFollowed(followedList);
                 band = true;
             }
@@ -109,7 +113,9 @@ public class UserRepository implements IUserRepository{
                 followersList = new ArrayList<>();
             }
             if( !followersList.contains(buyerUser) && band ){
-                followersList.add(buyerUser);
+                //System.out.println(buyerUser);
+                UserDTO userDTO = new UserDTO(buyerUser.getUser_id(), buyerUser.getUser_name());
+                followersList.add(userDTO);
                 sellerUser.setFollowers(followersList);
             }else{
                 band = false;
@@ -140,15 +146,14 @@ public class UserRepository implements IUserRepository{
         return user;
     }
 
-    /*@Override
+    @Override
     public SellersDTO followersList(Integer user_id) {
-        UserDTO userDTO = findUserByUserId(user_id);
-        SellersDTO user = new SellersDTO();
+        SellersDTO sellersDTO = findSellerByUserId(user_id);
 
-        if( userDTO != null ){
-            user.setUser_id(userDTO.getUser_id());
-            user.setUser_name(userDTO.getUser_name());
-            if( userDTO.getFollowers() != null ){
+        if( sellersDTO != null ){
+            /*user.setUser_id(userDTO.getUser_id());
+            user.setUser_name(userDTO.getUser_name());*/
+            /*if( userDTO.getFollowers() != null ){
                 List<UserDTO> followersList = new ArrayList<>();
 
                 for( Integer i : userDTO.getFollowers() ){
@@ -157,10 +162,11 @@ public class UserRepository implements IUserRepository{
                     followersList.add(follower);
                 }
                 user.setFollowersList(followersList);
-            }
+            }*/
+            System.out.println(sellersDTO.getFollowers());
 
         }
 
-        return user;
-    }*/
+        return sellersDTO;
+    }
 }

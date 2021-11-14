@@ -41,8 +41,8 @@ public class UserController {
         return userService.followersCount(user_id);
     }
 
-    /*@GetMapping("/users/{user_id}/followers/list")
+    @GetMapping("/users/{user_id}/followers/list")
     public SellersDTO followersList(@PathVariable Integer user_id){
         return userService.followersList(user_id);
-    }*/
+    }
 }
