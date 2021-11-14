@@ -36,36 +36,15 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     }
 
     @Override
-    public boolean follow(Integer purchaserId, Integer sellerId) {
-
-        if(!purchasers.containsKey(purchaserId) || !sellers.containsKey(sellerId)) {
-            return false;
-        }else{
-            Purchaser purchaser = purchasers.get(purchaserId);
-            purchaser.addFollowed(sellerId);
-
-            Seller seller = sellers.get(sellerId);
-            seller.addFollower(purchaserId);
-
-            return true;
-        }
-
+    public void follow(Integer purchaserId, Integer sellerId) {
+            purchasers.get(purchaserId).addFollowed(sellerId);
+            sellers.get(sellerId).addFollower(purchaserId);
     }
 
     @Override
-    public boolean unFollow(Integer purchaserId, Integer sellerId) {
-
-        if(!purchasers.containsKey(purchaserId) || !sellers.containsKey(sellerId)) {
-            return false;
-        }else{
-            Purchaser purchaser = purchasers.get(purchaserId);
-            purchaser.deleteFollowed(sellerId);
-
-            Seller seller = sellers.get(sellerId);
-            seller.deleteFollower(purchaserId);
-            return true;
-        }
-
+    public void unFollow(Integer purchaserId, Integer sellerId) {
+            purchasers.get(purchaserId).deleteFollowed(sellerId);
+            sellers.get(sellerId).deleteFollower(purchaserId);
     }
 
     @Override
@@ -88,5 +67,8 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
         return followed;
     }
 
-
+    @Override
+    public void createNewPost(Integer sellerId, Post post) {
+        sellers.get(sellerId).setPost(post);
+    }
 }

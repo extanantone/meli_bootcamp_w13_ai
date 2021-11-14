@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Getter
@@ -12,12 +13,12 @@ import java.util.List;
 @NoArgsConstructor
 public class Seller extends User {
 
-    private List<Post> posts;
+    private HashMap<Integer,Post> posts;
     private List<Integer> followers;
 
     public Seller(int userID, String user_name) {
         super(userID, user_name);
-        this.posts = new ArrayList<>();
+        this.posts = new HashMap<>();
         this.followers = new ArrayList<>();
     }
 
@@ -30,5 +31,12 @@ public class Seller extends User {
         followers.remove(sellerId);
     }
 
-//    añadir post y eliminar post
+    public void setPost(Post post){
+        posts.put(post.getPostId(),post);
+    }
+
+    public Post getPost(Integer postId){
+        return posts.get(postId);
+    }
+
 }

@@ -1,9 +1,13 @@
 package com.bootcamp.socialmeli.service;
 
+import com.bootcamp.socialmeli.dto.request.post.PostInDTO;
+import com.bootcamp.socialmeli.dto.request.post.ProductInDTO;
 import com.bootcamp.socialmeli.dto.response.user.BasicUserInfo;
 import com.bootcamp.socialmeli.dto.response.user.PurchaserFollowedListDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersInfoDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersListDTO;
+import com.bootcamp.socialmeli.entitiy.Post;
+import com.bootcamp.socialmeli.entitiy.Product;
 import com.bootcamp.socialmeli.exception.UserException.NotFoundUsuarioException;
 import com.bootcamp.socialmeli.entitiy.Purchaser;
 import com.bootcamp.socialmeli.entitiy.Seller;
@@ -11,6 +15,9 @@ import com.bootcamp.socialmeli.repository.ISocialMeliRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +34,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public boolean addFollowed(Integer purchaserId, Integer sellerId)
+    public void addFollowed(Integer purchaserId, Integer sellerId)
     {
 
      Purchaser c = socialMeliRepository.getPurchaser(purchaserId);
@@ -42,7 +49,7 @@ public class UserServiceImpl implements IUserService {
          throw new NotFoundUsuarioException(sellerId);
      }
 
-        return socialMeliRepository.follow(purchaserId,sellerId);
+        socialMeliRepository.follow(purchaserId,sellerId);
     }
 
 
@@ -95,4 +102,6 @@ public class UserServiceImpl implements IUserService {
         
         return new PurchaserFollowedListDTO(purchaserId,purchaser.getUserName(),followed);
     }
+
+
 }

@@ -13,10 +13,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Post {
 
-    private int postId,category;
-    private double price;
+    private int postId;
     private LocalDate date;
     private Product detail;
+    private int category;
+    private double price;
 
 }
 

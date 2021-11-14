@@ -2,6 +2,7 @@ package com.bootcamp.socialmeli.exception;
 
 import com.bootcamp.socialmeli.dto.response.error.ErrorDTO;
 import com.bootcamp.socialmeli.exception.UserException.NotFoundUsuarioException;
+import com.bootcamp.socialmeli.exception.postException.PostIdAlreadyExists;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExceptionSocialMeliHandler {
 
     @ExceptionHandler(NotFoundUsuarioException.class)
-    public ResponseEntity<ErrorDTO> get(NotFoundUsuarioException e) {
+    public ResponseEntity<ErrorDTO> NotFoundUser(NotFoundUsuarioException e) {
         return new ResponseEntity<>(
                 new ErrorDTO(
                         "Status Code 400: not_found_user",
@@ -20,4 +21,17 @@ public class ExceptionSocialMeliHandler {
                 HttpStatus.resolve(400));
 
     }
+
+    @ExceptionHandler(PostIdAlreadyExists.class)
+    public ResponseEntity<ErrorDTO> PostAlreadyExists(PostIdAlreadyExists e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "Status Code 400: post_already_exists",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST);
+
+    }
+
+
+
 }

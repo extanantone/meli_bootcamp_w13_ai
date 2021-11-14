@@ -14,17 +14,17 @@ public interface ISocialMeliRepository {
 
     Seller getSeller(Integer sellerId);
 
-    boolean follow(Integer purchaserId, Integer sellerId);
+    void follow(Integer purchaserId, Integer sellerId);
 
-    boolean unFollow(Integer purchaserId, Integer sellerId);
+    void unFollow(Integer purchaserId, Integer sellerId);
 
     List<Purchaser> getSellerFollowers(Integer sellerId);
 
     List<Seller> gerPurchaserFollowed(Integer purchaserId);
 
+    void createNewPost (Integer sellerId, Post post);
 
-/*    boolean newPost (Integer sellerId, Post post);
-
+/*
     List<Post> postBySellerOfPurchaser (Integer purchaserId);
 
     List<Purchaser> vendedorFollowersOrderByName (Integer sellerId, String orden);

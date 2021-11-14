@@ -1,12 +1,13 @@
 package com.bootcamp.socialmeli.service;
 
+import com.bootcamp.socialmeli.dto.request.post.PostInDTO;
 import com.bootcamp.socialmeli.dto.response.user.PurchaserFollowedListDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersInfoDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersListDTO;
 
 public interface IUserService {
 
-    boolean addFollowed (Integer purchaserId, Integer sellerId);
+    void addFollowed (Integer purchaserId, Integer sellerId);
 
     SellerFollowersInfoDTO getSellerFollowersCount (Integer sellerId);
 
