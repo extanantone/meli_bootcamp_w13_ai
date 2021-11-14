@@ -47,13 +47,13 @@ public class UserService {
         return UserMapper.userToFollowersCount(user);
     }
 
-    public UserFollowersListDTO followersList(Long userId) {
+    public UserFollowersListDTO followersList(Long userId) throws UserArgumentNotValidException {
         User user = userRepository.getById(userId);
         if (user == null) throw new UserArgumentNotValidException("Invalid user id.");
         return UserMapper.userToFollowersList(user);
     }
 
-    public UserFollowedListDTO followedList(Long userId) {
+    public UserFollowedListDTO followedList(Long userId) throws UserArgumentNotValidException {
         User user = userRepository.getById(userId);
         if (user == null) throw new UserArgumentNotValidException("Invalid user id.");
         return UserMapper.userToFollowedList(user);

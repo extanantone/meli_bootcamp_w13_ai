@@ -17,7 +17,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/post")
     ResponseEntity<UserDTO> newUser(@RequestBody UserCreationDTO newUser) throws UserArgumentNotValidException {
         UserDTO user = userService.save(newUser);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
