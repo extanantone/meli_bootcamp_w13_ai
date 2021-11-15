@@ -6,17 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Vendedor extends Usuario {
-    private List<Comprador> followers;
+@AllArgsConstructor
+public class Buyer extends User {
+    private List <Seller> followed = new ArrayList<Seller>();
 
-    public Vendedor(int user_id, String user_name) {
-        super(user_id, user_name);
-        this.followers = new ArrayList<Comprador>();
+    public Buyer(String user_name, int user_id) {
+        super(user_name, user_id);
     }
 }

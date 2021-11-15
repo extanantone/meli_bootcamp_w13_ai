@@ -1,4 +1,4 @@
-package com.SocialMeli.SocialMeli.model;
+package com.SocialMeli.SocialMeli.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,9 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
-    private int user_id;
-    private String user_name;
+@AllArgsConstructor
+public class ResponseUserDTO {
+        private String msg;
+        private int statusCode;
 }

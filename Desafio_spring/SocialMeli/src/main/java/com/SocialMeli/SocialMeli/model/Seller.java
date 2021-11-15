@@ -10,13 +10,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class Comprador extends Usuario {
-    List <Vendedor> followed;
+@NoArgsConstructor
+public class Seller extends User {
+    private List<Buyer> followers = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
-    public Comprador(int user_id, String user_name) {
-        super(user_id, user_name);
-        this.followed = new ArrayList<Vendedor>();
+    public Seller(String user_name, int user_id) {
+        super(user_name,user_id);
     }
 }

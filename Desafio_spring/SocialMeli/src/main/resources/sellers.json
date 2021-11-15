@@ -1,0 +1,22 @@
+[
+  {
+    "user_name": "Raul seller",
+    "user_id": 1
+  },
+  {
+    "user_name": "Josh seller",
+    "user_id": 3
+  },
+  {
+    "user_name": "Jose luis seller",
+    "user_id": 5
+  },
+  {
+    "user_name": "Soup seller",
+    "user_id": 10
+  },
+  {
+    "user_name": "Lemon seller",
+    "user_id": 12
+  }
+]
