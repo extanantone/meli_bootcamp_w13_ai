@@ -12,6 +12,7 @@ import com.bootcamp.SocialMeli.model.Producto;
 import com.bootcamp.SocialMeli.model.Publicacion;
 import com.bootcamp.SocialMeli.model.Usuario;
 import com.bootcamp.SocialMeli.repository.ISocialMeliRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,9 @@ public class SocialMeliService implements ISocialMeliService{
 
     @Autowired
     private ISocialMeliRepository socialMeliRepository;
+
+    //@Autowired
+    //private ModelMapper mapper;
 
     @Autowired
     private Mapper mapper;
@@ -137,7 +141,9 @@ public class SocialMeliService implements ISocialMeliService{
         if(usuario == null){
             throw new UserNotFoundException("No existe el usuario con Id: " + post.getUserId());
         }
-        Publicacion nuevaPublicacion = mapper.publicacionDTOToPublicacion(post);
+        //convertir de PublicacionDTO a Publicacion
+
+        Publicacion nuevaPublicacion = this.mapper.publicacionDTOToPublicacion(post);
         usuario.agregarPublicacion(nuevaPublicacion);
 
         return new SuccessDTO("Publicacion creada correctamente.");
@@ -169,11 +175,7 @@ public class SocialMeliService implements ISocialMeliService{
                                                                 .collect(Collectors.toList());
         publicacionesRecientes.sort(Comparator.comparing(Publicacion::getDate).reversed());
 
-        PublicacionesDTO publicacionesDTO = new PublicacionesDTO();
-        publicacionesDTO.setUserId(usuario.getUserId());
-       // publicacionesDTO.setPosts();
-
-
+        PublicacionesDTO publicacionesDTO = this.mapper.listPublicacionToPublicacionesDTO(usuario.getUserId(), publicacionesRecientes);
 
         return publicacionesDTO;
     }
