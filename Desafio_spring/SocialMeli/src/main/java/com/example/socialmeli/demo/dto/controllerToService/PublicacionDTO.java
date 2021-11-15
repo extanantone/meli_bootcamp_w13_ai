@@ -1,7 +1,8 @@
-package com.example.socialmeli.demo.model;
+package com.example.socialmeli.demo.dto.controllerToService;
 
-import com.example.socialmeli.demo.dto.controllerToService.ProductoDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,15 +15,17 @@ import java.util.Locale;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Publicacion {
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class PublicacionDTO {
 
     private int userId;
     private int idPost;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
-    private Producto detail;
+    private ProductoDTO detail;
     private int category;
     private double price;
+
 
 
 }

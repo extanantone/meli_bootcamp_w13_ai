@@ -4,7 +4,8 @@ package com.example.socialmeli.demo.service;
 
 import com.example.socialmeli.demo.dto.UsuarioDTO;
 import com.example.socialmeli.demo.dto.controllerToService.FollowUserDTO;
-import com.example.socialmeli.demo.dto.controllerToService.UnfollowerDTO;
+import com.example.socialmeli.demo.dto.controllerToService.RequestUserListDTO;
+import com.example.socialmeli.demo.dto.controllerToService.UnfollowUserDTO;
 import com.example.socialmeli.demo.dto.controllerToService.UserIdDTO;
 import com.example.socialmeli.demo.dto.serviceToController.UserFollowerCountDTO;
 import com.example.socialmeli.demo.dto.serviceToController.UserFollowersListDTO;
@@ -65,7 +66,7 @@ IUsuarioRepository usuarioRepository;
 
         userName = user.getUsername();
 
-        userFollowers = followerRepository.getUsersWhoFollowsToUserId(userID);
+        userFollowers = followerRepository.getUsersWhoFollowsToUserId(userID,null);
 
         if(userFollowers!= null){
             userFollowersCount = userFollowers.size();
@@ -82,9 +83,10 @@ IUsuarioRepository usuarioRepository;
     }
 
     @Override
-    public UserFollowersListDTO getFollowersListByUserID(UserIdDTO request) {
+    public UserFollowersListDTO getFollowersListByUserID(RequestUserListDTO request) {
 
-        int userID = request.getUser_id();
+        int userID = request.getUserId();
+        String order = request.getOrder();
         String userName;
         List<Usuarios> userFollowers;
         UserFollowersListDTO response = new UserFollowersListDTO();
@@ -97,7 +99,7 @@ IUsuarioRepository usuarioRepository;
 
         userName = user.getUsername();
 
-        userFollowers = followerRepository.getUsersWhoFollowsToUserId(userID);
+        userFollowers = followerRepository.getUsersWhoFollowsToUserId(userID,order);
 
         for (Usuarios u: userFollowers) {
 
@@ -116,14 +118,15 @@ IUsuarioRepository usuarioRepository;
     }
 
     @Override
-    public UserFollowersListDTO getFollowedUsersFromUserId(UserIdDTO request) {
+    public UserFollowersListDTO getFollowedUsersFromUserId(RequestUserListDTO request) {
 
         UserFollowersListDTO response = new UserFollowersListDTO();
         List<Usuarios> followedUsers = new ArrayList<>();
-        int userId = request.getUser_id();
+        int userId = request.getUserId();
+        String order = request.getOrder();
         String userName;
 
-        followedUsers = followerRepository.getUsersFollowedByUserId(userId);
+        followedUsers = followerRepository.getUsersFollowedByUserId(userId,order);
 
         //Vamos a obtener el usuario solicitado
         Usuarios searchedUser = usuarioRepository.obtenerUsuarioPorID(userId);
@@ -149,7 +152,7 @@ IUsuarioRepository usuarioRepository;
     }
 
     @Override
-    public ResponseEntity unFollowUser(UnfollowerDTO request) {
+    public ResponseEntity unFollowUser(UnfollowUserDTO request) {
 
         try{
             followerRepository.unFollowUser(request);

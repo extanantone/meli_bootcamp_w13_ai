@@ -1,8 +1,11 @@
 package com.example.socialmeli.demo.repository;
 
 
+import com.example.socialmeli.demo.comparator.AscendingUserName;
+import com.example.socialmeli.demo.comparator.DescendingPostDateSorter;
+import com.example.socialmeli.demo.comparator.DescendingUserName;
 import com.example.socialmeli.demo.dto.controllerToService.FollowUserDTO;
-import com.example.socialmeli.demo.dto.controllerToService.UnfollowerDTO;
+import com.example.socialmeli.demo.dto.controllerToService.UnfollowUserDTO;
 import com.example.socialmeli.demo.model.FollowerCompradorVendedor;
 import com.example.socialmeli.demo.model.Followers;
 import com.example.socialmeli.demo.model.Usuarios;
@@ -13,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class FollowerRepository implements IFollowerRepository{
@@ -77,7 +81,7 @@ public class FollowerRepository implements IFollowerRepository{
 
 
     @Override
-    public void unFollowUser(UnfollowerDTO request) {
+    public void unFollowUser(UnfollowUserDTO request) {
 
         int userId = request.getUser_id();
         int userToUnfollowId = request.getUser_id_to_unfollow();
@@ -96,7 +100,7 @@ public class FollowerRepository implements IFollowerRepository{
     }
 
     @Override
-    public List<Usuarios> getUsersWhoFollowsToUserId(int vendedorUserId) {
+    public List<Usuarios> getUsersWhoFollowsToUserId(int vendedorUserId, String order) {
 
         List<Usuarios> seguidoresDelVendedor = new ArrayList<>();
 
@@ -110,14 +114,21 @@ public class FollowerRepository implements IFollowerRepository{
 
         }
 
-        //listaDeFollows.stream().filter(x -> x.getVendedorId() == vendedorUserId).collect(Collectors.toList()).size();
+        if(order!=null){
+
+            if(order.equals("name_asc"))
+                seguidoresDelVendedor = seguidoresDelVendedor.stream().sorted(new AscendingUserName()).collect(Collectors.toList());
+            else if(order.equals("name_desc"))
+                seguidoresDelVendedor = seguidoresDelVendedor.stream().sorted(new DescendingUserName()).collect(Collectors.toList());
+
+        }
 
         return seguidoresDelVendedor;
 
     }
 
     @Override
-    public List<Usuarios> getUsersFollowedByUserId(int userId) {
+    public List<Usuarios> getUsersFollowedByUserId(int userId, String order) {
 
         Followers userFollowers = new Followers();
         List<Usuarios> response = new ArrayList<>();
@@ -126,6 +137,15 @@ public class FollowerRepository implements IFollowerRepository{
 
         if(userFollowers!= null){
             response = new ArrayList<>(userFollowers.getUsuariosSeguidos().values());
+        }
+
+        if(order!=null){
+
+            if(order.equals("name_asc"))
+                response = response.stream().sorted(new AscendingUserName()).collect(Collectors.toList());
+            else if(order.equals("name_desc"))
+               response = response.stream().sorted(new DescendingUserName()).collect(Collectors.toList());
+
         }
 
         return response;

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UnfollowerDTO {
+public class UnfollowUserDTO {
 
     private int user_id;
     private int user_id_to_unfollow;

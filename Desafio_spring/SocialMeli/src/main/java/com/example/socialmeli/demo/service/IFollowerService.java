@@ -2,7 +2,8 @@ package com.example.socialmeli.demo.service;
 
 
 import com.example.socialmeli.demo.dto.controllerToService.FollowUserDTO;
-import com.example.socialmeli.demo.dto.controllerToService.UnfollowerDTO;
+import com.example.socialmeli.demo.dto.controllerToService.RequestUserListDTO;
+import com.example.socialmeli.demo.dto.controllerToService.UnfollowUserDTO;
 import com.example.socialmeli.demo.dto.controllerToService.UserIdDTO;
 import com.example.socialmeli.demo.dto.serviceToController.UserFollowerCountDTO;
 import com.example.socialmeli.demo.dto.serviceToController.UserFollowersListDTO;
@@ -15,11 +16,11 @@ public interface IFollowerService {
 
     public UserFollowerCountDTO getFollowersCountByUserID(UserIdDTO request);
 
-    public UserFollowersListDTO getFollowersListByUserID(UserIdDTO request);
+    public UserFollowersListDTO getFollowersListByUserID(RequestUserListDTO request);
 
-    public UserFollowersListDTO getFollowedUsersFromUserId(UserIdDTO request);
+    public UserFollowersListDTO getFollowedUsersFromUserId(RequestUserListDTO request);
 
-    public ResponseEntity unFollowUser(UnfollowerDTO request);
+    public ResponseEntity unFollowUser(UnfollowUserDTO request);
 
 
 
