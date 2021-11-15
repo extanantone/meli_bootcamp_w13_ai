@@ -35,11 +35,11 @@ public class UserService implements IUserService{
     public FollowSellerDTO followSeller(int userId, int userToFollowId) {
         User seller = userRepository.getUser(userToFollowId);
         if (seller == null || seller.getClass() != Seller.class){
-            throw new NotFoundException("Vendedor no encontrado");
+            throw new BadRequestException("Vendedor no encontrado");
         }
         User buyer = userRepository.getUser(userId);
         if (buyer == null){
-            throw new NotFoundException("Usuario no encontrado");
+            throw new BadRequestException("Usuario no encontrado");
         }
 
         userRepository.addFollower(userId, userToFollowId);
