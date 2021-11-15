@@ -51,7 +51,7 @@ IUsuarioRepository usuarioRepository;
     @Override
     public UserFollowerCountDTO getFollowersCountByUserID(UserIdDTO request) {
 
-        int userID = request.getUser_id();
+        int userID = request.getUserId();
         String userName;
         List<Usuarios> userFollowers;
         int userFollowersCount = 0;

@@ -21,17 +21,19 @@ public class PostController {
         return iPublicacionService.createPost(request);
     }
 
-    @GetMapping("/products/followed/{user_id}/list")
-    public ResponseEntity<PostsFromMyFollowedUsersDTO> getPostsFromUserFollowersSinceTwoWeeks(@RequestBody UserIdDTO userId,
+    @GetMapping("/products/followed/{userId}/list")
+    public ResponseEntity<PostsFromMyFollowedUsersDTO> getPostsFromUserFollowersSinceTwoWeeks(@PathVariable int userId,
                                                                                               @RequestParam(value = "order", required = false) String order){
 
         RequestPostsFromFollowedsDTO request = new RequestPostsFromFollowedsDTO();
-        request.setUserId(userId.getUser_id());
+        request.setUserId(userId);
         request.setOrder(order);
 
         return iPublicacionService.getPostsFromUserFollowersSinceTwoWeeks(request);
 
     }
+
+
 
 
 }

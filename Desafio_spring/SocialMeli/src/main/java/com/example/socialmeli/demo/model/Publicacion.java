@@ -24,5 +24,12 @@ public class Publicacion {
     private int category;
     private double price;
 
+    public boolean hasPromo() { return false; }
+
+    public void setPromo(boolean promo) {  }
+
+    public double hasDiscount() { return 0.00; }
+
+    public void setDiscount(Double discount) {  }
 
 }

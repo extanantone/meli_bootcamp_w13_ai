@@ -38,7 +38,7 @@ public class FollowerController {
         UserFollowerCountDTO response = new UserFollowerCountDTO();
 
         UserIdDTO request = new UserIdDTO();
-        request.setUser_id(user_id);
+        request.setUserId(user_id);
 
         response = iFollowerService.getFollowersCountByUserID(request);
 
