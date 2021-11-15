@@ -2,6 +2,8 @@ package com.bootcamp.socialmeli.service;
 
 import com.bootcamp.socialmeli.DTO.DTOCountpromo;
 import com.bootcamp.socialmeli.DTO.DTOPostProduct;
+import com.bootcamp.socialmeli.DTO.DTOPromoPost;
+import com.bootcamp.socialmeli.DTO.DTOPublishFollowed;
 import com.bootcamp.socialmeli.model.Post;
 import com.bootcamp.socialmeli.model.Product;
 import com.bootcamp.socialmeli.model.User;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -93,6 +96,25 @@ public class ServicePost implements IServicePost{
             return new ResponseEntity(new DTOCountpromo(userId,user.getUserName(),count), HttpStatus.OK);
 
         }catch (Exception e){
+            return new ResponseEntity("Error: Usuario inexistente", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseEntity getPostPromo(int userId) {
+
+        List<Post> posts = new ArrayList<>();
+
+        try{
+
+            User user = iUserRepository.findById(userId);
+
+            posts = iPostRepository.getPromoPost(userId);
+
+            return new ResponseEntity(new DTOPromoPost(userId,user.getUserName(),posts),HttpStatus.OK);
+
+        }catch(Exception e){
+
             return new ResponseEntity("Error: Usuario inexistente", HttpStatus.BAD_REQUEST);
         }
     }

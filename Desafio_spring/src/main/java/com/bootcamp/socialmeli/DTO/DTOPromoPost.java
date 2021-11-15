@@ -1,7 +1,6 @@
 package com.bootcamp.socialmeli.DTO;
 
-import com.bootcamp.socialmeli.model.Product;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.bootcamp.socialmeli.model.Post;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -9,20 +8,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class DTOPublishPost {
+public class DTOPromoPost {
 
-    private int idPost;
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate date;
-    private Product product;
-    private int category;
-    private double price;
+    private int userId;
+    private String userName;
+    private List<Post> posts;
 }

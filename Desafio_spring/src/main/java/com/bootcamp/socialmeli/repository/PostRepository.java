@@ -1,5 +1,6 @@
 package com.bootcamp.socialmeli.repository;
 
+import com.bootcamp.socialmeli.DTO.DTOPostProduct;
 import com.bootcamp.socialmeli.DTO.DTOPublishPost;
 import com.bootcamp.socialmeli.model.Post;
 import com.bootcamp.socialmeli.utils.ComparatorPublishAsc;
@@ -28,7 +29,7 @@ public class PostRepository implements IPostRepository{
     }
 
     @Override
-    public List <Post> getPost(int idUser) {
+    public List<Post> getPost(int idUser) {
 
         List<Post> listPosts = new ArrayList<Post>();
 
@@ -50,6 +51,19 @@ public class PostRepository implements IPostRepository{
             return posts.stream().sorted(new ComparatorPublishAsc()).collect(Collectors.toList());
         return posts.stream().sorted(new ComparatorPublishDesc()).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<Post> getPromoPost(int userId) {
+
+        List<Post> postListAux = new ArrayList<>();
+
+        for (Post p : postList) {
+            if(p.getHasPromo() && p.getUserId() == userId)
+                postListAux.add(p);
+        }
+
+        return postListAux;
     }
 
 

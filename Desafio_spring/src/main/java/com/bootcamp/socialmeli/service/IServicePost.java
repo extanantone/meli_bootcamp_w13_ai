@@ -11,4 +11,6 @@ public interface IServicePost {
 
     ResponseEntity countPostPromo(int userId);
 
+    ResponseEntity getPostPromo(int userId);
+
 }

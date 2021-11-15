@@ -75,7 +75,6 @@ public class SocialMeliController {
     public ResponseEntity newPost(@RequestBody DTOPostProduct postProduct){
 
         return iServicePost.createPost(postProduct);
-
     }
 
     @GetMapping("/products/followed/{userId}/list")
@@ -90,13 +89,18 @@ public class SocialMeliController {
     public ResponseEntity newPostPromo(@RequestBody DTOPostProduct postProduct){
 
         return iServicePost.createPostPromo(postProduct);
-
     }
 
     @GetMapping("/products/{userId}/countPromo")
     public ResponseEntity<DTOCountpromo> countPostPromo(@PathVariable int userId){
 
         return iServicePost.countPostPromo(userId);
+    }
+
+    @GetMapping("/products/{userId}/list")
+    public ResponseEntity<DTOPromoPost> getPromoPost(@PathVariable int userId){
+
+        return iServicePost.getPostPromo(userId);
     }
 
 }
