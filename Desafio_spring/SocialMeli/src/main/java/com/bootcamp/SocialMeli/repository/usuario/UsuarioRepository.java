@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class UsuarioRepository implements IUsuarioRepository {
@@ -43,11 +44,11 @@ public class UsuarioRepository implements IUsuarioRepository {
     @Override
     public void insertarFollower(Integer userId, Integer userIdToFollow) { //inserta seguidor a un seguido
         Usuario usuarioFollower = devolverUsuario(userId);
-        this.listaUsuarios
+        Objects.requireNonNull(this.listaUsuarios
                 .stream()
-                .filter(usuario -> usuario.getUserId() == userIdToFollow)
+                .filter(usuario -> usuario.getUserId().equals(userIdToFollow))
                 .findFirst()
-                .orElse(null)
+                .orElse(null))
                 .getFollowers()
                 .add(usuarioFollower);
     }
@@ -55,11 +56,11 @@ public class UsuarioRepository implements IUsuarioRepository {
     @Override
     public void insertarFollowed(Integer userId, Integer userIdToFollow) { //inserta un seguido a un seguidor
         Usuario usuarioFollowed = devolverUsuario(userIdToFollow);
-        this.listaUsuarios
+        Objects.requireNonNull(this.listaUsuarios
                 .stream()
-                .filter(usuario -> usuario.getUserId() == userId)
+                .filter(usuario -> usuario.getUserId().equals(userId))
                 .findFirst()
-                .orElse(null)
+                .orElse(null))
                 .getFollowed()
                 .add(usuarioFollowed);
     }
@@ -68,7 +69,7 @@ public class UsuarioRepository implements IUsuarioRepository {
     public Usuario devolverUsuario(Integer userId) {
         return this.listaUsuarios
                 .stream()
-                .filter(usuario -> usuario.getUserId() == userId)
+                .filter(usuario -> usuario.getUserId().equals(userId))
                 .findFirst()
                 .orElse(null);
     }
@@ -77,7 +78,7 @@ public class UsuarioRepository implements IUsuarioRepository {
     public boolean encontrarUsuario(Integer userId) {
         return this.listaUsuarios
                 .stream()
-                .anyMatch(usuario -> usuario.getUserId() == userId);
+                .anyMatch(usuario -> usuario.getUserId().equals(userId));
     }
 
     @Override

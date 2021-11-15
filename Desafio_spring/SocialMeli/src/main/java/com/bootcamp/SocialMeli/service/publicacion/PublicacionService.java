@@ -1,10 +1,8 @@
 package com.bootcamp.SocialMeli.service.publicacion;
 
 import com.bootcamp.SocialMeli.dto.publicacion.*;
-import com.bootcamp.SocialMeli.dto.usuario.FollowerCountDTO;
 import com.bootcamp.SocialMeli.exception.BadRequestException;
 import com.bootcamp.SocialMeli.mapper.PublicacionMapper;
-import com.bootcamp.SocialMeli.model.Publicacion;
 import com.bootcamp.SocialMeli.repository.publicacion.IPublicacionRepository;
 import com.bootcamp.SocialMeli.repository.usuario.IUsuarioRepository;
 import com.bootcamp.SocialMeli.service.usuario.IUsuarioService;
@@ -129,23 +127,22 @@ public class PublicacionService implements IPublicacionService {
         if (contadorPublicacionPromo == 0) {
             throw new BadRequestException("El usuario con ID " + userId + " no tiene ninguna publicación con productos en promoción.");
         }
-        PublicacionPromoCountDTO publicacionPromoCountDTO = new PublicacionPromoCountDTO(userId, iUsuarioRepository.devolverUsuario(userId).getUserName(), contadorPublicacionPromo.intValue());
-        return publicacionPromoCountDTO;
+        return new PublicacionPromoCountDTO(userId, iUsuarioRepository.devolverUsuario(userId).getUserName(), contadorPublicacionPromo.intValue());
     }
 
     @Override
-    public List<PublicacionPromoDTO> listaPublicacionesPromo(Integer userId){
+    public PublicacionPromoListDTO listaPublicacionesPromo(Integer userId) {
         controlExistenciaUsuario(userId);
         String userName = iUsuarioRepository.devolverUsuario(userId).getUserName();
-        List<PublicacionPromoDTO> publicacionPromoDTOLista = iPublicacionRepository
+        List<SoloPublicacionPromoDTO> publicacionPromoDTOLista = iPublicacionRepository
                 .devolverPublicaciones(userId)
                 .stream()
-                .map(publicacion -> publicacionMapper.publicacionAPublicacionPromoDTO(publicacion,userName))
+                .map(publicacion -> publicacionMapper.publicacionASoloPublicacionPromoDTO(publicacion))
                 .filter(publicacionPromoDTO -> publicacionPromoDTO.getHasPromo() && publicacionPromoDTO.getDiscount() > 0)
                 .collect(Collectors.toList());
         if (publicacionPromoDTOLista.size() == 0) {
             throw new BadRequestException("El usuario con ID " + userId + " no tiene ninguna publicación con productos en promoción.");
         }
-        return publicacionPromoDTOLista;
+        return new PublicacionPromoListDTO(userId, userName, publicacionPromoDTOLista);
     }
 }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class UsuarioMapper {
-    public FollowerCountDTO usuarioAFollowerCountDTO(Usuario usuario){
+    public FollowerCountDTO usuarioAFollowerCountDTO(Usuario usuario) {
         FollowerCountDTO followerCountDTO = new FollowerCountDTO();
         followerCountDTO.setUserId(usuario.getUserId());
         followerCountDTO.setUserName(usuario.getUserName());
@@ -19,24 +19,24 @@ public class UsuarioMapper {
         return followerCountDTO;
     }
 
-    public FollowerListDTO usuarioAFollowerListDTO(Usuario usuario){
+    public FollowerListDTO usuarioAFollowerListDTO(Usuario usuario) {
         FollowerListDTO followerListDTO = new FollowerListDTO();
         followerListDTO.setUserId(usuario.getUserId());
         followerListDTO.setUserName(usuario.getUserName());
         followerListDTO.setFollowers(usuario.getFollowers()
                 .stream()
-                .map(u -> new UsuarioDTO(u.getUserId(),u.getUserName()))
+                .map(u -> new UsuarioDTO(u.getUserId(), u.getUserName()))
                 .collect(Collectors.toList()));
         return followerListDTO;
     }
 
-    public FollowedListDTO usuarioAFollowedListDTO(Usuario usuario){
+    public FollowedListDTO usuarioAFollowedListDTO(Usuario usuario) {
         FollowedListDTO followedListDTO = new FollowedListDTO();
         followedListDTO.setUserId(usuario.getUserId());
         followedListDTO.setUserName(usuario.getUserName());
         followedListDTO.setFollowed(usuario.getFollowed()
                 .stream()
-                .map(u -> new UsuarioDTO(u.getUserId(),u.getUserName()))
+                .map(u -> new UsuarioDTO(u.getUserId(), u.getUserName()))
                 .collect(Collectors.toList()));
         return followedListDTO;
     }

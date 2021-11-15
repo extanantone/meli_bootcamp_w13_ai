@@ -1,5 +1,6 @@
-package com.bootcamp.SocialMeli.model;
+package com.bootcamp.SocialMeli.dto.publicacion;
 
+import com.bootcamp.SocialMeli.dto.producto.ProductoDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -15,14 +16,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class Publicacion {
-    private Integer userId;
+public class SoloPublicacionPromoDTO {
     private Integer idPost;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
-    private Producto detail;
+    private ProductoDTO detail;
     private Integer category;
     private Double price;
-    private Boolean hasPromo = false;
-    private Double discount = 0.0;
+    private Boolean hasPromo;
+    private Double discount;
 }

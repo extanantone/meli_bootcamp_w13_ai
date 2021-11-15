@@ -33,8 +33,8 @@ public class UsuarioService implements IUsuarioService {
     public void realizarFollow(Integer userId, Integer userIdToFollow) throws BadRequestException {
         controlExistenciaUsuario(userId);
         controlExistenciaUsuario(userIdToFollow);
-        if (userId == userIdToFollow) {
-            throw new BadRequestException("El usuario con ID " + userId + " no se puede seguir a sí mismo.");
+        if (userId.equals(userIdToFollow)) {
+            throw new BadRequestException("Los usuarios no se pueden seguir a sí mismos.");
         }
         if (iUsuarioRepository
                 .devolverUsuario(userId)
@@ -80,7 +80,7 @@ public class UsuarioService implements IUsuarioService {
     public void realizarUnfollow(Integer userId, Integer userIdToFollow) {
         controlExistenciaUsuario(userId);
         controlExistenciaUsuario(userIdToFollow);
-        if (userId == userIdToFollow) {
+        if (userId.equals(userIdToFollow)) {
             throw new BadRequestException("El usuario con ID " + userId + " no se puede dejar de seguir a sí mismo.");
         }
         if (!iUsuarioRepository

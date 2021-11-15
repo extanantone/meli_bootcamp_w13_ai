@@ -1,16 +1,11 @@
 package com.bootcamp.SocialMeli.controller;
 
-import com.bootcamp.SocialMeli.dto.publicacion.PublicacionDTO;
-import com.bootcamp.SocialMeli.dto.publicacion.PublicacionFollowedDTO;
-import com.bootcamp.SocialMeli.dto.publicacion.PublicacionPromoCountDTO;
-import com.bootcamp.SocialMeli.dto.publicacion.PublicacionPromoDTO;
+import com.bootcamp.SocialMeli.dto.publicacion.*;
 import com.bootcamp.SocialMeli.exception.BadRequestException;
 import com.bootcamp.SocialMeli.service.publicacion.IPublicacionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/products")
@@ -81,7 +76,7 @@ public class PublicacionController {
     }
 
     @GetMapping("/{user_id}/list")
-    public ResponseEntity<List<PublicacionPromoDTO>> listaPublicacionesPromo(
+    public ResponseEntity<PublicacionPromoListDTO> listaPublicacionesPromo(
             @PathVariable Integer user_id)
             throws BadRequestException {
         try {

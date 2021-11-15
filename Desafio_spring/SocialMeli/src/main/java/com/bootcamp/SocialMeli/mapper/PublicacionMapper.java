@@ -1,9 +1,6 @@
 package com.bootcamp.SocialMeli.mapper;
 
-import com.bootcamp.SocialMeli.dto.publicacion.PublicacionDTO;
-import com.bootcamp.SocialMeli.dto.publicacion.PublicacionPromoCountDTO;
-import com.bootcamp.SocialMeli.dto.publicacion.PublicacionPromoDTO;
-import com.bootcamp.SocialMeli.dto.publicacion.SoloPublicacionDTO;
+import com.bootcamp.SocialMeli.dto.publicacion.*;
 import com.bootcamp.SocialMeli.model.Publicacion;
 import org.springframework.stereotype.Component;
 
@@ -23,27 +20,6 @@ public class PublicacionMapper {
         publicacion.setCategory(publicacionDTO.getCategory());
         publicacion.setPrice(publicacionDTO.getPrice());
         publicacion.setDetail(productoMapper.productoDTOAProducto(publicacionDTO.getDetail()));
-        return publicacion;
-    }
-
-    public PublicacionDTO publicacionAPublicacionDTO(Publicacion publicacion) {
-        PublicacionDTO publicacionDTO = new PublicacionDTO();
-        publicacionDTO.setUserId(publicacion.getUserId());
-        publicacionDTO.setIdPost(publicacion.getIdPost());
-        publicacionDTO.setDate(publicacion.getDate());
-        publicacionDTO.setCategory(publicacion.getCategory());
-        publicacionDTO.setPrice(publicacion.getPrice());
-        publicacionDTO.setDetail(productoMapper.productoAProductoDTO(publicacion.getDetail()));
-        return publicacionDTO;
-    }
-
-    public Publicacion soloPublicacionDTOAPublicacion(SoloPublicacionDTO soloPublicacionDTO) {
-        Publicacion publicacion = new Publicacion();
-        publicacion.setIdPost(soloPublicacionDTO.getIdPost());
-        publicacion.setDate(soloPublicacionDTO.getDate());
-        publicacion.setCategory(soloPublicacionDTO.getCategory());
-        publicacion.setPrice(soloPublicacionDTO.getPrice());
-        publicacion.setDetail(productoMapper.productoDTOAProducto(soloPublicacionDTO.getDetail()));
         return publicacion;
     }
 
@@ -70,18 +46,16 @@ public class PublicacionMapper {
         return publicacion;
     }
 
-    public PublicacionPromoDTO publicacionAPublicacionPromoDTO(Publicacion publicacion, String userName) {
-        PublicacionPromoDTO publicacionPromoDTO = new PublicacionPromoDTO();
-        publicacionPromoDTO.setUserId(publicacion.getUserId());
-        publicacionPromoDTO.setUserName(userName);
-        publicacionPromoDTO.setIdPost(publicacion.getIdPost());
-        publicacionPromoDTO.setDate(publicacion.getDate());
-        publicacionPromoDTO.setCategory(publicacion.getCategory());
-        publicacionPromoDTO.setPrice(publicacion.getPrice());
-        publicacionPromoDTO.setHasPromo(publicacion.getHasPromo());
-        publicacionPromoDTO.setDiscount(publicacion.getDiscount());
-        publicacionPromoDTO.setDetail(productoMapper.productoAProductoDTO(publicacion.getDetail()));
-        return publicacionPromoDTO;
+    public SoloPublicacionPromoDTO publicacionASoloPublicacionPromoDTO(Publicacion publicacion) {
+        SoloPublicacionPromoDTO soloPublicacionPromoDTO = new SoloPublicacionPromoDTO();
+        soloPublicacionPromoDTO.setIdPost(publicacion.getIdPost());
+        soloPublicacionPromoDTO.setDate(publicacion.getDate());
+        soloPublicacionPromoDTO.setCategory(publicacion.getCategory());
+        soloPublicacionPromoDTO.setPrice(publicacion.getPrice());
+        soloPublicacionPromoDTO.setHasPromo(publicacion.getHasPromo());
+        soloPublicacionPromoDTO.setDiscount(publicacion.getDiscount());
+        soloPublicacionPromoDTO.setDetail(productoMapper.productoAProductoDTO(publicacion.getDetail()));
+        return soloPublicacionPromoDTO;
     }
 
 }
