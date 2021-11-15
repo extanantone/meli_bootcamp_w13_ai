@@ -15,5 +15,5 @@ import lombok.Setter;
 public class FollowerCountDTO {
     private Integer userId;
     private String userName;
-    private Integer userCount;
+    private Integer followersCount;
 }

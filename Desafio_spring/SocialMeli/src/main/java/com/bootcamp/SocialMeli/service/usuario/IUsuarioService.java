@@ -12,4 +12,14 @@ public interface IUsuarioService {
     public FollowerListDTO listaFollowers(Integer userId);
 
     public FollowedListDTO listaFollowed(Integer userId);
+
+    public void realizarUnfollow(Integer userId, Integer userIdToFollow);
+
+    public FollowerListDTO listaFollowersAsc(Integer userId);
+
+    public FollowerListDTO listaFollowersDesc(Integer userId);
+
+    public FollowedListDTO listaFollowedAsc(Integer userId);
+
+    public FollowedListDTO listaFollowedDesc(Integer userId);
 }

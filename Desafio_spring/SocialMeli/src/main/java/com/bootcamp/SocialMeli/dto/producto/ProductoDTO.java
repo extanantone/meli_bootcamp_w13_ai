@@ -1,4 +1,4 @@
-package com.bootcamp.SocialMeli.model;
+package com.bootcamp.SocialMeli.dto.producto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -7,17 +7,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class Usuario {
-    private Integer userId;
-    private String userName;
-    private List<Usuario> followed;
-    private List<Usuario> followers;
-    private List<Publicacion> publicaciones;
+public class ProductoDTO {
+    private Integer productId;
+    private String productName;
+    private String type;
+    private String brand;
+    private String color;
+    private String notes;
 }

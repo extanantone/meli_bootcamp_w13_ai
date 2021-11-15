@@ -1,7 +1,6 @@
 [
   {
     "user_id": 1,
-    "followers_count": 0,
     "user_name": "Marina",
     "followed": [
     ],
@@ -10,7 +9,6 @@
   },
   {
     "user_id": 2,
-    "followers_count": 0,
     "user_name": "Rex",
     "followed": [
     ],
@@ -19,7 +17,6 @@
   },
   {
     "user_id": 3,
-    "followers_count": 0,
     "user_name": "Bronco",
     "followed": [
     ],

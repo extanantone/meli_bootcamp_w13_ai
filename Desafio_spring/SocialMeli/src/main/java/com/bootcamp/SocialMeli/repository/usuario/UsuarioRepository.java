@@ -42,11 +42,7 @@ public class UsuarioRepository implements IUsuarioRepository {
 
     @Override
     public void insertarFollower(Integer userId, Integer userIdToFollow) { //inserta seguidor a un seguido
-        Usuario usuarioFollower = this.listaUsuarios
-                .stream()
-                .filter(usuario -> usuario.getUserId() == userId)
-                .findFirst()
-                .orElse(null);
+        Usuario usuarioFollower = devolverUsuario(userId);
         this.listaUsuarios
                 .stream()
                 .filter(usuario -> usuario.getUserId() == userIdToFollow)
@@ -54,21 +50,11 @@ public class UsuarioRepository implements IUsuarioRepository {
                 .orElse(null)
                 .getFollowers()
                 .add(usuarioFollower);
-        this.listaUsuarios
-                .stream()
-                .filter(usuario -> usuario.getUserId() == userIdToFollow)
-                .findFirst()
-                .orElse(null)
-                .setFollowersCount(+1);
     }
 
     @Override
     public void insertarFollowed(Integer userId, Integer userIdToFollow) { //inserta un seguido a un seguidor
-        Usuario usuarioFollowed = this.listaUsuarios
-                .stream()
-                .filter(usuario -> usuario.getUserId() == userIdToFollow)
-                .findFirst()
-                .orElse(null);
+        Usuario usuarioFollowed = devolverUsuario(userIdToFollow);
         this.listaUsuarios
                 .stream()
                 .filter(usuario -> usuario.getUserId() == userId)
@@ -85,5 +71,26 @@ public class UsuarioRepository implements IUsuarioRepository {
                 .filter(usuario -> usuario.getUserId() == userId)
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public boolean encontrarUsuario(Integer userId) {
+        return this.listaUsuarios
+                .stream()
+                .anyMatch(usuario -> usuario.getUserId() == userId);
+    }
+
+    @Override
+    public void eliminarFollower(Integer userId, Integer userIdToFollow) {
+        Usuario usuarioFollower = devolverUsuario(userId);
+        Usuario usuarioFollowed = devolverUsuario(userIdToFollow);
+        usuarioFollowed.getFollowers().remove(usuarioFollower);
+    }
+
+    @Override
+    public void eliminarFollowed(Integer userId, Integer userIdToFollow) {
+        Usuario usuarioFollower = devolverUsuario(userId);
+        Usuario usuarioFollowed = devolverUsuario(userIdToFollow);
+        usuarioFollower.getFollowed().remove(usuarioFollowed);
     }
 }

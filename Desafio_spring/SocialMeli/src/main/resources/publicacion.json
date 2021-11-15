@@ -1,8 +1,8 @@
 [
   {
     "user_id": 1,
-    "id_post": 21,
-    "date": "29-11-2021",
+    "id_post": 18,
+    "date": "18-01-2021",
     "detail": {
       "product_id": 1,
       "product_name": "Silla Gamer",
@@ -16,17 +16,17 @@
   },
   {
     "user_id": 2,
-    "id_post": 22,
-    "date": "16-01-2022",
+    "id_post": 19,
+    "date": "10-05-2020",
     "detail": {
       "product_id": 1,
-      "product_name": "Silla Gamer",
-      "type": "Gamer",
-      "brand": "Racer",
-      "color": "Red & Black",
-      "notes": "Special Edition"
+      "product_name": "Nintendo Switch",
+      "type": "Console",
+      "brand": "Nintendo",
+      "color": "White",
+      "notes": "Lite Edition"
     },
-    "category": 100,
-    "price": 1000.50
+    "category": 99,
+    "price": 15000.75
   }
 ]
