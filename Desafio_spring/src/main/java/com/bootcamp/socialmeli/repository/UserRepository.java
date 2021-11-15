@@ -1,6 +1,5 @@
 package com.bootcamp.socialmeli.repository;
 
-import com.bootcamp.socialmeli.DTO.DTOFollower;
 import com.bootcamp.socialmeli.DTO.DTOUser;
 import com.bootcamp.socialmeli.model.User;
 import com.bootcamp.socialmeli.utils.ComparatorNameAsc;

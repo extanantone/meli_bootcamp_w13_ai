@@ -1,6 +1,5 @@
 package com.bootcamp.socialmeli.DTO;
 
-import com.bootcamp.socialmeli.model.User;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;

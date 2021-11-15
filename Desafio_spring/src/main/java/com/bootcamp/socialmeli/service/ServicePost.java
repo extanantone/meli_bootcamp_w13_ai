@@ -3,7 +3,6 @@ package com.bootcamp.socialmeli.service;
 import com.bootcamp.socialmeli.DTO.DTOCountpromo;
 import com.bootcamp.socialmeli.DTO.DTOPostProduct;
 import com.bootcamp.socialmeli.DTO.DTOPromoPost;
-import com.bootcamp.socialmeli.DTO.DTOPublishFollowed;
 import com.bootcamp.socialmeli.model.Post;
 import com.bootcamp.socialmeli.model.Product;
 import com.bootcamp.socialmeli.model.User;

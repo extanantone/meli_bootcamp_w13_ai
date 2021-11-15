@@ -1,6 +1,5 @@
 package com.bootcamp.socialmeli.repository;
 
-import com.bootcamp.socialmeli.DTO.DTOPostProduct;
 import com.bootcamp.socialmeli.DTO.DTOPublishPost;
 import com.bootcamp.socialmeli.model.Post;
 import com.bootcamp.socialmeli.utils.ComparatorPublishAsc;
