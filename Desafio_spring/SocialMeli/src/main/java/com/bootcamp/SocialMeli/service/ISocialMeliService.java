@@ -14,5 +14,9 @@ public interface ISocialMeliService {
     SeguidosDTO getVendedoresSeguidos(Integer userId, String order);
     SuccessDTO crearPublicacion(PublicacionDTO post);
     PublicacionesDTO getPublicacionesSeguidos(Integer userId);
+    PublicacionesDTO getPublicacionesSeguidos(Integer userId, String order);
     SuccessDTO unfollowVendedor(Integer idSeguidor, Integer idVendedor);
+
+    CantPromocionesDTO getCantPromociones(Integer userId);
+    PromocionesDTO getProductosEnPromocion(Integer userId);
 }

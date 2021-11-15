@@ -14,7 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PublicacionesDTO {
-    private Integer userId; //id del cliente
-    private List<InfoPostDTO> posts;
+public class PromocionesDTO {
+    private Integer userId;
+    private String userName;
+    private List<InfoPromoDTO> posts;
 }

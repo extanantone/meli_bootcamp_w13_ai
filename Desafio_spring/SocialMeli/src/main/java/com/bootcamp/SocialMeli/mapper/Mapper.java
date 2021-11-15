@@ -1,10 +1,12 @@
 package com.bootcamp.SocialMeli.mapper;
 
 import com.bootcamp.SocialMeli.dto.request.DetalleProductoDTO;
+import com.bootcamp.SocialMeli.dto.request.PromocionDTO;
 import com.bootcamp.SocialMeli.dto.request.PublicacionDTO;
 import com.bootcamp.SocialMeli.dto.response.InfoPostDTO;
 import com.bootcamp.SocialMeli.dto.response.PublicacionesDTO;
 import com.bootcamp.SocialMeli.model.Producto;
+import com.bootcamp.SocialMeli.model.Promocion;
 import com.bootcamp.SocialMeli.model.Publicacion;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -27,9 +29,24 @@ public class Mapper {
         publicacion.setDate(publicacionDTO.getDate());
         publicacion.setPrice(publicacionDTO.getPrice());
         publicacion.setCategory(publicacionDTO.getCategory());
-        publicacion.setProducto(detalleProductoDTOToProducto(publicacionDTO.getDetail()));
+        publicacion.setProducto(getModelMapper().map(publicacionDTO.getDetail(), Producto.class));
 
         return publicacion;
+    }
+
+    public Promocion promocionDTOToPromocion(PromocionDTO promocionDTO){
+        Promocion promocion = new Promocion();
+
+        promocion.setIdPost(promocionDTO.getIdPost());
+        promocion.setDate(promocionDTO.getDate());
+        promocion.setPrice(promocionDTO.getPrice());
+        promocion.setCategory(promocionDTO.getCategory());
+        promocion.setProducto(getModelMapper().map(promocionDTO.getDetail(), Producto.class));
+
+        promocion.setHas_promo(promocionDTO.isHas_promo());
+        promocion.setDiscount(promocionDTO.getDiscount());
+
+        return promocion;
     }
 
     public Producto detalleProductoDTOToProducto(DetalleProductoDTO detalleDTO){

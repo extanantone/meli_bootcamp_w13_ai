@@ -1,6 +1,7 @@
 package com.bootcamp.SocialMeli.service;
 
 import com.bootcamp.SocialMeli.dto.request.DetalleProductoDTO;
+import com.bootcamp.SocialMeli.dto.request.PromocionDTO;
 import com.bootcamp.SocialMeli.dto.request.PublicacionDTO;
 import com.bootcamp.SocialMeli.dto.response.*;
 import com.bootcamp.SocialMeli.exception.AlreadyFollowException;
@@ -9,6 +10,7 @@ import com.bootcamp.SocialMeli.exception.NotFollowException;
 import com.bootcamp.SocialMeli.exception.UserNotFoundException;
 import com.bootcamp.SocialMeli.mapper.Mapper;
 import com.bootcamp.SocialMeli.model.Producto;
+import com.bootcamp.SocialMeli.model.Promocion;
 import com.bootcamp.SocialMeli.model.Publicacion;
 import com.bootcamp.SocialMeli.model.Usuario;
 import com.bootcamp.SocialMeli.repository.ISocialMeliRepository;
@@ -134,8 +136,8 @@ public class SocialMeliService implements ISocialMeliService{
         //TODO chequear que el user exista
         //TODO chequear que el id_post sea unico para todos los users
         //TODO chequear que la fecha sea de hoy o el pasado
-        DetalleProductoDTO detalle = post.getDetail();
-        Producto nuevoProducto = new Producto();
+       // DetalleProductoDTO detalle = post.getDetail();
+       // Producto nuevoProducto = new Producto();
 
         Usuario usuario = this.socialMeliRepository.buscarUsuario(post.getUserId());
         if(usuario == null){
@@ -143,7 +145,13 @@ public class SocialMeliService implements ISocialMeliService{
         }
         //convertir de PublicacionDTO a Publicacion
 
-        Publicacion nuevaPublicacion = this.mapper.publicacionDTOToPublicacion(post);
+        Publicacion nuevaPublicacion;
+        if(post instanceof PromocionDTO){
+            nuevaPublicacion = this.mapper.promocionDTOToPromocion((PromocionDTO) post);
+        }else{
+            nuevaPublicacion = this.mapper.publicacionDTOToPublicacion(post);
+        }
+
         usuario.agregarPublicacion(nuevaPublicacion);
 
         return new SuccessDTO("Publicacion creada correctamente.");
@@ -181,6 +189,19 @@ public class SocialMeliService implements ISocialMeliService{
     }
 
     @Override
+    public PublicacionesDTO getPublicacionesSeguidos(Integer userId, String order) {
+        PublicacionesDTO publicacionesDTO = getPublicacionesSeguidos(userId);
+        if(order.equals("date_asc")){
+            publicacionesDTO.getPosts().sort(Comparator.comparing(InfoPostDTO::getDate));
+        }else if(order.equals("date_desc")){
+            publicacionesDTO.getPosts().sort(Comparator.comparing(InfoPostDTO::getDate).reversed());
+        }else{
+            throw new IllegalArgumentException("Argumento invalido en 'order'");
+        }
+        return publicacionesDTO;
+    }
+
+    @Override
     public SuccessDTO unfollowVendedor(Integer idSeguidor, Integer idVendedor) {
         Usuario seguidor = this.socialMeliRepository.buscarUsuario(idSeguidor);
         Usuario vendedor = this.socialMeliRepository.buscarUsuario(idVendedor);
@@ -198,5 +219,37 @@ public class SocialMeliService implements ISocialMeliService{
             throw new NotFollowException();
         }
         return new SuccessDTO("Vendedor no seguido correctamente");
+    }
+
+    @Override
+    public PromocionesDTO getProductosEnPromocion(Integer userId) {
+        //TODO chequear que el user exista
+        Usuario usuario = this.socialMeliRepository.buscarUsuario(userId);
+        if(usuario == null){
+            throw new UserNotFoundException("No existe el usuario con Id: " + userId);
+        }
+        List<Publicacion> promociones = usuario.getPublicaciones().stream().filter(x -> x instanceof Promocion)
+                                                                           .collect(Collectors.toList());
+        List<InfoPromoDTO> promo = new ArrayList<>();
+        for (Publicacion pub : promociones) {
+            promo.add(this.mapper.getModelMapper().map(pub, InfoPromoDTO.class));
+        }
+
+        return new PromocionesDTO(usuario.getUserId(), usuario.getUserName(), promo);
+    }
+
+    @Override
+    public CantPromocionesDTO getCantPromociones(Integer userId) {
+        //TODO chequear que el user exista
+        Usuario usuario = this.socialMeliRepository.buscarUsuario(userId);
+        if(usuario == null){
+            throw new UserNotFoundException("No existe el usuario con Id: " + userId);
+        }
+        CantPromocionesDTO cantPromocionesDTO = new CantPromocionesDTO();
+        cantPromocionesDTO.setUserId(usuario.getUserId());
+        cantPromocionesDTO.setUserName(usuario.getUserName());
+        cantPromocionesDTO.setPromo_products_count(getProductosEnPromocion(userId).getPosts().size());
+
+        return cantPromocionesDTO;
     }
 }
