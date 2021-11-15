@@ -7,4 +7,8 @@ public interface IServicePost {
 
     ResponseEntity createPost(DTOPostProduct postProduct);
 
+    ResponseEntity createPostPromo(DTOPostProduct postProduct);
+
+    ResponseEntity countPostPromo(int userId);
+
 }

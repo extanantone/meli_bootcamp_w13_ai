@@ -86,4 +86,17 @@ public class SocialMeliController {
         return iServiceFollowed.getPostFollowed(userId, order);
     }
 
+    @PostMapping("/products/newpromopost")
+    public ResponseEntity newPostPromo(@RequestBody DTOPostProduct postProduct){
+
+        return iServicePost.createPostPromo(postProduct);
+
+    }
+
+    @GetMapping("/products/{userId}/countPromo")
+    public ResponseEntity<DTOCountpromo> countPostPromo(@PathVariable int userId){
+
+        return iServicePost.countPostPromo(userId);
+    }
+
 }
