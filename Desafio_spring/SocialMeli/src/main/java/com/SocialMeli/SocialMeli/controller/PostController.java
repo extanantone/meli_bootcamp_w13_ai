@@ -33,4 +33,9 @@ public class PostController {
     public ResponseEntity<?> getSellerPromosCount(@PathVariable int userId) {
         return new ResponseEntity<SellerCountPromosDTO>(postService.getSellerPromosCount(userId), HttpStatus.OK);
     }
+
+    @GetMapping("/products/{user_id}/list")
+    public ResponseEntity<?> getSellerPromos(@PathVariable int user_id){
+        return new ResponseEntity<>(postService.getPromosByUser(user_id), HttpStatus.OK);
+    }
 }

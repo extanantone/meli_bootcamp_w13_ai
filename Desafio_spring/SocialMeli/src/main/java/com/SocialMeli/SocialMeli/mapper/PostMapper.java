@@ -62,6 +62,7 @@ public class PostMapper {
     public static Post postPromoDTOToPost(PostPromoDTO postPromoCreateDTO){
         Post post = new Post();
         post.setId(postPromoCreateDTO.getId_post());
+        post.setDate(postPromoCreateDTO.getDate());
         post.setSellerId(postPromoCreateDTO.getUser_id());
         post.setCategory(postPromoCreateDTO.getCategory());
         post.setPrice(postPromoCreateDTO.getPrice());
