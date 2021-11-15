@@ -22,11 +22,11 @@ public class SocialMeliController {
     @Autowired
     IServicePost iServicePost;
 
-    @PostMapping("/users/{userId}/follow/{userIdToFollow}")
-    public ResponseEntity userToFollow(@PathVariable int userId, @PathVariable int userIdToFollow){
+    @PostMapping("/users/{user_id}/follow/{userIdToFollow}")
+    public ResponseEntity userToFollow(@PathVariable int user_id, @PathVariable int userIdToFollow){
 
         try {
-            return iServiceFollower.userToFollow(userId,userIdToFollow);
+            return iServiceFollower.userToFollow(user_id,userIdToFollow);
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se encuentra el usuario");
@@ -34,35 +34,35 @@ public class SocialMeliController {
 
     }
 
-    @GetMapping("/users/{userId}/followers/count")
-    public ResponseEntity<DTOCount> countFollowersOfUser(@PathVariable int userId){
+    @GetMapping("/users/{user_id}/followers/count")
+    public ResponseEntity<DTOCount> countFollowersOfUser(@PathVariable int user_id){
 
-            return iServiceFollower.getCountFollowersOfuser(userId);
+            return iServiceFollower.getCountFollowersOfuser(user_id);
     }
 
-    @GetMapping("/user/{userId}/followers/list")
-    public ResponseEntity<DTOFollower> getFollowersFromUser(@PathVariable int userId,
+    @GetMapping("/user/{user_id}/followers/list")
+    public ResponseEntity<DTOFollower> getFollowersFromUser(@PathVariable int user_id,
                                        @RequestParam(defaultValue = "name_desc") String order){
 
         order = order.toLowerCase();
 
-        return iServiceFollower.getFollowersFromUser(userId, order);
+        return iServiceFollower.getFollowersFromUser(user_id, order);
     }
 
-    @GetMapping("/users/{userId}/followed/list")
-    public ResponseEntity<DTOFollowed> getFolloweds(@PathVariable int userId,
+    @GetMapping("/users/{user_id}/followed/list")
+    public ResponseEntity<DTOFollowed> getFolloweds(@PathVariable int user_id,
                                        @RequestParam(defaultValue = "name_desc") String order){
 
         order = order.toLowerCase();
 
-        return iServiceFollowed.getFolloweds(userId, order);
+        return iServiceFollowed.getFolloweds(user_id, order);
     }
 
-    @PostMapping("/users/{userId}/unfollow/{userIdToUnfollow}")
-    public ResponseEntity userToUnfollow(@PathVariable int userId, @PathVariable int userIdToUnfollow){
+    @PostMapping("/users/{user_id}/unfollow/{user_id_to_follow}")
+    public ResponseEntity userToUnfollow(@PathVariable int user_id, @PathVariable int user_id_to_follow){
 
         try {
-            return iServiceFollower.userToUnfollow(userId,userIdToUnfollow);
+            return iServiceFollower.userToUnfollow(user_id,user_id_to_follow);
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se encuentra el usuario");
@@ -75,30 +75,30 @@ public class SocialMeliController {
         return iServicePost.createPost(postProduct);
     }
 
-    @GetMapping("/products/followed/{userId}/list")
-    public ResponseEntity<DTOPublishFollowed> getPosts(@PathVariable int userId, @RequestParam(defaultValue = "date_desc") String order){
+    @GetMapping("/products/followed/{user_id}/list")
+    public ResponseEntity<DTOPublishFollowed> getPosts(@PathVariable int user_id, @RequestParam(defaultValue = "date_desc") String order){
 
         order = order.toLowerCase();
 
-        return iServiceFollowed.getPostFollowed(userId, order);
+        return iServiceFollowed.getPostFollowed(user_id, order);
     }
 
-    @PostMapping("/products/newpromopost")
+    @PostMapping("/products/promo-post")
     public ResponseEntity newPostPromo(@RequestBody DTOPostProduct postProduct){
 
         return iServicePost.createPostPromo(postProduct);
     }
 
-    @GetMapping("/products/{userId}/countPromo")
-    public ResponseEntity<DTOCountpromo> countPostPromo(@PathVariable int userId){
+    @GetMapping("/products/{user_id}/countPromo")
+    public ResponseEntity<DTOCountpromo> countPostPromo(@PathVariable int user_id){
 
-        return iServicePost.countPostPromo(userId);
+        return iServicePost.countPostPromo(user_id);
     }
 
-    @GetMapping("/products/{userId}/list")
-    public ResponseEntity<DTOPromoPost> getPromoPost(@PathVariable int userId){
+    @GetMapping("/products/{user_id}/list")
+    public ResponseEntity<DTOPromoPost> getPromoPost(@PathVariable int user_id){
 
-        return iServicePost.getPostPromo(userId);
+        return iServicePost.getPostPromo(user_id);
     }
 
 }
