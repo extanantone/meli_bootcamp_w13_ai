@@ -12,6 +12,7 @@ public interface ISocialMapper {
     public ProductDTO productToProductDTO(Product product);
     public Post newPostDTOtoPost(NewPostDTO post);
     public PostDTO PostToPostDTO(Post post);
+    public PostListDTO postListToPostListDTO(int customerId ,List<Post> postlist);
     public FollowersCountDTO sellerToFollowersCountDTO(Seller seller);
     public FollowersListDTO sellerToFollowersListDTO(Seller seller, List<Customer> customers);
     public FollowedListDTO customerToFollowedListDTO(Customer customer, List<Seller> sellers);

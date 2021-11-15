@@ -5,6 +5,7 @@ import SocialMeli.dto.response.*;
 import SocialMeli.model.*;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,12 +53,19 @@ public class SocialMapper implements ISocialMapper {
     @Override
     public PostDTO PostToPostDTO(Post post) {
         return new PostDTO(
-                post.getUser_id(),
                 post.getId_post(),
                 post.getDate(),
                 productToProductDTO(post.getDetail()),
                 post.getCategory(),
                 post.getPrice()
+        );
+    }
+
+    @Override
+    public PostListDTO postListToPostListDTO(int customerId ,List<Post> postlist) {
+        return new PostListDTO(
+                customerId,
+                postlist.stream().map(this::PostToPostDTO).collect(Collectors.toList())
         );
     }
 

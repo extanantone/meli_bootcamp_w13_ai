@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 public class SocialController {
     ISocialService socialService;
@@ -25,19 +27,25 @@ public class SocialController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/users/{user_id}/unfollow/{user_id_to_unfollow}")
+    ResponseEntity<?> unfollow(@PathVariable int user_id, @PathVariable int user_id_to_unfollow) {
+        socialService.unfollowSeller(user_id, user_id_to_unfollow);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("/users/{user_id}/followers/count")
     ResponseEntity<FollowersCountDTO> getFollowersCount(@PathVariable int user_id) {
         return new ResponseEntity<>(socialService.getFollowersCount(user_id), HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}/followers/list")
-    ResponseEntity<FollowersListDTO> getFollowersList(@PathVariable int user_id) {
-        return new ResponseEntity<>(socialService.getFollowersList(user_id), HttpStatus.OK);
+    ResponseEntity<FollowersListDTO> getFollowersList(@PathVariable int user_id, @PathParam("order") String order) {
+        return new ResponseEntity<>(socialService.getFollowersList(user_id, order), HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}/followed/list")
-    ResponseEntity<FollowedListDTO> getFollowedList(@PathVariable int user_id) {
-        return new ResponseEntity<>(socialService.getFollowedList(user_id), HttpStatus.OK);
+    ResponseEntity<FollowedListDTO> getFollowedList(@PathVariable int user_id, @PathParam("order") String order) {
+        return new ResponseEntity<>(socialService.getFollowedList(user_id, order), HttpStatus.OK);
     }
 
     @PostMapping("/products/post")
@@ -46,9 +54,9 @@ public class SocialController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-  /*  @GetMapping("/products/followed/{user_id}/list")
-    ResponseEntity<PostListDTO> getPosts(@PathVariable int user_id) {
-        return new ResponseEntity<>(socialService.getFollowedList(user_id), HttpStatus.OK);
-    } */
+    @GetMapping("/products/followed/{user_id}/list")
+    ResponseEntity<PostListDTO> getPosts(@PathVariable int user_id, @PathParam("order") String order) {
+        return new ResponseEntity<>(socialService.getTwoWeeksPost(user_id, order), HttpStatus.OK);
+    }
 
 }

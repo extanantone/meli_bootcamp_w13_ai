@@ -8,6 +8,7 @@ import SocialMeli.model.Seller;
 import SocialMeli.model.User;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,17 +85,29 @@ public class SocialRepository implements ISocialRepository{
     }
 
     @Override
-    public List<Post> getPosts(int userId) {
-        return null;
+    public List<Post> getCustomerPosts(int userId) {
+        Customer customer = getCustomer(userId);
+        List<Post> postList = new ArrayList<>();
+        for(int id : customer.getFollowedsIdSet()){
+            postList.addAll(getSeller(id).getPostIdSet().stream()
+                    .map(this::getPost).collect(Collectors.toList()));
+        }
+        return postList;
+    }
+
+    @Override
+    public List<Post> getCustomerPostsByDate(int userId, LocalDate init, LocalDate fin) {
+        return getCustomerPosts(userId).stream().filter(post -> !post.getDate().isBefore(init)
+                && !post.getDate().isAfter(fin)).collect(Collectors.toList());
     }
 
     private void loadData(){
-        newCustomer(new Customer(1,"Customer one"));
-        newCustomer(new Customer(2,"Customer two"));
-        newCustomer(new Customer(3,"Customer three"));
-        newSeller(new Seller(4,"Seller one"));
-        newSeller(new Seller(5,"Seller two"));
-        newSeller(new Seller(6,"Seller three"));
+        newCustomer(new Customer(1,"Customer b"));
+        newCustomer(new Customer(2,"Customer c"));
+        newCustomer(new Customer(3,"Customer a"));
+        newSeller(new Seller(4,"Seller b"));
+        newSeller(new Seller(5,"Seller c"));
+        newSeller(new Seller(6,"Seller a"));
     }
 
 }

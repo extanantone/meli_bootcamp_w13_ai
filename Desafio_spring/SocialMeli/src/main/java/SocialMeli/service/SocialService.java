@@ -7,12 +7,20 @@ import SocialMeli.dto.response.FollowersCountDTO;
 import SocialMeli.dto.response.FollowersListDTO;
 import SocialMeli.dto.response.PostListDTO;
 import SocialMeli.exception.AlredyFollowedException;
+import SocialMeli.exception.NotFollowedException;
 import SocialMeli.exception.WrongIdException;
 import SocialMeli.mapper.ISocialMapper;
 import SocialMeli.model.Customer;
+import SocialMeli.model.Post;
 import SocialMeli.model.Seller;
+import SocialMeli.model.User;
 import SocialMeli.repository.ISocialRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 public class SocialService implements ISocialService{
@@ -25,8 +33,31 @@ public class SocialService implements ISocialService{
         this.socialMapper = socialMapper;
     }
 
-    private void sortByName(String type){};
-    private void sortByDate(String type){};
+    private List<Customer> sortCustomerByName(List<Customer> userList, String type){
+        if(type != null) {
+            userList.sort(Comparator.comparing(Customer::getUser_name));
+            if (type.equals("name_desc")) Collections.reverse(userList);
+        }
+        return userList;
+    };
+
+    private List<Seller> sortSellerByName(List<Seller> userList, String type){
+        if(type != null) {
+            userList.sort(Comparator.comparing(Seller::getUser_name));
+            if (type.equals("name_desc")) Collections.reverse(userList);
+        }
+        return userList;
+    };
+
+
+
+    private List<Post> sortPostByDate(List<Post> postList, String type){
+        if(type != null) {
+            postList.sort(Comparator.comparing(Post::getDate));
+            if (type.equals("date_desc")) Collections.reverse(postList);
+        }
+        return postList;
+    };
 
     @Override
     public void followSeller(int customerId, int sellerId) {
@@ -40,7 +71,12 @@ public class SocialService implements ISocialService{
 
     @Override
     public void unfollowSeller(int customerId, int sellerId) {
-
+        Seller seller = socialRepository.getSeller(sellerId);
+        Customer customer =  socialRepository.getCustomer(customerId);
+        if(!customer.getFollowedsIdSet().remove(sellerId)){
+            throw new NotFollowedException();
+        };
+        seller.getFollowersIdSet().remove(customer.getUser_id());
     }
 
     @Override
@@ -50,15 +86,15 @@ public class SocialService implements ISocialService{
     }
 
     @Override
-    public FollowersListDTO getFollowersList(int sellerId) {
+    public FollowersListDTO getFollowersList(int sellerId, String order) {
         Seller seller = socialRepository.getSeller(sellerId);
-        return socialMapper.sellerToFollowersListDTO(seller, socialRepository.getFollowers(sellerId));
+        return socialMapper.sellerToFollowersListDTO(seller, sortCustomerByName(socialRepository.getFollowers(sellerId), order));
     }
 
     @Override
-    public FollowedListDTO getFollowedList(int customerId) {
+    public FollowedListDTO getFollowedList(int customerId, String order) {
         Customer customer = socialRepository.getCustomer(customerId);
-        return socialMapper.customerToFollowedListDTO(customer, socialRepository.getFollowed(customerId));
+        return socialMapper.customerToFollowedListDTO(customer, sortSellerByName(socialRepository.getFollowed(customerId), order));
     }
 
     @Override
@@ -67,9 +103,9 @@ public class SocialService implements ISocialService{
     }
 
     @Override
-    public PostListDTO getTwoWeeksPost(int customerId) {
-
-        return null;
+    public PostListDTO getTwoWeeksPost(int customerId, String order) {
+        return socialMapper.postListToPostListDTO(customerId ,sortPostByDate(socialRepository.getCustomerPostsByDate(
+                customerId, LocalDate.now().minusDays(13), LocalDate.now()), order));
     }
 
     @Override

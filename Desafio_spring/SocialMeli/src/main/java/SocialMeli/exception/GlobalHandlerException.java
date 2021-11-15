@@ -20,6 +20,9 @@ public class GlobalHandlerException {
     public ResponseEntity<ExceptionDTO> repeatIdException(){
         return new ResponseEntity<>(new ExceptionDTO("Id has already been taken"), HttpStatus.BAD_REQUEST);
     }
-
+    @ExceptionHandler(NotFollowedException.class)
+    public ResponseEntity<ExceptionDTO> notFollowedException(){
+        return new ResponseEntity<>(new ExceptionDTO("Customer was not following the selected seller"), HttpStatus.BAD_REQUEST);
+    }
 
 }
