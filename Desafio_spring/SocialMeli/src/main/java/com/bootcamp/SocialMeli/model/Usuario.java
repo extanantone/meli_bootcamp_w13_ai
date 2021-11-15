@@ -11,13 +11,20 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
+//@NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Usuario {
     private int userId;
     private String userName;
     private List<Usuario> vendedoresSeguidos;  //los vendedores a los cuales este usuario sigue
-    private List<Post> publicaciones;
+    private List<Publicacion> publicaciones;
+
+    public Usuario() {
+        this.userId = 0;
+        this.userName = "";
+        this.vendedoresSeguidos = new ArrayList<>();
+        this.publicaciones = new ArrayList<>();
+    }
 
     public Usuario(int userId, String userName) {
         this.userId = userId;
@@ -26,7 +33,14 @@ public class Usuario {
         this.publicaciones = new ArrayList<>();
     }
 
-    public Usuario(int userId, String userName, List<Usuario> vendedoresSeguidos, List<Post> publicaciones) {
+    public Usuario(int userId, String userName, List<Usuario> vendedoresSeguidos) {
+        this.userId = userId;
+        this.userName = userName;
+        this.vendedoresSeguidos = vendedoresSeguidos;
+        this.publicaciones = new ArrayList<>();
+    }
+
+    public Usuario(int userId, String userName, List<Usuario> vendedoresSeguidos, List<Publicacion> publicaciones) {
         this.userId = userId;
         this.userName = userName;
         this.vendedoresSeguidos = vendedoresSeguidos;
@@ -39,5 +53,9 @@ public class Usuario {
 
     public boolean dejarDeSeguirVendedor(Usuario vendedor){
         return this.vendedoresSeguidos.remove(vendedor);
+    }
+
+    public void agregarPublicacion(Publicacion nuevaPublicacion){
+        this.publicaciones.add(nuevaPublicacion);
     }
 }

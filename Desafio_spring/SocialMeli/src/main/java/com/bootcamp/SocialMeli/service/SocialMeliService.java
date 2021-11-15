@@ -1,29 +1,37 @@
 package com.bootcamp.SocialMeli.service;
 
+import com.bootcamp.SocialMeli.dto.request.DetalleProductoDTO;
+import com.bootcamp.SocialMeli.dto.request.PublicacionDTO;
 import com.bootcamp.SocialMeli.dto.response.*;
 import com.bootcamp.SocialMeli.exception.AlreadyFollowException;
 import com.bootcamp.SocialMeli.exception.EqualsUserSellerException;
 import com.bootcamp.SocialMeli.exception.NotFollowException;
 import com.bootcamp.SocialMeli.exception.UserNotFoundException;
+import com.bootcamp.SocialMeli.mapper.Mapper;
+import com.bootcamp.SocialMeli.model.Producto;
+import com.bootcamp.SocialMeli.model.Publicacion;
 import com.bootcamp.SocialMeli.model.Usuario;
-import com.bootcamp.SocialMeli.model.Vendedor;
 import com.bootcamp.SocialMeli.repository.ISocialMeliRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class SocialMeliService implements ISocialMeliService{
+    private final Integer CANT_DAYS_OF_2_WEEKS = 14; //cantidad de dias en 2 semanas
 
+    @Autowired
     private ISocialMeliRepository socialMeliRepository;
 
     @Autowired
-    public SocialMeliService(ISocialMeliRepository socialMeliRepository) {
-        this.socialMeliRepository = socialMeliRepository;
-    }
+    private Mapper mapper;
 
     @Override
     public SuccessDTO followVendedor(Integer idSeguidor, Integer idVendedor){
@@ -115,6 +123,59 @@ public class SocialMeliService implements ISocialMeliService{
             throw new IllegalArgumentException("Argumento invalido en 'order'");
         }
         return seguidosDTO;
+    }
+
+    @Override
+    public SuccessDTO crearPublicacion(PublicacionDTO post) {
+        //TODO chequear que el user exista
+        //TODO chequear que el id_post sea unico para todos los users
+        //TODO chequear que la fecha sea de hoy o el pasado
+        DetalleProductoDTO detalle = post.getDetail();
+        Producto nuevoProducto = new Producto();
+
+        Usuario usuario = this.socialMeliRepository.buscarUsuario(post.getUserId());
+        if(usuario == null){
+            throw new UserNotFoundException("No existe el usuario con Id: " + post.getUserId());
+        }
+        Publicacion nuevaPublicacion = mapper.publicacionDTOToPublicacion(post);
+        usuario.agregarPublicacion(nuevaPublicacion);
+
+        return new SuccessDTO("Publicacion creada correctamente.");
+    }
+
+    @Override
+    public PublicacionesDTO getPublicacionesSeguidos(Integer userId) {
+        //TODO chequear que el user exista
+        Usuario usuario = this.socialMeliRepository.buscarUsuario(userId);
+        if(usuario == null){
+            throw new UserNotFoundException("No existe el usuario con Id: " + userId);
+        }
+        List<Usuario> seguidos = usuario.getVendedoresSeguidos();
+        List<Publicacion> publicaciones = new ArrayList<>();
+
+        //junta todas las publicaciones de todos los vendedores que sigue el usuario
+        for (Usuario vendedor : seguidos) {
+            publicaciones.addAll(vendedor.getPublicaciones());
+        }
+
+        List<Publicacion> publicacionesRecientes = publicaciones.stream()
+                                                                .filter(x -> {
+                                                                    Period periodo = x.getDate().until(LocalDate.now());
+                                                                    return periodo.getDays() < CANT_DAYS_OF_2_WEEKS
+                                                                            && periodo.getDays() >= 0
+                                                                            && periodo.getMonths() == 0
+                                                                            && periodo.getYears() == 0;
+                                                                })
+                                                                .collect(Collectors.toList());
+        publicacionesRecientes.sort(Comparator.comparing(Publicacion::getDate).reversed());
+
+        PublicacionesDTO publicacionesDTO = new PublicacionesDTO();
+        publicacionesDTO.setUserId(usuario.getUserId());
+       // publicacionesDTO.setPosts();
+
+
+
+        return publicacionesDTO;
     }
 
     @Override
