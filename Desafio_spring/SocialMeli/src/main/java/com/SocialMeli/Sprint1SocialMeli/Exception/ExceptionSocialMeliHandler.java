@@ -12,13 +12,43 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExceptionSocialMeliHandler {
 
 
-    @ExceptionHandler(NotFoundUsuarioException.class)
-    public ResponseEntity<ErrorDTO> get(NotFoundUsuarioException e) {
+    @ExceptionHandler(NotFoundVendedorException.class)
+    public ResponseEntity<ErrorDTO> get(NotFoundVendedorException e) {
         return new ResponseEntity<>(
                 new ErrorDTO(
-                        "not_found_usuario",
+                        "not_found_vendedor ",
                         e.getMessage() ),
-                HttpStatus.NOT_FOUND );
+                HttpStatus.BAD_REQUEST );
+
+    }
+
+    @ExceptionHandler(NotFoundCompradorException.class)
+    public ResponseEntity<ErrorDTO> get(NotFoundCompradorException e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "not_found_comprador ",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST );
+
+    }
+
+    @ExceptionHandler(DuplicateFollowedException.class)
+    public ResponseEntity<ErrorDTO> get(DuplicateFollowedException e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "usuario_ya_sigue_vendedor",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST );
+
+    }
+
+    @ExceptionHandler(DuplicatePostException.class)
+    public ResponseEntity<ErrorDTO> get(DuplicatePostException e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "publicacion_ya_existente",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST );
 
     }
 }

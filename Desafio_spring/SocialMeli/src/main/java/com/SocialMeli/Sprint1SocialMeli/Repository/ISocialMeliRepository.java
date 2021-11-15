@@ -11,9 +11,9 @@ public interface ISocialMeliRepository {
 
     boolean follow(Integer id_Comprador, Integer id_vendedor);
     boolean unFollow(Integer id_Comprador, Integer id_vendedor);
-    List<Comprador> vendedorFollowers (Integer id_vendedor);
-    List<Vendedor> compradorFollowed (Integer id_comprador);
-    boolean newPost (Integer id_venderdor, Publicacion publicacion);
+    //List<Comprador> vendedorFollowers (Integer id_vendedor);
+    //List<Vendedor> compradorFollowed (Integer id_comprador);
+    boolean newPost (Publicacion publicacion);
     List<Publicacion> postByVendedorOfComprador (Integer id_comprador);
 
     List<Comprador> vendedorFollowersOrderByName (Integer id_vendedor, String orden);
@@ -23,6 +23,7 @@ public interface ISocialMeliRepository {
 
     Comprador getComprador(Integer id_comprador);
     Vendedor getVendedor(Integer id_vendedor);
+    List<Publicacion> getPublicaciones();
 
 
 }

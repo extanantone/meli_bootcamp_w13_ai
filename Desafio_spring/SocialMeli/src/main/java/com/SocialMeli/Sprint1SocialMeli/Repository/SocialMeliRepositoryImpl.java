@@ -4,28 +4,32 @@ import com.SocialMeli.Sprint1SocialMeli.Model.Comprador;
 import com.SocialMeli.Sprint1SocialMeli.Model.Publicacion;
 import com.SocialMeli.Sprint1SocialMeli.Model.Usuario;
 import com.SocialMeli.Sprint1SocialMeli.Model.Vendedor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
+@Getter
+@Setter
 @Repository
 public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
 
     Map<Integer, Comprador> compradores;
     Map<Integer, Vendedor> vendedores;
+    List<Publicacion> publicaciones;
 
     public SocialMeliRepositoryImpl() {
 
         this.compradores = new HashMap<>();
         this.vendedores = new HashMap<>();
+        this.publicaciones = new ArrayList<>();
         compradores.put(1,new Comprador(1,"juan525c"));
         compradores.put(2,new Comprador(2,"andres747c"));
         compradores.put(3,new Comprador(3,"brian8474c"));
         vendedores.put(4,new Vendedor(4,"Lucas323v"));
         vendedores.put(5,new Vendedor(5,"David323v"));
+        vendedores.put(6,new Vendedor(6,"Maria3433v"));
 
     }
 
@@ -33,10 +37,9 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     public boolean follow(Integer id_comprador, Integer id_vendedor) {
 
 
-
-        if(compradores.containsKey(id_comprador) || vendedores.containsKey(id_vendedor))
+       /* if(compradores.containsKey(id_comprador) || vendedores.containsKey(id_vendedor))
         {return false;}
-        else{
+        else{*/
             Comprador comprador = compradores.get(id_comprador);
             comprador.addFollowed(id_vendedor);
 
@@ -44,7 +47,7 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
             vendedor.addFollower(id_comprador);
 
             return true;
-        }
+       // }
 
     }
 
@@ -54,18 +57,17 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     }
 
     @Override
-    public List<Comprador> vendedorFollowers(Integer id_vendedor) {
-        return null;
-    }
+    public boolean newPost(Publicacion publicacion) {
+        publicaciones.add(publicacion);
 
-    @Override
-    public List<Vendedor> compradorFollowed(Integer id_comprador) {
-        return null;
-    }
+        Collections.sort(publicaciones, new Comparator<Publicacion>() { // Ordeno por fecha las publicaciones.
+            @Override
+            public int compare(Publicacion o1, Publicacion o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
 
-    @Override
-    public boolean newPost(Integer id_venderdor, Publicacion publicacion) {
-        return false;
+            return true;
     }
 
     @Override
@@ -96,5 +98,9 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     @Override
     public Vendedor getVendedor(Integer id_vendedor) {
         return vendedores.get(id_vendedor);
+    }
+
+    public List<Publicacion> getPublicaciones() {
+        return publicaciones;
     }
 }

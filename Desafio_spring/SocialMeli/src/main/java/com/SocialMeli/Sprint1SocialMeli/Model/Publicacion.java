@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -13,10 +14,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Publicacion {
 
-    private int id_post,category;
+    private int user_id,id_post,category;
     private double price;
     private LocalDate date;
     private Producto detail;
+
 
 
 }
