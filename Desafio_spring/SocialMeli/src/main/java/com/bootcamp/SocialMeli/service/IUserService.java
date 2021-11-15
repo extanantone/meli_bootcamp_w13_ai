@@ -6,6 +6,7 @@ import com.bootcamp.SocialMeli.dto.FollowersListDTO;
 
 
 public interface IUserService {
+    void create(int userId, String userName, boolean isSeller);
     void follow(int followerId, int followedId);
     void unfollow(int followerId, int followedId);
     FollowersListDTO getFollowers(int userId);

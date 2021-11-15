@@ -1,18 +1,13 @@
 package com.bootcamp.SocialMeli.repository;
 
-import com.bootcamp.SocialMeli.model.Buyer;
-import com.bootcamp.SocialMeli.model.Seller;
 import com.bootcamp.SocialMeli.model.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class UserRepository implements IUserRepository{
-    Map<Integer, User> users;
+    Map<Integer, User> users = new HashMap<>();
 
     @Override
     public Optional<User> find(int userId) {
@@ -26,10 +21,9 @@ public class UserRepository implements IUserRepository{
         return new ArrayList(this.users.values());
     }
 
-    public User create(int userId, String userName, boolean isSeller) {
-        User user;
-        if (isSeller) user = new Seller(userId, userName);
-        else user = new Buyer(userId, userName);
+    @Override
+    public User create(int userId, String userName, boolean canSell) {
+        User user = new User(userId, userName, canSell);
         this.users.put(userId, user);
         return user;
     }
