@@ -1,9 +1,6 @@
 package com.bootcamp.socialmeli.controller;
 
-import com.bootcamp.socialmeli.DTO.DTOCount;
-import com.bootcamp.socialmeli.DTO.DTOFollowed;
-import com.bootcamp.socialmeli.DTO.DTOFollower;
-import com.bootcamp.socialmeli.DTO.DTOPostProduct;
+import com.bootcamp.socialmeli.DTO.*;
 import com.bootcamp.socialmeli.repository.IPostRepository;
 import com.bootcamp.socialmeli.service.IServiceFollowed;
 import com.bootcamp.socialmeli.service.IServiceFollower;
@@ -12,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Locale;
 
 @RestController
 public class SocialMeliController {
@@ -44,15 +43,21 @@ public class SocialMeliController {
     }
 
     @GetMapping("/user/{userId}/followers/list")
-    public ResponseEntity<DTOFollower> getFollowersFromUser(@PathVariable int userId){
+    public ResponseEntity<DTOFollower> getFollowersFromUser(@PathVariable int userId,
+                                       @RequestParam(defaultValue = "name_desc") String order){
 
-        return iServiceFollower.getFollowersFromUser(userId);
+        order = order.toLowerCase();
+
+        return iServiceFollower.getFollowersFromUser(userId, order);
     }
 
     @GetMapping("/users/{userId}/followed/list")
-    public ResponseEntity<DTOFollowed> getFolloweds(@PathVariable int userId){
+    public ResponseEntity<DTOFollowed> getFolloweds(@PathVariable int userId,
+                                       @RequestParam(defaultValue = "name_desc") String order){
 
-        return iServiceFollowed.getFolloweds(userId);
+        order = order.toLowerCase();
+
+        return iServiceFollowed.getFolloweds(userId, order);
     }
 
     @PostMapping("/users/{userId}/unfollow/{userIdToUnfollow}")
@@ -71,6 +76,14 @@ public class SocialMeliController {
 
         return iServicePost.createPost(postProduct);
 
+    }
+
+    @GetMapping("/products/followed/{userId}/list")
+    public ResponseEntity<DTOPublishFollowed> getPosts(@PathVariable int userId, @RequestParam(defaultValue = "date_desc") String order){
+
+        order = order.toLowerCase();
+
+        return iServiceFollowed.getPostFollowed(userId, order);
     }
 
 }

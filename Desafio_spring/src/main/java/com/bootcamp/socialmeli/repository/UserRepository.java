@@ -1,11 +1,15 @@
 package com.bootcamp.socialmeli.repository;
 
-import com.bootcamp.socialmeli.DTO.DTOCount;
+import com.bootcamp.socialmeli.DTO.DTOFollower;
+import com.bootcamp.socialmeli.DTO.DTOUser;
 import com.bootcamp.socialmeli.model.User;
+import com.bootcamp.socialmeli.utils.ComparatorNameAsc;
+import com.bootcamp.socialmeli.utils.ComparatorNameDesc;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepository implements IUserRepository{
@@ -77,6 +81,13 @@ public class UserRepository implements IUserRepository{
 
         throw new RuntimeException("La lista de Usuarios está vacía");
 
+    }
+
+    @Override
+    public List<DTOUser> orderFollowersAndFolloweds(List<DTOUser> dtoUserList, String order) {
+        if(order.equals("name_desc"))
+            return dtoUserList.stream().sorted(new ComparatorNameDesc()).collect(Collectors.toList());
+        return dtoUserList.stream().sorted(new ComparatorNameAsc()).collect(Collectors.toList());
     }
 
 }

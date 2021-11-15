@@ -8,7 +8,7 @@ public interface IServiceFollower {
 
     ResponseEntity getCountFollowersOfuser(int idUser);
 
-    ResponseEntity getFollowersFromUser(int idUser);
+    ResponseEntity getFollowersFromUser(int idUser, String order);
 
     ResponseEntity userToUnfollow(int userId, int userIdToUnfollow);
 

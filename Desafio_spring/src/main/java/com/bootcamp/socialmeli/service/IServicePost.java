@@ -6,4 +6,5 @@ import org.springframework.http.ResponseEntity;
 public interface IServicePost {
 
     ResponseEntity createPost(DTOPostProduct postProduct);
+
 }

@@ -68,7 +68,7 @@ public class ServiceFollower implements IServiceFollower{
     }
 
     @Override
-    public ResponseEntity<DTOFollower> getFollowersFromUser(int idUser) {
+    public ResponseEntity<DTOFollower> getFollowersFromUser(int idUser, String order) {
 
         try {
 
@@ -80,6 +80,8 @@ public class ServiceFollower implements IServiceFollower{
 
             for (User u : followerList)
                 listDtoUsers.add(new DTOUser(u.getUserId(),u.getUserName()));
+
+            listDtoUsers = iUserRepository.orderFollowersAndFolloweds(listDtoUsers, order);
 
             return new ResponseEntity(new DTOFollower(user.getUserId(), user.getUserName(),listDtoUsers), HttpStatus.OK);
 
