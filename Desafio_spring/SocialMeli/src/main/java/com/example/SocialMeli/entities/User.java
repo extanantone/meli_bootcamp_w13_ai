@@ -17,6 +17,7 @@ public class User {
     private String user_name;
     private List<Long> seguidos;
     private List<Long> seguidores;
+    private List<Long> products;
 
 
     public User(Long user_id, String user_name) {
@@ -24,5 +25,6 @@ public class User {
         this.user_name = user_name;
         this.seguidores = new ArrayList<>();
         this.seguidos = new ArrayList<>();
+        this.products = new ArrayList<>();
     }
 }

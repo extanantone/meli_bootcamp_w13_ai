@@ -54,4 +54,12 @@ public class UserRepositoryImpl implements UserRepository{
         }
         return followeds;    }
 
+    @Override
+    public Boolean savePost(Long idPost, Long idUser) throws Exception {
+        User usr = this.getById(Math.toIntExact(idUser));
+        if (usr == null) throw new Exception();
+        usr.getProducts().add(idPost);
+        return true;
+    }
+
 }
