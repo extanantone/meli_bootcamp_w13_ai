@@ -19,7 +19,7 @@ public interface ISocialMeliController {
     @GetMapping("users/{user_id}/followed/list")
     ResponseEntity<FollowedDTO> listFollowed(@PathVariable("user_id") int userId, @RequestParam(value = "order", required = false) String order);
 
-    @PostMapping("product/post")
+    @PostMapping("products/post")
     ResponseEntity<MensajeDTO> addPost(@RequestBody PostDTOResponse post);
 
     @GetMapping("products/followed/{user_id}/list")
@@ -27,4 +27,5 @@ public interface ISocialMeliController {
 
     @PostMapping("users/{user_id}/unfollow/{user_id_to_unfollow}")
     ResponseEntity<MensajeDTO> unfollow(@PathVariable("user_id") int userId, @PathVariable("user_id_to_unfollow") int userIdFollow);
+
 }

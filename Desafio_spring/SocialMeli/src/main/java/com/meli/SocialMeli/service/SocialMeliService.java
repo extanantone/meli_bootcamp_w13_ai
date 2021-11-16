@@ -13,7 +13,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class SocialMeliService implements ISocialMeliService{
@@ -91,12 +90,8 @@ public class SocialMeliService implements ISocialMeliService{
 
     @Override
     public MensajeDTO addPost(PostDTOResponse postDto) {
-
         if(postDto.getUserId()<=0)
             throw new BadRequestException("Usuario "+postDto.getUserId()+" invalido");
-        if(postDto==null)
-            throw new BadRequestException("Post inválido");
-        //control producto
         if(userRepository.containPost(postDto.getIdPost())){
             throw new BadRequestException("id_post existente.");
         }

@@ -34,7 +34,7 @@ public class RepositoryUser implements IRepositoryUser{
         }
         ObjectMapper objectMapper = new ObjectMapper();
         TypeReference<List<User>> typeRef = new TypeReference<>() {};
-        List<User> listUser = null;
+        List<User> listUser = new LinkedList<>();
         try {
             listUser = objectMapper.readValue(file, typeRef);
         } catch (IOException e) {
