@@ -5,6 +5,7 @@ import com.bootcamp.socialmeli.dto.UserDTO;
 import com.bootcamp.socialmeli.dto.UserWithFollowersDTO;
 import com.bootcamp.socialmeli.dto.UserWithFollowedDTO;
 import com.bootcamp.socialmeli.mapper.IMapper;
+import com.bootcamp.socialmeli.model.User;
 import com.bootcamp.socialmeli.repository.IUserRepository;
 import org.springframework.stereotype.Service;
 
@@ -44,8 +45,17 @@ public class UserService implements IUserService {
 
     @Override
     public boolean followUser(long followerId, long followedId) {
-        userRepository.followUser(followerId, followedId);
-        return true;
+        User follower = userRepository.getUser(followerId);
+        User followed = userRepository.getUser(followedId);
+        if (followed.getFollowers().contains(follower)) {
+            return false;
+        } else if (followerId == followedId) {
+            return false;
+        } else {
+            follower.getFollowed().add(followed);
+            followed.getFollowers().add(follower);
+            return true;
+        }
     }
 
     @Override
@@ -66,5 +76,31 @@ public class UserService implements IUserService {
     @Override
     public UserWithFollowedDTO getFollowed(long id) {
         return mapper.userToUserWithFollowedDTO(userRepository.getUser(id));
+    }
+
+    @Override
+    public boolean unfollowUser(long followerId, long followedId) {
+        User follower = userRepository.getUser(followerId);
+        User followed = userRepository.getUser(followedId);
+        if (followed.getFollowers().contains(follower)) {
+            follower.getFollowed().remove(followed);
+            followed.getFollowers().remove(follower);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public List<UserDTO> orderUsersByName(List<UserDTO> users, String order) {
+        users.sort((u1, u2) -> {
+            if (order.equals("desc")) {
+                return u1.getUsername().compareTo(u2.getUsername());
+            } else if (order.equals("asc")) {
+                return u2.getUsername().compareTo(u1.getUsername());
+            }
+            return 0;
+        });
+        return users;
     }
 }

@@ -10,5 +10,4 @@ public interface IUserRepository {
     public User getUser(long id);
     public User createUser(User user);
     public boolean deleteUser(long id);
-    public void followUser(long followerId, long followedId);
 }

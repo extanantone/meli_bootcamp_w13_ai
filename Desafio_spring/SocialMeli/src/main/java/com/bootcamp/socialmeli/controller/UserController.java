@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -66,9 +68,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}/followers/list")
-    public ResponseEntity<UserWithFollowersDTO> getFollowerList(@PathVariable long id) {
+    public ResponseEntity<UserWithFollowersDTO> getFollowerList(@PathVariable long id, @RequestParam(value = "order", required = false) String order) {
+        UserWithFollowersDTO resBody = userService.getFollowers(id);
+        if (order != null) {
+            order = order.replace("name_", "");
+            resBody.setFollowers(userService.orderUsersByName(resBody.getFollowers(), order));
+        }
         return new ResponseEntity<>(
-                userService.getFollowers(id),
+                resBody,
                 HttpStatus.OK
         );
     }
@@ -82,10 +89,21 @@ public class UserController {
     }
 
     @GetMapping("/{id}/followed/list")
-    public ResponseEntity<UserWithFollowedDTO> getFollowedList(@PathVariable long id) {
+    public ResponseEntity<UserWithFollowedDTO> getFollowedList(@PathVariable long id, @RequestParam(value = "order", required = false) String order) {
+        UserWithFollowedDTO resBody = userService.getFollowed(id);
+        if (order != null) {
+            order = order.replace("name_", "");
+            resBody.setFollowed(userService.orderUsersByName(resBody.getFollowed(), order));
+        }
         return new ResponseEntity<>(
-                userService.getFollowed(id),
+                resBody,
                 HttpStatus.OK
         );
+    }
+
+    @PostMapping("/{followerId}/unfollow/{followedId}")
+    public ResponseEntity<Void> unfollowUser(@PathVariable long followerId, @PathVariable long followedId) {
+        userService.unfollowUser(followerId, followedId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

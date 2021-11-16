@@ -71,10 +71,4 @@ public class UserRepository implements IUserRepository {
         }
         return false;
     }
-
-    @Override
-    public void followUser(long followerId, long followedId) {
-        users.get(followerId).getFollowed().add(users.get(followedId));
-        users.get(followedId).getFollowers().add(users.get(followerId));
-    }
 }
