@@ -1,15 +1,13 @@
 package com.bootcamp.socialmeli.service;
 
-import com.bootcamp.socialmeli.dto.comparator.ComparatorUserNameBasicUserDTO;
 import com.bootcamp.socialmeli.dto.comparator.PostDateComparator;
 import com.bootcamp.socialmeli.dto.comparator.SortOrder;
-import com.bootcamp.socialmeli.dto.request.post.PostInDTO;
-import com.bootcamp.socialmeli.dto.request.post.ProductInDTO;
+import com.bootcamp.socialmeli.dto.request.PostInDTO;
+import com.bootcamp.socialmeli.dto.request.PostInPromoDTO;
+import com.bootcamp.socialmeli.dto.request.ProductInDTO;
 import com.bootcamp.socialmeli.dto.response.post.PostOutDTO;
 import com.bootcamp.socialmeli.dto.response.post.ProductDTO;
 import com.bootcamp.socialmeli.dto.response.post.SellersPostsDTO;
-import com.bootcamp.socialmeli.dto.response.user.BasicUserInfo;
-import com.bootcamp.socialmeli.dto.response.user.PurchaserFollowedListDTO;
 import com.bootcamp.socialmeli.entitiy.Post;
 import com.bootcamp.socialmeli.entitiy.Product;
 import com.bootcamp.socialmeli.entitiy.Purchaser;
@@ -62,6 +60,20 @@ public class ProductServiceImpl implements IProductService{
         Post post = new Post(postIn.getIdPost(),date,product,postIn.getCategory(),postIn.getPrice());
 
         socialMeliRepository.createNewPost(seller.getUserID(), post);
+    }
+
+    @Override
+    public void createPostPromo(PostInPromoDTO postIn) {
+
+        PostInDTO post =mm.map(postIn,PostInDTO.class);
+
+        createPost(post);
+
+        Seller s = socialMeliRepository.getSeller(postIn.getUserId()).get();
+
+        s.getPost(postIn.getIdPost()).setHasPromo(postIn.isHasPromo());
+
+        s.getPost(postIn.getIdPost()).setDiscount(postIn.getDiscount());
     }
 
     @Override

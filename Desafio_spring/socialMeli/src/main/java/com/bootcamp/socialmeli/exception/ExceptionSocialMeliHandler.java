@@ -19,7 +19,7 @@ public class ExceptionSocialMeliHandler {
     public ResponseEntity<ErrorDTO> NotFoundUser(NotFoundUsuarioException e) {
         return new ResponseEntity<>(
                 new ErrorDTO(
-                        "Status Code 400: not_found_user",
+                        "Status Code 400: Not_found_user",
                         e.getMessage() ),
                 HttpStatus.resolve(400));
 
@@ -29,7 +29,7 @@ public class ExceptionSocialMeliHandler {
     public ResponseEntity<ErrorDTO> PostAlreadyExists(PostIdAlreadyExists e) {
         return new ResponseEntity<>(
                 new ErrorDTO(
-                        "Status Code 400: post_already_exists",
+                        "Status Code 400: Post_already_exists",
                         e.getMessage() ),
                 HttpStatus.BAD_REQUEST);
 
@@ -63,4 +63,5 @@ public class ExceptionSocialMeliHandler {
                 HttpStatus.BAD_REQUEST);
 
     }
+
 }

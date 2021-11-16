@@ -1,9 +1,9 @@
 package com.bootcamp.socialmeli.controller;
 
-import com.bootcamp.socialmeli.dto.request.post.PostInDTO;
+import com.bootcamp.socialmeli.dto.request.PostInDTO;
+import com.bootcamp.socialmeli.dto.request.PostInPromoDTO;
 import com.bootcamp.socialmeli.dto.response.post.SellersPostsDTO;
 import com.bootcamp.socialmeli.service.IProductService;
-import com.bootcamp.socialmeli.service.IUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +36,15 @@ public class ProductController {
         }
 
     }
+
+    @PostMapping(path = "/promopost")
+    public ResponseEntity<String> createPromoPost(@RequestBody PostInPromoDTO post){
+
+        productService.createPostPromo(post);
+        return ResponseEntity.ok("El post promocional con id:" + post.getIdPost()
+                + " ha sido publicado por el vendedor con id:" + post.getUserId());
+    }
+
 
 
 

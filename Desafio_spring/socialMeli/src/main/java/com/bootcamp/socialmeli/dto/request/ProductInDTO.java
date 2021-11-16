@@ -1,4 +1,4 @@
-package com.bootcamp.socialmeli.dto.request.post;
+package com.bootcamp.socialmeli.dto.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
