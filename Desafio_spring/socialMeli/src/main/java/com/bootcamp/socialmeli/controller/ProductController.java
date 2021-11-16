@@ -1,13 +1,11 @@
 package com.bootcamp.socialmeli.controller;
 
 import com.bootcamp.socialmeli.dto.request.post.PostInDTO;
+import com.bootcamp.socialmeli.dto.response.post.SellersPostsDTO;
 import com.bootcamp.socialmeli.service.IProductService;
 import com.bootcamp.socialmeli.service.IUserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/products")
@@ -25,5 +23,13 @@ public class ProductController {
         productService.createPost(post);
         return ResponseEntity.ok("El post con id:" + post.getIdPost()
                 + " ha sido publicado por el vendedor con id:" + post.getUserId());
-    } 
+    }
+
+    @GetMapping(path = "/followed/{user_id}/list")
+    public ResponseEntity<SellersPostsDTO> getSellersPosts(@PathVariable Integer user_id){
+        return ResponseEntity.ok(productService.getSellersPosts(user_id));
+    }
+
+//    /products/followed/{user_id}/list
+
 }

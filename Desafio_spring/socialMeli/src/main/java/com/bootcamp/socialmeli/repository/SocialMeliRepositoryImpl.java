@@ -5,6 +5,7 @@ import com.bootcamp.socialmeli.entitiy.Post;
 import com.bootcamp.socialmeli.entitiy.Seller;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Repository
@@ -26,13 +27,17 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     }
 
     @Override
-    public Purchaser getPurchaser(Integer purchaserId) {
-        return purchasers.get(purchaserId);
+    public Optional<Purchaser> getPurchaser(Integer purchaserId) {
+        return (purchasers.containsKey(purchaserId))
+                ? Optional.of(purchasers.get(purchaserId))
+                : Optional.empty();
     }
 
     @Override
-    public Seller getSeller(Integer sellerId) {
-        return sellers.get(sellerId);
+    public Optional<Seller> getSeller(Integer sellerId) {
+        return (sellers.containsKey(sellerId))
+                ? Optional.of(sellers.get(sellerId))
+                : Optional.empty();
     }
 
     @Override
@@ -70,5 +75,33 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     @Override
     public void createNewPost(Integer sellerId, Post post) {
         sellers.get(sellerId).setPost(post);
+    }
+
+
+    @Override
+    public List<Post> getSellersPosts(Integer purchaserId) {
+
+        List<Seller> followed = gerPurchaserFollowed(purchaserId);
+
+        List<Post> posts = new ArrayList<>();
+
+//        followed.stream().forEach(seller->{
+//             seller.getPosts().values().stream()
+//                    .filter(post ->
+//                        post.getDate().isAfter(LocalDate.now().minusWeeks(2))
+//                    ).map( post ->
+//                        posts.add(post)
+//                     );
+//        });
+
+        for (Seller seller: followed) {
+
+            seller.getPosts().values().forEach(post -> {
+                if(post.getDate().isAfter(LocalDate.now().minusWeeks(2))){
+                    posts.add(post);
+                }
+            });
+        }
+        return posts;
     }
 }

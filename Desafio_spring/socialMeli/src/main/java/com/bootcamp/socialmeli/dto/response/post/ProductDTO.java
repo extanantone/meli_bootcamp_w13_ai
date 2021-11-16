@@ -1,4 +1,4 @@
-package com.bootcamp.socialmeli.dto.request.post;
+package com.bootcamp.socialmeli.dto.response.post;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -10,13 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PostInDTO {
-
-    private int userId;
-    private int IdPost;
-    private String date;
-    private ProductInDTO detail;
-    private int category;
-    private double price;
-
+public class ProductDTO {
+    private int productId;
+    private String productName, type, brand, color, notes;
 }

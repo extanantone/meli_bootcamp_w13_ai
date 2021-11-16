@@ -1,6 +1,5 @@
 package com.bootcamp.socialmeli.service;
 
-import com.bootcamp.socialmeli.dto.request.post.PostInDTO;
 import com.bootcamp.socialmeli.dto.response.user.PurchaserFollowedListDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersInfoDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersListDTO;
