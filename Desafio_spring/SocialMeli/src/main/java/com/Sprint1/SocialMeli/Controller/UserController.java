@@ -104,7 +104,7 @@ public class UserController {
 
 
 
-
+    //TODO: BORRAR
     @GetMapping("/prueba")
     public ResponseEntity<HashMap> obtenerPrueba ()
     {

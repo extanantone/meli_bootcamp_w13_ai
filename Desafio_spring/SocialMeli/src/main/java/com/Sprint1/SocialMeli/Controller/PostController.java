@@ -1,0 +1,63 @@
+package com.Sprint1.SocialMeli.Controller;
+
+import com.Sprint1.SocialMeli.DTO.PostListDTO;
+import com.Sprint1.SocialMeli.DTO.PostShortDTO;
+import com.Sprint1.SocialMeli.DTO.UserFollowersListDTO;
+import com.Sprint1.SocialMeli.Service.IPostService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+
+@RestController
+@RequestMapping("/products")
+public class PostController {
+
+    IPostService postService;
+
+    public PostController(IPostService postService) {
+        this.postService = postService;
+    }
+
+    @PostMapping("/post")
+    public ResponseEntity<String> altaPublicacion (@RequestBody PostShortDTO publicacion){
+
+        //TODO: Agregar validaciones
+
+        if(postService.crearPublicacion(publicacion)){
+            return new ResponseEntity<String>(
+                    "Todo OK",
+                    HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(
+                    "Bad Request",
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/followed/{user_id}/list")
+    public ResponseEntity<PostListDTO> obtenerListPosts (@PathVariable("user_id") Integer userId){
+
+        //TODO: Agregar validaciones
+
+        return new ResponseEntity<PostListDTO>(
+                postService.obtenerListadoPostsDeVendedor(userId),
+                HttpStatus.OK);
+    }
+
+
+
+
+
+
+    //TODO: BORRAR
+    @GetMapping("/pruebaPost")
+    public ResponseEntity<HashMap> obtenerPrueba ()
+    {
+
+        return new ResponseEntity<HashMap>(
+                postService.pruebaPost(),
+                HttpStatus.OK);
+    }
+}
