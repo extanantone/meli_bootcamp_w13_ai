@@ -2,6 +2,7 @@ package com.bootcamp.socialmeli.controller;
 
 import com.bootcamp.socialmeli.dto.request.PostInDTO;
 import com.bootcamp.socialmeli.dto.request.PostInPromoDTO;
+import com.bootcamp.socialmeli.dto.response.post.ProductsPromoInfoDTO;
 import com.bootcamp.socialmeli.dto.response.post.SellersPostsDTO;
 import com.bootcamp.socialmeli.service.IProductService;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +46,9 @@ public class ProductController {
                 + " ha sido publicado por el vendedor con id:" + post.getUserId());
     }
 
-
-
+    @GetMapping(path = "/{user_id}/promo-post/count")
+    public ResponseEntity<ProductsPromoInfoDTO> getNumberProductsInPromo(@PathVariable Integer user_id){
+        return ResponseEntity.ok(productService.getNumberOfProductsInPromo(user_id));
+    }
 
 }

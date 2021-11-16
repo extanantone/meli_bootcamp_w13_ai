@@ -7,6 +7,7 @@ import com.bootcamp.socialmeli.dto.request.PostInPromoDTO;
 import com.bootcamp.socialmeli.dto.request.ProductInDTO;
 import com.bootcamp.socialmeli.dto.response.post.PostOutDTO;
 import com.bootcamp.socialmeli.dto.response.post.ProductDTO;
+import com.bootcamp.socialmeli.dto.response.post.ProductsPromoInfoDTO;
 import com.bootcamp.socialmeli.dto.response.post.SellersPostsDTO;
 import com.bootcamp.socialmeli.entitiy.Post;
 import com.bootcamp.socialmeli.entitiy.Product;
@@ -139,4 +140,33 @@ public class ProductServiceImpl implements IProductService{
         }
     }
 
+    @Override
+    public List<PostInPromoDTO> getProductsInPromo(Integer sellerId) {
+
+        Seller seller = socialMeliRepository.getSeller(sellerId).orElseThrow(
+                ()-> new NotFoundUsuarioException(sellerId)
+        );
+
+        var post = seller.getPosts().values();
+
+        List<PostInPromoDTO> response = new ArrayList<>();
+
+        post.stream().forEach(postTemp -> {
+            if(postTemp.isHasPromo()){
+                response.add(mm.map(postTemp,PostInPromoDTO.class));
+            }
+        });
+
+        return response;
+    }
+
+    @Override
+    public ProductsPromoInfoDTO getNumberOfProductsInPromo(Integer sellerId) {
+
+        int size = getProductsInPromo(sellerId).size();
+
+        String userName = socialMeliRepository.getSeller(sellerId).get().getUserName();
+
+        return new ProductsPromoInfoDTO(sellerId,userName,size);
+    }
 }
