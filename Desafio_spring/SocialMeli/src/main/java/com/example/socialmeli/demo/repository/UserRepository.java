@@ -19,8 +19,6 @@ public class UserRepository implements IUserRepository {
 
     private Map<Integer, Usuarios> listaUsuarios = new HashMap<>();
 
-
-
     public UserRepository(){
         this.listaUsuarios = getUserFromJson();
     }

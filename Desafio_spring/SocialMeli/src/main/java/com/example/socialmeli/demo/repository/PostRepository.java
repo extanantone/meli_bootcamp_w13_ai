@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.reverse;
+
 @Repository
 public class PostRepository implements IPostRepository {
 
@@ -34,13 +36,8 @@ public class PostRepository implements IPostRepository {
 
         List<Post> response = new ArrayList<>();
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDateTime now = LocalDateTime.now();
-        String todayDate = dtf.format(now);
-
-        LocalDate date = LocalDate.parse(todayDate,dtf);
         // Restamos dos semanas a la fecha actual
-        LocalDate dateFromTwoWeeks = date.minusWeeks(2);
+        LocalDate dateFromTwoWeeks = LocalDate.now().minusWeeks(2);
 
         response = publicaciones.stream().filter(x -> x.getUserId() == userId)
                 .filter(y -> y.getDate().isAfter(dateFromTwoWeeks) )
@@ -49,7 +46,7 @@ public class PostRepository implements IPostRepository {
 
         if(order != null)
             if(order.equals("date_asc"))
-                response = response.stream().sorted(new AscendingPostDateSorter()).collect(Collectors.toList());
+               reverse(response);
 
         return response;
 
