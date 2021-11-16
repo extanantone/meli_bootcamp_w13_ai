@@ -14,6 +14,8 @@ public interface IUserService {
 
     PurchaserFollowedListDTO getPurchaserFollowedList(Integer purchaserId);
 
+    void unFollow (Integer purchaserId, Integer sellerId);
+
 
 
 

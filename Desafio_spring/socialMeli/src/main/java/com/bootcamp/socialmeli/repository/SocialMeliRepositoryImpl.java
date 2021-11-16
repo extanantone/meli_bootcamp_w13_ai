@@ -85,17 +85,7 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
 
         List<Post> posts = new ArrayList<>();
 
-//        followed.stream().forEach(seller->{
-//             seller.getPosts().values().stream()
-//                    .filter(post ->
-//                        post.getDate().isAfter(LocalDate.now().minusWeeks(2))
-//                    ).map( post ->
-//                        posts.add(post)
-//                     );
-//        });
-
         for (Seller seller: followed) {
-
             seller.getPosts().values().forEach(post -> {
                 if(post.getDate().isAfter(LocalDate.now().minusWeeks(2))){
                     posts.add(post);

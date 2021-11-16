@@ -37,11 +37,19 @@ public class UsersController {
         return  ResponseEntity.ok(service.getSellerFollowersList(user_id));
     }
 
-//    /users/{user_id}/followed/list
-
     @GetMapping(path = "/{user_id}/followed/list")
     public ResponseEntity<PurchaserFollowedListDTO> getPurcharserFollowedList(@PathVariable Integer user_id){
         return ResponseEntity.ok(service.getPurchaserFollowedList(user_id));
     }
+
+    @PostMapping(path = "/{user_id}/unfollow/{user_id_to_unfollow}" )
+    public ResponseEntity<String> unFollow(@PathVariable Integer user_id,
+                                         @PathVariable Integer user_id_to_unfollow)
+    {
+        service.unFollow(user_id,user_id_to_unfollow);
+        return ResponseEntity
+                .ok("El comprador con id:" + user_id + " ya no sigue al vendedor con id:" + user_id_to_unfollow);
+    }
+
 
 }

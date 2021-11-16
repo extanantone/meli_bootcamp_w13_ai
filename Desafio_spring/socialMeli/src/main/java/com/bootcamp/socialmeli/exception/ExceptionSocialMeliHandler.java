@@ -1,6 +1,7 @@
 package com.bootcamp.socialmeli.exception;
 
 import com.bootcamp.socialmeli.dto.response.error.ErrorDTO;
+import com.bootcamp.socialmeli.exception.UserException.NotFoundFollower;
 import com.bootcamp.socialmeli.exception.UserException.NotFoundUsuarioException;
 import com.bootcamp.socialmeli.exception.postException.PostIdAlreadyExists;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,15 @@ public class ExceptionSocialMeliHandler {
 
     }
 
+    @ExceptionHandler(NotFoundFollower.class)
+    public ResponseEntity<ErrorDTO> NotFoundFollower(NotFoundFollower e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "Status Code 404: Follower_No_exists",
+                        e.getMessage() ),
+                HttpStatus.NOT_FOUND);
+
+    }
 
 
 }
