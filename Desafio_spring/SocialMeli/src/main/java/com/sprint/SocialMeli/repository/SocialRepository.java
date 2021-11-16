@@ -19,6 +19,7 @@ public class SocialRepository implements ISocialRepository{
         users = new HashMap<>();
         posts = new HashMap<>();
 
+        // Inicialización de datos del repositorio para poder realizar algunas pruebas
         Buyer buyer1 = new Buyer(0, "Pepe");
         Buyer buyer2 = new Buyer(1, "Brenda");
         Post post1 = new Post(3, 0, LocalDate.now(), 45, "Plancha para ropa", "Electro", "Eterna", "Blanco", "Una plaaanchaza", 23, 3400D, false, 0D);
