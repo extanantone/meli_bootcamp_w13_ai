@@ -51,7 +51,6 @@ public class PostService implements IPostService {
         User user = userRepository.getUser(userId);
         LocalDate now = LocalDate.now();
         for (User followedUser: user.getFollowed()) {
-            System.out.println(followedUser.getPosts());
             List<PostDTO> followedUserPosts = followedUser.getPosts().stream().filter(
                     post -> !post.getDate().plusWeeks(weeks).isBefore(now)
             ).map(
@@ -60,5 +59,24 @@ public class PostService implements IPostService {
             posts.addAll(followedUserPosts);
         }
         return new UserWithPostsDTO(userId, posts);
+    }
+
+    @Override
+    public List<PostDTO> orderPostsByDate(List<PostDTO> posts, String order) {
+        posts.sort((p1, p2) -> {
+            int ans = 0;
+            LocalDate d1 = mapper.postDTOToPost(p1).getDate();
+            LocalDate d2 = mapper.postDTOToPost(p2).getDate();
+            if (d1.isBefore(d2)) {
+                ans = -1;
+            } else if (d2.isBefore(d1)) {
+                ans = 1;
+            }
+            if (order.equals("desc")) {
+                ans = -ans;
+            }
+            return ans;
+        });
+        return posts;
     }
 }

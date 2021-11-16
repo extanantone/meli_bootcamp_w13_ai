@@ -94,9 +94,9 @@ public class UserService implements IUserService {
     @Override
     public List<UserDTO> orderUsersByName(List<UserDTO> users, String order) {
         users.sort((u1, u2) -> {
-            if (order.equals("desc")) {
+            if (order.equals("asc")) {
                 return u1.getUsername().compareTo(u2.getUsername());
-            } else if (order.equals("asc")) {
+            } else if (order.equals("desc")) {
                 return u2.getUsername().compareTo(u1.getUsername());
             }
             return 0;

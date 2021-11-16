@@ -34,9 +34,14 @@ public class PostController {
     }
 
     @GetMapping("followed/{userId}/list")
-    public ResponseEntity<UserWithPostsDTO> getLast2WeeksFollowedPosts(@PathVariable long userId) {
+    public ResponseEntity<UserWithPostsDTO> getLast2WeeksFollowedPosts(@PathVariable long userId, @RequestParam(value = "order", required = false) String order) {
+        UserWithPostsDTO resBody = postService.getLatestFollowedPosts(userId, 2);
+        if (order != null) {
+            order = order.replace("date_", "");
+            resBody.setPosts(postService.orderPostsByDate(resBody.getPosts(), order));
+        }
         return new ResponseEntity<>(
-                postService.getLatestFollowedPosts(userId, 2),
+                resBody,
                 HttpStatus.OK
         );
     }
