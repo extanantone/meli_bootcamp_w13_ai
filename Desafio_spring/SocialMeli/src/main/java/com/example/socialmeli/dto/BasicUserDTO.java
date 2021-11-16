@@ -4,13 +4,11 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class FollowerCountDTO {
-    private Integer userId;
-    private String userName;
-    private Integer followersCount;
+@AllArgsConstructor
+@Getter
+public class BasicUserDTO {
+    private final Integer userId;
+    private final String userName;
 }
