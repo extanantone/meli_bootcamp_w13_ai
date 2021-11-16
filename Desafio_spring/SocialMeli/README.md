@@ -19,5 +19,5 @@ Estas se guardan en la misma lista con todas las publicaciones y cuando se solic
  - Los posteos no pueden contener una fecha futura.
  - El descuento a aplicar a las promociones debe estar comprendido entre el 0% y el 100%.
 
-### Diagrama de clases del modelo
-![alt text](doc/socialmeli_class_diagram/SocialMeli.png)
+### Diagrama de clases del Modelo
+![alt text](doc/socialmeli_class_diagram/modelClassDiagram.png)

@@ -3,7 +3,6 @@ package com.bootcamp.SocialMeli.model;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -26,20 +25,6 @@ public class Usuario {
         this.seguidores = new ArrayList<>();
         this.publicaciones = new ArrayList<>();
     }
-/*
-    public Usuario(int userId, String userName) {
-        this.userId = userId;
-        this.userName = userName;
-        this.vendedoresSeguidos = new ArrayList<>();
-        this.publicaciones = new ArrayList<>();
-    }
-
-    public Usuario(int userId, String userName, List<Usuario> vendedoresSeguidos) {
-        this.userId = userId;
-        this.userName = userName;
-        this.vendedoresSeguidos = vendedoresSeguidos;
-        this.publicaciones = new ArrayList<>();
-    }*/
 
     public Usuario(int userId, String userName, List<Usuario> vendedoresSeguidos, List<Usuario> seguidores, List<Publicacion> publicaciones) {
         this.userId = userId;

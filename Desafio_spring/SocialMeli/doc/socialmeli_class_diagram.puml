@@ -1,21 +1,28 @@
-@startuml SocialMeli
+@startuml modelClassDiagram
 
 skinparam ClassAttributeIconSize 0
 
 class Usuario {
     - int userId
     - String userName 
+    - List<Usuario> vendedoresSeguidos
+    - List<Usuario> seguidores
+    - List<Publicacion> publicaciones
+
+    + seguirVendedor(Usuario vendedor)
+    + dejarDeSeguirVendedor(Usuario vendedor): boolean
+    + agregarSeguidor(Usuario seguidor)
+    + eliminarSeguidor(Usuario seguidor): boolean
+    + agregarPublicacion(Publicacion nuevaPublicacion)
+    + isVendedor(): boolean
 }
 
-class Vendedor {
-    - List<Post> publicaciones 
-}
-
-class Post {
+class Publicacion {
     - int idPost
     - LocalDate date 
-    - double price
     - Producto producto
+    - double price
+    - int category
 }
 
 class Producto {
@@ -25,12 +32,22 @@ class Producto {
     - String brand
     - String color
     - String notes
-    - String category
 }
 
-Usuario <|-- Vendedor
+class Promocion {
+    - int idPost
+    - LocalDate date 
+    - Producto producto
+    - double price
+    - int category
+    - boolean hasPromo
+    - double discount
+}
 
-Post o.> Producto
+Publicacion o.> Producto
+Usuario <-- Usuario
+Usuario -> Publicacion
+Publicacion <|-- Promocion
 
 
 @enduml
