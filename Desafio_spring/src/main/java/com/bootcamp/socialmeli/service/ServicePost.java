@@ -27,53 +27,61 @@ public class ServicePost implements IServicePost{
 
     public ResponseEntity createPost(DTOPostProduct postProduct) {
 
-        iUserRepository.findById(postProduct.getUserId());
+        try {
+            User user =iUserRepository.findById(postProduct.getUserId());
 
-        Product product = new Product(postProduct.getDetail().getProductId(),
-                postProduct.getDetail().getProductName(),
-                postProduct.getDetail().getType(),
-                postProduct.getDetail().getBrand(),
-                postProduct.getDetail().getColor(),
-                postProduct.getDetail().getNotes());
+            Product product = new Product(postProduct.getDetail().getProductId(),
+                    postProduct.getDetail().getProductName(),
+                    postProduct.getDetail().getType(),
+                    postProduct.getDetail().getBrand(),
+                    postProduct.getDetail().getColor(),
+                    postProduct.getDetail().getNotes());
 
-        Post post = new Post(postProduct.getUserId(),
-                postProduct.getIdPost(),
-                postProduct.getDate(),
-                product,
-                postProduct.getCategory(),
-                postProduct.getPrice(),
-                false,
-                0.0);
+            Post post = new Post(postProduct.getUserId(),
+                    postProduct.getIdPost(),
+                    postProduct.getDate(),
+                    product,
+                    postProduct.getCategory(),
+                    postProduct.getPrice(),
+                    false,
+                    0.0);
 
-        if(!iPostRepository.addPost(post))
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity(HttpStatus.OK);
+            if(!iPostRepository.addPost(post))
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch(Exception e ){
+            return new ResponseEntity("Usuario inexistente", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
     public ResponseEntity createPostPromo(DTOPostProduct postProduct) {
 
-        iUserRepository.findById(postProduct.getUserId());
+        try {
+            User user = iUserRepository.findById(postProduct.getUserId());
 
-        Product product = new Product(postProduct.getDetail().getProductId(),
-                postProduct.getDetail().getProductName(),
-                postProduct.getDetail().getType(),
-                postProduct.getDetail().getBrand(),
-                postProduct.getDetail().getColor(),
-                postProduct.getDetail().getNotes());
+            Product product = new Product(postProduct.getDetail().getProductId(),
+                    postProduct.getDetail().getProductName(),
+                    postProduct.getDetail().getType(),
+                    postProduct.getDetail().getBrand(),
+                    postProduct.getDetail().getColor(),
+                    postProduct.getDetail().getNotes());
 
-        Post post = new Post(postProduct.getUserId(),
-                postProduct.getIdPost(),
-                postProduct.getDate(),
-                product,
-                postProduct.getCategory(),
-                postProduct.getPrice(),
-                true,
-                postProduct.getDiscount());
+            Post post = new Post(postProduct.getUserId(),
+                    postProduct.getIdPost(),
+                    postProduct.getDate(),
+                    product,
+                    postProduct.getCategory(),
+                    postProduct.getPrice(),
+                    true,
+                    postProduct.getDiscount());
 
-        if(!iPostRepository.addPost(post))
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity(HttpStatus.OK);
+            if (!iPostRepository.addPost(post))
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch(Exception e ){
+            return new ResponseEntity("Usuario inexistente", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override

@@ -23,6 +23,7 @@ public class ServiceFollower implements IServiceFollower{
     public ResponseEntity<String> userToFollow(int userId, int userIdToFollow) {
 
         if(userId == userIdToFollow)
+
             return new ResponseEntity("No puedes seguirte a ti mismo", HttpStatus.BAD_REQUEST);
 
         try{
@@ -34,13 +35,14 @@ public class ServiceFollower implements IServiceFollower{
             boolean userFollowed = user.addListFollows(userIdToFollow,userToFollows);
 
             if(!userFollowed)
+
                 return new ResponseEntity("El usuario ya sigue al vendedor " + userToFollows.getUserName(), HttpStatus.BAD_REQUEST);
 
             return new ResponseEntity("Estas siguiendo a " + userToFollows.getUserName(), HttpStatus.OK);
 
         } catch (Exception e){
 
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Usuario inexistente", HttpStatus.BAD_REQUEST);
 
         }
 

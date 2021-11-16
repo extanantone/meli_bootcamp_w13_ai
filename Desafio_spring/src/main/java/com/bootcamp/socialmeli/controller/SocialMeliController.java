@@ -22,15 +22,10 @@ public class SocialMeliController {
     @Autowired
     IServicePost iServicePost;
 
-    @PostMapping("/users/{user_id}/follow/{userIdToFollow}")
-    public ResponseEntity userToFollow(@PathVariable int user_id, @PathVariable int userIdToFollow){
+    @PostMapping("/users/{user_id}/follow/{user_id_to_follow}")
+    public ResponseEntity userToFollow(@PathVariable int user_id, @PathVariable int user_id_to_follow){
 
-        try {
-            return iServiceFollower.userToFollow(user_id,userIdToFollow);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se encuentra el usuario");
-        }
+        return iServiceFollower.userToFollow(user_id,user_id_to_follow);
 
     }
 
@@ -89,7 +84,7 @@ public class SocialMeliController {
         return iServicePost.createPostPromo(postProduct);
     }
 
-    @GetMapping("/products/{user_id}/countPromo")
+    @GetMapping("/products/{user_id}/promo-post/count")
     public ResponseEntity<DTOCountpromo> countPostPromo(@PathVariable int user_id){
 
         return iServicePost.countPostPromo(user_id);

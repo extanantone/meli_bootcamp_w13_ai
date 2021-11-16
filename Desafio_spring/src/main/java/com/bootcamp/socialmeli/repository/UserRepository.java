@@ -21,10 +21,10 @@ public class UserRepository implements IUserRepository{
 
     public static void inicializarUsers(){
 
-        listUsers.add(new User(1,"comprador1"));
-        listUsers.add(new User(2,"comprador2"));
-        listUsers.add(new User(3,"vendedor3"));
-        listUsers.add(new User(4,"vendedor4"));
+        listUsers.add(new User(1,"anibal"));
+        listUsers.add(new User(2,"marco"));
+        listUsers.add(new User(3,"gabriela"));
+        listUsers.add(new User(4,"andres"));
 
     }
 
@@ -35,7 +35,7 @@ public class UserRepository implements IUserRepository{
             try{
                 return listUsers.get(idUser - 1);
             }catch (Exception e) {
-                throw new RuntimeException("Usuario" + idUser + "no encontrado");
+                throw new RuntimeException("Usuario " + idUser + " no encontrado");
             }
         }
 
