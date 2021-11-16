@@ -26,9 +26,9 @@ import java.util.Map;
 public class SocialMeliRepository implements ISocialMeliRepository{
 
     private Map<Integer, Usuario> usuarios;
+    private Map<Integer, Publicacion> publicaciones;
 
-    //@Value("${spring.json_source}")
-    private String json_source = "develop/";
+    private final String json_source = "develop/";
 
     public SocialMeliRepository() {
         this.usuarios = new HashMap<>();
@@ -37,6 +37,7 @@ public class SocialMeliRepository implements ISocialMeliRepository{
         for (Usuario user : listaUsuarios) {
             this.usuarios.put(user.getUserId(), user);
         }
+        this.publicaciones = new HashMap<>();
         cargarPublicaciones();
     }
 
@@ -69,7 +70,9 @@ public class SocialMeliRepository implements ISocialMeliRepository{
             //itero sobre el arreglo de JSON
             for (Object json : publicaciones) {
                 Integer id = Math.toIntExact((Long)((JSONObject) json).get("user_id"));
-                this.usuarios.get(id).agregarPublicacion(parsearJsonPublicacion((JSONObject) json));
+                Publicacion publicacion = parsearJsonPublicacion((JSONObject) json);
+                this.usuarios.get(id).agregarPublicacion(publicacion);
+                agregarPublicacion(publicacion); //se guarda en el repositorio de publicaciones
             }
 
         } catch (FileNotFoundException e) {
@@ -107,9 +110,21 @@ public class SocialMeliRepository implements ISocialMeliRepository{
         return publicacion;
     }
 
+    @Override
     public Usuario buscarUsuario(Integer idUsuario){
         return this.usuarios.get(idUsuario);
     }
+
+    @Override
+    public Publicacion buscarPublicacion(Integer idPublicacion){
+        return this.publicaciones.get(idPublicacion);
+    }
+
+    @Override
+    public void agregarPublicacion(Publicacion publicacion){
+        this.publicaciones.put(publicacion.getIdPost(), publicacion);
+    }
+
 
     /*
     public List<Usuario> buscarSeguidores(Usuario vendedor){

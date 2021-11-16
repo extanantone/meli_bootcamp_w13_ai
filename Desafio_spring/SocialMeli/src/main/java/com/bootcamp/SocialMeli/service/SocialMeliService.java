@@ -135,12 +135,16 @@ public class SocialMeliService implements ISocialMeliService{
         //TODO chequear que el user exista
         //TODO chequear que el id_post sea unico para todos los users
         //TODO chequear que la fecha sea de hoy o el pasado
-       // DetalleProductoDTO detalle = post.getDetail();
-       // Producto nuevoProducto = new Producto();
 
         Usuario usuario = this.socialMeliRepository.buscarUsuario(post.getUserId());
         if(usuario == null){
             throw new UserNotFoundException("No existe el usuario con Id: " + post.getUserId());
+        }
+        if(this.socialMeliRepository.buscarPublicacion(post.getIdPost()) != null){
+            throw new DuplicateIDException("Ya existe una publicacion con ID: " + post.getIdPost());
+        }
+        if(post.getDate().isAfter(LocalDate.now())){ //chequea si la fecha de la publicacion es de hoy o dias anteriores
+            throw new FutureDateException("La fecha " + post.getDate() + " es posterior al dia de hoy");
         }
         //convertir de PublicacionDTO a Publicacion
 
@@ -152,6 +156,7 @@ public class SocialMeliService implements ISocialMeliService{
         }
 
         usuario.agregarPublicacion(nuevaPublicacion);
+        this.socialMeliRepository.agregarPublicacion(nuevaPublicacion);
 
         return new SuccessDTO("Publicacion creada correctamente.");
     }

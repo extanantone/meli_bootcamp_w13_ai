@@ -36,4 +36,14 @@ public class GeneralExceptionHandler {
         return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(DuplicateIDException.class)
+    public ResponseEntity<?> duplicateIDException(Exception e){
+        return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FutureDateException.class)
+    public ResponseEntity<?> futureDateException(Exception e){
+        return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
 }

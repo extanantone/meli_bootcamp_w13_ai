@@ -16,3 +16,7 @@
  - las promociones son consideradas como publicaciones "especiales". 
 Estas se guardan en la misma lista con todas las publicaciones y cuando se solicitan las publicaciones de las ultimas dos semanas también se muestran las promociones.
  - para que un usuario pueda seguir a otro, éste debe ser un vendedor, es decir, tener al menos una publicación.
+ - los posteos no pueden contener una fecha futura.
+
+### Diagrama de clases del modelo
+![alt text](doc/socialmeli_class_diagram/SocialMeli.png)
