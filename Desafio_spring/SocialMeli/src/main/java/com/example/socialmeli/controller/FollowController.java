@@ -29,13 +29,17 @@ public class FollowController {
     }
 
     @GetMapping("/followers/list")
-    public ResponseEntity<FollowerListDTO> followerList(@PathVariable(name = "user_id") Integer userId) {
-        return new ResponseEntity<>(followService.followerList(userId), HttpStatus.OK);
+    public ResponseEntity<FollowerListDTO> followerList(@PathVariable(name = "user_id") Integer userId,
+                                                        @RequestParam(required = false) String order) {
+        if (order == null) { return new ResponseEntity<>(followService.followerList(userId), HttpStatus.OK); }
+        return new ResponseEntity<>(followService.sortedFollowerList(userId, order), HttpStatus.OK);
     }
 
     @GetMapping("/followed/list")
-    public ResponseEntity<FollowerListDTO> followedList(@PathVariable(name = "user_id") Integer userId) {
-        return new ResponseEntity<>(followService.followingList(userId), HttpStatus.OK);
+    public ResponseEntity<FollowerListDTO> followedList(@PathVariable(name = "user_id") Integer userId,
+                                                        @RequestParam(required = false) String order) {
+        if (order == null) { return new ResponseEntity<>(followService.followingList(userId), HttpStatus.OK); }
+        return new ResponseEntity<>(followService.sortedFollowingList(userId, order), HttpStatus.OK);
     }
 
     @PostMapping("/unfollow/{user_id_to_unfollow}")
