@@ -329,7 +329,7 @@ http://localhost:8080/products/post
 ```
 Response
 ```JSON
-STATUS 409 CONFLICT
+STATUS 400 BAD REQUEST
 {
   "message": "Publicacion ya creada"
 }
@@ -557,7 +557,7 @@ http://localhost:8080/products/post
 ```
 Response
 ```JSON
-STATUS 409 CONFLICT
+STATUS 400 BAD REQUEST
 {
   "message": "Publicacion ya creada"
 }
