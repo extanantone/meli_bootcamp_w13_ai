@@ -4,6 +4,7 @@ import com.SocialMeli.SocialMeli.dto.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Repository
@@ -194,6 +195,64 @@ public class UserRepository implements IUserRepository{
             postDTOList.add(post);
             band = true;
         }
+
+        return band;
+    }
+
+    @Override
+    public Boolean unfollow(Integer user_id, Integer user_id_to_unfollow) {
+        BuyersDTO buyerUser = findBuyerByUserId(user_id);
+        SellersDTO sellerUser = findSellerByUserId(user_id_to_unfollow);
+        Boolean band = false;
+
+        if( buyerUser != null && sellerUser != null ){
+            //Al buyer se le elimina el usuario a seguir(seller)
+            List<UserDTO> followedList = buyerUser.getFollowed();
+            if( followedList != null ){
+
+                UserDTO userDTO = followedList.stream()
+                        .filter( user -> sellerUser.getUser_id() == user.getUser_id() )
+                        .findAny()
+                        .orElse(null);
+
+                if( userDTO != null ) {
+                    //userDTO = new UserDTO(sellerUser.getUser_id(), sellerUser.getUser_name());
+                    followedList.remove(userDTO);
+
+                    /*Iterator itr = followedList.iterator();
+
+                    while (itr.hasNext()){
+
+                    }*/
+
+                    buyerUser.setFollowed(followedList);
+                    band = true;
+                }
+            }
+
+
+            //Al vendedor se le elimina al usuario comprador
+            List<UserDTO> followersList = sellerUser.getFollowers();
+            if( followersList != null && band ) {
+
+                UserDTO userDTO2 = followersList.stream()
+                        .filter(user -> buyerUser.getUser_id() == user.getUser_id())
+                        .findAny()
+                        .orElse(null);
+
+                if (userDTO2 != null) {
+                    //userDTO2 = new UserDTO(buyerUser.getUser_id(), buyerUser.getUser_name());
+
+                    followersList.remove(userDTO2);
+                    sellerUser.setFollowers(followersList);
+                } else {
+                    band = false;
+                }
+            }
+
+        }
+
+        System.out.println(sellerUser.toString());
 
         return band;
     }

@@ -16,4 +16,11 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class SellersDTO extends UserDTO{
     private List<UserDTO> followers;
+
+    @Override
+    public String toString() {
+        return "SellersDTO{" +
+                "followers=" + followers +
+                '}';
+    }
 }

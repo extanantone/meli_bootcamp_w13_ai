@@ -10,4 +10,5 @@ public interface IUserService {
     SellersDTO followersList(Integer user_id);
     BuyersDTO followedList(Integer user_id);
     Boolean createPost(PostDTO post);
+    Boolean unfollowUser(Integer user_id, Integer user_id_to_unfollow);
 }

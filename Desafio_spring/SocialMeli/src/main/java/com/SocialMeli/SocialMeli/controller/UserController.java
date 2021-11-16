@@ -59,4 +59,13 @@ public class UserController {
 
         return new ResponseEntity<String>("Ha ocurrido un error al guardar el post.", HttpStatus.BAD_REQUEST);
     }
+
+    @PostMapping("users/{user_id}/unfollow/{user_id_to_unfollow}")
+    public ResponseEntity<String> unfollowUser(@PathVariable Integer user_id, @PathVariable Integer user_id_to_unfollow) {
+        Boolean statusUnfollow = userService.unfollowUser(user_id,user_id_to_unfollow);
+        if( statusUnfollow )
+            return new ResponseEntity<>("Los usuarios se han dejado de seguir.", HttpStatus.OK);
+
+        return new ResponseEntity<>("Ha ocurrido un error en la acción.", HttpStatus.BAD_REQUEST);
+    }
 }

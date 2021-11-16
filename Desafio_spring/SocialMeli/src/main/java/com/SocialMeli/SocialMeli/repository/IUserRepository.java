@@ -12,4 +12,5 @@ public interface IUserRepository {
     SellersDTO followersList(Integer user_id);
     BuyersDTO followedList(Integer user_id);
     Boolean createPost(PostDTO post);
+    Boolean unfollow(Integer user_id, Integer user_id_to_unfollow);
 }

@@ -47,4 +47,9 @@ public class UserService implements IUserService {
     public Boolean createPost(PostDTO post) {
         return userRepository.createPost(post);
     }
+
+    @Override
+    public Boolean unfollowUser(Integer user_id, Integer user_id_to_unfollow) {
+        return userRepository.unfollow(user_id, user_id_to_unfollow);
+    }
 }
