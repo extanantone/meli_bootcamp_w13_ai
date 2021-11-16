@@ -4,6 +4,7 @@ import com.bootcamp.SocialMeli.dto.CountDTO;
 import com.bootcamp.SocialMeli.dto.FollowedDTO;
 import com.bootcamp.SocialMeli.dto.FollowerDTO;
 import com.bootcamp.SocialMeli.dto.PublicationDTO;
+import com.bootcamp.SocialMeli.model.Publication;
 
 public interface ISocialMeliService {
 
@@ -15,7 +16,7 @@ public interface ISocialMeliService {
 
     FollowedDTO followedList(Integer user_id);
 
-    void newPublication(PublicationDTO publicationDTO);
+    Publication newPublication(PublicationDTO publicationDTO);
 
     void deleteFollow(Integer user_id, Integer user_id_to_unfollow);
 

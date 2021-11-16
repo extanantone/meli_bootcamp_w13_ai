@@ -11,16 +11,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
 public class SocialMeliRepository implements ISocialMeliRepository {
 
     List<User> userList;
+    private HashMap<Integer, Publication> publicationList;
 
     public SocialMeliRepository() {
         this.userList = userJson();
-        this.publicationList = new ArrayList<>();
+        this.publicationList = new HashMap<>();
     }
 
     public List<User> userJson() {
@@ -72,12 +74,10 @@ public class SocialMeliRepository implements ISocialMeliRepository {
         return this.userList.stream().anyMatch(user -> user.getUser_id().equals(user_id));
     }
 
-    List<Publication> publicationList;
-
     @Override
-    public void createPublication(Publication publication) {
-
-        publicationList.add(publication);
+    public Publication createPublication(Publication publication) {
+        publicationList.put(publication.getId_post(), publication);
+        return publication;
     }
 
     @Override

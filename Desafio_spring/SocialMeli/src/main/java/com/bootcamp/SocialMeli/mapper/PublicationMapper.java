@@ -12,6 +12,7 @@ public class PublicationMapper {
         publication.setUser_id(publicationDTO.getUser_id());
         publication.setId_post(publicationDTO.getId_post());
         publication.setDate(publicationDTO.getDate());
+        publication.setDetails(ProductoMapper.productoDTOToProducto(publicationDTO.getDetail()));
         publication.setCategory(publicationDTO.getCategory());
         publication.setPrice(publicationDTO.getPrice());
         return publication;

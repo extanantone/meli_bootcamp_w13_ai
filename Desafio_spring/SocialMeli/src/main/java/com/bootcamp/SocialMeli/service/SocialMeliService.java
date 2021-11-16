@@ -39,19 +39,19 @@ public class SocialMeliService implements ISocialMeliService {
 
     @Override
     public CountDTO followerCount(Integer user_id) {
-       userNotFound(user_id);
-       CountDTO countDTO = userMapper.countDTO(iSocialMeliRepository.userId(user_id));
-       if(countDTO.getCount() == 0){
-           throw  new BadRequest("No tiene ningun seguidor el usuario: " + user_id);
-       }
-       return countDTO;
+        userNotFound(user_id);
+        CountDTO countDTO = userMapper.countDTO(iSocialMeliRepository.userId(user_id));
+        if (countDTO.getCount() == 0) {
+            throw new BadRequest("No tiene ningun seguidor el usuario: " + user_id);
+        }
+        return countDTO;
     }
 
     @Override
     public FollowerDTO followerList(Integer user_id) {
         userNotFound(user_id);
         FollowerDTO followerDTO = userMapper.followerDTO(iSocialMeliRepository.userId(user_id));
-        if(followerDTO.getFollowers().size() == 0){
+        if (followerDTO.getFollowers().size() == 0) {
             throw new BadRequest("No tiene seguidores el usuario " + user_id);
         }
         return followerDTO;
@@ -61,20 +61,20 @@ public class SocialMeliService implements ISocialMeliService {
     public FollowedDTO followedList(Integer user_id) {
         userNotFound(user_id);
         FollowedDTO followedDTO = userMapper.followedDTO(iSocialMeliRepository.userId(user_id));
-        if(followedDTO.getFollowed().size() == 0){
+        if (followedDTO.getFollowed().size() == 0) {
             throw new BadRequest("No sigue a nadie el usuario " + user_id);
         }
         return followedDTO;
     }
 
     @Override
-    public void newPublication(PublicationDTO publicationDTO) throws BadRequest{
-        iSocialMeliRepository.createPublication(publicationMapper.newPublication(publicationDTO));
+    public Publication newPublication(PublicationDTO publicationDTO) throws BadRequest {
+        return iSocialMeliRepository.createPublication(publicationMapper.newPublication(publicationDTO));
     }
 
     @Override
-    public void deleteFollow(Integer user_id, Integer user_id_to_unfollow){
-        if(user_id.equals(user_id_to_unfollow)){
+    public void deleteFollow(Integer user_id, Integer user_id_to_unfollow) {
+        if (user_id.equals(user_id_to_unfollow)) {
             iSocialMeliRepository.deleteFollower(user_id, user_id_to_unfollow);
             iSocialMeliRepository.deleteFollowed(user_id, user_id_to_unfollow);
         }

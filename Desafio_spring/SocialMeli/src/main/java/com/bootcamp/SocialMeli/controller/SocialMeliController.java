@@ -5,6 +5,7 @@ import com.bootcamp.SocialMeli.dto.FollowedDTO;
 import com.bootcamp.SocialMeli.dto.FollowerDTO;
 import com.bootcamp.SocialMeli.dto.PublicationDTO;
 import com.bootcamp.SocialMeli.exception.BadRequest;
+import com.bootcamp.SocialMeli.model.Publication;
 import com.bootcamp.SocialMeli.service.ISocialMeliService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+
 public class SocialMeliController {
     ISocialMeliService isocialMeliService;
+
+    public SocialMeliController(ISocialMeliService isocialMeliService) {
+        this.isocialMeliService = isocialMeliService;
+    }
 
     @PostMapping("/users/{user_id}/follow/{user_id_to_follow}")
     ResponseEntity<?> follow(@PathVariable Integer user_id, @PathVariable Integer user_id_to_follow) throws BadRequest {
@@ -61,13 +67,15 @@ public class SocialMeliController {
     }
 
     @PostMapping("/products/post")
-    public ResponseEntity publication(@RequestBody PublicationDTO publicationDTO) throws BadRequest{
-        try{isocialMeliService.newPublication(publicationDTO);
-        } catch (RuntimeException e){
-            throw  new BadRequest(e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Publication> createPublication(@RequestBody PublicationDTO publicationDTO) {
+        return new ResponseEntity<>(isocialMeliService.newPublication(publicationDTO), HttpStatus.OK);
     }
+
+    /*
+    @GetMapping("/products/followed/{user_id}/list")
+    ResponseEntity<> getPublication(@PathVariable Integer user_id, @RequestParam(required = false) String order) BadRequest{
+        try{isocialMeliService.getPublications(user_id, order)}
+    }*/
 
     @PostMapping("/users/{user_id}/unfollow/{user_id_to_unfollow}")
     ResponseEntity<?> unfollow(@PathVariable Integer user_id, @PathVariable Integer user_id_to_unfollow) throws BadRequest {

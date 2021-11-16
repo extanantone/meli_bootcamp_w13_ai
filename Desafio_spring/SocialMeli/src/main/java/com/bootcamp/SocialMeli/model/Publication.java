@@ -13,15 +13,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Publication {
-    private Integer user_id;
-    private Integer id_post;
-    private LocalDate date;
-    private Integer id_product;
-    private String product_name;
-    private String type;
-    private String brand;
-    private String color;
-    private String notes;
-    private Integer category;
-    private Double price;
+    private int user_id;
+    private int id_post;
+    private String date;
+    private Producto details;
+    private int category;
+    private double price;
 }
