@@ -44,8 +44,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Boolean createPost(PostDTO post) {
+    public Boolean createPost(PostUserDTO post) {
         return userRepository.createPost(post);
+    }
+
+    @Override
+    public PostListDTO postList(Integer user_id) {
+        return userRepository.postList(user_id);
     }
 
     @Override

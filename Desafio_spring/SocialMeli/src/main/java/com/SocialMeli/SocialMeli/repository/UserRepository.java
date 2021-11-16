@@ -6,13 +6,14 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepository implements IUserRepository{
 
     private final List<BuyersDTO> buyersDTOList = new ArrayList<>();
     private final List<SellersDTO> sellersDTOList = new ArrayList<>();
-    private final List<PostDTO> postDTOList = new ArrayList<>();
+    private final List<PostUserDTO> postDTOList = new ArrayList<>();
 
     @Override
     public UserDTO createBuyers(UserDTO user) {
@@ -186,7 +187,7 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public Boolean createPost(PostDTO post) {
+    public Boolean createPost(PostUserDTO post) {
         Boolean band = false;
 
         SellersDTO sellersDTO = findSellerByUserId(post.getUser_id());
@@ -197,6 +198,40 @@ public class UserRepository implements IUserRepository{
         }
 
         return band;
+    }
+
+    @Override
+    public PostListDTO postList(Integer user_id) {
+        SellersDTO sellersDTO = findSellerByUserId(user_id);
+        PostListDTO postListDTO = new PostListDTO();
+
+        if( sellersDTO != null ){
+
+            postListDTO.setUser_id(user_id);
+
+            List<PostUserDTO> postsUser = new ArrayList<>();
+            List<PostDTO> posts = new ArrayList<>();
+
+            postsUser = postDTOList.stream()
+                    .filter( post -> post.getUser_id() == user_id )
+                    .collect(Collectors.toList());
+
+            for( PostUserDTO postUser : postsUser ){
+                posts.add(
+                        new PostDTO(
+                                postUser.getId_post(),
+                                postUser.getDate(),
+                                postUser.getCategory(),
+                                postUser.getPrice(),
+                                postUser.getDetail()
+                        )
+                );
+            }
+
+            postListDTO.setPosts(posts);
+        }
+
+        return postListDTO;
     }
 
     @Override
@@ -229,7 +264,6 @@ public class UserRepository implements IUserRepository{
                     band = true;
                 }
             }
-
 
             //Al vendedor se le elimina al usuario comprador
             List<UserDTO> followersList = sellerUser.getFollowers();

@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @PostMapping("products/post")
-    public ResponseEntity<String> createPost(@RequestBody PostDTO post){
+    public ResponseEntity<String> createPost(@RequestBody PostUserDTO post){
 
         Boolean band = userService.createPost(post);
 
@@ -58,6 +58,11 @@ public class UserController {
             return new ResponseEntity<String>("Post guardado con éxito.", HttpStatus.OK);
 
         return new ResponseEntity<String>("Ha ocurrido un error al guardar el post.", HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/products/followed/{user_id}/list")
+    public PostListDTO postList(@PathVariable Integer user_id){
+        return userService.postList(user_id);
     }
 
     @PostMapping("users/{user_id}/unfollow/{user_id_to_unfollow}")
