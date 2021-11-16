@@ -1,7 +1,6 @@
 package ruiz_facundo.SocialMeli.repository;
 
 import ruiz_facundo.SocialMeli.model.Post;
-import ruiz_facundo.SocialMeli.model.PromoPost;
 import ruiz_facundo.SocialMeli.model.User;
 
 import java.util.List;

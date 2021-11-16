@@ -15,8 +15,7 @@ import java.util.List;
 public class UserFollowersDTO extends UserDTO implements Serializable {
     private List<UserDTO> followers;
 
-    public UserFollowersDTO(Long inId, String inName,
-                            List<UserDTO> inFollowers) {
+    public UserFollowersDTO(Long inId, String inName, List<UserDTO> inFollowers) {
         super(inId, inName);
         this.followers = inFollowers;
     }

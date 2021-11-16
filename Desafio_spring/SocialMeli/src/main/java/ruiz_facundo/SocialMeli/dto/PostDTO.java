@@ -18,7 +18,7 @@ public class PostDTO implements Serializable {
     private Long idPost;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
-    private PostProductDTO detail;
+    private RetailProductDTO detail;
     private Integer category;
     private Double price;
 

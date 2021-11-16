@@ -2,8 +2,6 @@ package ruiz_facundo.SocialMeli.service;
 
 import ruiz_facundo.SocialMeli.dto.*;
 
-import java.util.List;
-
 public interface SocialMeliServiceI {
     void follow(Long idNewFollower, Long idNewFollowed);
     void unfollow(Long idOldFollower, Long idOldFollwed);
@@ -12,6 +10,7 @@ public interface SocialMeliServiceI {
     UserFollowedDTO getFollowed(Long idUser, String criteria);
     void publish(RequestPostDTO newPostReq);
     UserPostsDTO getRecentPosts(Long idUser, String criteria);
-    void publishPromo(RequestPromoPostDTO newPromoReq);
+    void publishPromo(RequestPromotionDTO newPromoReq);
     UserPromoCountDTO getPromosCount(Long idUser);
+    UserNamePostsDTO getPromoPosts(Long idUser, String criteria);
 }

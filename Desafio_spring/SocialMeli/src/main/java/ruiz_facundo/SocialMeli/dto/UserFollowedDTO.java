@@ -12,8 +12,7 @@ import java.util.List;
 public class UserFollowedDTO extends UserDTO implements Serializable {
     private List<UserDTO> followed;
 
-    public UserFollowedDTO(Long inId, String inName,
-                            List<UserDTO> inFollowed) {
+    public UserFollowedDTO (Long inId, String inName, List<UserDTO> inFollowed) {
         super(inId, inName);
         this.followed = inFollowed;
     }

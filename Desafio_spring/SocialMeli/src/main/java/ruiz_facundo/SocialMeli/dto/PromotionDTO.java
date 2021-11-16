@@ -5,21 +5,21 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class RequestPromoPostDTO extends RequestPostDTO {
+public class PromotionDTO extends PostDTO implements Serializable {
     private boolean hasPromo;
     private double discount;
 
-    public RequestPromoPostDTO () {}
+    public PromotionDTO() {}
 
-    public RequestPromoPostDTO (Long inUserId, Long inId, LocalDate inDate,
-                                PostProductDTO inDetail, Integer inCategory,
-                                Double inPrice, boolean inHasPromo, Double inDiscount) {
-        super(inUserId, inId, inDate, inDetail, inCategory, inPrice);
+    public PromotionDTO(Long inId, LocalDate inDate, RetailProductDTO inDetail, Integer inCategory,
+                        Double inPrice, boolean inHasPromo, Double inDiscount) {
+        super(inId, inDate, inDetail, inCategory, inPrice);
         this.hasPromo = inHasPromo;
         this.discount = inDiscount;
     }

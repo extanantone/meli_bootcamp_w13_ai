@@ -1,32 +1,57 @@
 package ruiz_facundo.SocialMeli.repository;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.ResourceUtils;
 import ruiz_facundo.SocialMeli.model.Post;
-import ruiz_facundo.SocialMeli.model.PromoPost;
 import ruiz_facundo.SocialMeli.model.User;
 
-import java.time.Duration;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
 @Repository
 public class SocialMeliRepository implements SocialMeliRepositoryI {
-    private HashMap<Long, User> users;
-    private HashMap<Long, Post> posts;
+    private final HashMap<Long, User> users;
+    private final HashMap<Long, Post> posts;
 
     public SocialMeliRepository() {
-        // Load from JSON
-        this.users = new HashMap<>();
-        this.posts = new HashMap<>();
-        this.users.put(1L, new User(1L, "carlotem"));
-        this.users.put(2L, new User(2L, "simigaga"));
-        this.users.put(3L, new User(3L, "julio_88"));
-        this.users.put(4L, new User(4L, "mateo_galpesin_1997"));
+        this.users = (HashMap<Long, User>) this.loadUsersFromJSON();
+        this.posts = (HashMap<Long, Post>) this.loadPostsFromJSON();
+    }
+
+    private Map<Long, User> loadUsersFromJSON() {
+        File file = null;
+        try { file = ResourceUtils.getFile("classpath:users.json");
+        } catch (FileNotFoundException e) { e.printStackTrace(); }
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<User> userList = null;
+        try { userList = objectMapper.readValue(file, new TypeReference<List<User>>() {});
+        } catch (IOException e) { e.printStackTrace(); }
+        return userList.stream().collect(Collectors.toMap(User::getId, Function.identity()));
+    }
+
+    private Map<Long, Post> loadPostsFromJSON() {
+        File file = null;
+        try { file = ResourceUtils.getFile("classpath:posts.json");
+        } catch (FileNotFoundException e) { e.printStackTrace(); }
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        List<Post> postList = null;
+        try { postList = objectMapper.readValue(file, new TypeReference<List<Post>>() {});
+        } catch (IOException e) { e.printStackTrace(); }
+        return postList.stream().collect(Collectors.toMap(Post::getId, Function.identity()));
     }
 
     @Override
@@ -52,14 +77,14 @@ public class SocialMeliRepository implements SocialMeliRepositoryI {
 
     @Override
     public List<User> getFollowers(Long idUser) {
-        return this.users.get(idUser).getFollowers().stream().map(
-                i -> this.users.get(i)).collect(Collectors.toList());
+        return this.users.get(idUser).getFollowers().stream().map(this.users::get).
+                collect(Collectors.toList());
     }
 
     @Override
     public List<User> getFollowed(Long idUser) {
-        return this.users.get(idUser).getFollowed().stream().map(
-                i -> this.users.get(i)).collect(Collectors.toList());
+        return this.users.get(idUser).getFollowed().stream().map(this.users::get).
+                collect(Collectors.toList());
     }
 
     @Override
@@ -72,8 +97,7 @@ public class SocialMeliRepository implements SocialMeliRepositoryI {
     public List<Post> getRecentPosts(Long idUser) {
         LocalDate today = LocalDate.now();
         return this.users.get(idUser).getPosts().stream().map(
-                i -> this.posts.get(i)).filter(
-                        p -> DAYS.between(p.getPublishDate(), today) < 14).
+                this.posts::get).filter(p -> DAYS.between(p.getPublishDate(), today) < 14).
                 collect(Collectors.toList());
     }
 
@@ -89,8 +113,7 @@ public class SocialMeliRepository implements SocialMeliRepositoryI {
 
     @Override
     public List<Post> getPromoPosts(Long idUser) {
-        return this.users.get(idUser).getPosts().stream().map(
-                i -> this.posts.get(i)).filter(p->p.hasPromo()).
-                collect(Collectors.toList());
+        return this.users.get(idUser).getPosts().stream().map(this.posts::get).
+                filter(Post::isHasPromo).collect(Collectors.toList());
     }
 }

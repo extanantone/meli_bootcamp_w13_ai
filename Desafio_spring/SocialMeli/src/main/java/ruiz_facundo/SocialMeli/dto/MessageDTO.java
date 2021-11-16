@@ -6,7 +6,7 @@ import lombok.Getter;
 public class MessageDTO {
     private String message;
 
-    public MessageDTO(String exMessage) {
-        this.message = exMessage;
+    public MessageDTO(String inMessage) {
+        this.message = inMessage;
     }
 }

@@ -13,8 +13,7 @@ public class UserPromoCountDTO extends UserDTO {
 
     public UserPromoCountDTO () {}
 
-    public UserPromoCountDTO (Long inUserId, String inUserName,
-                              Integer inPromoProductsCount) {
+    public UserPromoCountDTO (Long inUserId, String inUserName, Integer inPromoProductsCount) {
         super(inUserId, inUserName);
         this.promoProductsCount = inPromoProductsCount;
     }

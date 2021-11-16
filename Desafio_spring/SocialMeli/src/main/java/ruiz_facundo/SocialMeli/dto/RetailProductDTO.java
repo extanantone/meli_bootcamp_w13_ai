@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PostProductDTO {
+public class RetailProductDTO {
     private Long productId;
     private String productName;
     private String type;
@@ -18,5 +18,5 @@ public class PostProductDTO {
     private String color;
     private String notes;
 
-    public PostProductDTO () {}
+    public RetailProductDTO () {}
 }

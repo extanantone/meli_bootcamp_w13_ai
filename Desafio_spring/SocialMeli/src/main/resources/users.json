@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "carlotem",
+    "followers" : [],
+    "followed" : [3, 4],
+    "posts" : []
+  },
+  {
+    "id": 2,
+    "name": "simigaga",
+    "followers" : [],
+    "followed" : [4],
+    "posts" : []
+  },
+  {
+    "id": 3,
+    "name": "julio_88",
+    "followers" : [1],
+    "followed" : [],
+    "posts" : [3, 4]
+  },
+  {
+    "id": 4,
+    "name": "mateo_galpesin_1997",
+    "followers" : [1, 2],
+    "followed" : [],
+    "posts" : [1, 2]
+  }
+]
