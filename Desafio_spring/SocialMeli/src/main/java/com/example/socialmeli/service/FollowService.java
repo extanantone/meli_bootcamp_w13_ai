@@ -25,6 +25,14 @@ public class FollowService implements IFollowService{
     }
 
     @Override
+    public void removeFollow(Integer userId, Integer followId) {
+        User user = userRepository.find(userId);
+        User follow = userRepository.find(followId);
+        user.removeFollow(followId);
+        follow.removeFollower(userId);
+    }
+
+    @Override
     public FollowerCountDTO followerCount(Integer userid) {
         User user = userRepository.find(userid);
         return new FollowerCountDTO(user.getId(), user.getName(), user.getFollowers().size());

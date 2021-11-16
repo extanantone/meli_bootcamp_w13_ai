@@ -16,6 +16,10 @@ public class User {
 
     public boolean addPost(Integer id) { return posts.add(id); }
 
+    public boolean removeFollower(Integer id) { return followers.remove(id); }
+
+    public boolean removeFollow(Integer id) { return followed.remove(id); }
+
     public User(Integer id, String name) {
         this.id = id;
         this.name = name;
