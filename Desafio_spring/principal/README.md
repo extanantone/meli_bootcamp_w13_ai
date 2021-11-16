@@ -1,8 +1,8 @@
-##Resumen Guía :"Bootcamp Backend Java Sprint Nº 1 - Spring"
+## Resumen Guía :"Bootcamp Backend Java Sprint Nº 1 - Spring"
 
-###Organización del proyecto
+### Organización del proyecto
 
-####Paquetes
+#### Paquetes
 <ul>
 <li>configuración: Requerido para usar la libreria de ModelMapper</li>
 <li>controladores: 2 principales, usuarios y productos</li>
@@ -15,13 +15,13 @@
 </ul>
 
 
-###Clases más relevantes
+### Clases más relevantes
 
 Explicaré las clases más relevantes del proyecto:
 
-- ####Repositorio:
+- #### Repositorio:
   En el repositorio se definieron 4 collecciones que dieron el orden al proyecto:</p>
-  '
+  '''sh 
   private Map<Integer, Usuario> users;
   private Map<Integer, Publicacion> posts;
 
@@ -29,7 +29,7 @@ Explicaré las clases más relevantes del proyecto:
 
   private Map<Integer, List<Usuario>> usuarioySeguidores;
   private Map<Integer, List<Usuario>> usuarioySeguidos;
-  '
+'''
 
   **users y posts**: Garantizan que exista solo un 1 usuario y un post con id unico. El repositorio tiene metodos que garantizan que al guardar un dato nuevo, la key de la coleccion sea el id unico del elemento a crear y que las excpetiones de unicidad se controlen con una excepción personalizada llamada  **NegocioExcepcion**.
 
