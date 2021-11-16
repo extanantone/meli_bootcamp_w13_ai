@@ -9,14 +9,13 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class CompradorDTO {
+public class VendedorFollowersListDTO {
     private int userId;
     private String userName;
-    private List<Integer> followeds;
-
+    private List<CompradorIdNameDTO> followers;
 }

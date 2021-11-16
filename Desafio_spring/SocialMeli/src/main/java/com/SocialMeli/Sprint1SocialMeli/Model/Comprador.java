@@ -3,6 +3,7 @@ package com.SocialMeli.Sprint1SocialMeli.Model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,24 +12,25 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Comprador extends Usuario{
+@ToString
+public class Comprador extends Usuario {
 
 
     private List<Integer> followeds;
 
 
-    public Comprador(int userID, String user_name) {
-        super(userID, user_name);
+    public Comprador(int userID, String userName) {
+        super(userID, userName);
         this.followeds = new ArrayList<>();
     }
 
-    public void addFollowed(Integer id_vendedor)
+    public void addFollowed(Integer vendedorId)
     {
-        followeds.add(id_vendedor);
+        followeds.add(vendedorId);
     }
-    public void deleteFollowed(Integer id_Vendedor)
+    public void deleteFollowed(Integer vendedorId)
     {
-        followeds.remove(id_Vendedor);
+        followeds.remove(vendedorId);
     }
 
 }

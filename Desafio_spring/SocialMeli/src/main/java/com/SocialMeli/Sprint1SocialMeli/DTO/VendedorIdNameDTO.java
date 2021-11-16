@@ -7,16 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class CompradorDTO {
-    private int userId;
+public class VendedorIdNameDTO {
+    private Integer userID;
     private String userName;
-    private List<Integer> followeds;
-
 }

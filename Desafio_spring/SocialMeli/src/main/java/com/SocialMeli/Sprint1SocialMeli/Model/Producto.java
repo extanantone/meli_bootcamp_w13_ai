@@ -11,8 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Producto {
 
-    private int product_id;
-    private String product_name, type, brand, color, notes;
+    private int productId;
+    private String productName, type, brand, color, notes;
 
 
 }

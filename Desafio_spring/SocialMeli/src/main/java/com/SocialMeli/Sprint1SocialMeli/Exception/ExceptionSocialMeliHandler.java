@@ -21,4 +21,15 @@ public class ExceptionSocialMeliHandler {
                 HttpStatus.NOT_FOUND );
 
     }
+
+
+    @ExceptionHandler(UserduplicateFollowExeption.class)
+    public ResponseEntity<ErrorDTO> get(UserduplicateFollowExeption e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "duplicate_key",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST );
+
+    }
 }

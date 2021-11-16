@@ -1,5 +1,6 @@
 package com.SocialMeli.Sprint1SocialMeli.DTO;
 
+import com.SocialMeli.Sprint1SocialMeli.Model.Vendedor;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -14,9 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class CompradorDTO {
+public class CompradorFollowedListDTO {
     private int userId;
     private String userName;
-    private List<Integer> followeds;
-
+    private List<VendedorIdNameDTO> followed;
 }

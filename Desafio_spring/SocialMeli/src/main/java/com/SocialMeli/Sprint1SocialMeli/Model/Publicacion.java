@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Publicacion {
 
-    private int id_post,category;
+    private int postId,category;
     private double price;
     private LocalDate date;
     private Producto detail;

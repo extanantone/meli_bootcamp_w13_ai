@@ -11,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public abstract class Usuario {
 
-    private int userID;
-    private String user_name;
+    private Integer userID;
+    private String userName;
 
 
 }
