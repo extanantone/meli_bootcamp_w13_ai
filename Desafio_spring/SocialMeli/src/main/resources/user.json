@@ -1,0 +1,34 @@
+[
+  {
+    "user_id": 33,
+    "user_name": "bl3nker",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  },
+  {
+    "user_id": 21,
+    "user_name": "blenkiEnPapel",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  },
+  {
+    "user_id": 123,
+    "user_name": "blenkiEnMacrame",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  },
+  {
+    "user_id": 1,
+    "user_name": "ladyTeff",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  }
+]
