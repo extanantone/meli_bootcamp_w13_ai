@@ -18,11 +18,9 @@ import java.util.stream.Collectors;
 public class PostRepository implements IPostRepository {
 
     private Map<Long, Post> posts;
-    long currentId;
 
     public PostRepository() {
         this.posts = loadPostsFromJSON();
-        this.currentId = posts.size();
     }
 
     private Map<Long, Post> loadPostsFromJSON() {
@@ -51,9 +49,7 @@ public class PostRepository implements IPostRepository {
 
     @Override
     public Post createPost(Post post) {
-        post.setId(currentId);
         posts.put(post.getId(), post);
-        currentId += 1;
         return post;
     }
 }

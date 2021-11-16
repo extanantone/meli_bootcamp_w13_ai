@@ -7,6 +7,7 @@ import com.bootcamp.socialmeli.model.User;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
 @Component
@@ -69,8 +70,10 @@ public class Mapper implements IMapper {
 
     @Override
     public Post postDTOToPost(PostDTO postDTO) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return new Post(
-                LocalDate.parse(postDTO.getDate()),
+                postDTO.getId(),
+                LocalDate.parse(postDTO.getDate(), dateFormatter),
                 postDTO.getCategory(),
                 postDTO.getPrice(),
                 postDTO.getUserId(),
