@@ -1,0 +1,40 @@
+package com.socialmeli.socialmeli.controller;
+
+import com.socialmeli.socialmeli.dto.ResponseSuccessfullyDTO;
+import com.socialmeli.socialmeli.dto.post.PostDTO;
+import com.socialmeli.socialmeli.service.UserAndPostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Controller
+@RequestMapping("/products")
+public class PostController {
+    @Autowired
+    UserAndPostService userAndPostService;
+    @Autowired
+    ResponseSuccessfullyDTO responseSuccessfullyDTO;
+
+    @PostMapping("/post")
+    public ResponseEntity<?> newPost(@RequestBody PostDTO postDTO){
+        return new ResponseEntity(userAndPostService.newPost(postDTO), HttpStatus.OK);
+    }
+
+    @GetMapping("/followed/{user_id}/list")
+    ResponseEntity<?> followedSellersPost(@PathVariable int user_id,@RequestParam(required = false) String order){
+
+        return new ResponseEntity(userAndPostService.followedSellersPost(user_id,order),HttpStatus.OK);
+    }
+
+    @PostMapping("/promopost")
+    public ResponseEntity<?> newPostWithDiscount(@RequestBody PostDTO postDTO){
+        return new ResponseEntity(userAndPostService.newPost(postDTO), HttpStatus.OK);
+    }
+
+
+}

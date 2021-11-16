@@ -17,6 +17,7 @@ public class FoodController {
     //@GetMapping("/Dish")
     @PostMapping("/dishes")
     public ResponseEntity<?> caloriesOfDish(@RequestBody DishDTO dish){
-        return new ResponseEntity(foodRepository.foodCalories(dish.getFoodAndHeigh()), HttpStatus.OK);
+        //return new ResponseEntity(foodRepository.foodCalories(dish.getFoodAndHeigh()), HttpStatus.OK);
+        return new ResponseEntity("hola", HttpStatus.OK);
     }
 }
