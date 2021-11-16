@@ -10,11 +10,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Usuarios extends Usuario{
+public class Usuarios{
 
     private int id;
     private String username;
-
-
 
 }

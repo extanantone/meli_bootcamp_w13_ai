@@ -1,26 +1,26 @@
 package com.example.socialmeli.demo.service;
 
 
-import com.example.socialmeli.demo.dto.controllerToService.FollowUserDTO;
-import com.example.socialmeli.demo.dto.controllerToService.RequestUserListDTO;
-import com.example.socialmeli.demo.dto.controllerToService.UnfollowUserDTO;
-import com.example.socialmeli.demo.dto.controllerToService.UserIdDTO;
-import com.example.socialmeli.demo.dto.serviceToController.UserFollowerCountDTO;
-import com.example.socialmeli.demo.dto.serviceToController.UserFollowersListDTO;
+import com.example.socialmeli.demo.dto.controllerToService.DTOFollowUser;
+import com.example.socialmeli.demo.dto.controllerToService.DTORequestUserList;
+import com.example.socialmeli.demo.dto.controllerToService.DTOUnfollowUser;
+import com.example.socialmeli.demo.dto.controllerToService.DTOUserId;
+import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowerCount;
+import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowersList;
 import org.springframework.http.ResponseEntity;
 
 
 public interface IFollowerService {
 
-    public ResponseEntity followUser(FollowUserDTO requestDTO);
+    public ResponseEntity followUser(DTOFollowUser requestDTO);
 
-    public UserFollowerCountDTO getFollowersCountByUserID(UserIdDTO request);
+    public DTOUserFollowerCount getFollowersCountByUserID(DTOUserId request);
 
-    public UserFollowersListDTO getFollowersListByUserID(RequestUserListDTO request);
+    public DTOUserFollowersList getFollowersListOfUserID(DTORequestUserList request);
 
-    public UserFollowersListDTO getFollowedUsersFromUserId(RequestUserListDTO request);
+    public DTOUserFollowersList getFollowedUsersOfUserId(DTORequestUserList request);
 
-    public ResponseEntity unFollowUser(UnfollowUserDTO request);
+    public ResponseEntity unFollowUser(DTOUnfollowUser request);
 
 
 

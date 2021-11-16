@@ -2,8 +2,8 @@ package com.example.socialmeli.demo.repository;
 
 
 
-import com.example.socialmeli.demo.dto.controllerToService.FollowUserDTO;
-import com.example.socialmeli.demo.dto.controllerToService.UnfollowUserDTO;
+import com.example.socialmeli.demo.dto.controllerToService.DTOFollowUser;
+import com.example.socialmeli.demo.dto.controllerToService.DTOUnfollowUser;
 import com.example.socialmeli.demo.model.Usuarios;
 
 import java.util.List;
@@ -13,10 +13,10 @@ public interface IFollowerRepository {
 
     public void addUserToRepository(int userID);
 
-    public void FollowUser(FollowUserDTO request);
+    public void FollowUser(DTOFollowUser request);
 
 
-    public void unFollowUser(UnfollowUserDTO request);
+    public void unFollowUser(DTOUnfollowUser request);
 
     public List<Usuarios> getUsersWhoFollowsToUserId(int vendedorUserId, String order);
 

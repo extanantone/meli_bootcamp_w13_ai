@@ -1,5 +1,4 @@
-package com.example.socialmeli.demo.model;
-
+package com.example.socialmeli.demo.dto.controllerToService;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,9 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FollowerCompradorVendedor {
+public class DTOUnfollowUser {
 
-    private int compradorId;
-    private int vendedorId;
+    private int user_id;
+    private int user_id_to_unfollow;
 
 }

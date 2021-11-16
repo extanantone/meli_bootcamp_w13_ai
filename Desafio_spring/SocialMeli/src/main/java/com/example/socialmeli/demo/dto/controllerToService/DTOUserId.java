@@ -1,5 +1,6 @@
 package com.example.socialmeli.demo.dto.controllerToService;
 
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -12,14 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ProductoDTO {
+public class DTOUserId {
 
-private int productId;
-private String productName;
-private String type;
-private String brand;
-private String color;
-private String notes;
-
-
+    private int userId;
 }

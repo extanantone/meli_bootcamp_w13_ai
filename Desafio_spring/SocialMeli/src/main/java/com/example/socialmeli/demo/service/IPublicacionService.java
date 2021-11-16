@@ -1,25 +1,25 @@
 package com.example.socialmeli.demo.service;
 
-import com.example.socialmeli.demo.dto.controllerToService.PublicacionDTO;
-import com.example.socialmeli.demo.dto.controllerToService.PublicacionPromoDTO;
-import com.example.socialmeli.demo.dto.controllerToService.RequestPostsFromFollowedsDTO;
-import com.example.socialmeli.demo.dto.controllerToService.UserIdDTO;
-import com.example.socialmeli.demo.dto.serviceToController.PostsFromMyFollowedUsersDTO;
-import com.example.socialmeli.demo.dto.serviceToController.UserPromoPostCountDTO;
-import com.example.socialmeli.demo.dto.serviceToController.UserPromoPostListDTO;
+import com.example.socialmeli.demo.dto.controllerToService.DTOPost;
+import com.example.socialmeli.demo.dto.controllerToService.DTOPromoPost;
+import com.example.socialmeli.demo.dto.controllerToService.DTORequestPostsFromFolloweds;
+import com.example.socialmeli.demo.dto.controllerToService.DTOUserId;
+import com.example.socialmeli.demo.dto.serviceToController.DTOPostsFromMyFollowedUsers;
+import com.example.socialmeli.demo.dto.serviceToController.DTOUserPromoPostCount;
+import com.example.socialmeli.demo.dto.serviceToController.DTOUserPromoPostList;
 import org.springframework.http.ResponseEntity;
 
 public interface IPublicacionService {
 
-    public ResponseEntity createPost(PublicacionDTO p);
+    public ResponseEntity createPost(DTOPost p);
 
-    public ResponseEntity createPromoPost(PublicacionPromoDTO publicacion);
+    public ResponseEntity createPromoPost(DTOPromoPost publicacion);
 
-    public ResponseEntity<PostsFromMyFollowedUsersDTO> getPostsFromUserFollowersSinceTwoWeeks(RequestPostsFromFollowedsDTO request);
+    public ResponseEntity<DTOPostsFromMyFollowedUsers> getPostsFromUserFollowersSinceTwoWeeks(DTORequestPostsFromFolloweds request);
 
-    public ResponseEntity<UserPromoPostListDTO> getPromoPostListOfUserId(UserIdDTO request);
+    public ResponseEntity<DTOUserPromoPostList> getPromoPostListOfUserId(DTOUserId request);
 
-    public ResponseEntity<UserPromoPostCountDTO> countPromoPostOfUser(UserIdDTO userId);
+    public ResponseEntity<DTOUserPromoPostCount> countPromoPostOfUser(DTOUserId userId);
 
 
 

@@ -2,16 +2,16 @@ package com.example.socialmeli.demo.service;
 
 
 
-import com.example.socialmeli.demo.dto.UsuarioDTO;
-import com.example.socialmeli.demo.dto.controllerToService.FollowUserDTO;
-import com.example.socialmeli.demo.dto.controllerToService.RequestUserListDTO;
-import com.example.socialmeli.demo.dto.controllerToService.UnfollowUserDTO;
-import com.example.socialmeli.demo.dto.controllerToService.UserIdDTO;
-import com.example.socialmeli.demo.dto.serviceToController.UserFollowerCountDTO;
-import com.example.socialmeli.demo.dto.serviceToController.UserFollowersListDTO;
+import com.example.socialmeli.demo.dto.DTOUsuario;
+import com.example.socialmeli.demo.dto.controllerToService.DTOFollowUser;
+import com.example.socialmeli.demo.dto.controllerToService.DTORequestUserList;
+import com.example.socialmeli.demo.dto.controllerToService.DTOUnfollowUser;
+import com.example.socialmeli.demo.dto.controllerToService.DTOUserId;
+import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowerCount;
+import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowersList;
 import com.example.socialmeli.demo.model.Usuarios;
 import com.example.socialmeli.demo.repository.IFollowerRepository;
-import com.example.socialmeli.demo.repository.IUsuarioRepository;
+import com.example.socialmeli.demo.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +28,13 @@ public class FollowerService implements IFollowerService{
 IFollowerRepository followerRepository;
 
 @Autowired
-IUsuarioRepository usuarioRepository;
+IUserRepository usuarioRepository;
 
 
     @Override
-    public ResponseEntity followUser(FollowUserDTO requestDTO) {
+    public ResponseEntity followUser(DTOFollowUser requestDTO) {
 
-        if(requestDTO.getUser_id() == requestDTO.getUser_id_to_follow())
+        if(requestDTO.getUserId() == requestDTO.getUserIdToFollow())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 
@@ -49,14 +49,14 @@ IUsuarioRepository usuarioRepository;
     }
 
     @Override
-    public UserFollowerCountDTO getFollowersCountByUserID(UserIdDTO request) {
+    public DTOUserFollowerCount getFollowersCountByUserID(DTOUserId request) {
 
         int userID = request.getUserId();
         String userName;
         List<Usuarios> userFollowers;
         int userFollowersCount = 0;
 
-        UserFollowerCountDTO response = new UserFollowerCountDTO();
+        DTOUserFollowerCount response = new DTOUserFollowerCount();
 
         //Vamos a obtener el usuario solicitado
         Usuarios user = usuarioRepository.obtenerUsuarioPorID(userID);
@@ -83,13 +83,13 @@ IUsuarioRepository usuarioRepository;
     }
 
     @Override
-    public UserFollowersListDTO getFollowersListByUserID(RequestUserListDTO request) {
+    public DTOUserFollowersList getFollowersListOfUserID(DTORequestUserList request) {
 
         int userID = request.getUserId();
         String order = request.getOrder();
         String userName;
         List<Usuarios> userFollowers;
-        UserFollowersListDTO response = new UserFollowersListDTO();
+        DTOUserFollowersList response = new DTOUserFollowersList();
 
         //Vamos a obtener el usuario solicitado
         Usuarios user = usuarioRepository.obtenerUsuarioPorID(userID);
@@ -103,7 +103,7 @@ IUsuarioRepository usuarioRepository;
 
         for (Usuarios u: userFollowers) {
 
-            UsuarioDTO uDTO = new UsuarioDTO();
+            DTOUsuario uDTO = new DTOUsuario();
             uDTO.setUser_id(u.getId());
             uDTO.setUser_name(u.getUsername());
 
@@ -118,9 +118,9 @@ IUsuarioRepository usuarioRepository;
     }
 
     @Override
-    public UserFollowersListDTO getFollowedUsersFromUserId(RequestUserListDTO request) {
+    public DTOUserFollowersList getFollowedUsersOfUserId(DTORequestUserList request) {
 
-        UserFollowersListDTO response = new UserFollowersListDTO();
+        DTOUserFollowersList response = new DTOUserFollowersList();
         List<Usuarios> followedUsers = new ArrayList<>();
         int userId = request.getUserId();
         String order = request.getOrder();
@@ -138,7 +138,7 @@ IUsuarioRepository usuarioRepository;
 
         for (Usuarios u: followedUsers) {
 
-            UsuarioDTO uDTO = new UsuarioDTO();
+            DTOUsuario uDTO = new DTOUsuario();
             uDTO.setUser_id(u.getId());
             uDTO.setUser_name(u.getUsername());
 
@@ -152,7 +152,7 @@ IUsuarioRepository usuarioRepository;
     }
 
     @Override
-    public ResponseEntity unFollowUser(UnfollowUserDTO request) {
+    public ResponseEntity unFollowUser(DTOUnfollowUser request) {
 
         try{
             followerRepository.unFollowUser(request);

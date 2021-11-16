@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestUserListDTO {
+public class DTORequestUserList {
 
     private int userId;
     private String order;

@@ -12,9 +12,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class RequestPostsFromFollowedsDTO {
+public class DTOProduct {
 
-    private int userId;
-    private String order;
+private int productId;
+private String productName;
+private String type;
+private String brand;
+private String color;
+private String notes;
+
 
 }

@@ -4,7 +4,6 @@ import com.example.socialmeli.demo.model.Usuarios;
 
 
 import java.util.Comparator;
-import java.util.Locale;
 
 public class DescendingUserName implements Comparator<Usuarios> {
 

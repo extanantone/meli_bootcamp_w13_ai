@@ -2,11 +2,9 @@ package com.example.socialmeli.demo.repository;
 
 
 import com.example.socialmeli.demo.comparator.AscendingUserName;
-import com.example.socialmeli.demo.comparator.DescendingPostDateSorter;
 import com.example.socialmeli.demo.comparator.DescendingUserName;
-import com.example.socialmeli.demo.dto.controllerToService.FollowUserDTO;
-import com.example.socialmeli.demo.dto.controllerToService.UnfollowUserDTO;
-import com.example.socialmeli.demo.model.FollowerCompradorVendedor;
+import com.example.socialmeli.demo.dto.controllerToService.DTOFollowUser;
+import com.example.socialmeli.demo.dto.controllerToService.DTOUnfollowUser;
 import com.example.socialmeli.demo.model.Followers;
 import com.example.socialmeli.demo.model.Usuarios;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +22,9 @@ public class FollowerRepository implements IFollowerRepository{
     //Contiene los IDs de todos los usuarios (compradores o vendedores) y sus seguidores
     private Map<Integer, Followers> listaDeFollowers = new HashMap<>();
 
-    private List<FollowerCompradorVendedor> listaDeFollows = new ArrayList<>();
 
     @Autowired
-    IUsuarioRepository usuarioRepository;
+    IUserRepository usuarioRepository;
 
 
     @Override
@@ -41,31 +38,28 @@ public class FollowerRepository implements IFollowerRepository{
 
     //US 0001
     @Override
-    public void FollowUser(FollowUserDTO request) {
+    public void FollowUser(DTOFollowUser request) {
 
         //Obtenemos los datos de la request
-        int followerUserId = request.getUser_id();
-        int followedUserId = request.getUser_id_to_follow();
+        int followerUserId = request.getUserId();
+        int followedUserId = request.getUserIdToFollow();
 
-        Usuarios vendedorASeguir = new Usuarios();
+        Usuarios userToFollow = new Usuarios();
 
         try {
             //Nos fijamos si el usuario alguna vez ha seguido a alguien
             Followers userFollowedList = listaDeFollowers.get(followerUserId);
 
 
-            //listaDeFollows.stream().filter(x-> x.getCompradorId() == followedUserId && x.getVendedorId() == followedUserId);
-
             if (userFollowedList == null) {
-
                 addUserToRepository(followerUserId);
                 userFollowedList = listaDeFollowers.get(followerUserId);
             }
 
-            vendedorASeguir = usuarioRepository.obtenerUsuarioPorID(followedUserId);
+            userToFollow = usuarioRepository.obtenerUsuarioPorID(followedUserId);
 
             if(listaDeFollowers.get(followerUserId).getUsuariosSeguidos().get(followedUserId) == null){
-                listaDeFollowers.get(followerUserId).getUsuariosSeguidos().put(followedUserId, vendedorASeguir);
+                listaDeFollowers.get(followerUserId).getUsuariosSeguidos().put(followedUserId, userToFollow);
             }
             else
                 throw new RuntimeException();
@@ -79,9 +73,8 @@ public class FollowerRepository implements IFollowerRepository{
     }
 
 
-
     @Override
-    public void unFollowUser(UnfollowUserDTO request) {
+    public void unFollowUser(DTOUnfollowUser request) {
 
         int userId = request.getUser_id();
         int userToUnfollowId = request.getUser_id_to_unfollow();

@@ -9,10 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserPromoPostCountDTO {
+public class DTOUserFollowerCount {
 
     private int user_id;
     private String user_name;
-    private int promoproducts_count;
+    private int followers_count;
 
 }

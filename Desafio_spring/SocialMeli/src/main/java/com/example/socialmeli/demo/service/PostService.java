@@ -1,12 +1,12 @@
 package com.example.socialmeli.demo.service;
 
-import com.example.socialmeli.demo.dto.UsuarioDTO;
+import com.example.socialmeli.demo.dto.DTOUsuario;
 import com.example.socialmeli.demo.dto.controllerToService.*;
 import com.example.socialmeli.demo.dto.serviceToController.*;
-import com.example.socialmeli.demo.model.Producto;
-import com.example.socialmeli.demo.model.Publicacion;
-import com.example.socialmeli.demo.model.PublicacionPromocion;
-import com.example.socialmeli.demo.repository.IPublicacionRepository;
+import com.example.socialmeli.demo.model.Product;
+import com.example.socialmeli.demo.model.Post;
+import com.example.socialmeli.demo.model.PromoPost;
+import com.example.socialmeli.demo.repository.IPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,28 +16,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PublicacionService implements IPublicacionService{
+public class PostService implements IPublicacionService{
 
     @Autowired
-    IPublicacionRepository iPublicacionRepository;
+    IPostRepository iPublicacionRepository;
 
     @Autowired
     IFollowerService iFollowerService;
 
     @Autowired
-    IUsuarioService iUsuarioService;
+    IUserService iUserService;
 
     @Override
-    public ResponseEntity createPost(PublicacionDTO publicacion) {
+    public ResponseEntity createPost(DTOPost publicacion) {
 
-        Publicacion postToSave = new Publicacion();
+        Post postToSave = new Post();
         postToSave.setUserId(publicacion.getUserId());
         postToSave.setIdPost(publicacion.getIdPost());
         postToSave.setCategory(publicacion.getCategory());
         postToSave.setDate(publicacion.getDate());
         postToSave.setPrice(publicacion.getPrice());
 
-        Producto p = new Producto();
+        Product p = new Product();
         p.setProductId(publicacion.getDetail().getProductId());
         p.setType(publicacion.getDetail().getType());
         p.setProductName(publicacion.getDetail().getProductName());
@@ -53,9 +53,9 @@ public class PublicacionService implements IPublicacionService{
     }
 
     @Override
-    public ResponseEntity createPromoPost(PublicacionPromoDTO publicacion) {
+    public ResponseEntity createPromoPost(DTOPromoPost publicacion) {
 
-        PublicacionPromocion postToSave = new PublicacionPromocion();
+        PromoPost postToSave = new PromoPost();
         postToSave.setUserId(publicacion.getUserId());
         postToSave.setIdPost(publicacion.getIdPost());
         postToSave.setCategory(publicacion.getCategory());
@@ -64,7 +64,7 @@ public class PublicacionService implements IPublicacionService{
         postToSave.setDiscount(publicacion.getDiscount());
         postToSave.setPromo(publicacion.isHasPromo());
 
-        Producto p = new Producto();
+        Product p = new Product();
         p.setProductId(publicacion.getDetail().getProductId());
         p.setType(publicacion.getDetail().getType());
         p.setProductName(publicacion.getDetail().getProductName());
@@ -81,40 +81,40 @@ public class PublicacionService implements IPublicacionService{
 
 
     @Override
-    public ResponseEntity<PostsFromMyFollowedUsersDTO> getPostsFromUserFollowersSinceTwoWeeks(RequestPostsFromFollowedsDTO request) {
+    public ResponseEntity<DTOPostsFromMyFollowedUsers> getPostsFromUserFollowersSinceTwoWeeks(DTORequestPostsFromFolloweds request) {
 
         int userId = request.getUserId();
         String order = request.getOrder();
 
-        List<PostFollowersDTO> postsFromVendorDTO = new ArrayList<>();
-        List<Publicacion> postsFromVendor = new ArrayList<>();
-        List<UsuarioDTO> followedUsersFromUser = new ArrayList<>();
+        List<DTOPostFollowers> postsFromVendorDTO = new ArrayList<>();
+        List<Post> postsFromVendor = new ArrayList<>();
+        List<DTOUsuario> followedUsersFromUser = new ArrayList<>();
 
-        PostsFromMyFollowedUsersDTO response = new PostsFromMyFollowedUsersDTO();
-        UserFollowersListDTO followedUsersFromUserDTO = new UserFollowersListDTO();
+        DTOPostsFromMyFollowedUsers response = new DTOPostsFromMyFollowedUsers();
+        DTOUserFollowersList followedUsersFromUserDTO = new DTOUserFollowersList();
 
-        RequestUserListDTO requestToPostService = new RequestUserListDTO();
+        DTORequestUserList requestToPostService = new DTORequestUserList();
         requestToPostService.setUserId(request.getUserId());
         requestToPostService.setOrder(null);
 
 
-        UserIdDTO userIdDTo = new UserIdDTO(userId);
-        followedUsersFromUserDTO = iFollowerService.getFollowedUsersFromUserId(requestToPostService);
-        followedUsersFromUser = followedUsersFromUserDTO.getFollowers();
+        DTOUserId userIdDTo = new DTOUserId(userId);
+        followedUsersFromUserDTO = iFollowerService.getFollowedUsersOfUserId(requestToPostService);
+        followedUsersFromUser = followedUsersFromUserDTO.getFollowed();
 
-        for (UsuarioDTO uDTO: followedUsersFromUser) {
+        for (DTOUsuario uDTO: followedUsersFromUser) {
 
             postsFromVendor = iPublicacionRepository.obtenerPublicacionesPorVendedorIdPosteriores2Semanas(uDTO.getUser_id(),order);
 
-            for (Publicacion p: postsFromVendor) {
+            for (Post p: postsFromVendor) {
 
-                PostFollowersDTO postFollowersDTO = new PostFollowersDTO();
+                DTOPostFollowers postFollowersDTO = new DTOPostFollowers();
                 postFollowersDTO.setIdPost(p.getIdPost());
                 postFollowersDTO.setDate(p.getDate());
                 postFollowersDTO.setCategory(p.getCategory());
                 postFollowersDTO.setPrice(p.getPrice());
 
-                ProductoDTO prod = new ProductoDTO();
+                DTOProduct prod = new DTOProduct();
                 prod.setProductId(p.getDetail().getProductId());
                 prod.setType(p.getDetail().getType());
                 prod.setProductName(p.getDetail().getProductName());
@@ -138,15 +138,15 @@ public class PublicacionService implements IPublicacionService{
     }
 
     @Override
-    public ResponseEntity<UserPromoPostListDTO> getPromoPostListOfUserId(UserIdDTO request) {
+    public ResponseEntity<DTOUserPromoPostList> getPromoPostListOfUserId(DTOUserId request) {
 
         int vendorId = request.getUserId();
-        List<Publicacion> responseFromRepository = new ArrayList<>();
-        List<PublicacionPromoDTO> promoPostList = new ArrayList<>();
-        UsuarioDTO searchedUser = new UsuarioDTO();
-        UserPromoPostListDTO response = new UserPromoPostListDTO();
+        List<Post> responseFromRepository = new ArrayList<>();
+        List<DTOPromoPost> promoPostList = new ArrayList<>();
+        DTOUsuario searchedUser = new DTOUsuario();
+        DTOUserPromoPostList response = new DTOUserPromoPostList();
 
-        searchedUser = iUsuarioService.getUserByUserId(vendorId);
+        searchedUser = iUserService.getUserByUserId(vendorId);
 
         if(searchedUser == null){
             throw new RuntimeException();
@@ -157,9 +157,9 @@ public class PublicacionService implements IPublicacionService{
 
         responseFromRepository = iPublicacionRepository.getPromoPostListOfUserId(vendorId);
 
-        for (Publicacion p: responseFromRepository) {
+        for (Post p: responseFromRepository) {
 
-            PublicacionPromoDTO post = new PublicacionPromoDTO();
+            DTOPromoPost post = new DTOPromoPost();
             post.setIdPost(p.getIdPost());
             post.setUserId(p.getUserId());
             post.setCategory(p.getCategory());
@@ -169,7 +169,7 @@ public class PublicacionService implements IPublicacionService{
             post.setPrice(p.getPrice());
 
 
-            ProductoDTO prod = new ProductoDTO();
+            DTOProduct prod = new DTOProduct();
             prod.setProductId(p.getDetail().getProductId());
             prod.setType(p.getDetail().getType());
             prod.setProductName(p.getDetail().getProductName());
@@ -187,14 +187,14 @@ public class PublicacionService implements IPublicacionService{
     }
 
     @Override
-    public ResponseEntity<UserPromoPostCountDTO> countPromoPostOfUser(UserIdDTO userId) {
+    public ResponseEntity<DTOUserPromoPostCount> countPromoPostOfUser(DTOUserId userId) {
 
         int vendorId = userId.getUserId();
         int promoProductsCount = 0;
-        UsuarioDTO searchedUser = new UsuarioDTO();
-        UserPromoPostCountDTO response = new UserPromoPostCountDTO();
+        DTOUsuario searchedUser = new DTOUsuario();
+        DTOUserPromoPostCount response = new DTOUserPromoPostCount();
 
-        searchedUser = iUsuarioService.getUserByUserId(vendorId);
+        searchedUser = iUserService.getUserByUserId(vendorId);
 
         if(searchedUser == null){
             throw new RuntimeException();

@@ -1,8 +1,6 @@
 package com.example.socialmeli.demo.dto.serviceToController;
 
-
-import com.example.socialmeli.demo.dto.UsuarioDTO;
-import lombok.AllArgsConstructor;
+import com.example.socialmeli.demo.dto.controllerToService.DTOPromoPost;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,17 +11,16 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class UserFollowersListDTO {
+public class DTOUserPromoPostList {
 
     private int user_id;
     private String user_name;
-    private List<UsuarioDTO> followers = new ArrayList<>();
+    private List<DTOPromoPost> posts = new ArrayList<>();
 
 
-    public void addFollowerToList(UsuarioDTO user){
+    public void addPostToList(DTOPromoPost p){
 
-        followers.add(user);
+        posts.add(p);
     }
 
 }

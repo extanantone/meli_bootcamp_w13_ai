@@ -8,13 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
-public class UsuarioRepository implements IUsuarioRepository {
+public class UserRepository implements IUserRepository {
 
     private Map<Integer, Usuarios> listaUsuarios = new HashMap<>();
 
 
 
-    public UsuarioRepository(){
+    public UserRepository(){
 
         Usuarios v1 = new Usuarios(1,"Pablo");
         Usuarios v2 = new Usuarios(2,"Rodrigo");

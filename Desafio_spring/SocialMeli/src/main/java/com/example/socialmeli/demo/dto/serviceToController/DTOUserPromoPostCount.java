@@ -1,5 +1,4 @@
-package com.example.socialmeli.demo.dto.controllerToService;
-
+package com.example.socialmeli.demo.dto.serviceToController;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,10 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FollowUserDTO {
+public class DTOUserPromoPostCount {
 
     private int user_id;
-    private int user_id_to_follow;
-
+    private String user_name;
+    private int promoproducts_count;
 
 }

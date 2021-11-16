@@ -1,17 +1,16 @@
 package com.example.socialmeli.demo.service;
 
-import com.example.socialmeli.demo.dto.UsuarioDTO;
-import com.example.socialmeli.demo.model.Usuario;
+import com.example.socialmeli.demo.dto.DTOUsuario;
 import com.example.socialmeli.demo.model.Usuarios;
-import com.example.socialmeli.demo.repository.IUsuarioRepository;
+import com.example.socialmeli.demo.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UsuarioService implements IUsuarioService{
+public class UserService implements IUserService {
 
     @Autowired
-    IUsuarioRepository iUsuarioRepository;
+    IUserRepository iUsuarioRepository;
 
     @Override
     public Usuarios createUser(Usuarios v) {
@@ -19,10 +18,10 @@ public class UsuarioService implements IUsuarioService{
     }
 
     @Override
-    public UsuarioDTO getUserByUserId(int id) {
+    public DTOUsuario getUserByUserId(int id) {
 
-        Usuario searchedUser = new Usuarios();
-        UsuarioDTO searchedUserDTO = new UsuarioDTO();
+        Usuarios searchedUser = new Usuarios();
+        DTOUsuario searchedUserDTO = new DTOUsuario();
 
         searchedUser = iUsuarioRepository.obtenerUsuarioPorID(id);
         searchedUserDTO.setUser_id(searchedUser.getId());

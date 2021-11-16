@@ -2,9 +2,8 @@ package com.example.socialmeli.demo.repository;
 
 import com.example.socialmeli.demo.comparator.AscendingPostDateSorter;
 import com.example.socialmeli.demo.comparator.DescendingPostDateSorter;
-import com.example.socialmeli.demo.dto.controllerToService.RequestPostsFromFollowedsDTO;
-import com.example.socialmeli.demo.model.Publicacion;
-import com.example.socialmeli.demo.model.PublicacionPromocion;
+import com.example.socialmeli.demo.model.Post;
+import com.example.socialmeli.demo.model.PromoPost;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -15,15 +14,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class PublicacionRepository implements IPublicacionRepository {
+public class PostRepository implements IPostRepository {
 
-    private List<Publicacion> publicaciones = new ArrayList<>();
+    private List<Post> publicaciones = new ArrayList<>();
 
 
     @Override
-    public Publicacion crearPublicacion(Publicacion p) {
+    public Post crearPublicacion(Post p) {
 
-        PublicacionPromocion pr = new PublicacionPromocion();
+        PromoPost pr = new PromoPost();
         publicaciones.add(pr);
 
         publicaciones.add(p);
@@ -31,9 +30,9 @@ public class PublicacionRepository implements IPublicacionRepository {
     }
 
     @Override
-    public List<Publicacion> obtenerPublicacionesPorVendedorIdPosteriores2Semanas(int userId, String order) {
+    public List<Post> obtenerPublicacionesPorVendedorIdPosteriores2Semanas(int userId, String order) {
 
-        List<Publicacion> response = new ArrayList<>();
+        List<Post> response = new ArrayList<>();
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDateTime now = LocalDateTime.now();
@@ -61,7 +60,7 @@ public class PublicacionRepository implements IPublicacionRepository {
 
         int promoPostCount = 0;
 
-        List<Publicacion> listOfPromoPost = publicaciones.stream().filter(p -> p.getUserId() == userId && p.hasPromo() == true).collect(Collectors.toList());
+        List<Post> listOfPromoPost = publicaciones.stream().filter(p -> p.getUserId() == userId && p.hasPromo() == true).collect(Collectors.toList());
         promoPostCount = listOfPromoPost.size();
 
         return promoPostCount;
@@ -69,9 +68,9 @@ public class PublicacionRepository implements IPublicacionRepository {
     }
 
     @Override
-    public List<Publicacion> getPromoPostListOfUserId(int userId) {
+    public List<Post> getPromoPostListOfUserId(int userId) {
 
-        List <Publicacion> response = new ArrayList<>();
+        List <Post> response = new ArrayList<>();
 
         response = publicaciones.stream().filter(x -> x.getUserId() == userId)
                 .filter(p -> p.getUserId() == userId && p.hasPromo() == true)
