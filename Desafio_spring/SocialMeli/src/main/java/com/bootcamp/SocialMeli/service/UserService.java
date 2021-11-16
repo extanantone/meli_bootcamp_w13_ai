@@ -44,6 +44,7 @@ public class UserService implements IUserService{
     @Override
     public FollowersListDTO getFollowers(int userId) {
         User user = this.userRepository.find(userId).orElseThrow();
+        //tirar not found exception
         List<User> listOfFollowers = new ArrayList<>(user.getFollowers().values());
         return new FollowersListDTO(userId, user.getName(), listOfFollowers);
     }
@@ -51,6 +52,7 @@ public class UserService implements IUserService{
     @Override
     public FollowedListDTO getFollowed(int userId) {
         User user = this.userRepository.find(userId).orElseThrow();
+        //tirar not found exception
         List<User> listOfFollowed = new ArrayList<>(user.getFollowed().values());
         return new FollowedListDTO(userId, user.getName(), listOfFollowed);
     }
@@ -58,6 +60,7 @@ public class UserService implements IUserService{
     @Override
     public FollowersCountDTO getFollowersCount(int userId) {
         User user = this.userRepository.find(userId).orElseThrow();
+        //tirar not found exception
         List<User> listOfFollowers = new ArrayList<>(user.getFollowers().values());
         return new FollowersCountDTO(userId, user.getName(), listOfFollowers);
     }

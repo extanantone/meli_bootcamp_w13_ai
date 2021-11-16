@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class FollowedListDTO {
-    int userId = 1;
+    int userId;
     String userName;
     List<UserDTO> followed;
 

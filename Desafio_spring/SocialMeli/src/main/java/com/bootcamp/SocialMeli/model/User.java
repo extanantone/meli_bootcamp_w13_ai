@@ -1,7 +1,5 @@
 package com.bootcamp.SocialMeli.model;
 
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,11 +8,12 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class User {
+public class User implements IUser{
     private int id;
     private String name;
     private Map<Integer, User> followed;
     private Map<Integer, User> followers;
+    private Map<Integer, Post> posts;
     private boolean canSell;
 
     public User(int id, String name, boolean canSell) {
@@ -33,6 +32,14 @@ public class User {
         this.canSell = false;
     }
 
+
+    public void addPost(Post post){
+        int postId = post.getId();
+        if (this.posts.containsKey(post)) throw new RuntimeException("post already exists");
+        //implementar excepciones y handler
+        this.posts.put(postId, post);
+    }
+
     public void addFollowed(User user) {
         int userId = user.getId();
         if (this.followed.containsKey(userId)) throw new RuntimeException("followed already exists");
@@ -42,6 +49,7 @@ public class User {
 
     public void removeFollowed(int userId) {
         if (!this.followed.containsKey(userId)) throw new RuntimeException("followed doesn't exist");
+        //implementar excepciones y handler
         this.followed.remove(userId);
     }
 
@@ -54,6 +62,7 @@ public class User {
 
     public void removeFollower(int userId) {
         if (!this.followers.containsKey(userId)) throw new RuntimeException("follower doesn't exist");
+        //implementar excepciones y handler
         this.followers.remove(userId);
     }
 }

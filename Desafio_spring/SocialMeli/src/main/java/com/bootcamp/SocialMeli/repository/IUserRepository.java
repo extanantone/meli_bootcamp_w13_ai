@@ -9,6 +9,5 @@ import java.util.Optional;
 public interface IUserRepository {
     Optional<User> find(int userId);
     List<User> findAll();
-    User create(int userId, String userName, boolean isSeller);
-    //encontrar solución para desacoplar división seller/buyer del repository
+    User create(int userId, String userName, boolean canSell);
 }

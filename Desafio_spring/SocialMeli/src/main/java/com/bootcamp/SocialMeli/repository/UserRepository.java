@@ -13,7 +13,6 @@ public class UserRepository implements IUserRepository{
     public Optional<User> find(int userId) {
         if (!this.users.containsKey(userId)) return Optional.empty();
         return Optional.of(this.users.get(userId));
-
     }
 
     @Override
