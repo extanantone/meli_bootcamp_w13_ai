@@ -1,5 +1,17 @@
 # Documentacion
 
+
+### Dragramas
+
+**Modelo**
+
+![img](model_diagram.jpg)
+
+**Project**
+
+![img](project.jpg)
+
+
 ### Follow user
 
 POST
