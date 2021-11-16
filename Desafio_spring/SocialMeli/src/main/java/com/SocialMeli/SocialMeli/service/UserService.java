@@ -78,4 +78,9 @@ public class UserService implements IUserService {
     public Boolean createPostPromo(PostPromoUserDTO post) {
         return userRepository.createPostPromo(post);
     }
+
+    @Override
+    public PostPromoCountDTO postPromoCount(Integer userId) {
+        return userRepository.postPromoCount(userId);
+    }
 }

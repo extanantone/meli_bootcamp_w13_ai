@@ -107,4 +107,9 @@ public class UserController {
 
         return new ResponseEntity<String>("Ha ocurrido un error al guardar el post.", HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("products/{userId}/promo-post/count")
+    public PostPromoCountDTO postPromoCount(@PathVariable Integer userId){
+        return userService.postPromoCount(userId);
+    }
 }

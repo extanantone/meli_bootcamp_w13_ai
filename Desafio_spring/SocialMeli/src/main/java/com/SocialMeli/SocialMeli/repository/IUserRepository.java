@@ -20,5 +20,6 @@ public interface IUserRepository {
 
     // BONUS
     Boolean createPostPromo(PostPromoUserDTO post);
+    PostPromoCountDTO postPromoCount( Integer userId );
 
 }

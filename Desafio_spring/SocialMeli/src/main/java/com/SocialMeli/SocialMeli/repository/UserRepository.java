@@ -436,4 +436,27 @@ public class UserRepository implements IUserRepository{
 
         return band;
     }
+
+    @Override
+    public PostPromoCountDTO postPromoCount(Integer userId) {
+        SellersDTO sellersDTO = findSellerByUserId(userId);
+        PostPromoCountDTO user = new PostPromoCountDTO();
+        //Integer count = 0;
+
+        if( sellersDTO != null ){
+            user.setUser_id(sellersDTO.getUser_id());
+            user.setUser_name(sellersDTO.getUser_name());
+
+            List<PostPromoUserDTO> posts = postPromoDTOList.stream()
+                    .filter( post -> post.getUser_id() == userId )
+                    .collect(Collectors.toList());
+
+            System.out.println("SIZE--->" + posts.size());
+
+            user.setPromo_products_count(posts.size());
+
+        }
+
+        return user;
+    }
 }
