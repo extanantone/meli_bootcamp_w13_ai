@@ -1,26 +1,26 @@
 # Desafio Sprint 1: Git, Java y Sprint.
 
-####Pablo Guayta - Software developer.
+#### Pablo Guayta - Software developer.
 
-##Introduccion
+## Introduccion
 
-Este repositorio cuenta con la resolución del desafio 1 del Bootcamp.
+Este repositorio cuenta con la resolución del desafío 1 del Bootcamp.
 
-Este desafio consiste en la implementación de una versión Beta de lo que va a ser conocido como “SocialMeli”, en donde los compradores van a poder seguir a sus vendedores favoritos y enterarse de todas las novedades que los mismos posteen.
+Este desafío consiste en la implementación de una versión Beta de lo que va a ser conocido como “SocialMeli”, en donde los compradores van a poder seguir a sus vendedores favoritos y enterarse de todas las novedades que los mismos posteen.
 
 Por lo tanto, en este documento vamos a detallar las consideraciones que se tuvieron al momento de hacer este desafio.
 
 
-##Como iniciar el proyecto
+## Como iniciar el proyecto
 
 El proyecto se encuentra en la estructura de carpetas "/Desafio_spring/SocialMeli".
 Con iniciar el proyecto y ejecutar la clase "SocialmeliApplication" se ejecutaría el código.
 
-Ademas, en el proyecto contamos con un **archivo Json** llamado "usuarios.json" en el cual se encuentran cuatro usuarios, con el id del 1 al 4.
+Además, en el proyecto contamos con un **archivo Json** llamado "usuarios.json" en el cual se encuentran cuatro usuarios, con el id del 1 al 4.
 Los usuarios con id 1 y 2 estan destinados a ser compradores, mientras que los usuarios con id 3 y 4 estan destinados a ser vendedores (aunque todos los usuarios son iguales ante el manejo de la aplicacion).
 
 
-##Consideraciones
+## Consideraciones
 
 Para este sistema tuvimos las siguientes consideraciones:
 
@@ -28,31 +28,31 @@ Para este sistema tuvimos las siguientes consideraciones:
 - Los datos iniciales de los usuarios se levantan desde el repository de Usuarios.
 
 
-##Estructura del proyecto
+## Estructura del proyecto
 El proyecto se ha separado en la siguiente estructura de paquetes:
 
-####-comparator
+#### -comparator
 Aqui se encuentran las clases tipo "Comparator" utilizadas para ordenar los response de determinados endpoints. Se encuentran las clases de ordenamiento ascendente y descendiente para el nombre de los usuarios y la fecha de las publicaciones.
 
-####-controller
+#### -controller
 Se encuentran los controller de la aplicacion. Se separan en:
 -FollowerController: administra todos los endpoints referidos a usuarios seguidos y seguidores de un usuario.
 -PostController: administra todos los endpoints referidos a publicaciones de los usuarios.
 -PromoPostController: administra todos los endpoints referidos a publicaciones con promocion de los usuarios.
 
-####-dto
+#### -dto
 Se encuentran todos los DTOs utilizados para la aplicación. Dentro se encuentran dos paquetes por distintos tipos de DTO:
 -controllerToService: todos los DTO recibidos por el controlador o que son enviados al service.
 -serviceToController: todos los DTO que son enviados desde el service al controlador para responder.
 
 
-####-exception
+#### -exception
 Paquete donde se manejan las excepciones de la aplicacion.
 
-####-mapper
+#### -mapper
 Se encuentran los mapper utilizados en la aplicacion. Se utilizan para mapear los modelos de la aplicacion a sus correspondientes DTO y viceversa.
 
-####-model
+#### -model
 Se encuentran todos los modelos utilizados para la aplicacion. 
 
 Los principales son:
@@ -67,22 +67,22 @@ Los principales son:
 
 -Usuarios
 
-####-repository
+#### -repository
 Se encuentran los repositorios asociados a la aplicacion.
 
-####-service
+#### -service
 Se encuentran los servicios asociados a la aplicacion
 
-##Detalles de las User Stories:
+## Detalles de las User Stories:
 
-##US-0001 - FollowUser
+## US-0001 - FollowUser
 Tanto compradores como vendedores podrán seguir a cualquier tipo de usuario por la consideracion tomada de que todo usuario puede seguir a otro usuario.
 
-###Método: 
+### Método: 
 POST
-###Endpoint: 
+### Endpoint: 
 localhost:8080/users/{user_id}/follow/{user_id_to_follow}
-###Response:
+### Response:
 
 200 - OK
 
@@ -94,40 +94,35 @@ Puede arrojar un status code 400 por alguna de las siguientes opciones:
 - Si el usuario con "user_id" intenta seguirse a si mismo.
 - El usuario a seguir o el usuario que este intentando seguir no se encuentren registrados (es decir, en el archivo Json).
 
-##US-0002 - Cantidad seguidores
+## US-0002 - Cantidad seguidores
 Nos devuelve la cantidad de usuarios que siguen a un determinado usuario.
 
-###Método: GET
+### Método: GET
 
-###Endpoint: 
+### Endpoint: 
 localhost:8080/users/{user_id}/followers/count
 
-###Response:
+### Response:
 
 200 - OK
 
-{"user_id" : identificador_usuario,
-
-"name" : "nombre",
-
-"followers_count" : "cantidad_seguidores" }
-
+Respuesta Json con formato indicado en la US.
 400 - BAD REQUEST
 
 Nos devuelve un código 400 en caso de:
 
 - No encontrar al usuario enviado por parametro.
 
-##US-0003 ¿Quien me sigue?
+## US-0003 ¿Quien me sigue?
 Nos devuelve una lista de usuarios que siguen al usuario enviado mediante el request.
 
-###Método: 
+### Método: 
 GET
 
-###Endpoint:
+### Endpoint:
 localhost:8080/users/{user_id}/followers/list
 
-###Response:
+### Response:
 200 - OK
 
 Cadena JSON con la lista de seguidores
@@ -137,15 +132,15 @@ Cadena JSON con la lista de seguidores
 
 Por defecto, se devuelve la lista de seguidores ordenada de manera descendente. 
 
-##US-0004 ¿A quién sigo?
+## US-0004 ¿A quién sigo?
 
-###Método:
+### Método:
 GET
 
-###Endpoint:
+### Endpoint:
 localhost:8080/users/{user_id}/followeds/list
 
-###Response:
+### Response:
 200 - OK
 
 Cadena JSON con la lista de seguidos
@@ -155,37 +150,37 @@ Cadena JSON con la lista de seguidos
 
 Este método, por defecto, no realiza un ordenamiento en la lista. En la US 0008 se configura el ordenamiento.
 
-##US-0005 Alta de publicación
+## US-0005 Alta de publicación
 Consiste en dar de alta una nueva publicación. El payload requerido es una cadena JSON en el body del request HTTP. 
 Dicho endpoint es necesario agregar los campos solicitados en el documento de especificación de requerimientos.
 
-###Método: 
+### Método: 
 POST
 
-###Endpoint: 
+### Endpoint: 
 localhost:8080/products/newpost
 
-###Body: 
+### Body: 
 Sentencia JSON con los datos correspondientes
 
-###Response:
+### Response:
 200 - OK
 
 400 - BAD REQUEST
 
-##US-0006 Listado de publicaciones de los vendedores seguidos por un usuario.
+## US-0006 Listado de publicaciones de los vendedores seguidos por un usuario.
 Obtener un listado de las publicaciones realizadas por los vendedores que un usuario sigue en las últimas dos semanas (para esto tener en cuenta ordenamiento por fecha, publicaciones más recientes primero).
 
-###Método: 
+### Método: 
 GET
 
-###Endpoint: 
+### Endpoint: 
 localhost:8080/products/followed/{user_id}/list
 
-###Body: 
+### Body: 
 Sentencia JSON con los datos correspondiente.
 
-###Response:
+### Response:
 
 200 - OK
 
@@ -198,19 +193,19 @@ Si los vendedores no poseen publicaciones vigentes o el usuario no sigue a ningu
 
 
 
-##US-0007 Unfollow
+## US-0007 Unfollow
 Permite a los usuarios dejar de seguir vendedores/compradores (un usuario).
 
-###Método: 
+### Método: 
 POST
 
-###Endpoint: 
+### Endpoint: 
 localhost:8080/users/{user_id}/unfollow/{user_id_to_unfollow}
 
-###Body: 
+### Body: 
 Sentencia JSON con los datos correspondiente.
 
-###Response:
+### Response:
 
 200 - OK
 
@@ -225,15 +220,15 @@ Si el user_id_to_unfollow no existe: "Se ha registrado un problema al intentar b
 Si el user_id no sigue al usuario que busca dejar de seguir: "El usuario solicitado no se encontraba siguiendo al usuario solicitado"
 
 
-##US-0008 Ordenamiento por nombre
+## US-0008 Ordenamiento por nombre
 Esta requerimiento solicita ordenar por nombre de usuario (ya sea ascendente o descendente) al momento de realizar las user stories 0003 y 0004.
 
-###Método: 
+### Método: 
 GET
 
-###Endpoints:
+### Endpoints:
 
-(Corresponden a los mismos endpoints de las US-0003 y US-0004, solo que debe añadirse este nuevo parémtro)
+Corresponden a los mismos endpoints de las US-0003 y US-0004, solo que debe añadirse este nuevo parémtro
 
 localhost:8080/users/{user_id}/followers/list?order=name_asc
 localhost:8080/users/{user_id}/followers/list?order=name_desc
@@ -248,19 +243,20 @@ localhost:8080/users/{user_id}/followed/list?order=name_desc
 Cadena JSON con los usuarios seguidos/seguidores.
 400 - BAD REQUEST
 
-##US-0009 Ordenamiento por fecha
+## US-0009 Ordenamiento por fecha
 Esta user story es una mejora de la US-0006 y lo que permite hacer es ordenar la lista de publicaciones de los vendedores que sigue un usuario por fecha de manera ascendente o descendente. Se agrega el parámetro order en le cual se debe especificar el tipo de orden que se desea realizar. Si no se envía el parámetro el aplicativo ordenará la lista de manera descendente.
 
-###Método: 
+### Método: 
 GET
 
-###Endpoints:
+### Endpoints:
 
-(*) En el caso de no especificar el parámetro order, la lista se ordenará de manera descendente.
+En el caso de no especificar el parámetro order, la lista se ordenará de manera descendente.
 
 localhost:8080/products/followed/{user_id}/list?order=date_asc
 localhost:8080/products/followed/{user_id}/list?order=date_desc
-Status:
+
+### Response:
 
 200 - OK
 
@@ -270,18 +266,18 @@ Cadena JSON con las publicaciones de los vendedores.
 Usuario inexistente.
 
 
-#Extra Bonus
+# Extra Bonus
 
-##US-0010 Publicación producto en promoción
+## US-0010 Publicación producto en promoción
 Para crear una Publicacion con promocion se crea un nuevo objeto que herede de la clase Post (promocion), para no afectar el funcionamiento de los endpoint anteriores. 
 
-###Método: 
+### Método: 
 POST
 
-###Endpoint: 
+### Endpoint: 
 localhost:8080/products/promo-post
 
-###Response:
+### Response:
 
 200 - OK
 
@@ -290,16 +286,16 @@ localhost:8080/products/promo-post
 
 - No encontrar al usuario enviado por parametro.
 
-##US-0011 Cantidad publicaciones en Promoción
+## US-0011 Cantidad publicaciones en Promoción
 Este requerimiento consiste en contar la cantidad de publicaciones con promocion que tiene un determinado usuario.
 
-###Método: 
+### Método: 
 GET
 
-###Endpoint: 
+### Endpoint: 
 localhost:8080/products/{user_id}/promo-post/count
 
-###Response:
+### Response:
 
 200 - OK
 
@@ -308,16 +304,16 @@ Retorna un JSON con los datos solicitados en el documento de especificación de 
 
 Error: Usuario inexistente
 
-##US-0012 Lista de publicaciones en promoción
+## US-0012 Lista de publicaciones en promoción
 Este requerimiento consiste en mostrar las publicaciones QUE SE ENCUENTREN EN PROMOCIÓN por un determinado vendedor.
 
-###Método: 
+### Método: 
 GET
 
-###Endpoint: 
+### Endpoint: 
 localhost:8080/products/{user_id}/list
 
-###Response:
+### Response:
 
 200 - OK
 
