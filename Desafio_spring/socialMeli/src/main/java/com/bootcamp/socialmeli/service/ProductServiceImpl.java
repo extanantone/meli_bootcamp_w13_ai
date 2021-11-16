@@ -9,7 +9,7 @@ import com.bootcamp.socialmeli.entitiy.Post;
 import com.bootcamp.socialmeli.entitiy.Product;
 import com.bootcamp.socialmeli.entitiy.Purchaser;
 import com.bootcamp.socialmeli.entitiy.Seller;
-import com.bootcamp.socialmeli.exception.UserException.NotFoundUsuarioException;
+import com.bootcamp.socialmeli.exception.userException.NotFoundUsuarioException;
 import com.bootcamp.socialmeli.exception.postException.PostIdAlreadyExists;
 import com.bootcamp.socialmeli.repository.ISocialMeliRepository;
 import org.modelmapper.ModelMapper;

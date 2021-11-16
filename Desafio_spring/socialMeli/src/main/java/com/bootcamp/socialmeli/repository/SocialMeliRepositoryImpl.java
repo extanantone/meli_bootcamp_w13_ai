@@ -96,12 +96,4 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
         return posts;
     }
 
-/*    @Override
-    public void getSortedSellerFollowers(List<Purchaser> list, Comparator<?> comparator, SortOrder order) {
-        if(order == SortOrder.ASC){
-            list.sort(Comparator.comparing(Purchaser::getUserName));
-        }else{
-            list.sort(Comparator.comparing(Purchaser::getUserName).reversed());
-        }
-    }*/
 }

@@ -18,5 +18,7 @@ public interface IUserService {
 
     SellerFollowersListDTO getSellerFollowersListSort(Integer sellerId, String order);
 
+    PurchaserFollowedListDTO getPurchaserFollowedListSort(Integer purchaserId, String order);
+
 
 }

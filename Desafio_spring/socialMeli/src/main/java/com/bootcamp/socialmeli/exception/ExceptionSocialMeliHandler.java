@@ -1,8 +1,10 @@
 package com.bootcamp.socialmeli.exception;
 
 import com.bootcamp.socialmeli.dto.response.error.ErrorDTO;
-import com.bootcamp.socialmeli.exception.UserException.NotFoundFollower;
-import com.bootcamp.socialmeli.exception.UserException.NotFoundUsuarioException;
+import com.bootcamp.socialmeli.exception.sortException.BadSorterParamRequest;
+import com.bootcamp.socialmeli.exception.userException.NotFoundFollower;
+import com.bootcamp.socialmeli.exception.userException.NotFoundUsuarioException;
+import com.bootcamp.socialmeli.exception.userException.PurchaserAlreadyFollowSeller;
 import com.bootcamp.socialmeli.exception.postException.PostIdAlreadyExists;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,5 +45,22 @@ public class ExceptionSocialMeliHandler {
 
     }
 
+    @ExceptionHandler(PurchaserAlreadyFollowSeller.class)
+    public ResponseEntity<ErrorDTO> PurchaserAlreadyFollowSeller(PurchaserAlreadyFollowSeller e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "Status Code 400: Seller_already_follow",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST);
+    }
 
+    @ExceptionHandler(BadSorterParamRequest.class)
+    public ResponseEntity<ErrorDTO> BadSorterParamRequest(BadSorterParamRequest e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "Status Code 400: Invalid_Sort_Param",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST);
+
+    }
 }

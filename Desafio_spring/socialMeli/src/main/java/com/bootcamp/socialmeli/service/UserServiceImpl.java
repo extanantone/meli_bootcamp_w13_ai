@@ -6,17 +6,18 @@ import com.bootcamp.socialmeli.dto.response.user.BasicUserInfo;
 import com.bootcamp.socialmeli.dto.response.user.PurchaserFollowedListDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersInfoDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersListDTO;
-import com.bootcamp.socialmeli.exception.UserException.NotFoundFollower;
-import com.bootcamp.socialmeli.exception.UserException.NotFoundUsuarioException;
+import com.bootcamp.socialmeli.exception.sortException.BadSorterParamRequest;
+import com.bootcamp.socialmeli.exception.userException.NotFoundFollower;
+import com.bootcamp.socialmeli.exception.userException.NotFoundUsuarioException;
 import com.bootcamp.socialmeli.entitiy.Purchaser;
 import com.bootcamp.socialmeli.entitiy.Seller;
+import com.bootcamp.socialmeli.exception.userException.PurchaserAlreadyFollowSeller;
 import com.bootcamp.socialmeli.repository.ISocialMeliRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -42,6 +43,12 @@ public class UserServiceImpl implements IUserService {
         Purchaser purchaser = socialMeliRepository.getPurchaser(purchaserId).orElseThrow(
                 () -> new NotFoundUsuarioException(purchaserId)
         );
+
+        //        validar que NO se sigan anteriormente
+
+        if (purchaser.getFollowed().contains(sellerId)){
+            throw new PurchaserAlreadyFollowSeller(purchaserId,sellerId);
+        }
 
         socialMeliRepository.follow(purchaserId,sellerId);
     }
@@ -86,7 +93,6 @@ public class UserServiceImpl implements IUserService {
             followed.add(new BasicUserInfo(follow.getUserID(),follow.getUserName()));
         });
 
-       // list.sort(Comparator.comparing(Seller::getUserName).reversed());
         return new PurchaserFollowedListDTO(purchaserId,purchaser.getUserName(),followed);
     }
 
@@ -114,17 +120,50 @@ public class UserServiceImpl implements IUserService {
     @Override
     public SellerFollowersListDTO getSellerFollowersListSort(Integer sellerId, String order) {
 
-        SellerFollowersListDTO list = getSellerFollowersList(sellerId);
+        SellerFollowersListDTO res = getSellerFollowersList(sellerId);
+
+        var list = res.getFollowers();
+
+        sort(list,order);
+
+        return res;
+    }
+
+    @Override
+    public PurchaserFollowedListDTO getPurchaserFollowedListSort(Integer purchaserId, String order) {
+
+        PurchaserFollowedListDTO res = getPurchaserFollowedList(purchaserId);
+
+        var list = res.getFollowed();
+
+        sort(list,order);
+
+        return res;
+    }
+
+    private void sort(List<BasicUserInfo> list, String order){
 
         StringTokenizer st = new StringTokenizer(order,"_");
-        st.nextToken();
 
-        var n = list.getFollowers();
-        if(st.nextToken().equals("asc")){
-            n.sort( new ComparatorUserNameBasicUserDTO(SortOrder.ASC));
+        if(st.hasMoreTokens()){
+            if(!st.nextToken().equals("name")){
+                throw new BadSorterParamRequest(order);
+            }
+
+            var sort = st.nextToken();
+
+            if(sort.equals("asc")){
+                list.sort( new ComparatorUserNameBasicUserDTO(SortOrder.ASC));
+            }else{
+                if(sort.equals("desc")) {
+                    list.sort(new ComparatorUserNameBasicUserDTO(SortOrder.DESC));
+                }else{
+                    throw new BadSorterParamRequest(order);
+                }
+            }
         }else{
-            n.sort( new ComparatorUserNameBasicUserDTO(SortOrder.DESC));
+            throw new BadSorterParamRequest(order);
         }
-        return list;
     }
+
 }

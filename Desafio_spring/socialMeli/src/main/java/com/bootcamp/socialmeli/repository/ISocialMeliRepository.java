@@ -28,16 +28,5 @@ public interface ISocialMeliRepository {
 
     List<Post> getSellersPosts (Integer purchaserId);
 
-    //void getSortedSellerFollowers(List<Purchaser> list,Comparator<?> comparator, SortOrder order);
-
-/*
-
-
-    List<Purchaser> vendedorFollowersOrderByName (Integer sellerId, String orden);
-    List<Seller> compradorFollowedOrderByName (Integer purchaserId, String orden);
-
-    List<Post> postByVendedorOfCompradorOrderByDate (Integer purchaserId, String orden);*/
-
-
 
 }

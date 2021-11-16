@@ -34,18 +34,23 @@ public class UsersController {
 
     @GetMapping(path = "/{user_id}/followers/list")
     public ResponseEntity<SellerFollowersListDTO> getSellerFollowersList(@PathVariable Integer user_id,
-                                                                         @RequestParam(defaultValue = "") String order){
-        if(order==""){
+                                                                         @RequestParam(required = false, defaultValue = "") String order){
+        if(order.equals("")){
             return  ResponseEntity.ok(service.getSellerFollowersList(user_id));
         }else{
             return ResponseEntity.ok(service.getSellerFollowersListSort(user_id,order));
         }
-
     }
 
     @GetMapping(path = "/{user_id}/followed/list")
-    public ResponseEntity<PurchaserFollowedListDTO> getPurcharserFollowedList(@PathVariable Integer user_id){
-        return ResponseEntity.ok(service.getPurchaserFollowedList(user_id));
+    public ResponseEntity<PurchaserFollowedListDTO> getPurcharserFollowedList(
+            @PathVariable Integer user_id,
+            @RequestParam(required = false, defaultValue = "") String order){
+        if(order.equals("")){
+            return  ResponseEntity.ok(service.getPurchaserFollowedList(user_id));
+        }else{
+            return ResponseEntity.ok(service.getPurchaserFollowedListSort(user_id,order));
+        }
     }
 
     @PostMapping(path = "/{user_id}/unfollow/{user_id_to_unfollow}" )

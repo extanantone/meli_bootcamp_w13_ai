@@ -1,4 +1,4 @@
-package com.bootcamp.socialmeli.exception.UserException;
+package com.bootcamp.socialmeli.exception.userException;
 
 public class NotFoundUsuarioException extends RuntimeException{
     public NotFoundUsuarioException(Integer id) {
