@@ -4,14 +4,14 @@
 
 #### Paquetes
 <ul>
-<li>**configuración**: Requerido para usar la libreria de ModelMapper</li>
-<li>**controladores**: 2 principales, usuarios y productos</li>
-<li>**enumerados**: Para definir un enumerado de opciones para los parametros de orden</li>
-<li>**servicios**: Se usaron 2 Servicios, usuarios y Publicaciones</li>
-<li>**excepciones**</li>
-<li>**modelos**</li>
-<li>**repositorios**</li>
-<li>**dto**</li>
+<li><b>configuración</b>: Requerido para usar la libreria de ModelMapper</li>
+<li><b>controladores</b>: 2 principales, usuarios y productos</li>
+<li><b>enumerados</b>: Para definir un enumerado de opciones para los parametros de orden</li>
+<li><b>servicios</b>: Se usaron 2 Servicios, usuarios y Publicaciones</li>
+<li><b>excepciones</b></li>
+<li><b>modelos</b></li>
+<li><b>repositorios</b></li>
+<li><b>dto</b></li>
 </ul>
 
 
@@ -21,7 +21,7 @@ Explicaré las clases más relevantes del proyecto:
 
 - #### Repositorio:
   En el repositorio se definieron 4 collecciones que dieron el orden al proyecto:</p>
-  ''' 
+  '''java
   private Map<Integer, Usuario> users;
   private Map<Integer, Publicacion> posts;
   private Map<Integer, List<Publicacion>> userPosts;
