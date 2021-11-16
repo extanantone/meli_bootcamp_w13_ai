@@ -206,7 +206,7 @@ URL http://localhost:8080/users/{subscriptor}/unfollow/{seller}
 
 whatch pdf
 
-### Publish a promo post
+### agregar un nuevo promo post
 
 POST
 
@@ -237,7 +237,7 @@ Payload
 400 si existe un post con el mismo usuario para el usuario dado
 
 
-### count all promo post
+### contar todas las promociones (promo post)
 
 GET
 
@@ -249,7 +249,7 @@ URL http://localhost:8080/products/{seller}/promo-post/count
 
 
 
-### List promo list
+### Listar todas las publicaciones de promo
 
 GET
 
@@ -260,7 +260,6 @@ URL http://localhost:8080/products/{seller}/list
 
 400 si el usuario no es seller
 
-else send 200
 
 #### Nota: 
 Para los items de promocion filtra quienes tengan la bandera hasPromo en true
