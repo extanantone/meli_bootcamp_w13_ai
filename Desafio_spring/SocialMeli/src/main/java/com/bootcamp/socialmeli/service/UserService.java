@@ -4,6 +4,8 @@ import com.bootcamp.socialmeli.dto.UserCreationDTO;
 import com.bootcamp.socialmeli.dto.UserDTO;
 import com.bootcamp.socialmeli.dto.UserWithFollowersDTO;
 import com.bootcamp.socialmeli.dto.UserWithFollowedDTO;
+import com.bootcamp.socialmeli.exceptions.BadRequestException;
+import com.bootcamp.socialmeli.exceptions.NotFoundException;
 import com.bootcamp.socialmeli.mapper.IMapper;
 import com.bootcamp.socialmeli.model.User;
 import com.bootcamp.socialmeli.repository.IUserRepository;
@@ -23,6 +25,12 @@ public class UserService implements IUserService {
         this.mapper = mapper;
     }
 
+    public void checkUserExistence(long id){
+        if (userRepository.getUser(id) == null) {
+            throw new NotFoundException("User Not Found");
+        }
+    }
+
     @Override
     public List<UserDTO> getAll() {
         return userRepository.getAll().stream().map(mapper::userToUserDTO).collect(Collectors.toList());
@@ -30,64 +38,69 @@ public class UserService implements IUserService {
 
     @Override
     public UserDTO getUser(long id) {
+        checkUserExistence(id);
         return mapper.userToUserDTO(userRepository.getUser(id));
     }
 
     @Override
     public UserDTO createUser(UserCreationDTO user) {
-        return null;
+        User userCreated = userRepository.createUser(mapper.userCreationDTOToUser(user));
+        return mapper.userToUserDTO(userCreated);
     }
 
     @Override
-    public boolean deleteUser(long id) {
-        return false;
+    public void deleteUser(long id) {
+        checkUserExistence(id);
+        userRepository.deleteUser(id);
     }
 
     @Override
-    public boolean followUser(long followerId, long followedId) {
+    public void followUser(long followerId, long followedId) {
         User follower = userRepository.getUser(followerId);
         User followed = userRepository.getUser(followedId);
         if (followed.getFollowers().contains(follower)) {
-            return false;
+            throw new BadRequestException("User is already a follower");
         } else if (followerId == followedId) {
-            return false;
+            throw new BadRequestException("User can't follow themself");
         } else {
             follower.getFollowed().add(followed);
             followed.getFollowers().add(follower);
-            return true;
         }
     }
 
     @Override
     public int getFollowerCount(long id) {
+        checkUserExistence(id);
         return userRepository.getUser(id).getFollowers().size();
     }
 
     @Override
     public UserWithFollowersDTO getFollowers(long id) {
+        checkUserExistence(id);
         return mapper.userToUserWithFollowersDTO(userRepository.getUser(id));
     }
 
     @Override
     public int getFollowedCount(long id) {
+        checkUserExistence(id);
         return userRepository.getUser(id).getFollowed().size();
     }
 
     @Override
     public UserWithFollowedDTO getFollowed(long id) {
+        checkUserExistence(id);
         return mapper.userToUserWithFollowedDTO(userRepository.getUser(id));
     }
 
     @Override
-    public boolean unfollowUser(long followerId, long followedId) {
+    public void unfollowUser(long followerId, long followedId) {
         User follower = userRepository.getUser(followerId);
         User followed = userRepository.getUser(followedId);
         if (followed.getFollowers().contains(follower)) {
             follower.getFollowed().remove(followed);
             followed.getFollowers().remove(follower);
-            return true;
         } else {
-            return false;
+            throw new BadRequestException("User isn't a follower");
         }
     }
 

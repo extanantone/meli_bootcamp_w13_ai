@@ -13,12 +13,13 @@ public interface IUserService {
     public List<UserDTO> getAll();
     public UserDTO getUser(long id);
     public UserDTO createUser(UserCreationDTO user);
-    public boolean deleteUser(long id);
-    public boolean followUser(long followerId, long followedId);
+    public void deleteUser(long id);
+    public void followUser(long followerId, long followedId);
     public int getFollowerCount(long id);
     public UserWithFollowersDTO getFollowers(long id);
     public int getFollowedCount(long id);
     public UserWithFollowedDTO getFollowed(long id);
-    public boolean unfollowUser(long followerId, long followedId);
+    public void unfollowUser(long followerId, long followedId);
     public List<UserDTO> orderUsersByName(List<UserDTO> users, String order);
+    public void checkUserExistence(long userId);
 }
