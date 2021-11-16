@@ -1,9 +1,8 @@
 package com.bootcamp.socialmeli.service;
 
-import com.bootcamp.socialmeli.dto.FollowUserDTO;
 import com.bootcamp.socialmeli.dto.UserCreationDTO;
 import com.bootcamp.socialmeli.dto.UserDTO;
-import com.bootcamp.socialmeli.model.User;
+import com.bootcamp.socialmeli.dto.UserWithFollowersDTO;
 
 import java.util.List;
 
@@ -13,5 +12,7 @@ public interface IUserService {
     public UserDTO getUser(long id);
     public UserDTO createUser(UserCreationDTO user);
     public boolean deleteUser(long id);
-    public boolean followUser(FollowUserDTO followUserDTO);
+    public boolean followUser(long follwerId, long followedId);
+    public int getFollowerCount(long id);
+    public UserWithFollowersDTO getFollowers(long id);
 }

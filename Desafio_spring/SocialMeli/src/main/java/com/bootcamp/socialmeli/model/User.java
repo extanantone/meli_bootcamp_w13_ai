@@ -20,6 +20,7 @@ public class User {
     private String password;
     private List<User> followers;
     private List<User> following;
+    private List<Post> posts;
 
     public User(String username, String email, String password) {
         this.username = username;
@@ -27,6 +28,7 @@ public class User {
         this.password = password;
         this.followers = new LinkedList<>();
         this.following = new LinkedList<>();
+        this.posts = new LinkedList<>();
     }
 
 }

@@ -21,7 +21,12 @@ public class UserRepository implements IUserRepository {
     private long currentId;
     private Map<Long, User> users;
 
-    public Map<Long, User> loadUsersFromJson() {
+    public UserRepository() {
+        this.users = this.loadUsersFromJSON();
+        this.currentId = users.size();
+    }
+
+    public Map<Long, User> loadUsersFromJSON() {
         File file = null;
         try {
             file = ResourceUtils.getFile(
@@ -38,11 +43,6 @@ public class UserRepository implements IUserRepository {
             e.printStackTrace();
         }
         return userList.stream().collect(Collectors.toMap(User::getId, Function.identity()));
-    }
-
-    public UserRepository() {
-        this.users = this.loadUsersFromJson();
-        this.currentId = users.size();
     }
 
     @Override

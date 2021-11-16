@@ -2,6 +2,7 @@ package com.bootcamp.socialmeli.controller;
 
 import com.bootcamp.socialmeli.dto.UserCreationDTO;
 import com.bootcamp.socialmeli.dto.UserDTO;
+import com.bootcamp.socialmeli.dto.UserWithFollowersDTO;
 import com.bootcamp.socialmeli.service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,10 +45,29 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Boolean> deleteUser(@PathVariable long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable long id) {
         userService.deleteUser(id);
-        return new ResponseEntity<Boolean>(
-                true,
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/{followerId}/follow/{followedId}")
+    public ResponseEntity<Void> followUser(@PathVariable long followerId, @PathVariable long followedId) {
+        userService.followUser(followerId, followedId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/followers/count")
+    public ResponseEntity<Integer> getFollowerCount(@PathVariable long id) {
+        return new ResponseEntity<>(
+                userService.getFollowerCount(id),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/{id}/followers/list")
+    public ResponseEntity<UserWithFollowersDTO> getFollowerList(@PathVariable long id) {
+        return new ResponseEntity<>(
+                userService.getFollowers(id),
                 HttpStatus.OK
         );
     }

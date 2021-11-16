@@ -7,13 +7,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class UserDTO {
+public class UserWithFollowersDTO {
 
     private long id;
     private String username;
+    private List<UserDTO> followers;
 }

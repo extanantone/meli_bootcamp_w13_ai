@@ -1,8 +1,8 @@
 package com.bootcamp.socialmeli.service;
 
-import com.bootcamp.socialmeli.dto.FollowUserDTO;
 import com.bootcamp.socialmeli.dto.UserCreationDTO;
 import com.bootcamp.socialmeli.dto.UserDTO;
+import com.bootcamp.socialmeli.dto.UserWithFollowersDTO;
 import com.bootcamp.socialmeli.mapper.IMapper;
 import com.bootcamp.socialmeli.repository.IUserRepository;
 import org.springframework.stereotype.Service;
@@ -23,12 +23,12 @@ public class UserService implements IUserService {
 
     @Override
     public List<UserDTO> getAll() {
-        return userRepository.getAll().stream().map(mapper::UserToUserDTO).collect(Collectors.toList());
+        return userRepository.getAll().stream().map(mapper::userToUserDTO).collect(Collectors.toList());
     }
 
     @Override
     public UserDTO getUser(long id) {
-        return mapper.UserToUserDTO(userRepository.getUser(id));
+        return mapper.userToUserDTO(userRepository.getUser(id));
     }
 
     @Override
@@ -42,8 +42,20 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean followUser(FollowUserDTO followUserDTO) {
-        userRepository.followUser(followUserDTO.getUserId(), followUserDTO.getUserToFollowId());
+    public boolean followUser(long followerId, long followedId) {
+        userRepository.followUser(followerId, followedId);
         return true;
     }
+
+    @Override
+    public int getFollowerCount(long id) {
+        return userRepository.getUser(id).getFollowers().size();
+    }
+
+    @Override
+    public UserWithFollowersDTO getFollowers(long id) {
+        return mapper.userToUserWithFollowersDTO(userRepository.getUser(id));
+    }
+
+
 }

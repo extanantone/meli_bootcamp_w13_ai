@@ -22,5 +22,29 @@
     "password": "w0e8fhionkd",
     "followers": [],
     "following": []
+  },
+  {
+    "id": 4,
+    "username": "laura_suarez",
+    "email": "laura_suarez@mail.com",
+    "password": "euwdiofnew92ws",
+    "followers": [],
+    "following": []
+  },
+  {
+    "id": 5,
+    "username": "gonzalo_fernandez",
+    "email": "gonzalo_fernandez@mail.com",
+    "password": "e0w9finkdk",
+    "followers": [],
+    "following": []
+  },
+  {
+    "id": 6,
+    "username": "fernando_gonzalez",
+    "email": "fernando_gonzalez@mail.com",
+    "password": "0fehwiondfolm",
+    "followers": [],
+    "following": []
   }
 ]
