@@ -1,9 +1,7 @@
 package com.bootcamp.SocialMeli.service;
 
-import com.bootcamp.SocialMeli.dto.request.PublicacionDTO;
+import com.bootcamp.SocialMeli.dto.PublicacionDTO;
 import com.bootcamp.SocialMeli.dto.response.*;
-
-import java.util.List;
 
 public interface ISocialMeliService {
     SuccessDTO followVendedor(Integer idSeguidor, Integer idVendedor);

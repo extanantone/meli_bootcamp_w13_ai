@@ -1,7 +1,7 @@
 package com.bootcamp.SocialMeli.service;
 
 import com.bootcamp.SocialMeli.dto.request.PromocionDTO;
-import com.bootcamp.SocialMeli.dto.request.PublicacionDTO;
+import com.bootcamp.SocialMeli.dto.PublicacionDTO;
 import com.bootcamp.SocialMeli.dto.response.*;
 import com.bootcamp.SocialMeli.exception.*;
 import com.bootcamp.SocialMeli.mapper.Mapper;
@@ -37,7 +37,7 @@ public class SocialMeliService implements ISocialMeliService{
         //TODO verificar que sea vendedor (tenga publicaciones)
         //TODO verificar que antes no lo seguia
         if(idSeguidor.equals(idVendedor)) {
-            throw new EqualsUserSellerException("El usuario (ID " + idSeguidor + ") no puede seguirse a sí mismo");
+            throw new EqualsUserSellerException(String.format("El usuario (ID %d) no puede seguirse a sí mismo", idSeguidor));
         }else if(seguidor == null){
             throw new UserNotFoundException("No existe el usuario con ID: " + idSeguidor);
         }else if(vendedor == null){
@@ -146,10 +146,13 @@ public class SocialMeliService implements ISocialMeliService{
         if(post.getDate().isAfter(LocalDate.now())){ //chequea si la fecha de la publicacion es de hoy o dias anteriores
             throw new FutureDateException("La fecha " + post.getDate() + " es posterior al dia de hoy");
         }
-        //convertir de PublicacionDTO a Publicacion
 
         Publicacion nuevaPublicacion;
         if(post instanceof PromocionDTO){
+            //se chequean los limites del porcentaje a aplicar
+            if(((PromocionDTO) post).getDiscount() < 0.0 || ((PromocionDTO) post).getDiscount() > 1.0){
+                throw new InvalidDiscountException();
+            }
             nuevaPublicacion = this.mapper.promocionDTOToPromocion((PromocionDTO) post);
         }else{
             nuevaPublicacion = this.mapper.publicacionDTOToPublicacion(post);
@@ -196,9 +199,9 @@ public class SocialMeliService implements ISocialMeliService{
     public PublicacionesDTO getPublicacionesSeguidos(Integer userId, String order) {
         PublicacionesDTO publicacionesDTO = getPublicacionesSeguidos(userId);
         if(order.equals("date_asc")){
-            publicacionesDTO.getPosts().sort(Comparator.comparing(InfoPostDTO::getDate));
+            publicacionesDTO.getPosts().sort(Comparator.comparing(PublicacionDTO::getDate));
         }else if(order.equals("date_desc")){
-            publicacionesDTO.getPosts().sort(Comparator.comparing(InfoPostDTO::getDate).reversed());
+            publicacionesDTO.getPosts().sort(Comparator.comparing(PublicacionDTO::getDate).reversed());
         }else{
             throw new IllegalArgumentException("Argumento invalido en 'order'");
         }

@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 @ControllerAdvice(annotations = RestController.class)
 public class GeneralExceptionHandler {
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> illegalArgumentException(Exception e){
+        return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(AlreadyFollowException.class)
     public ResponseEntity<?> alreadyFollowException(Exception e){
         return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
@@ -44,6 +49,11 @@ public class GeneralExceptionHandler {
     @ExceptionHandler(FutureDateException.class)
     public ResponseEntity<?> futureDateException(Exception e){
         return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidDiscountException.class)
+    public ResponseEntity<?> invalidDiscountException(){
+        return new ResponseEntity<>(new ErrorDTO("El descuento a aplicar debe estar comprendido entre 0% y 100%"), HttpStatus.BAD_REQUEST);
     }
 
 }

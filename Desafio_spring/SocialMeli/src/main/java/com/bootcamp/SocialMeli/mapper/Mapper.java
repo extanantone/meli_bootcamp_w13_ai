@@ -2,8 +2,7 @@ package com.bootcamp.SocialMeli.mapper;
 
 import com.bootcamp.SocialMeli.dto.DetalleProductoDTO;
 import com.bootcamp.SocialMeli.dto.request.PromocionDTO;
-import com.bootcamp.SocialMeli.dto.request.PublicacionDTO;
-import com.bootcamp.SocialMeli.dto.response.InfoPostDTO;
+import com.bootcamp.SocialMeli.dto.PublicacionDTO;
 import com.bootcamp.SocialMeli.dto.response.InfoPromoDTO;
 import com.bootcamp.SocialMeli.dto.response.PublicacionesDTO;
 import com.bootcamp.SocialMeli.model.Producto;
@@ -66,20 +65,20 @@ public class Mapper {
         PublicacionesDTO publicacionesDTO = new PublicacionesDTO();
 
         publicacionesDTO.setUserId(userId);
-        publicacionesDTO.setPosts(publicaciones.stream().map(x -> publicacionToInfoPostDTO(x)).collect(Collectors.toList()));
+        publicacionesDTO.setPosts(publicaciones.stream().map(x -> publicacionToPublicacionDTO(x)).collect(Collectors.toList()));
         return publicacionesDTO;
     }
 
-    public InfoPostDTO publicacionToInfoPostDTO(Publicacion publicacion){
-        InfoPostDTO infoPostDTO = new InfoPostDTO();
+    public PublicacionDTO publicacionToPublicacionDTO(Publicacion publicacion){
+        PublicacionDTO publicacionDTO = new PublicacionDTO();
 
-        infoPostDTO.setIdPost(publicacion.getIdPost());
-        infoPostDTO.setDate(publicacion.getDate());
-        infoPostDTO.setCategory(publicacion.getCategory());
-        infoPostDTO.setPrice(publicacion.getPrice());
-        infoPostDTO.setDetail(getModelMapper().map(publicacion.getProducto(), DetalleProductoDTO.class));
+        publicacionDTO.setIdPost(publicacion.getIdPost());
+        publicacionDTO.setDate(publicacion.getDate());
+        publicacionDTO.setCategory(publicacion.getCategory());
+        publicacionDTO.setPrice(publicacion.getPrice());
+        publicacionDTO.setDetail(getModelMapper().map(publicacion.getProducto(), DetalleProductoDTO.class));
 
-        return infoPostDTO;
+        return publicacionDTO;
     }
 
     public InfoPromoDTO publicacionToInfoPromoDTO(Promocion promocion){

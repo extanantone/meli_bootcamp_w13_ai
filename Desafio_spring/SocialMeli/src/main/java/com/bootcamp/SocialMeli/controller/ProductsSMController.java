@@ -1,7 +1,7 @@
 package com.bootcamp.SocialMeli.controller;
 
 import com.bootcamp.SocialMeli.dto.request.PromocionDTO;
-import com.bootcamp.SocialMeli.dto.request.PublicacionDTO;
+import com.bootcamp.SocialMeli.dto.PublicacionDTO;
 import com.bootcamp.SocialMeli.service.ISocialMeliService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

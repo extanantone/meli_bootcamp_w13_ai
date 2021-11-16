@@ -1,6 +1,7 @@
 package com.bootcamp.SocialMeli.dto.request;
 
 import com.bootcamp.SocialMeli.dto.DetalleProductoDTO;
+import com.bootcamp.SocialMeli.dto.PublicacionDTO;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -22,5 +23,4 @@ public class PromocionDTO extends PublicacionDTO {
         this.has_promo = has_promo;
         this.discount = discount;
     }
-
 }

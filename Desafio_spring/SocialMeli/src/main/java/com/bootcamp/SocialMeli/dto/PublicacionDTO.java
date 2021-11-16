@@ -1,7 +1,8 @@
-package com.bootcamp.SocialMeli.dto.response;
+package com.bootcamp.SocialMeli.dto;
 
 import com.bootcamp.SocialMeli.dto.DetalleProductoDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -16,11 +17,22 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class InfoPostDTO {
-    private int idPost;
+public class PublicacionDTO {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer userId;
+
+    private Integer idPost;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;
     private DetalleProductoDTO detail;
-    private int category;
-    private double price;
+    private Integer category;
+    private Double price;
+
+    public PublicacionDTO(Integer idPost, LocalDate date, DetalleProductoDTO detail, Integer category, Double price) {
+        this.idPost = idPost;
+        this.date = date;
+        this.detail = detail;
+        this.category = category;
+        this.price = price;
+    }
 }

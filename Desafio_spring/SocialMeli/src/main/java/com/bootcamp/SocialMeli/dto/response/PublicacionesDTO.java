@@ -1,5 +1,6 @@
 package com.bootcamp.SocialMeli.dto.response;
 
+import com.bootcamp.SocialMeli.dto.PublicacionDTO;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -16,5 +17,5 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PublicacionesDTO {
     private Integer userId; //id del cliente
-    private List<InfoPostDTO> posts;
+    private List<PublicacionDTO> posts;
 }
