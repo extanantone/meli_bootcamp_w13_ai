@@ -21,6 +21,7 @@ public class User implements IUser{
         this.name = name;
         this.followed = new HashMap<Integer, User>();
         this.followers = new HashMap<Integer, User>();
+        this.posts = new HashMap<Integer, Post>();
         this.canSell = canSell;
     }
 
@@ -29,13 +30,14 @@ public class User implements IUser{
         this.name = name;
         this.followed = new HashMap<Integer, User>();
         this.followers = new HashMap<Integer, User>();
+        this.posts = new HashMap<Integer, Post>();
         this.canSell = false;
     }
 
 
     public void addPost(Post post){
         int postId = post.getId();
-        if (this.posts.containsKey(post)) throw new RuntimeException("post already exists");
+        if (this.posts.containsKey(postId)) throw new RuntimeException("post already exists");
         //implementar excepciones y handler
         this.posts.put(postId, post);
     }

@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public class PostRepository implements IPostRepository{
-    Map<Integer, User> posts = new HashMap<>();
+    Map<Integer, Post> posts = new HashMap<>();
 
     @Override
     public Optional<Post> find(int postId) {
@@ -24,10 +24,11 @@ public class PostRepository implements IPostRepository{
     }
 
     @Override
-    public Post create() {
-        Post post = new Post();
-        //setear todo?
-        //this.products.put(postId, product);
-        return post;
+    public void add(Post post) {
+        int postId = post.getId();
+        if (this.posts.containsKey(postId)) throw new RuntimeException("Ya existe la publicación");
+        //create excepción específica
+        this.posts.put(postId, post);
+        return;
     }
 }

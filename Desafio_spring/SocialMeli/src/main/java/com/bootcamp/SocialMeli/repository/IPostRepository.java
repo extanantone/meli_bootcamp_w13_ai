@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface IPostRepository {
     Optional<Post> find(int postId);
     List<Post> findAll();
-    Post create();
+    void add(Post post);
 }

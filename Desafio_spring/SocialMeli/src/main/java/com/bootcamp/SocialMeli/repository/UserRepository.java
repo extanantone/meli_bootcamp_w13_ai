@@ -23,6 +23,8 @@ public class UserRepository implements IUserRepository{
     @Override
     public User create(int userId, String userName, boolean canSell) {
         User user = new User(userId, userName, canSell);
+        if (this.users.containsKey(userId)) throw new RuntimeException("Ya existe el usuario");
+        //create excepción específica
         this.users.put(userId, user);
         return user;
     }

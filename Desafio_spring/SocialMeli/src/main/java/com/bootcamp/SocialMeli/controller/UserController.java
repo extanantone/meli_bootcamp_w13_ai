@@ -7,10 +7,10 @@ import com.bootcamp.SocialMeli.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -22,8 +22,8 @@ public class UserController {
     public ResponseEntity<Void> preload(){
         userService.create(1, "Juan", true);
         userService.create(2, "Pedro", true);
-        userService.create(3, "Agustina", false);
-        userService.create(4, "Azul", false);
+        userService.create(3, "Agustina", true);
+        userService.create(4, "Azul", true);
         return new ResponseEntity(HttpStatus.OK);
         //pasar esto a un json?
         //tenerlos creados desde antes en el repository?
@@ -49,17 +49,19 @@ public class UserController {
 
     @GetMapping("/users/{user_id}/followers/list")
     public ResponseEntity<FollowersListDTO> getFollowers(
-            @PathVariable int user_id) {
+            @PathVariable int user_id,
+            @RequestParam Optional<String> order) {
         //chequear input o tirar excepción
-        FollowersListDTO followersList = userService.getFollowers(user_id);
+        FollowersListDTO followersList = userService.getFollowers(user_id, order);
         return new ResponseEntity<>(followersList, HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}/followed/list")
     public ResponseEntity<FollowedListDTO> getFollowed(
-            @PathVariable int user_id) {
+            @PathVariable int user_id,
+            @RequestParam Optional<String> order) {
         //chequear input ok o tirar excepción
-        FollowedListDTO followedList = userService.getFollowed(user_id);
+        FollowedListDTO followedList = userService.getFollowed(user_id, order);
         return new ResponseEntity<>(followedList, HttpStatus.OK);
     }
 
