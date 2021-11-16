@@ -8,18 +8,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class UserFollowersCountDTO {
+public class UserFollowersListDTO {
 
     private int userId;
     private String userName;
-    private int followersCount;
+    private List<UserShortDTO> followers;
 
-    public UserFollowersCountDTO (User usuario){
+    public UserFollowersListDTO (User usuario){
         this.userId = usuario.getUserId();
         this.userName = usuario.getUserName();
     }

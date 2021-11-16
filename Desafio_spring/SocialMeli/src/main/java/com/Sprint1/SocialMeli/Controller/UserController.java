@@ -1,6 +1,8 @@
 package com.Sprint1.SocialMeli.Controller;
 
+import com.Sprint1.SocialMeli.DTO.UserFollowedsListDTO;
 import com.Sprint1.SocialMeli.DTO.UserFollowersCountDTO;
+import com.Sprint1.SocialMeli.DTO.UserFollowersListDTO;
 import com.Sprint1.SocialMeli.Service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +61,49 @@ public class UserController {
                 "Todo OK",
                 HttpStatus.OK);
     }
+
+    @GetMapping("/{user_id}/followers/count")
+    public ResponseEntity<UserFollowersCountDTO> obtenerCantSeguidores (@PathVariable("user_id") Integer userId)
+    {
+        //TODO: Agregar validaciones
+
+        return new ResponseEntity<UserFollowersCountDTO>(
+                userService.obtenerUserFollowersCount(userId),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/{user_id}/followers/list")
+    public ResponseEntity<UserFollowersListDTO> obtenerListaSeguidores (@PathVariable("user_id") Integer userId)
+    {
+        //TODO: Agregar validaciones
+
+        return new ResponseEntity<UserFollowersListDTO>(
+                userService.obtenerUserFollowersList(userId),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/{user_id}/followed/list")
+    public ResponseEntity<UserFollowedsListDTO> obtenerListaSeguidos (@PathVariable("user_id") Integer userId)
+    {
+        //TODO: Agregar validaciones
+
+        return new ResponseEntity<UserFollowedsListDTO>(
+                userService.obtenerUserFollowedsList(userId),
+                HttpStatus.OK);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping("/prueba")
     public ResponseEntity<HashMap> obtenerPrueba ()

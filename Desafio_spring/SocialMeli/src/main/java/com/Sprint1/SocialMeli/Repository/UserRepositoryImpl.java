@@ -10,8 +10,10 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class UserRepositoryImpl implements IUserRepository{
@@ -55,6 +57,38 @@ public class UserRepositoryImpl implements IUserRepository{
     }
 
     @Override
+    //TODO: Aclarar en el informe porqué usé solo una lista
+    public int obtenerCantSeguidores(int userId) {
+        AtomicInteger cantSeguidores = new AtomicInteger();
+
+        baseUsers.forEach((integer, user) ->
+        {if (user.getFolloweds().stream().filter(x -> x.getUserId() == userId).findFirst().isPresent()){
+            cantSeguidores.getAndIncrement();
+        }});
+
+        return cantSeguidores.get();
+    }
+
+    @Override
+    public List<UserShortDTO> obtenerListaSeguidores(int userId) {
+
+        List<UserShortDTO> listaSeguidores = new ArrayList<UserShortDTO>();
+
+        baseUsers.forEach((integer, user) ->
+        {if (user.getFolloweds().stream().filter(x -> x.getUserId() == userId).findFirst().isPresent()){
+            listaSeguidores.add(new UserShortDTO(user));
+        }});
+
+        return listaSeguidores;
+
+    }
+
+    @Override
+    public List<UserShortDTO> obtenerListaSeguidos(int userId) {
+        return baseUsers.get(userId).getFolloweds();
+    }
+
+    @Override
     public Boolean existeUsuario(int userId) {
         return baseUsers.containsKey(userId);
     }
@@ -80,7 +114,7 @@ public class UserRepositoryImpl implements IUserRepository{
 
         followedsActual.add(new UserShortDTO(usuarioASeguir));
 
-        baseUsers.replace(userId, usuarioActual);
+        //baseUsers.replace(userId, usuarioActual);
 
         return true;
     }
