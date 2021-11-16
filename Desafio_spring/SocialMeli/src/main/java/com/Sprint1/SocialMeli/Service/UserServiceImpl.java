@@ -8,8 +8,11 @@ import com.Sprint1.SocialMeli.Model.User;
 import com.Sprint1.SocialMeli.Repository.IUserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements IUserService{
@@ -37,8 +40,7 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public Boolean agregarFollowed(int userId, int user_id_to_follow) {
-        userRepository.agregarFollowed(userId, user_id_to_follow);
-        return true;
+        return userRepository.agregarFollowed(userId, user_id_to_follow);
     }
 
     @Override
@@ -59,9 +61,22 @@ public class UserServiceImpl implements IUserService{
     }
 
     @Override
-    public UserFollowersListDTO obtenerUserFollowersList(int userId) {
+    public UserFollowersListDTO obtenerUserFollowersList(int userId, String order) {
         User usuario = obtenerUsuario(userId);
         List<UserShortDTO> listaSeguidores = userRepository.obtenerListaSeguidores(userId);
+
+        if (order != null && !order.isEmpty()){
+            if (order.equals("name_asc")) {
+                listaSeguidores = listaSeguidores.stream()
+                        .sorted(Comparator.comparing(UserShortDTO::getUserName))
+                        .collect(Collectors.toList());
+            }
+            else if (order.equals("name_desc")) {
+                listaSeguidores = listaSeguidores.stream()
+                        .sorted(Comparator.comparing(UserShortDTO::getUserName, Collections.reverseOrder()))
+                        .collect(Collectors.toList());
+            }
+        }
 
         UserFollowersListDTO userFolList = new UserFollowersListDTO(usuario);
 
@@ -71,14 +86,32 @@ public class UserServiceImpl implements IUserService{
     }
 
     @Override
-    public UserFollowedsListDTO obtenerUserFollowedsList(int userId) {
+    public UserFollowedsListDTO obtenerUserFollowedsList(int userId, String order) {
         User usuario = obtenerUsuario(userId);
         List<UserShortDTO> listaSeguidos = userRepository.obtenerListaSeguidos(userId);
+
+        if (order != null && !order.isEmpty()){
+            if (order.equals("name_asc")) {
+                listaSeguidos = listaSeguidos.stream()
+                        .sorted(Comparator.comparing(UserShortDTO::getUserName))
+                        .collect(Collectors.toList());
+            }
+            else if (order.equals("name_desc")) {
+                listaSeguidos = listaSeguidos.stream()
+                        .sorted(Comparator.comparing(UserShortDTO::getUserName, Collections.reverseOrder()))
+                        .collect(Collectors.toList());
+            }
+        }
 
         UserFollowedsListDTO userFollowedList = new UserFollowedsListDTO(usuario);
 
         userFollowedList.setFolloweds(listaSeguidos);
 
         return userFollowedList;
+    }
+
+    @Override
+    public Boolean quitarFollowed(int userId, int user_id_to_unfollow) {
+        return userRepository.quitarFollowed(userId, user_id_to_unfollow);
     }
 }

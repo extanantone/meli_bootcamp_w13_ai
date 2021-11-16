@@ -73,28 +73,37 @@ public class UserController {
     }
 
     @GetMapping("/{user_id}/followers/list")
-    public ResponseEntity<UserFollowersListDTO> obtenerListaSeguidores (@PathVariable("user_id") Integer userId)
+    public ResponseEntity<UserFollowersListDTO> obtenerListaSeguidores (@PathVariable("user_id") Integer userId, @RequestParam(value = "order", required = false) String order)
     {
         //TODO: Agregar validaciones
 
         return new ResponseEntity<UserFollowersListDTO>(
-                userService.obtenerUserFollowersList(userId),
+                userService.obtenerUserFollowersList(userId, order),
                 HttpStatus.OK);
     }
 
     @GetMapping("/{user_id}/followed/list")
-    public ResponseEntity<UserFollowedsListDTO> obtenerListaSeguidos (@PathVariable("user_id") Integer userId)
+    public ResponseEntity<UserFollowedsListDTO> obtenerListaSeguidos (@PathVariable("user_id") Integer userId, @RequestParam(value = "order", required = false) String order)
     {
         //TODO: Agregar validaciones
 
         return new ResponseEntity<UserFollowedsListDTO>(
-                userService.obtenerUserFollowedsList(userId),
+                userService.obtenerUserFollowedsList(userId, order),
                 HttpStatus.OK);
     }
 
 
 
+    //TODO: AGREGAR TODAS LAS VALIDACIONES
+    @PostMapping("/{user_id}/unfollow/{user_id_to_unfollow}")
+    public ResponseEntity<String> dejarDeSeguirUsuario (@PathVariable("user_id") Integer userId, @PathVariable("user_id_to_unfollow") Integer userIdToUnfollow)
+    {
+        userService.quitarFollowed(userId, userIdToUnfollow);
 
+        return new ResponseEntity<>(
+                "Todo OK",
+                HttpStatus.OK);
+    }
 
 
 

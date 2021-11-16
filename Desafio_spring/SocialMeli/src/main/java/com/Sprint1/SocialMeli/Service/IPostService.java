@@ -14,5 +14,5 @@ public interface IPostService {
 
     public Boolean crearPublicacion(PostShortDTO publicacion);
 
-    public PostListDTO obtenerListadoPostsDeVendedor (int userId);
+    public PostListDTO obtenerListadoPostsDeVendedor (int userId, String order);
 }

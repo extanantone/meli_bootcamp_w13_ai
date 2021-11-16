@@ -10,10 +10,7 @@ import com.Sprint1.SocialMeli.Repository.IUserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -42,7 +39,7 @@ public class PostServiceImpl implements IPostService{
     }
 
     @Override
-    public PostListDTO obtenerListadoPostsDeVendedor(int userId) {
+    public PostListDTO obtenerListadoPostsDeVendedor(int userId, String order) {
         List<Post> listaPosts = new ArrayList<Post>();
         User usuario = userRepository.obtenerUsuario(userId);
         PostListDTO postListResultado = new PostListDTO(userId);
@@ -56,6 +53,19 @@ public class PostServiceImpl implements IPostService{
                 .sorted(Comparator.comparing(Post::getDate))
                 .map(post -> new PostShortDTO(post))
                 .collect(Collectors.toList());
+
+        if (order != null && !order.isEmpty()){
+            if (order.equals("date_asc")) {
+                listaPostShortFiltrada = listaPostShortFiltrada.stream()
+                        .sorted(Comparator.comparing(PostShortDTO::getDate))
+                        .collect(Collectors.toList());
+            }
+            else if (order.equals("date_desc")) {
+                listaPostShortFiltrada = listaPostShortFiltrada.stream()
+                        .sorted(Comparator.comparing(PostShortDTO::getDate, Collections.reverseOrder()))
+                        .collect(Collectors.toList());
+            }
+        }
 
         postListResultado.setPosts(listaPostShortFiltrada);
 

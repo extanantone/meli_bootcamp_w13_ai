@@ -14,6 +14,8 @@ public interface IUserRepository {
 
     public Boolean agregarFollowed (int userId, int user_id_to_follow);
 
+    public Boolean quitarFollowed (int userId, int user_id_to_unfollow);
+
     //TODO: BORRAR
     public HashMap<Integer, User> prueba();
 

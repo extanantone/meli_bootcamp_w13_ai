@@ -37,12 +37,12 @@ public class PostController {
     }
 
     @GetMapping("/followed/{user_id}/list")
-    public ResponseEntity<PostListDTO> obtenerListPosts (@PathVariable("user_id") Integer userId){
+    public ResponseEntity<PostListDTO> obtenerListPosts (@PathVariable("user_id") Integer userId, @RequestParam(value = "order", required = false) String order){
 
         //TODO: Agregar validaciones
 
         return new ResponseEntity<PostListDTO>(
-                postService.obtenerListadoPostsDeVendedor(userId),
+                postService.obtenerListadoPostsDeVendedor(userId, order),
                 HttpStatus.OK);
     }
 

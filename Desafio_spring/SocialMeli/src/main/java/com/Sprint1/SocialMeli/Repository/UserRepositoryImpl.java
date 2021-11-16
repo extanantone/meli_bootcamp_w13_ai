@@ -108,6 +108,7 @@ public class UserRepositoryImpl implements IUserRepository{
 
     @Override
     public Boolean agregarFollowed(int userId, int user_id_to_follow) {
+        //TODO: AGREGAR TRY CATCH Y DEVOLVER FALSE
         User usuarioActual = baseUsers.get(userId);
         List<UserShortDTO> followedsActual= usuarioActual.getFolloweds();
         User usuarioASeguir = baseUsers.get(user_id_to_follow);
@@ -115,6 +116,17 @@ public class UserRepositoryImpl implements IUserRepository{
         followedsActual.add(new UserShortDTO(usuarioASeguir));
 
         //baseUsers.replace(userId, usuarioActual);
+
+        return true;
+    }
+
+    @Override
+    public Boolean quitarFollowed(int userId, int user_id_to_unfollow) {
+        //TODO: AGREGAR TRY CATCH Y DEVOLVER FALSE
+        User usuarioActual = baseUsers.get(userId);
+        List<UserShortDTO> followedsActual= usuarioActual.getFolloweds();
+
+        followedsActual.removeIf(u -> u.getUserId() == user_id_to_unfollow);
 
         return true;
     }

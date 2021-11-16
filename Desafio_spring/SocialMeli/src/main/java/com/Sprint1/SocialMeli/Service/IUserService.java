@@ -22,8 +22,10 @@ public interface IUserService {
 
     public UserFollowersCountDTO obtenerUserFollowersCount (int userId);
 
-    public UserFollowersListDTO obtenerUserFollowersList (int userId);
+    public UserFollowersListDTO obtenerUserFollowersList (int userId, String order);
 
-    public UserFollowedsListDTO obtenerUserFollowedsList (int userId);
+    public UserFollowedsListDTO obtenerUserFollowedsList (int userId, String order);
+
+    public Boolean quitarFollowed (int userId, int user_id_to_unfollow);
 
 }
