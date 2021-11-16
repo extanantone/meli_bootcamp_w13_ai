@@ -40,8 +40,12 @@ public class ProductsSMController {
     }
 
     @GetMapping("/{user_id}/list")
-    public ResponseEntity<?> getProductosEnPromocion(@PathVariable("user_id") Integer userId){
-        return new ResponseEntity<>(this.socialMeliService.getProductosEnPromocion(userId), HttpStatus.OK);
+    public ResponseEntity<?> getProductosEnPromocion(@PathVariable("user_id") Integer userId,
+                                                     @RequestParam(value = "order", required = false) String order){
+        if(order == null){
+            return new ResponseEntity<>(this.socialMeliService.getProductosEnPromocion(userId), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(this.socialMeliService.getProductosEnPromocion(userId, order), HttpStatus.OK);
     }
 
 }

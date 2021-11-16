@@ -4,13 +4,13 @@ import com.bootcamp.SocialMeli.dto.request.DetalleProductoDTO;
 import com.bootcamp.SocialMeli.dto.request.PromocionDTO;
 import com.bootcamp.SocialMeli.dto.request.PublicacionDTO;
 import com.bootcamp.SocialMeli.dto.response.InfoPostDTO;
+import com.bootcamp.SocialMeli.dto.response.InfoPromoDTO;
 import com.bootcamp.SocialMeli.dto.response.PublicacionesDTO;
 import com.bootcamp.SocialMeli.model.Producto;
 import com.bootcamp.SocialMeli.model.Promocion;
 import com.bootcamp.SocialMeli.model.Publicacion;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.ModelMap;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,5 +80,19 @@ public class Mapper {
         infoPostDTO.setDetail(getModelMapper().map(publicacion.getProducto(), DetalleProductoDTO.class));
 
         return infoPostDTO;
+    }
+
+    public InfoPromoDTO publicacionToInfoPromoDTO(Promocion promocion){
+        InfoPromoDTO infoPromoDTO = new InfoPromoDTO();
+
+        infoPromoDTO.setIdPost(promocion.getIdPost());
+        infoPromoDTO.setDate(promocion.getDate());
+        infoPromoDTO.setCategory(promocion.getCategory());
+        infoPromoDTO.setPrice(promocion.getPrice());
+        infoPromoDTO.setDetail(getModelMapper().map(promocion.getProducto(), DetalleProductoDTO.class));
+        infoPromoDTO.setHas_promo(promocion.isHas_promo());
+        infoPromoDTO.setDiscount(promocion.getDiscount());
+
+        return infoPromoDTO;
     }
 }

@@ -11,12 +11,12 @@ import java.util.List;
 
 @Getter
 @Setter
-//@NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Usuario {
     private int userId;
     private String userName;
     private List<Usuario> vendedoresSeguidos;  //los vendedores a los cuales este usuario sigue
+   // private List<Usuario> seguidores;
     private List<Publicacion> publicaciones;
 
     public Usuario() {

@@ -19,4 +19,5 @@ public interface ISocialMeliService {
 
     CantPromocionesDTO getCantPromociones(Integer userId);
     PromocionesDTO getProductosEnPromocion(Integer userId);
+    PromocionesDTO getProductosEnPromocion(Integer userId, String order);
 }

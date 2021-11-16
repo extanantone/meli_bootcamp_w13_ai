@@ -18,11 +18,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -46,7 +45,7 @@ public class SocialMeliService implements ISocialMeliService{
         //TODO verificar que sea vendedor (tenga publicaciones)
         //TODO verificar que antes no lo seguia
         if(idSeguidor.equals(idVendedor)) {
-            throw new EqualsUserSellerException();
+            throw new EqualsUserSellerException("El usuario (ID " + idSeguidor + ") no puede seguirse a sí mismo");
         }else if(seguidor == null){
             throw new UserNotFoundException("No existe el usuario seguidor");
         }else if(vendedor == null){
@@ -54,11 +53,11 @@ public class SocialMeliService implements ISocialMeliService{
         }
         boolean loSigo = seguidor.getVendedoresSeguidos().contains(vendedor);
         if(loSigo){ //true = ya lo sigo
-            throw new AlreadyFollowException();
+            throw new AlreadyFollowException(String.format("El usuario (ID %d) ya era seguidor del vendedor (ID %d)", idSeguidor, idVendedor));
         }
         seguidor.seguirVendedor(vendedor);
 
-        return new SuccessDTO("Vendedor seguido correctamente");
+        return new SuccessDTO("Followed successfully");
     }
 
     @Override
@@ -66,7 +65,7 @@ public class SocialMeliService implements ISocialMeliService{
         //TODO chequear que se le pase un vendedor
         Usuario vendedor = this.socialMeliRepository.buscarUsuario(userId);
         if(vendedor == null){
-            throw new UserNotFoundException("No existe un vendedor con Id: " + userId);
+            throw new UserNotFoundException("No existe un vendedor con ID: " + userId);
         }
         CantSeguidoresDTO cantSeguidoresDTO = new CantSeguidoresDTO(vendedor.getUserId(), vendedor.getUserName(),
                                                     this.socialMeliRepository.buscarSeguidores(vendedor).size());
@@ -79,7 +78,7 @@ public class SocialMeliService implements ISocialMeliService{
         //TODO chequear que se le pase un vendedor
         Usuario vendedor = this.socialMeliRepository.buscarUsuario(userId);
         if(vendedor == null){
-            throw new UserNotFoundException("No existe un vendedor con Id: " + userId);
+            throw new UserNotFoundException("No existe un vendedor con ID: " + userId);
         }
 
         List<UsuarioDTO> listaUsuarioDTO = new ArrayList<>();
@@ -108,7 +107,7 @@ public class SocialMeliService implements ISocialMeliService{
     public SeguidosDTO getVendedoresSeguidos(Integer userId) {
         Usuario usuario = this.socialMeliRepository.buscarUsuario(userId);
         if(usuario == null){
-            throw new UserNotFoundException("No existe un usuario con Id: " + userId);
+            throw new UserNotFoundException("No existe un usuario con ID: " + userId);
         }
         List<UsuarioDTO> listaUsuarioDTO = new ArrayList<>();
         for (Usuario user : usuario.getVendedoresSeguidos()) {
@@ -208,7 +207,7 @@ public class SocialMeliService implements ISocialMeliService{
         //TODO verificar que sea vendedor (tenga publicaciones)
         //TODO verificar que antes lo seguia
         if(idSeguidor.equals(idVendedor)){ //no se puede dejar de seguir a si mismo
-            throw new EqualsUserSellerException();
+            throw new EqualsUserSellerException("El usuario (ID " + idSeguidor + ") no puede dejar de seguirse a sí mismo");
         }else if(seguidor == null){
             throw new UserNotFoundException("No existe el usuario seguidor");
         }else if(vendedor == null){
@@ -216,9 +215,9 @@ public class SocialMeliService implements ISocialMeliService{
         }
         boolean loSeguia = seguidor.dejarDeSeguirVendedor(vendedor);
         if(!loSeguia){
-            throw new NotFollowException();
+            throw new NotFollowException(String.format("El usuario (ID %d) no era seguidor del vendedor (ID %d)", idSeguidor, idVendedor));
         }
-        return new SuccessDTO("Vendedor no seguido correctamente");
+        return new SuccessDTO("Unfollowed successfully");
     }
 
     @Override
@@ -228,14 +227,36 @@ public class SocialMeliService implements ISocialMeliService{
         if(usuario == null){
             throw new UserNotFoundException("No existe el usuario con Id: " + userId);
         }
-        List<Publicacion> promociones = usuario.getPublicaciones().stream().filter(x -> x instanceof Promocion)
-                                                                           .collect(Collectors.toList());
+        List<Publicacion> promociones = getPromociones(usuario);
+
         List<InfoPromoDTO> promo = new ArrayList<>();
         for (Publicacion pub : promociones) {
-            promo.add(this.mapper.getModelMapper().map(pub, InfoPromoDTO.class));
+            promo.add(this.mapper.publicacionToInfoPromoDTO((Promocion) pub));
+            //promo.add(this.mapper.getModelMapper().map(pub, InfoPromoDTO.class));
         }
 
         return new PromocionesDTO(usuario.getUserId(), usuario.getUserName(), promo);
+    }
+
+    @Override
+    public PromocionesDTO getProductosEnPromocion(Integer userId, String order) {
+        PromocionesDTO promocionesDTO = getProductosEnPromocion(userId);
+
+        if(order.equals("name_asc")){
+            promocionesDTO.getPosts().sort(Comparator.comparing(x -> x.getDetail().getProductName()));
+        }else if(order.equals("name_desc")){
+            promocionesDTO.getPosts().sort(Comparator.comparing(x -> x.getDetail().getProductName()));
+            Collections.reverse(promocionesDTO.getPosts());
+        }else{
+            throw new IllegalArgumentException("Argumento invalido en 'order'");
+        }
+        return promocionesDTO;
+    }
+
+    private List<Publicacion> getPromociones(Usuario user){
+        List<Publicacion> promociones = user.getPublicaciones().stream().filter(x -> x instanceof Promocion)
+                                            .collect(Collectors.toList());
+        return promociones;
     }
 
     @Override
@@ -248,7 +269,7 @@ public class SocialMeliService implements ISocialMeliService{
         CantPromocionesDTO cantPromocionesDTO = new CantPromocionesDTO();
         cantPromocionesDTO.setUserId(usuario.getUserId());
         cantPromocionesDTO.setUserName(usuario.getUserName());
-        cantPromocionesDTO.setPromo_products_count(getProductosEnPromocion(userId).getPosts().size());
+        cantPromocionesDTO.setPromo_products_count(getPromociones(usuario).size());
 
         return cantPromocionesDTO;
     }
