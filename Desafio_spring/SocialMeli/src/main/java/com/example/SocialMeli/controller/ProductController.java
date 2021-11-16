@@ -26,4 +26,6 @@ public class ProductController {
         return ResponseEntity.ok(this.productService.getSellerFollowed(userId));
     }
 
+
+
 }

@@ -2,14 +2,17 @@ package com.example.SocialMeli.services;
 
 import com.example.SocialMeli.dto.PostDTO;
 import com.example.SocialMeli.dto.VendedorDTO;
+import com.example.SocialMeli.entities.Post;
 import com.example.SocialMeli.entities.User;
 import com.example.SocialMeli.repository.ProductRepository;
 import com.example.SocialMeli.repository.UserRepository;
 import com.example.SocialMeli.services.mapper.ProductMapper;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.ProtectionDomain;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,10 +37,15 @@ public class ProductServiceImpl implements ProductService{
         List<PostDTO> postsDTOs = new ArrayList<>();
         vendedores.forEach(vendedor -> {
             VendedorDTO vendedorDTO = new VendedorDTO();
-            vendedor.getProducts().forEach(post -> postsDTOs.add(
-                    ProductMapper.toDto(this.productRepository.getById(post)))
+            vendedor.getProducts().forEach(post -> {
+                //Controlar las fechas que sean dentro de las dos semanas.
+                PostDTO postDTO = ProductMapper.toDto(this.productRepository.getById(post));
+                if( postDTO.getDate().isAfter(LocalDate.now().minusDays(14))) {
+                    postsDTOs.add(
+                            ProductMapper.toDto(this.productRepository.getById(post)));
+                }
+            }
             );
-            //Cada vendendor tiene una lista de id productos, falta filtar la fecha del array.
             result.add(new VendedorDTO(vendedor.getUser_id(), postsDTOs));
         });
         return result;
