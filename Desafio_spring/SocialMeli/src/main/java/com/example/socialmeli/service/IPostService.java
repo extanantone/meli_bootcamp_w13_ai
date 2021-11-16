@@ -5,5 +5,5 @@ import com.example.socialmeli.dto.UserPostDTO;
 
 public interface IPostService {
     void addPost(Integer userId, Integer postId, PostDTO post);
-    UserPostDTO getPosts(Integer userId);
+    UserPostDTO getPosts(Integer userId, String order);
 }

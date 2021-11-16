@@ -47,7 +47,7 @@ public class PostService implements IPostService{
         postRepository.addPost(postId, postModel);
     }
 
-    public UserPostDTO getPosts(Integer userId) {
+    public UserPostDTO getPosts(Integer userId, String order) {
         int daysToSearch = 14;
         User user = userRepository.find(userId);
         UserPostDTO userPosts = new UserPostDTO(userId);
@@ -75,8 +75,12 @@ public class PostService implements IPostService{
                 userPosts.getPosts().add(postListDTO);
             }
         }
-        if (userPosts.getPosts().size() > 2) {
-            userPosts.getPosts().sort(Comparator.comparing(PostListDTO::getDate).reversed());
+        if (userPosts.getPosts().size() > 1) {
+            if (order != null && order.equals("date_asc")) {
+                userPosts.getPosts().sort(Comparator.comparing(PostListDTO::getDate));
+            } else {
+                userPosts.getPosts().sort(Comparator.comparing(PostListDTO::getDate).reversed());
+            }
         }
         return userPosts;
     }
