@@ -1,10 +1,7 @@
 package com.bootcamp.SocialMeli.exception.handler;
 
 import com.bootcamp.SocialMeli.dto.response.ErrorDTO;
-import com.bootcamp.SocialMeli.exception.AlreadyFollowException;
-import com.bootcamp.SocialMeli.exception.EqualsUserSellerException;
-import com.bootcamp.SocialMeli.exception.NotFollowException;
-import com.bootcamp.SocialMeli.exception.UserNotFoundException;
+import com.bootcamp.SocialMeli.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -31,6 +28,11 @@ public class GeneralExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> userNotFoundException(Exception e){
+        return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserNotSellerException.class)
+    public ResponseEntity<?> userNotSellerException(Exception e){
         return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 

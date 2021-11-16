@@ -4,10 +4,7 @@ import com.bootcamp.SocialMeli.dto.request.DetalleProductoDTO;
 import com.bootcamp.SocialMeli.dto.request.PromocionDTO;
 import com.bootcamp.SocialMeli.dto.request.PublicacionDTO;
 import com.bootcamp.SocialMeli.dto.response.*;
-import com.bootcamp.SocialMeli.exception.AlreadyFollowException;
-import com.bootcamp.SocialMeli.exception.EqualsUserSellerException;
-import com.bootcamp.SocialMeli.exception.NotFollowException;
-import com.bootcamp.SocialMeli.exception.UserNotFoundException;
+import com.bootcamp.SocialMeli.exception.*;
 import com.bootcamp.SocialMeli.mapper.Mapper;
 import com.bootcamp.SocialMeli.model.Producto;
 import com.bootcamp.SocialMeli.model.Promocion;
@@ -47,15 +44,18 @@ public class SocialMeliService implements ISocialMeliService{
         if(idSeguidor.equals(idVendedor)) {
             throw new EqualsUserSellerException("El usuario (ID " + idSeguidor + ") no puede seguirse a sí mismo");
         }else if(seguidor == null){
-            throw new UserNotFoundException("No existe el usuario seguidor");
+            throw new UserNotFoundException("No existe el usuario con ID: " + idSeguidor);
         }else if(vendedor == null){
-            throw new UserNotFoundException("No existe el vendedor");
+            throw new UserNotFoundException("No existe el vendedor con ID: " + idVendedor);
+        }else if(!vendedor.isVendedor()){
+            throw new UserNotSellerException(String.format("El usuario (ID %d) no es un vendedor", idVendedor));
         }
         boolean loSigo = seguidor.getVendedoresSeguidos().contains(vendedor);
         if(loSigo){ //true = ya lo sigo
             throw new AlreadyFollowException(String.format("El usuario (ID %d) ya era seguidor del vendedor (ID %d)", idSeguidor, idVendedor));
         }
         seguidor.seguirVendedor(vendedor);
+        vendedor.agregarSeguidor(seguidor);
 
         return new SuccessDTO("Followed successfully");
     }
@@ -66,9 +66,11 @@ public class SocialMeliService implements ISocialMeliService{
         Usuario vendedor = this.socialMeliRepository.buscarUsuario(userId);
         if(vendedor == null){
             throw new UserNotFoundException("No existe un vendedor con ID: " + userId);
+        }else if(!vendedor.isVendedor()){
+            throw new UserNotSellerException(String.format("El usuario (ID %d) no es un vendedor", userId));
         }
         CantSeguidoresDTO cantSeguidoresDTO = new CantSeguidoresDTO(vendedor.getUserId(), vendedor.getUserName(),
-                                                    this.socialMeliRepository.buscarSeguidores(vendedor).size());
+                                                    vendedor.getSeguidores().size());
 
         return cantSeguidoresDTO;
     }
@@ -79,10 +81,13 @@ public class SocialMeliService implements ISocialMeliService{
         Usuario vendedor = this.socialMeliRepository.buscarUsuario(userId);
         if(vendedor == null){
             throw new UserNotFoundException("No existe un vendedor con ID: " + userId);
+        }else if(!vendedor.isVendedor()){
+            throw new UserNotSellerException(String.format("El usuario (ID %d) no es un vendedor", userId));
         }
 
         List<UsuarioDTO> listaUsuarioDTO = new ArrayList<>();
-        for (Usuario user : this.socialMeliRepository.buscarSeguidores(vendedor)) {
+
+        for (Usuario user : vendedor.getSeguidores()) {
             listaUsuarioDTO.add(new UsuarioDTO(user.getUserId(), user.getUserName()));
         }
 
@@ -214,9 +219,11 @@ public class SocialMeliService implements ISocialMeliService{
             throw new UserNotFoundException("No existe el vendedor");
         }
         boolean loSeguia = seguidor.dejarDeSeguirVendedor(vendedor);
-        if(!loSeguia){
+        if(!loSeguia){ //si loSeguia es falso quiere decir que vendedor no estaba en la lista de seguidos
             throw new NotFollowException(String.format("El usuario (ID %d) no era seguidor del vendedor (ID %d)", idSeguidor, idVendedor));
         }
+        vendedor.eliminarSeguidor(seguidor);
+
         return new SuccessDTO("Unfollowed successfully");
     }
 

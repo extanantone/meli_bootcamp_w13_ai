@@ -25,7 +25,7 @@ public class SocialMeliRepository implements ISocialMeliRepository{
     public SocialMeliRepository() {
         this.usuarios = new HashMap<>();
         List<Usuario> listaUsuarios = cargarUsuarios();
-        //listaUsuarios.stream().map(x -> this.usuarios.put(x.getUserId(), x));
+
         for (Usuario user : listaUsuarios) {
             this.usuarios.put(user.getUserId(), user);
         }
@@ -55,15 +55,12 @@ public class SocialMeliRepository implements ISocialMeliRepository{
         return this.usuarios.get(idUsuario);
     }
 
+    /*
     public List<Usuario> buscarSeguidores(Usuario vendedor){
         List<Usuario> seguidores = this.usuarios.values().stream()
                                         .filter(x -> x.getVendedoresSeguidos().contains(vendedor))
                                         .collect(Collectors.toList());
         return seguidores;
-    }
-
-    /*public void seguirUsuario(Integer idSeguidor, Integer idVendedor){
-       // this.usuarios.get(idSeguidor).seguirVendedor();
     }*/
 
 }

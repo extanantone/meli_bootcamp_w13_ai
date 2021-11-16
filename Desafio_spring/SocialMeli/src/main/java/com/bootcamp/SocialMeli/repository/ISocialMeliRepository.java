@@ -7,8 +7,6 @@ import java.util.List;
 public interface ISocialMeliRepository {
     public Usuario buscarUsuario(Integer idUsuario);
 
-    //public void seguirUsuario(Integer idSeguidor, Integer idVendedor);
-
-    public List<Usuario> buscarSeguidores(Usuario vendedor);
+   // public List<Usuario> buscarSeguidores(Usuario vendedor);
 
 }

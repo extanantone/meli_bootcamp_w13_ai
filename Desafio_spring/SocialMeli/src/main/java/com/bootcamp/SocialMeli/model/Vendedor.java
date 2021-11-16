@@ -11,7 +11,7 @@ public class Vendedor extends Usuario{
     private List<Publicacion> publicaciones;
 
     public Vendedor(int userId, String userName, List<Publicacion> publicaciones) {
-        super(userId, userName);
+        //super(userId, userName);
         this.publicaciones = publicaciones;
     }
 
