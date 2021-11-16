@@ -5,7 +5,8 @@
     "email": "juan_perez@mail.com",
     "password": "9r8guwibef",
     "followers": [],
-    "following": []
+    "followed": [],
+    "posts": []
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "email": "adriana_gonzalez@mail.com",
     "password": "8w9fhniwef9",
     "followers": [],
-    "following": []
+    "followed": [],
+    "posts": []
   },
   {
     "id": 3,
@@ -21,7 +23,8 @@
     "email": "mateo_sanchez@mail.com",
     "password": "w0e8fhionkd",
     "followers": [],
-    "following": []
+    "followed": [],
+    "posts": []
   },
   {
     "id": 4,
@@ -29,7 +32,8 @@
     "email": "laura_suarez@mail.com",
     "password": "euwdiofnew92ws",
     "followers": [],
-    "following": []
+    "followed": [],
+    "posts": []
   },
   {
     "id": 5,
@@ -37,7 +41,8 @@
     "email": "gonzalo_fernandez@mail.com",
     "password": "e0w9finkdk",
     "followers": [],
-    "following": []
+    "followed": [],
+    "posts": []
   },
   {
     "id": 6,
@@ -45,6 +50,7 @@
     "email": "fernando_gonzalez@mail.com",
     "password": "0fehwiondfolm",
     "followers": [],
-    "following": []
+    "followed": [],
+    "posts": []
   }
 ]

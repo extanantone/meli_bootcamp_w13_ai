@@ -60,7 +60,7 @@ public class UserService implements IUserService {
 
     @Override
     public int getFollowedCount(long id) {
-        return userRepository.getUser(id).getFollowing().size();
+        return userRepository.getUser(id).getFollowed().size();
     }
 
     @Override

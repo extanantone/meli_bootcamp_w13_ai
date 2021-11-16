@@ -18,9 +18,14 @@ import java.util.stream.Collectors;
 public class PostRepository implements IPostRepository {
 
     private Map<Long, Post> posts;
+    private final IUserRepository userRepository;
 
-    public PostRepository() {
+    public PostRepository(IUserRepository userRepository) {
+        this.userRepository = userRepository;
         this.posts = loadPostsFromJSON();
+        for (Post post: posts.values()) {
+            userRepository.getUser(post.getUserId()).getPosts().add(post);
+        }
     }
 
     private Map<Long, Post> loadPostsFromJSON() {

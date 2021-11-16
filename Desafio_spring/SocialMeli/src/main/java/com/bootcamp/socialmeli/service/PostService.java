@@ -41,6 +41,7 @@ public class PostService implements IPostService {
     public PostDTO createPost(PostDTO postDTO) {
         productRepository.createProduct(mapper.productDTOToProduct(postDTO.getDetail()));
         Post postCreated = postRepository.createPost(mapper.postDTOToPost(postDTO));
+        userRepository.getUser(postDTO.getUserId()).getPosts().add(postCreated);
         return mapper.postToPostDTO(postCreated);
     }
 
@@ -49,7 +50,8 @@ public class PostService implements IPostService {
         List<PostDTO> posts = new ArrayList<>();
         User user = userRepository.getUser(userId);
         LocalDate now = LocalDate.now();
-        for (User followedUser: user.getFollowers()) {
+        for (User followedUser: user.getFollowed()) {
+            System.out.println(followedUser.getPosts());
             List<PostDTO> followedUserPosts = followedUser.getPosts().stream().filter(
                     post -> !post.getDate().plusWeeks(weeks).isBefore(now)
             ).map(

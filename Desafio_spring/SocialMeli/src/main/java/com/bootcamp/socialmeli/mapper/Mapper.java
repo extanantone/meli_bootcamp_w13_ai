@@ -47,7 +47,7 @@ public class Mapper implements IMapper {
         return new UserWithFollowedDTO(
                 user.getId(),
                 user.getUsername(),
-                user.getFollowing().stream().map(this::userToUserDTO).collect(Collectors.toList())
+                user.getFollowed().stream().map(this::userToUserDTO).collect(Collectors.toList())
         );
     }
 

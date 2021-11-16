@@ -19,7 +19,7 @@ public class User {
     private String email;
     private String password;
     private List<User> followers;
-    private List<User> following;
+    private List<User> followed;
     private List<Post> posts;
 
     public User(String username, String email, String password) {
@@ -27,8 +27,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.followers = new LinkedList<>();
-        this.following = new LinkedList<>();
+        this.followed = new LinkedList<>();
         this.posts = new LinkedList<>();
     }
-
 }
