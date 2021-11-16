@@ -1,9 +1,6 @@
 package com.SocialMeli.SocialMeli.controller;
 
-import com.SocialMeli.SocialMeli.dto.BuyersDTO;
-import com.SocialMeli.SocialMeli.dto.FollowersCountDTO;
-import com.SocialMeli.SocialMeli.dto.SellersDTO;
-import com.SocialMeli.SocialMeli.dto.UserDTO;
+import com.SocialMeli.SocialMeli.dto.*;
 import com.SocialMeli.SocialMeli.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +47,16 @@ public class UserController {
     @GetMapping("/users/{user_id}/followed/list")
     public BuyersDTO followedList(@PathVariable Integer user_id){
         return userService.followedList(user_id);
+    }
+
+    @PostMapping("products/post")
+    public ResponseEntity<String> createPost(@RequestBody PostDTO post){
+
+        Boolean band = userService.createPost(post);
+
+        if( band )
+            return new ResponseEntity<String>("Post guardado con éxito.", HttpStatus.OK);
+
+        return new ResponseEntity<String>("Ha ocurrido un error al guardar el post.", HttpStatus.BAD_REQUEST);
     }
 }

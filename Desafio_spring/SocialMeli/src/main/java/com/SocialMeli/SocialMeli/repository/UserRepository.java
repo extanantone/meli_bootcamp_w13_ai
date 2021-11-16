@@ -1,9 +1,6 @@
 package com.SocialMeli.SocialMeli.repository;
 
-import com.SocialMeli.SocialMeli.dto.BuyersDTO;
-import com.SocialMeli.SocialMeli.dto.FollowersCountDTO;
-import com.SocialMeli.SocialMeli.dto.SellersDTO;
-import com.SocialMeli.SocialMeli.dto.UserDTO;
+import com.SocialMeli.SocialMeli.dto.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,6 +11,7 @@ public class UserRepository implements IUserRepository{
 
     private final List<BuyersDTO> buyersDTOList = new ArrayList<>();
     private final List<SellersDTO> sellersDTOList = new ArrayList<>();
+    private final List<PostDTO> postDTOList = new ArrayList<>();
 
     @Override
     public UserDTO createBuyers(UserDTO user) {
@@ -184,5 +182,19 @@ public class UserRepository implements IUserRepository{
     @Override
     public BuyersDTO followedList(Integer user_id) {
         return findBuyerByUserId(user_id);
+    }
+
+    @Override
+    public Boolean createPost(PostDTO post) {
+        Boolean band = false;
+
+        SellersDTO sellersDTO = findSellerByUserId(post.getUser_id());
+
+        if( sellersDTO != null ){
+            postDTOList.add(post);
+            band = true;
+        }
+
+        return band;
     }
 }

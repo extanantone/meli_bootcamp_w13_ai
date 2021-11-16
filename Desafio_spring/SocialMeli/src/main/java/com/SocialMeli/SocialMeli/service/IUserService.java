@@ -1,9 +1,6 @@
 package com.SocialMeli.SocialMeli.service;
 
-import com.SocialMeli.SocialMeli.dto.BuyersDTO;
-import com.SocialMeli.SocialMeli.dto.FollowersCountDTO;
-import com.SocialMeli.SocialMeli.dto.SellersDTO;
-import com.SocialMeli.SocialMeli.dto.UserDTO;
+import com.SocialMeli.SocialMeli.dto.*;
 
 public interface IUserService {
     UserDTO createBuyers(UserDTO user);
@@ -12,4 +9,5 @@ public interface IUserService {
     FollowersCountDTO followersCount( Integer user_id );
     SellersDTO followersList(Integer user_id);
     BuyersDTO followedList(Integer user_id);
+    Boolean createPost(PostDTO post);
 }

@@ -1,9 +1,6 @@
 package com.SocialMeli.SocialMeli.service;
 
-import com.SocialMeli.SocialMeli.dto.BuyersDTO;
-import com.SocialMeli.SocialMeli.dto.FollowersCountDTO;
-import com.SocialMeli.SocialMeli.dto.SellersDTO;
-import com.SocialMeli.SocialMeli.dto.UserDTO;
+import com.SocialMeli.SocialMeli.dto.*;
 import com.SocialMeli.SocialMeli.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +41,10 @@ public class UserService implements IUserService {
     @Override
     public BuyersDTO followedList(Integer user_id) {
         return userRepository.followedList(user_id);
+    }
+
+    @Override
+    public Boolean createPost(PostDTO post) {
+        return userRepository.createPost(post);
     }
 }
