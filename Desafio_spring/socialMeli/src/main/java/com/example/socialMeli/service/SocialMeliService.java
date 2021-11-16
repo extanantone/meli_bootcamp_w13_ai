@@ -31,16 +31,33 @@ public class SocialMeliService implements  ISocialMeliService{
     public Comprador errorComprador(int id) throws UsuarioNoEncontradoError {
         Comprador compra = SMRepositorio.buscarComprador(id);
         if(compra == null ){
-            throw new UsuarioNoEncontradoError("El id del usuario comprador es incorrecto");
+            throw new UsuarioNoEncontradoError("El id: "+id+" para el usuario comprador que está tratando de ingresar es incorrecto");
         }
         return compra;
     }
     public Vendedor errorVendedor(int id) throws UsuarioNoEncontradoError {
         Vendedor vende = SMRepositorio.buscarVendedor(id);
         if(vende == null ){
-            throw new UsuarioNoEncontradoError("El id del usuario vendedor es incorrecto");
+            throw new UsuarioNoEncontradoError("El id: "+id+" para el usuario vendedor que está tratando de ingresar es incorrecto");
         }
         return vende;
+    }
+    public ProductoDTO deProductoAProductoDTO(Publicacion p){
+        return new ProductoDTO(p.getDetalle().getId_producto(),p.getDetalle().getNombre_producto(), p.getDetalle().getTipo(), p.getDetalle().getMarca(), p.getDetalle().getColor(), p.getDetalle().getNotas());
+    }
+    public Producto deProductoDTOAProducto(PublicacionDTO pub){
+        return new Producto(pub.getDetail().getProduct_id(), pub.getDetail().getProduct_name(), pub.getDetail().getType(), pub.getDetail().getBrand(),
+                pub.getDetail().getColor(), pub.getDetail().getNotes() );
+    }
+    public PublicacionDTO crearPublicacionDTO(Publicacion p, ProductoDTO producto){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+        String formattedString = p.getFecha().format(formatter);
+        return new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio(), p.isPromo(),p.getDescuento());
+    }
+    public Publicacion crearPublicacionNormal(PublicacionDTO pub, Producto producto){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+        LocalDate fecha = LocalDate.parse(pub.getDate(), formatter);
+        return new Publicacion(pub.getUser_id(),pub.getId_post(),fecha,producto,pub.getCategory(), pub.getPrice(),pub.isHas_promo(),pub.getDiscount());
     }
     public RespuestaSimpleDTO seguir (int id_comprado, int id_vendedor) throws UsuarioNoEncontradoError {
         RespuestaSimpleDTO rta = new RespuestaSimpleDTO();
@@ -101,11 +118,8 @@ public class SocialMeliService implements  ISocialMeliService{
     public RespuestaSimpleDTO añadirPost (PublicacionDTO pub) throws UsuarioNoEncontradoError{
         RespuestaSimpleDTO rta = new RespuestaSimpleDTO();
         Vendedor vende = errorVendedor(pub.getUser_id());
-        Producto productos = new Producto(pub.getDetail().getProduct_id(), pub.getDetail().getProduct_name(), pub.getDetail().getType(), pub.getDetail().getBrand(),
-                                           pub.getDetail().getColor(), pub.getDetail().getNotes() );
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
-        LocalDate fecha = LocalDate.parse(pub.getDate(), formatter);
-        Publicacion publi = new Publicacion(pub.getUser_id(),pub.getId_post(),fecha,productos,pub.getCategory(), pub.getPrice(),false,0);
+        Producto producto = deProductoDTOAProducto(pub);
+        Publicacion publi = crearPublicacionNormal(pub, producto);
         Publicacion yaPublicado = SMRepositorio.buscarPost(vende.getPublicaciones(), pub.getId_post());
         if(yaPublicado != null){
             throw new UsuarioNoEncontradoError("El post con id "+pub.getId_post()+" ya habia sido añadido anteriormente por el vendedor "+vende.getUser_id());
@@ -145,11 +159,9 @@ public class SocialMeliService implements  ISocialMeliService{
                     flag = verificarVendedorYFecha(p.getFecha());
                     if(flag && pun.getId_publicacion()==p.getId_publicacion()){
                         PublicacionesVendedoresDTO retorno = new PublicacionesVendedoresDTO(ve.getUser_id(), ve.getName());
-                        ProductoDTO producto = new ProductoDTO(p.getDetalle().getId_producto(),p.getDetalle().getNombre_producto(), p.getDetalle().getTipo(), p.getDetalle().getMarca(), p.getDetalle().getColor(), p.getDetalle().getNotas());
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
-                        String formattedString = p.getFecha().format(formatter);
-                        publicacionesDTO.add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio(), p.isPromo(),p.getDescuento()));
-                        retorno.getPosts().add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio(), p.isPromo(), p.getDescuento()));
+                        ProductoDTO producto = deProductoAProductoDTO(p);
+                        publicacionesDTO.add(crearPublicacionDTO(p, producto));
+                        retorno.getPosts().add(crearPublicacionDTO(p, producto));
                         posts.add(retorno);
                     }
                 }
@@ -157,6 +169,7 @@ public class SocialMeliService implements  ISocialMeliService{
         }
         return posts;
     }
+
     public RespuestaSimpleDTO dejarDeSeguir (int id_comprado, int id_vendedor) throws UsuarioNoEncontradoError {
         RespuestaSimpleDTO rta = new RespuestaSimpleDTO();
         Comprador compra = errorComprador(id_comprado);
@@ -176,11 +189,8 @@ public class SocialMeliService implements  ISocialMeliService{
     public RespuestaSimpleDTO añadirPostPromocion (PublicacionDTO pub) throws UsuarioNoEncontradoError{
         RespuestaSimpleDTO rta = new RespuestaSimpleDTO();
         Vendedor vende = errorVendedor(pub.getUser_id());
-        Producto productos = new Producto(pub.getDetail().getProduct_id(), pub.getDetail().getProduct_name(), pub.getDetail().getType(), pub.getDetail().getBrand(),
-                pub.getDetail().getColor(), pub.getDetail().getNotes() );
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
-        LocalDate fecha = LocalDate.parse(pub.getDate(), formatter);
-        Publicacion publi = new Publicacion(pub.getUser_id(),pub.getId_post(),fecha,productos,pub.getCategory(), pub.getPrice(),pub.isHas_promo(),pub.getDiscount());
+        Producto producto = deProductoDTOAProducto(pub);
+        Publicacion publi = crearPublicacionNormal(pub, producto);
         Publicacion yaPublicado = SMRepositorio.buscarPost(vende.getPublicaciones(), pub.getId_post());
         if(yaPublicado != null){
             throw new UsuarioNoEncontradoError("El post con id "+pub.getId_post()+" ya habia sido añadido anteriormente por el vendedor "+vende.getUser_id());
@@ -195,29 +205,21 @@ public class SocialMeliService implements  ISocialMeliService{
     }
     public CantidadPromosDTO contarPromocion (int id_vendedor) throws UsuarioNoEncontradoError {
         int i=0;
-        CantidadPromosDTO rta = new CantidadPromosDTO();
         Vendedor vende = errorVendedor(id_vendedor);
         for ( Publicacion p:vende.getPublicaciones()) {
             if(p.isPromo()){
                 i++;
             }
         }
-        rta.setUser_id(id_vendedor);
-        rta.setUser_name(vende.getName());
-        rta.setPromo_products_count(i);
-        return rta;
+        return new CantidadPromosDTO(id_vendedor, vende.getName(), i);
     }
     public PublicacionesVendedoresDTO publicacionesEnPromocion (int id) throws UsuarioNoEncontradoError{
         Vendedor vende = errorVendedor(id);
-        List<PublicacionDTO> publicacionesDTO = new ArrayList<>();
         PublicacionesVendedoresDTO retorno = new PublicacionesVendedoresDTO(vende.getUser_id(),vende.getName());
            for (Publicacion p:vende.getPublicaciones()) {
                 if(p.isPromo() ){
-                     ProductoDTO producto = new ProductoDTO(p.getDetalle().getId_producto(),p.getDetalle().getNombre_producto(), p.getDetalle().getTipo(), p.getDetalle().getMarca(), p.getDetalle().getColor(), p.getDetalle().getNotas());
-                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
-                     String formattedString = p.getFecha().format(formatter);
-                     publicacionesDTO.add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio(), p.isPromo(),p.getDescuento()));
-                     retorno.getPosts().add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio(), p.isPromo(), p.getDescuento()));
+                     ProductoDTO producto = deProductoAProductoDTO(p);
+                     retorno.getPosts().add(crearPublicacionDTO(p,producto));
                 }
            }
         return retorno;
@@ -228,10 +230,8 @@ public class SocialMeliService implements  ISocialMeliService{
         List<PublicacionDTO> publicacionesDTO = new ArrayList<>();
         for (Publicacion p:todas) {
             if(p.getDetalle().getTipo().toLowerCase().equals(tipo.toLowerCase()) ){
-                ProductoDTO producto = new ProductoDTO(p.getDetalle().getId_producto(),p.getDetalle().getNombre_producto(), p.getDetalle().getTipo(), p.getDetalle().getMarca(), p.getDetalle().getColor(), p.getDetalle().getNotas());
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
-                String formattedString = p.getFecha().format(formatter);
-                publicacionesDTO.add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio(), p.isPromo(),p.getDescuento()));
+                ProductoDTO producto = deProductoAProductoDTO(p);
+                publicacionesDTO.add(crearPublicacionDTO(p, producto));
                 flag=true;
             }
         }
