@@ -79,6 +79,7 @@ public class UserRepository implements IUserRepository{
     }
 
 
+
     @Override
     public Boolean follow(Integer user_id, Integer user_id_to_follow) {
         BuyersDTO buyerUser = findBuyerByUserId(user_id);
@@ -359,5 +360,55 @@ public class UserRepository implements IUserRepository{
 
 
         return sellersDTO;
+    }
+
+    @Override
+    public PostListDTO productsListSorted(Integer user_id, String order) {
+        SellersDTO sellersDTO = findSellerByUserId(user_id);
+        PostListDTO postListDTO = new PostListDTO();
+
+        if( sellersDTO != null ){
+
+            postListDTO.setUser_id(user_id);
+
+            List<PostUserDTO> postsUser = new ArrayList<>();
+            List<PostDTO> posts = new ArrayList<>();
+
+            postsUser = postDTOList.stream()
+                    .filter( post -> post.getUser_id() == user_id )
+                    .collect(Collectors.toList());
+
+            for( PostUserDTO postUser : postsUser ){
+                posts.add(
+                        new PostDTO(
+                                postUser.getId_post(),
+                                postUser.getDate(),
+                                postUser.getCategory(),
+                                postUser.getPrice(),
+                                postUser.getDetail()
+                        )
+                );
+            }
+
+            posts.sort(new Comparator<PostDTO>() {
+                @Override
+                public int compare(PostDTO o1, PostDTO o2) {
+                    return o2.getDate().compareTo(o1.getDate());
+                }
+            });
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyy");
+
+            LocalDate fifteenDaysAgo = LocalDate.now(ZoneId.of("America/Bogota")).minusDays(15);
+            System.out.println("dd/MM/yyy" + dtf.format(fifteenDaysAgo));
+
+            posts = posts.stream()
+                    .filter( post -> post.getDate().isAfter( fifteenDaysAgo ))
+                    .collect(Collectors.toList());
+
+            postListDTO.setPosts(posts);
+        }
+
+        return postListDTO;
     }
 }

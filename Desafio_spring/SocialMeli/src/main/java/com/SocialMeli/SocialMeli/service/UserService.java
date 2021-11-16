@@ -67,4 +67,9 @@ public class UserService implements IUserService {
     public SellersDTO followersListSorted(Integer userId, String order) {
         return userRepository.followersListSorted(userId, order);
     }
+
+    @Override
+    public PostListDTO productsListSorted(Integer user_id, String order) {
+        return userRepository.productsListSorted(user_id, order);
+    }
 }

@@ -85,4 +85,9 @@ public class UserController {
     public SellersDTO followersListSorted(@PathVariable Integer userId, @RequestParam("order") String order){
         return userService.followersListSorted(userId, order);
     }
+
+    /*@GetMapping(value ="/products/followed/{userId}/list", params = {"order"})
+    public BuyersDTO productsListSorted(@PathVariable Integer userId, @RequestParam("order") String order){
+        return userService.productsListSorted(userId, order);
+    }*/
 }
