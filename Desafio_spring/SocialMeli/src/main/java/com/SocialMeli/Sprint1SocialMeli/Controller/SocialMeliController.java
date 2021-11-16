@@ -2,16 +2,14 @@ package com.SocialMeli.Sprint1SocialMeli.Controller;
 
 
 import com.SocialMeli.Sprint1SocialMeli.DTO.CompradorDTO;
+import com.SocialMeli.Sprint1SocialMeli.DTO.PublicacionDTO;
 import com.SocialMeli.Sprint1SocialMeli.DTO.VendedorFollowesCountDTO;
 import com.SocialMeli.Sprint1SocialMeli.Service.ISocialMeliService;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
@@ -57,6 +55,14 @@ public class SocialMeliController {
     public ResponseEntity<VendedorFollowesCountDTO> getCompradorFollowerdList(@PathVariable Integer compradoId) {
 
         return new ResponseEntity(service.compradorFollowedList(compradoId), HttpStatus.OK);
+    }
+
+    @PostMapping("/products/post")
+    public ResponseEntity createNewPublicacion(@RequestBody PublicacionDTO puDTO){
+
+        service.createNewPublicacion(puDTO);
+
+       return new ResponseEntity("se creo correctamente",HttpStatus.OK);
     }
 
 }

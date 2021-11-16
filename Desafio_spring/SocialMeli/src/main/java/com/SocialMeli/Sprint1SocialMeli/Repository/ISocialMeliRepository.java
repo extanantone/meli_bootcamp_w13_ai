@@ -32,5 +32,7 @@ public interface ISocialMeliRepository {
 
     Boolean existsFollow(Integer compradorId, Integer vendedorId);
 
+    Boolean existPost(Integer vendedorId, Integer postId);
+
 
 }

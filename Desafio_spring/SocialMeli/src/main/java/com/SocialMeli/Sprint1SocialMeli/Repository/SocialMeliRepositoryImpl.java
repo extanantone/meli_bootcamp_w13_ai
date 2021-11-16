@@ -5,6 +5,7 @@ import com.SocialMeli.Sprint1SocialMeli.Model.Publicacion;
 import com.SocialMeli.Sprint1SocialMeli.Model.Vendedor;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,8 +71,13 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     }
 
     @Override
-    public boolean newPost(Integer id_venderdor, Publicacion publicacion) {
-        return false;
+    public boolean newPost(Integer venderdorId, Publicacion publicacion) {
+
+
+        List<Publicacion> publicacions = new ArrayList<>();
+        publicacions.add(publicacion);
+        vendedores.get(venderdorId).setPosts(publicacions);
+        return true;
     }
 
     @Override
@@ -114,4 +120,18 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
 
         return resp1;
     }
+
+    @Override
+    public Boolean existPost(Integer vendedorId, Integer postId) {
+
+        boolean resp = vendedores.get(vendedorId)
+                .getPosts()
+                .stream()
+                .anyMatch(ven -> ven.getPostId() == postId);
+
+
+        return resp;
+    }
+
+
 }

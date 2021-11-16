@@ -32,4 +32,15 @@ public class ExceptionSocialMeliHandler {
                 HttpStatus.BAD_REQUEST );
 
     }
+
+
+    @ExceptionHandler(PostIdDuplicateVendedor.class)
+    public ResponseEntity<ErrorDTO> get(PostIdDuplicateVendedor e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "duplicate_key",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST );
+
+    }
 }
