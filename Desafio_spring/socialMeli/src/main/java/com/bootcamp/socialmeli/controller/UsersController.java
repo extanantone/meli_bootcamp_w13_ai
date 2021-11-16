@@ -33,8 +33,14 @@ public class UsersController {
     }
 
     @GetMapping(path = "/{user_id}/followers/list")
-    public ResponseEntity<SellerFollowersListDTO> getSellerFollowersList(@PathVariable Integer user_id){
-        return  ResponseEntity.ok(service.getSellerFollowersList(user_id));
+    public ResponseEntity<SellerFollowersListDTO> getSellerFollowersList(@PathVariable Integer user_id,
+                                                                         @RequestParam(defaultValue = "") String order){
+        if(order==""){
+            return  ResponseEntity.ok(service.getSellerFollowersList(user_id));
+        }else{
+            return ResponseEntity.ok(service.getSellerFollowersListSort(user_id,order));
+        }
+
     }
 
     @GetMapping(path = "/{user_id}/followed/list")
@@ -50,6 +56,5 @@ public class UsersController {
         return ResponseEntity
                 .ok("El comprador con id:" + user_id + " ya no sigue al vendedor con id:" + user_id_to_unfollow);
     }
-
 
 }

@@ -16,7 +16,7 @@ public interface IUserService {
 
     void unFollow (Integer purchaserId, Integer sellerId);
 
-
+    SellerFollowersListDTO getSellerFollowersListSort(Integer sellerId, String order);
 
 
 }

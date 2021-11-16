@@ -1,5 +1,7 @@
 package com.bootcamp.socialmeli.service;
 
+import com.bootcamp.socialmeli.dto.comparator.ComparatorUserNameBasicUserDTO;
+import com.bootcamp.socialmeli.dto.comparator.SortOrder;
 import com.bootcamp.socialmeli.dto.response.user.BasicUserInfo;
 import com.bootcamp.socialmeli.dto.response.user.PurchaserFollowedListDTO;
 import com.bootcamp.socialmeli.dto.response.user.SellerFollowersInfoDTO;
@@ -14,8 +16,9 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
+import java.util.StringTokenizer;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -82,13 +85,15 @@ public class UserServiceImpl implements IUserService {
         socialMeliRepository.gerPurchaserFollowed(purchaserId).stream().forEach(follow ->{
             followed.add(new BasicUserInfo(follow.getUserID(),follow.getUserName()));
         });
-        
+
+       // list.sort(Comparator.comparing(Seller::getUserName).reversed());
         return new PurchaserFollowedListDTO(purchaserId,purchaser.getUserName(),followed);
     }
 
     @Override
     public void unFollow(Integer purchaserId, Integer sellerId) {
 
+//        validar que existan
         Seller seller = socialMeliRepository.getSeller(sellerId).orElseThrow(
                 ()-> new NotFoundUsuarioException(sellerId)
         );
@@ -104,5 +109,22 @@ public class UserServiceImpl implements IUserService {
         }
 
         socialMeliRepository.unFollow(purchaserId,sellerId);
+    }
+
+    @Override
+    public SellerFollowersListDTO getSellerFollowersListSort(Integer sellerId, String order) {
+
+        SellerFollowersListDTO list = getSellerFollowersList(sellerId);
+
+        StringTokenizer st = new StringTokenizer(order,"_");
+        st.nextToken();
+
+        var n = list.getFollowers();
+        if(st.nextToken().equals("asc")){
+            n.sort( new ComparatorUserNameBasicUserDTO(SortOrder.ASC));
+        }else{
+            n.sort( new ComparatorUserNameBasicUserDTO(SortOrder.DESC));
+        }
+        return list;
     }
 }

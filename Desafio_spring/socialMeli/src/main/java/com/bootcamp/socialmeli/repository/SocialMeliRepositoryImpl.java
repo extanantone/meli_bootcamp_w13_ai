@@ -3,6 +3,7 @@ package com.bootcamp.socialmeli.repository;
 import com.bootcamp.socialmeli.entitiy.Purchaser;
 import com.bootcamp.socialmeli.entitiy.Post;
 import com.bootcamp.socialmeli.entitiy.Seller;
+import com.bootcamp.socialmeli.entitiy.comparator.SortOrder;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -94,4 +95,13 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
         }
         return posts;
     }
+
+/*    @Override
+    public void getSortedSellerFollowers(List<Purchaser> list, Comparator<?> comparator, SortOrder order) {
+        if(order == SortOrder.ASC){
+            list.sort(Comparator.comparing(Purchaser::getUserName));
+        }else{
+            list.sort(Comparator.comparing(Purchaser::getUserName).reversed());
+        }
+    }*/
 }

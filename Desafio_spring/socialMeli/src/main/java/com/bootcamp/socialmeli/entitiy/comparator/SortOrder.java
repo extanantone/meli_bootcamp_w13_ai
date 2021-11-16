@@ -1,5 +1,6 @@
 package com.bootcamp.socialmeli.entitiy.comparator;
 
-public enum SorterOrder {
-    ASC, DESC
+public enum SortOrder {
+
+    ASC,DESC
 }
