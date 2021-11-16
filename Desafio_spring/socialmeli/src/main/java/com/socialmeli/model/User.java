@@ -62,7 +62,7 @@ public class User {
     }
 
     public void addPost(Post post){
-        System.out.println(post.getId());
+        //System.out.println(post.getId());
         if(!seller)
             throw new InvalidSellerException("The user is not a seller");
         if (posts.contains(post))

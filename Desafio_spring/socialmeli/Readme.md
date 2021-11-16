@@ -353,7 +353,24 @@ Para los items de promocion filtra quienes tengan la bandera hasPromo en true
           }
 ![img](5.png)
 
-**5.** Listar las publicaciones de los followed
+-       POST POST http://localhost:8080/products/post
+        {
+          "user_id": 4,
+          "id_post": 30,
+          "date": "15-11-2021",
+          "detail": {
+                "product_id": 1,
+                "product_name": "Silla Gamer",
+                "type": "Gamer",
+                "brand": "Racer",
+                "color": "Red & Black",
+                "notes": "Special Edition"
+          },
+          "category": 100,
+          "price": 1500.50
+          }
+
+**5.** Listar las publicaciones de los followed en las ultimas 2 semanas
 
 -       GET http://localhost:8080/products/followed/2/list
 
@@ -374,4 +391,18 @@ Para los items de promocion filtra quienes tengan la bandera hasPromo en true
 **7.** Dejar de seguir seller
 -       POST http://localhost:8080/users/2/unfollow/4
 ![img](11.png)
-**8. Ordenar por nombre seguidores**
+
+**8.** Ordenar por nombre seguidores
+
+-       GET http://localhost:8080/users/4/followers/list?oder=name_desc
+![img](12.png)
+
+**9.** Ordenar por nombre followed
+
+-       GET http://localhost:8080/users/1/followed/list?oder=name_desc
+![img](13.png)
+
+**10.** Ordenar por fecha
+
+-       GET http://localhost:8080/products/followed/1/list?order=date_asc
+![img](14.png)
