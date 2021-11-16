@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class UserFollowersCountDTO extends UserDTO {
-    private Integer followersCount;
+public class UserPromoPostCountDTO extends UserDTO {
+    private Integer promoProductsCount;
 }

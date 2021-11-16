@@ -1,13 +1,12 @@
 package com.lgoyenechea.socialmeli.service;
 
-import com.lgoyenechea.socialmeli.dto.PostCreationDTO;
-import com.lgoyenechea.socialmeli.dto.PostDTO;
-import com.lgoyenechea.socialmeli.dto.UserFollowedListDTO;
-import com.lgoyenechea.socialmeli.dto.UserFollowedPostsListDTO;
+import com.lgoyenechea.socialmeli.dto.*;
 import com.lgoyenechea.socialmeli.dto.mapper.ProductMapper;
 import com.lgoyenechea.socialmeli.exception.UserArgumentNotValidException;
 import com.lgoyenechea.socialmeli.model.Post;
+import com.lgoyenechea.socialmeli.model.User;
 import com.lgoyenechea.socialmeli.repository.ProductRepository;
+import com.lgoyenechea.socialmeli.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,10 +18,12 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
     private final UserService userService;
 
-    public ProductService(ProductRepository productRepository, UserService userService) {
+    public ProductService(ProductRepository productRepository, UserRepository userRepository, UserService userService) {
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
         this.userService = userService;
     }
 
@@ -55,5 +56,35 @@ public class ProductService {
         return date.equals(LocalDate.now()) ||
                 (date.isBefore(LocalDate.now()) &&
                 date.isAfter(LocalDate.now().minusDays(14L)));
+    }
+
+    public PostPromoDTO saveWithPromo(PostCreationPromoDTO newPost) {
+        Post post = productRepository.save(ProductMapper.postCreationWithPromoDtoToPost(newPost));
+        return ProductMapper.postToPromoDto(post);
+    }
+
+    public UserPromoPostCountDTO promoPostCount(Long userId) throws UserArgumentNotValidException {
+        User user = userRepository.getById(userId);
+        if (user == null) throw new UserArgumentNotValidException("Invalid user id.");
+
+        int count = (int) productRepository.getByUserId(userId)
+                .stream()
+                .filter(Post::getHasPromo)
+                .count();
+
+        return ProductMapper.userToPromoPostCountDto(user, count);
+    }
+
+    public UserPostsPromoListDTO postsPromoList(Long userId) throws UserArgumentNotValidException {
+        User user = userRepository.getById(userId);
+        if (user == null) throw new UserArgumentNotValidException("Invalid user id.");
+
+        List<PostDTO> posts = productRepository.getByUserId(userId)
+                .stream()
+                .filter(Post::getHasPromo)
+                .map(ProductMapper::postToDto)
+                .collect(Collectors.toList());
+
+        return ProductMapper.userPostPromoListToDto(user, posts);
     }
 }

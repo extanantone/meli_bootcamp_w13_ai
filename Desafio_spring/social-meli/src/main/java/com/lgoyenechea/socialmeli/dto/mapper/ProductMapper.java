@@ -3,6 +3,7 @@ package com.lgoyenechea.socialmeli.dto.mapper;
 import com.lgoyenechea.socialmeli.dto.*;
 import com.lgoyenechea.socialmeli.model.Post;
 import com.lgoyenechea.socialmeli.model.Product;
+import com.lgoyenechea.socialmeli.model.User;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -63,5 +64,41 @@ public class ProductMapper {
                 .collect(Collectors.toList());
         followedPostsListDto.setPosts(postsDto);
         return followedPostsListDto;
+    }
+
+    public static Post postCreationWithPromoDtoToPost(PostCreationPromoDTO dto) {
+        Post post = new Post();
+        post.setUserId(dto.getUserId());
+        post.setDate(LocalDate.parse(dto.getDate(), DATE_TIME_FORMATTER));
+        post.setDetail(productCreationDtoToProduct(dto.getDetail()));
+        post.setCategory(dto.getCategory());
+        post.setPrice(dto.getPrice());
+        post.setHasPromo(dto.getHasPromo());
+        post.setDiscount(dto.getDiscount());
+        return post;
+    }
+
+    public static PostPromoDTO postToPromoDto(Post post) {
+        PostDTO dto = postToDto(post);
+        PostPromoDTO promoDto = (PostPromoDTO) dto;
+        promoDto.setHasPromo(post.getHasPromo());
+        promoDto.setDiscount(post.getDiscount());
+        return promoDto;
+    }
+
+    public static UserPromoPostCountDTO userToPromoPostCountDto(User user, int count) {
+        UserPromoPostCountDTO dto = new UserPromoPostCountDTO();
+        dto.setUserId(user.getId());
+        dto.setUserName(user.getName());
+        dto.setPromoProductsCount(count);
+        return dto;
+    }
+
+    public static UserPostsPromoListDTO userPostPromoListToDto(User user, List<PostDTO> posts) {
+        UserPostsPromoListDTO dto = new UserPostsPromoListDTO();
+        dto.setUserId(user.getId());
+        dto.setUserName(user.getName());
+        dto.setPosts(posts);
+        return dto;
     }
 }
