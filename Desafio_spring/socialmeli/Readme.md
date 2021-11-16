@@ -36,7 +36,7 @@ Ejemplo:
 
 http://localhost:8080/users/1/follow/4
 
-### Count users follow to seller (followers of seller)
+### conteo usuarios siguiendo a sellers (followers of seller)
 
 GET
 
@@ -92,6 +92,7 @@ http://localhost:8080/users/1/followed/list
 Si el usuario no existe 404
 
 http://localhost:8080/users/20/followed/list
+
 
 ### nuevo Post
 
@@ -275,7 +276,7 @@ Para los items de promocion filtra quienes tengan la bandera hasPromo en true
    
      POST http://localhost:8080/users/2/follow/4
 
-**2.** Listar followers
+**2.** Listar followers en orden
 
 -     GET http://localhost:8080/users/4/followers/list?order=name_asc
      
@@ -289,8 +290,11 @@ Para los items de promocion filtra quienes tengan la bandera hasPromo en true
 ![img](2.png)
 
     El vendedor 3 es solo seguido por el usuario 1
-**3.** Lista de followed
 
+**3.** Conteo de followers
+
+-       GET http://localhost:8080/users/3/followers/count
+![img](10.png)
 
 **4.** Añadimos nuevas publicaciones
 
@@ -348,3 +352,26 @@ Para los items de promocion filtra quienes tengan la bandera hasPromo en true
           "price": 1500.50
           }
 ![img](5.png)
+
+**5.** Listar las publicaciones de los followed
+
+-       GET http://localhost:8080/products/followed/2/list
+
+![img](6.png)
+
+-       GET http://localhost:8080/products/followed/1/list
+
+![img](7.png)
+
+**6.** Lista de followed
+
+-        GET http://localhost:8080/users/1/followed/list
+![img](8.png)
+
+-        GET http://localhost:8080/users/2/followed/list
+![img](9.png)
+
+**7.** Dejar de seguir seller
+-       POST http://localhost:8080/users/2/unfollow/4
+![img](11.png)
+**8. Ordenar por nombre seguidores**

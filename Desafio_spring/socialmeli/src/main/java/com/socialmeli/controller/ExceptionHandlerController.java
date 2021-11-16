@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.time.DateTimeException;
+
 @ControllerAdvice
 public class ExceptionHandlerController {
 
@@ -24,5 +26,10 @@ public class ExceptionHandlerController {
     @ExceptionHandler(InvalidPostException.class)
     public ResponseEntity<?> handleInvalidPost(InvalidPostException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(DateTimeException.class)
+    public ResponseEntity<?> handleTime(DateTimeException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDto("Invalid date"));
     }
 }

@@ -46,7 +46,7 @@ public class UserController {
 
     @PostMapping("/products/post")
     public void addPost(@RequestBody PostDto dto){
-        System.out.println(dto.getDate());
+        //System.out.println(dto.getDate());
         iUserService.addPost(dto);
     }
 

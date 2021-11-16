@@ -74,7 +74,7 @@ public class UserService implements IUserService{
         if(user==null)
             throw new NotFoundUserException("Not exist user");
         DetailDto detail = dto.getDetail();
-        System.out.println(dto.getIdPost());
+        //System.out.println(dto.getIdPost());
         user.addPost(new Post(dto.getIdPost(), LocalDate.parse(dto.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),detail.getProductId(),detail.getProductName(),
                 detail.getType(),detail.getBrand(),detail.getColor(),detail.getNotes(),dto.getCategory(),
                 dto.getPrice(),false,0));
