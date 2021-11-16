@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @Controller
 @RequestMapping(path = "/users")
 public class UsersController {
@@ -45,5 +47,14 @@ public class UsersController {
         return  new ResponseEntity<>(iUserService.dejarDeSeguir(user_id,user_id_to_unfollow),HttpStatus.OK);
     }
 
+    @GetMapping("{user_id}/followers/list")
+    public ResponseEntity<MesiguenDTO> getfollowersList(@PathVariable int user_id ,@PathParam("order") String order){
+        return new ResponseEntity<>(iUserService.getOrdenadaMesiguen(user_id,order),HttpStatus.OK);
+    }
+
+    @GetMapping("{user_id}/followed/list")
+    public ResponseEntity<MesiguenDTO> getfollowed(@PathVariable int user_id,@PathParam("order") String order){
+        return new ResponseEntity<>(iUserService.getOrdenadaAquienSigo(user_id,order),HttpStatus.OK);
+    }
 
 }

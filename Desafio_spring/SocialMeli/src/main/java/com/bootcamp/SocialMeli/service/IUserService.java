@@ -14,6 +14,8 @@ public interface IUserService {
     MesiguenDTO getMeSiguen(int id);
     MesiguenDTO getAquienSiguo(int id);
     SeguidorDTO dejarDeSeguir(int idSeguidor, int idSeguido);
+    MesiguenDTO getOrdenadaMesiguen(int id, String order);
+    MesiguenDTO getOrdenadaAquienSigo(int id ,String order);
 
 
 }

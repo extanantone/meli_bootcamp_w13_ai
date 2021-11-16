@@ -33,6 +33,13 @@ public class UserRepository implements  IUserRepository{
     }
 
     @Override
+    public boolean getExisteSeguidor(int idseguidor, int idseguido) {
+        return seguidors.stream()
+                .filter(seguidor -> seguidor.getIdSeguido()==idseguido && seguidor.getIdSeguidor()==idseguidor)
+                .count() > 0?  true : false;
+    }
+
+    @Override
     public User getUser(int id) {
         if(users.stream().filter(user -> user.getId() == id).count() >0){
           return users.stream().filter(user1 -> user1.getId()==id).findFirst().get();

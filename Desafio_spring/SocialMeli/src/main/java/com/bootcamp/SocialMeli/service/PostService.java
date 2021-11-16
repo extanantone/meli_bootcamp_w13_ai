@@ -62,4 +62,20 @@ public class PostService implements IPostService {
         return new PublicacionesDTO(id,ordenadadesc.stream().filter(postsDTO ->  (int)ChronoUnit.DAYS.between(postsDTO.getDate(),LocalDate.now())<=14 ).collect(Collectors.toList()));
 
     }
+
+    @Override
+    public PublicacionesDTO getPublicaciones(int id, String order) {
+        List<Post> posts;
+        if(order.equals("date_asc")){
+
+            posts = iUserRepository.getPosts(id).stream().sorted(Comparator.comparing(Post::getDate)).collect(Collectors.toList());
+
+        }else{
+            posts = iUserRepository.getPosts(id).stream().sorted(Comparator.comparing(Post::getDate).reversed()).collect(Collectors.toList());
+        }
+        List<PostsDTO> postsDTOS = posts.stream().map(post -> PostMater.PostToPostsDTO(post)).collect(Collectors.toList());
+
+        return new PublicacionesDTO(id,postsDTOS);
+
+    }
 }

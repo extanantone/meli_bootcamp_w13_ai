@@ -26,4 +26,6 @@ public interface IUserRepository {
 
     void dejarDeSeguir(int idSeguidor, int idSeguido);
 
+    boolean getExisteSeguidor(int idseguidor , int idseguido);
+
 }

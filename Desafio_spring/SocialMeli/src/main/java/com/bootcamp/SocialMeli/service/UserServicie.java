@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServicie implements IUserService{
@@ -26,6 +28,7 @@ public class UserServicie implements IUserService{
 
         if(iUserRepository.getUser(idSeguidor) ==null){throw new NotFoundExceptionUsers(idSeguidor); }
         if(iUserRepository.getUser(idSeguido) ==null){throw new NotFoundExceptionUsers(idSeguido);}
+        if(iUserRepository.getExisteSeguidor(idSeguidor,idSeguido)){throw new DuplicateIdException(idSeguidor,idSeguido);}
 
         iUserRepository.setSeguidor(new Seguidor(idSeguidor,idSeguido));
 
@@ -84,5 +87,38 @@ public class UserServicie implements IUserService{
         iUserRepository.dejarDeSeguir(idSeguidor,idSeguido);
 
         return new SeguidorDTO("",idSeguidor,"",idSeguido);
+    }
+
+    @Override
+    public MesiguenDTO getOrdenadaMesiguen(int id, String order) {
+
+        MesiguenDTO mesiguenDTO = getMeSiguen(id);
+
+        List<UserDTO> userDTOSorder;
+        if(order.equals("name_asc")){
+            userDTOSorder= mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUser_name)).collect(Collectors.toList());
+        }else{
+            userDTOSorder= mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUser_name).reversed()).collect(Collectors.toList());
+        }
+        mesiguenDTO.setFollowers(userDTOSorder);
+
+        return mesiguenDTO;
+    }
+
+    @Override
+    public MesiguenDTO getOrdenadaAquienSigo(int id, String order) {
+
+        MesiguenDTO mesiguenDTO= getMeSiguen(id);
+
+        List<UserDTO> userDTOSOrder;
+
+        if(order.equals("name_asc")){
+            userDTOSOrder = mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUser_name)).collect(Collectors.toList());
+        }else{
+            userDTOSOrder = mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUser_name).reversed()).collect(Collectors.toList());
+        }
+        mesiguenDTO.setFollowers(userDTOSOrder);
+
+        return mesiguenDTO;
     }
 }
