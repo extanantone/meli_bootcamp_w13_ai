@@ -16,9 +16,13 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ListaUsuariosDTO {
-    private int userId;
-    private String userName;
+public class ListaUsuariosDTO extends UsuarioDTO{
     private List<UsuarioDTO> followers;
     private List<UsuarioDTO> followed;
+
+    public ListaUsuariosDTO(int userId, String userName, List<UsuarioDTO> followers, List<UsuarioDTO> followed) {
+        super(userId, userName);
+        this.followers = followers;
+        this.followed = followed;
+    }
 }
