@@ -21,7 +21,7 @@ public class PostController {
         return iPublicacionService.createPost(request);
     }
 
-    //US 0006: crear una nueva publicacion y US 0009
+    //US 0006: obtener las publicaciones posteriores a las 2 semanas anteriores a la fecha de hoy y US 0009
     @GetMapping("/products/followed/{userId}/list")
     public ResponseEntity<DTOPostsFromMyFollowedUsers> getPostsFromUserFollowersSinceTwoWeeks(@PathVariable int userId,
                                                                                               @RequestParam(value = "order", required = false) String order){

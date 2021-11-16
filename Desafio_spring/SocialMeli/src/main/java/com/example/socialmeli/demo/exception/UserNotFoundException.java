@@ -1,4 +1,4 @@
 package com.example.socialmeli.demo.exception;
 
-public class UserNotFoundException {
+public class UserNotFoundException extends RuntimeException{
 }

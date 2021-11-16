@@ -3,6 +3,7 @@ package com.example.socialmeli.demo.service;
 import com.example.socialmeli.demo.dto.DTOUsuario;
 import com.example.socialmeli.demo.dto.controllerToService.*;
 import com.example.socialmeli.demo.dto.serviceToController.*;
+import com.example.socialmeli.demo.exception.UserNotFoundException;
 import com.example.socialmeli.demo.mapper.PostMapper;
 import com.example.socialmeli.demo.mapper.PromoMapper;
 import com.example.socialmeli.demo.model.Product;
@@ -89,18 +90,22 @@ public class PostService implements IPublicacionService{
 
         int userId = request.getUserId();
         String order = request.getOrder();
-
         List<DTOPostFollowers> postsFromVendorDTO = new ArrayList<>();
         List<Post> postsFromVendor = new ArrayList<>();
         List<DTOUsuario> followedUsersFromUser = new ArrayList<>();
-
         DTOPostsFromMyFollowedUsers response = new DTOPostsFromMyFollowedUsers();
         DTOUserFollowedList followedUsersFromUserDTO = new DTOUserFollowedList();
+
+        //Verificamos que el usuario exista
+        DTOUsuario searchedUser = iUserService.getUserByUserId(userId);
+
+        if(searchedUser == null){
+            throw new UserNotFoundException();
+        }
 
         DTORequestUserList requestToPostService = new DTORequestUserList();
         requestToPostService.setUserId(request.getUserId());
         requestToPostService.setOrder(null);
-
 
         DTOUserId userIdDTo = new DTOUserId(userId);
         followedUsersFromUserDTO = iFollowerService.getFollowedUsersOfUserId(requestToPostService);
@@ -108,7 +113,7 @@ public class PostService implements IPublicacionService{
 
         for (DTOUsuario uDTO: followedUsersFromUser) {
 
-            postsFromVendor = iPublicacionRepository.obtenerPublicacionesPorVendedorIdPosteriores2Semanas(uDTO.getUser_id(),order);
+            postsFromVendor = iPublicacionRepository.obtenerPublicacionesPorVendedorIdPosteriores2Semanas(uDTO.getUserId(),order);
 
             for (Post p: postsFromVendor) {
 
@@ -154,11 +159,11 @@ public class PostService implements IPublicacionService{
         searchedUser = iUserService.getUserByUserId(vendorId);
 
         if(searchedUser == null){
-            throw new RuntimeException();
+           throw new UserNotFoundException();
         }
 
         response.setUserId(vendorId);
-        response.setUserName(searchedUser.getUser_name());
+        response.setUserName(searchedUser.getUserName());
 
         responseFromRepository = iPublicacionRepository.getPromoPostListOfUserId(vendorId);
 
@@ -203,11 +208,11 @@ public class PostService implements IPublicacionService{
         searchedUser = iUserService.getUserByUserId(vendorId);
 
         if(searchedUser == null){
-            throw new RuntimeException();
+            throw new UserNotFoundException();
         }
 
         response.setUserId(vendorId);
-        response.setUserName(searchedUser.getUser_name());
+        response.setUserName(searchedUser.getUserName());
 
         promoProductsCount = iPublicacionRepository.countPromoPostOfUser(vendorId);
         response.setPromoProductsCount(promoProductsCount);

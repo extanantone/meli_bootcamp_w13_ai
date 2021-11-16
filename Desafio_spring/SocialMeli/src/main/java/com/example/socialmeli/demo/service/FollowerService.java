@@ -10,6 +10,10 @@ import com.example.socialmeli.demo.dto.controllerToService.DTOUserId;
 import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowedList;
 import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowerCount;
 import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowersList;
+import com.example.socialmeli.demo.exception.FollowingItselfException;
+import com.example.socialmeli.demo.exception.UserNotFollowingToUserException;
+import com.example.socialmeli.demo.exception.UserNotFoundException;
+import com.example.socialmeli.demo.exception.VendorNotFoundException;
 import com.example.socialmeli.demo.mapper.UsuarioMapper;
 import com.example.socialmeli.demo.model.Usuarios;
 import com.example.socialmeli.demo.repository.IFollowerRepository;
@@ -30,14 +34,27 @@ public class FollowerService implements IFollowerService{
 IFollowerRepository followerRepository;
 
 @Autowired
-IUserRepository usuarioRepository;
+IUserService usuarioService;
 
 
     @Override
     public ResponseEntity followUser(DTOFollowUser requestDTO) {
 
+        DTOUsuario followerUser = new DTOUsuario();
+        DTOUsuario followedUser = new DTOUsuario();
+
+        followerUser = usuarioService.getUserByUserId(requestDTO.getUserId());
+        followedUser = usuarioService.getUserByUserId(requestDTO.getUserIdToFollow());
+
+        if(followerUser == null)
+            throw new UserNotFoundException();
+
+        if(followedUser == null)
+            throw new VendorNotFoundException();
+
+
         if(requestDTO.getUserId() == requestDTO.getUserIdToFollow())
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new FollowingItselfException();
 
 
         try {
@@ -59,14 +76,15 @@ IUserRepository usuarioRepository;
         int userFollowersCount = 0;
 
         DTOUserFollowerCount response = new DTOUserFollowerCount();
+        DTOUsuario user = new DTOUsuario();
 
         //Vamos a obtener el usuario solicitado
-        Usuarios user = usuarioRepository.obtenerUsuarioPorID(userID);
+            user = usuarioService.getUserByUserId(userID);
 
         if(user == null)
-            throw new RuntimeException();
+            throw new UserNotFoundException();
 
-        userName = user.getUsername();
+        userName = user.getUserName();
 
         userFollowers = followerRepository.getUsersWhoFollowsToUserId(userID,null);
 
@@ -94,12 +112,12 @@ IUserRepository usuarioRepository;
         DTOUserFollowersList response = new DTOUserFollowersList();
 
         //Vamos a obtener el usuario solicitado
-        Usuarios user = usuarioRepository.obtenerUsuarioPorID(userID);
+        DTOUsuario user = usuarioService.getUserByUserId(userID);
 
         if(user == null)
-            throw new RuntimeException();
+            throw new UserNotFoundException();
 
-        userName = user.getUsername();
+        userName = user.getUserName();
 
         userFollowers = followerRepository.getUsersWhoFollowsToUserId(userID,order);
 
@@ -129,15 +147,15 @@ IUserRepository usuarioRepository;
         String order = request.getOrder();
         String userName;
 
-        followedUsers = followerRepository.getUsersFollowedByUserId(userId,order);
-
         //Vamos a obtener el usuario solicitado
-        Usuarios searchedUser = usuarioRepository.obtenerUsuarioPorID(userId);
+        DTOUsuario searchedUser = usuarioService.getUserByUserId(userId);
 
         if(searchedUser == null)
-            throw new RuntimeException();
+            throw new UserNotFoundException();
 
-        userName = searchedUser.getUsername();
+        userName = searchedUser.getUserName();
+
+        followedUsers = followerRepository.getUsersFollowedByUserId(userId,order);
 
         for (Usuarios u: followedUsers) {
 
@@ -159,13 +177,22 @@ IUserRepository usuarioRepository;
     @Override
     public ResponseEntity unFollowUser(DTOUnfollowUser request) {
 
+        DTOUsuario mainUser = usuarioService.getUserByUserId(request.getUserId());
+        DTOUsuario userToUnfollow = usuarioService.getUserByUserId(request.getUserIdToUnfollow());
+
+        if(mainUser == null)
+            throw new UserNotFoundException();
+
+        if(userToUnfollow == null)
+            throw new VendorNotFoundException();
+
         try{
             followerRepository.unFollowUser(request);
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new UserNotFollowingToUserException();
         }
 
-        return null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

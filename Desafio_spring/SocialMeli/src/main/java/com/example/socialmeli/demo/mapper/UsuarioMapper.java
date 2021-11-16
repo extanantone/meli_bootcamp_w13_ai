@@ -10,8 +10,8 @@ public class UsuarioMapper {
     public static Usuarios DTOUsuarioToUsuario (DTOUsuario u){
 
         Usuarios usuario = new Usuarios();
-        usuario.setId(u.getUser_id());
-        usuario.setUsername(u.getUser_name());
+        usuario.setId(u.getUserId());
+        usuario.setUserName(u.getUserName());
 
         return usuario;
     }
@@ -19,8 +19,8 @@ public class UsuarioMapper {
     public static DTOUsuario UsuarioTODtoUsuario (Usuarios u){
 
         DTOUsuario usuario = new DTOUsuario();
-        usuario.setUser_id(u.getId());
-        usuario.setUser_name(u.getUsername());
+        usuario.setUserId(u.getId());
+        usuario.setUserName(u.getUserName());
 
         return usuario;
     }

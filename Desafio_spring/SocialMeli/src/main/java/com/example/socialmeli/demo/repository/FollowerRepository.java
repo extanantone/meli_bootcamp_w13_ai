@@ -5,6 +5,8 @@ import com.example.socialmeli.demo.comparator.AscendingUserName;
 import com.example.socialmeli.demo.comparator.DescendingUserName;
 import com.example.socialmeli.demo.dto.controllerToService.DTOFollowUser;
 import com.example.socialmeli.demo.dto.controllerToService.DTOUnfollowUser;
+import com.example.socialmeli.demo.exception.UserAlreadyFollowingToUser;
+import com.example.socialmeli.demo.exception.UserNotFollowingToUserException;
 import com.example.socialmeli.demo.model.Followers;
 import com.example.socialmeli.demo.model.Usuarios;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,6 @@ public class FollowerRepository implements IFollowerRepository{
 
         Usuarios userToFollow = new Usuarios();
 
-        try {
             //Nos fijamos si el usuario alguna vez ha seguido a alguien
             Followers userFollowedList = listaDeFollowers.get(followerUserId);
 
@@ -62,13 +63,10 @@ public class FollowerRepository implements IFollowerRepository{
                 listaDeFollowers.get(followerUserId).getUsuariosSeguidos().put(followedUserId, userToFollow);
             }
             else
-                throw new RuntimeException();
+                throw new UserAlreadyFollowingToUser();
 
 
-        }
-        catch (Exception e){
-            throw new RuntimeException();
-        }
+
 
     }
 
@@ -79,16 +77,13 @@ public class FollowerRepository implements IFollowerRepository{
         int userId = request.getUserId();
         int userToUnfollowId = request.getUserIdToUnfollow();
 
-        try {
-            listaDeFollowers.get(userId).getUsuariosSeguidos().remove(userToUnfollowId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        //Opcion B: con lista
-        //List<FollowerCompradorVendedor> aux;
-        //aux = listaDeFollows.stream().filter(x-> x.getCompradorId() == userId && x.getVendedorId() == userToUnfollowId).collect(Collectors.toList());
-        //listaDeFollows.removeAll(aux);
+        if(listaDeFollowers.get(userId).getUsuariosSeguidos().get(userToUnfollowId) != null)
+        listaDeFollowers.get(userId).getUsuariosSeguidos().remove(userToUnfollowId);
+        else
+            throw new UserNotFollowingToUserException();
+
+
 
     }
 

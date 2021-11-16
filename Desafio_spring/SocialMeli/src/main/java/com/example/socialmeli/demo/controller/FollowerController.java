@@ -30,6 +30,9 @@ public class FollowerController {
     request.setUserIdToFollow(user_id_to_follow);
 
     return iFollowerService.followUser(request);
+
+
+
     }
 
 
@@ -89,13 +92,7 @@ public class FollowerController {
         request.setUserId(user_id);
         request.setUserIdToUnfollow(user_id_to_unfollow);
 
-        try{
-            iFollowerService.unFollowUser(request);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return iFollowerService.unFollowUser(request);
 
     }
 
