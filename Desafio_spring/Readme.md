@@ -253,5 +253,8 @@ Este requerimiento consiste en mostrar las publicaciones **QUE SE ENCUENTREN EN 
 * Error: Usuario inexistente
 
 
+Codigo realizado por Rodrigo Dimare - Software developer en Mercado Libre
+
+
 
 
