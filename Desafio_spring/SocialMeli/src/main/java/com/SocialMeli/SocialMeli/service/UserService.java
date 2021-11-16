@@ -72,4 +72,10 @@ public class UserService implements IUserService {
     public PostListDTO productsListSorted(Integer user_id, String order) {
         return userRepository.productsListSorted(user_id, order);
     }
+
+    // BONUS
+    @Override
+    public Boolean createPostPromo(PostPromoUserDTO post) {
+        return userRepository.createPostPromo(post);
+    }
 }

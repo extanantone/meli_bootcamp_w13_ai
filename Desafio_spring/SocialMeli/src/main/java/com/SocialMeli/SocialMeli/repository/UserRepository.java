@@ -18,6 +18,7 @@ public class UserRepository implements IUserRepository{
     private final List<BuyersDTO> buyersDTOList = new ArrayList<>();
     private final List<SellersDTO> sellersDTOList = new ArrayList<>();
     private final List<PostUserDTO> postDTOList = new ArrayList<>();
+    private final List<PostPromoUserDTO> postPromoDTOList = new ArrayList<>();
 
     @Override
     public UserDTO createBuyers(UserDTO user) {
@@ -419,5 +420,20 @@ public class UserRepository implements IUserRepository{
         }
 
         return postListDTO;
+    }
+
+    // BONUS
+    @Override
+    public Boolean createPostPromo(PostPromoUserDTO post) {
+        Boolean band = false;
+
+        SellersDTO sellersDTO = findSellerByUserId(post.getUser_id());
+
+        if( sellersDTO != null ){
+            postPromoDTOList.add(post);
+            band = true;
+        }
+
+        return band;
     }
 }

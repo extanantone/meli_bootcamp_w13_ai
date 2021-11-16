@@ -16,6 +16,9 @@ public interface IUserService {
     SellersDTO followersListSorted(Integer userId, String order);
     PostListDTO productsListSorted(Integer user_id, String order);
 
+    // BONUS
+    Boolean createPostPromo(PostPromoUserDTO post);
+
 
 
 }

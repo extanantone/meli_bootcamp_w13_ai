@@ -95,4 +95,16 @@ public class UserController {
 
         return userService.postList(user_id, order);
     }
+
+    //BONUS
+    @PostMapping("products/promo-post")
+    public ResponseEntity<String> createPostPromo(@RequestBody PostPromoUserDTO post){
+
+        Boolean band = userService.createPostPromo(post);
+
+        if( band )
+            return new ResponseEntity<String>("Post guardado con éxito.", HttpStatus.OK);
+
+        return new ResponseEntity<String>("Ha ocurrido un error al guardar el post.", HttpStatus.BAD_REQUEST);
+    }
 }
