@@ -20,6 +20,14 @@ public class PostService implements IPostService {
     }
 
     @Override
+    public PostDTO getPost(long id) {
+        return mapper.postToPostDTO(
+                postRepository.getPost(id),
+                productRepository.getProduct(postRepository.getPost(id).getProductId())
+        );
+    }
+
+    @Override
     public PostDTO createPost(PostDTO postDTO) {
         return mapper.postToPostDTO(
                 postRepository.createPost(mapper.postDTOToPost(postDTO)),

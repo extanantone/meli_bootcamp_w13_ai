@@ -1,8 +1,6 @@
 package com.bootcamp.socialmeli.repository;
 
-import com.bootcamp.socialmeli.dto.PostDTO;
 import com.bootcamp.socialmeli.model.Post;
-import com.bootcamp.socialmeli.model.Product;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Repository;
@@ -19,7 +17,7 @@ import java.util.stream.Collectors;
 @Repository
 public class PostRepository implements IPostRepository {
 
-    Map<Long, Post> posts;
+    private Map<Long, Post> posts;
     long currentId;
 
     public PostRepository() {
