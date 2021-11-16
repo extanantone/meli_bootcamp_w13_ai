@@ -1,7 +1,12 @@
 package com.bootcamp.socialmeli.service;
 
+import com.bootcamp.socialmeli.dto.CompradorDTO;
+import com.bootcamp.socialmeli.dto.UserCountDTO;
 import com.bootcamp.socialmeli.dto.VendedorDTO;
 
 public interface IVendedorService {
-    public VendedorDTO getInfoSeller(long id);
+    public void addFollower(long idFollowed, long idFollwer);
+    public UserCountDTO getFollowersCount(long idUser);
+    public VendedorDTO getFollowersList(long idUser);
+    public CompradorDTO getFollowedsList(long idUser);
 }

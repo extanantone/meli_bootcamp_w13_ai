@@ -1,5 +1,7 @@
 package com.bootcamp.socialmeli.controller;
 
+import com.bootcamp.socialmeli.dto.CompradorDTO;
+import com.bootcamp.socialmeli.dto.MessageDTO;
 import com.bootcamp.socialmeli.dto.UserCountDTO;
 import com.bootcamp.socialmeli.dto.VendedorDTO;
 import com.bootcamp.socialmeli.service.VendedorService;
@@ -20,32 +22,38 @@ public class UsersController {
 
     // US0001
     @PostMapping("/{user_id}/follow/{user_id_to_follow}")
-    public ResponseEntity<?> postNewFollowToSeller(@PathVariable Long user_id, @PathVariable Long user_id_to_follow) {
-        return new ResponseEntity<>(
-                vendedorService.getInfoSeller(user_id),
-                HttpStatus.OK
-        );
+    public ResponseEntity<MessageDTO> postNewFollowToSeller(@PathVariable Long user_id, @PathVariable Long user_id_to_follow) {
+        vendedorService.addFollower(user_id, user_id_to_follow);
+        MessageDTO msg = new MessageDTO("Ok");
+        return new ResponseEntity(msg, HttpStatus.OK);
     }
 
-    // US0001
+    // US0002
     @GetMapping("/{user_id}/followers/count")
-    public ResponseEntity<UserCountDTO> getSellerFollowersCount(@PathVariable Long user_id) {
-        return new ResponseEntity<>(
-                vendedorService.getInfoSeller(user_id),
-                HttpStatus.OK
-        );
+    public ResponseEntity<UserCountDTO> getFollerwsCount(@PathVariable Long user_id) {
+        return new ResponseEntity(this.vendedorService.getFollowersCount(user_id), HttpStatus.OK);
 
     }
 
     // US0003
     @GetMapping("/{user_id}/followers/list")
     public ResponseEntity<VendedorDTO> getSellerFollowers(@PathVariable Long user_id) {
-        return new ResponseEntity<>(
-                vendedorService.getInfoSeller(user_id),
-                HttpStatus.OK
-        );
+        return new ResponseEntity(this.vendedorService.getFollowersList(user_id), HttpStatus.OK);
 
     }
+
+    // US0004
+    @GetMapping("/{user_id}/followed/list")
+    public ResponseEntity<CompradorDTO> getBuyllerFollowers(@PathVariable Long user_id) {
+        return new ResponseEntity(this.vendedorService.getFollowedsList(user_id), HttpStatus.OK);
+
+
+    }
+
+
+    // US0005
+
+
 
 
 }

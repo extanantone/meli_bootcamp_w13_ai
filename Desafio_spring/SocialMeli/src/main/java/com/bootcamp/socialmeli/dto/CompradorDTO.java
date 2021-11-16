@@ -1,6 +1,5 @@
 package com.bootcamp.socialmeli.dto;
 
-import com.bootcamp.socialmeli.model.User;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -13,15 +12,16 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class VendedorDTO extends UserDTO {
-    private List<UserDTO> followers;
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class CompradorDTO extends UserDTO {
+    private List<UserDTO> followed;
 
-    public VendedorDTO(long userId, String userName, List<UserDTO> followers) {
+    public CompradorDTO(long userId, String userName, List<UserDTO> followed) {
         super(userId, userName);
-        this.followers = followers;
+        this.followed = followed;
     }
 
-    public VendedorDTO(List<UserDTO> followers) {
-        this.followers = followers;
+    public CompradorDTO(List<UserDTO> followed) {
+        this.followed = followed;
     }
 }

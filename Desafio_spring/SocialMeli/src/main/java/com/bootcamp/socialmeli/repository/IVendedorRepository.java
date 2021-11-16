@@ -8,9 +8,10 @@ import java.util.Optional;
 
 public interface IVendedorRepository {
     public List<User> openUserJson();
-    Optional<User> addFollowerToSeller(Long actualUserId, Long userId);
-    Optional<User> getSellerFollowersCount(Long id);
-    Optional<User> findSellerById(Long id);
+    public User getUser(Long idUser);
+    public List<User> getFollowers(Long idUser);
+    public List<User> getFolloweds(Long idUser);
+    public void addFollow(Long idFollower, Long idFollowed);
 
 
 }
