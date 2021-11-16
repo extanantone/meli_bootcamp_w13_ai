@@ -25,13 +25,13 @@ public class PostController {
         return new ResponseEntity(userAndPostService.newPost(postDTO), HttpStatus.OK);
     }
 
-    @GetMapping("/followed/{user_id}/list")
-    ResponseEntity<?> followedSellersPost(@PathVariable int user_id,@RequestParam(required = false) String order){
+    @GetMapping("/followed/{userId}/list")
+    ResponseEntity<?> followedSellersPost(@PathVariable("userId") int user_id,@RequestParam(required = false) String order){
 
         return new ResponseEntity(userAndPostService.followedSellersPost(user_id,order),HttpStatus.OK);
     }
 
-    @PostMapping("/promopost")
+    @PostMapping("/promo-post")
     public ResponseEntity<?> newPostWithDiscount(@RequestBody PostDTO postDTO){
         return new ResponseEntity(userAndPostService.newPost(postDTO), HttpStatus.OK);
     }
