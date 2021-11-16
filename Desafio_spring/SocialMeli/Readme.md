@@ -1,4 +1,4 @@
-#Desafio Sprint 1: Git, Java y Sprint.
+# Desafio Sprint 1: Git, Java y Sprint.
 
 ####Pablo Guayta - Software developer.
 
