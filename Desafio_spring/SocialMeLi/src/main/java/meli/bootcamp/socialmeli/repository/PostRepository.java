@@ -28,11 +28,6 @@ public class PostRepository implements IPostRepository{
     }
 
     @Override
-    public List<Post> findAll() {
-        return null;
-    }
-
-    @Override
     public Post updatePostById(int postID) {
         return null;
     }

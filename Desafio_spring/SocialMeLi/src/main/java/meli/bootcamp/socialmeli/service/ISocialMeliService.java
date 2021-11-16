@@ -1,9 +1,6 @@
 package meli.bootcamp.socialmeli.service;
 
-import meli.bootcamp.socialmeli.dto.FollowersCountDTO;
-import meli.bootcamp.socialmeli.dto.FollowersListDTO;
-import meli.bootcamp.socialmeli.dto.ProductsPostDTO;
-import meli.bootcamp.socialmeli.dto.ProductsUserIDListDTO;
+import meli.bootcamp.socialmeli.dto.*;
 import meli.bootcamp.socialmeli.model.Post;
 import meli.bootcamp.socialmeli.model.User;
 import meli.bootcamp.socialmeli.model.UserFollow;
@@ -21,4 +18,7 @@ public interface ISocialMeliService {
     List<UserFollow> lista();
     List<Post> listaPost();
     ProductsUserIDListDTO listSortedPostByUserID(int user_id);
+    ProductsUserIDListDTO listSortedPostByUserID(int user_id, String order);
+    FollowersListDTO getOrderedFollowersList(int userID, boolean searchFollowers, String order, boolean sortedResponse);
+    void newPromoPost(ProductsPromoPostDTO productsPromoPostDTO);
 }

@@ -9,7 +9,6 @@ public interface IPostRepository {
     //Metodos para generar CRUD al repo
     void addPost(Post newPost);
     Post findPostById(int postID);
-    List<Post> findAll();
     Post updatePostById(int postID);
     void deletePost(int postID);
     String getPostNameById(int postID);

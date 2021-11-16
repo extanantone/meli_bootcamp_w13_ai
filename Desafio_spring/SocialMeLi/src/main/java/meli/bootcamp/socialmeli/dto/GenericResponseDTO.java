@@ -10,6 +10,7 @@ public class GenericResponseDTO {
     }
 
     public GenericResponseDTO() {
+        this.response= new HashMap<>();
     }
 
     public HashMap<String, String> getResponse() {

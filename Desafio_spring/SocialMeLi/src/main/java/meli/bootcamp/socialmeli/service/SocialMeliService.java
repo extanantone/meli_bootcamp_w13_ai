@@ -12,7 +12,9 @@ import meli.bootcamp.socialmeli.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,7 +51,7 @@ public class SocialMeliService implements ISocialMeliService{
         return new FollowersListDTO(
                 userID,
                 userRepository.getUserNameById(userID),
-                this.getSpecificList(true, userID));
+                this.getSpecificUserNameList(true, userID));
     }
 
     @Override
@@ -57,7 +59,7 @@ public class SocialMeliService implements ISocialMeliService{
         return new FollowersListDTO(
                 userID,
                 userRepository.getUserNameById(userID),
-                this.getSpecificList(false, userID));
+                this.getSpecificUserNameList(false, userID));
     }
 
     @Override
@@ -69,7 +71,7 @@ public class SocialMeliService implements ISocialMeliService{
             throw new PostAlreadyExistException();
     }
 
-    private List<UserDTO> getSpecificList(boolean searchFollowers, int userID){
+    private List<UserDTO> getSpecificUserNameList(boolean searchFollowers, int userID){
         return userFollowRepository.getAllList().stream()
                 .filter(userFollow ->
                         (searchFollowers)
@@ -86,14 +88,46 @@ public class SocialMeliService implements ISocialMeliService{
                 .collect(Collectors.toList());
     }
 
+    private List<ProductsPostByUserDTO> getSpecificDateList(String order, int userID){
+        return postRepository.getAllList().stream()
+                .filter(post ->
+                        (userFollowRepository.getAllList().stream()
+                            .filter(userFollow -> userFollow.getUserFollower() == userID)
+                            .map(UserFollow::getFollowedUser)
+                            .collect(Collectors.toList())).contains(post.getUserId())
+                )
+                .sorted((order.equals("name_desc"))
+                        ?Comparator.comparing(Post::getDate).reversed()
+                        :Comparator.comparing(Post::getDate)
+                )
+                .map(post -> postMapper.postToProductsPostByUserDTO(post))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public ProductsUserIDListDTO listSortedPostByUserID(int user_id){
-        List<Post> tempList= postRepository.findSortedByDatePostsByUserID(user_id);
+        List<Post> tempList= postRepository.getAllList().stream()
+                .filter(post ->
+                        (userFollowRepository.getAllList().stream()
+                                .filter(userFollow -> userFollow.getUserFollower() == user_id)
+                                .map(UserFollow::getFollowedUser)
+                                .collect(Collectors.toList())).contains(post.getUserId())
+                )
+                .collect(Collectors.toList());
         return new ProductsUserIDListDTO(
                 user_id,
                 tempList.stream()
                         .map(post -> postMapper.postToProductsPostByUserDTO(post))
                         .collect(Collectors.toList())
+        );
+    }
+
+    @Override
+    public ProductsUserIDListDTO listSortedPostByUserID(int user_id, String order){
+        System.out.println(order);
+        return new ProductsUserIDListDTO(
+                user_id,
+                this.getSpecificDateList(order, user_id)
         );
     }
 
@@ -113,5 +147,26 @@ public class SocialMeliService implements ISocialMeliService{
         User userToFollow= userRepository.findUserById(userIDToFollow);
         userFollowRepository.checkUserFollow(followerUser.getUserId(), userToFollow.getUserId());
         userFollowRepository.unfollowUser(followerUser.getUserId(), userToFollow.getUserId());
+    }
+
+    @Override
+    public FollowersListDTO getOrderedFollowersList(int userID, boolean searchFollowers, String order, boolean sortedResponse) {
+
+        return new FollowersListDTO(
+                userID,
+                userRepository.getUserNameById(userID),
+                (sortedResponse)
+                ?this.getSpecificUserNameList(searchFollowers, userID).stream()
+                        .sorted((order.equals("name_desc"))
+                            ?Comparator.comparingInt(UserDTO::getUserID).reversed()
+                            :Comparator.comparingInt(UserDTO::getUserID))
+                    .collect(Collectors.toList())
+                :this.getSpecificUserNameList(searchFollowers, userID)
+        );
+    }
+
+    @Override
+    public void newPromoPost(ProductsPromoPostDTO productsPromoPostDTO) {
+
     }
 }

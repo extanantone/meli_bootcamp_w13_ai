@@ -13,15 +13,6 @@ import java.util.Map;
 
 @ControllerAdvice
 public class ControllerAdviceExceptions extends ResponseEntityExceptionHandler {
-    private int user_id;
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
 
     //Consultar si esto se puede manejar como una excepcion.
     @ExceptionHandler(value= {UserAlreadyFollowsException.class})
