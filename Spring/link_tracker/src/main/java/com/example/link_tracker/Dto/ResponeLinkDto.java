@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ResponeLinkDto {
     String url;
-    Integer id;
+    Integer id,clicks;
     Boolean valid;
+
 }

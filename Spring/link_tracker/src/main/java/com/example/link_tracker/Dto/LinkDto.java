@@ -28,6 +28,8 @@ public class LinkDto {
         this.clicks++;
     }
 
+    public int getClicks(){return this.clicks;}
+
     public void setUrl(String url) {
         this.url = url;
     }

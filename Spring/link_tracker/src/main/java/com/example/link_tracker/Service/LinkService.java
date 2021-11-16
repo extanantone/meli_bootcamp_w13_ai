@@ -18,19 +18,19 @@ public class LinkService {
     public ResponeLinkDto crearLink(LinkDto link){
         int id = linkRepository.setListaLinks(link);
 
-        ResponeLinkDto responeLinkDto = new ResponeLinkDto(link.getUrl(),id,link.isValido());
+        ResponeLinkDto responeLinkDto = new ResponeLinkDto(link.getUrl(),id,link.getClicks(),link.isValido());
         return  responeLinkDto;
     }
 
     public ResponeLinkDto obtenerDatosEnlace (int linkId){
         LinkDto link = linkRepository.getLink(linkId);
-        ResponeLinkDto responeLinkDto = new ResponeLinkDto(link.getUrl(),linkId,link.isValido());
+        ResponeLinkDto responeLinkDto = new ResponeLinkDto(link.getUrl(),linkId,link.getClicks(),link.isValido());
         return responeLinkDto;
     }
 
     public ResponeLinkDto invalidar (int linkId){
         LinkDto link = linkRepository.invalidar(linkId);
-        ResponeLinkDto response = new ResponeLinkDto(link.getUrl(),linkId,link.isValido());
+        ResponeLinkDto response = new ResponeLinkDto(link.getUrl(),linkId,link.getClicks(),link.isValido());
         return response;
     }
 

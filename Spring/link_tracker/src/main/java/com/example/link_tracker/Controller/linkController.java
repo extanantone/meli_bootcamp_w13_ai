@@ -22,8 +22,13 @@ public class linkController {
 
     @GetMapping("/link/{linkId}")
     public ModelAndView redireccion(@PathVariable int linkId){
-        String url = linkService.obtenerDatosEnlace(linkId).getUrl();
-        return new ModelAndView("redirect:"+ url);
+        ResponeLinkDto link = linkService.obtenerDatosEnlace(linkId);
+        if(link.getValid()){
+            String url = link.getUrl();
+            return new ModelAndView("redirect:"+ url);
+        }else {
+            return new ModelAndView("Invalido");
+        }
     }
 
     @GetMapping("/metrics/{linkId}")
