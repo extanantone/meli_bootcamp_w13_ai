@@ -32,7 +32,7 @@ public class Post {
     public Post(PostDtoIn postDtoIn) throws ParseException {
         user_id = postDtoIn.getUser_id();
         id_post = postDtoIn.getId_post();
-        date = parseToLocalDate(postDtoIn.getDate());
+        date = postDtoIn.getDate();
         product_id = postDtoIn.getDetail().getProduct_id();
         product_name = postDtoIn.getDetail().getProduct_name();
         type = postDtoIn.getDetail().getType();
@@ -47,7 +47,7 @@ public class Post {
     public Post(PromoPostDtoIn promoPostDtoIn) throws ParseException {
         user_id = promoPostDtoIn.getUser_id();
         id_post = promoPostDtoIn.getId_post();
-        date = parseToLocalDate(promoPostDtoIn.getDate());
+        date = promoPostDtoIn.getDate();
         product_id = promoPostDtoIn.getDetail().getProduct_id();
         product_name = promoPostDtoIn.getDetail().getProduct_name();
         type = promoPostDtoIn.getDetail().getType();
@@ -59,11 +59,5 @@ public class Post {
         discount = promoPostDtoIn.getDiscount();
     }
 
-    private LocalDate parseToLocalDate(String stringDate) throws ParseException {
-        Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
-        return Instant.ofEpochMilli(date.getTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-    }
 
 }

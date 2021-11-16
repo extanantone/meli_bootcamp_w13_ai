@@ -19,7 +19,7 @@ public class UserController {
         this.socialService = socialService;
     }
 
-    // US 0001
+    // US0001
     @PostMapping("/{user_id}/follow/{user_id_to_follow}")
     public HttpStatus followSeller(@PathVariable int user_id, @PathVariable int user_id_to_follow) throws Exception {
         socialService.followSeller(user_id, user_id_to_follow);
@@ -33,12 +33,14 @@ public class UserController {
     }
 
     // US0003 + US0008
+    // Para fusionar las US se aplico el RequestParam como no requerido, de forma que se puede llamar con o sin el order.
     @GetMapping("/{user_id}/followers/list")
     public ResponseEntity<FollowersListDto> followersListSorted(@PathVariable int user_id, @RequestParam(value = "order", required=false) String order) throws WrongTypeException, NotFoundException {
         return ResponseEntity.status(HttpStatus.OK).body(socialService.getSellerFollowersList(user_id, order));
     }
 
     // US0004 + US0008
+    // Para fusionar las US se aplico el RequestParam como no requerido, de forma que se puede llamar con o sin el order.
     @GetMapping("/{user_id}/followed/list")
     public ResponseEntity<FollowedListDto> followedList(@PathVariable int user_id,@RequestParam(value = "order", required=false)  String order) throws WrongTypeException, NotFoundException {
         return ResponseEntity.status(HttpStatus.OK).body(socialService.getBuyerFollowedList(user_id, order));

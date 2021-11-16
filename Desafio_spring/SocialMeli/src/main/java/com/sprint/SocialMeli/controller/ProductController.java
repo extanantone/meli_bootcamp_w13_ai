@@ -30,6 +30,7 @@ public class ProductController {
     }
 
     // US0006 + US0009
+    // Para fusionar las US se aplico el RequestParam como no requerido, de forma que se puede llamar con o sin el order.
     @GetMapping("/followed/{user_id}/list")
     public ResponseEntity<FollowedPostListDto> postListSorted(@PathVariable int user_id, @RequestParam(value = "order", required=false) String order) throws WrongTypeException, NotFoundException {
         return ResponseEntity.status(HttpStatus.OK).body(socialService.getLastTwoWeeksPostsFromFollowed(user_id, order));
@@ -43,7 +44,7 @@ public class ProductController {
     }
 
     // US0011
-    @GetMapping("/promo/{user_id}/promo-post/count")
+    @GetMapping("/{user_id}/promo-post/count")
     public ResponseEntity<PromoPostCountDto> getPromoPostCount(@PathVariable int user_id) throws WrongTypeException, NotFoundException {
         return ResponseEntity.ok(socialService.getPromoPostCount(user_id));
     }

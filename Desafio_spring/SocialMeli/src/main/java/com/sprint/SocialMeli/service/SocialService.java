@@ -108,7 +108,7 @@ public class SocialService implements ISocialService{
         sellers.forEach(s -> posts.addAll(
                                 s.getPostsIds().stream()
                                 .map(p -> socialRepository.getPost(p))
-                                .filter(p -> p.getDate().isAfter(LocalDate.now().minusWeeks(2)))
+                                .filter(p -> p.getDate().isAfter(LocalDate.now().minusWeeks(2).minusDays(1)))
                                 .collect(Collectors.toList())));
 
         return new FollowedPostListDto(buyer.getUser_id(),
@@ -174,13 +174,13 @@ public class SocialService implements ISocialService{
             if(!socialRepository.existsUser(user_id))
                 throw new NotFoundException("El comprador no se ha encontrado");
             else if(socialRepository.getUser(user_id).getUserType() != UserType.BUYER)
-                throw new WrongTypeException("El usuario seguidor no es un comprador");
+                throw new WrongTypeException("El usuario no es un comprador");
         }
         else if (userType.equals(UserType.SELLER)){
             if(!socialRepository.existsUser(user_id))
                 throw new NotFoundException("El vendedor no se ha encontrado");
             else if(socialRepository.getUser(user_id).getUserType() != UserType.SELLER)
-                throw new WrongTypeException("El usuario a seguir no es un vendedor");
+                throw new WrongTypeException("El usuario no es un vendedor");
         }
     }
 
