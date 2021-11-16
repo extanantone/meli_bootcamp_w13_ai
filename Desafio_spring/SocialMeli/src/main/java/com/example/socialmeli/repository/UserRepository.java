@@ -4,7 +4,6 @@ import com.example.socialmeli.exception.UserIdNotFoundException;
 import com.example.socialmeli.model.User;
 import org.springframework.stereotype.Repository;
 
-import java.security.KeyException;
 import java.util.*;
 
 @Repository

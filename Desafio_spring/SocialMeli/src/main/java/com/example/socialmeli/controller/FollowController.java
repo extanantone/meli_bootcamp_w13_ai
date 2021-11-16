@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/users/{user_id}" )
 public class FollowController {
     IFollowService followService;
 
@@ -15,24 +16,24 @@ public class FollowController {
         this.followService = followService;
     }
 
-    @PostMapping("/users/{user_id}/follow/{user_id_to_follow}")
+    @PostMapping("/follow/{user_id_to_follow}")
     public ResponseEntity<?> follow(@PathVariable(name = "user_id") Integer userId,
                                     @PathVariable(name = "user_id_to_follow") Integer followId) {
         followService.addFollow(userId, followId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/users/{user_id}/followers/count")
+    @GetMapping("/followers/count")
     public ResponseEntity<FollowerCountDTO> countFollowers(@PathVariable(name = "user_id") Integer userId) {
         return new ResponseEntity<>(followService.followerCount(userId), HttpStatus.OK);
     }
 
-    @GetMapping("/users/{user_id}/followers/list")
+    @GetMapping("/followers/list")
     public ResponseEntity<FollowerListDTO> followerList(@PathVariable(name = "user_id") Integer userId) {
         return new ResponseEntity<>(followService.followerList(userId), HttpStatus.OK);
     }
 
-    @GetMapping("/users/{user_id}/followed/list")
+    @GetMapping("/followed/list")
     public ResponseEntity<FollowerListDTO> followedList(@PathVariable(name = "user_id") Integer userId) {
         return new ResponseEntity<>(followService.followingList(userId), HttpStatus.OK);
     }
