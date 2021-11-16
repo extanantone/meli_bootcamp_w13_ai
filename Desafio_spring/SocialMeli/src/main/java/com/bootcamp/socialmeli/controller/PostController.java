@@ -1,6 +1,7 @@
 package com.bootcamp.socialmeli.controller;
 
 import com.bootcamp.socialmeli.dto.PostDTO;
+import com.bootcamp.socialmeli.dto.UserWithPostsDTO;
 import com.bootcamp.socialmeli.service.IPostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,14 @@ public class PostController {
         return new ResponseEntity<>(
                 postService.createPost(postDTO),
                 HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping("followed/{userId}/list")
+    public ResponseEntity<UserWithPostsDTO> getLast2WeeksFollowedPosts(@PathVariable long userId) {
+        return new ResponseEntity<>(
+                postService.getLatestFollowedPosts(userId, 2),
+                HttpStatus.OK
         );
     }
 }

@@ -4,21 +4,21 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PostDTO {
 
-    private long id;
+    private long postId;
     private String date;
     private int category;
     private double price;
 
     private long userId;
-    private ProductDTO product;
+    private ProductDTO detail;
 }

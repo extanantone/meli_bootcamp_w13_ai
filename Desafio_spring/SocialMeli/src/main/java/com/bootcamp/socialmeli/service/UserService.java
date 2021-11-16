@@ -3,6 +3,7 @@ package com.bootcamp.socialmeli.service;
 import com.bootcamp.socialmeli.dto.UserCreationDTO;
 import com.bootcamp.socialmeli.dto.UserDTO;
 import com.bootcamp.socialmeli.dto.UserWithFollowersDTO;
+import com.bootcamp.socialmeli.dto.UserWithFollowedDTO;
 import com.bootcamp.socialmeli.mapper.IMapper;
 import com.bootcamp.socialmeli.repository.IUserRepository;
 import org.springframework.stereotype.Service;
@@ -57,5 +58,13 @@ public class UserService implements IUserService {
         return mapper.userToUserWithFollowersDTO(userRepository.getUser(id));
     }
 
+    @Override
+    public int getFollowedCount(long id) {
+        return userRepository.getUser(id).getFollowing().size();
+    }
 
+    @Override
+    public UserWithFollowedDTO getFollowed(long id) {
+        return mapper.userToUserWithFollowedDTO(userRepository.getUser(id));
+    }
 }

@@ -5,22 +5,22 @@
     "productId": 1,
     "category": 1,
     "price": 1800.5,
-    "userId": 1
+    "userId": 2
   },
   {
     "id": 2,
-    "date": "2021-01-02",
+    "date": "2021-11-10",
     "productId": 2,
     "category": 1,
     "price": 2800.0,
-    "userId": 1
+    "userId": 2
   },
   {
     "id": 3,
-    "date": "2021-01-03",
+    "date": "2021-11-11",
     "productId": 3,
     "category": 2,
     "price": 3550.0,
-    "userId": 1
+    "userId": 2
   }
 ]

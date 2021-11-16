@@ -4,18 +4,19 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ProductDTO {
+public class UserWithFollowedDTO {
 
-    private long productId;
-    private String productName;
-    private String type;
-    private String brand;
-    private String color;
-    private String notes;
+    private long id;
+    private String username;
+    private List<UserDTO> followed;
 }

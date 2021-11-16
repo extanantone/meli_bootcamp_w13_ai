@@ -10,8 +10,9 @@ public interface IMapper {
     public UserDTO userToUserDTO(User user);
     public User userCreationDTOToUser(UserCreationDTO userCreationDTO);
     public UserWithFollowersDTO userToUserWithFollowersDTO(User user);
+    public UserWithFollowedDTO userToUserWithFollowedDTO(User user);
     public ProductDTO productToProductDTO(Product product);
     public Product productDTOToProduct(ProductDTO productDTO);
-    public PostDTO postToPostDTO(Post post, Product product);
+    public PostDTO postToPostDTO(Post post);
     public Post postDTOToPost(PostDTO postDTO);
 }
