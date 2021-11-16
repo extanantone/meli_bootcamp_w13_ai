@@ -28,8 +28,9 @@ El resto de endpoints si se hacen tal cual como están en la documentación entr
 Se trata de un endpoint que lista todas las publicaciones de un mismo tipo. El tipo a buscar puede ser en mayúscula o minúscula pues el sistema no discrimina por eso, sin embargo si debe estar escrito igual con respecto a las tildes y acentos.
 
 ### Método
+
 ```java
-localhost:8080/products/{type}/list-type
+GET:         localhost:8080/products/{type}/list-type
 ```
 
 ### Ejemplo
@@ -45,7 +46,7 @@ localhost:8080/products/Gamer/list-type
         "id_post": 281,
         "date": "11-11-2021",
         "detail": {
-            "product_id": 1,
+            "product_id": 1023,
             "product_name": "pc",
             "type": "Gamer",
             "brand": "Acer",
@@ -60,9 +61,9 @@ localhost:8080/products/Gamer/list-type
     {
         "user_id": 24,
         "id_post": 28,
-        "date": "11-11-2021",
+        "date": "15-11-2021",
         "detail": {
-            "product_id": 1,
+            "product_id": 14524,
             "product_name": "silla",
             "type": "Gamer",
             "brand": "Racer",
