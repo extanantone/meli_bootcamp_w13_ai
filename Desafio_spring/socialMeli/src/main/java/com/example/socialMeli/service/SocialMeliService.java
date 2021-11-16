@@ -149,25 +149,27 @@ public class SocialMeliService implements  ISocialMeliService{
         }else  if(order.equals("date_desc")){
             guardadas = guardadas.stream().sorted(Collections.reverseOrder(Comparator.comparing(x->x.getFecha()))).collect(Collectors.toList());
         }
-        List<PublicacionDTO> publicacionesDTO = new ArrayList<>();
         List<PublicacionesVendedoresDTO>  posts = new ArrayList<>();
         Comprador compra = errorComprador(id);
         List<Vendedor> vendedores = compra.getSiguiendo();
-        for(Publicacion pun:guardadas){
+        while(guardadas.size()>0){
             for (Vendedor ve: vendedores) {
+                PublicacionesVendedoresDTO retorno = new PublicacionesVendedoresDTO(ve.getUser_id(), ve.getName());
                 for (Publicacion p:ve.getPublicaciones()) {
                     flag = verificarVendedorYFecha(p.getFecha());
-                    if(flag && pun.getId_publicacion()==p.getId_publicacion()){
-                        PublicacionesVendedoresDTO retorno = new PublicacionesVendedoresDTO(ve.getUser_id(), ve.getName());
+                    if(guardadas.size()!=0 && flag && guardadas.get(0).getId_publicacion()== p.getId_publicacion() && guardadas.get(0).getId_user() == ve.getUser_id() ){
                         ProductoDTO producto = deProductoAProductoDTO(p);
-                        publicacionesDTO.add(crearPublicacionDTO(p, producto));
                         retorno.getPosts().add(crearPublicacionDTO(p, producto));
-                        posts.add(retorno);
+                        guardadas.remove(0);
                     }
+                }
+                if(retorno.getPosts().size()!=0){
+                    posts.add(retorno);
                 }
             }
         }
-        return posts;
+
+            return posts;
     }
 
     public RespuestaSimpleDTO dejarDeSeguir (int id_comprado, int id_vendedor) throws UsuarioNoEncontradoError {
