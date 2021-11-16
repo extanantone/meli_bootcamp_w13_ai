@@ -76,3 +76,11 @@ localhost:8080/products/Gamer/list-type
     }
 ]
 ```
+
+#### En caso de que el Tipo no exista
+```java
+{
+    "mensaje": "No hay ninguna publicación con el tipo que está tratando de buscar.",
+    "statusCode": 400
+}
+```
