@@ -253,13 +253,13 @@ Usuario inexistente.
 ##US-0010 Publicación producto en promoción
 Este requerimiento consiste en crear una nueva publicación, pero esta vez debe estar en promoción, para esto, se debe agregar 2 campos adicionales con respecto a la creación de una publicación adicional, has_promo que corresponde a un boolean y un porcentaje de descuento que corresponde a un double. Para desarrollar este requerimiento se utilizó el mismo DTO que para la US-0006 realizando las modificaciones correspondientes para que ambos trabajen en amronía
 
-##Método: 
+###Método: 
 POST
 
-##Endpoint: 
+###Endpoint: 
 localhost:8080/products/promo-post
 
-##Response:
+###Response:
 
 200 - OK
 
@@ -273,10 +273,10 @@ Este requerimiento consiste en contar la cantidad de publicaciones que tiene un 
 ###Método: 
 GET
 
-##Endpoint: 
+###Endpoint: 
 localhost:8080/products/{user_id}/promo-post/count
 
-##Response:
+###Response:
 
 200 - OK
 
@@ -284,16 +284,17 @@ Retorna un JSON con los datos solicitados en el documento de especificación de 
 400 - BAD REQUEST
 
 Error: Usuario inexistente
+
 ##US-0012 Lista de publicaciones el promoción
 Este requerimiento consiste en mostrar las publicaciones QUE SE ENCUENTREN EN PROMOCIÓN por un determinado vendedor.
 
-##Método: 
+###Método: 
 GET
 
-##Endpoint: 
+###Endpoint: 
 localhost:8080/products/{user_id}/list
 
-##Response:
+###Response:
 
 200 - OK
 

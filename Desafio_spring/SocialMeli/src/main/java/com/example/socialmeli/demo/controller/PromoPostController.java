@@ -15,13 +15,13 @@ public class PromoPostController {
     IPublicacionService iPublicacionService;
 
     //US 0010: crear una nueva publicacion con promocion
-    @PostMapping("/products/newpromopost")
+    @PostMapping("/products/promo-post")
     public ResponseEntity createPost(@RequestBody DTOPromoPost request){
         return iPublicacionService.createPromoPost(request);
     }
 
     //US 0011: contar publicaciones en promocion de un determinado usuario
-    @GetMapping("/products/{userId}/countPromo")
+    @GetMapping("/products/{userId}/promo-post/count")
     public ResponseEntity getPromoPostsFromUserCount(@PathVariable int userId){
 
         DTOUserId request = new DTOUserId(userId);
