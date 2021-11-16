@@ -22,25 +22,11 @@ public class UserRepository implements IUserRepository {
 
 
     public UserRepository(){
-
-        Usuarios v1 = new Usuarios(1,"Pablo");
-        Usuarios v2 = new Usuarios(2,"Rodrigo");
-        Usuarios v3 = new Usuarios(3,"Anibal");
-        Usuarios v4 = new Usuarios(4,"Rodrigo");
-
-        this.listaUsuarios = obtenerUsuariosPorJson();
-/*
-        listaUsuarios.put(1,v1);
-        listaUsuarios.put(2,v2);
-        listaUsuarios.put(3,v3);
-        listaUsuarios.put(4,v4); */
-
-
-
+        this.listaUsuarios = getUserFromJson();
     }
 
 
-    public Map<Integer, Usuarios> obtenerUsuariosPorJson(){
+    public Map<Integer, Usuarios> getUserFromJson(){
 
         File file = null;
         try {
@@ -79,7 +65,7 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public Usuarios crearVendedor(Usuarios v) {
-        return null;
+        return listaUsuarios.put(v.getId(),v);
     }
 
     @Override

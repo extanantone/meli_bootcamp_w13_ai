@@ -10,6 +10,16 @@ Este desafio consiste en la implementación de una versión Beta de lo que va a 
 
 Por lo tanto, en este documento vamos a detallar las consideraciones que se tuvieron al momento de hacer este desafio.
 
+
+##Como iniciar el proyecto
+
+El proyecto se encuentra en la estructura de carpetas "/Desafio_spring/SocialMeli".
+Con iniciar el proyecto y ejecutar la clase "SocialmeliApplication" se ejecutaría el código.
+
+Ademas, en el proyecto contamos con un **archivo Json** llamado "usuarios.json" en el cual se encuentran cuatro usuarios, con el id del 1 al 4.
+Los usuarios con id 1 y 2 estan destinados a ser compradores, mientras que los usuarios con id 3 y 4 estan destinados a ser vendedores (aunque todos los usuarios son iguales ante el manejo de la aplicacion).
+
+
 ##Consideraciones
 
 Para este sistema tuvimos las siguientes consideraciones:
@@ -21,7 +31,7 @@ Para este sistema tuvimos las siguientes consideraciones:
 ##Estructura del proyecto
 El proyecto se ha separado en la siguiente estructura de paquetes:
 
-####-comporator
+####-comparator
 Aqui se encuentran las clases tipo "Comparator" utilizadas para ordenar los response de determinados endpoints. Se encuentran las clases de ordenamiento ascendente y descendiente para el nombre de los usuarios y la fecha de las publicaciones.
 
 ####-controller
@@ -80,11 +90,12 @@ localhost:8080/users/{user_id}/follow/{user_id_to_follow}
 
 Puede arrojar un status code 400 por alguna de las siguientes opciones:
 
--El usuario ya sigue al usuario con id proveniente de: user_id_to_follow.
--Si el usuario con "user_id" intenta seguirse a si mismo.
+- El usuario ya sigue al usuario con id proveniente de: user_id_to_follow.
+- Si el usuario con "user_id" intenta seguirse a si mismo.
+- El usuario a seguir o el usuario que este intentando seguir no se encuentren registrados (es decir, en el archivo Json).
 
 ##US-0002 - Cantidad seguidores
-Nos devuelve la cantidad de usuarios que siguen a un determinado usuario vendedor.
+Nos devuelve la cantidad de usuarios que siguen a un determinado usuario.
 
 ###Método: GET
 
@@ -103,6 +114,9 @@ localhost:8080/users/{user_id}/followers/count
 
 400 - BAD REQUEST
 
+Nos devuelve un código 400 en caso de:
+
+- No encontrar al usuario enviado por parametro.
 
 ##US-0003 ¿Quien me sigue?
 Nos devuelve una lista de usuarios que siguen al usuario enviado mediante el request.
@@ -119,6 +133,7 @@ localhost:8080/users/{user_id}/followers/list
 Cadena JSON con la lista de seguidores
 400 - BAD REQUEST
 
+- No encontrar al usuario enviado por parametro.
 
 Por defecto, se devuelve la lista de seguidores ordenada de manera descendente. 
 
@@ -136,7 +151,8 @@ localhost:8080/users/{user_id}/followeds/list
 Cadena JSON con la lista de seguidos
 400 - BAD REQUEST
 
-Usuario inexistente
+- No encontrar al usuario enviado por parametro.
+
 Este método, por defecto, no realiza un ordenamiento en la lista. En la US 0008 se configura el ordenamiento.
 
 ##US-0005 Alta de publicación
@@ -172,10 +188,14 @@ Sentencia JSON con los datos correspondiente.
 ###Response:
 
 200 - OK
-Lista de publicaciones de los vendedores que sigue el usuario. 
+
+Lista de publicaciones con menos de dos semanas de antiguedad de los vendedores que el usuario enviado por parametro sigue.. 
 Si los vendedores no poseen publicaciones vigentes o el usuario no sigue a ningun vendedor, mostrara un JSON con el usuario y una lista de posts vacía.
 
 400 - BAD REQUEST
+
+- No encontrar al usuario enviado por parametro.
+
 
 
 ##US-0007 Unfollow
@@ -192,15 +212,17 @@ Sentencia JSON con los datos correspondiente.
 
 ###Response:
 
-Ejemplo: Si el usuario 1 quiere dejar de seguir al usuario 2
-
 200 - OK
 
 400 - BAD REQUEST
 
-Si el usuario 1 no existe --> Usuario inexistente
-Si el usuario 2 no existe --> El vendedor no existe
-Si 1 no sigue a 2 --> No sigue al vendedor
+Errores definidos para este request:
+
+Si el user_id no existe: "El usuario al cual se intenta identificar no se encuentra registrado."
+
+Si el user_id_to_unfollow no existe: "Se ha registrado un problema al intentar buscar al vendedor seguido por el usuario ingresado."
+
+Si el user_id no sigue al usuario que busca dejar de seguir: "El usuario solicitado no se encontraba siguiendo al usuario solicitado"
 
 
 ##US-0008 Ordenamiento por nombre
@@ -246,12 +268,12 @@ Cadena JSON con las publicaciones de los vendedores.
 400 - BAD REQUEST
 
 Usuario inexistente.
-(*) Los status corresponden a los 3 endpoints, los 2 con parámetro "orden" y aquel sin parámetro.
+
 
 #Extra Bonus
 
 ##US-0010 Publicación producto en promoción
-Este requerimiento consiste en crear una nueva publicación, pero esta vez debe estar en promoción, para esto, se debe agregar 2 campos adicionales con respecto a la creación de una publicación adicional, has_promo que corresponde a un boolean y un porcentaje de descuento que corresponde a un double. Para desarrollar este requerimiento se utilizó el mismo DTO que para la US-0006 realizando las modificaciones correspondientes para que ambos trabajen en amronía
+Para crear una Publicacion con promocion se crea un nuevo objeto que herede de la clase Post (promocion), para no afectar el funcionamiento de los endpoint anteriores. 
 
 ###Método: 
 POST
@@ -263,12 +285,13 @@ localhost:8080/products/promo-post
 
 200 - OK
 
+
 400 - BAD REQUEST
 
-Usuario inexistente
+- No encontrar al usuario enviado por parametro.
 
 ##US-0011 Cantidad publicaciones en Promoción
-Este requerimiento consiste en contar la cantidad de publicaciones que tiene un vendedor.
+Este requerimiento consiste en contar la cantidad de publicaciones con promocion que tiene un determinado usuario.
 
 ###Método: 
 GET
@@ -285,7 +308,7 @@ Retorna un JSON con los datos solicitados en el documento de especificación de 
 
 Error: Usuario inexistente
 
-##US-0012 Lista de publicaciones el promoción
+##US-0012 Lista de publicaciones en promoción
 Este requerimiento consiste en mostrar las publicaciones QUE SE ENCUENTREN EN PROMOCIÓN por un determinado vendedor.
 
 ###Método: 
@@ -299,9 +322,10 @@ localhost:8080/products/{user_id}/list
 200 - OK
 
 Retorna un JSON con los datos solicitados en el documento de especificación de requerimientos.
+
 400 - BAD REQUEST
 
-Error: Usuario inexistente
+- No encontrar al usuario enviado por parametro.
 
 
 

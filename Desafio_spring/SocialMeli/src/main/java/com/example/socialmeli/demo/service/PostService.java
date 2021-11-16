@@ -35,23 +35,7 @@ public class PostService implements IPublicacionService{
 
         Post postToSave = new Post();
         postToSave = PostMapper.DtoPostToPost(publicacion);
-       /* postToSave.setUserId(publicacion.getUserId());
-        postToSave.setIdPost(publicacion.getIdPost());
-        postToSave.setCategory(publicacion.getCategory());
-        postToSave.setDate(publicacion.getDate());
-        postToSave.setPrice(publicacion.getPrice()); */
-
-        Product p = new Product();
-        /*p.setProductId(publicacion.getDetail().getProductId());
-        p.setType(publicacion.getDetail().getType());
-        p.setProductName(publicacion.getDetail().getProductName());
-        p.setNotes(publicacion.getDetail().getNotes());
-        p.setColor(publicacion.getDetail().getColor());
-        p.setBrand(publicacion.getDetail().getBrand());
-
-        postToSave.setDetail(p); */
-
-       iPublicacionRepository.crearPublicacion(postToSave);
+        iPublicacionRepository.crearPublicacion(postToSave);
 
        return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -61,24 +45,6 @@ public class PostService implements IPublicacionService{
 
         PromoPost postToSave = new PromoPost();
         postToSave = PromoMapper.DtoPostToPost(publicacion);
-       /* postToSave.setUserId(publicacion.getUserId());
-        postToSave.setIdPost(publicacion.getIdPost());
-        postToSave.setCategory(publicacion.getCategory());
-        postToSave.setDate(publicacion.getDate());
-        postToSave.setPrice(publicacion.getPrice());
-        postToSave.setDiscount(publicacion.getDiscount());
-        postToSave.setPromo(publicacion.isHasPromo());
-
-        Product p = new Product();
-        p.setProductId(publicacion.getDetail().getProductId());
-        p.setType(publicacion.getDetail().getType());
-        p.setProductName(publicacion.getDetail().getProductName());
-        p.setNotes(publicacion.getDetail().getNotes());
-        p.setColor(publicacion.getDetail().getColor());
-        p.setBrand(publicacion.getDetail().getBrand());
-
-        postToSave.setDetail(p); */
-
         iPublicacionRepository.crearPublicacion(postToSave);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -119,30 +85,12 @@ public class PostService implements IPublicacionService{
 
                 DTOPostFollowers postFollowersDTO = new DTOPostFollowers();
                 postFollowersDTO = PostMapper.PostToDtoPostFollowers(p);
-/*                postFollowersDTO.setIdPost(p.getIdPost());
-                postFollowersDTO.setDate(p.getDate());
-                postFollowersDTO.setCategory(p.getCategory());
-                postFollowersDTO.setPrice(p.getPrice());
-
-                DTOProduct prod = new DTOProduct();
-                prod.setProductId(p.getDetail().getProductId());
-                prod.setType(p.getDetail().getType());
-                prod.setProductName(p.getDetail().getProductName());
-                prod.setNotes(p.getDetail().getNotes());
-                prod.setColor(p.getDetail().getColor());
-                prod.setBrand(p.getDetail().getBrand());
-
-                postFollowersDTO.setDetail(prod); */
-
                 postsFromVendorDTO.add(postFollowersDTO);
             }
-
         }
-
 
         response.setUserId(userId);
         response.setPosts(postsFromVendorDTO);
-
 
         return new ResponseEntity<>(response,HttpStatus.OK);
     }

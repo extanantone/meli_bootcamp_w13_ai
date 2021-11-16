@@ -56,13 +56,7 @@ IUserService usuarioService;
         if(requestDTO.getUserId() == requestDTO.getUserIdToFollow())
             throw new FollowingItselfException();
 
-
-        try {
-            followerRepository.FollowUser(requestDTO);
-        }
-        catch (RuntimeException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        followerRepository.FollowUser(requestDTO);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
