@@ -52,20 +52,24 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     }
 
     @Override
-    public boolean unFollow(Integer id_Comprador, Integer id_vendedor) {
-        return false;
+    public boolean unFollow(Integer id_comprador, Integer id_vendedor) {
+
+        Comprador comprador = compradores.get(id_comprador);
+        comprador.deleteFollowed(id_vendedor);
+
+        Vendedor vendedor = vendedores.get(id_vendedor);
+        vendedor.deleteFollower(id_vendedor);
+
+        return true;
+
     }
 
     @Override
     public boolean newPost(Publicacion publicacion) {
         publicaciones.add(publicacion);
 
-        Collections.sort(publicaciones, new Comparator<Publicacion>() { // Ordeno por fecha las publicaciones.
-            @Override
-            public int compare(Publicacion o1, Publicacion o2) {
-                return o2.getDate().compareTo(o1.getDate());
-            }
-        });
+        // Ordeno por fecha las publicaciones.
+        //Collections.sort(publicaciones, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
 
             return true;
     }

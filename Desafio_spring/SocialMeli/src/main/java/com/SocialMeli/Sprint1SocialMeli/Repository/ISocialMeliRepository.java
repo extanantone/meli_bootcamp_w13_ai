@@ -10,7 +10,7 @@ import java.util.List;
 public interface ISocialMeliRepository {
 
     boolean follow(Integer id_Comprador, Integer id_vendedor);
-    boolean unFollow(Integer id_Comprador, Integer id_vendedor);
+    boolean unFollow(Integer id_comprador, Integer id_vendedor);
     //List<Comprador> vendedorFollowers (Integer id_vendedor);
     //List<Vendedor> compradorFollowed (Integer id_comprador);
     boolean newPost (Publicacion publicacion);

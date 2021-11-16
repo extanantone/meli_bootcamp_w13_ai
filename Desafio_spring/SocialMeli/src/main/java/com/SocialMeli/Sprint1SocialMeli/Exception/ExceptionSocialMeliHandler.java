@@ -51,4 +51,23 @@ public class ExceptionSocialMeliHandler {
                 HttpStatus.BAD_REQUEST );
 
     }
+    @ExceptionHandler(NotFollowException.class)
+    public ResponseEntity<ErrorDTO> get(NotFollowException e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "no_sigue_comprador",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST );
+
+    }
+    @ExceptionHandler(NotValidParamException.class)
+    public ResponseEntity<ErrorDTO> get(NotValidParamException e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "parametro_no_valido",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST );
+
+    }
+
 }
