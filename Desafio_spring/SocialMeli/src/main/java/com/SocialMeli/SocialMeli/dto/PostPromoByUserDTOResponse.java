@@ -6,8 +6,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Getter @Setter
-public class SellerFollowersDTO {
+public class PostPromoByUserDTOResponse {
     private int user_id;
-    private String user_name;
-    private List<BuyerDTO> followers;
+    private List<PostPromoListItemDTOResponse> posts;
 }

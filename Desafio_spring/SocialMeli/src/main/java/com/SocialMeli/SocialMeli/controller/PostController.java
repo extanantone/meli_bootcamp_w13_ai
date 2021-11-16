@@ -1,8 +1,8 @@
 package com.SocialMeli.SocialMeli.controller;
 
-import com.SocialMeli.SocialMeli.dto.PostDTO;
-import com.SocialMeli.SocialMeli.dto.PostPromoDTO;
-import com.SocialMeli.SocialMeli.dto.SellerCountPromosDTO;
+import com.SocialMeli.SocialMeli.dto.PostDTORequest;
+import com.SocialMeli.SocialMeli.dto.PostPromoDTORequest;
+import com.SocialMeli.SocialMeli.dto.SellerCountPromosDTOResponse;
 import com.SocialMeli.SocialMeli.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,8 @@ public class PostController {
     IPostService postService;
 
     @PostMapping("/products/post")
-    public ResponseEntity<?> create(@RequestBody PostDTO postDTO) {
-        return new ResponseEntity<>(postService.create(postDTO), HttpStatus.OK);
+    public ResponseEntity<?> create(@RequestBody PostDTORequest postDTORequest) {
+        return new ResponseEntity<>(postService.create(postDTORequest), HttpStatus.OK);
     }
 
     @GetMapping("/products/followed/{user_id}/list")
@@ -25,13 +25,13 @@ public class PostController {
     }
 
     @PostMapping("/products/promo-post")
-    public ResponseEntity<?> createPromo(@RequestBody PostPromoDTO postPromoDTO) {
-        return new ResponseEntity<>(postService.createPromo(postPromoDTO), HttpStatus.OK);
+    public ResponseEntity<?> createPromo(@RequestBody PostPromoDTORequest postPromoDTORequest) {
+        return new ResponseEntity<>(postService.createPromo(postPromoDTORequest), HttpStatus.OK);
     }
 
     @GetMapping("/products/{userId}/promo-post/count")
     public ResponseEntity<?> getSellerPromosCount(@PathVariable int userId) {
-        return new ResponseEntity<SellerCountPromosDTO>(postService.getSellerPromosCount(userId), HttpStatus.OK);
+        return new ResponseEntity<SellerCountPromosDTOResponse>(postService.getSellerPromosCount(userId), HttpStatus.OK);
     }
 
     @GetMapping("/products/{user_id}/list")

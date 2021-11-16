@@ -4,6 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class UnfollowSellerDTO {
-    private String message;
+public class SellerCountFollowersDTOResponse extends UserDTO{
+    private int followers_count;
 }

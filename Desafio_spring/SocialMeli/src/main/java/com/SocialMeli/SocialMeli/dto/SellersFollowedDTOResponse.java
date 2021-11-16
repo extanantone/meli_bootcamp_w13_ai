@@ -6,7 +6,6 @@ import lombok.Setter;
 import java.util.List;
 
 @Getter @Setter
-public class PostsByUserDTO {
-    private int user_id;
-    private List<PostListDTO> posts;
+public class SellersFollowedDTOResponse extends UserDTO{
+    private List<UserDTO> followed;
 }

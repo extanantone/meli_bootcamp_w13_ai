@@ -5,14 +5,14 @@ import com.SocialMeli.SocialMeli.entity.Post;
 import com.SocialMeli.SocialMeli.entity.Product;
 
 public class PostMapper {
-    public static Post postDTOToPost(PostDTO postDTO){
+    public static Post postDTORequestToPost(PostDTORequest postDTORequest){
         Post post = new Post();
-        post.setId(postDTO.getId_post());
-        post.setSellerId(postDTO.getUser_id());
-        post.setDate(postDTO.getDate());
-        post.setCategory(postDTO.getCategory());
-        post.setPrice(postDTO.getPrice());
-        post.setDetail(PostMapper.productDTOToProduct(postDTO.getDetail()));
+        post.setId(postDTORequest.getId_post());
+        post.setSellerId(postDTORequest.getUser_id());
+        post.setDate(postDTORequest.getDate());
+        post.setCategory(postDTORequest.getCategory());
+        post.setPrice(postDTORequest.getPrice());
+        post.setDetail(PostMapper.productDTOToProduct(postDTORequest.getDetail()));
         return post;
     }
 
@@ -27,15 +27,15 @@ public class PostMapper {
         return product;
     }
 
-    public static PostDTO postToPostDTO(Post post){
-        PostDTO postDTO = new PostDTO();
-        postDTO.setId_post(post.getId());
-        postDTO.setUser_id(post.getSellerId());
-        postDTO.setCategory(post.getCategory());
-        postDTO.setDate(post.getDate());
-        postDTO.setCategory(post.getCategory());
-        postDTO.setDetail(PostMapper.productToProductDTO(post.getDetail()));
-        return postDTO;
+    public static PostDTORequest postToPostDTO(Post post){
+        PostDTORequest postDTORequest = new PostDTORequest();
+        postDTORequest.setId_post(post.getId());
+        postDTORequest.setUser_id(post.getSellerId());
+        postDTORequest.setCategory(post.getCategory());
+        postDTORequest.setDate(post.getDate());
+        postDTORequest.setCategory(post.getCategory());
+        postDTORequest.setDetail(PostMapper.productToProductDTO(post.getDetail()));
+        return postDTORequest;
     }
 
     public static ProductDTO productToProductDTO(Product product){
@@ -49,17 +49,17 @@ public class PostMapper {
         return productDTO;
     }
 
-    public static PostListDTO postToPostListDTO(Post post){
-        PostListDTO postListDTO = new PostListDTO();
-        postListDTO.setId_post(post.getId());
-        postListDTO.setDate(post.getDate());
-        postListDTO.setDetail(PostMapper.productToProductDTO(post.getDetail()));
-        postListDTO.setCategory(post.getCategory());
-        postListDTO.setPrice(post.getPrice());
-        return postListDTO;
+    public static PostListItemDTOResponse postToPostListDTO(Post post){
+        PostListItemDTOResponse postListItemDTOResponse = new PostListItemDTOResponse();
+        postListItemDTOResponse.setId_post(post.getId());
+        postListItemDTOResponse.setDate(post.getDate());
+        postListItemDTOResponse.setDetail(PostMapper.productToProductDTO(post.getDetail()));
+        postListItemDTOResponse.setCategory(post.getCategory());
+        postListItemDTOResponse.setPrice(post.getPrice());
+        return postListItemDTOResponse;
     }
 
-    public static Post postPromoDTOToPost(PostPromoDTO postPromoCreateDTO){
+    public static Post postPromoDTOToPost(PostPromoDTORequest postPromoCreateDTO){
         Post post = new Post();
         post.setId(postPromoCreateDTO.getId_post());
         post.setDate(postPromoCreateDTO.getDate());
@@ -72,28 +72,28 @@ public class PostMapper {
         return post;
     }
 
-    public static PostPromoDTO postToPostPromoDTO(Post post){
-        PostPromoDTO postPromoDTO = new PostPromoDTO();
-        postPromoDTO.setId_post(post.getId());
-        postPromoDTO.setUser_id(post.getSellerId());
-        postPromoDTO.setCategory(post.getCategory());
-        postPromoDTO.setDate(post.getDate());
-        postPromoDTO.setPrice(post.getPrice());
-        postPromoDTO.setHas_promo(post.isHas_promo());
-        postPromoDTO.setDiscount(post.getDiscount());
-        postPromoDTO.setDetail(PostMapper.productToProductDTO(post.getDetail()));
-        return postPromoDTO;
+    public static PostPromoDTORequest postToPostPromoDTO(Post post){
+        PostPromoDTORequest postPromoDTORequest = new PostPromoDTORequest();
+        postPromoDTORequest.setId_post(post.getId());
+        postPromoDTORequest.setUser_id(post.getSellerId());
+        postPromoDTORequest.setCategory(post.getCategory());
+        postPromoDTORequest.setDate(post.getDate());
+        postPromoDTORequest.setPrice(post.getPrice());
+        postPromoDTORequest.setHas_promo(post.isHas_promo());
+        postPromoDTORequest.setDiscount(post.getDiscount());
+        postPromoDTORequest.setDetail(PostMapper.productToProductDTO(post.getDetail()));
+        return postPromoDTORequest;
     }
 
-    public static PostPromoListDTO postToPostPromoListDTO(Post post){
-        PostPromoListDTO postPromoListDTO = new PostPromoListDTO();
-        postPromoListDTO.setId_post(post.getId());
-        postPromoListDTO.setDate(post.getDate());
-        postPromoListDTO.setDetail(PostMapper.productToProductDTO(post.getDetail()));
-        postPromoListDTO.setCategory(post.getCategory());
-        postPromoListDTO.setPrice(post.getPrice());
-        postPromoListDTO.setHas_promo(post.isHas_promo());
-        postPromoListDTO.setDiscount(post.getDiscount());
-        return postPromoListDTO;
+    public static PostPromoListItemDTOResponse postToPostPromoListDTO(Post post){
+        PostPromoListItemDTOResponse postPromoListItemDTOResponse = new PostPromoListItemDTOResponse();
+        postPromoListItemDTOResponse.setId_post(post.getId());
+        postPromoListItemDTOResponse.setDate(post.getDate());
+        postPromoListItemDTOResponse.setDetail(PostMapper.productToProductDTO(post.getDetail()));
+        postPromoListItemDTOResponse.setCategory(post.getCategory());
+        postPromoListItemDTOResponse.setPrice(post.getPrice());
+        postPromoListItemDTOResponse.setHas_promo(post.isHas_promo());
+        postPromoListItemDTOResponse.setDiscount(post.getDiscount());
+        return postPromoListItemDTOResponse;
     }
 }

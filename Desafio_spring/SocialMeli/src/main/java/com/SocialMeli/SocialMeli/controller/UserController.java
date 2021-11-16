@@ -14,26 +14,26 @@ public class UserController {
 
     @PostMapping("/users/{userId}/follow/{user_id_to_follow}")
     public ResponseEntity<?> followSeller(@PathVariable int userId, @PathVariable int user_id_to_follow){
-        return new ResponseEntity<FollowSellerDTO>(userService.followSeller(userId, user_id_to_follow), HttpStatus.OK);
+        return new ResponseEntity<MessageDTOResponse>(userService.followSeller(userId, user_id_to_follow), HttpStatus.OK);
     }
 
     @GetMapping("/users/{userId}/followers/count")
     public ResponseEntity<?> getSellerCountFollowers(@PathVariable int userId){
-        return new ResponseEntity<SellerCountFollowersDTO>(userService.getSellerFollowersCount(userId), HttpStatus.OK);
+        return new ResponseEntity<SellerCountFollowersDTOResponse>(userService.getSellerFollowersCount(userId), HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}/followers/list")
     public ResponseEntity<?> getFollowers(@PathVariable int user_id, @RequestParam String order){
-        return new ResponseEntity<SellerFollowersDTO>(userService.getFollowers(user_id, order), HttpStatus.OK);
+        return new ResponseEntity<SellerFollowersDTOResponse>(userService.getFollowers(user_id, order), HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}/followed/list")
     public ResponseEntity<?> getFollowed(@PathVariable int user_id){
-        return new ResponseEntity<SellersFollowedDTO>(userService.getFollowed(user_id), HttpStatus.OK);
+        return new ResponseEntity<SellersFollowedDTOResponse>(userService.getFollowed(user_id), HttpStatus.OK);
     }
 
     @PostMapping("/users/{userId}/unfollow/{user_id_to_unfollow}")
     public ResponseEntity<?> unfollowSeller(@PathVariable int userId, @PathVariable int user_id_to_unfollow){
-        return new ResponseEntity<UnfollowSellerDTO>(userService.unfollowSeller(userId, user_id_to_unfollow), HttpStatus.OK);
+        return new ResponseEntity<MessageDTOResponse>(userService.unfollowSeller(userId, user_id_to_unfollow), HttpStatus.OK);
     }
 }

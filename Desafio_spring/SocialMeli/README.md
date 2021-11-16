@@ -172,7 +172,7 @@ STATUS 200 OK
 ---
 Request
 ```
-http://localhost:8080/users/1/followers/list?order=name_desc
+http://localhost:8080/users/99/followers/list?order=name_desc
 ```
 Response
 ```JSON
@@ -476,7 +476,7 @@ http://localhost:8080/products/promo-post
 ```
 ```JSON
 {
-  "user_id": 3,
+  "user_id": 1,
   "id_post": 7,
   "date": "12-11-2021",
   "detail": {
@@ -538,7 +538,7 @@ http://localhost:8080/products/post
 ```
 ```JSON
 {
-  "user_id": 3,
+  "user_id": 1,
   "id_post": 7,
   "date": "12-11-2021",
   "detail": {
@@ -620,7 +620,7 @@ Response
 ```JSON
 STATUS 200 OK
 {
-  "user_id": 3,
+  "user_id": 1,
   "posts": [
     {
       "id_post": 1,

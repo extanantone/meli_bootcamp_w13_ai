@@ -4,6 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class FollowSellerDTO {
+public class MessageDTOResponse {
     private String message;
 }

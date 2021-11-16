@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class SellerCountPromosDTO {
-    private int user_id;
-    private String user_name;
+public class SellerCountPromosDTOResponse extends UserDTO{
     private int promo_products_count;
 }

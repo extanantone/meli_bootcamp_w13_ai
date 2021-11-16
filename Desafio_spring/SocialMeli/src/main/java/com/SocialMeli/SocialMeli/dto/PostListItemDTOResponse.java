@@ -7,8 +7,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Getter @Setter
-public class PostPromoDTO {
-    protected int user_id;
+public class PostListItemDTOResponse {
     protected int id_post;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
@@ -18,6 +17,4 @@ public class PostPromoDTO {
 
     protected int category;
     protected double price;
-    protected boolean has_promo;
-    protected double discount;
 }

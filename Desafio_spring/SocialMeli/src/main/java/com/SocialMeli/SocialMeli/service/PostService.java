@@ -29,7 +29,7 @@ public class PostService implements IPostService{
     IUserRepository userRepository;
 
     @Override
-    public PostDTO getById(int id) {
+    public PostDTORequest getById(int id) {
         Post post = postRepository.getById(id);
         if (post == null) {
             throw new NotFoundException("Publicacion no encontrada");
@@ -38,22 +38,25 @@ public class PostService implements IPostService{
     }
 
     @Override
-    public PostDTO create(PostDTO postDTO) {
-        User seller = userRepository.getUser(postDTO.getUser_id());
-        if (seller == null){
-            throw new NotFoundException("Usuario no encontrado");
+    public MessageDTOResponse create(PostDTORequest postDTORequest) {
+        User seller = userRepository.getUser(postDTORequest.getUser_id());
+        if (seller == null || seller.getClass() != Seller.class){
+            throw new NotFoundException("Vendedor no encontrado");
         }
-        Post post = postRepository.getById(postDTO.getId_post());
+
+        Post post = postRepository.getById(postDTORequest.getId_post());
         if (post != null) {
             throw new AlreadyExistsException("Publicacion ya creada");
         }
 
-        postRepository.create(PostMapper.postDTOToPost(postDTO));
-        return postDTO;
+        postRepository.create(PostMapper.postDTORequestToPost(postDTORequest));
+        MessageDTOResponse messageDTOResponse = new MessageDTOResponse();
+        messageDTOResponse.setMessage("Publicacion creada correctamente");
+        return messageDTOResponse;
     }
 
     @Override
-    public PostsByUserDTO getByUser(int userId, String order) {
+    public PostsByUserDTOResponse getByUser(int userId, String order) {
         User buyer = userRepository.getUser(userId);
         if (buyer == null){
             throw new NotFoundException("Usuario no encontrado");
@@ -62,9 +65,9 @@ public class PostService implements IPostService{
         LocalDate date = LocalDate.now().minus(Period.ofDays(14));
         List<Post> posts = postRepository.getByUserId(userId, date);
 
-        PostsByUserDTO postsByUserDTO = new PostsByUserDTO();
-        postsByUserDTO.setUser_id(userId);
-        List<PostListDTO> postListDTOS = posts.stream().map(PostMapper::postToPostListDTO).collect(Collectors.toList());
+        PostsByUserDTOResponse postsByUserDTOResponse = new PostsByUserDTOResponse();
+        postsByUserDTOResponse.setUser_id(userId);
+        List<PostListItemDTOResponse> postListItemDTOResponses = posts.stream().map(PostMapper::postToPostListDTO).collect(Collectors.toList());
         if (order != null){
             String[] order_request = order.split("_");
             if (order_request.length != 2) {
@@ -76,10 +79,10 @@ public class PostService implements IPostService{
             switch (order_type.toLowerCase()){
                 case "date":
                     if (order_dir.toLowerCase().equals("desc")) {
-                        postListDTOS = postListDTOS.stream().sorted(Comparator.comparing(PostListDTO::getDate).reversed()).collect(Collectors.toList());
+                        postListItemDTOResponses = postListItemDTOResponses.stream().sorted(Comparator.comparing(PostListItemDTOResponse::getDate).reversed()).collect(Collectors.toList());
                     } else {
                         if(order_dir.toLowerCase().equals("asc")){
-                            postListDTOS = postListDTOS.stream().sorted(Comparator.comparing(PostListDTO::getDate)).collect(Collectors.toList());
+                            postListItemDTOResponses = postListItemDTOResponses.stream().sorted(Comparator.comparing(PostListItemDTOResponse::getDate)).collect(Collectors.toList());
                         } else {
                             throw new BadRequestException("Formato de orden incorrecto");
                         }
@@ -90,49 +93,51 @@ public class PostService implements IPostService{
             }
         }
 
-        postsByUserDTO.setPosts(postListDTOS);
-        return postsByUserDTO;
+        postsByUserDTOResponse.setPosts(postListItemDTOResponses);
+        return postsByUserDTOResponse;
     }
 
     @Override
-    public PostPromoDTO createPromo(PostPromoDTO postPromoDTO) {
-        User seller = userRepository.getUser(postPromoDTO.getUser_id());
-        if (seller == null){
-            throw new NotFoundException("Usuario no encontrado");
+    public MessageDTOResponse createPromo(PostPromoDTORequest postPromoDTORequest) {
+        User seller = userRepository.getUser(postPromoDTORequest.getUser_id());
+        if (seller == null || seller.getClass() != Seller.class){
+            throw new NotFoundException("Vendedor no encontrado");
         }
 
-        Post post = postRepository.getById(postPromoDTO.getId_post());
+        Post post = postRepository.getById(postPromoDTORequest.getId_post());
         if (post != null) {
             throw new AlreadyExistsException("Publicacion ya creada");
         }
 
-        postRepository.create(PostMapper.postPromoDTOToPost(postPromoDTO));
-        return postPromoDTO;
+        postRepository.create(PostMapper.postPromoDTOToPost(postPromoDTORequest));
+        MessageDTOResponse messageDTOResponse = new MessageDTOResponse();
+        messageDTOResponse.setMessage("Publicacion creada correctamente");
+        return messageDTOResponse;
     }
 
     @Override
-    public PostPromoByUserDTO getPromosByUser(int userId) {
+    public PostPromoByUserDTOResponse getPromosByUser(int userId) {
         User buyer = userRepository.getUser(userId);
         if (buyer == null){
             throw new NotFoundException("Usuario no encontrado");
         }
 
         List<Post> posts = postRepository.getPromosByUser(userId);
-        PostPromoByUserDTO postPromoByUserDTO = new PostPromoByUserDTO();
-        postPromoByUserDTO.setUser_id(userId);
-        List<PostPromoListDTO> postListDTOS = posts.stream().map(PostMapper::postToPostPromoListDTO).collect(Collectors.toList());
-        postPromoByUserDTO.setPosts(postListDTOS);
-        return postPromoByUserDTO;
+        PostPromoByUserDTOResponse postPromoByUserDTOResponse = new PostPromoByUserDTOResponse();
+        postPromoByUserDTOResponse.setUser_id(userId);
+        List<PostPromoListItemDTOResponse> postListDTOS = posts.stream().map(PostMapper::postToPostPromoListDTO).collect(Collectors.toList());
+        postPromoByUserDTOResponse.setPosts(postListDTOS);
+        return postPromoByUserDTOResponse;
     }
 
     @Override
-    public SellerCountPromosDTO getSellerPromosCount(int sellerId) {
+    public SellerCountPromosDTOResponse getSellerPromosCount(int sellerId) {
         User seller = userRepository.getUser(sellerId);
         if (seller == null || seller.getClass() != Seller.class){
             throw new NotFoundException("Vendedor no encontrado");
         }
-        SellerCountPromosDTO sellerCountPromosDTO = UserMapper.userToSellerCountDTO(seller);
-        sellerCountPromosDTO.setPromo_products_count(postRepository.getPromosByUser(sellerId).size());
-        return sellerCountPromosDTO;
+        SellerCountPromosDTOResponse sellerCountPromosDTOResponse = UserMapper.userToSellerCountDTO(seller);
+        sellerCountPromosDTOResponse.setPromo_products_count(postRepository.getPromosByUser(sellerId).size());
+        return sellerCountPromosDTOResponse;
     }
 }
