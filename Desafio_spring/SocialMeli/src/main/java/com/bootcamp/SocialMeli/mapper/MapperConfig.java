@@ -1,17 +1,14 @@
 package com.bootcamp.SocialMeli.mapper;
 
-import com.bootcamp.SocialMeli.dto.request.DetalleProductoDTO;
+import com.bootcamp.SocialMeli.dto.DetalleProductoDTO;
 import com.bootcamp.SocialMeli.dto.request.PublicacionDTO;
 import com.bootcamp.SocialMeli.model.Producto;
 import com.bootcamp.SocialMeli.model.Publicacion;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.modelmapper.convention.NamingConventions;
         import org.springframework.context.annotation.Bean;
         import org.springframework.context.annotation.Configuration;
-
-import java.time.LocalDate;
 
 /* En general usamos el paquete config para guardar esta clase*/
 

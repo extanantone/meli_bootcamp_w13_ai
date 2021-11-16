@@ -1,6 +1,6 @@
 package com.bootcamp.SocialMeli.dto.response;
 
-import com.bootcamp.SocialMeli.dto.request.DetalleProductoDTO;
+import com.bootcamp.SocialMeli.dto.DetalleProductoDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

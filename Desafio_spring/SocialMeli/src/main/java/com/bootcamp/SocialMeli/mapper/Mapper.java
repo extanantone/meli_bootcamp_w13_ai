@@ -1,6 +1,6 @@
 package com.bootcamp.SocialMeli.mapper;
 
-import com.bootcamp.SocialMeli.dto.request.DetalleProductoDTO;
+import com.bootcamp.SocialMeli.dto.DetalleProductoDTO;
 import com.bootcamp.SocialMeli.dto.request.PromocionDTO;
 import com.bootcamp.SocialMeli.dto.request.PublicacionDTO;
 import com.bootcamp.SocialMeli.dto.response.InfoPostDTO;

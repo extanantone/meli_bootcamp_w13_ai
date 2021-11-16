@@ -1,24 +1,32 @@
 package com.bootcamp.SocialMeli.repository;
 
+import com.bootcamp.SocialMeli.model.Producto;
+import com.bootcamp.SocialMeli.model.Publicacion;
 import com.bootcamp.SocialMeli.model.Usuario;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Repository
 public class SocialMeliRepository implements ISocialMeliRepository{
 
     private Map<Integer, Usuario> usuarios;
+
     //@Value("${spring.json_source}")
     private String json_source = "develop/";
 
@@ -29,6 +37,7 @@ public class SocialMeliRepository implements ISocialMeliRepository{
         for (Usuario user : listaUsuarios) {
             this.usuarios.put(user.getUserId(), user);
         }
+        cargarPublicaciones();
     }
 
     public List<Usuario> cargarUsuarios(){
@@ -49,7 +58,54 @@ public class SocialMeliRepository implements ISocialMeliRepository{
         return usuarios;
     }
 
-    //public List<Producto> cargarProductos();
+    public void cargarPublicaciones(){
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader( "src/main/resources/" + json_source + "publicaciones.json"))
+        {
+            //Read JSON file
+            JSONArray publicaciones = (JSONArray) jsonParser.parse(reader);
+
+            //itero sobre el arreglo de JSON
+            for (Object json : publicaciones) {
+                Integer id = Math.toIntExact((Long)((JSONObject) json).get("user_id"));
+                this.usuarios.get(id).agregarPublicacion(parsearJsonPublicacion((JSONObject) json));
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (ClassCastException e){
+            e.printStackTrace();
+        }
+    }
+
+    private Publicacion parsearJsonPublicacion(JSONObject jsonPub){
+        Publicacion publicacion = new Publicacion();
+        publicacion.setIdPost(Math.toIntExact((Long) jsonPub.get("id_post")));
+        publicacion.setCategory(Math.toIntExact((Long) jsonPub.get("category")));
+        publicacion.setPrice((double) jsonPub.get("price"));
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        //convierte String a LocalDate
+        publicacion.setDate(LocalDate.parse((String) jsonPub.get("date"), formato));
+
+        Producto producto = new Producto();
+        JSONObject detalle = (JSONObject) jsonPub.get("detail");
+        producto.setProductId(Math.toIntExact((Long) detalle.get("product_id")));
+        producto.setProductName((String) detalle.get("product_name"));
+        producto.setType((String) detalle.get("type"));
+        producto.setBrand((String) detalle.get("brand"));
+        producto.setColor((String) detalle.get("color"));
+        producto.setNotes((String) detalle.get("notes"));
+
+        publicacion.setProducto(producto);
+
+        return publicacion;
+    }
 
     public Usuario buscarUsuario(Integer idUsuario){
         return this.usuarios.get(idUsuario);

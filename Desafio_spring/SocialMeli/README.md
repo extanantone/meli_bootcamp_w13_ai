@@ -1,5 +1,11 @@
 # Sprint Nº1 - Proyecto Bootcamp Backend
-Temas: Git, Java y Spring.
+## SocialMeli
+
+**Temas:** Git, Java y Spring.
+
+**Autor:** Alejandro Ferrero.
+
+**Email:** alejandro.ferrero@mercadolibre.com
 
 ## Consideraciones
  - se consideran vendedores a aquellos usuarios que tienen al menos un posteo.
@@ -9,3 +15,4 @@ Temas: Git, Java y Spring.
  - los vendedores pueden seguir a otros vendedores.
  - las promociones son consideradas como publicaciones "especiales". 
 Estas se guardan en la misma lista con todas las publicaciones y cuando se solicitan las publicaciones de las ultimas dos semanas también se muestran las promociones.
+ - para que un usuario pueda seguir a otro, éste debe ser un vendedor, es decir, tener al menos una publicación.

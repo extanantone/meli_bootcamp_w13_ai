@@ -1,26 +1,21 @@
 package com.bootcamp.SocialMeli.service;
 
-import com.bootcamp.SocialMeli.dto.request.DetalleProductoDTO;
 import com.bootcamp.SocialMeli.dto.request.PromocionDTO;
 import com.bootcamp.SocialMeli.dto.request.PublicacionDTO;
 import com.bootcamp.SocialMeli.dto.response.*;
 import com.bootcamp.SocialMeli.exception.*;
 import com.bootcamp.SocialMeli.mapper.Mapper;
-import com.bootcamp.SocialMeli.model.Producto;
 import com.bootcamp.SocialMeli.model.Promocion;
 import com.bootcamp.SocialMeli.model.Publicacion;
 import com.bootcamp.SocialMeli.model.Usuario;
 import com.bootcamp.SocialMeli.repository.ISocialMeliRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class SocialMeliService implements ISocialMeliService{

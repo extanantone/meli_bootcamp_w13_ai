@@ -1,5 +1,6 @@
 package com.bootcamp.SocialMeli.dto.request;
 
+import com.bootcamp.SocialMeli.dto.DetalleProductoDTO;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
