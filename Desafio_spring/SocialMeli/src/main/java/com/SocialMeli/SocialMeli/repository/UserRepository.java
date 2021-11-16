@@ -206,7 +206,7 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public PostListDTO postList(Integer user_id) {
+    public PostListDTO postList(Integer user_id, String order) {
         SellersDTO sellersDTO = findSellerByUserId(user_id);
         PostListDTO postListDTO = new PostListDTO();
 
@@ -239,6 +239,15 @@ public class UserRepository implements IUserRepository{
                     return o2.getDate().compareTo(o1.getDate());
                 }
             });
+
+            if ( order.equals("date_asc") ){
+                posts.sort(new Comparator<PostDTO>() {
+                    @Override
+                    public int compare(PostDTO o1, PostDTO o2) {
+                        return o1.getDate().compareTo(o2.getDate());
+                    }
+                });
+            }
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyy");
 

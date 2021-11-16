@@ -49,8 +49,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public PostListDTO postList(Integer user_id) {
-        return userRepository.postList(user_id);
+    public PostListDTO postList(Integer user_id, String order) {
+        return userRepository.postList(user_id, order);
     }
 
     @Override

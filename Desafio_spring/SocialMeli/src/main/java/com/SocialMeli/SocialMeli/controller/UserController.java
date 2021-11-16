@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 public class UserController {
 
@@ -62,7 +64,8 @@ public class UserController {
 
     @GetMapping("/products/followed/{user_id}/list")
     public PostListDTO postList(@PathVariable Integer user_id){
-        return userService.postList(user_id);
+        String order = "date_desc";
+        return userService.postList(user_id, order);
     }
 
     @PostMapping("users/{user_id}/unfollow/{user_id_to_unfollow}")
@@ -86,8 +89,10 @@ public class UserController {
         return userService.followersListSorted(userId, order);
     }
 
-    /*@GetMapping(value ="/products/followed/{userId}/list", params = {"order"})
-    public BuyersDTO productsListSorted(@PathVariable Integer userId, @RequestParam("order") String order){
-        return userService.productsListSorted(userId, order);
-    }*/
+    @GetMapping(value = "/products/followed/{user_id}/list", params = {"order"})
+    public PostListDTO postListParam(@PathVariable Integer user_id, @RequestParam("order") String order){
+        System.out.println("------------>Order------>"+order);
+
+        return userService.postList(user_id, order);
+    }
 }
