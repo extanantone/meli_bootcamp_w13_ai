@@ -3,6 +3,7 @@ package com.bootcamp.socialmeli.service;
 import com.bootcamp.socialmeli.dto.request.PostInDTO;
 import com.bootcamp.socialmeli.dto.request.PostInPromoDTO;
 import com.bootcamp.socialmeli.dto.response.post.ProductsPromoInfoDTO;
+import com.bootcamp.socialmeli.dto.response.post.SellerProductsInPromoList;
 import com.bootcamp.socialmeli.dto.response.post.SellersPostsDTO;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface IProductService {
 
     SellersPostsDTO getSellersPostsSort (Integer purchaserId, String order);
 
-    List<PostInPromoDTO> getProductsInPromo(Integer sellerId);
+    SellerProductsInPromoList getProductsInPromo(Integer sellerId);
 
     ProductsPromoInfoDTO getNumberOfProductsInPromo(Integer sellerId);
 }
