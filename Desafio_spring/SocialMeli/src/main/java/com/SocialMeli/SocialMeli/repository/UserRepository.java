@@ -335,4 +335,29 @@ public class UserRepository implements IUserRepository{
 
         return buyersDTO;
     }
+
+    @Override
+    public SellersDTO followersListSorted(Integer userId, String order) {
+        SellersDTO sellersDTO = findSellerByUserId(userId);
+        System.out.println(order);
+
+        if ( order.equals("name_asc") ){
+            sellersDTO.getFollowers().sort(new Comparator<UserDTO>() {
+                @Override
+                public int compare(UserDTO o1, UserDTO o2) {
+                    return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
+                }
+            });
+        }else if ( order.equals("name_desc") ){
+            sellersDTO.getFollowers().sort(new Comparator<UserDTO>() {
+                @Override
+                public int compare(UserDTO o1, UserDTO o2) {
+                    return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
+                }
+            }.reversed());
+        }
+
+
+        return sellersDTO;
+    }
 }
