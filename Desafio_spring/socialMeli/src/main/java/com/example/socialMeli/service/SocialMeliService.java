@@ -105,7 +105,7 @@ public class SocialMeliService implements  ISocialMeliService{
                                            pub.getDetail().getColor(), pub.getDetail().getNotes() );
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
         LocalDate fecha = LocalDate.parse(pub.getDate(), formatter);
-        Publicacion publi = new Publicacion(pub.getUser_id(),pub.getId_post(),fecha,productos,pub.getCategory(), pub.getPrice());
+        Publicacion publi = new Publicacion(pub.getUser_id(),pub.getId_post(),fecha,productos,pub.getCategory(), pub.getPrice(),false,0);
         Publicacion yaPublicado = SMRepositorio.buscarPost(vende.getPublicaciones(), pub.getId_post());
         if(yaPublicado != null){
             throw new UsuarioNoEncontradoError("El post con id "+pub.getId_post()+" ya habia sido añadido anteriormente por el vendedor "+vende.getUser_id());
@@ -144,12 +144,12 @@ public class SocialMeliService implements  ISocialMeliService{
                 for (Publicacion p:ve.getPublicaciones()) {
                     flag = verificarVendedorYFecha(p.getFecha());
                     if(flag && pun.getId_publicacion()==p.getId_publicacion()){
-                        PublicacionesVendedoresDTO retorno = new PublicacionesVendedoresDTO(ve.getUser_id());
+                        PublicacionesVendedoresDTO retorno = new PublicacionesVendedoresDTO(ve.getUser_id(), ve.getName());
                         ProductoDTO producto = new ProductoDTO(p.getDetalle().getId_producto(),p.getDetalle().getNombre_producto(), p.getDetalle().getTipo(), p.getDetalle().getMarca(), p.getDetalle().getColor(), p.getDetalle().getNotas());
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
                         String formattedString = p.getFecha().format(formatter);
-                        publicacionesDTO.add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio()));
-                        retorno.getPosts().add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio()));
+                        publicacionesDTO.add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio(), p.isPromo(),p.getDescuento()));
+                        retorno.getPosts().add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio(), p.isPromo(), p.getDescuento()));
                         posts.add(retorno);
                     }
                 }
@@ -173,10 +173,53 @@ public class SocialMeliService implements  ISocialMeliService{
         }
         return rta;
     }
-    public SeguidoresDTO ordenarSeguidores (int id, String order) throws UsuarioNoEncontradoError{
-        SeguidoresDTO  seg = null;
-        List<CompradoresDTO> seguidores = seg.getFollowers();
-        //seg.setFollowers(seguidores.stream().sorted(Comparator.comparing(x-> x.getUser_name())).collect(Collectors.toList()));
-        return seg;
+    public RespuestaSimpleDTO añadirPostPromocion (PublicacionDTO pub) throws UsuarioNoEncontradoError{
+        RespuestaSimpleDTO rta = new RespuestaSimpleDTO();
+        Vendedor vende = errorVendedor(pub.getUser_id());
+        Producto productos = new Producto(pub.getDetail().getProduct_id(), pub.getDetail().getProduct_name(), pub.getDetail().getType(), pub.getDetail().getBrand(),
+                pub.getDetail().getColor(), pub.getDetail().getNotes() );
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+        LocalDate fecha = LocalDate.parse(pub.getDate(), formatter);
+        Publicacion publi = new Publicacion(pub.getUser_id(),pub.getId_post(),fecha,productos,pub.getCategory(), pub.getPrice(),pub.isHas_promo(),pub.getDiscount());
+        Publicacion yaPublicado = SMRepositorio.buscarPost(vende.getPublicaciones(), pub.getId_post());
+        if(yaPublicado != null){
+            throw new UsuarioNoEncontradoError("El post con id "+pub.getId_post()+" ya habia sido añadido anteriormente por el vendedor "+vende.getUser_id());
+        }else{
+            Boolean flag = SMRepositorio.postear(vende, publi);
+            if(flag){
+                rta.setMensaje("Se le añadió el post promocional "+pub.getId_post()+" al vendedor "+vende.getUser_id()+" correctamente.");
+                rta.setStatusCode(200);
+            }
+        }
+        return rta;
+    }
+    public CantidadPromosDTO contarPromocion (int id_vendedor) throws UsuarioNoEncontradoError {
+        int i=0;
+        CantidadPromosDTO rta = new CantidadPromosDTO();
+        Vendedor vende = errorVendedor(id_vendedor);
+        for ( Publicacion p:vende.getPublicaciones()) {
+            if(p.isPromo()){
+                i++;
+            }
+        }
+        rta.setUser_id(id_vendedor);
+        rta.setUser_name(vende.getName());
+        rta.setPromo_products_count(i);
+        return rta;
+    }
+    public PublicacionesVendedoresDTO publicacionesEnPromocion (int id) throws UsuarioNoEncontradoError{
+        Vendedor vende = errorVendedor(id);
+        List<PublicacionDTO> publicacionesDTO = new ArrayList<>();
+        PublicacionesVendedoresDTO retorno = new PublicacionesVendedoresDTO(vende.getUser_id(),vende.getName());
+           for (Publicacion p:vende.getPublicaciones()) {
+                if(p.isPromo() ){
+                     ProductoDTO producto = new ProductoDTO(p.getDetalle().getId_producto(),p.getDetalle().getNombre_producto(), p.getDetalle().getTipo(), p.getDetalle().getMarca(), p.getDetalle().getColor(), p.getDetalle().getNotas());
+                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+                     String formattedString = p.getFecha().format(formatter);
+                     publicacionesDTO.add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio(), p.isPromo(),p.getDescuento()));
+                     retorno.getPosts().add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio(), p.isPromo(), p.getDescuento()));
+                }
+           }
+        return retorno;
     }
 }

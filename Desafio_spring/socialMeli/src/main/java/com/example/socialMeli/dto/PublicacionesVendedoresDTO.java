@@ -13,10 +13,12 @@ import java.util.List;
 @Setter
 public class PublicacionesVendedoresDTO {
     private int user_id;
+    private String user_name;
     private List<PublicacionDTO> posts;
 
-    public PublicacionesVendedoresDTO(int user_id) {
+    public PublicacionesVendedoresDTO(int user_id, String user_name) {
         this.user_id = user_id;
+        this.user_name = user_name;
         this.posts = new ArrayList<>();
     }
 }

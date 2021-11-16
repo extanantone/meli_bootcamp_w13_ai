@@ -55,5 +55,20 @@ public class SocialMeliController {
         RespuestaSimpleDTO rta = SMservicio.dejarDeSeguir(user_id, user_id_to_unfollow);
         return new ResponseEntity<>(rta, HttpStatus.OK);
     }
+    @PostMapping("/products/promo-post")
+    public ResponseEntity<RespuestaSimpleDTO> postearPromocion(@RequestBody PublicacionDTO pub) throws UsuarioNoEncontradoError {
+        RespuestaSimpleDTO rta = SMservicio.añadirPostPromocion(pub);
+        return new ResponseEntity<>(rta, HttpStatus.OK);
+    }
+    @GetMapping("/products/{user_id}/promo-post/count")
+    public ResponseEntity<CantidadPromosDTO> contarPromociones(@PathVariable int user_id) throws UsuarioNoEncontradoError {
+        CantidadPromosDTO cantidad = SMservicio.contarPromocion(user_id);
+        return new ResponseEntity<>(cantidad, HttpStatus.OK);
+    }
+    @GetMapping("/products/{user_id}/list")
+    public ResponseEntity<PublicacionesVendedoresDTO > postsConPromo(@PathVariable int user_id) throws UsuarioNoEncontradoError {
+       PublicacionesVendedoresDTO  posts = SMservicio.publicacionesEnPromocion(user_id);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
 
 }

@@ -20,5 +20,7 @@ public interface ISocialMeliService {
     List<PublicacionesVendedoresDTO> obtenerPublicaciones (int id, String order) throws UsuarioNoEncontradoError;
     public boolean verificarVendedorYFecha(LocalDate fecha);
     public RespuestaSimpleDTO dejarDeSeguir (int id_comprado, int id_vendedor) throws UsuarioNoEncontradoError;
-    public SeguidoresDTO ordenarSeguidores (int id, String order) throws UsuarioNoEncontradoError;
+    public RespuestaSimpleDTO añadirPostPromocion (PublicacionDTO pub) throws UsuarioNoEncontradoError;
+    public CantidadPromosDTO contarPromocion (int id_vendedor) throws UsuarioNoEncontradoError;
+    public PublicacionesVendedoresDTO publicacionesEnPromocion (int id) throws UsuarioNoEncontradoError;
 }

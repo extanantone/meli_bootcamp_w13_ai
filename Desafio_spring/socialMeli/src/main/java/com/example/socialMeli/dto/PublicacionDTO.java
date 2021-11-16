@@ -19,4 +19,8 @@ public class PublicacionDTO {
     private ProductoDTO detail;
     private int category;
     private double price;
+    private boolean has_promo;
+    private double discount;
+
+
 }

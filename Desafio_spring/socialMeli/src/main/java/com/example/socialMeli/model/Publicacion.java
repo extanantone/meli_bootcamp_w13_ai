@@ -20,5 +20,7 @@ public class Publicacion {
     private Producto detalle;
     private int categoria;
     private double precio;
+    private boolean promo;
+    private double descuento;
 
 }
