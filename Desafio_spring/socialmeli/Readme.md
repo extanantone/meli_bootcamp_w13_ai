@@ -183,11 +183,11 @@ GET
 
 URL http://localhost:8080/products/followed/{user_id}/list
 
-CORRECT
+CORRECTO
 
 http://localhost:8080/products/followed/1/list
 
-404 if not exist 
+404 si no existe el usuario
 
 http://localhost:8080/products/followed/90/list
 
@@ -198,11 +198,10 @@ POST
 URL http://localhost:8080/users/{subscriptor}/unfollow/{seller}
 
 
-If user unsubscribe user not seller 400
+400 si el usuario a desincribirse no es seller
 
-If user not is subscriber of seller 404
+404 si el usuario no esta inscrito al seller
 
-If user is subscribe a seller 200
 
 ### Implements orders in previos listing methods
 
@@ -234,9 +233,9 @@ Payload
         "discount":0.25
     }
 
-If not exist user id 404
+404 si no existe el usuario
 
-if exist same id in user post send 400
+400 si existe un post con el mismo usuario para el usuario dado
 
 
 ### count all promo post
@@ -245,11 +244,11 @@ GET
 
 URL http://localhost:8080/products/{seller}/promo-post/count
 
-if seller not exist send 404
+404 si el usuario no existe
+ 
+400 si el usuario no es seller
 
-if user isn`t seller send 400
 
-else send 200
 
 ### List promo list
 
@@ -257,9 +256,10 @@ GET
 
 URL http://localhost:8080/products/{seller}/list
 
-if seller not exist send 404
+404 si no existe el usuario
 
-if user is not seller send 400
+
+400 si el usuario no es seller
 
 else send 200
 
