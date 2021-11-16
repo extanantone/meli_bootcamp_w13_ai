@@ -2,6 +2,7 @@ package meli.bootcamp.socialmeli.service;
 
 import meli.bootcamp.socialmeli.dto.*;
 import meli.bootcamp.socialmeli.model.Post;
+import meli.bootcamp.socialmeli.model.PromoPost;
 import meli.bootcamp.socialmeli.model.User;
 import meli.bootcamp.socialmeli.model.UserFollow;
 import meli.bootcamp.socialmeli.repository.PostRepository;
@@ -17,8 +18,10 @@ public interface ISocialMeliService {
     void addPost(ProductsPostDTO newPost);
     List<UserFollow> lista();
     List<Post> listaPost();
+    List<PromoPost> listaPromoPost();
     ProductsUserIDListDTO listSortedPostByUserID(int user_id);
     ProductsUserIDListDTO listSortedPostByUserID(int user_id, String order);
     FollowersListDTO getOrderedFollowersList(int userID, boolean searchFollowers, String order, boolean sortedResponse);
     void newPromoPost(ProductsPromoPostDTO productsPromoPostDTO);
+    PromoPostCountDTO countPromoPost(int userID);
 }

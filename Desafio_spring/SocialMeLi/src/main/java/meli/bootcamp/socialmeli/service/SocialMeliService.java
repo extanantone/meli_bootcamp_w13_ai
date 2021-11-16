@@ -3,10 +3,13 @@ package meli.bootcamp.socialmeli.service;
 import meli.bootcamp.socialmeli.dto.*;
 import meli.bootcamp.socialmeli.exceptions.PostAlreadyExistException;
 import meli.bootcamp.socialmeli.mapper.PostMapper;
+import meli.bootcamp.socialmeli.mapper.PromoProductMapper;
 import meli.bootcamp.socialmeli.model.Post;
+import meli.bootcamp.socialmeli.model.PromoPost;
 import meli.bootcamp.socialmeli.model.User;
 import meli.bootcamp.socialmeli.model.UserFollow;
 import meli.bootcamp.socialmeli.repository.PostRepository;
+import meli.bootcamp.socialmeli.repository.PromoPostRepository;
 import meli.bootcamp.socialmeli.repository.UserFollowRepository;
 import meli.bootcamp.socialmeli.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +32,13 @@ public class SocialMeliService implements ISocialMeliService{
     private PostRepository postRepository;
 
     @Autowired
+    private PromoPostRepository promoPostRepository;
+
+    @Autowired
     private PostMapper postMapper;
+
+    @Autowired
+    private PromoProductMapper promoPostMapper;
 
     @Override
     public void followUser(int userID, int userIDToFollow) {
@@ -137,9 +146,10 @@ public class SocialMeliService implements ISocialMeliService{
     }
 
     @Override
-    public List<Post> listaPost(){
-        return postRepository.getAllList();
-    }
+    public List<Post> listaPost(){ return postRepository.getAllList(); }
+
+    @Override
+    public List<PromoPost> listaPromoPost(){ return promoPostRepository.getAllList(); }
 
     @Override
     public void unfollowUser(int userID, int userIDToFollow) {
@@ -167,6 +177,20 @@ public class SocialMeliService implements ISocialMeliService{
 
     @Override
     public void newPromoPost(ProductsPromoPostDTO productsPromoPostDTO) {
+        userRepository.findUserById(productsPromoPostDTO.getUser_id());
+        if (promoPostRepository.findPromoPostById(productsPromoPostDTO.getId_post()) == null)
+            promoPostRepository.addPromoPost(promoPostMapper.productoPromoPostDTOtoPromoPost(productsPromoPostDTO));
+        else
+            throw new PostAlreadyExistException();
+    }
 
+    @Override
+    public PromoPostCountDTO countPromoPost(int userID) {
+        return new PromoPostCountDTO(
+                userID,
+                userRepository.getUserNameById(userID),
+                (int) promoPostRepository.getAllList().stream()
+                    .filter(post -> post.getUserId() == userID).count()
+        );
     }
 }

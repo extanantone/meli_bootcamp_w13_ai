@@ -25,7 +25,6 @@ public class UserRepository implements IUserRepository{
     @Override
     public User findUserById(int userID) {
         ControllerAdviceExceptions ex= new ControllerAdviceExceptions();
-        ex.setUser_id(userID);
         return mListUsers.stream()
                 .filter(user -> user.getUserId() == userID)
                 .findFirst()

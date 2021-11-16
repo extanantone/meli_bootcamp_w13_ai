@@ -2,6 +2,7 @@ package meli.bootcamp.socialmeli.controller;
 
 import meli.bootcamp.socialmeli.dto.*;
 import meli.bootcamp.socialmeli.model.Post;
+import meli.bootcamp.socialmeli.model.PromoPost;
 import meli.bootcamp.socialmeli.model.UserFollow;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,13 +35,20 @@ public interface ISocialController {
     @GetMapping(value = "/users/{user_id}/{method}/list")
     ResponseEntity<FollowersListDTO> getOrderedList(@PathVariable int user_id, @PathVariable String method);
 
-    @PostMapping(value = "products/promo-post")
+    @PostMapping(value = "/products/promo-post")
     ResponseEntity<GenericResponseDTO> publicPromoPost(@RequestBody ProductsPromoPostDTO productsPromoPostDTO);
 
+    @GetMapping(value = "/products/{user_id}/promo-post/count")
+    ResponseEntity<PromoPostCountDTO> countPromoPostBySeller(@PathVariable int user_id);
+
+    //
     @GetMapping("/listaSeguidores")
     List<UserFollow> lista();
 
     @GetMapping("/listaPost")
     List<Post> listaPost();
+
+    @GetMapping("/listaPromoPost")
+    List<PromoPost> listaPromoPost();
 
 }

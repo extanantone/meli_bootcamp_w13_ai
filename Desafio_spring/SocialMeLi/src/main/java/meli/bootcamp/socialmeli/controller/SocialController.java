@@ -2,6 +2,7 @@ package meli.bootcamp.socialmeli.controller;
 
 import meli.bootcamp.socialmeli.dto.*;
 import meli.bootcamp.socialmeli.model.Post;
+import meli.bootcamp.socialmeli.model.PromoPost;
 import meli.bootcamp.socialmeli.model.UserFollow;
 import meli.bootcamp.socialmeli.service.SocialMeliService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +31,6 @@ public class SocialController implements ISocialController{
     }
 
     @Override
-    public ResponseEntity<FollowersListDTO> listFollowersUser(int user_id) {
-        return new ResponseEntity<>(socialMeliService.getFollowersList(user_id), HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<FollowersListDTO> listFollowedUser(int user_id) {
-        return new ResponseEntity<>(socialMeliService.getFollowedList(user_id), HttpStatus.OK);
-    }
-
-    @Override
     public ResponseEntity<GenericResponseDTO> addPost(ProductsPostDTO newPost) {
         socialMeliService.addPost(newPost);
         GenericResponseDTO genericResponseDTO= new GenericResponseDTO();
@@ -56,6 +47,11 @@ public class SocialController implements ISocialController{
     @Override
     public List<Post> listaPost() {
         return socialMeliService.listaPost();
+    }
+
+    @Override
+    public List<PromoPost> listaPromoPost() {
+        return socialMeliService.listaPromoPost();
     }
 
     @Override
@@ -110,5 +106,10 @@ public class SocialController implements ISocialController{
         genericResponseDTO.getResponse().put("code","200");
         genericResponseDTO.getResponse().put("response","PromoPost agregado exitosamente");
         return new ResponseEntity<>(genericResponseDTO, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<PromoPostCountDTO> countPromoPostBySeller(int user_id) {
+        return new ResponseEntity<>(socialMeliService.countPromoPost(user_id), HttpStatus.OK);
     }
 }
