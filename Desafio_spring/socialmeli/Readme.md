@@ -263,3 +263,88 @@ URL http://localhost:8080/products/{seller}/list
 
 #### Nota: 
 Para los items de promocion filtra quienes tengan la bandera hasPromo en true
+
+
+### Prueba todo ok
+
+**1.** Agregar followers
+
+     POST http://localhost:8080/users/1/follow/3
+   
+     POST http://localhost:8080/users/1/follow/4
+   
+     POST http://localhost:8080/users/2/follow/4
+
+**2.** Listar followers
+
+-     GET http://localhost:8080/users/4/followers/list?order=name_asc
+     
+![img](1.png)
+
+    El vendedor 4 es seguido por 1 y 2
+
+
+
+-       GET http://localhost:8080/users/3/followers/list?order=name_asc
+![img](2.png)
+
+    El vendedor 3 es solo seguido por el usuario 1
+**3.** Lista de followed
+
+
+**4.** Añadimos nuevas publicaciones
+
+-       POST http://localhost:8080/products/post
+        {
+              "user_id": 3,
+              "id_post": 1,
+              "date": "01-01-2021",
+              "detail": {
+                  "product_id": 1,
+                  "product_name": "Silla Gamer",
+                  "type": "Gamer",
+                  "brand": "Racer",
+                  "color": "Red & Black",
+                  "notes": "Special Edition"
+              },
+              "category": 100,
+              "price": 1500.50
+          }
+![img](3.png)
+
+-       POST http://localhost:8080/products/post
+        {
+          "user_id": 4,
+          "id_post": 1,
+          "date": "01-02-2021",
+          "detail": {
+              "product_id": 1,
+              "product_name": "Silla Gamer",
+              "type": "Gamer",
+              "brand": "Racer",
+              "color": "Red & Black",
+              "notes": "Special Edition"
+          },
+          "category": 100,
+          "price": 1500.50
+        }
+![img](4.png)
+
+
+-       POST http://localhost:8080/products/post
+        {
+          "user_id": 4,
+          "id_post": 2,
+          "date": "16-11-2021",
+          "detail": {
+                "product_id": 1,
+                "product_name": "Silla Gamer",
+                "type": "Gamer",
+                "brand": "Racer",
+                "color": "Red & Black",
+                "notes": "Special Edition"
+          },
+          "category": 100,
+          "price": 1500.50
+          }
+![img](5.png)
