@@ -30,12 +30,13 @@ public class UserController {
     }
 
     @GetMapping("/{user_id}/followers/list")
-    public ResponseEntity<UserFollowersDTO> listFollowers(@PathVariable int user_id) throws Exception {
-        return ResponseEntity.ok(this.userService.listFollowers(user_id));
+    public ResponseEntity<UserFollowersDTO> listFollowers(@PathVariable int user_id, @RequestParam(required = false) String order) throws Exception {
+        return ResponseEntity.ok(this.userService.listFollowers(user_id, order));
     }
 
     @GetMapping("/{user_id}/followed/list")
-    public ResponseEntity<UserFollowersDTO> listFolloweds(@PathVariable int user_id) throws Exception {
-        return ResponseEntity.ok(this.userService.listFolloweds(user_id));
+    public ResponseEntity<UserFollowersDTO> listFolloweds(@PathVariable int user_id, @RequestParam(required = false) String order) throws Exception {
+        return ResponseEntity.ok(this.userService.listFolloweds(user_id, order));
     }
+
 }

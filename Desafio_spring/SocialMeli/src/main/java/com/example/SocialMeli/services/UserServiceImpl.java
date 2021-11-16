@@ -8,8 +8,9 @@ import com.example.SocialMeli.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import static java.util.Collections.reverse;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -40,22 +41,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserFollowersDTO listFollowers(int user_id) throws Exception {
-
-        List<User> followers = this.userRepository.getFollowers(user_id);
+    public UserFollowersDTO listFollowers(int user_id, String order) throws Exception {
         List<UserDTO> followersDTO = new ArrayList<>();
-        followers.forEach(user -> followersDTO.add(new UserDTO(Math.toIntExact(user.getUser_id()), user.getUser_name())));
-        User userFinal = this.userRepository.getById(user_id);
-        return new UserFollowersDTO(user_id, userFinal.getUser_name(), followersDTO );
+        this.userRepository.getFollowers(user_id).forEach(user -> followersDTO.add(new UserDTO(Math.toIntExact(user.getUser_id()), user.getUser_name())));
+        return new UserFollowersDTO(user_id, this.userRepository.getById(user_id).getUser_name(), this.listOrder(followersDTO, order) );
         }
 
     @Override
-    public UserFollowersDTO listFolloweds(int user_id) throws Exception {
-        List<User> followers = this.userRepository.getFolloweds(user_id);
+    public UserFollowersDTO listFolloweds(int user_id, String order) throws Exception {
         List<UserDTO> followedsDTO = new ArrayList<>();
-        followers.forEach(user -> followedsDTO.add(new UserDTO(Math.toIntExact(user.getUser_id()), user.getUser_name())));
-        User userFinal = this.userRepository.getById(user_id);
-        return new UserFollowersDTO(user_id, userFinal.getUser_name(), followedsDTO );    }
+        this.userRepository.getFolloweds(user_id).forEach(user -> followedsDTO.add(new UserDTO(Math.toIntExact(user.getUser_id()), user.getUser_name())));
+        return new UserFollowersDTO(user_id, this.userRepository.getById(user_id).getUser_name(), this.listOrder(followedsDTO, order) );    }
 
+    public List<UserDTO> listOrder(List<UserDTO> follows, String order) {
+        follows.sort(Comparator.comparing(UserDTO::getUser_name));
+        if(Objects.equals(order, "name_desc")) reverse(follows);
+        return follows;
+    }
 
 }
