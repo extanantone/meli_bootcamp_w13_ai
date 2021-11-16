@@ -3,6 +3,9 @@ package com.SocialMeli.SocialMeli.repository;
 import com.SocialMeli.SocialMeli.dto.*;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -235,6 +238,15 @@ public class UserRepository implements IUserRepository{
                     return o2.getDate().compareTo(o1.getDate());
                 }
             });
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyy");
+
+            LocalDate fifteenDaysAgo = LocalDate.now(ZoneId.of("America/Bogota")).minusDays(15);
+            System.out.println("dd/MM/yyy" + dtf.format(fifteenDaysAgo));
+
+            posts = posts.stream()
+                    .filter( post -> post.getDate().isAfter( fifteenDaysAgo ))
+                    .collect(Collectors.toList());
 
             postListDTO.setPosts(posts);
         }
