@@ -323,6 +323,13 @@ public class UserRepository implements IUserRepository{
                     return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
                 }
             });
+        }else if ( order.equals("name_desc") ){
+            buyersDTO.getFollowed().sort(new Comparator<UserDTO>() {
+                @Override
+                public int compare(UserDTO o1, UserDTO o2) {
+                    return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
+                }
+            }.reversed());
         }
 
 
