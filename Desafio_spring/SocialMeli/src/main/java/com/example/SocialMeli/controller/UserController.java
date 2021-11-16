@@ -19,6 +19,11 @@ public class UserController {
         return ResponseEntity.ok(this.userService.saveFollow(user_id, user_id_to_follow));
     }
 
+    @PostMapping("/{user_id}/unfollow/{id_to_unfollow}")
+    public ResponseEntity<Boolean> unfollow(@PathVariable int user_id, @PathVariable int id_to_unfollow) throws Exception {
+        return ResponseEntity.ok(this.userService.unfollow(user_id, id_to_unfollow));
+    }
+
     @GetMapping("/{user_id}/followers/count")
     public ResponseEntity<UserCountFollowersDTO> countFollowers(@PathVariable int user_id) throws Exception {
         return ResponseEntity.ok(this.userService.countFollowers(user_id));

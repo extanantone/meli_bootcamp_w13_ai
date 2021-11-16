@@ -27,4 +27,5 @@ public class User {
         this.seguidos = new ArrayList<>();
         this.products = new ArrayList<>();
     }
+
 }

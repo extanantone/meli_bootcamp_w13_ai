@@ -25,6 +25,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Boolean unfollow(int user_id, int id_to_unfollow) throws Exception {
+        User usr = userRepository.getById(user_id);
+        if(usr == null) throw new Exception();
+        this.userRepository.unfollow(user_id, id_to_unfollow);
+        return null;
+    }
+
+    @Override
     public UserCountFollowersDTO countFollowers(int user_id) throws Exception {
         User user = this.userRepository.getById(user_id);
         if (user == null) throw new Exception();
@@ -48,5 +56,6 @@ public class UserServiceImpl implements UserService {
         followers.forEach(user -> followedsDTO.add(new UserDTO(Math.toIntExact(user.getUser_id()), user.getUser_name())));
         User userFinal = this.userRepository.getById(user_id);
         return new UserFollowersDTO(user_id, userFinal.getUser_name(), followedsDTO );    }
+
 
 }

@@ -12,4 +12,6 @@ public interface UserService {
     UserFollowersDTO listFollowers(int user_id) throws Exception;
 
     UserFollowersDTO listFolloweds(int user_id) throws Exception;
+
+    Boolean unfollow(int user_id, int id_to_unfollow) throws Exception;
 }

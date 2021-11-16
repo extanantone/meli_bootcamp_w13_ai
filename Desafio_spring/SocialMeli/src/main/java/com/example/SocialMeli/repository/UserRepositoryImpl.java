@@ -27,6 +27,15 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
+    public Boolean unfollow(int user_id, int id_to_unfollow) throws Exception {
+        User usr = this.getById(user_id);
+        User toUnfollow = this.getById(id_to_unfollow);
+        if (usr == null || toUnfollow == null ) throw new Exception();
+        usr.getSeguidos().removeIf(us -> us == id_to_unfollow);
+        return toUnfollow.getSeguidores().removeIf(us -> us == user_id);
+    }
+
+    @Override
     public User getById(int id) {
         return this.usuarios.stream().filter(user -> user.getUser_id() == id).findFirst().orElse(null);
     }

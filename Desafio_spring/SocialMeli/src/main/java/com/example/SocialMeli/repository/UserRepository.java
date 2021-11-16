@@ -15,4 +15,6 @@ public interface UserRepository {
     List<User> getFolloweds(int user_id) throws Exception;
 
     Boolean savePost(Long idPost, Long idUser) throws Exception;
+
+    Boolean unfollow(int user_id, int id_to_unfollow) throws Exception;
 }
