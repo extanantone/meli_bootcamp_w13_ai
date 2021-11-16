@@ -310,4 +310,22 @@ public class UserRepository implements IUserRepository{
 
         return band;
     }
+
+    @Override
+    public BuyersDTO followedListSorted(Integer userId, String order) {
+        BuyersDTO buyersDTO = findBuyerByUserId(userId);
+        System.out.println(order);
+
+        if ( order.equals("name_asc") ){
+            buyersDTO.getFollowed().sort(new Comparator<UserDTO>() {
+                @Override
+                public int compare(UserDTO o1, UserDTO o2) {
+                    return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
+                }
+            });
+        }
+
+
+        return buyersDTO;
+    }
 }

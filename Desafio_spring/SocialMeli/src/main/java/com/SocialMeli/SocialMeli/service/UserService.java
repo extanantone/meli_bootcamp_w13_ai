@@ -57,4 +57,9 @@ public class UserService implements IUserService {
     public Boolean unfollowUser(Integer user_id, Integer user_id_to_unfollow) {
         return userRepository.unfollow(user_id, user_id_to_unfollow);
     }
+
+    @Override
+    public BuyersDTO followedListSorted(Integer userId, String order) {
+        return userRepository.followedListSorted(userId, order);
+    }
 }
