@@ -1,6 +1,7 @@
 package com.bootcamp.SocialMeli.repository;
 
 import com.bootcamp.SocialMeli.model.Post;
+import com.bootcamp.SocialMeli.model.PromoPost;
 import com.bootcamp.SocialMeli.model.Seguidor;
 import com.bootcamp.SocialMeli.model.User;
 import org.springframework.stereotype.Repository;
@@ -16,13 +17,14 @@ public class UserRepository implements  IUserRepository{
     List<Seguidor> seguidors = new ArrayList<>();
     List<User> users = new ArrayList<>();
     List<Post> posts = new ArrayList<>();
+    List<PromoPost> promoPosts = new ArrayList<>();
 
     public UserRepository() {
 
         users.add(new User(1,"User1"));
         users.add(new User(2,"User2"));
-        users.add(new User(3,"User3"));
-        users.add(new User(4,"User4"));
+        users.add(new User(3,"Vendedor1"));
+        users.add(new User(4,"Vendedor2"));
 
     }
 
@@ -105,5 +107,20 @@ public class UserRepository implements  IUserRepository{
     public List<Post> getPosts(int id) {
 
         return posts.stream().filter(post -> post.getIdUser()==id).collect(Collectors.toList());
+    }
+
+    @Override
+    public void setpromopost(PromoPost post) {
+        promoPosts.add(post);
+    }
+
+    @Override
+    public PromoPost getPromoPost(int id) {
+        return promoPosts.stream().filter(post -> post.getIdPost()==id).findFirst().get();
+    }
+
+    @Override
+    public List<PromoPost> getlistPromopost(int id) {
+        return promoPosts.stream().filter(post -> post.getIdUser() == id).collect(Collectors.toList());
     }
 }

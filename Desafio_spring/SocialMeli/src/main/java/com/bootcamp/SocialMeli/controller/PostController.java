@@ -1,7 +1,6 @@
 package com.bootcamp.SocialMeli.controller;
 
-import com.bootcamp.SocialMeli.dto.PostDTO;
-import com.bootcamp.SocialMeli.dto.PublicacionesDTO;
+import com.bootcamp.SocialMeli.dto.*;
 import com.bootcamp.SocialMeli.service.IPostService;
 import com.bootcamp.SocialMeli.service.IUserService;
 import lombok.Getter;
@@ -24,15 +23,29 @@ public class PostController {
         return new ResponseEntity<>(iPostService.setPost(postDTO), HttpStatus.OK);
     }
 
-    @GetMapping("followed/{user_id}/list")
+    @GetMapping("/followed/{user_id}/list")
     public ResponseEntity<PublicacionesDTO> getPublicaciones(@PathVariable int user_id){
         return new ResponseEntity<>(iPostService.getPublicaciones(user_id),HttpStatus.OK);
     }
 
-    @GetMapping("/products/followed/{user_id}/list")
+    @GetMapping("/followed/{user_id}/listorder")
     public ResponseEntity<PublicacionesDTO> getListPostOrder(@PathVariable int user_id, @PathParam("order") String order){
         return new ResponseEntity<>(iPostService.getPublicaciones(user_id, order),HttpStatus.OK);
     }
 
+    @PostMapping("/promopost")
+    public ResponseEntity<PromopostDTO> setPromoPost(@RequestBody PromopostDTO promopostDTO){
+        return new ResponseEntity<>(iPostService.setPromopost(promopostDTO),HttpStatus.OK);
+    }
+
+    @GetMapping("/{user_id}/promo-post/count")
+    public ResponseEntity<PromoPostCoutDTO> getPublicacionespromoCount(@PathVariable int user_id){
+        return new ResponseEntity<>(iPostService.getCountPromo(user_id),HttpStatus.OK);
+    }
+
+    @GetMapping("/{user_id}/list")
+    public ResponseEntity<PublicacionesPromoDTO> getPublicacionesPromo(@PathVariable int user_id){
+        return  new ResponseEntity<>(iPostService.getpublicacionesPromo(user_id),HttpStatus.OK);
+    }
 
 }

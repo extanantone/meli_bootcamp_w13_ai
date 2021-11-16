@@ -1,14 +1,12 @@
 package com.bootcamp.SocialMeli.service;
 
-import com.bootcamp.SocialMeli.dto.PostDTO;
-import com.bootcamp.SocialMeli.dto.PostsDTO;
-import com.bootcamp.SocialMeli.dto.PublicacionesDTO;
-import com.bootcamp.SocialMeli.dto.UserDTO;
+import com.bootcamp.SocialMeli.dto.*;
 import com.bootcamp.SocialMeli.exception.DuplicateIdException;
 import com.bootcamp.SocialMeli.exception.NotFoundExceptionUsers;
 import com.bootcamp.SocialMeli.mapper.PostMater;
 import com.bootcamp.SocialMeli.mapper.UserMapper;
 import com.bootcamp.SocialMeli.model.Post;
+import com.bootcamp.SocialMeli.model.User;
 import com.bootcamp.SocialMeli.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
@@ -77,5 +75,39 @@ public class PostService implements IPostService {
 
         return new PublicacionesDTO(id,postsDTOS);
 
+    }
+
+    @Override
+    public PromopostDTO setPromopost(PromopostDTO promopostDTO) {
+
+        if(iUserRepository.getUser(promopostDTO.getUser_id()) ==null){throw new NotFoundExceptionUsers(promopostDTO.getUser_id()); }
+        if(iUserRepository.getPost(promopostDTO.getId_post())!=null){
+            throw new DuplicateIdException(promopostDTO.getId_post(),Post.class.getSimpleName());
+        }
+
+        iUserRepository.setpromopost(PostMater.PromoPostDToToPromoPost(promopostDTO));
+
+        return promopostDTO;
+    }
+
+    @Override
+    public PromoPostCoutDTO getCountPromo(int id) {
+        if(iUserRepository.getUser(id) ==null){throw new NotFoundExceptionUsers(id); }
+
+        User user = iUserRepository.getUser(id);
+        int count = (int) iUserRepository.getlistPromopost(id).stream().count();
+
+        return new PromoPostCoutDTO(user.getId(), user.getUserName(), count);
+    }
+
+    @Override
+    public PublicacionesPromoDTO getpublicacionesPromo(int id) {
+        if(iUserRepository.getUser(id) ==null){throw new NotFoundExceptionUsers(id); }
+
+        User user = iUserRepository.getUser(id);
+        List<PromopostDTO> promopostDTOS = iUserRepository.getlistPromopost(id)
+                .stream().map(promoPost -> PostMater.PromoposTopromoPostDTO(promoPost)).collect(Collectors.toList());
+
+        return new PublicacionesPromoDTO(user.getId(),user.getUserName(),promopostDTOS);
     }
 }

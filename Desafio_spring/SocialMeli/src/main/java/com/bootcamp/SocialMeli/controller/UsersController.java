@@ -47,12 +47,12 @@ public class UsersController {
         return  new ResponseEntity<>(iUserService.dejarDeSeguir(user_id,user_id_to_unfollow),HttpStatus.OK);
     }
 
-    @GetMapping("{user_id}/followers/list")
+    @GetMapping("{user_id}/followers/listorder")
     public ResponseEntity<MesiguenDTO> getfollowersList(@PathVariable int user_id ,@PathParam("order") String order){
         return new ResponseEntity<>(iUserService.getOrdenadaMesiguen(user_id,order),HttpStatus.OK);
     }
 
-    @GetMapping("{user_id}/followed/list")
+    @GetMapping("{user_id}/followed/listorder")
     public ResponseEntity<MesiguenDTO> getfollowed(@PathVariable int user_id,@PathParam("order") String order){
         return new ResponseEntity<>(iUserService.getOrdenadaAquienSigo(user_id,order),HttpStatus.OK);
     }
