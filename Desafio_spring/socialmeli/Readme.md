@@ -93,7 +93,7 @@ Si el usuario no existe 404
 
 http://localhost:8080/users/20/followed/list
 
-### Add new post
+### nuevo Post
 
 POST
 
@@ -117,7 +117,7 @@ payload
         "price": 1500.50
     }
 
-If not exist user send 404
+404 si no existe el usuario
     
 Payload 
 
@@ -139,7 +139,7 @@ Ejemplo:
     "price": 1500.50
     }
 
-If user is not seller send 400
+400 si el usuario no es seller o existe un post con la misma id para el usuario dado
 
     {
     "user_id": 1,
@@ -157,7 +157,7 @@ If user is not seller send 400
     "price": 1500.50
     }
 
-If is a seller and not have post with same id send status 200
+Correcto:
 
     {
     "user_id": 3,
@@ -175,9 +175,8 @@ If is a seller and not have post with same id send status 200
     "price": 1500.50
     }
 
-if is seller and exist post with same id send 400
 
-### List pushing by user in the last 2 weeks
+### Las publicaciones de los usuarios que sigo de las ultimas 2 semanas
 
 GET
 
@@ -191,7 +190,7 @@ http://localhost:8080/products/followed/1/list
 
 http://localhost:8080/products/followed/90/list
 
-#### Unfollow user
+#### Dejar de seguir a un seller
 
 POST
 
@@ -263,3 +262,5 @@ URL http://localhost:8080/products/{seller}/list
 
 else send 200
 
+#### Nota: 
+Para los items de promocion filtra quienes tengan la bandera hasPromo en true
