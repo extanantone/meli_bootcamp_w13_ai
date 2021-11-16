@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -20,12 +21,15 @@ public class User {
     private String userName;
     private List<Long> followers;
     private List<Long> followed;
+    private List<Long> post;
+
 
     public User(long userId, String userName) {
         this.userId = userId;
         this.userName = userName;
         this.followers = new ArrayList<>();
         this.followed = new ArrayList<>();
+        this.post = new ArrayList<>();
     }
 
     public void addFollowed (Long idNewFollowed) {
@@ -38,5 +42,11 @@ public class User {
 
     public Integer getFollowersCount () {
         return this.followers.size();
+    }
+
+    public void addNewPost(long idPost){this.post.add(idPost);}
+
+    public List<Long> getPosts() {
+        return this.post;
     }
 }

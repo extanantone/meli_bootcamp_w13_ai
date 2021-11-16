@@ -1,5 +1,7 @@
 package com.bootcamp.socialmeli.repository;
 
+import com.bootcamp.socialmeli.dto.PostDTO;
+import com.bootcamp.socialmeli.model.Post;
 import com.bootcamp.socialmeli.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,21 +12,26 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 @Repository
 public class VendedorRepository implements IVendedorRepository {
 
     private HashMap<Long, User> users;
+    private HashMap<Long, Post> post;
 
     public VendedorRepository() {
 
         //TODO: Read from json
         //this.users = openUserJson();
         this.users = new HashMap<>();
+        this.post = new HashMap<>();
         this.users.put(1L, new User(1L, "vendedor1"));
         this.users.put(2L, new User(2L, "comprador1"));
         this.users.put(3L, new User(3L, "comprador2"));
@@ -78,7 +85,20 @@ public class VendedorRepository implements IVendedorRepository {
         newFollowed.addFollower(idFollower);
     }
 
-    // US0002
+    @Override
+    public void addPostToUser(Long idUser, Post post) {
+        this.users.get(idUser).addNewPost(post.getId());
+        this.post.put(post.getId(),post);
+    }
+
+    @Override
+    public List<Post> getRecentPosts(Long idUser) {
+        LocalDate now = LocalDate.now();
+        return this.users.get(idUser).getPosts().stream().map(
+                        i -> this.post.get(i)).filter(
+                        p -> DAYS.between(p.getPublishDate(), now) < 14).
+                collect(Collectors.toList());
+    }
 
 
 }
