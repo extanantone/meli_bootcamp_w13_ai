@@ -6,7 +6,7 @@ El aplicativo cuenta con 12 puntos bien definidos:
 
 ### **US-0001 - Follow**
 
-Tanto compradores como vendedores podrán seguir a cualquier tipo de usuario. Esto fue desarrollador así porque un comprador puede convertirse en vendedor en un futuro.
+Tanto compradores como vendedores podrán seguir a cualquier tipo de usuario. Esto fue desarrollado así porque un comprador puede convertirse en vendedor en un futuro.
 
 **Método:** POST
 
