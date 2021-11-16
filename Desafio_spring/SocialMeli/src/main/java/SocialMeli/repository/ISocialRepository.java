@@ -9,16 +9,29 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ISocialRepository {
-    public Customer getCustomer(int customerId);
-    public List<Seller> getFollowed(int customerId);
-    public Seller getSeller(int sellerId);
-    public List<Customer> getFollowers(int sellerId);
-    public void newPost(Post post);
-    public void newCustomer(Customer customer);
-    public void newSeller(Seller seller);
-    public Post getPost(int postId);
-    public List<Post> getCustomerPosts(int userId);
-    public List<Post> getSellerPosts(int userId);
-    public List<Post> getSellerPromoPosts(int userId);
-    public List<Post> getCustomerPostsByDate(int userId , LocalDate init, LocalDate fin);
+    Customer getCustomer(int customerId);
+
+    List<Seller> getFollowed(int customerId);
+
+    Seller getSeller(int sellerId);
+
+    List<Customer> getFollowers(int sellerId);
+
+    void newPost(Post post);
+
+    void newCustomer(Customer customer);
+
+    void newSeller(Seller seller);
+
+    void newUser(User user);
+
+    Post getPost(int postId);
+
+    List<Post> getCustomerPosts(int userId);
+
+    List<Post> getSellerPosts(int userId);
+
+    List<Post> getSellerPromoPosts(int userId);
+
+    List<Post> getCustomerPostsByDate(int userId, LocalDate init, LocalDate fin);
 }

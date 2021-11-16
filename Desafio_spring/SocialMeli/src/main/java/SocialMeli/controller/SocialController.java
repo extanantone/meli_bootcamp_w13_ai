@@ -1,6 +1,7 @@
 package SocialMeli.controller;
 
 import SocialMeli.dto.request.NewPostDTO;
+import SocialMeli.dto.request.NewUserDTO;
 import SocialMeli.dto.response.list.FollowedListDTO;
 import SocialMeli.dto.response.count.FollowersCountDTO;
 import SocialMeli.dto.response.list.FollowersListDTO;
@@ -20,31 +21,31 @@ public class SocialController {
         this.socialService = socialService;
     }
 
-    @PostMapping("/users/{user_id}/follow/{user_id_to_follow}")
-    ResponseEntity<?> follow(@PathVariable int user_id, @PathVariable int user_id_to_follow) {
-        socialService.followSeller(user_id, user_id_to_follow);
+    @PostMapping("/users/{userId}/follow/{userIdToFollow}")
+    ResponseEntity<?> follow(@PathVariable int userId, @PathVariable int userIdToFollow) {
+        socialService.followSeller(userId, userIdToFollow);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/users/{user_id}/unfollow/{user_id_to_unfollow}")
-    ResponseEntity<?> unfollow(@PathVariable int user_id, @PathVariable int user_id_to_unfollow) {
-        socialService.unfollowSeller(user_id, user_id_to_unfollow);
+    @PostMapping("/users/{userId}/unfollow/{userIdToUnfollow}")
+    ResponseEntity<?> unfollow(@PathVariable int userId, @PathVariable int userIdToUnfollow) {
+        socialService.unfollowSeller(userId, userIdToUnfollow);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/users/{user_id}/followers/count")
-    ResponseEntity<FollowersCountDTO> getFollowersCount(@PathVariable int user_id) {
-        return new ResponseEntity<>(socialService.getFollowersCount(user_id), HttpStatus.OK);
+    @GetMapping("/users/{userId}/followers/count")
+    ResponseEntity<FollowersCountDTO> getFollowersCount(@PathVariable int userId) {
+        return new ResponseEntity<>(socialService.getFollowersCount(userId), HttpStatus.OK);
     }
 
-    @GetMapping("/users/{user_id}/followers/list")
-    ResponseEntity<FollowersListDTO> getFollowersList(@PathVariable int user_id, @RequestParam(required = false) String order) {
-        return new ResponseEntity<>(socialService.getFollowersList(user_id, order), HttpStatus.OK);
+    @GetMapping("/users/{userId}/followers/list")
+    ResponseEntity<FollowersListDTO> getFollowersList(@PathVariable int userId, @RequestParam(required = false) String order) {
+        return new ResponseEntity<>(socialService.getFollowersList(userId, order), HttpStatus.OK);
     }
 
-    @GetMapping("/users/{user_id}/followed/list")
-    ResponseEntity<FollowedListDTO> getFollowedList(@PathVariable int user_id, @RequestParam(required = false) String order) {
-        return new ResponseEntity<>(socialService.getFollowedList(user_id, order), HttpStatus.OK);
+    @GetMapping("/users/{userId}/followed/list")
+    ResponseEntity<FollowedListDTO> getFollowedList(@PathVariable int userId, @RequestParam(required = false) String order) {
+        return new ResponseEntity<>(socialService.getFollowedList(userId, order), HttpStatus.OK);
     }
 
     @PostMapping("/products/post")
@@ -53,9 +54,9 @@ public class SocialController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/products/followed/{user_id}/list")
-    ResponseEntity<PostListDTO> getPosts(@PathVariable int user_id, @RequestParam(required = false) String order) {
-        return new ResponseEntity<>(socialService.getTwoWeeksPost(user_id, order), HttpStatus.OK);
+    @GetMapping("/products/followed/{userId}/list")
+    ResponseEntity<PostListDTO> getPosts(@PathVariable int userId, @RequestParam(required = false) String order) {
+        return new ResponseEntity<>(socialService.getTwoWeeksPost(userId, order), HttpStatus.OK);
     }
 
     //BONUS
@@ -66,14 +67,20 @@ public class SocialController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/products/{user_id}/promo-post/count")
-    ResponseEntity<PromoCountDTO> getPromoPostCount(@PathVariable int user_id) {
-        return new ResponseEntity<>(socialService.getPromoCount(user_id), HttpStatus.OK);
+    @GetMapping("/products/{userId}/promo-post/count")
+    ResponseEntity<PromoCountDTO> getPromoPostCount(@PathVariable int userId) {
+        return new ResponseEntity<>(socialService.getPromoCount(userId), HttpStatus.OK);
     }
 
-    @GetMapping("/products/{user_id}/list")
-    ResponseEntity<PromoPostListDTO> newPost(@PathVariable int user_id) {
-        return new ResponseEntity<>(socialService.getPromoList(user_id),HttpStatus.OK);
+    @GetMapping("/products/{userId}/list")
+    ResponseEntity<PromoPostListDTO> newPost(@PathVariable int userId) {
+        return new ResponseEntity<>(socialService.getPromoList(userId),HttpStatus.OK);
+    }
+
+    @PostMapping("/user/newUser")
+    ResponseEntity<?> newUser(@RequestBody NewUserDTO user) {
+        socialService.newUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

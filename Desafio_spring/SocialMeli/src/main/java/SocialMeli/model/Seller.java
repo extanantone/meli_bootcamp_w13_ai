@@ -1,18 +1,20 @@
 package SocialMeli.model;
 
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
-@ToString
-public class Seller extends User{
+public class Seller extends User {
     Set<Integer> followersIdSet = new HashSet<>();
     Set<Integer> postIdSet = new HashSet<>();
 
-    public Seller(int user_id, String user_name) {
-        super(user_id, user_name);
+    public Seller(int userId, String userName) {
+        super(userId, userName);
+    }
+
+    public Seller(User user) {
+        super(user.getUserId(), user.getUserName());
     }
 }

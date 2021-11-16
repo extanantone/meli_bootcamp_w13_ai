@@ -1,6 +1,7 @@
 package SocialMeli.mapper;
 
 import SocialMeli.dto.request.NewPostDTO;
+import SocialMeli.dto.request.NewUserDTO;
 import SocialMeli.dto.response.*;
 import SocialMeli.dto.response.count.FollowersCountDTO;
 import SocialMeli.dto.response.count.PromoCountDTO;
@@ -13,16 +14,29 @@ import SocialMeli.model.*;
 import java.util.List;
 
 public interface ISocialMapper {
-    public UserDTO userToUserdto(User user);
-    public Product productDTOtoProduct(ProductDTO product);
-    public ProductDTO productToProductDTO(Product product);
-    public Post newPostDTOtoPost(NewPostDTO post);
-    public PostDTO PostToPostDTO(Post post);
-    public PromoPostDTO PostToPromoPostDTO(Post post);
-    public PostListDTO postListToPostListDTO(int customerId , List<Post> postlist);
-    public PromoPostListDTO promoPostListToPromoPostListDTO(Seller seller , List<Post> postlist);
-    public FollowersCountDTO sellerToFollowersCountDTO(Seller seller);
-    public FollowersListDTO sellerToFollowersListDTO(Seller seller, List<Customer> customers);
-    public FollowedListDTO customerToFollowedListDTO(Customer customer, List<Seller> sellers);
+    UserDTO userToUserdto(User user);
+
+    User newUserDTOtoUser(NewUserDTO user);
+
+    Product productDTOtoProduct(ProductDTO product);
+
+    ProductDTO productToProductDTO(Product product);
+
+    Post newPostDTOtoPost(NewPostDTO post);
+
+    PostDTO PostToPostDTO(Post post);
+
+    PromoPostDTO PostToPromoPostDTO(Post post);
+
+    PostListDTO postListToPostListDTO(int customerId, List<Post> postlist);
+
+    PromoPostListDTO promoPostListToPromoPostListDTO(Seller seller, List<Post> postlist);
+
+    FollowersCountDTO sellerToFollowersCountDTO(Seller seller);
+
+    FollowersListDTO sellerToFollowersListDTO(Seller seller, List<Customer> customers);
+
+    FollowedListDTO customerToFollowedListDTO(Customer customer, List<Seller> sellers);
+
     PromoCountDTO sellerToPromoCountDTO(Seller seller, int count);
 }

@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 
 @Repository
 public class SocialRepository implements ISocialRepository {
-    HashMap<Integer, Seller> sellerMap = new HashMap();
-    HashMap<Integer, Customer> customerMap = new HashMap();
-    HashMap<Integer, Post> postMap = new HashMap();
+    HashMap<Integer, Seller> sellerMap = new HashMap<>();
+    HashMap<Integer, Customer> customerMap = new HashMap<>();
+    HashMap<Integer, Post> postMap = new HashMap<>();
 
     public SocialRepository() {
         loadData();
@@ -58,25 +58,40 @@ public class SocialRepository implements ISocialRepository {
 
     @Override
     public void newPost(Post post) {
-        if (postMap.containsKey(post.getId_post())) {
+        if (postMap.containsKey(post.getIdPost())) {
             throw new RepeatedIdException();
         }
-        Seller seller = sellerMap.get(post.getUser_id());
-        if( seller == null ) {
+        Seller seller = sellerMap.get(post.getUserId());
+        if (seller == null) {
             throw new WrongIdException("Seller");
         }
-        seller.getPostIdSet().add(post.getId_post());
-        postMap.put(post.getId_post(), post);
+        seller.getPostIdSet().add(post.getIdPost());
+        postMap.put(post.getIdPost(), post);
     }
 
     @Override
     public void newCustomer(Customer customer) {
-        customerMap.put(customer.getUser_id(), customer);
+        customerMap.put(customer.getUserId(), customer);
     }
 
     @Override
     public void newSeller(Seller seller) {
-        sellerMap.put(seller.getUser_id(), seller);
+        sellerMap.put(seller.getUserId(), seller);
+    }
+
+    @Override
+    public void newUser(User user) {
+        if (user.getClass() == Customer.class) {
+            if (customerMap.containsKey(user.getUserId())) {
+                throw new RepeatedIdException();
+            }
+            customerMap.put(user.getUserId(), new Customer(user));
+        } else {
+            if (sellerMap.containsKey(user.getUserId())) {
+                throw new RepeatedIdException();
+            }
+            sellerMap.put(user.getUserId(), new Seller(user));
+        }
     }
 
     @Override
@@ -109,7 +124,7 @@ public class SocialRepository implements ISocialRepository {
 
     @Override
     public List<Post> getSellerPromoPosts(int userId) {
-        return getSellerPosts(userId).stream().filter(Post::isHas_promo).collect(Collectors.toList());
+        return getSellerPosts(userId).stream().filter(Post::isHasPromo).collect(Collectors.toList());
     }
 
     @Override

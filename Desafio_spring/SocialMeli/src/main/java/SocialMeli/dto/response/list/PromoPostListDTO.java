@@ -1,15 +1,17 @@
 package SocialMeli.dto.response.list;
 
 import SocialMeli.dto.response.PromoPostDTO;
-import lombok.AllArgsConstructor;
+import SocialMeli.dto.response.UserDTO;
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
-public class PromoPostListDTO {
-    int user_id;
-    String user_name;
+public class PromoPostListDTO extends UserDTO {
     List<PromoPostDTO> posts;
+
+    public PromoPostListDTO(int userId, String userName, List<PromoPostDTO> posts) {
+        super(userId, userName);
+        this.posts = posts;
+    }
 }

@@ -35,45 +35,37 @@ public class SocialService implements ISocialService {
 
     private List<Customer> sortCustomerByName(List<Customer> userList, String type) {
         if (type != null) {
-            userList.sort(Comparator.comparing(Customer::getUser_name));
-            if (type.equals("name_desc")) Collections.reverse(userList);
-            //userList.sort(Comparator.comparing(Customer::getUser_name).reversed());
+            if (type.equals("name_asc")) userList.sort(Comparator.comparing(Customer::getUserName));
+            if (type.equals("name_desc")) userList.sort(Comparator.comparing(Customer::getUserName).reversed());
         }
         return userList;
     }
-
-    ;
 
     private List<Seller> sortSellerByName(List<Seller> userList, String type) {
         if (type != null) {
-            userList.sort(Comparator.comparing(Seller::getUser_name));
-            if (type.equals("name_desc")) Collections.reverse(userList);
+            if (type.equals("name_asc")) userList.sort(Comparator.comparing(Seller::getUserName));
+            if (type.equals("name_desc")) userList.sort(Comparator.comparing(Seller::getUserName).reversed());
         }
         return userList;
     }
-
-    ;
 
 
     private List<Post> sortPostByDate(List<Post> postList, String type) {
         if (type != null) {
-            postList.sort(Comparator.comparing(Post::getDate));
-            if (type.equals("date_desc")) Collections.reverse(postList);
+            if (type.equals("date_asc")) postList.sort(Comparator.comparing(Post::getDate));
+            if (type.equals("date_asc")) postList.sort(Comparator.comparing(Post::getDate).reversed());
         }
         return postList;
     }
-
-    ;
 
     @Override
     public void followSeller(int customerId, int sellerId) {
         Seller seller = socialRepository.getSeller(sellerId);
         Customer customer = socialRepository.getCustomer(customerId);
-        if (!seller.getFollowersIdSet().add(customer.getUser_id())) {
+        if (!seller.getFollowersIdSet().add(customer.getUserId())) {
             throw new AlredyFollowedException();
         }
-        ;
-        customer.getFollowedsIdSet().add(seller.getUser_id());
+        customer.getFollowedsIdSet().add(seller.getUserId());
     }
 
     @Override
@@ -83,8 +75,7 @@ public class SocialService implements ISocialService {
         if (!customer.getFollowedsIdSet().remove(sellerId)) {
             throw new NotFollowedException();
         }
-        ;
-        seller.getFollowersIdSet().remove(customer.getUser_id());
+        seller.getFollowersIdSet().remove(customer.getUserId());
     }
 
     @Override
@@ -118,7 +109,7 @@ public class SocialService implements ISocialService {
 
     @Override
     public void newUser(NewUserDTO newUser) {
-
+        socialRepository.newUser(socialMapper.newUserDTOtoUser(newUser));
     }
 
     //BONUS

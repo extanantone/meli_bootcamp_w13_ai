@@ -11,7 +11,11 @@ import java.util.Set;
 public class Customer extends User {
     Set<Integer> followedsIdSet = new HashSet<>();
 
-    public Customer(int user_id, String user_name) {
-        super(user_id, user_name);
+    public Customer(int userId, String userName) {
+        super(userId, userName);
+    }
+
+    public Customer(User user) {
+        super(user.getUserId(), user.getUserName());
     }
 }

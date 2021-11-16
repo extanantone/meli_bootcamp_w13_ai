@@ -5,12 +5,13 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
-public class PromoPostDTO extends PostDTO{
-    boolean has_promo;
+public class PromoPostDTO extends PostDTO {
+    boolean hasPromo;
     double discount;
-    public PromoPostDTO(int id_post, LocalDate date, ProductDTO detail, int category, double price, boolean has_promo, double discount) {
-        super(id_post, date, detail, category, price);
-        this.has_promo = has_promo;
+
+    public PromoPostDTO(int idPost, LocalDate date, ProductDTO detail, int category, double price, boolean hasPromo, double discount) {
+        super(idPost, date, detail, category, price);
+        this.hasPromo = hasPromo;
         this.discount = discount;
     }
 }

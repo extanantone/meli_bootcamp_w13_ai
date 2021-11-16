@@ -1,15 +1,17 @@
 package SocialMeli.dto.response.list;
 
 import SocialMeli.dto.response.UserDTO;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
-public class FollowedListDTO {
-    int user_id;
-    String user_name;
+
+public class FollowedListDTO extends UserDTO {
     List<UserDTO> followed;
+
+    public FollowedListDTO(int userId, String userName, List<UserDTO> followed) {
+        super(userId, userName);
+        this.followed = followed;
+    }
 }
