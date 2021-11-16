@@ -1,19 +1,19 @@
 [
   {
     "id": 1,
-    "user_name": "Pablo"
+    "user_name": "comprador1"
   },
   {
     "id": 2,
-    "user_name": "Jorge"
+    "user_name": "comprador2"
   },
   {
     "id": 3,
-    "user_name": "Anibal"
+    "user_name": "vendedor1"
   },
   {
     "id": 4,
-    "user_name": "Marco"
+    "user_name": "vendedor2"
   }
 
 ]
