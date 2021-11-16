@@ -3,7 +3,6 @@ package com.example.SocialMeli.controller;
 import com.example.SocialMeli.dto.PostDTO;
 import com.example.SocialMeli.dto.VendedorDTO;
 import com.example.SocialMeli.services.ProductService;
-import com.example.SocialMeli.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +21,8 @@ public class ProductController {
     }
 
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity<List<VendedorDTO>> getSellersFollowed(@PathVariable int userId) throws Exception {
-        return ResponseEntity.ok(this.productService.getSellerFollowed(userId));
+    public ResponseEntity<List<VendedorDTO>> getSellersFollowed(@PathVariable int userId, @RequestParam(required = false) String order) throws Exception {
+        return ResponseEntity.ok(this.productService.getSellerFollowed(userId, order));
     }
-
-
 
 }

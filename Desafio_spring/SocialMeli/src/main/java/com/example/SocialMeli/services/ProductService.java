@@ -9,5 +9,5 @@ public interface ProductService {
 
     Boolean saveProduct(PostDTO postDTO) throws Exception;
 
-    List<VendedorDTO> getSellerFollowed(int userId) throws Exception;
+    List<VendedorDTO> getSellerFollowed(int userId, String order) throws Exception;
 }
