@@ -1,6 +1,6 @@
 # **DOCUMENTACION SOCIAL MELI**
 
-##### SocialMeli es una aplicacióm en la que nuestros usuarios compradadores podrán seguir a sus vendedores favoritos, ver publicaciones y promociones
+##### SocialMeli es una aplicacióm en la que nuestros usuarios compradores podrán seguir a sus vendedores favoritos, ver publicaciones y promociones
 
 El aplicativo cuenta con 12 puntos bien definidos:
 
