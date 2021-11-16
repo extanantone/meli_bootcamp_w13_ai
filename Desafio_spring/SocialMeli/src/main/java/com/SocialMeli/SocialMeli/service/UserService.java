@@ -83,4 +83,9 @@ public class UserService implements IUserService {
     public PostPromoCountDTO postPromoCount(Integer userId) {
         return userRepository.postPromoCount(userId);
     }
+
+    @Override
+    public PostPromoListDTO postPromoList(Integer userId) {
+        return userRepository.postPromoList(userId);
+    }
 }

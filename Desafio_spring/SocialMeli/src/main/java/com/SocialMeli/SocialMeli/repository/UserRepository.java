@@ -459,4 +459,66 @@ public class UserRepository implements IUserRepository{
 
         return user;
     }
+
+    @Override
+    public PostPromoListDTO postPromoList(Integer userId) {
+        SellersDTO sellersDTO = findSellerByUserId(userId);
+        PostPromoListDTO postPromoListDTO = new PostPromoListDTO();
+
+        if( sellersDTO != null ){
+
+            postPromoListDTO.setUser_id(userId);
+            postPromoListDTO.setUser_name(sellersDTO.getUser_name());
+
+            List<PostPromoUserDTO> postPromoUserDTO = new ArrayList<>();
+            List<PostPromoDTO> posts = new ArrayList<>();
+
+            postPromoUserDTO = postPromoDTOList.stream()
+                    .filter( post -> post.getUser_id() == userId )
+                    .collect(Collectors.toList());
+
+            for( PostPromoUserDTO postUser : postPromoUserDTO ){
+                posts.add(
+                        new PostPromoDTO(
+                                postUser.getId_post(),
+                                postUser.getDate(),
+                                postUser.getCategory(),
+                                postUser.getPrice(),
+                                postUser.getDetail(),
+                                postUser.getHas_promo(),
+                                postUser.getDiscount()
+                        )
+                );
+            }
+
+            /*posts.sort(new Comparator<PostDTO>() {
+                @Override
+                public int compare(PostDTO o1, PostDTO o2) {
+                    return o2.getDate().compareTo(o1.getDate());
+                }
+            });
+
+            if ( order.equals("date_asc") ){
+                posts.sort(new Comparator<PostDTO>() {
+                    @Override
+                    public int compare(PostDTO o1, PostDTO o2) {
+                        return o1.getDate().compareTo(o2.getDate());
+                    }
+                });
+            }*/
+
+            /*DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyy");
+
+            LocalDate fifteenDaysAgo = LocalDate.now(ZoneId.of("America/Bogota")).minusDays(15);
+            System.out.println("dd/MM/yyy" + dtf.format(fifteenDaysAgo));
+
+            posts = posts.stream()
+                    .filter( post -> post.getDate().isAfter( fifteenDaysAgo ))
+                    .collect(Collectors.toList());*/
+
+            postPromoListDTO.setPosts(posts);
+        }
+
+        return postPromoListDTO;
+    }
 }

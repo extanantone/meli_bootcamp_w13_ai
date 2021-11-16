@@ -112,4 +112,9 @@ public class UserController {
     public PostPromoCountDTO postPromoCount(@PathVariable Integer userId){
         return userService.postPromoCount(userId);
     }
+
+    @GetMapping("products/{userId}/list")
+    public PostPromoListDTO postPromoList(@PathVariable Integer userId){
+        return userService.postPromoList(userId);
+    }
 }
