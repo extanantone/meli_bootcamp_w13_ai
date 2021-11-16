@@ -5,6 +5,7 @@ import com.sprint.SocialMeli.dto.in.PromoPostDtoIn;
 import com.sprint.SocialMeli.dto.out.FollowedPostListDto;
 import com.sprint.SocialMeli.dto.out.PromoPostCountDto;
 import com.sprint.SocialMeli.dto.out.PromoPostList;
+import com.sprint.SocialMeli.exceptions.DuplicateException;
 import com.sprint.SocialMeli.exceptions.NotFoundException;
 import com.sprint.SocialMeli.exceptions.WrongTypeException;
 import com.sprint.SocialMeli.service.ISocialService;
@@ -23,26 +24,20 @@ public class ProductController {
 
     // US0005
     @PostMapping("/post")
-    public HttpStatus newProduct(@RequestBody PostDtoIn postDtoIn) throws WrongTypeException, NotFoundException {
+    public HttpStatus newProduct(@RequestBody PostDtoIn postDtoIn) throws Exception {
         socialService.newPost(postDtoIn);
         return HttpStatus.OK;
     }
 
-    // US0006
+    // US0006 + US0009
     @GetMapping("/followed/{user_id}/list")
-    public ResponseEntity<FollowedPostListDto> postList(@PathVariable int user_id) throws WrongTypeException, NotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(socialService.getLastTwoWeeksPostsFromFollowed(user_id, null));
-    }
-
-    // US0006
-    @GetMapping("/followed/{user_id}/list")
-    public ResponseEntity<FollowedPostListDto> postListSorted(@PathVariable int user_id, @RequestParam String order) throws WrongTypeException, NotFoundException {
+    public ResponseEntity<FollowedPostListDto> postListSorted(@PathVariable int user_id, @RequestParam(value = "order", required=false) String order) throws WrongTypeException, NotFoundException {
         return ResponseEntity.status(HttpStatus.OK).body(socialService.getLastTwoWeeksPostsFromFollowed(user_id, order));
     }
 
     // US0010
     @PostMapping("/promo-post")
-    public HttpStatus newPromoProduct(@RequestBody PromoPostDtoIn promoPostDtoIn) throws WrongTypeException, NotFoundException {
+    public HttpStatus newPromoProduct(@RequestBody PromoPostDtoIn promoPostDtoIn) throws Exception {
         socialService.newPromoPost(promoPostDtoIn);
         return HttpStatus.OK;
     }

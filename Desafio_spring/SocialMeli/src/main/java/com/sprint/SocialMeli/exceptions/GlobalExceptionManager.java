@@ -19,6 +19,11 @@ public class GlobalExceptionManager {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
+    @ExceptionHandler(DuplicateException.class)
+    public ResponseEntity<?> DuplicateException(Exception e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> Exception(Exception e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error no especificado");

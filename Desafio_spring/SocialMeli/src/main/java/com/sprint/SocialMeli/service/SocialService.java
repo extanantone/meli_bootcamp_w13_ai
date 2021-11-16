@@ -4,6 +4,7 @@ import com.sprint.SocialMeli.dto.*;
 import com.sprint.SocialMeli.dto.in.PostDtoIn;
 import com.sprint.SocialMeli.dto.in.PromoPostDtoIn;
 import com.sprint.SocialMeli.dto.out.*;
+import com.sprint.SocialMeli.exceptions.DuplicateException;
 import com.sprint.SocialMeli.exceptions.NotFoundException;
 import com.sprint.SocialMeli.exceptions.WrongTypeException;
 import com.sprint.SocialMeli.model.*;
@@ -26,17 +27,23 @@ public class SocialService implements ISocialService{
 
 
     @Override
-    public void followSeller(int user_id, int user_id_to_follow) throws NotFoundException, WrongTypeException {
+    public void followSeller(int user_id, int user_id_to_follow) throws Exception {
         UserValidation(user_id, UserType.BUYER);
         UserValidation(user_id_to_follow, UserType.SELLER);
 
-        Buyer buyer = (Buyer) socialRepository.getUser(user_id);
-        buyer.addFollowed(user_id_to_follow);
-        socialRepository.putUser(buyer);
+        try{
+            Buyer buyer = (Buyer) socialRepository.getUser(user_id);
+            buyer.addFollowed(user_id_to_follow);
+            socialRepository.putUser(buyer);
 
-        Seller seller = (Seller) socialRepository.getUser(user_id);
-        seller.addFollower(user_id);
-        socialRepository.putUser(seller);
+            Seller seller = (Seller) socialRepository.getUser(user_id_to_follow);
+            seller.addFollower(user_id);
+            socialRepository.putUser(seller);
+        }
+        catch (Exception e){
+            throw new Exception("Error al seguir un usuario : " + e.getMessage());
+        }
+
 
     }
 
@@ -81,12 +88,8 @@ public class SocialService implements ISocialService{
     }
 
     @Override
-    public void newPost(PostDtoIn postDtoIn) throws WrongTypeException, NotFoundException {
-        UserValidation(postDtoIn.getUser_id(), UserType.SELLER);
-        socialRepository.putPost(new Post(postDtoIn));
-        Seller seller = (Seller) socialRepository.getUser(postDtoIn.getUser_id());
-        seller.addPost(postDtoIn.getId_post());
-        socialRepository.putUser(seller);
+    public void newPost(PostDtoIn postDtoIn) throws Exception {
+        savePost(new Post(postDtoIn));
     }
 
     @Override
@@ -120,26 +123,28 @@ public class SocialService implements ISocialService{
     }
 
     @Override
-    public void unfollowSeller(int user_id, int user_id_to_unfollow) throws WrongTypeException, NotFoundException {
+    public void unfollowSeller(int user_id, int user_id_to_unfollow) throws Exception {
         UserValidation(user_id, UserType.BUYER);
         UserValidation(user_id_to_unfollow, UserType.SELLER);
 
-        Buyer buyer = (Buyer) socialRepository.getUser(user_id);
-        buyer.deleteFollowed(user_id_to_unfollow);
-        socialRepository.putUser(buyer);
+        try{
+            Buyer buyer = (Buyer) socialRepository.getUser(user_id);
+            buyer.deleteFollowed(user_id_to_unfollow);
+            socialRepository.putUser(buyer);
 
-        Seller seller = (Seller) socialRepository.getUser(user_id);
-        seller.deleteFollower(user_id);
-        socialRepository.putUser(seller);
+            Seller seller = (Seller) socialRepository.getUser(user_id);
+            seller.deleteFollower(user_id);
+            socialRepository.putUser(seller);
+        }
+        catch(Exception e){
+            throw new Exception("Error al dejar de seguir un usuario : " + e.getMessage());
+        }
+
     }
 
     @Override
-    public void newPromoPost(PromoPostDtoIn promoPostDtoIn) throws WrongTypeException, NotFoundException {
-        UserValidation(promoPostDtoIn.getUser_id(), UserType.SELLER);
-        socialRepository.putPost(new Post(promoPostDtoIn));
-        Seller seller = (Seller) socialRepository.getUser(promoPostDtoIn.getUser_id());
-        seller.addPost(promoPostDtoIn.getId_post());
-        socialRepository.putUser(seller);
+    public void newPromoPost(PromoPostDtoIn promoPostDtoIn) throws Exception {
+        savePost(new Post(promoPostDtoIn));
     }
 
     @Override
@@ -167,23 +172,39 @@ public class SocialService implements ISocialService{
     private void UserValidation(int user_id, UserType userType) throws WrongTypeException, NotFoundException {
         if (userType.equals(UserType.BUYER)){
             if(!socialRepository.existsUser(user_id))
-                throw new NotFoundException("El id del comprador no se ha encontrado");
+                throw new NotFoundException("El comprador no se ha encontrado");
             else if(socialRepository.getUser(user_id).getUserType() != UserType.BUYER)
                 throw new WrongTypeException("El usuario seguidor no es un comprador");
         }
         else if (userType.equals(UserType.SELLER)){
             if(!socialRepository.existsUser(user_id))
-                throw new NotFoundException("El id del vendedor no se ha encontrado");
+                throw new NotFoundException("El vendedor no se ha encontrado");
             else if(socialRepository.getUser(user_id).getUserType() != UserType.SELLER)
                 throw new WrongTypeException("El usuario a seguir no es un vendedor");
         }
     }
 
     private List<User> orderUserByName(List<User> users, String order){
-        if(order.equals("name_asc"))
+        if(order == null || order.equals("name_asc"))
             return users.stream().sorted(Comparator.comparing(User::getUser_name)).collect(Collectors.toList());
         else if(order.equals("name_desc"))
             return users.stream().sorted(Comparator.comparing(User::getUser_name).reversed()).collect(Collectors.toList());
         return users;
+    }
+
+    private void savePost(Post post) throws Exception {
+        UserValidation(post.getUser_id(), UserType.SELLER);
+        if(socialRepository.existsPost(post.getId_post()))
+            throw new DuplicateException("Ya existe un post con ese  identificatorio");
+        try{
+            socialRepository.putPost(post);
+            Seller seller = (Seller) socialRepository.getUser(post.getUser_id());
+            seller.addPost(post.getId_post());
+            socialRepository.putUser(seller);
+        }
+        catch(Exception e){
+            throw new Exception("Error al crear un nuevo post : " + e.getMessage());
+        }
+
     }
 }
