@@ -3,6 +3,8 @@ package com.example.socialmeli.demo.service;
 import com.example.socialmeli.demo.dto.DTOUsuario;
 import com.example.socialmeli.demo.dto.controllerToService.*;
 import com.example.socialmeli.demo.dto.serviceToController.*;
+import com.example.socialmeli.demo.mapper.PostMapper;
+import com.example.socialmeli.demo.mapper.PromoMapper;
 import com.example.socialmeli.demo.model.Product;
 import com.example.socialmeli.demo.model.Post;
 import com.example.socialmeli.demo.model.PromoPost;
@@ -31,21 +33,22 @@ public class PostService implements IPublicacionService{
     public ResponseEntity createPost(DTOPost publicacion) {
 
         Post postToSave = new Post();
-        postToSave.setUserId(publicacion.getUserId());
+        postToSave = PostMapper.DtoPostToPost(publicacion);
+       /* postToSave.setUserId(publicacion.getUserId());
         postToSave.setIdPost(publicacion.getIdPost());
         postToSave.setCategory(publicacion.getCategory());
         postToSave.setDate(publicacion.getDate());
-        postToSave.setPrice(publicacion.getPrice());
+        postToSave.setPrice(publicacion.getPrice()); */
 
         Product p = new Product();
-        p.setProductId(publicacion.getDetail().getProductId());
+        /*p.setProductId(publicacion.getDetail().getProductId());
         p.setType(publicacion.getDetail().getType());
         p.setProductName(publicacion.getDetail().getProductName());
         p.setNotes(publicacion.getDetail().getNotes());
         p.setColor(publicacion.getDetail().getColor());
         p.setBrand(publicacion.getDetail().getBrand());
 
-        postToSave.setDetail(p);
+        postToSave.setDetail(p); */
 
        iPublicacionRepository.crearPublicacion(postToSave);
 
@@ -56,7 +59,8 @@ public class PostService implements IPublicacionService{
     public ResponseEntity createPromoPost(DTOPromoPost publicacion) {
 
         PromoPost postToSave = new PromoPost();
-        postToSave.setUserId(publicacion.getUserId());
+        postToSave = PromoMapper.DtoPostToPost(publicacion);
+       /* postToSave.setUserId(publicacion.getUserId());
         postToSave.setIdPost(publicacion.getIdPost());
         postToSave.setCategory(publicacion.getCategory());
         postToSave.setDate(publicacion.getDate());
@@ -72,7 +76,7 @@ public class PostService implements IPublicacionService{
         p.setColor(publicacion.getDetail().getColor());
         p.setBrand(publicacion.getDetail().getBrand());
 
-        postToSave.setDetail(p);
+        postToSave.setDetail(p); */
 
         iPublicacionRepository.crearPublicacion(postToSave);
 
@@ -91,7 +95,7 @@ public class PostService implements IPublicacionService{
         List<DTOUsuario> followedUsersFromUser = new ArrayList<>();
 
         DTOPostsFromMyFollowedUsers response = new DTOPostsFromMyFollowedUsers();
-        DTOUserFollowersList followedUsersFromUserDTO = new DTOUserFollowersList();
+        DTOUserFollowedList followedUsersFromUserDTO = new DTOUserFollowedList();
 
         DTORequestUserList requestToPostService = new DTORequestUserList();
         requestToPostService.setUserId(request.getUserId());
@@ -109,7 +113,8 @@ public class PostService implements IPublicacionService{
             for (Post p: postsFromVendor) {
 
                 DTOPostFollowers postFollowersDTO = new DTOPostFollowers();
-                postFollowersDTO.setIdPost(p.getIdPost());
+                postFollowersDTO = PostMapper.PostToDtoPostFollowers(p);
+/*                postFollowersDTO.setIdPost(p.getIdPost());
                 postFollowersDTO.setDate(p.getDate());
                 postFollowersDTO.setCategory(p.getCategory());
                 postFollowersDTO.setPrice(p.getPrice());
@@ -122,7 +127,7 @@ public class PostService implements IPublicacionService{
                 prod.setColor(p.getDetail().getColor());
                 prod.setBrand(p.getDetail().getBrand());
 
-                postFollowersDTO.setDetail(prod);
+                postFollowersDTO.setDetail(prod); */
 
                 postsFromVendorDTO.add(postFollowersDTO);
             }
@@ -152,15 +157,16 @@ public class PostService implements IPublicacionService{
             throw new RuntimeException();
         }
 
-        response.setUser_id(vendorId);
-        response.setUser_name(searchedUser.getUser_name());
+        response.setUserId(vendorId);
+        response.setUserName(searchedUser.getUser_name());
 
         responseFromRepository = iPublicacionRepository.getPromoPostListOfUserId(vendorId);
 
         for (Post p: responseFromRepository) {
 
             DTOPromoPost post = new DTOPromoPost();
-            post.setIdPost(p.getIdPost());
+            post = PromoMapper.PostToDtoPromoPost(p);
+           /* post.setIdPost(p.getIdPost());
             post.setUserId(p.getUserId());
             post.setCategory(p.getCategory());
             post.setHasPromo(p.hasPromo());
@@ -177,7 +183,7 @@ public class PostService implements IPublicacionService{
             prod.setColor(p.getDetail().getColor());
             prod.setBrand(p.getDetail().getBrand());
 
-            post.setDetail(prod);
+            post.setDetail(prod); */
 
             response.addPostToList(post);
 
@@ -200,11 +206,11 @@ public class PostService implements IPublicacionService{
             throw new RuntimeException();
         }
 
-        response.setUser_id(vendorId);
-        response.setUser_name(searchedUser.getUser_name());
+        response.setUserId(vendorId);
+        response.setUserName(searchedUser.getUser_name());
 
         promoProductsCount = iPublicacionRepository.countPromoPostOfUser(vendorId);
-        response.setPromoproducts_count(promoProductsCount);
+        response.setPromoProductsCount(promoProductsCount);
 
         return new ResponseEntity<>(response,HttpStatus.OK);
     }

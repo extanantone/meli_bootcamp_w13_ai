@@ -3,6 +3,7 @@ package com.example.socialmeli.demo.mapper;
 import com.example.socialmeli.demo.dto.controllerToService.DTOPost;
 import com.example.socialmeli.demo.dto.controllerToService.DTOProduct;
 import com.example.socialmeli.demo.dto.controllerToService.DTOPromoPost;
+import com.example.socialmeli.demo.dto.serviceToController.DTOPostFollowers;
 import com.example.socialmeli.demo.model.Post;
 import com.example.socialmeli.demo.model.Product;
 import org.springframework.stereotype.Component;
@@ -46,6 +47,26 @@ public class PostMapper {
 
         return post;
     }
+
+
+    public static DTOPostFollowers PostToDtoPostFollowers(Post p){
+
+        DTOPostFollowers dtoPostFollowers = new DTOPostFollowers();
+        dtoPostFollowers.setIdPost(p.getIdPost());
+        dtoPostFollowers.setCategory(p.getCategory());
+        dtoPostFollowers.setDate(p.getDate());
+        dtoPostFollowers.setPrice(p.getPrice());
+
+        DTOProduct productDTO = new DTOProduct();
+        productDTO = ProductMapper.convertProductTODTOProduct(p.getDetail());
+
+        dtoPostFollowers.setDetail(productDTO);
+
+        return dtoPostFollowers;
+
+    }
+
+
 
 
 }

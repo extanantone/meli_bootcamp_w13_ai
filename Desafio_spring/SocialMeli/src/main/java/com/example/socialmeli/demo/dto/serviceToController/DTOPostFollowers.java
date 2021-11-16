@@ -25,5 +25,4 @@ public class DTOPostFollowers {
     private int category;
     private double price;
 
-
 }

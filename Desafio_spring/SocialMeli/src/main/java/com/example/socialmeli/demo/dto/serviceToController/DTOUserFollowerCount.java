@@ -1,5 +1,7 @@
 package com.example.socialmeli.demo.dto.serviceToController;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +11,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DTOUserFollowerCount {
 
-    private int user_id;
-    private String user_name;
-    private int followers_count;
+    private int userId;
+    private String userName;
+    private int followersCount;
 
 }

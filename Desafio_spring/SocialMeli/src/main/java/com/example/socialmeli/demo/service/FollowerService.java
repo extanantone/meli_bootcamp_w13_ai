@@ -7,8 +7,10 @@ import com.example.socialmeli.demo.dto.controllerToService.DTOFollowUser;
 import com.example.socialmeli.demo.dto.controllerToService.DTORequestUserList;
 import com.example.socialmeli.demo.dto.controllerToService.DTOUnfollowUser;
 import com.example.socialmeli.demo.dto.controllerToService.DTOUserId;
+import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowedList;
 import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowerCount;
 import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowersList;
+import com.example.socialmeli.demo.mapper.UsuarioMapper;
 import com.example.socialmeli.demo.model.Usuarios;
 import com.example.socialmeli.demo.repository.IFollowerRepository;
 import com.example.socialmeli.demo.repository.IUserRepository;
@@ -74,9 +76,9 @@ IUserRepository usuarioRepository;
         else
             userFollowersCount = 0;
 
-        response.setUser_id(userID);
-        response.setUser_name(userName);
-        response.setFollowers_count(userFollowersCount);
+        response.setUserId(userID);
+        response.setUserName(userName);
+        response.setFollowersCount(userFollowersCount);
 
         return response;
 
@@ -104,23 +106,24 @@ IUserRepository usuarioRepository;
         for (Usuarios u: userFollowers) {
 
             DTOUsuario uDTO = new DTOUsuario();
-            uDTO.setUser_id(u.getId());
-            uDTO.setUser_name(u.getUsername());
+           /* uDTO.setUser_id(u.getId());
+            uDTO.setUser_name(u.getUsername()); */
 
+            uDTO = UsuarioMapper.UsuarioTODtoUsuario(u);
             response.addFollowerToList(uDTO);
         }
 
-        response.setUser_id(userID);
-        response.setUser_name(userName);
+        response.setUserId(userID);
+        response.setUserName(userName);
 
 
         return response;
     }
 
     @Override
-    public DTOUserFollowersList getFollowedUsersOfUserId(DTORequestUserList request) {
+    public DTOUserFollowedList getFollowedUsersOfUserId(DTORequestUserList request) {
 
-        DTOUserFollowersList response = new DTOUserFollowersList();
+        DTOUserFollowedList response = new DTOUserFollowedList();
         List<Usuarios> followedUsers = new ArrayList<>();
         int userId = request.getUserId();
         String order = request.getOrder();
@@ -139,14 +142,16 @@ IUserRepository usuarioRepository;
         for (Usuarios u: followedUsers) {
 
             DTOUsuario uDTO = new DTOUsuario();
-            uDTO.setUser_id(u.getId());
-            uDTO.setUser_name(u.getUsername());
+            /*uDTO.setUser_id(u.getId());
+            uDTO.setUser_name(u.getUsername());*/
+
+            uDTO = UsuarioMapper.UsuarioTODtoUsuario(u);
 
             response.addFollowerToList(uDTO);
         }
 
-        response.setUser_id(userId);
-        response.setUser_name(userName);
+        response.setUserId(userId);
+        response.setUserName(userName);
 
         return response;
     }

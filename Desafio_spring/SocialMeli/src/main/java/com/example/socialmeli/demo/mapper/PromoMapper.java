@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PromoMapper {
 
-    public static DTOPromoPost PostTODtoPost(Post p){
+    public static DTOPromoPost PostTODtoPost(PromoPost p){
 
         DTOPromoPost post = new DTOPromoPost();
         post.setIdPost(p.getIdPost());
@@ -31,10 +31,28 @@ public class PromoMapper {
         return post;
     }
 
+    public static DTOPromoPost PostToDtoPromoPost (Post p){
 
-    public static Post DtoPostToPost(DTOPromoPost p){
+        DTOPromoPost post = new DTOPromoPost();
+        post.setIdPost(p.getIdPost());
+        post.setUserId(p.getUserId());
+        post.setCategory(p.getCategory());
+        post.setHasPromo(p.hasPromo());
+        post.setDiscount(p.hasDiscount());
+        post.setDate(p.getDate());
+        post.setPrice(p.getPrice());
 
-        Post post = new Post();
+        DTOProduct productDTO = new DTOProduct();
+        productDTO = ProductMapper.convertProductTODTOProduct(p.getDetail());
+
+        post.setDetail(productDTO);
+
+        return post;
+    }
+
+    public static PromoPost DtoPostToPost(DTOPromoPost p){
+
+        PromoPost post = new PromoPost();
         post.setIdPost(p.getIdPost());
         post.setUserId(p.getUserId());
         post.setCategory(p.getCategory());
@@ -52,6 +70,8 @@ public class PromoMapper {
 
 
     }
+
+
 
 
 }

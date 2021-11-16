@@ -6,6 +6,7 @@ import com.example.socialmeli.demo.dto.controllerToService.DTOFollowUser;
 import com.example.socialmeli.demo.dto.controllerToService.DTORequestUserList;
 import com.example.socialmeli.demo.dto.controllerToService.DTOUnfollowUser;
 import com.example.socialmeli.demo.dto.controllerToService.DTOUserId;
+import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowedList;
 import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowerCount;
 import com.example.socialmeli.demo.dto.serviceToController.DTOUserFollowersList;
 import com.example.socialmeli.demo.service.IFollowerService;
@@ -64,10 +65,10 @@ public class FollowerController {
 
     //US 0004: ¿A quien sigo? Y US 0008
     @GetMapping("/users/{user_id}/followed/list")
-    public ResponseEntity<DTOUserFollowersList> getFollowedUsersFromUserId(@PathVariable int user_id,
-                                                                           @RequestParam(value = "order", required = false) String order){
+    public ResponseEntity<DTOUserFollowedList> getFollowedUsersFromUserId(@PathVariable int user_id,
+                                                                          @RequestParam(value = "order", required = false) String order){
 
-        DTOUserFollowersList response = new DTOUserFollowersList();
+        DTOUserFollowedList response = new DTOUserFollowedList();
 
         DTORequestUserList request = new DTORequestUserList();
         request.setUserId(user_id);
@@ -85,8 +86,8 @@ public class FollowerController {
     public ResponseEntity unFollowUser(@PathVariable int user_id, @PathVariable int user_id_to_unfollow){
 
         DTOUnfollowUser request = new DTOUnfollowUser();
-        request.setUser_id(user_id);
-        request.setUser_id_to_unfollow(user_id_to_unfollow);
+        request.setUserId(user_id);
+        request.setUserIdToUnfollow(user_id_to_unfollow);
 
         try{
             iFollowerService.unFollowUser(request);

@@ -1,6 +1,5 @@
 package com.example.socialmeli.demo.dto.serviceToController;
 
-
 import com.example.socialmeli.demo.dto.DTOUsuario;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -17,16 +16,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class DTOUserFollowersList {
+public class DTOUserFollowedList {
 
     private int userId;
     private String userName;
-    private List<DTOUsuario> followers = new ArrayList<>();
+    private List<DTOUsuario> followed = new ArrayList<>();
 
 
     public void addFollowerToList(DTOUsuario user){
 
-        followers.add(user);
+        followed.add(user);
     }
+
 
 }

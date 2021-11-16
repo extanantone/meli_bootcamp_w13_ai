@@ -1,5 +1,7 @@
 package com.example.socialmeli.demo.dto.controllerToService;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,9 +11,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DTOUnfollowUser {
 
-    private int user_id;
-    private int user_id_to_unfollow;
+    private int userId;
+    private int userIdToUnfollow;
 
 }

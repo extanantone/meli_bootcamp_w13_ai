@@ -76,8 +76,8 @@ public class FollowerRepository implements IFollowerRepository{
     @Override
     public void unFollowUser(DTOUnfollowUser request) {
 
-        int userId = request.getUser_id();
-        int userToUnfollowId = request.getUser_id_to_unfollow();
+        int userId = request.getUserId();
+        int userToUnfollowId = request.getUserIdToUnfollow();
 
         try {
             listaDeFollowers.get(userId).getUsuariosSeguidos().remove(userToUnfollowId);
