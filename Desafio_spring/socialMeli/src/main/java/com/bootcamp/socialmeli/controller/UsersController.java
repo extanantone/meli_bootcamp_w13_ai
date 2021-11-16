@@ -43,9 +43,8 @@ public class UsersController {
     }
 
     @GetMapping(path = "/{user_id}/followed/list")
-    public ResponseEntity<PurchaserFollowedListDTO> getPurcharserFollowedList(
-            @PathVariable Integer user_id,
-            @RequestParam(required = false, defaultValue = "") String order){
+    public ResponseEntity<PurchaserFollowedListDTO> getPurcharserFollowedList(@PathVariable Integer user_id,
+                                                                              @RequestParam(required = false, defaultValue = "") String order){
         if(order.equals("")){
             return  ResponseEntity.ok(service.getPurchaserFollowedList(user_id));
         }else{

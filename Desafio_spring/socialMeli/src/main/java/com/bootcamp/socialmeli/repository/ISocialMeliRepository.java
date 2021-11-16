@@ -3,10 +3,7 @@ package com.bootcamp.socialmeli.repository;
 import com.bootcamp.socialmeli.entitiy.Purchaser;
 import com.bootcamp.socialmeli.entitiy.Post;
 import com.bootcamp.socialmeli.entitiy.Seller;
-import com.bootcamp.socialmeli.entitiy.comparator.SortOrder;
-import org.springframework.core.annotation.Order;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 

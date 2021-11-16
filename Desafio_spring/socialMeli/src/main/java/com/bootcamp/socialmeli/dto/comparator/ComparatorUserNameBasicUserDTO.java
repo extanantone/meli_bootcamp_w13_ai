@@ -14,10 +14,8 @@ public class ComparatorUserNameBasicUserDTO implements Comparator<BasicUserInfo>
 
     @Override
     public int compare(BasicUserInfo o1, BasicUserInfo o2) {
-        if(order == SortOrder.ASC){
-            return o1.getUserName().compareTo(o2.getUserName());
-        }else{
-            return o1.getUserName().compareTo(o2.getUserName()) * -1;
-        }
+        return (order == SortOrder.ASC)
+                ? o1.getUserName().compareTo(o2.getUserName())
+                : o1.getUserName().compareTo(o2.getUserName()) * -1;
     }
 }

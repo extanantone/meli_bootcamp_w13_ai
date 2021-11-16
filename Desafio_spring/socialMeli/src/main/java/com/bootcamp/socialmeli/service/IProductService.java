@@ -9,4 +9,6 @@ public interface IProductService {
 
     SellersPostsDTO getSellersPosts (Integer purchaserId);
 
+    SellersPostsDTO getSellersPostsSort (Integer purchaserId, String order);
+
 }

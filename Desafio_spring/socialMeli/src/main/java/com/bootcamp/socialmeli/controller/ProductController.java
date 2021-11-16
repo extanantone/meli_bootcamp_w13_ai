@@ -26,10 +26,17 @@ public class ProductController {
     }
 
     @GetMapping(path = "/followed/{user_id}/list")
-    public ResponseEntity<SellersPostsDTO> getSellersPosts(@PathVariable Integer user_id){
-        return ResponseEntity.ok(productService.getSellersPosts(user_id));
+    public ResponseEntity<SellersPostsDTO> getSellersPosts(@PathVariable Integer user_id,
+                                                           @RequestParam(defaultValue = "",required = false) String order){
+
+        if(order.equals("")){
+            return ResponseEntity.ok(productService.getSellersPosts(user_id));
+        }else{
+            return ResponseEntity.ok(productService.getSellersPostsSort(user_id,order));
+        }
+
     }
 
-//    /products/followed/{user_id}/list
+
 
 }

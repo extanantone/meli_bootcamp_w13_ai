@@ -1,14 +1,20 @@
 package com.bootcamp.socialmeli.service;
 
+import com.bootcamp.socialmeli.dto.comparator.ComparatorUserNameBasicUserDTO;
+import com.bootcamp.socialmeli.dto.comparator.PostDateComparator;
+import com.bootcamp.socialmeli.dto.comparator.SortOrder;
 import com.bootcamp.socialmeli.dto.request.post.PostInDTO;
 import com.bootcamp.socialmeli.dto.request.post.ProductInDTO;
 import com.bootcamp.socialmeli.dto.response.post.PostOutDTO;
 import com.bootcamp.socialmeli.dto.response.post.ProductDTO;
 import com.bootcamp.socialmeli.dto.response.post.SellersPostsDTO;
+import com.bootcamp.socialmeli.dto.response.user.BasicUserInfo;
+import com.bootcamp.socialmeli.dto.response.user.PurchaserFollowedListDTO;
 import com.bootcamp.socialmeli.entitiy.Post;
 import com.bootcamp.socialmeli.entitiy.Product;
 import com.bootcamp.socialmeli.entitiy.Purchaser;
 import com.bootcamp.socialmeli.entitiy.Seller;
+import com.bootcamp.socialmeli.exception.sortException.BadSorterParamRequest;
 import com.bootcamp.socialmeli.exception.userException.NotFoundUsuarioException;
 import com.bootcamp.socialmeli.exception.postException.PostIdAlreadyExists;
 import com.bootcamp.socialmeli.repository.ISocialMeliRepository;
@@ -19,6 +25,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 @Service
 public class ProductServiceImpl implements IProductService{
@@ -71,8 +78,8 @@ public class ProductServiceImpl implements IProductService{
         allPost.stream().forEach(post -> {
 
             ProductDTO detail = mm.map(post.getDetail(),ProductDTO.class);
-
-            PostOutDTO postOutDTO = new PostOutDTO(post.getPostId(), post.getDate().toString(),
+            DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            PostOutDTO postOutDTO = new PostOutDTO(post.getPostId(), post.getDate().format(dt),
                     detail, post.getCategory(),post.getPrice());
 
             postsResponse.add(postOutDTO);
@@ -81,4 +88,43 @@ public class ProductServiceImpl implements IProductService{
 
         return new SellersPostsDTO(purchaserId,postsResponse);
     }
+
+    @Override
+    public SellersPostsDTO getSellersPostsSort(Integer purchaserId, String order) {
+
+        SellersPostsDTO res = getSellersPosts(purchaserId);
+
+        var list = res.getPosts();
+
+        sort(list,order);
+
+        return res;
+    }
+
+
+    private void sort(List<PostOutDTO> list, String order){
+
+        StringTokenizer st = new StringTokenizer(order,"_");
+
+        if(st.hasMoreTokens()){
+            if(!st.nextToken().equals("date")){
+                throw new BadSorterParamRequest(order);
+            }
+
+            var sort = st.nextToken();
+
+            if(sort.equals("asc")){
+                list.sort(new PostDateComparator(SortOrder.ASC));
+            }else{
+                if(sort.equals("desc")) {
+                    list.sort(new PostDateComparator(SortOrder.DESC));
+                }else{
+                    throw new BadSorterParamRequest(order);
+                }
+            }
+        }else{
+            throw new BadSorterParamRequest(order);
+        }
+    }
+
 }
