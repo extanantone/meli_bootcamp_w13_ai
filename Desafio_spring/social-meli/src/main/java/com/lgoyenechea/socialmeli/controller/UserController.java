@@ -2,6 +2,7 @@ package com.lgoyenechea.socialmeli.controller;
 
 import com.lgoyenechea.socialmeli.dto.*;
 import com.lgoyenechea.socialmeli.exception.UserArgumentNotValidException;
+import com.lgoyenechea.socialmeli.exception.UserDoesNotFollowException;
 import com.lgoyenechea.socialmeli.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,33 +19,48 @@ public class UserController {
     }
 
     @PostMapping("/post")
-    ResponseEntity<UserDTO> newUser(@RequestBody UserCreationDTO newUser) throws UserArgumentNotValidException {
+    ResponseEntity<UserDTO> newUser(@RequestBody UserCreationDTO newUser)
+            throws UserArgumentNotValidException {
         UserDTO user = userService.save(newUser);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @PostMapping("/{userId}/follow/{userIdToFollow}")
     ResponseEntity<UserFollowDTO> follow(@PathVariable Long userId,
-                                         @PathVariable Long userIdToFollow) throws UserArgumentNotValidException {
+                                         @PathVariable Long userIdToFollow)
+            throws UserArgumentNotValidException {
         UserFollowDTO follow = userService.follow(userId, userIdToFollow);
         return new ResponseEntity<>(follow, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}/followers/count")
-    ResponseEntity<UserFollowersCountDTO> followersCount(@PathVariable Long userId) {
+    ResponseEntity<UserFollowersCountDTO> followersCount(@PathVariable Long userId)
+            throws UserArgumentNotValidException {
         UserFollowersCountDTO userFollowersCount = userService.followersCount(userId);
         return new ResponseEntity<>(userFollowersCount, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}/followers/list")
-    ResponseEntity<UserFollowersListDTO> followersList(@PathVariable Long userId) {
-        UserFollowersListDTO userFollowersList = userService.followersList(userId);
+    ResponseEntity<UserFollowersListDTO> followersList(@PathVariable Long userId,
+                                                       @RequestParam(defaultValue = "name_asc") String order)
+            throws UserArgumentNotValidException {
+        UserFollowersListDTO userFollowersList = userService.followersList(userId, order);
         return new ResponseEntity<>(userFollowersList, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}/followed/list")
-    ResponseEntity<UserFollowedListDTO> followedList(@PathVariable Long userId) {
-        UserFollowedListDTO userFollowedList = userService.followedList(userId);
+    ResponseEntity<UserFollowedListDTO> followedList(@PathVariable Long userId,
+                                                     @RequestParam(defaultValue = "name_asc") String order)
+            throws UserArgumentNotValidException {
+        UserFollowedListDTO userFollowedList = userService.followedList(userId, order);
         return new ResponseEntity<>(userFollowedList, HttpStatus.OK);
+    }
+
+    @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
+    ResponseEntity<UserUnfollowDTO> unfollow(@PathVariable Long userId,
+                                             @PathVariable Long userIdToUnfollow)
+            throws UserArgumentNotValidException, UserDoesNotFollowException {
+        UserUnfollowDTO unfollowDto = userService.unfollow(userId, userIdToUnfollow);
+        return new ResponseEntity<>(unfollowDto, HttpStatus.OK);
     }
 }

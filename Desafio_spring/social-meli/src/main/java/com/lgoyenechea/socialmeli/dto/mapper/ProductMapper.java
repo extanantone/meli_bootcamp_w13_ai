@@ -1,14 +1,13 @@
 package com.lgoyenechea.socialmeli.dto.mapper;
 
-import com.lgoyenechea.socialmeli.dto.PostCreationDTO;
-import com.lgoyenechea.socialmeli.dto.PostDTO;
-import com.lgoyenechea.socialmeli.dto.ProductCreationDTO;
-import com.lgoyenechea.socialmeli.dto.ProductDTO;
+import com.lgoyenechea.socialmeli.dto.*;
 import com.lgoyenechea.socialmeli.model.Post;
 import com.lgoyenechea.socialmeli.model.Product;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductMapper {
 
@@ -54,5 +53,15 @@ public class ProductMapper {
         dto.setNotes(product.getNotes());
         dto.setType(product.getType());
         return dto;
+    }
+
+    public static UserFollowedPostsListDTO productToFollowedPostListDto(Long userId, List<Post> posts) {
+        UserFollowedPostsListDTO followedPostsListDto = new UserFollowedPostsListDTO();
+        followedPostsListDto.setUserId(userId);
+        List<PostDTO> postsDto = posts.stream()
+                .map(ProductMapper::postToDto)
+                .collect(Collectors.toList());
+        followedPostsListDto.setPosts(postsDto);
+        return followedPostsListDto;
     }
 }

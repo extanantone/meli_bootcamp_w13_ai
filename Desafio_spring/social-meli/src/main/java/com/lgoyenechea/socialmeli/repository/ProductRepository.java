@@ -6,9 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
-public class ProductRepository implements IRepository<Long, Post> {
+public class ProductRepository implements IRepository<Long, Post>, IProductRepository<Long> {
 
     private final List<Post> posts;
     private Long idPostCounter = 1L;
@@ -39,5 +40,12 @@ public class ProductRepository implements IRepository<Long, Post> {
     private void setProductId(Product product) {
         product.setId(idProductCounter);
         idProductCounter++;
+    }
+
+    @Override
+    public List<Post> getByUserId(Long userId) {
+        return posts.stream()
+                .filter(post -> post.getUserId().equals(userId))
+                .collect(Collectors.toList());
     }
 }

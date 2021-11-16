@@ -16,6 +16,14 @@ public class GlobalExceptionHandler {
         return buildResponseEntity(error);
     }
 
+    @ExceptionHandler(value = UserDoesNotFollowException.class)
+    public ResponseEntity<Object> userDoesNotFollowException(UserDoesNotFollowException userDoesNotFollowException) {
+        Error error = new Error();
+        error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        error.setMessage(userDoesNotFollowException.getMessage());
+        return buildResponseEntity(error);
+    }
+
     private ResponseEntity<Object> buildResponseEntity(Error error) {
         return new ResponseEntity<>(error, error.getStatus());
     }

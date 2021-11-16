@@ -11,8 +11,8 @@ import java.util.List;
 public class User {
     private Long id;
     private String name;
-    private List<User> followers;
-    private List<User> followed;
+    private List<Long> followers;
+    private List<Long> followed;
 
     public User() {
         followers = new ArrayList<>();

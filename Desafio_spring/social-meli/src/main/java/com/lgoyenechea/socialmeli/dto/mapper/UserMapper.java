@@ -3,6 +3,7 @@ package com.lgoyenechea.socialmeli.dto.mapper;
 import com.lgoyenechea.socialmeli.dto.*;
 import com.lgoyenechea.socialmeli.model.User;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserMapper {
@@ -37,23 +38,30 @@ public class UserMapper {
         return dto;
     }
 
-    public static UserFollowersListDTO userToFollowersList(User user) {
+    public static UserFollowersListDTO userToFollowersList(User user, List<User> followers) {
         UserFollowersListDTO dto = new UserFollowersListDTO();
         dto.setUserId(user.getId());
         dto.setUserName(user.getName());
-        dto.setFollowers(user.getFollowers().stream()
+        dto.setFollowers(followers.stream()
                 .map(UserMapper::userToDto)
                 .collect(Collectors.toList()));
         return dto;
     }
 
-    public static UserFollowedListDTO userToFollowedList(User user) {
+    public static UserFollowedListDTO userToFollowedList(User user, List<User> followed) {
         UserFollowedListDTO dto = new UserFollowedListDTO();
         dto.setUserId(user.getId());
         dto.setUserName(user.getName());
-        dto.setFollowed(user.getFollowed().stream()
+        dto.setFollowed(followed.stream()
                 .map(UserMapper::userToDto)
                 .collect(Collectors.toList()));
         return dto;
+    }
+
+    public static UserUnfollowDTO unfollowToDto(User user, User unfollowed) {
+        UserUnfollowDTO unfollowDto = new UserUnfollowDTO();
+        unfollowDto.setUserId(user.getId());
+        unfollowDto.setUnfollowed(userToDto(unfollowed));
+        return unfollowDto;
     }
 }
