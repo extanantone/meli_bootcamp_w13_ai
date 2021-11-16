@@ -2,14 +2,19 @@ package com.example.socialmeli.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
-@AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class FollowerCountDTO {
+public class UserPostDTO {
     private final Integer userId;
-    private final String userName;
-    private final Integer followersCount;
+    private final List<PostListDTO> posts;
+
+    public UserPostDTO(Integer userId) {
+        this.userId = userId;
+        this.posts = new ArrayList<>();
+    }
 }

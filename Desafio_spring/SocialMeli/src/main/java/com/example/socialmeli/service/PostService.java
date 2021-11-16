@@ -1,11 +1,20 @@
 package com.example.socialmeli.service;
 
 import com.example.socialmeli.dto.PostDTO;
+import com.example.socialmeli.dto.PostListDTO;
+import com.example.socialmeli.dto.ProductDetailDTO;
+import com.example.socialmeli.dto.UserPostDTO;
 import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.PostDetail;
+import com.example.socialmeli.model.User;
 import com.example.socialmeli.repository.IPostRepository;
 import com.example.socialmeli.repository.IUserRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.Comparator;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class PostService implements IPostService{
@@ -36,5 +45,39 @@ public class PostService implements IPostService{
         );
         userRepository.find(userId).addPost(postId);
         postRepository.addPost(postId, postModel);
+    }
+
+    public UserPostDTO getPosts(Integer userId) {
+        int daysToSearch = 14;
+        User user = userRepository.find(userId);
+        UserPostDTO userPosts = new UserPostDTO(userId);
+        Post post;
+        PostListDTO postListDTO;
+        ProductDetailDTO productDetailDTO;
+        for(int postId : user.getPosts()){
+            post = postRepository.find(postId);
+            if (DAYS.between(post.getDate(), LocalDate.now()) < daysToSearch) {
+                productDetailDTO = new ProductDetailDTO(
+                        post.getDetails().getProductId(),
+                        post.getDetails().getProductName(),
+                        post.getDetails().getType(),
+                        post.getDetails().getBrand(),
+                        post.getDetails().getColor(),
+                        post.getDetails().getNotes()
+                );
+                postListDTO = new PostListDTO(
+                        post.getIdPost(),
+                        post.getDate(),
+                        productDetailDTO,
+                        post.getCategory(),
+                        post.getPrice()
+                );
+                userPosts.getPosts().add(postListDTO);
+            }
+        }
+        if (userPosts.getPosts().size() > 2) {
+            userPosts.getPosts().sort(Comparator.comparing(PostListDTO::getDate).reversed());
+        }
+        return userPosts;
     }
 }

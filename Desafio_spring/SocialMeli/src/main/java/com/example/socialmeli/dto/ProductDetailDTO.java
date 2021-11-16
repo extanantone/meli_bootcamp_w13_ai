@@ -9,10 +9,10 @@ import lombok.Getter;
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ProductDetailDTO {
-    private Integer productId;
-    private String productName;
-    private String type;
-    private String brand;
-    private String color;
-    private String notes;
+    private final Integer productId;
+    private final String productName;
+    private final String type;
+    private final String brand;
+    private final String color;
+    private final String notes;
 }

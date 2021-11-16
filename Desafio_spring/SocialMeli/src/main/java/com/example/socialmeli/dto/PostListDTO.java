@@ -7,22 +7,18 @@ import lombok.Getter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-
 @Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PostDTO {
-    private final Integer userId;
+public class PostListDTO {
     private final Integer idPost;
-    private final LocalDate date;
+    private final String date;
     private final ProductDetailDTO detail;
     private final Integer category;
     private final Double price;
 
-    public PostDTO(Integer userId, Integer idPost, String date, ProductDetailDTO detail, Integer category, Double price) {
-        this.userId = userId;
+    public PostListDTO(Integer idPost, LocalDate date, ProductDetailDTO detail, Integer category, Double price) {
         this.idPost = idPost;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        this.date = LocalDate.parse(date, formatter);
+        this.date = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         this.detail = detail;
         this.category = category;
         this.price = price;
