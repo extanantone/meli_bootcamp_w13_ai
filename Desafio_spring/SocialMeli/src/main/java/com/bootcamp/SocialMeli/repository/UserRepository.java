@@ -21,11 +21,16 @@ public class UserRepository implements  IUserRepository{
 
     public UserRepository() {
 
-        users.add(new User(1,"User1"));
-        users.add(new User(2,"User2"));
-        users.add(new User(3,"Vendedor1"));
-        users.add(new User(4,"Vendedor2"));
+        users.add(new User(1,"Juan"));
+        users.add(new User(2,"Manuel"));
+        users.add(new User(3,"Julian"));
+        users.add(new User(4,"Carlos"));
 
+    }
+
+    @Override
+    public void setUser(User user) {
+        users.add(user);
     }
 
     @Override

@@ -1,9 +1,6 @@
 package com.bootcamp.SocialMeli.controller;
 
-import com.bootcamp.SocialMeli.dto.MesiguenCabtidadDTO;
-import com.bootcamp.SocialMeli.dto.MesiguenDTO;
-import com.bootcamp.SocialMeli.dto.PostDTO;
-import com.bootcamp.SocialMeli.dto.SeguidorDTO;
+import com.bootcamp.SocialMeli.dto.*;
 import com.bootcamp.SocialMeli.service.IUserService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,29 +29,33 @@ public class UsersController {
         return new ResponseEntity<>(iUserService.getSequidores(user_id),HttpStatus.OK);
     }
 
-    @GetMapping("{user_id}/followers/list")
-    public ResponseEntity<MesiguenDTO> getfollowersList(@PathVariable int user_id){
-        return new ResponseEntity<>(iUserService.getMeSiguen(user_id),HttpStatus.OK);
-    }
-
-    @GetMapping("{user_id}/followed/list")
-    public ResponseEntity<MesiguenDTO> getfollowed(@PathVariable int user_id){
-        return new ResponseEntity<>(iUserService.getAquienSiguo(user_id),HttpStatus.OK);
-    }
-
     @PutMapping("{user_id}/unfollow/{user_id_to_unfollow}")
     public ResponseEntity<SeguidorDTO> unfollow(@PathVariable int user_id, @PathVariable int user_id_to_unfollow){
         return  new ResponseEntity<>(iUserService.dejarDeSeguir(user_id,user_id_to_unfollow),HttpStatus.OK);
     }
 
-    @GetMapping("{user_id}/followers/listorder")
-    public ResponseEntity<MesiguenDTO> getfollowersList(@PathVariable int user_id ,@PathParam("order") String order){
-        return new ResponseEntity<>(iUserService.getOrdenadaMesiguen(user_id,order),HttpStatus.OK);
+    @GetMapping("{user_id}/followers/list")
+    public ResponseEntity<MesiguenDTO> getfollowersList(@PathVariable int user_id ,@RequestParam(required = false) String order){
+        if(order != null)
+            return new ResponseEntity<>(iUserService.getOrdenadaMesiguen(user_id,order),HttpStatus.OK);
+        else
+            return new ResponseEntity<>(iUserService.getMeSiguen(user_id),HttpStatus.OK);
+
     }
 
-    @GetMapping("{user_id}/followed/listorder")
-    public ResponseEntity<MesiguenDTO> getfollowed(@PathVariable int user_id,@PathParam("order") String order){
-        return new ResponseEntity<>(iUserService.getOrdenadaAquienSigo(user_id,order),HttpStatus.OK);
+    @GetMapping("{user_id}/followed/list")
+    public ResponseEntity<MesiguenDTO> getfollowed(@PathVariable int user_id,@RequestParam(required = false) String order){
+        if(order==null)
+            return new ResponseEntity<>(iUserService.getAquienSiguo(user_id),HttpStatus.OK);
+        else
+            return new ResponseEntity<>(iUserService.getOrdenadaAquienSigo(user_id,order),HttpStatus.OK);
     }
+
+    @PostMapping("/user/{user_id}/{user_name}")
+    public ResponseEntity<UserDTO> setUSer(@PathVariable int user_id, String user_name){
+        return new ResponseEntity<>(iUserService.setUser(user_id,user_name),HttpStatus.OK);
+    }
+
+
 
 }

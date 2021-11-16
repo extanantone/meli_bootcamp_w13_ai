@@ -23,14 +23,15 @@ public class PostController {
         return new ResponseEntity<>(iPostService.setPost(postDTO), HttpStatus.OK);
     }
 
-    @GetMapping("/followed/{user_id}/list")
+    /*@GetMapping("/followed/{user_id}/list")
     public ResponseEntity<PublicacionesDTO> getPublicaciones(@PathVariable int user_id){
         return new ResponseEntity<>(iPostService.getPublicaciones(user_id),HttpStatus.OK);
-    }
+    }*/
 
-    @GetMapping("/followed/{user_id}/listorder")
-    public ResponseEntity<PublicacionesDTO> getListPostOrder(@PathVariable int user_id, @PathParam("order") String order){
-        return new ResponseEntity<>(iPostService.getPublicaciones(user_id, order),HttpStatus.OK);
+    @GetMapping("/followed/{user_id}/list")
+    public ResponseEntity<PublicacionesDTO> getListPostOrder(@PathVariable int user_id, @RequestParam(required = false) String order){
+        if(order == null) return new ResponseEntity<>(iPostService.getPublicaciones(user_id),HttpStatus.OK);
+        else return new ResponseEntity<>(iPostService.getPublicaciones(user_id, order),HttpStatus.OK);
     }
 
     @PostMapping("/promopost")

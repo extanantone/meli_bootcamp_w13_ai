@@ -35,4 +35,6 @@ public interface IUserRepository {
 
     List<PromoPost> getlistPromopost(int id);
 
+    void setUser(User user);
+
 }

@@ -26,6 +26,7 @@ public class UserServicie implements IUserService{
     @Override
     public SeguidorDTO setSeguidor(int idSeguidor, int idSeguido) {
 
+        if(idSeguidor == idSeguido){throw new DuplicateIdException(idSeguidor,idSeguido);}
         if(iUserRepository.getUser(idSeguidor) ==null){throw new NotFoundExceptionUsers(idSeguidor); }
         if(iUserRepository.getUser(idSeguido) ==null){throw new NotFoundExceptionUsers(idSeguido);}
         if(iUserRepository.getExisteSeguidor(idSeguidor,idSeguido)){throw new DuplicateIdException(idSeguidor,idSeguido);}
@@ -33,6 +34,15 @@ public class UserServicie implements IUserService{
         iUserRepository.setSeguidor(new Seguidor(idSeguidor,idSeguido));
 
         return new SeguidorDTO(iUserRepository.getUser(idSeguidor).getUserName(),idSeguidor,iUserRepository.getUser(idSeguido).getUserName(),idSeguido);
+    }
+
+    @Override
+    public UserDTO setUser(int id, String name) {
+        if(iUserRepository.getUser(id) !=null){throw new DuplicateIdException(id,User.class.getSimpleName()); }
+
+        iUserRepository.setUser(new User(id,name));
+
+        return UserMapper.userToUserDTO(iUserRepository.getUser(id));
     }
 
     @Override
@@ -108,7 +118,7 @@ public class UserServicie implements IUserService{
     @Override
     public MesiguenDTO getOrdenadaAquienSigo(int id, String order) {
 
-        MesiguenDTO mesiguenDTO= getMeSiguen(id);
+        MesiguenDTO mesiguenDTO= getAquienSiguo(id);
 
         List<UserDTO> userDTOSOrder;
 
