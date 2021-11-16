@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class SocialRepository implements ISocialRepository{
+public class SocialRepository implements ISocialRepository {
     HashMap<Integer, Seller> sellerMap = new HashMap();
     HashMap<Integer, Customer> customerMap = new HashMap();
     HashMap<Integer, Post> postMap = new HashMap();
@@ -27,7 +27,7 @@ public class SocialRepository implements ISocialRepository{
     @Override
     public Customer getCustomer(int customerId) {
         Customer customer = customerMap.get(customerId);
-        if(customer == null){
+        if (customer == null) {
             throw new WrongIdException("Customer");
         }
         return customer;
@@ -43,7 +43,7 @@ public class SocialRepository implements ISocialRepository{
     @Override
     public Seller getSeller(int sellerId) {
         Seller seller = sellerMap.get(sellerId);
-        if(seller == null){
+        if (seller == null) {
             throw new WrongIdException("Seller");
         }
         return seller;
@@ -58,10 +58,14 @@ public class SocialRepository implements ISocialRepository{
 
     @Override
     public void newPost(Post post) {
-        if(postMap.containsKey(post.getId_post())){
+        if (postMap.containsKey(post.getId_post())) {
             throw new RepeatedIdException();
-        };
-        sellerMap.get(post.getUser_id()).getPostIdSet().add(post.getId_post());
+        }
+        Seller seller = sellerMap.get(post.getUser_id());
+        if( seller == null ) {
+            throw new WrongIdException("Seller");
+        }
+        seller.getPostIdSet().add(post.getId_post());
         postMap.put(post.getId_post(), post);
     }
 
@@ -78,7 +82,7 @@ public class SocialRepository implements ISocialRepository{
     @Override
     public Post getPost(int postId) {
         Post post = postMap.get(postId);
-        if(post == null){
+        if (post == null) {
             throw new WrongIdException("Post");
         }
         return post;
@@ -88,11 +92,24 @@ public class SocialRepository implements ISocialRepository{
     public List<Post> getCustomerPosts(int userId) {
         Customer customer = getCustomer(userId);
         List<Post> postList = new ArrayList<>();
-        for(int id : customer.getFollowedsIdSet()){
+        for (int id : customer.getFollowedsIdSet()) {
             postList.addAll(getSeller(id).getPostIdSet().stream()
                     .map(this::getPost).collect(Collectors.toList()));
         }
         return postList;
+    }
+
+    @Override
+    public List<Post> getSellerPosts(int userId) {
+        Seller seller = getSeller(userId);
+        return seller.getPostIdSet().stream()
+                .map(this::getPost).collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<Post> getSellerPromoPosts(int userId) {
+        return getSellerPosts(userId).stream().filter(Post::isHas_promo).collect(Collectors.toList());
     }
 
     @Override
@@ -101,13 +118,13 @@ public class SocialRepository implements ISocialRepository{
                 && !post.getDate().isAfter(fin)).collect(Collectors.toList());
     }
 
-    private void loadData(){
-        newCustomer(new Customer(1,"Customer b"));
-        newCustomer(new Customer(2,"Customer c"));
-        newCustomer(new Customer(3,"Customer a"));
-        newSeller(new Seller(4,"Seller b"));
-        newSeller(new Seller(5,"Seller c"));
-        newSeller(new Seller(6,"Seller a"));
+    private void loadData() {
+        newCustomer(new Customer(1, "Customer b"));
+        newCustomer(new Customer(2, "Customer c"));
+        newCustomer(new Customer(3, "Customer a"));
+        newSeller(new Seller(4, "Seller b"));
+        newSeller(new Seller(5, "Seller c"));
+        newSeller(new Seller(6, "Seller a"));
     }
 
 }

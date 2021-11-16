@@ -1,5 +1,6 @@
-package SocialMeli.dto.response;
+package SocialMeli.dto.response.list;
 
+import SocialMeli.dto.response.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

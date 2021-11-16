@@ -1,17 +1,16 @@
 package SocialMeli.controller;
 
 import SocialMeli.dto.request.NewPostDTO;
-import SocialMeli.dto.response.FollowedListDTO;
-import SocialMeli.dto.response.FollowersCountDTO;
-import SocialMeli.dto.response.FollowersListDTO;
-import SocialMeli.dto.response.PostListDTO;
+import SocialMeli.dto.response.list.FollowedListDTO;
+import SocialMeli.dto.response.count.FollowersCountDTO;
+import SocialMeli.dto.response.list.FollowersListDTO;
+import SocialMeli.dto.response.list.PostListDTO;
+import SocialMeli.dto.response.count.PromoCountDTO;
+import SocialMeli.dto.response.list.PromoPostListDTO;
 import SocialMeli.service.ISocialService;
-import SocialMeli.service.SocialService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.websocket.server.PathParam;
 
 @RestController
 public class SocialController {
@@ -39,24 +38,42 @@ public class SocialController {
     }
 
     @GetMapping("/users/{user_id}/followers/list")
-    ResponseEntity<FollowersListDTO> getFollowersList(@PathVariable int user_id, @PathParam("order") String order) {
+    ResponseEntity<FollowersListDTO> getFollowersList(@PathVariable int user_id, @RequestParam(required = false) String order) {
         return new ResponseEntity<>(socialService.getFollowersList(user_id, order), HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}/followed/list")
-    ResponseEntity<FollowedListDTO> getFollowedList(@PathVariable int user_id, @PathParam("order") String order) {
+    ResponseEntity<FollowedListDTO> getFollowedList(@PathVariable int user_id, @RequestParam(required = false) String order) {
         return new ResponseEntity<>(socialService.getFollowedList(user_id, order), HttpStatus.OK);
     }
 
     @PostMapping("/products/post")
-    ResponseEntity<?> follow(@RequestBody NewPostDTO post) {
+    ResponseEntity<?> newPost(@RequestBody NewPostDTO post) {
         socialService.newPost(post);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/products/followed/{user_id}/list")
-    ResponseEntity<PostListDTO> getPosts(@PathVariable int user_id, @PathParam("order") String order) {
+    ResponseEntity<PostListDTO> getPosts(@PathVariable int user_id, @RequestParam(required = false) String order) {
         return new ResponseEntity<>(socialService.getTwoWeeksPost(user_id, order), HttpStatus.OK);
+    }
+
+    //BONUS
+
+    @PostMapping("/products/promopost")
+    ResponseEntity<?> newPromoPost(@RequestBody NewPostDTO post) {
+        socialService.newPost(post);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/products/{user_id}/promo-post/count")
+    ResponseEntity<PromoCountDTO> getPromoPostCount(@PathVariable int user_id) {
+        return new ResponseEntity<>(socialService.getPromoCount(user_id), HttpStatus.OK);
+    }
+
+    @GetMapping("/products/{user_id}/list")
+    ResponseEntity<PromoPostListDTO> newPost(@PathVariable int user_id) {
+        return new ResponseEntity<>(socialService.getPromoList(user_id),HttpStatus.OK);
     }
 
 }

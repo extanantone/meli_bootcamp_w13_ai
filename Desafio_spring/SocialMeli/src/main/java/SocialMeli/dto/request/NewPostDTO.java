@@ -9,12 +9,12 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 //@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import org.springframework.lang.Nullable;
 
 @Getter
 @ToString
@@ -28,4 +28,8 @@ public class NewPostDTO {
     ProductDTO detail;
     int category;
     double price;
+
+    // Bonus promo
+    boolean has_promo;
+    double discount;
 }

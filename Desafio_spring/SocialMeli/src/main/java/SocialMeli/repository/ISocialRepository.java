@@ -18,5 +18,7 @@ public interface ISocialRepository {
     public void newSeller(Seller seller);
     public Post getPost(int postId);
     public List<Post> getCustomerPosts(int userId);
+    public List<Post> getSellerPosts(int userId);
+    public List<Post> getSellerPromoPosts(int userId);
     public List<Post> getCustomerPostsByDate(int userId , LocalDate init, LocalDate fin);
 }

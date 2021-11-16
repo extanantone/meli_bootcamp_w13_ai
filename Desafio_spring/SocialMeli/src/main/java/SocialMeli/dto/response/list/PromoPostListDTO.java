@@ -1,5 +1,6 @@
-package SocialMeli.dto.response;
+package SocialMeli.dto.response.list;
 
+import SocialMeli.dto.response.PromoPostDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -7,8 +8,8 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class FollowedListDTO {
+public class PromoPostListDTO {
     int user_id;
     String user_name;
-    List<UserDTO> followed;
+    List<PromoPostDTO> posts;
 }
