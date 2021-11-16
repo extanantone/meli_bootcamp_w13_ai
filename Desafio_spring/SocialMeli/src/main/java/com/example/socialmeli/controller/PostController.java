@@ -1,7 +1,6 @@
 package com.example.socialmeli.controller;
 
 import com.example.socialmeli.dto.PostDTO;
-import com.example.socialmeli.repository.IPostRepository;
 import com.example.socialmeli.service.IPostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

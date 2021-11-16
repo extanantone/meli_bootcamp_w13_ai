@@ -36,7 +36,5 @@ public class PostService implements IPostService{
         );
         userRepository.find(userId).addPost(postId);
         postRepository.addPost(postId, postModel);
-        System.out.println(postRepository.getPosts().size());
-        System.out.println(postRepository.find(postId).getPrice());
     }
 }

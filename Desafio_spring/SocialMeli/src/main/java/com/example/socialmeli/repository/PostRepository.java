@@ -1,6 +1,6 @@
 package com.example.socialmeli.repository;
 
-import com.example.socialmeli.exception.UserIdNotFoundException;
+import com.example.socialmeli.exception.PostIdNotFoundException;
 import com.example.socialmeli.model.Post;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +16,7 @@ public class PostRepository implements IPostRepository{
         if (posts.containsKey(id)) {
             return posts.get(id);
         }
-        throw new UserIdNotFoundException(id); // Placeholder
+        throw new PostIdNotFoundException(id);
     }
 
     @Override
