@@ -222,4 +222,22 @@ public class SocialMeliService implements  ISocialMeliService{
            }
         return retorno;
     }
+    public List<PublicacionDTO> publicacionesPorTipo(String tipo) throws UsuarioNoEncontradoError {
+        boolean flag = false;
+        List<Publicacion> todas = SMRepositorio.retornarPublicaciones();
+        List<PublicacionDTO> publicacionesDTO = new ArrayList<>();
+        for (Publicacion p:todas) {
+            if(p.getDetalle().getTipo().toLowerCase().equals(tipo.toLowerCase()) ){
+                ProductoDTO producto = new ProductoDTO(p.getDetalle().getId_producto(),p.getDetalle().getNombre_producto(), p.getDetalle().getTipo(), p.getDetalle().getMarca(), p.getDetalle().getColor(), p.getDetalle().getNotas());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+                String formattedString = p.getFecha().format(formatter);
+                publicacionesDTO.add(new PublicacionDTO(p.getId_user(), p.getId_publicacion(), formattedString, producto, p.getCategoria(), p.getPrecio(), p.isPromo(),p.getDescuento()));
+                flag=true;
+            }
+        }
+        if (!flag){
+            throw new UsuarioNoEncontradoError("No hay ninguna publicación con el tipo que está tratando de buscar.");
+        }
+        return publicacionesDTO;
+    }
 }

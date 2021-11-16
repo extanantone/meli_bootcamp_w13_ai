@@ -70,5 +70,10 @@ public class SocialMeliController {
        PublicacionesVendedoresDTO  posts = SMservicio.publicacionesEnPromocion(user_id);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
+    @GetMapping("/products/{type}/list-type")
+    public ResponseEntity<List<PublicacionDTO>> postsPorTipo(@PathVariable String type) throws UsuarioNoEncontradoError {
+        List<PublicacionDTO>  posts = SMservicio.publicacionesPorTipo(type);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
 
 }

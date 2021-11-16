@@ -23,4 +23,5 @@ public interface ISocialMeliService {
     public RespuestaSimpleDTO añadirPostPromocion (PublicacionDTO pub) throws UsuarioNoEncontradoError;
     public CantidadPromosDTO contarPromocion (int id_vendedor) throws UsuarioNoEncontradoError;
     public PublicacionesVendedoresDTO publicacionesEnPromocion (int id) throws UsuarioNoEncontradoError;
+    public List<PublicacionDTO> publicacionesPorTipo(String tipo) throws UsuarioNoEncontradoError;
 }
