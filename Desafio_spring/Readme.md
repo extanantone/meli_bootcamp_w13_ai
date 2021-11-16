@@ -2,7 +2,7 @@
 
 ##### SocialMeli es una aplicacióm en la que nuestros usuarios compradores podrán seguir a sus vendedores favoritos, ver publicaciones y promociones
 
-El aplicativo cuenta con 12 puntos bien definidos:
+El aplicativo cuenta con un listado de compradores/vendedores con los que se pueden hacer pruebas y posee 12 requerimientos bien definidos:
 
 ### **US-0001 - Follow**
 
@@ -10,7 +10,7 @@ Tanto compradores como vendedores podrán seguir a cualquier tipo de usuario. Es
 
 **Método:** POST
 
-**Endpoint:** localhost:8080/users/{user_id}/follow/user_id_to_follow
+**Endpoint:** localhost:8080/users/{user_id}/follow/{user_id_to_follow}
 
 **Status:**
 
