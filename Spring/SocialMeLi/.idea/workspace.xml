@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d0ad2f09-9bab-4584-ad2a-bf5fe40e0b30" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/SocialmeliApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/controller/ISocialController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/controller/SocialController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/dto/FollowedListDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/dto/FollowedUserIDListDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/dto/FollowersCountDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/dto/FollowersListDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/dto/ProductsPostDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/dto/ProductsUderIDListDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/dto/PromoPostCountDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/dto/PromoPostDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/exceptions/ControllerAdviceExceptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/exceptions/UserAlreadyFollowsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/exceptions/UserNotExistException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/exceptions/UserNotFollowsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/model/Post.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/model/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/model/UserFollow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/repository/IUSerFollowRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/repository/IUserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/repository/UserFollowRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/service/ISocialMeliService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/java/meli/bootcamp/socialmeli/service/SocialMeliService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/resources/datausers.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/test/java/meli/bootcamp/socialmeli/SocialmeliApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/src/main/java/com/mercadolibre/coderesponse/CoderesponseApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/src/main/java/com/mercadolibre/coderesponse/controller/ResponseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/src/main/java/com/mercadolibre/coderesponse/dto/LinkDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/src/main/java/com/mercadolibre/coderesponse/repository/ILinkRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/src/main/java/com/mercadolibre/coderesponse/repository/LinkRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/src/main/java/com/mercadolibre/coderesponse/service/ILinkService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/src/main/java/com/mercadolibre/coderesponse/service/LinkService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../coderesponse/src/test/java/com/mercadolibre/coderesponse/CoderesponseApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/META-INF/orm.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/META-INF/persistence.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/src/main/java/com/anfel024/market/MarketApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/src/main/resources/CategoriasEntity.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/src/main/resources/ComprasEntity.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../market/src/test/java/com/anfel024/market/MarketApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/MarketplaceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/domain/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/domain/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/domain/repository/IProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/persistence/ProductoRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/persistence/crud/IProductoCrudRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/persistence/entity/CategoriasEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/persistence/entity/ClientesEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/persistence/entity/ComprasEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/persistence/entity/ComprasProductosEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/persistence/entity/ComprasProductosEntityPK.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/persistence/entity/ProductosEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/persistence/mapper/ICategoryMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/java/com/anfel024/marketplace/persistence/mapper/IProductMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/resources/application-dev.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/resources/application-prod.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../marketplace/src/test/java/com/anfel024/marketplace/MarketplaceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package-info" />
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="20mtUhBQRZnpZxIOlTfwfeU74TD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../../Desafio_spring/SocialMeLi/src/main/resources" />
+      <recent name="$PROJECT_DIR$/../../Desafio_spring" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="meli.bootcamp.socialmeli.exceptions" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SocialmeliApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="socialmeli.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="meli.bootcamp.socialmeli.SocialmeliApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d0ad2f09-9bab-4584-ad2a-bf5fe40e0b30" name="Default Changelist" comment="" />
+      <created>1636661610900</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1636661610900</updated>
+      <workItem from="1636661612090" duration="1403000" />
+      <workItem from="1636721502766" duration="8707000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
