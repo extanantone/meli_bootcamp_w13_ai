@@ -45,3 +45,8 @@
   es de fecha descendente, si se especifica puede solicitarse de forma ascendente,
   en caso de equivocarse en la definición del parámetro "order", también devuelve, por
   defecto en fecha descendente. "order" es, por tanto, un parámetro opcional.
+  
+
+En todos los endpoint, acciones repetibles como follow, unfollow y post con el mismo ID,
+no generan error si ya existen y retornan estado 200 (OK), pero tampoco hacen cambios en
+el sistema.
