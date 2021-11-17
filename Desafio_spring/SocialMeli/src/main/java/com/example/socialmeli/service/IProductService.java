@@ -1,11 +1,10 @@
-package com.example.socialmeli.server;
+package com.example.socialmeli.service;
 
 import com.example.socialmeli.dto.PostsDto;
 import com.example.socialmeli.model.Post;
-import com.example.socialmeli.model.Product;
 
 
-public interface IProductServer {
+public interface IProductService {
 
     public void createPost(Post post);
 

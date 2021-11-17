@@ -1,12 +1,10 @@
-package com.example.socialmeli.server;
+package com.example.socialmeli.service;
 
 import com.example.socialmeli.dto.FollowedDto;
 import com.example.socialmeli.dto.FollowersDto;
 import com.example.socialmeli.dto.UserDto;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.repository.IUserRepository;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,11 +14,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServer implements IUserServer{
+public class UserService implements IUserService {
 
     IUserRepository userRepository;
 
-    public UserServer(IUserRepository userRepository) {
+    public UserService(IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

@@ -4,7 +4,7 @@ import com.example.socialmeli.dto.PostsDto;
 import com.example.socialmeli.dto.ResponseDto;
 import com.example.socialmeli.exception.BadRequestException;
 import com.example.socialmeli.model.Post;
-import com.example.socialmeli.server.IProductServer;
+import com.example.socialmeli.service.IProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/products")
 public class PostController {
-    IProductServer productServer;
+    IProductService productServer;
 
-    public PostController(IProductServer productServer) {
+    public PostController(IProductService productServer) {
         this.productServer = productServer;
     }
 

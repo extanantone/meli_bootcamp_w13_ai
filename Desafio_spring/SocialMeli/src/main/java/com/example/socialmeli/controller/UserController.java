@@ -4,7 +4,7 @@ import com.example.socialmeli.dto.FollowedDto;
 import com.example.socialmeli.dto.FollowersDto;
 import com.example.socialmeli.dto.ResponseDto;
 import com.example.socialmeli.exception.BadRequestException;
-import com.example.socialmeli.server.IUserServer;
+import com.example.socialmeli.service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users/{user_id}")
 public class UserController {
 
-    IUserServer userServer;
+    IUserService userServer;
 
-    public UserController(IUserServer userServer) {
+    public UserController(IUserService userServer) {
         this.userServer = userServer;
     }
 

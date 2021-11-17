@@ -1,4 +1,4 @@
-package com.example.socialmeli.server;
+package com.example.socialmeli.service;
 
 import com.example.socialmeli.dto.PostDto;
 import com.example.socialmeli.dto.PostsDto;
@@ -17,13 +17,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductServer implements IProductServer{
+public class ProductService implements IProductService {
 
     IProductRepository productRepository;
     IUserRepository userRepository;
 
 
-    public ProductServer(IProductRepository productRepository, IUserRepository userRepository) {
+    public ProductService(IProductRepository productRepository, IUserRepository userRepository) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
     }

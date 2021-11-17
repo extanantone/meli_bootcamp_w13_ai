@@ -1,11 +1,11 @@
-package com.example.socialmeli.server;
+package com.example.socialmeli.service;
 
 
 import com.example.socialmeli.dto.FollowedDto;
 import com.example.socialmeli.dto.FollowersDto;
 
 
-public interface IUserServer {
+public interface IUserService {
     public  void follower(Integer userId,Integer userIdToFollow);
 
     void unfollow(Integer userId, Integer userIdToUnfollow);
