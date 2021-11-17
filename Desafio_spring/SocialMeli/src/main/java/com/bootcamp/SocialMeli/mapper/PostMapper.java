@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 @NoArgsConstructor
 public class PostMapper implements IPostMapper{
+    @Override
     public Post postDTOToPost (PostDTO postDTO) {
         Post post = new Post();
 
@@ -18,6 +19,11 @@ public class PostMapper implements IPostMapper{
         post.setDate(postDTO.getDate());
         post.setCategory(postDTO.getCategory());
         post.setPrice(postDTO.getPrice());
+
+        if (postDTO.isHasPromo()) {
+            post.setHasPromo(true);
+            post.setDiscount(postDTO.getDiscount());
+        }
 
         ProductDetailDTO productDetailDTO = postDTO.getDetail();
         ProductDetail productDetail = this.productDetailDTOToProductDetail(productDetailDTO);
@@ -38,4 +44,40 @@ public class PostMapper implements IPostMapper{
 
         return productDetail;
     }
+
+    public PostDTO postToPostDTO(Post post) {
+        PostDTO postDTO = new PostDTO();
+
+        postDTO.setIdPost(post.getId());
+        postDTO.setUserId(post.getUserId());
+        postDTO.setDate(post.getDate());
+        postDTO.setCategory(post.getCategory());
+        postDTO.setPrice(post.getPrice());
+
+        if (post.isHasPromo()) {
+            postDTO.setHasPromo(true);
+            postDTO.setDiscount(post.getDiscount());
+        }
+
+        ProductDetail productDetail = post.getProductDetail();
+        ProductDetailDTO productDetailDTO = this.productDetailToProductDetailDTO(productDetail);
+        postDTO.setDetail(productDetailDTO);
+
+        return postDTO;
+    }
+
+    private ProductDetailDTO productDetailToProductDetailDTO (ProductDetail productDetail) {
+        ProductDetailDTO productDetailDTO = new ProductDetailDTO();
+
+        productDetailDTO.setProductId(productDetail.getId());
+        productDetailDTO.setProductName(productDetail.getName());
+        productDetailDTO.setType(productDetail.getType());
+        productDetailDTO.setBrand(productDetail.getBrand());
+        productDetailDTO.setColor(productDetail.getColor());
+        productDetailDTO.setNotes(productDetail.getNotes());
+
+        return productDetailDTO;
+    }
+
+
 }

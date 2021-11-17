@@ -5,4 +5,5 @@ import com.bootcamp.SocialMeli.model.Post;
 
 public interface IPostMapper {
     Post postDTOToPost (PostDTO postDTO);
+    PostDTO postToPostDTO (Post post);
 }

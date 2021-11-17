@@ -22,15 +22,4 @@ public class ProductDetailDTO implements Serializable {
     String brand;
     String color;
     String notes;
-
-
-    public ProductDetailDTO(ProductDetail productDetail) {
-        this.productId = productDetail.getId();
-        this.productName = productDetail.getName();
-        this.type = productDetail.getType();
-        this.brand = productDetail.getBrand();
-        this.color = productDetail.getColor();
-        this.notes = productDetail.getNotes();
-
-    }
 }

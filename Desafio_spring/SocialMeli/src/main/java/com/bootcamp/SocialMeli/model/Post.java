@@ -18,4 +18,6 @@ public class Post {
     private ProductDetail productDetail;
     private int category;
     private double price;
+    private boolean hasPromo;
+    private double discount;
 }

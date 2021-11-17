@@ -25,15 +25,6 @@ public class PostDTO implements Serializable {
     ProductDetailDTO detail;
     int category;
     double price;
-
-
-    public PostDTO(Post post) {
-        this.userId = post.getUserId();
-        this.idPost = post.getId();
-        this.date = post.getDate();
-        this.detail = new ProductDetailDTO(post.getProductDetail());
-        this.category = post.getCategory();
-        this.price = post.getPrice();
-
-    }
+    boolean hasPromo;
+    double discount;
 }
