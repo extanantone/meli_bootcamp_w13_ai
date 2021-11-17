@@ -3,15 +3,12 @@ package com.bootcamp.socialmeli.repository;
 import com.bootcamp.socialmeli.model.User;
 import org.springframework.stereotype.Repository;
 
-import javax.management.RuntimeErrorException;
-import java.rmi.NoSuchObjectException;
 import java.util.*;
 
 @Repository
 public class UserRepository implements IUserRepository{
 
     private List<User> userList;
-
 
     public UserRepository(){
         userList = new ArrayList<>();
