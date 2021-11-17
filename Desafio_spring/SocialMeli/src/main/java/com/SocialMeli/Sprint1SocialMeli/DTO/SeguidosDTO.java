@@ -11,10 +11,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListadoSeguidoresDTO {
+public class SeguidosDTO {
     private Integer user_id;
     private String user_name;
-    private List followers;
-
-
+    private List followed;
 }

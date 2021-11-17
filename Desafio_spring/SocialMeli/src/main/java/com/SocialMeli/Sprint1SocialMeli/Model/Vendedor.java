@@ -14,7 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class Vendedor extends Usuario{
 
-    List<Publicacion> posts;
+    List<Publicacion> posts; //TODO chequear..
     List<Integer> followers;
 
 

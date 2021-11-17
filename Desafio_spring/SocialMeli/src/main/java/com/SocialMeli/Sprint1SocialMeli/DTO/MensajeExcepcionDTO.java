@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ErrorDTO {
+public class MensajeExcepcionDTO {
     String code;
     String mensaje;
 }

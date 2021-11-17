@@ -1,12 +1,12 @@
 package com.SocialMeli.Sprint1SocialMeli.DTO;
 
-import com.SocialMeli.Sprint1SocialMeli.Model.Producto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor

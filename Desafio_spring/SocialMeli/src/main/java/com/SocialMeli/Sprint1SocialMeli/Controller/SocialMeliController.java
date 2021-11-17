@@ -21,60 +21,59 @@ public class SocialMeliController {
     }
 
     @PostMapping(path = "/users/{user_id}/follow/{user_id_to_follow}") //US-01
-    public ResponseEntity<?> follow(@PathVariable Integer user_id,
-                                    @PathVariable Integer user_id_to_follow) {
+    public ResponseEntity<MensajeExcepcionDTO> follow(@PathVariable Integer user_id,
+                                                      @PathVariable Integer user_id_to_follow) {
         service.serviceFollow(user_id, user_id_to_follow);
-        return new ResponseEntity<>("EL COMPRADOR: " + user_id +
-                " COMENZO A SEGUIR A VENDEDOR: " + user_id_to_follow, HttpStatus.OK);
+        return new ResponseEntity<>(new MensajeExcepcionDTO("OK","El comprador "+user_id+" comenzo a seguir a vendedor "+user_id_to_follow), HttpStatus.OK);
+                /*"EL COMPRADOR: " + user_id +
+                " COMENZO A SEGUIR A VENDEDOR: " + user_id_to_follow, HttpStatus.OK);*/
     }
 
-    @ResponseBody
+    //@ResponseBody
     @GetMapping("/users/{user_id}/followers/count") //US-02
-    public ResponseEntity<SeguidoresDTO> contadorSeguidores(
+    public ResponseEntity<CountSeguidoresDTO> contadorSeguidores(
             @PathVariable Integer user_id) {
-        return new ResponseEntity<SeguidoresDTO>(service.serviceVendedorFollowers(user_id), HttpStatus.OK);
+        return new ResponseEntity<CountSeguidoresDTO>(service.serviceCountVendedorFollowers(user_id), HttpStatus.OK);
     }
 
     @ResponseBody
     @GetMapping("/users/{user_id}/followers/list") //US-03 y US-08
-    public ResponseEntity<ListadoSeguidoresDTO> listadoSeguidores(
+    public ResponseEntity<SeguidoresDTO> listadoSeguidores(
             @PathVariable Integer user_id, @RequestParam(defaultValue = "name_asc") String order) {
-        return new ResponseEntity<ListadoSeguidoresDTO>(service.serviceVendedorListFollowers(user_id, order), HttpStatus.OK);
+        return new ResponseEntity<SeguidoresDTO>(service.serviceVendedorListFollowers(user_id, order), HttpStatus.OK);
     }
 
     @ResponseBody
     @GetMapping("/users/{user_id}/followed/list") //US-04 y US-08
-    public ResponseEntity<ListadoSeguidosDTO> listadoSeguidos(
+    public ResponseEntity<SeguidosDTO> listadoSeguidos(
             @PathVariable Integer user_id, @RequestParam(defaultValue = "name_asc") String order) {
-        return new ResponseEntity<ListadoSeguidosDTO>(service.serviceCompradorListFollowed(user_id, order), HttpStatus.OK);
+        return new ResponseEntity<SeguidosDTO>(service.serviceCompradorListFollowed(user_id, order), HttpStatus.OK);
     }
 
     @PostMapping("/products/post") //US-05
-    public ResponseEntity<?> nuevaPublicacion(@RequestBody PublicacionDTO publi) throws Exception {
+    public ResponseEntity<MensajeExcepcionDTO> nuevaPublicacion(@RequestBody PublicacionDTO publi) throws Exception {
         service.serviceNewPost(publi);
-        return new ResponseEntity<>("NUEVA PUBLICACION CREADA", HttpStatus.OK);
+        return new ResponseEntity<MensajeExcepcionDTO>(new MensajeExcepcionDTO("OK","NUEVA PUBLICACION CREADA"), HttpStatus.OK);
     }
 
     @ResponseBody
     @GetMapping("/products/post") //Prueba
     public List<Publicacion> listarPublicaciones() {
-        return service.listadoPublicacionTotal();
+        return service.serviceListadoCompletoPublicaciones();
     }
 
     @ResponseBody
-    @GetMapping("/products/followed/{user_id}/list") // US-06
-    public ResponseEntity<List<ListadoPublicacionesDTO>> listadoPublicaciones(@PathVariable Integer user_id,
-                                                                              @RequestParam(defaultValue = "date_desc") String order) {
-      return new ResponseEntity<>(service.listadoPublicaciones(user_id, order), HttpStatus.OK);
+    @GetMapping("/products/followed/{user_id}/list") // US-06 y US-09
+    public ResponseEntity<List<PublicacionesDTO>> listadoPublicaciones(@PathVariable Integer user_id,
+                                                                       @RequestParam(defaultValue = "date_desc") String order) {
+      return new ResponseEntity<>(service.serviceListadoPublicaciones(user_id, order), HttpStatus.OK);
     }
 
     @PostMapping(path = "/users/{user_id}/unfollow/{user_id_to_unfollow}") //US-07
-    public ResponseEntity<?> unFollow(@PathVariable Integer user_id,
-                                      @PathVariable Integer user_id_to_unfollow) {
+    public ResponseEntity<MensajeExcepcionDTO> unFollow(@PathVariable Integer user_id,
+                                                        @PathVariable Integer user_id_to_unfollow) {
         service.serviceUnFollow(user_id, user_id_to_unfollow);
-        return new ResponseEntity<>("EL COMPRADOR: " + user_id +
-                " DEJO DE SEGUIR A VENDEDOR: " + user_id_to_unfollow, HttpStatus.OK);
+        return new ResponseEntity<>(new MensajeExcepcionDTO("OK","El comprador "+user_id+" dejo de seguir a vendedor "+user_id_to_unfollow), HttpStatus.OK);
     }
-
 
 }
