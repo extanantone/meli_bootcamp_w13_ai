@@ -129,7 +129,8 @@ localhost:8080/products/post
 
 ### Payload
 
-```json {
+```json 
+{
   "user_id": 3,
   "id_post": null,
   "date": "16-11-2021",
