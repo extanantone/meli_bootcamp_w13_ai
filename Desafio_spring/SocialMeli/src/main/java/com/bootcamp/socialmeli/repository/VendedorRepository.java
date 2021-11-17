@@ -95,7 +95,7 @@ public class VendedorRepository implements IVendedorRepository {
     public List<Post> getRecentPosts(Long idUser) {
         LocalDate now = LocalDate.now();
         return this.users.get(idUser).getPosts().stream().map(
-                        this.post::get).filter(p -> DAYS.between(p.getPublishDate(), now) < 14).
+                        this.post::get).filter(p -> DAYS.between(p.getDate(), now) < 14).
                 collect(Collectors.toList());
     }
 

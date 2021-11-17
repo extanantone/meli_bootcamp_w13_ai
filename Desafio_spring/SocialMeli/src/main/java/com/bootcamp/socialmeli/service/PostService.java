@@ -39,7 +39,7 @@ public class PostService implements IPostService {
     public UserPostDTO getRecientPost(Long idUser, String order) {
         List<Post> recentPostsByFollowed = vendedorRepository.getFolloweds(idUser).stream().map(
                         u -> vendedorRepository.getRecentPosts(u.getUserId())).
-                flatMap(Collection::stream).sorted(Comparator.comparing(Post::getPublishDate,
+                flatMap(Collection::stream).sorted(Comparator.comparing(Post::getDate,
                         Collections.reverseOrder())).collect(Collectors.toList());
         if (!Objects.isNull(order)) {
             recentPostsByFollowed = orderPostsByDate(recentPostsByFollowed, order);
@@ -52,9 +52,9 @@ public class PostService implements IPostService {
     private List<Post> orderPostsByDate(List<Post> posts, String order) {
         Comparator<Post> orderType;
         if (order.equals("date_asc")) {
-            orderType = Comparator.comparing(Post::getPublishDate);
+            orderType = Comparator.comparing(Post::getDate);
         } else if (order.equals("date_desc")) {
-            orderType = Comparator.comparing(Post::getPublishDate,
+            orderType = Comparator.comparing(Post::getDate,
                     Collections.reverseOrder());
             // TODO: make except
         } else return null;

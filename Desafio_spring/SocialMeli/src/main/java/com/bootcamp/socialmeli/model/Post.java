@@ -1,6 +1,8 @@
 package com.bootcamp.socialmeli.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +14,12 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Post {
     private Long id;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate publishDate;
-    private PostProduct productOnSale;
+    private LocalDate date;
+    private PostProduct detail;
     private Integer category;
     private Double price;
 }
