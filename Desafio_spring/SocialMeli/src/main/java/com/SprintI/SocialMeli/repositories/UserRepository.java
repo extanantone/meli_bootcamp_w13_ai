@@ -9,6 +9,5 @@ public interface UserRepository {
 
     User findById(int id);
     List<User> getUsers();
-    //List<Post> getPostFollowed(int id);
 
 }

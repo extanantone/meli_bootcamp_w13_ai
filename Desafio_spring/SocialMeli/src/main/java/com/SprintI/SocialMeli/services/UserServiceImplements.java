@@ -47,32 +47,30 @@ public class UserServiceImplements implements UserService{
     @Override
     public UserFollowersDTO followers(int id, String order) {
         User user = userRepository.findById(id);
-        if(order == "name_asc") {
-            List<User> sorted = user.getFollowers().stream().sorted(Comparator.comparing(User::getName)).collect(Collectors.toList());
-            user.setFollowers(sorted);
-            return new UserFollowersDTO(user);
-        }
-        else if(order == "name_desc"){
+        System.out.println(order);
+        if(order.equals("name_desc")){
             List<User> sorted = user.getFollowers().stream().sorted(Comparator.comparing(User::getName).reversed()).collect(Collectors.toList());
             user.setFollowers(sorted);
             return new UserFollowersDTO(user);
-        } else {
-            return new UserFollowersDTO(user);
-
         }
-
+        List<User> sorted = user.getFollowers().stream().sorted(Comparator.comparing(User::getName)).collect(Collectors.toList());
+        user.setFollowers(sorted);
+        return new UserFollowersDTO(user);
     }
 
     @Override
     public UserFollowedDTO followed(int id, String order) {
         User user = userRepository.findById(id);
-        List<UserDTO> users = new ArrayList<>();
-        userRepository.getUsers().forEach(u -> {
-            if (u.isFollower(user)) {
-                users.add(new UserDTO(u));
-            }
-        });
-        return new UserFollowedDTO(user.getId(), user.getName(), users);
+        List<UserDTO> users = userRepository.getUsers().stream().filter(u -> u.isFollower(user)).map(UserDTO::new).collect(Collectors.toList());
+
+        if(order.equals("name_desc")){
+            List<User> sorted = user.getFollowers().stream().sorted(Comparator.comparing(User::getName).reversed()).collect(Collectors.toList());
+            user.setFollowers(sorted);
+            return new UserFollowedDTO(user.getId(), user.getName(), sorted.stream().map(UserDTO::new).collect(Collectors.toList()));
+        }
+        List<User> sorted = user.getFollowers().stream().sorted(Comparator.comparing(User::getName)).collect(Collectors.toList());
+        user.setFollowers(sorted);
+        return new UserFollowedDTO(user);
     }
 
     @Override
@@ -84,12 +82,27 @@ public class UserServiceImplements implements UserService{
         user.addPost(post);
     }
 
-    /*@Override
-    public UserPostDTO listPostTwoWeeksEarly(int id) {
+    @Override
+    public UserPostDTO listPostTwoWeeksEarly(int id, String order) {
         User user = userRepository.findById(id);
-        List<PostWithoutDiscountDTO> posts = userRepository.getPostFollowed(id).stream().map(PostWithoutDiscountDTO::new).collect(Collectors.toList());
-        return new UserPostDTO(user.getId(), posts);
-    }*/
+
+        LocalDate now = LocalDate.now();
+        LocalDate last14 = now.minusDays(14);
+
+        Comparator<Post> postOrder = Comparator.comparing(Post::getDate);
+
+        if(order.equals("date_desc")){
+            postOrder = postOrder.reversed();
+        }
+
+        List<PostWithoutDiscountDTO> users = userRepository.getUsers()
+                .stream().filter(u -> u.isFollower(user)).flatMap(us -> us.getPost().stream())
+                .filter(d -> d.getDate().isAfter(last14) && d.getDate().isBefore(now)).sorted(postOrder)
+                .map(PostWithoutDiscountDTO::new).collect(Collectors.toList());
+
+
+        return new UserPostDTO(user.getId(), users);
+    }
 
 
 }

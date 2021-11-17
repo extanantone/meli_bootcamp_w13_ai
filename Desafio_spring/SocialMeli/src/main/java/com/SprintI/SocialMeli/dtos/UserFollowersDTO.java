@@ -21,5 +21,4 @@ public class UserFollowersDTO {
         this.name = user.getName();
         this.followers = user.getFollowers().stream().map(UserDTO::new).collect(Collectors.toList());
     }
-
 }

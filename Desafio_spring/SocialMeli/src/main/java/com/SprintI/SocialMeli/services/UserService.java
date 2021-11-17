@@ -26,7 +26,7 @@ public interface UserService {
     void addNewPost(PostWithoutDiscountDTO postWithoutDiscountDTO);
 
     //US 006
-//    UserPostDTO listPostTwoWeeksEarly(int id);
+    UserPostDTO listPostTwoWeeksEarly(int id, String order);
 
 
 }

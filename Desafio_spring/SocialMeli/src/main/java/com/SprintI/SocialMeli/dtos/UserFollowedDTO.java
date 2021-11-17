@@ -24,4 +24,5 @@ public class UserFollowedDTO {
         this.name = user.getName();
         this.followed = user.getFollowers().stream().map(UserDTO::new).collect(Collectors.toList());
     }
+
 }

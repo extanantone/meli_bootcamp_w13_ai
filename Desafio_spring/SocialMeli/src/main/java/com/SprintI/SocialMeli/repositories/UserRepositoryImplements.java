@@ -39,21 +39,5 @@ public class UserRepositoryImplements implements UserRepository{
         return this.users;
     }
 
-    /*@Override
-    public List<Post> getPostFollowed(int id) {
-        User user = this.findById(id);
-        System.out.println(user);
-        List<User> usersFollowed = this.users.stream().forEach(x -> x.getFollowers().stream().filter(u -> u.getId() == user.getId()));
-        System.out.println(usersFollowed);
-        List<Post> post = new ArrayList<>();
-                usersFollowed.stream().forEach(x -> x.getPost().forEach(u -> post.add(u)));
-        System.out.println(post);
-        LocalDate now = LocalDate.now();
-        LocalDate last14days = now.minusDays(14);
-        List<Post> postLas14Days = post.stream().filter(x -> (x.getDate().isAfter(now) && x.getDate().isBefore(last14days))).collect(Collectors.toList());
-        System.out.println(postLas14Days);
-        return  postLas14Days;
-    }*/
-
 
 }

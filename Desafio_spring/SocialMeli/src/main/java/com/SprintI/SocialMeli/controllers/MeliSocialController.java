@@ -7,10 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
-@RequestMapping("/api")
 public class MeliSocialController {
 
     @Autowired
@@ -41,17 +39,20 @@ public class MeliSocialController {
         return  userService.quantityOfFollowers(userId);
     }
 
-    //FOLLOWERS LIST US 003
+
+    //FOLLOWERS LIST US 003 / 008
     @GetMapping("users/{userID}/followers/list")
-    public UserFollowersDTO listFollowers(@PathVariable int userID, @RequestParam(required = false) String order){
+    public UserFollowersDTO listFollowers(@PathVariable int userID, @RequestParam(defaultValue = "name_asc") String order){
         return userService.followers(userID, order);
     }
 
-    //FOLLOWED LIST US 004
+
+    //FOLLOWED LIST US 004 / 008
     @GetMapping("/users/{userID}/followed/list")
-    public UserFollowedDTO listFollowed(@PathVariable int userID, @RequestParam(required = false) String order) {
+    public UserFollowedDTO listFollowed(@PathVariable int userID, @RequestParam(defaultValue = "name_asc") String order) {
         return userService.followed(userID, order);
     }
+
 
     //ADD NEW POST US 005
     @PostMapping("/products/post")
@@ -59,18 +60,13 @@ public class MeliSocialController {
         userService.addNewPost(postWithoutDiscountDTO);
     }
 
-    //List Of Post Early 14 Days US 006
-    /*@GetMapping("/products/followed/{user_id}/list")
-    public UserPostDTO findEarlyPost(@PathVariable int user_id){
-        return userService.listPostTwoWeeksEarly(user_id);
+
+    //List Of Post Early 14 Days US 006 / 009
+    @GetMapping("/products/followed/{user_id}/list")
+    public UserPostDTO findEarlyPost(@PathVariable int user_id,@RequestParam (defaultValue = "date_asc") String order){
+        return userService.listPostTwoWeeksEarly(user_id, order);
     }
 
-    Interval interval = new Interval( dateTime1, dateTime3 );
-    boolean intervalContainsDateTime2 = interval.contains( dateTime2 );*/
-/*
-    @GetMapping(path = "/products/followed/{user_id}/list")
-    @RequestParam(required = false) String order
-    public ResponseEntity<List<PostsListDTO>> getRecentFollowedSellersPosts(@PathVariable int user_id, @RequestParam(required = false) String order)*/
 
 
 }
