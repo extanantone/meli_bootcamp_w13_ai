@@ -40,23 +40,17 @@ public class SocialController implements ISocialController{
     }
 
     @Override
-    public List<UserFollow> lista() {
-        return socialMeliService.lista();
-    }
-
-    @Override
-    public List<Post> listaPost() {
-        return socialMeliService.listaPost();
-    }
-
-    @Override
-    public List<PromoPost> listaPromoPost() {
-        return socialMeliService.listaPromoPost();
-    }
-
-    @Override
-    public ResponseEntity<ProductsUserIDListDTO> listSortedPostByUserID(int user_id) {
-        return new ResponseEntity<>(socialMeliService.listSortedPostByUserID(user_id), HttpStatus.OK);
+    public ResponseEntity<FollowersListDTO> getOrderedList(int user_id, String order, String method) {
+        if ((method.equals("followers")) || (method.equals("followed"))) {
+            boolean searchFollowers;
+            searchFollowers = method.equals("followers");
+            if (order.equals("noOrder"))
+                return new ResponseEntity<>(socialMeliService.getOrderedFollowersList(user_id, searchFollowers, null, false), HttpStatus.OK);
+            else
+                return new ResponseEntity<>(socialMeliService.getOrderedFollowersList(user_id, searchFollowers, order, true), HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @Override
@@ -71,32 +65,6 @@ public class SocialController implements ISocialController{
         genericResponseDTO.getResponse().put("code","200");
         genericResponseDTO.getResponse().put("response","Usuario " + user_id+ " ya no sigue a " + user_id_to_unfollow);
         return new ResponseEntity<>(genericResponseDTO, HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<FollowersListDTO> getOrderedList(int user_id, String method) {
-        if ((method.equals("followers")) || (method.equals("followed"))) {
-            boolean searchFollowers;
-            searchFollowers = method.equals("followers");
-                return new ResponseEntity<>(socialMeliService.getOrderedFollowersList(user_id, searchFollowers, null, false), HttpStatus.OK);
-        }
-        else
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-    }
-
-    @Override
-    public ResponseEntity<FollowersListDTO> getOrderedList(int user_id, String order, String method) {
-        System.out.println(order);
-        if ((method.equals("followers")) || (method.equals("followed"))) {
-            boolean searchFollowers;
-            searchFollowers = method.equals("followers");
-            if (order == null)
-                return new ResponseEntity<>(socialMeliService.getOrderedFollowersList(user_id, searchFollowers, null, false), HttpStatus.OK);
-            else
-                return new ResponseEntity<>(socialMeliService.getOrderedFollowersList(user_id, searchFollowers, order, true), HttpStatus.OK);
-        }
-        else
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @Override
@@ -117,4 +85,20 @@ public class SocialController implements ISocialController{
     public ResponseEntity<PromoPostDTO> listPromoPostByUser(int user_id) {
         return new ResponseEntity<>(socialMeliService.listPromoPostByUSer(user_id), HttpStatus.OK);
     }
+
+    @Override
+    public List<UserFollow> lista() {
+        return socialMeliService.lista();
+    }
+
+    @Override
+    public List<Post> listaPost() {
+        return socialMeliService.listaPost();
+    }
+
+    @Override
+    public List<PromoPost> listaPromoPost() {
+        return socialMeliService.listaPromoPost();
+    }
+
 }

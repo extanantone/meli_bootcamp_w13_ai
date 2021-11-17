@@ -28,7 +28,7 @@ public class PostRepository implements IPostRepository{
     }
 
     @Override
-    public Post updatePostById(int postID) {
+    public Post updatePostById(Post updatePost) {
         return null;
     }
 
@@ -39,18 +39,5 @@ public class PostRepository implements IPostRepository{
     @Override
     public List<Post> getAllList() {
         return mListPosts;
-    }
-
-    @Override
-    public String getPostNameById(int postID) {
-        return null;
-    }
-
-    @Override
-    public List<Post> findSortedByDatePostsByUserID(int userID) {
-        return mListPosts.stream()
-                .filter(post -> post.getUserId() == userID)
-                .sorted(Comparator.comparing(Post::getDate).reversed())
-                .collect(Collectors.toList());
     }
 }

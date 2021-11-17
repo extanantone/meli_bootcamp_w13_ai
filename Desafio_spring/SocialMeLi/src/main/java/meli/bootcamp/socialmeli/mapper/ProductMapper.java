@@ -9,6 +9,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+/**
+ * Clase para mapear entre el modelo y los DTOs los productos que que ingresan (dentro de los post)
+ * o salen del sistema.
+ * @author andrmorales
+ */
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
     @Mappings({

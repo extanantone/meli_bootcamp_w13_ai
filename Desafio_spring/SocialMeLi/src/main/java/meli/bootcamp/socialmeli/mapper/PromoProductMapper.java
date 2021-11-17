@@ -8,6 +8,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+/**
+ * Clase para mapear entre el modelo y los DTOs los promo post que ingresan o salen del sistema.
+ * @author andrmorales
+ */
 @Mapper(componentModel = "spring", uses = {ProductMapper.class})
 public interface PromoProductMapper {
     @Mappings({

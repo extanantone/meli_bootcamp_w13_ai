@@ -65,7 +65,7 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public User updateUserById(int userID) {
+    public User updateUserById(User user) {
         return null;
     }
 

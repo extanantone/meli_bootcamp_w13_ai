@@ -20,7 +20,7 @@ public class PromoPostRepository implements IPromoPostRepository{
     }
 
     @Override
-    public Post findPromoPostById(int postID) {
+    public PromoPost findPromoPostById(int postID) {
         return mListPromoPosts.stream()
                 .filter(post -> post.getPostId() == postID)
                 .findFirst()
@@ -28,7 +28,7 @@ public class PromoPostRepository implements IPromoPostRepository{
     }
 
     @Override
-    public Post updatePromoPostById(int postID) {
+    public PromoPost updatePromoPostById(PromoPost updatePost) {
         return null;
     }
 
