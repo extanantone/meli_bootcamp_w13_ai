@@ -3,9 +3,7 @@ package com.bootcamp.SocialMeli.service;
 import com.bootcamp.SocialMeli.dto.*;
 import com.bootcamp.SocialMeli.exception.DuplicateIdException;
 import com.bootcamp.SocialMeli.exception.NotFoundExceptionUsers;
-import com.bootcamp.SocialMeli.mapper.PostMater;
 import com.bootcamp.SocialMeli.mapper.UserMapper;
-import com.bootcamp.SocialMeli.model.Post;
 import com.bootcamp.SocialMeli.model.Seguidor;
 import com.bootcamp.SocialMeli.model.User;
 import com.bootcamp.SocialMeli.repository.IUserRepository;
@@ -37,12 +35,15 @@ public class UserServicie implements IUserService{
     }
 
     @Override
-    public UserDTO setUser(int id, String name) {
-        if(iUserRepository.getUser(id) !=null){throw new DuplicateIdException(id,User.class.getSimpleName()); }
+    public List<UserDTO> setUser(List<UserDTO> userDTOS) {
 
-        iUserRepository.setUser(new User(id,name));
-
-        return UserMapper.userToUserDTO(iUserRepository.getUser(id));
+        userDTOS.forEach(userDTO ->{
+                    User user=  UserMapper.UserDTOToUser(userDTO);
+                    if(iUserRepository.getUser(user.getId()) !=null)
+                    {throw new DuplicateIdException(user.getId(),User.class.getSimpleName());}
+                    iUserRepository.setUser(user);
+                });
+        return userDTOS;
     }
 
     @Override
@@ -131,6 +132,5 @@ public class UserServicie implements IUserService{
 
         return mesiguenDTO;
     }
-
 
 }

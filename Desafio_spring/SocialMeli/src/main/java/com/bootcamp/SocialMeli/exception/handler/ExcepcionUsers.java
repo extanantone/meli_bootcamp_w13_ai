@@ -16,7 +16,7 @@ public class ExcepcionUsers {
 
         return new ResponseEntity<>(
                 new ErrorUserDTO(
-                        "ERROR "+e.hashCode(),
+                        "ERROR "+e.getClass().getSimpleName(),
                         e.getMessage()
                 ), HttpStatus.BAD_REQUEST
         );
@@ -27,7 +27,7 @@ public class ExcepcionUsers {
 
         return new ResponseEntity<>(
                 new ErrorUserDTO(
-                        "ERROR "+e.hashCode(),
+                        "ERROR "+e.getClass().getSimpleName(),
                         e.getMessage()
                 ), HttpStatus.BAD_REQUEST
         );

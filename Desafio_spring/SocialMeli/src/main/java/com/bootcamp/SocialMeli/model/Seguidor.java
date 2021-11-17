@@ -11,5 +11,4 @@ import lombok.Setter;
 public class Seguidor {
     private int idSeguidor;
     private int idSeguido;
-
 }

@@ -54,8 +54,7 @@ public class PostService implements IPostService {
                                                  user -> posts.add(PostMater.PostToPostsDTO( iUserRepository.getPost(user.getIdPost()))));
                                         }});
 
-        List<PostsDTO> ordenada = posts.stream().sorted(Comparator.comparing(PostsDTO::getDate)).collect(Collectors.toList());
-        List<PostsDTO> ordenadadesc = posts.stream().sorted(Comparator.comparing(PostsDTO::getDate).reversed()).collect(Collectors.toList());
+       List<PostsDTO> ordenadadesc = posts.stream().sorted(Comparator.comparing(PostsDTO::getDate).reversed()).collect(Collectors.toList());
 
         return new PublicacionesDTO(id,ordenadadesc.stream().filter(postsDTO ->  (int)ChronoUnit.DAYS.between(postsDTO.getDate(),LocalDate.now())<=14 ).collect(Collectors.toList()));
 
@@ -84,7 +83,6 @@ public class PostService implements IPostService {
         if(iUserRepository.getPost(promopostDTO.getId_post())!=null){
             throw new DuplicateIdException(promopostDTO.getId_post(),Post.class.getSimpleName());
         }
-
         iUserRepository.setpromopost(PostMater.PromoPostDToToPromoPost(promopostDTO));
 
         return promopostDTO;
