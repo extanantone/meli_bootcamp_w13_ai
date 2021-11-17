@@ -19,5 +19,5 @@ public interface IPostController
     PromoPostCountDTO promoPostcount(@PathVariable int userId);
 
     @GetMapping("{userId}/list")
-    PromoPostListDTO promoPostList(@PathVariable int userId);
+    PromoPostListDTO promoPostList(@PathVariable int userId, @RequestParam(required = false) String order);
 }

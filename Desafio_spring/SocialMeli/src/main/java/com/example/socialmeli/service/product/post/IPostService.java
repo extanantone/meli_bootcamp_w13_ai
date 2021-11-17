@@ -8,9 +8,9 @@ public interface IPostService
 
     UserPromoPostDTO createPromo(UserPromoPostDTO userPromoPostDTO);
 
-    PostFollowedDTO listRecentFollowedProducts(int userId, String order);
+    PostFollowedDTO listRecentFollowedPosts(int userId, String order);
 
     PromoPostCountDTO promoPostCount(int userId);
 
-    PromoPostListDTO promoPostList(int userId);
+    PromoPostListDTO promoPostList(int userId, String order);
 }

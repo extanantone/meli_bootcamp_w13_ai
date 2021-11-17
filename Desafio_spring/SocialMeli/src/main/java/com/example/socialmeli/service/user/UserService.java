@@ -1,5 +1,6 @@
 package com.example.socialmeli.service.user;
 
+import com.example.socialmeli.controller.mapper.FollowerMapper;
 import com.example.socialmeli.dto.user.FollowedListDTO;
 import com.example.socialmeli.dto.user.FollowerCountDTO;
 import com.example.socialmeli.dto.user.FollowerListDTO;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -21,55 +23,68 @@ public class UserService implements IUserService
     @Autowired
     IUserRepository userRepository;
 
-    @Override
-    public FollowedListDTO followed(int userId, String order)
+    @Autowired
+    FollowerMapper followerMapper;
+
+    private User getUser(int userId) throws BadRequestException
     {
+
         Map<Integer, User> userMap = userRepository.usersMap();
         if (!userMap.containsKey(userId))
             throw new BadRequestException("Usuario no encontrado");
+        return (userMap.get(userId));
+    }
 
-        User user;
-        user = userMap.get(userId);
+    @Override
+    public FollowedListDTO followed(int userId, String order) throws BadRequestException
+    {
+        User user = getUser(userId);
+        ModelMapper modelMapper = new ModelMapper();
+        List<User> followedOrder = null;
         if (order != null)
         {
             if (order.equals("name_asc"))
-                user.setFollowed(userRepository.findFollowedOrderByNameAsc(userId));
-            else if (order.equals("name_desc"))
-                user.setFollowed(userRepository.findFollowedOrderByNameDesc(userId));
+                followedOrder = userRepository.findFollowedOrderByNameAsc(userId);
+            else
+                followedOrder = userRepository.findFollowedOrderByNameDesc(userId);
         }
-        ModelMapper modelMapper = new ModelMapper();
+        else
+        {
+            followedOrder = user.getFollowed();
+        }
+        TypeMap<User, FollowedListDTO> typeMap = modelMapper.createTypeMap(User.class, FollowedListDTO.class);
+        List<User> finalFollowedOrder = followedOrder;
+        typeMap.addMappings(mapper -> mapper.map(src -> followerMapper.UserToFollowerDTO(finalFollowedOrder),
+                FollowedListDTO::setFollowed));
         return modelMapper.map(user, FollowedListDTO.class);
     }
 
     @Override
     public FollowerListDTO followers(int userId, String order)
     {
-        Map<Integer, User> userMap = userRepository.usersMap();
-        if (!userMap.containsKey(userId))
-            throw new BadRequestException("Usuario no encontrado");
-
-        User user;
-        user = userMap.get(userId);
+        User user = getUser(userId);
+        List<User> followersOrder = null;
         if (order != null)
         {
             if (order.equals("name_asc"))
-                user.setFollowers(userRepository.findFollowersOrderByNameAsc(userId));
-            else if (order.equals("name_desc"))
-                user.setFollowers(userRepository.findFollowersOrderByNameDesc(userId));
+                followersOrder = userRepository.findFollowersOrderByNameAsc(userId);
+            else
+                followersOrder = userRepository.findFollowersOrderByNameDesc(userId);
         }
+        else
+            followersOrder = user.getFollowers();
         ModelMapper modelMapper = new ModelMapper();
+        TypeMap<User, FollowerListDTO> typeMap = modelMapper.createTypeMap(User.class, FollowerListDTO.class);
+        List<User> finalFollowerOrder = followersOrder;
+        typeMap.addMappings(mapper -> mapper.map(src -> followerMapper.UserToFollowerDTO(finalFollowerOrder),
+                FollowerListDTO::setFollowers));
         return modelMapper.map(user, FollowerListDTO.class);
     }
 
     @Override
     public FollowerCountDTO countFollowers(int userId)
     {
-        Map<Integer, User> userMap = userRepository.usersMap();
-        if (!userMap.containsKey(userId))
-            throw new BadRequestException("Usuario no encontrado");
-
-        User user;
-        user = userMap.get(userId);
+        User user = getUser(userId);
         ModelMapper modelMapper = new ModelMapper();
         TypeMap<User, FollowerCountDTO> propertyMapper = modelMapper.createTypeMap(User.class, FollowerCountDTO.class);
         Converter<Collection, Integer> collectionToSize = c -> c.getSource().size();
@@ -80,7 +95,7 @@ public class UserService implements IUserService
     }
 
     @Override
-    public FollowerListDTO follow(int userId, int userIdToFollow)
+    public FollowedListDTO follow(int userId, int userIdToFollow)
     {
         Map<Integer, User> userMap = userRepository.usersMap();
         if (!userMap.containsKey(userId) || !userMap.containsKey(userIdToFollow))
@@ -93,11 +108,11 @@ public class UserService implements IUserService
             throw new BadRequestException("No puedes seguir a este usuario");
 
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(user, FollowerListDTO.class);
+        return modelMapper.map(user, FollowedListDTO.class);
     }
 
     @Override
-    public FollowerListDTO unfollow(int userId, int userIdToUnfollow)
+    public FollowedListDTO unfollow(int userId, int userIdToUnfollow)
     {
         Map<Integer, User> userMap = userRepository.usersMap();
         if (!userMap.containsKey(userId) || !userMap.containsKey(userIdToUnfollow))
@@ -110,6 +125,6 @@ public class UserService implements IUserService
             throw new BadRequestException("No puedes dejar de seguir a este usuario");
 
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(user, FollowerListDTO.class);
+        return modelMapper.map(user, FollowedListDTO.class);
     }
 }

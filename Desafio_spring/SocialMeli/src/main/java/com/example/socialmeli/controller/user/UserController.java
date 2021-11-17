@@ -32,13 +32,13 @@ public class UserController implements IUserController
     }
 
     @Override
-    public FollowerListDTO follow(int userId, int userIdToFollow)
+    public FollowedListDTO follow(int userId, int userIdToFollow)
     {
         return userService.follow(userId, userIdToFollow);
     }
 
     @Override
-    public FollowerListDTO unfollow(int userId, int userIdToUnfollow)
+    public FollowedListDTO unfollow(int userId, int userIdToUnfollow)
     {
         return userService.unfollow(userId, userIdToUnfollow);
     }

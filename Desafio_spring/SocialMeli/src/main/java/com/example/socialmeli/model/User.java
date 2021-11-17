@@ -16,29 +16,29 @@ public class User
     private static int globUserId = 1;
     private int userId;
     private String userName;
-    private List<User> followers;
     private List<User> followed;
+    private List<User> followers;
     private List<Post> posts;
 
     public User()
     {
         this.userId = globUserId++;
-        this.followers = new LinkedList<>();
         this.followed = new LinkedList<>();
+        this.followers = new LinkedList<>();
         this.posts = new LinkedList<>();
     }
     public User(String userName)
     {
         this.userId = globUserId++;
         this.userName = userName;
-        this.followers = new LinkedList<>();
         this.followed = new LinkedList<>();
+        this.followers = new LinkedList<>();
         this.posts = new LinkedList<>();
     }
 
     private boolean alreadyFollowing(User user)
     {
-        return this.followers.contains(user);
+        return this.followed.contains(user);
     }
 
     public boolean follow(User user)
@@ -46,8 +46,8 @@ public class User
         if (user == null || alreadyFollowing(user) || (this.getUserId() == user.getUserId()))
             return false;
 
-        this.followers.add(user);
-        user.followed.add(this);
+        this.followed.add(user);
+        user.followers.add(this);
         return true;
     }
 
@@ -56,8 +56,8 @@ public class User
         if (user == null || !alreadyFollowing(user) || this.getUserId() == user.getUserId())
             return false;
 
-        this.followers.remove(user);
-        user.followed.remove(this);
+        this.followed.remove(user);
+        user.followers.remove(this);
         return true;
     }
 

@@ -19,9 +19,9 @@ public class PostController implements IPostController
     }
 
     @Override
-    public PromoPostListDTO promoPostList(int userId)
+    public PromoPostListDTO promoPostList(int userId, String order)
     {
-        return postService.promoPostList(userId);
+        return postService.promoPostList(userId, order);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class PostController implements IPostController
     @Override
     public PostFollowedDTO recentFollowedProducts(int userId, String order)
     {
-        return postService.listRecentFollowedProducts(userId, order);
+        return postService.listRecentFollowedPosts(userId, order);
     }
 
 }

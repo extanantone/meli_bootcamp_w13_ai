@@ -10,9 +10,15 @@ public interface IPostRepository
 {
     Map<Integer, Post> postMap();
 
-    List<Post> findTwoWeeksBeforeOrderByDateDesc(Integer userId);
+    List<Post> findFollowedTwoWeeksBeforeOrderByDateDesc(Integer userId);
 
-    List<Post> findTwoWeeksBeforeOrderByDateAsc(Integer userId);
+    List<Post> findFollowedTwoWeeksBeforeOrderByDateAsc(Integer userId);
 
-    boolean addPost(Post post);
+    boolean createPost(Post post);
+
+    List<Post> findPromoPosts(Integer userId);
+
+    List<Post> findPromoPostOrderByProductNameAsc(Integer userId);
+
+    List<Post> findPromoPostsOrderByProductNameDesc(Integer userId);
 }

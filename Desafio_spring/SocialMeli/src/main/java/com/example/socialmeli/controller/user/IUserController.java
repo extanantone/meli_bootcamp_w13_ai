@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 public interface IUserController
 {
     @PostMapping("/{userId}/follow/{userIdToFollow}")
-    FollowerListDTO follow(@PathVariable int userId, @PathVariable int userIdToFollow);
+    FollowedListDTO follow(@PathVariable int userId, @PathVariable int userIdToFollow);
 
     @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
-    FollowerListDTO unfollow(@PathVariable int userId, @PathVariable int userIdToUnfollow);
+    FollowedListDTO unfollow(@PathVariable int userId, @PathVariable int userIdToUnfollow);
 
     @GetMapping("/{userId}/followers/count")
     FollowerCountDTO countFollowers(@PathVariable int userId);

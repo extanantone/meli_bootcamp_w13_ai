@@ -1,6 +1,7 @@
 package com.example.socialmeli.repository.product.post;
 
 import com.example.socialmeli.model.Post;
+import com.example.socialmeli.model.Product;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.repository.user.IUserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -24,13 +25,32 @@ import java.util.stream.Stream;
 public class PostRepository implements IPostRepository
 {
 
-    private List<Post> postList;
-
     @Autowired
     IUserRepository userRepository;
 
+    private List<Post> postList;
 
-    public PostRepository(List<Post> postList)
+    @Override
+    public List<Post> findPromoPosts(Integer userId)
+    {
+        return userRepository.usersMap().get(userId).getPosts().stream().filter(Post::isHasPromo).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Post> findPromoPostOrderByProductNameAsc(Integer userId)
+    {
+        Comparator<Post> nameAsc = Comparator.comparing(post -> post.getDetail().getProductName());
+        return findPromoPosts(userId).stream().sorted(nameAsc).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Post> findPromoPostsOrderByProductNameDesc(Integer userId)
+    {
+        Comparator<Post> nameAsc = Comparator.comparing(post -> post.getDetail().getProductName());
+        return findPromoPosts(userId).stream().sorted(nameAsc.reversed()).collect(Collectors.toList());
+    }
+
+    public PostRepository()
     {
         this.postList = new LinkedList<>();
     }
@@ -41,28 +61,30 @@ public class PostRepository implements IPostRepository
         return postList.stream().collect(Collectors.toMap(Post::getIdPost, post -> post));
     }
 
-    @Override
-    public List<Post> findTwoWeeksBeforeOrderByDateDesc(Integer userId)
+    private Stream<Post> getTwoWeeksPosts(Integer userId)
     {
+
         LocalDate twoWeeksBeforeDate = LocalDate.now().minusWeeks(2);
+        Stream<Post> followedPosts = userRepository.usersMap().get(userId).getFollowed().stream().flatMap(x -> x.getPosts().stream());
+        return (followedPosts.filter((post) -> !post.getDate().isBefore(twoWeeksBeforeDate)));
+    }
+
+    @Override
+    public List<Post> findFollowedTwoWeeksBeforeOrderByDateDesc(Integer userId)
+    {
         Comparator<Post> dateDesc = Comparator.comparing(Post::getDate).reversed();
-        Stream<Post> twoWeeksPosts = userRepository.usersMap().get(userId).getPosts().
-                stream().filter((post) -> !post.getDate().isBefore(twoWeeksBeforeDate));
-        return twoWeeksPosts.sorted(dateDesc).collect(Collectors.toList());
+        return getTwoWeeksPosts(userId).sorted(dateDesc).collect(Collectors.toList());
     }
 
     @Override
-    public List<Post> findTwoWeeksBeforeOrderByDateAsc(Integer userId)
+    public List<Post> findFollowedTwoWeeksBeforeOrderByDateAsc(Integer userId)
     {
-        LocalDate twoWeeksBeforeDate = LocalDate.now().minusWeeks(2);
-        Comparator<Post> dateDesc = Comparator.comparing(Post::getDate);
-        Stream<Post> twoWeeksPosts = userRepository.usersMap().get(userId).getPosts().
-                stream().filter((post) -> !post.getDate().isBefore(twoWeeksBeforeDate));
-        return twoWeeksPosts.sorted(dateDesc).collect(Collectors.toList());
+        Comparator<Post> dateAsc = Comparator.comparing(Post::getDate);
+        return getTwoWeeksPosts(userId).sorted(dateAsc).collect(Collectors.toList());
     }
 
     @Override
-    public boolean addPost(Post post)
+    public boolean createPost(Post post)
     {
         User user;
         Map<Integer, User> userMap = userRepository.usersMap();
@@ -79,22 +101,4 @@ public class PostRepository implements IPostRepository
         return true;
     }
 
-    private List<Post> getJsonData()
-    {
-        File file = null;
-        try {
-            file = ResourceUtils.getFile("classpath:post.json");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        ObjectMapper objectMapper = new ObjectMapper();
-        TypeReference<List<Post>> typeRef = new TypeReference<>() {};
-        List<Post> posts = null;
-        try {
-            posts = objectMapper.readValue(file, typeRef);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return posts;
-    }
 }

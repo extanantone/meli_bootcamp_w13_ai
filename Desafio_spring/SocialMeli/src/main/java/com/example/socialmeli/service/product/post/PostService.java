@@ -31,7 +31,7 @@ public class PostService implements IPostService
     {
         ModelMapper modelMapper = new ModelMapper();
         Post post = modelMapper.map(userPostDTO, Post.class);
-        if (!postRepository.addPost(post))
+        if (!postRepository.createPost(post))
             throw new BadRequestException("Post no valido");
 
         return userPostDTO;
@@ -58,17 +58,29 @@ public class PostService implements IPostService
     }
 
     @Override
-    public PromoPostListDTO promoPostList(int userId)
+    public PromoPostListDTO promoPostList(int userId, String order)
     {
         User user;
         Map<Integer, User> userMap = userRepository.usersMap();
+        List<Post> promoPost;
         if (!userMap.containsKey(userId))
             throw new BadRequestException("Usuario no encontrado");
 
         user = userMap.get(userId);
         ModelMapper modelMapper = new ModelMapper();
-        List<Post> promoPosts = user.getPosts().stream().filter(Post::isHasPromo).collect(Collectors.toList());
-        user.setPosts(promoPosts);
+        if (order != null)
+        {
+            if (order.equals("name_asc"))
+                promoPost = postRepository.findPromoPostOrderByProductNameAsc(userId);
+            else
+                promoPost = postRepository.findPromoPostsOrderByProductNameDesc(userId);
+        }
+        else
+        {
+            promoPost = postRepository.findPromoPosts(userId);
+        }
+        TypeMap<User, PromoPostListDTO> propertyMapper = modelMapper.createTypeMap(User.class, PromoPostListDTO.class);
+        propertyMapper.addMappings(mapper -> mapper.map(src -> promoPost, PromoPostListDTO::setPosts));
         return modelMapper.map(user, PromoPostListDTO.class);
     }
 
@@ -77,14 +89,14 @@ public class PostService implements IPostService
     {
         ModelMapper modelMapper = new ModelMapper();
         Post post = modelMapper.map(userPromoPostDTO, Post.class);
-        if (!postRepository.addPost(post))
+        if (!postRepository.createPost(post))
             throw new BadRequestException("Post no valido");
 
         return userPromoPostDTO;
     }
 
     @Override
-    public PostFollowedDTO listRecentFollowedProducts(int userId, String order)
+    public PostFollowedDTO listRecentFollowedPosts(int userId, String order)
     {
         User user;
         List<Post> orderedPosts;
@@ -94,11 +106,12 @@ public class PostService implements IPostService
 
         user = userMap.get(userId);
         ModelMapper modelMapper = new ModelMapper();
-        if (order.equals("date_asc"))
-            orderedPosts = postRepository.findTwoWeeksBeforeOrderByDateAsc(userId);
+        if (order == null || order.equals("date_desc"))
+            orderedPosts = postRepository.findFollowedTwoWeeksBeforeOrderByDateDesc(userId);
         else
-            orderedPosts = postRepository.findTwoWeeksBeforeOrderByDateDesc(userId);
-        user.setPosts(orderedPosts);
+            orderedPosts = postRepository.findFollowedTwoWeeksBeforeOrderByDateAsc(userId);
+        TypeMap<User, PostFollowedDTO> propertyMapper = modelMapper.createTypeMap(User.class, PostFollowedDTO.class);
+        propertyMapper.addMappings(mapper -> mapper.map(src -> orderedPosts, PostFollowedDTO::setPosts));
         return modelMapper.map(user, PostFollowedDTO.class);
     }
 }
