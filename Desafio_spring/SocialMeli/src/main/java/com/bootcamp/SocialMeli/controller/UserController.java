@@ -15,15 +15,17 @@ import java.util.Optional;
 @RestController
 public class UserController {
 
+    /* TODO: input validation */
+
     @Autowired
     IUserService userService;
 
     @GetMapping("preload")
     public ResponseEntity<Void> preload(){
-        userService.create(1, "Juan", true);
-        userService.create(2, "Pedro", true);
-        userService.create(3, "Agustina", true);
-        userService.create(4, "Azul", true);
+        userService.add(1, "Juan", true);
+        userService.add(2, "Pedro", true);
+        userService.add(3, "Agustina", true);
+        userService.add(4, "Azul", true);
         return new ResponseEntity(HttpStatus.OK);
         //pasar esto a un json?
         //tenerlos creados desde antes en el repository?
@@ -33,7 +35,6 @@ public class UserController {
     public ResponseEntity<Void> follow(
             @PathVariable int user_id,
             @PathVariable int user_id_to_follow) {
-        //chequear que input no sea nulo, o tirar excepción
         userService.follow(user_id, user_id_to_follow);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -42,7 +43,6 @@ public class UserController {
     public ResponseEntity<Void> unfollow(
             @PathVariable int user_id,
             @PathVariable int user_id_to_unfollow) {
-        //chequear input o tirar excepción
         userService.unfollow(user_id, user_id_to_unfollow);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -51,7 +51,6 @@ public class UserController {
     public ResponseEntity<FollowersListDTO> getFollowers(
             @PathVariable int user_id,
             @RequestParam Optional<String> order) {
-        //chequear input o tirar excepción
         FollowersListDTO followersList = userService.getFollowers(user_id, order);
         return new ResponseEntity<>(followersList, HttpStatus.OK);
     }
@@ -60,7 +59,6 @@ public class UserController {
     public ResponseEntity<FollowedListDTO> getFollowed(
             @PathVariable int user_id,
             @RequestParam Optional<String> order) {
-        //chequear input ok o tirar excepción
         FollowedListDTO followedList = userService.getFollowed(user_id, order);
         return new ResponseEntity<>(followedList, HttpStatus.OK);
     }
@@ -68,7 +66,6 @@ public class UserController {
     @GetMapping("/users/{user_id}/followers/count")
     public ResponseEntity<FollowersCountDTO> getFollowersCount(
             @PathVariable int user_id) {
-        //chequear input ok o tirar excepción
         FollowersCountDTO followersCount = userService.getFollowersCount(user_id);
         return new ResponseEntity<>(followersCount, HttpStatus.OK);
     }

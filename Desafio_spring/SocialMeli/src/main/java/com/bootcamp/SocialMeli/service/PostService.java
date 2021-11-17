@@ -3,6 +3,7 @@ package com.bootcamp.SocialMeli.service;
 import com.bootcamp.SocialMeli.dto.FollowedPostsDTO;
 import com.bootcamp.SocialMeli.dto.FollowersListDTO;
 import com.bootcamp.SocialMeli.dto.PostDTO;
+import com.bootcamp.SocialMeli.exception.UserNotFoundException;
 import com.bootcamp.SocialMeli.model.Post;
 import com.bootcamp.SocialMeli.model.User;
 import com.bootcamp.SocialMeli.repository.IPostRepository;
@@ -25,16 +26,16 @@ public class PostService implements IPostService{
         postRepository.add(post);
         int userId = post.getUserId();
 
-        User user = userRepository.find(userId).orElseThrow();
-        //tirar excepción si el usuario no existe
-        //tirar excepción si el usuario no puede vender
+        User user = userRepository.find(userId).orElseThrow(() ->
+                new UserNotFoundException(userId));
         user.addPost(post);
     }
 
     @Override
     public FollowedPostsDTO getFollowedPosts(int userId, Optional<String> order) {
-        User user = this.userRepository.find(userId).orElseThrow();
-        //tirar not found exception
+        User user = this.userRepository.find(userId).orElseThrow(() ->
+                new UserNotFoundException(userId));
+
         List<User> listOfFollowed = new ArrayList<>(user.getFollowed().values());
         FollowedPostsDTO followedPosts = new FollowedPostsDTO(userId);
 
@@ -52,17 +53,15 @@ public class PostService implements IPostService{
                 listOfPosts.add(new PostDTO(post));
             }
         }
-        if (order.isEmpty()) {
-            followedPosts.setPosts(listOfPosts);
-            return followedPosts;
+        if (order.isPresent()) {
+            if (order.get().equals("date_asc")) {
+                listOfPosts.sort(Comparator.comparing(PostDTO::getDate));
+            }
+            else if (order.get().equals("date_desc")) {
+                listOfPosts.sort(Comparator.comparing(PostDTO::getDate).reversed());
+            }
+            //tirar excepción si el orden es otro?
         }
-        if (order.get().equals("date_asc")) {
-            listOfPosts.sort(Comparator.comparing(PostDTO::getDate));
-        }
-        else if (order.get().equals("date_desc")) {
-            listOfPosts.sort(Comparator.comparing(PostDTO::getDate).reversed());
-        }
-        //tirar excepción si el orden es otro?
 
         followedPosts.setPosts(listOfPosts);
         return followedPosts;

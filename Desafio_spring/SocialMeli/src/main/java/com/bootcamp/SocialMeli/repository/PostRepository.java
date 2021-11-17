@@ -1,5 +1,6 @@
 package com.bootcamp.SocialMeli.repository;
 
+import com.bootcamp.SocialMeli.exception.PostAlreadyExistsException;
 import com.bootcamp.SocialMeli.model.Post;
 import com.bootcamp.SocialMeli.model.User;
 import org.springframework.stereotype.Repository;
@@ -26,8 +27,7 @@ public class PostRepository implements IPostRepository{
     @Override
     public void add(Post post) {
         int postId = post.getId();
-        if (this.posts.containsKey(postId)) throw new RuntimeException("Ya existe la publicación");
-        //create excepción específica
+        if (this.posts.containsKey(postId)) throw new PostAlreadyExistsException(postId);
         this.posts.put(postId, post);
         return;
     }

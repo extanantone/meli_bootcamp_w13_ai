@@ -14,13 +14,14 @@ import java.util.Optional;
 
 @RestController
 public class PostController implements IPostController {
+
+    /* TODO: add input validation */
+
     @Autowired IPostMapper postMapper;
     @Autowired IPostService postService;
 
-
     @PostMapping("products/post")
     public ResponseEntity<Void> create(@RequestBody PostDTO postDTO) {
-        //agregar validación de input
         Post post = postMapper.postDTOToPost(postDTO);
         postService.addPost(post);
         return new ResponseEntity(HttpStatus.OK);

@@ -1,0 +1,23 @@
+package com.bootcamp.SocialMeli.exception.handler;
+
+import com.bootcamp.SocialMeli.dto.ErrorDTO;
+import com.bootcamp.SocialMeli.exception.UserAlreadyExistsException;
+import com.bootcamp.SocialMeli.exception.UserIsAlreadyFollowingException;
+import com.bootcamp.SocialMeli.exception.UserIsNotFollowingException;
+import com.bootcamp.SocialMeli.exception.UserNotFoundException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+public interface IUserExceptionHandler {
+    @ExceptionHandler(UserNotFoundException.class)
+    ResponseEntity<ErrorDTO> userNotFoundHandler(UserNotFoundException e);
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    ResponseEntity<ErrorDTO> userAlreadyExistsHandler(UserAlreadyExistsException e);
+
+    @ExceptionHandler(UserIsAlreadyFollowingException.class)
+    ResponseEntity<ErrorDTO> userIsAlreadyFollowingHandler(UserIsAlreadyFollowingException e);
+
+    @ExceptionHandler(UserIsNotFollowingException.class)
+    ResponseEntity<ErrorDTO> userIsNotFollowingHandler(UserIsNotFollowingException e);
+}

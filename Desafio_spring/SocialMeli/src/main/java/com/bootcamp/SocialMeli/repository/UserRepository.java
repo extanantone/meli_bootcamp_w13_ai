@@ -1,5 +1,6 @@
 package com.bootcamp.SocialMeli.repository;
 
+import com.bootcamp.SocialMeli.exception.UserAlreadyExistsException;
 import com.bootcamp.SocialMeli.model.User;
 import org.springframework.stereotype.Repository;
 
@@ -21,10 +22,9 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public User create(int userId, String userName, boolean canSell) {
+    public User add(int userId, String userName, boolean canSell) {
         User user = new User(userId, userName, canSell);
-        if (this.users.containsKey(userId)) throw new RuntimeException("Ya existe el usuario");
-        //create excepción específica
+        if (this.users.containsKey(userId)) throw new UserAlreadyExistsException(userId);
         this.users.put(userId, user);
         return user;
     }
