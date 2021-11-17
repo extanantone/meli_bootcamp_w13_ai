@@ -19,6 +19,12 @@ El desafío que se propone a continuación consta de 2 partes:
 - Obtener un listado de las publicaciones realizadas en las últimas dos semanas, por los vendedores que un usuario sigue (para esto tener en cuenta ordenamiento por fecha, publicaciones más recientes primero).
 - Poder realizar la acción de “Unfollow” (dejar de seguir) a un determinado vendedor.
 
-### Diagrams
+### Cosas a tener en cuenta
+- Todos los usuarios se pueden seguir entre si, asumiendo que pueden convertirse en vendedores
+- No pueden seguirse a si mismos
+- No pueden seguir al usuario más de una vez.
+- No pasar parametros incorrectos
+
+### Diagrama
 
 ![Class Diagram](https://raw.githubusercontent.com/extanantone/meli_bootcamp_w13_ai/felipe_cubillos/Desafio_spring/SocialMeli/docs/Diagram.png)
