@@ -20,33 +20,33 @@ public class UserService implements IUserService{
     IUserRepository userRepository;
 
     @Override
-    public void add(int userId, String userName, boolean canSell) {
-        userRepository.add(userId, userName, canSell);
+    public void add(int userId, String userName, boolean isSeller) {
+        userRepository.add(userId, userName, isSeller);
     }
 
     @Override
     public void follow(int followerId, int followedId) {
 
-        Optional<User> follower = this.userRepository.find(followerId);
-        if (follower.isEmpty()) throw new UserNotFoundException(followerId);
+        User follower = this.userRepository.find(followerId).orElseThrow(() ->
+                new UserNotFoundException(followerId));
 
-        Optional<User>followed = this.userRepository.find(followedId);
-        if (followed.isEmpty()) throw new UserNotFoundException(followedId);
+        User followed = this.userRepository.find(followedId).orElseThrow(() ->
+                new UserNotFoundException(followedId));
 
-        follower.get().addFollowed(followed.get());
-        followed.get().addFollower(follower.get());
+        follower.addFollowed(followed);
+        followed.addFollower(follower);
     }
 
     @Override
     public void unfollow(int followerId, int followedId) {
-        Optional<User> follower = this.userRepository.find(followerId);
-        if (follower.isEmpty()) throw new UserNotFoundException(followerId);
+        User follower = this.userRepository.find(followerId).orElseThrow(() ->
+                new UserNotFoundException(followerId));
 
-        Optional<User>followed = this.userRepository.find(followedId);
-        if (followed.isEmpty()) throw new UserNotFoundException(followedId);
+        User followed = this.userRepository.find(followedId).orElseThrow(() ->
+                new UserNotFoundException(followedId));
 
-        follower.get().removeFollowed(followedId);
-        followed.get().removeFollower(followerId);
+        follower.removeFollowed(followedId);
+        followed.removeFollower(followerId);
 
     }
 
@@ -63,7 +63,6 @@ public class UserService implements IUserService{
             else if (order.get().equals("name_desc")) {
                 listOfFollowers.sort(Comparator.comparing(User::getName).reversed());
             }
-            //tirar excepción si el orden es otro?
         }
         return new FollowersListDTO(userId, user.getName(), listOfFollowers);
     }
@@ -82,7 +81,6 @@ public class UserService implements IUserService{
             else if (order.get().equals("name_desc")) {
                 listOfFollowed.sort(Comparator.comparing(User::getName).reversed());
             }
-            //tirar excepción si el orden es otro?
         }
         return new FollowedListDTO(userId, user.getName(), listOfFollowed);
 
