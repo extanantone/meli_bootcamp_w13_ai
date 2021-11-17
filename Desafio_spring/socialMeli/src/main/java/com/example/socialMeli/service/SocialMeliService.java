@@ -141,21 +141,35 @@ public class SocialMeliService implements  ISocialMeliService{
         }
         return flag;
     }
-    public List<PublicacionesVendedoresDTO> obtenerPublicaciones (int id, String order) throws UsuarioNoEncontradoError{
-        boolean flag;
-        List<Publicacion> guardadas = SMRepositorio.retornarPublicaciones();
+    public List<Publicacion>ordenar(List<Publicacion> guardadas, String order){
         if(order == null ||order.equals("date_asc")){
             guardadas = guardadas.stream().sorted(Comparator.comparing(x->x.getFecha())).collect(Collectors.toList());
         }else  if(order.equals("date_desc")){
             guardadas = guardadas.stream().sorted(Collections.reverseOrder(Comparator.comparing(x->x.getFecha()))).collect(Collectors.toList());
         }
+        return guardadas;
+    }
+    public boolean verificaTamaño(List<?> lista){
+        boolean flag = false;
+        if(lista.size()!=0){
+            flag=true;
+        }
+        return flag;
+    }
+    public List<PublicacionesVendedoresDTO> obtenerPublicaciones (int id, String order) throws UsuarioNoEncontradoError{
+        boolean flag, entra = true;
+        List<Publicacion> guardadas = SMRepositorio.retornarPublicaciones();
+        guardadas = ordenar(guardadas, order);
         List<PublicacionesVendedoresDTO>  posts = new ArrayList<>();
         Comprador compra = errorComprador(id);
         List<Vendedor> vendedores = compra.getSiguiendo();
-        while(guardadas.size()>0){
+        while(guardadas.size()>0 && entra){
+            entra=verificaTamaño(vendedores);
             for (Vendedor ve: vendedores) {
                 PublicacionesVendedoresDTO retorno = new PublicacionesVendedoresDTO(ve.getUser_id(), ve.getName());
-                for (Publicacion p:ve.getPublicaciones()) {
+                List<Publicacion> publi = ordenar(ve.getPublicaciones(), order);
+                entra=verificaTamaño(publi);
+                for (Publicacion p:publi) {
                     if(guardadas.size()!=0){
                         flag = verificarVendedorYFecha(guardadas.get(0).getFecha());
                         if(flag && guardadas.get(0).getId_publicacion()== p.getId_publicacion() && guardadas.get(0).getId_user() == ve.getUser_id() ){
