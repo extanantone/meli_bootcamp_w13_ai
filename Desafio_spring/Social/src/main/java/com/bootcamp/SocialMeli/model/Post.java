@@ -1,8 +1,8 @@
 package com.bootcamp.SocialMeli.model;
 
-public class Buyer {
+public class Post {
 
-
+    String post;
 
 
 }
