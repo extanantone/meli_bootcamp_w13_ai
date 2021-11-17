@@ -13,7 +13,7 @@ Solución planteada para el desafío de Spring número 1.
 
  - **Crear nuevo usuario**
 	 - `/users`
-	 - POST
+	 - *POST*
 	 - Ejemplo Payload:
    ```json
     {
