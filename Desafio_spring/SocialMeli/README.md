@@ -37,13 +37,19 @@ Los demas endpoint de ordenamiento funcionan como la documentacion.
 
 GET
 Ejemplos:
+
 /users/{user_id}/followers/list?order=name_asc
+
 /users/{user_id}/followers/list?order=name_desc
+
 /users/{user_id}/followed/list?order=name_asc
+
 /users/{user_id}/followed/list?order=name_desc
 
 GET
 Ejemplos:
+
 /products/followed/{user_id}/list?order=date_asc
+
 /products/followed/{user_id}/list?order=date_desc
 
