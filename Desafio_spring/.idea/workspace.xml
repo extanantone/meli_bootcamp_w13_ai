@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7c201c09-1a02-47c3-9589-a9c7d96b8780" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Java/IntefacesPractica/src/test/java/ConsultaSaldo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/IntefacesPractica/src/test/java/ConsultaSaldo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/IntefacesPractica/src/test/java/PagoServicios.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/IntefacesPractica/src/test/java/PagoServicios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/IntefacesPractica/src/test/java/Retiro.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/IntefacesPractica/src/test/java/Retiro.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/IntegradorP1/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/IntegradorP1/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/LambdaStreams/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/LambdaStreams/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/RomanNumerals/src/main/java/com/example/romannumerals/controllers/RomanNumeralsRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/RomanNumerals/src/main/java/com/example/romannumerals/controllers/RomanNumeralsRestController.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2131wvUl2UXQ0cJtvVOnXjHTzL0" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7c201c09-1a02-47c3-9589-a9c7d96b8780" name="Changes" comment="" />
+      <created>1637155199003</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1637155199003</updated>
+      <workItem from="1637155203758" duration="6000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
