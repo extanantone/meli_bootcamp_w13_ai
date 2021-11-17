@@ -1,7 +1,6 @@
 package com.Sprint1.SocialMeli.Repository;
 
 import com.Sprint1.SocialMeli.Model.Post;
-import com.Sprint1.SocialMeli.Model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -14,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Repository
 public class PostRepositoryImpl implements IPostRepository {
@@ -74,5 +75,29 @@ public class PostRepositoryImpl implements IPostRepository {
         });
 
         return listaPosts;
+    }
+
+    @Override
+    public Boolean crearPublicacionPromocion(Post publicacionFull) {
+
+        try{
+            basePosts.put(publicacionFull.getIdPost(), publicacionFull);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public int obtenerCantPromoPost(int vendedorId) {
+        AtomicInteger cantPromoPost = new AtomicInteger();
+
+        basePosts.forEach((postId, post) -> {
+            if((post.getUserId() == vendedorId) && post.getHasPromo()){
+                cantPromoPost.getAndIncrement();
+            }
+        });
+
+        return cantPromoPost.get();
     }
 }

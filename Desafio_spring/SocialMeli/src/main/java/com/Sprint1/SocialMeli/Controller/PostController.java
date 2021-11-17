@@ -1,8 +1,9 @@
 package com.Sprint1.SocialMeli.Controller;
 
+import com.Sprint1.SocialMeli.DTO.PostFullDTO;
 import com.Sprint1.SocialMeli.DTO.PostListDTO;
 import com.Sprint1.SocialMeli.DTO.PostShortDTO;
-import com.Sprint1.SocialMeli.DTO.UserFollowersListDTO;
+import com.Sprint1.SocialMeli.DTO.PromoPostCountDTO;
 import com.Sprint1.SocialMeli.Service.IPostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,31 @@ public class PostController {
                 HttpStatus.OK);
     }
 
+    @PostMapping("/promopost")
+    public ResponseEntity<String> altaPublicacionPromocion (@RequestBody PostFullDTO publicacionFull){
 
+        //TODO: Agregar validaciones (Validar si vino el compo hasPromo y Discount)
+
+        if(postService.crearPostPromocion(publicacionFull)){
+            return new ResponseEntity<String>(
+                    "Todo OK",
+                    HttpStatus.OK);
+        }else{
+            return new ResponseEntity<String>(
+                    "Bad Request",
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/{user_id}/promo-post/count")
+    public ResponseEntity<PromoPostCountDTO> obtenerCantPromoPost (@PathVariable("user_id") Integer userId){
+
+        //TODO: Agregar validaciones
+
+        return new ResponseEntity<PromoPostCountDTO>(
+                postService.obtenerCantPromoPost(userId),
+                HttpStatus.OK);
+    }
 
 
 

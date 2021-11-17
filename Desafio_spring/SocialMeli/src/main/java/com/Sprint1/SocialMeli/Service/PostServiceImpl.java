@@ -1,8 +1,6 @@
 package com.Sprint1.SocialMeli.Service;
 
-import com.Sprint1.SocialMeli.DTO.PostListDTO;
-import com.Sprint1.SocialMeli.DTO.PostShortDTO;
-import com.Sprint1.SocialMeli.DTO.UserShortDTO;
+import com.Sprint1.SocialMeli.DTO.*;
 import com.Sprint1.SocialMeli.Model.Post;
 import com.Sprint1.SocialMeli.Model.User;
 import com.Sprint1.SocialMeli.Repository.IPostRepository;
@@ -62,7 +60,7 @@ public class PostServiceImpl implements IPostService{
             }
             else if (order.equals("date_desc")) {
                 listaPostShortFiltrada = listaPostShortFiltrada.stream()
-                        .sorted(Comparator.comparing(PostShortDTO::getDate, Collections.reverseOrder()))
+                        .sorted(Comparator.comparing(PostShortDTO::getDate).reversed())
                         .collect(Collectors.toList());
             }
         }
@@ -72,5 +70,23 @@ public class PostServiceImpl implements IPostService{
         return postListResultado;
 
 
+    }
+
+    @Override
+    public Boolean crearPostPromocion(PostFullDTO publicacionFull) {
+        Post nuevaPublicacion = new Post(publicacionFull);
+
+        return postRepository.crearPublicacionPromocion(nuevaPublicacion);
+    }
+
+    @Override
+    public PromoPostCountDTO obtenerCantPromoPost(int vendedorId) {
+        User usuario = userRepository.obtenerUsuario(vendedorId);
+        int cantPromoPost = postRepository.obtenerCantPromoPost(vendedorId);
+
+        PromoPostCountDTO promoPostCount = new PromoPostCountDTO(usuario);
+        promoPostCount.setPromoProductsCount(cantPromoPost);
+
+        return promoPostCount;
     }
 }

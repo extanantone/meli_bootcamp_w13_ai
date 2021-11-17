@@ -73,7 +73,7 @@ public class UserServiceImpl implements IUserService{
             }
             else if (order.equals("name_desc")) {
                 listaSeguidores = listaSeguidores.stream()
-                        .sorted(Comparator.comparing(UserShortDTO::getUserName, Collections.reverseOrder()))
+                        .sorted(Comparator.comparing(UserShortDTO::getUserName).reversed())
                         .collect(Collectors.toList());
             }
         }
@@ -98,7 +98,7 @@ public class UserServiceImpl implements IUserService{
             }
             else if (order.equals("name_desc")) {
                 listaSeguidos = listaSeguidos.stream()
-                        .sorted(Comparator.comparing(UserShortDTO::getUserName, Collections.reverseOrder()))
+                        .sorted(Comparator.comparing(UserShortDTO::getUserName).reversed())
                         .collect(Collectors.toList());
             }
         }

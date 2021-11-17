@@ -1,5 +1,6 @@
 package com.Sprint1.SocialMeli.Model;
 
+import com.Sprint1.SocialMeli.DTO.PostFullDTO;
 import com.Sprint1.SocialMeli.DTO.PostShortDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -27,14 +28,25 @@ public class Post{
     private Double discount;
 
 
-    public Post (PostShortDTO postDTO){
-        this.userId = postDTO.getUserId();
-        this.idPost = postDTO.getIdPost();
-        this.date = postDTO.getDate();
-        this.detail = new Product(postDTO.getDetail());
-        this.category = postDTO.getCategory();
-        this.price = postDTO.getPrice();
+    public Post (PostShortDTO postShortDTO) {
+        this.userId = postShortDTO.getUserId();
+        this.idPost = postShortDTO.getIdPost();
+        this.date = postShortDTO.getDate();
+        this.detail = new Product(postShortDTO.getDetail());
+        this.category = postShortDTO.getCategory();
+        this.price = postShortDTO.getPrice();
         this.hasPromo = false;
         this.discount = 0.00;
+    }
+
+    public Post (PostFullDTO postFullDTO){
+            this.userId = postFullDTO.getUserId();
+            this.idPost = postFullDTO.getIdPost();
+            this.date = postFullDTO.getDate();
+            this.detail = new Product(postFullDTO.getDetail());
+            this.category = postFullDTO.getCategory();
+            this.price = postFullDTO.getPrice();
+            this.hasPromo = postFullDTO.getHasPromo();
+            this.discount = postFullDTO.getDiscount();
     }
 }
