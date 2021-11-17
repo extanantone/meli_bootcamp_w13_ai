@@ -60,7 +60,7 @@ public class UserService implements IUserService
     }
 
     @Override
-    public FollowerListDTO followers(int userId, String order)
+    public FollowerListDTO followers(int userId, String order) throws BadRequestException
     {
         User user = getUser(userId);
         List<User> followersOrder = null;
@@ -82,7 +82,7 @@ public class UserService implements IUserService
     }
 
     @Override
-    public FollowerCountDTO countFollowers(int userId)
+    public FollowerCountDTO countFollowers(int userId) throws BadRequestException
     {
         User user = getUser(userId);
         ModelMapper modelMapper = new ModelMapper();
@@ -95,7 +95,7 @@ public class UserService implements IUserService
     }
 
     @Override
-    public FollowedListDTO follow(int userId, int userIdToFollow)
+    public FollowedListDTO follow(int userId, int userIdToFollow) throws BadRequestException
     {
         Map<Integer, User> userMap = userRepository.usersMap();
         if (!userMap.containsKey(userId) || !userMap.containsKey(userIdToFollow))
@@ -112,7 +112,7 @@ public class UserService implements IUserService
     }
 
     @Override
-    public FollowedListDTO unfollow(int userId, int userIdToUnfollow)
+    public FollowedListDTO unfollow(int userId, int userIdToUnfollow) throws BadRequestException
     {
         Map<Integer, User> userMap = userRepository.usersMap();
         if (!userMap.containsKey(userId) || !userMap.containsKey(userIdToUnfollow))

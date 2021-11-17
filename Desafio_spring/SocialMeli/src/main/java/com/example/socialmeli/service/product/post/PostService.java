@@ -60,7 +60,7 @@ public class PostService implements IPostService
     }
 
     @Override
-    public PostFollowedDTO listPosts(int userId)
+    public PostFollowedDTO listPosts(int userId) throws BadRequestException
     {
         User user = getUser(userId);
         ModelMapper modelMapper = new ModelMapper();
@@ -68,7 +68,7 @@ public class PostService implements IPostService
     }
 
     @Override
-    public PromoPostListDTO promoPostList(int userId, String order)
+    public PromoPostListDTO promoPostList(int userId, String order) throws BadRequestException
     {
         User user = getUser(userId);
         List<Post> promoPost;
@@ -90,7 +90,7 @@ public class PostService implements IPostService
     }
 
     @Override
-    public UserPromoPostDTO createPromo(UserPromoPostDTO userPromoPostDTO)
+    public UserPromoPostDTO createPromo(UserPromoPostDTO userPromoPostDTO) throws BadRequestException
     {
         ModelMapper modelMapper = new ModelMapper();
         Post post = modelMapper.map(userPromoPostDTO, Post.class);
@@ -101,7 +101,7 @@ public class PostService implements IPostService
     }
 
     @Override
-    public PostFollowedDTO listRecentFollowedPosts(int userId, String order)
+    public PostFollowedDTO listRecentFollowedPosts(int userId, String order) throws BadRequestException
     {
 
         User user = getUser(userId);
