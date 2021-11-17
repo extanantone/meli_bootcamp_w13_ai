@@ -1,10 +1,10 @@
-package com.example.socialmeli.service.post;
+package com.example.socialmeli.service.product.post;
 
 import com.example.socialmeli.dto.post.*;
 import com.example.socialmeli.exception.BadRequestException;
 import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.User;
-import com.example.socialmeli.repository.post.IPostRepository;
+import com.example.socialmeli.repository.product.post.IPostRepository;
 import com.example.socialmeli.repository.user.IUserRepository;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;

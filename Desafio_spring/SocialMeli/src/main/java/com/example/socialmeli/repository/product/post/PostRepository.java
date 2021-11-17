@@ -1,11 +1,10 @@
-package com.example.socialmeli.repository.post;
+package com.example.socialmeli.repository.product.post;
 
 import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.repository.user.IUserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
@@ -14,7 +13,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -72,9 +70,11 @@ public class PostRepository implements IPostRepository
             return false;
         if (postMap().containsKey(post.getIdPost()))
             return false;
+
         user = userMap.get(post.getUserId());
         if (!user.addPost(post))
                 return false;
+
         postList.add(post);
         return true;
     }

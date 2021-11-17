@@ -1,4 +1,4 @@
-package com.example.socialmeli.repository.post;
+package com.example.socialmeli.repository.product.post;
 
 import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.User;
