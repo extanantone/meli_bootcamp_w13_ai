@@ -14,9 +14,6 @@ public class Usuario {
     private Integer userId;
     private String userName;
 
-    public Usuario(Integer userId, String userName) {
-    }
-
     private static Integer con_id=0;
     public Usuario(){
         userId =++con_id;

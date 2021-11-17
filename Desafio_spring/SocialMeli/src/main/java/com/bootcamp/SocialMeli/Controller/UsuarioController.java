@@ -5,6 +5,7 @@ import com.bootcamp.SocialMeli.DTO.SeguidoresCountDTO;
 import com.bootcamp.SocialMeli.Model.Seguidor;
 import com.bootcamp.SocialMeli.Service.ISocialService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -57,12 +58,12 @@ public class UsuarioController {
 
     //Trae lista ordenada de mis seguidores
     @GetMapping("{userId}/followers/listorder")
-    public ResponseEntity<SeguidorDTO> getOrderFollowers(@PathVariable Integer userId ,@PathParam("order") String order){
+    public ResponseEntity<SeguidorDTO> getOrderFollowers(@PathVariable Integer userId ,@RequestParam(required = true) String order){
         return new ResponseEntity(iSocialService.getOrderFollow(userId,order),HttpStatus.OK);
     }
     //Trae lista ordenada de los que sigo
     @GetMapping("{userId}/followed/listorder")
-    public ResponseEntity<SeguidorDTO> getfollowed(@PathVariable Integer userId,@PathParam("order") String order){
+    public ResponseEntity<SeguidorDTO> getfollowed(@PathVariable Integer userId,@RequestParam(required = true) String order){
         return new ResponseEntity(iSocialService.getOrderFollowed(userId,order),HttpStatus.OK);
     }
 }

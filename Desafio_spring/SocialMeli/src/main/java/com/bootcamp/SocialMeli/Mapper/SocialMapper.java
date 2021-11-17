@@ -2,7 +2,6 @@ package com.bootcamp.SocialMeli.Mapper;
 
 
 import com.bootcamp.SocialMeli.DTO.DetallePublicacionDTO;
-import com.bootcamp.SocialMeli.DTO.PublicUserDTO;
 import com.bootcamp.SocialMeli.DTO.PublicacionDTO;
 import com.bootcamp.SocialMeli.DTO.UsuarioDTO;
 import com.bootcamp.SocialMeli.Model.DetallePublicacion;
