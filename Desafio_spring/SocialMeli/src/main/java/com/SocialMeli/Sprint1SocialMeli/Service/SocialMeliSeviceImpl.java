@@ -74,7 +74,7 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
         }
 
         List<Integer> followerIds = vendedor.getFollowers();
-        List<Comprador> com = followerIds.stream().map(f -> repositorio.getComprador(f)).collect(Collectors.toList());
+        List<Comprador> com = followerIds.stream().map(repositorio::getComprador).collect(Collectors.toList());
 
         List<CompradorIdNameDTO> compradorIdNameDTO = com.stream()
                 .map(co -> new CompradorIdNameDTO(co.getUserID(), co.getUserName()))
@@ -103,7 +103,7 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
         }
 
         List<Integer> followerdIds = comprador.getFolloweds();
-        List<Vendedor> ven = followerdIds.stream().map(f -> repositorio.getVendedor(f)).collect(Collectors.toList());
+        List<Vendedor> ven = followerdIds.stream().map(repositorio::getVendedor).collect(Collectors.toList());
 
         List<VendedorIdNameDTO> vendedorIdNameDTO = ven.stream()
                 .map(ve -> new VendedorIdNameDTO(ve.getUserID(), ve.getUserName()))
@@ -147,7 +147,7 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
     }
 
     @Override
-    public CompradorPublicacionesVendedorListDTO postByVendedorOfComprador(Integer compradorId) {
+    public CompradorPublicacionesVendedorListDTO postByVendedorOfComprador(Integer compradorId, String order) {
 
         Comprador comprador = repositorio.getComprador(compradorId);
         if (comprador == null) {
@@ -155,7 +155,7 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
         }
 
         List<Integer> followerdIds = comprador.getFolloweds();
-        List<Vendedor> ven = followerdIds.stream().map(f -> repositorio.getVendedor(f)).collect(Collectors.toList());
+        List<Vendedor> ven = followerdIds.stream().map(repositorio::getVendedor).collect(Collectors.toList());
 
 
         List<Publicacion> publicaciones = ven.stream().flatMap(u -> u.getPosts().stream()).filter(l -> l.getDate().isAfter(LocalDate.now().minusWeeks(2))).collect(Collectors.toList());
@@ -165,6 +165,17 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
                         new ProductoDTO(p.getDetail().getProductId(), p.getDetail().getProductName(), p.getDetail().getType(), p.getDetail().getBrand(), p.getDetail().getColor(), p.getDetail().getNotes())))
                 .collect(Collectors.toList());
 
+
+        if (order != null) {
+            if (order.equalsIgnoreCase("date_asc")) {
+                publicacionSinUserIdDTO.sort(Comparator.comparing(PublicacionSinUserIdDTO::getDate));
+            }
+
+
+            if (order.equalsIgnoreCase("date_asc")) {
+                publicacionSinUserIdDTO.sort(Comparator.comparing(PublicacionSinUserIdDTO::getDate).reversed());
+            }
+        }
 
         return new CompradorPublicacionesVendedorListDTO(comprador.getUserID(), publicacionSinUserIdDTO);
     }

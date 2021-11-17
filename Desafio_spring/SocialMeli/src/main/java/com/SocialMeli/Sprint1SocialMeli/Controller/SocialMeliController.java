@@ -70,9 +70,10 @@ public class SocialMeliController {
 
 
     @GetMapping(path = "/products/followed/{compradorId}/list")
-    public ResponseEntity<VendedorFollowesCountDTO> getCompradorofVendedorPublicacionesList(@PathVariable Integer compradorId) {
+    public ResponseEntity<VendedorFollowesCountDTO> getCompradorofVendedorPublicacionesList(@PathVariable Integer compradorId,
+                                                                                            @RequestParam(name = "order", required = false) String order) {
 
-        return new ResponseEntity(service.postByVendedorOfComprador(compradorId), HttpStatus.OK);
+        return new ResponseEntity(service.postByVendedorOfComprador(compradorId,order), HttpStatus.OK);
     }
 
 
