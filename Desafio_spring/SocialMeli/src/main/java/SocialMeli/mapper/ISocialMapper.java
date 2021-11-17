@@ -8,7 +8,6 @@ import SocialMeli.dto.response.count.PromoCountDTO;
 import SocialMeli.dto.response.list.FollowedListDTO;
 import SocialMeli.dto.response.list.FollowersListDTO;
 import SocialMeli.dto.response.list.PostListDTO;
-import SocialMeli.dto.response.list.PromoPostListDTO;
 import SocialMeli.model.*;
 
 import java.util.List;
@@ -26,11 +25,9 @@ public interface ISocialMapper {
 
     PostDTO PostToPostDTO(Post post);
 
-    PromoPostDTO PostToPromoPostDTO(Post post);
-
     PostListDTO postListToPostListDTO(int customerId, List<Post> postlist);
 
-    PromoPostListDTO promoPostListToPromoPostListDTO(Seller seller, List<Post> postlist);
+    PostListDTO promoPostListToPostListDTO(Seller seller, List<Post> postlist);
 
     FollowersCountDTO sellerToFollowersCountDTO(Seller seller);
 

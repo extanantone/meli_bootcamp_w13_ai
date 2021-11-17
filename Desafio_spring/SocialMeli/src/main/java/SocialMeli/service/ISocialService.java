@@ -7,7 +7,6 @@ import SocialMeli.dto.response.count.FollowersCountDTO;
 import SocialMeli.dto.response.list.FollowersListDTO;
 import SocialMeli.dto.response.list.PostListDTO;
 import SocialMeli.dto.response.count.PromoCountDTO;
-import SocialMeli.dto.response.list.PromoPostListDTO;
 
 public interface ISocialService {
     void followSeller(int customerId, int sellerId);
@@ -29,5 +28,5 @@ public interface ISocialService {
     // BONUS
     PromoCountDTO getPromoCount(int sellerId);
 
-    PromoPostListDTO getPromoList(int user_id);
+    PostListDTO getPromoList(int user_id);
 }

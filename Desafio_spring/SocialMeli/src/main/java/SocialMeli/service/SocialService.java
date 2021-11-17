@@ -7,7 +7,6 @@ import SocialMeli.dto.response.count.FollowersCountDTO;
 import SocialMeli.dto.response.list.FollowersListDTO;
 import SocialMeli.dto.response.list.PostListDTO;
 import SocialMeli.dto.response.count.PromoCountDTO;
-import SocialMeli.dto.response.list.PromoPostListDTO;
 import SocialMeli.exception.AlredyFollowedException;
 import SocialMeli.exception.NotFollowedException;
 import SocialMeli.mapper.ISocialMapper;
@@ -18,7 +17,6 @@ import SocialMeli.repository.ISocialRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -120,7 +118,7 @@ public class SocialService implements ISocialService {
     }
 
     @Override
-    public PromoPostListDTO getPromoList(int sellerId) {
-        return socialMapper.promoPostListToPromoPostListDTO(socialRepository.getSeller(sellerId), socialRepository.getSellerPromoPosts(sellerId));
+    public PostListDTO getPromoList(int sellerId) {
+        return socialMapper.promoPostListToPostListDTO(socialRepository.getSeller(sellerId), socialRepository.getSellerPromoPosts(sellerId));
     }
 }

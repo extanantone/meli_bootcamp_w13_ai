@@ -8,7 +8,6 @@ import SocialMeli.dto.response.count.PromoCountDTO;
 import SocialMeli.dto.response.list.FollowedListDTO;
 import SocialMeli.dto.response.list.FollowersListDTO;
 import SocialMeli.dto.response.list.PostListDTO;
-import SocialMeli.dto.response.list.PromoPostListDTO;
 import SocialMeli.model.*;
 import org.springframework.stereotype.Component;
 
@@ -71,20 +70,9 @@ public class SocialMapper implements ISocialMapper {
                 post.getDate(),
                 productToProductDTO(post.getDetail()),
                 post.getCategory(),
-                post.getPrice()
-        );
-    }
-
-    @Override
-    public PromoPostDTO PostToPromoPostDTO(Post post) {
-        return new PromoPostDTO(
-                post.getIdPost(),
-                post.getDate(),
-                productToProductDTO(post.getDetail()),
-                post.getCategory(),
                 post.getPrice(),
-                post.isHasPromo(),
-                post.getDiscount()
+                post.isHasPromo() ? post.isHasPromo() : null,
+                post.isHasPromo() ? post.getDiscount() : null
         );
     }
 
@@ -92,16 +80,17 @@ public class SocialMapper implements ISocialMapper {
     public PostListDTO postListToPostListDTO(int customerId, List<Post> postlist) {
         return new PostListDTO(
                 customerId,
+                null,
                 postlist.stream().map(this::PostToPostDTO).collect(Collectors.toList())
         );
     }
 
     @Override
-    public PromoPostListDTO promoPostListToPromoPostListDTO(Seller seller, List<Post> postlist) {
-        return new PromoPostListDTO(
+    public PostListDTO promoPostListToPostListDTO(Seller seller, List<Post> postlist) {
+        return new PostListDTO(
                 seller.getUserId(),
                 seller.getUserName(),
-                postlist.stream().map(this::PostToPromoPostDTO).collect(Collectors.toList())
+                postlist.stream().map(this::PostToPostDTO).collect(Collectors.toList())
         );
     }
 

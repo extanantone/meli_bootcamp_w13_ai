@@ -1,17 +1,20 @@
 package SocialMeli.dto.response.list;
 
 import SocialMeli.dto.response.PostDTO;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.AllArgsConstructor;
+import SocialMeli.dto.response.UserDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PostListDTO {
-    int userId;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class PostListDTO extends UserDTO {
+
     List<PostDTO> posts;
+
+    public PostListDTO(int userId, String userName, List<PostDTO> posts) {
+        super(userId, userName);
+        this.posts = posts;
+    }
 }

@@ -1,6 +1,7 @@
 package SocialMeli.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -11,8 +12,8 @@ import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
-@NonNull
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostDTO {
     int idPost;
 
@@ -22,4 +23,8 @@ public class PostDTO {
     ProductDTO detail;
     int category;
     double price;
+
+    //BONUS
+    Boolean hasPromo;
+    Double discount;
 }

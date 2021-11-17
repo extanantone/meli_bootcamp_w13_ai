@@ -7,7 +7,6 @@ import SocialMeli.dto.response.count.FollowersCountDTO;
 import SocialMeli.dto.response.list.FollowersListDTO;
 import SocialMeli.dto.response.list.PostListDTO;
 import SocialMeli.dto.response.count.PromoCountDTO;
-import SocialMeli.dto.response.list.PromoPostListDTO;
 import SocialMeli.service.ISocialService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,8 +72,8 @@ public class SocialController {
     }
 
     @GetMapping("/products/{userId}/list")
-    ResponseEntity<PromoPostListDTO> newPost(@PathVariable int userId) {
-        return new ResponseEntity<>(socialService.getPromoList(userId),HttpStatus.OK);
+    ResponseEntity<PostListDTO> newPost(@PathVariable int userId) {
+        return new ResponseEntity<>(socialService.getPromoList(userId), HttpStatus.OK);
     }
 
     @PostMapping("/user/newUser")
