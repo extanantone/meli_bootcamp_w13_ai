@@ -8,6 +8,7 @@ Solución planteada para el desafío de Spring número 1.
 - Se agrego un endpoint para crear usuarios. Al correr la app no se carga ningún usuario por defecto. Se debe crear cada usuario manualmente. 
 - Al realizar un POST de un posteo o un producto *no se pasan los ids* en el payload. Los ids se manejan automáticamente desde el repositorio (revisar payloads de endpoints). 
 - Los ids deben ser positivos mayores a 0 (cero).
+- Cuando se utilizan filtros de asc y desc, se toma por defecto el valor asc si no se pasa ningun filtro. 
 
 ## Entity Model Diagram
 
