@@ -1,5 +1,6 @@
 package com.example.socialmeli.service;
 
+import com.example.socialmeli.Mapper.SocialMeliMapper;
 import com.example.socialmeli.dto.*;
 import com.example.socialmeli.exception.BadParamsRequestException;
 import com.example.socialmeli.exception.FollowException;
@@ -15,7 +16,8 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
-
+    @Autowired
+    SocialMeliMapper socialMeliMapper;
     public UserService() {
 
     }
@@ -121,7 +123,8 @@ public class UserService {
     }
 
     public UsersResponseDto getUsers(){
-        return new UsersResponseDto(userRepository.getUsers());
+        List<UserDto> userDtoList = socialMeliMapper.userToUserDto(userRepository.getUsers());
+        return new UsersResponseDto(userDtoList);
     }
 
     public PostRequestResponseDto unfollow(Integer user_id, Integer user_id_to_unfollow){

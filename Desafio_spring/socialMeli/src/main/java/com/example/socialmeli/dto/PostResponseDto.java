@@ -14,10 +14,9 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 
 public class PostResponseDto extends UserDto{
-    //TODO cambiar post a postDto
-    List<Post> posts;
+    List<PostDto> posts;
 
-    public PostResponseDto(Integer userId,String userName,List<Post> posts) {
+    public PostResponseDto(Integer userId,String userName,List<PostDto> posts) {
         this.posts = posts;
         super.userId = userId;
         super.userName = userName;

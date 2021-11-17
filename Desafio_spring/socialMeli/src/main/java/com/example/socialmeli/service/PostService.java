@@ -1,9 +1,7 @@
 package com.example.socialmeli.service;
 
-import com.example.socialmeli.dto.NewPostRequestDto;
-import com.example.socialmeli.dto.PostRequestResponseDto;
-import com.example.socialmeli.dto.PostResponseDto;
-import com.example.socialmeli.dto.UserResponseDto;
+import com.example.socialmeli.Mapper.SocialMeliMapper;
+import com.example.socialmeli.dto.*;
 import com.example.socialmeli.exception.BadBodyRequestException;
 import com.example.socialmeli.exception.BadParamsRequestException;
 import com.example.socialmeli.exception.UserNotExistException;
@@ -28,8 +26,10 @@ public class PostService {
     PostRepository postRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    SocialMeliMapper socialMeliMapper;
 
-    public PostRequestResponseDto addPost(NewPostRequestDto postReq){
+    public PostRequestResponseDto addPost(PostDto postReq){
         if(Objects.isNull(postReq.getUserId())){
             throw new BadBodyRequestException("El id del usuario no es valido");
         }
@@ -50,7 +50,7 @@ public class PostService {
             throw new BadBodyRequestException("La fecha ingresada no es valida");
         }
 
-        Post post = new Post(postReq.getUserId(),postReq.getDate(),postReq.getCategory(),postReq.getHasPromo(),postReq.getDiscount(),postReq.getPrice(),postReq.getDetail());
+        Post post = socialMeliMapper.postDtoToPost(postReq);
         postRepository.setPost(post);
         return new PostRequestResponseDto(String.format("Se creo el post con id: %d",post.getPostId()));
     }
@@ -74,7 +74,9 @@ public class PostService {
                 postList.sort(Comparator.comparing(Post::getDate));
             }
         }
-        return new PostResponseDto(user_id,user.getUserName(),postList);
+        List<PostDto> postDtoList = socialMeliMapper.postListToPostDtoList(postList);
+
+        return new PostResponseDto(user_id,user.getUserName(),postDtoList);
     }
 
     public UserResponseDto countPostFromUserId(Integer user_id){
@@ -115,6 +117,8 @@ public class PostService {
             }
         }
 
-        return new PostResponseDto(user_id,user.getUserName(),postList);
+        List<PostDto> postDtoList = socialMeliMapper.postListToPostDtoList(postList);
+
+        return new PostResponseDto(user_id,user.getUserName(),postDtoList);
     }
 }

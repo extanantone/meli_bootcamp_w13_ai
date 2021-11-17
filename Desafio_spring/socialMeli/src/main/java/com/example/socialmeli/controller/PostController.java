@@ -1,9 +1,6 @@
 package com.example.socialmeli.controller;
 
-import com.example.socialmeli.dto.NewPostRequestDto;
-import com.example.socialmeli.dto.PostRequestResponseDto;
-import com.example.socialmeli.dto.PostResponseDto;
-import com.example.socialmeli.dto.UserResponseDto;
+import com.example.socialmeli.dto.*;
 import com.example.socialmeli.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,13 +13,13 @@ public class PostController {
     PostService postService;
 
     @PostMapping("/product/post")
-    public ResponseEntity<PostRequestResponseDto> addPost(@RequestBody NewPostRequestDto post){
+    public ResponseEntity<PostRequestResponseDto> addPost(@RequestBody PostDto post){
         PostRequestResponseDto response = postService.addPost(post);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/product/promo-post")
-    public ResponseEntity<PostRequestResponseDto> addPromoPost(@RequestBody NewPostRequestDto post){
+    public ResponseEntity<PostRequestResponseDto> addPromoPost(@RequestBody PostDto post){
         PostRequestResponseDto response = postService.addPost(post);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
