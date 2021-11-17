@@ -173,6 +173,8 @@ public class SocialMeliService implements ISocialMeliService{
         if(repository.containProductPromo(promoDto.getUserId(), promoDto.getDetail().getProductId())){
             throw new BadRequestException("product_id existente para usuario "+promoDto.getUserId()+".");
         }
+        if(!promoDto.isHasPromo())
+            throw new BadRequestException("has_promo es false, por lo cual no se considera promo y no se almacenará.");
         if(promoDto.getPrice()<=0)
             throw new BadRequestException("price debe ser mayor que cero.");
         if(promoDto.getCategory()<=0)
