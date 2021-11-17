@@ -3,7 +3,6 @@ package com.bootcamp.socialmeli.mapper;
 import com.bootcamp.socialmeli.dto.PostDTO;
 import com.bootcamp.socialmeli.dto.ProductDTO;
 import com.bootcamp.socialmeli.dto.RequestPostDTO;
-import com.bootcamp.socialmeli.exception.NotPossibleOperationException;
 import com.bootcamp.socialmeli.model.Post;
 import com.bootcamp.socialmeli.model.Product;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class ProductMapper implements IProductMapper{
+public class ProductMapper implements IProductMapper {
     @Override
     public Post postDTOToPost(RequestPostDTO requestPostDTO){
 
@@ -56,7 +55,7 @@ public class ProductMapper implements IProductMapper{
                     productDTO.getNotes());
             return product;
         } catch (Exception e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
             return null;
         }
     }

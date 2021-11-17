@@ -31,16 +31,6 @@ public class UserRepository implements IUserRepository{
         return null;
     }
 
-/*    @Override
-    public void followUser(int userId, int userFollowedId) {
-        User user = getUser(userId);
-        if (user == null) throw new RuntimeException();
-
-        User userFollowed = getUser(userFollowedId);
-        user.addFollowed(userFollowedId);
-        userFollowed.addFollower(userId);
-    }*/
-
     @Override
     public void followUser(User user, User userToFollow) {
         if (user == null || userToFollow == null)   throw new RuntimeException();
@@ -48,14 +38,6 @@ public class UserRepository implements IUserRepository{
         user.addFollowed(userToFollow.getId());
         userToFollow.addFollower(user.getId());
     }
-
-/*
-    @Override
-    public int getTotalUserFollowers(int userId) {
-        User user = getUser(userId);
-        return user.getFollowersUserId().size();
-    }
-*/
 
     @Override
     public int getTotalUserFollowers(User user) {

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -22,7 +23,6 @@ public class UserService implements IUserService{
 
     @Override
     public void followUser(int userId, int userToFollowId) throws NotPossibleOperationException {
-
         if (userId == userToFollowId) throw new NotPossibleOperationException();
 
         User user = iUserRepository.getUser(userId);
@@ -40,12 +40,8 @@ public class UserService implements IUserService{
         if (user == null) throw new NotFoundUserException(id);
 
         int totalFollowers = iUserRepository.getTotalUserFollowers(user);
-        try{
-            return iUserMapper.toUserTotalFollowersDTO(user, totalFollowers);
-        } catch (RuntimeException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
+
+        return iUserMapper.toUserTotalFollowersDTO(user, totalFollowers);
     }
 
     @Override
@@ -56,6 +52,7 @@ public class UserService implements IUserService{
         List<User> followers = iUserRepository.getUsersFollowers(user.getId());
 
         if (order != null)  followers.sort((u1, u2) -> compareUser(u1, u2, order));
+
         return iUserMapper.toUserFollowersDTO(user, followers);
     }
 
@@ -73,22 +70,24 @@ public class UserService implements IUserService{
 
 
     @Override
-    public void unfollowUser(int userId, int userToUnfollowId) throws NotFoundUserException {
+    public void unfollowUser(int userId, int userToUnfollowId) throws NotPossibleOperationException {
+        if (userId == userToUnfollowId) throw new NotPossibleOperationException();
+
         User user = iUserRepository.getUser(userId);
         if (user == null)   throw new NotFoundUserException(userId);
 
         User userToUnfollow = iUserRepository.getUser(userToUnfollowId);
         if (userToUnfollow == null)   throw new NotFoundUserException(userId);
+
         iUserRepository.unfollowUser(user, userToUnfollow);
     }
 
     private int compareUser(User u1, User u2, String order){
-        if (order.equals("name_asc")) {
+        if (order.equalsIgnoreCase("name_asc")) {
             return u1.getName().compareTo(u2.getName());
-        } else if (order.equals("name_desc")){
+        } else if (order.equalsIgnoreCase("name_desc")){
             return (u1.getName().compareTo(u2.getName())) * -1;
         } else {
-            //TODO: Definir comportamiento en caso que el order no sea ninguno de los casos
             return 0;
         }
     }
