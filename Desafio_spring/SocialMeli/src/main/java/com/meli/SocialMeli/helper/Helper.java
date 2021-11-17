@@ -2,6 +2,7 @@ package com.meli.SocialMeli.helper;
 
 import com.meli.SocialMeli.dto.*;
 import com.meli.SocialMeli.model.Post;
+import com.meli.SocialMeli.model.Product;
 import com.meli.SocialMeli.model.User;
 import org.modelmapper.ModelMapper;
 
@@ -38,25 +39,21 @@ public class Helper {
 
     public static PostDTOResponse postToPostDTO(Post post){
         PostDTOResponse postDTO = new PostDTOResponse();
-        postDTO.setIdPost(post.getIdPost());
-        postDTO.setCategory(post.getCategory());
-        postDTO.setDate(post.getDate());
-        postDTO.setPrice(post.getPrice());
-        //postDTO.setDetail(post.getDetail());
+        ProductDTO product = new ProductDTO();
         ModelMapper modelMapper = new ModelMapper();
+        product = modelMapper.map(post.getDetail(), ProductDTO.class);
         postDTO = modelMapper.map(post, PostDTOResponse.class);
+        postDTO.setDetail(product);
         return postDTO;
     }
 
     public static Post postDTOToPost(PostDTOResponse postDTO){
         Post post = new Post();
-        post.setIdPost(postDTO.getIdPost());
-        post.setCategory(postDTO.getCategory());
-        post.setDate(postDTO.getDate());
-        post.setPrice(postDTO.getPrice());
-        //postDTO.setDetail(post.getDetail());
+        Product product = new Product();
         ModelMapper modelMapper = new ModelMapper();
+        product = modelMapper.map(postDTO.getDetail(), Product.class);
         post = modelMapper.map(postDTO, Post.class);
+        post.setDetail(product);
         return post;
     }
 
@@ -65,9 +62,11 @@ public class Helper {
         lista.setUserId(userId);
         ModelMapper modelMapper = new ModelMapper();
         ProductDTO prod = new ProductDTO();
+
         List<PostDTO> postsDTO = new LinkedList<>();
         for(Post post: postList){
-            PostDTO postDTO = new PostDTO(post.getIdPost(), post.getDate(), post.getCategory(), post.getPrice(),modelMapper.map(prod, ProductDTO.class));
+            prod = modelMapper.map(post.getDetail(), ProductDTO.class);
+            PostDTO postDTO = new PostDTO(post.getIdPost(), post.getDate(), post.getCategory(), post.getPrice(),prod);
             postsDTO.add(postDTO);
         }
         lista.setPosts(postsDTO);
