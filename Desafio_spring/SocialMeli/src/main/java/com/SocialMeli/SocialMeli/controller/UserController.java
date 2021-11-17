@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -77,8 +76,6 @@ public class UserController {
         return new ResponseEntity<>("Ha ocurrido un error en la acción.", HttpStatus.BAD_REQUEST);
     }
 
-    //public ResponseEntity<ListadoSeguidoresDTO> listadoSeguidores(
-    //            @PathVariable Integer user_id, @RequestParam(defaultValue = "name_asc") String order)
     @GetMapping(value ="/users/{userId}/followed/list", params = {"order"})
     public BuyersDTO followedListSorted(@PathVariable Integer userId, @RequestParam("order") String order){
         return userService.followedListSorted(userId, order);
@@ -91,8 +88,6 @@ public class UserController {
 
     @GetMapping(value = "/products/followed/{user_id}/list", params = {"order"})
     public PostListDTO postListParam(@PathVariable Integer user_id, @RequestParam("order") String order){
-        System.out.println("------------>Order------>"+order);
-
         return userService.postList(user_id, order);
     }
 

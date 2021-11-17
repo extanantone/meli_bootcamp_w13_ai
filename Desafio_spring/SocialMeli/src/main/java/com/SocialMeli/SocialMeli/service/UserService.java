@@ -68,11 +68,6 @@ public class UserService implements IUserService {
         return userRepository.followersListSorted(userId, order);
     }
 
-    @Override
-    public PostListDTO productsListSorted(Integer user_id, String order) {
-        return userRepository.productsListSorted(user_id, order);
-    }
-
     // BONUS
     @Override
     public Boolean createPostPromo(PostPromoUserDTO post) {

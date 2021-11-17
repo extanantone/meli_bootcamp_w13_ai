@@ -8,7 +8,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +51,6 @@ public class UserRepository implements IUserRepository{
         BuyersDTO buyersDTO = null;
         try{
             buyersDTO = buyersDTOList.get(user_id-1);
-            //System.out.println(userDTO.toString());
             throw new IndexOutOfBoundsException("El usuario no existe con id -> " + user_id );
 
         }catch (IndexOutOfBoundsException e){
@@ -68,7 +66,6 @@ public class UserRepository implements IUserRepository{
         SellersDTO sellersDTO = null;
         try{
             sellersDTO = sellersDTOList.get(user_id-1);
-            //System.out.println(userDTO.toString());
             throw new IndexOutOfBoundsException("El usuario no existe con id -> " + user_id );
 
         }catch (IndexOutOfBoundsException e){
@@ -89,7 +86,6 @@ public class UserRepository implements IUserRepository{
 
         if( buyerUser != null && sellerUser != null ){
             //Al buyer se le agrega el usuario a seguir(seller)
-            //List<UserDTO> followedList = current_user.getFollowed();
             List<UserDTO> followedList = buyerUser.getFollowed();
             if( followedList == null ){
                 followedList = new ArrayList<UserDTO>();
@@ -102,23 +98,15 @@ public class UserRepository implements IUserRepository{
 
             if( userDTO == null ){
                 userDTO = new UserDTO(sellerUser.getUser_id(), sellerUser.getUser_name());
-                //System.out.println(sellerUser);
-                //System.out.println(userDTO);
                 followedList.add(userDTO);
                 buyerUser.setFollowed(followedList);
                 band = true;
             }
-            /*
-            BuyersDTO followedList = new BuyersDTO();
-            followedList.setUser_id(buyerUser.getUser_id());
-            followedList.setUser_name(buyerUser.getUser_name());
-            List<UserDTO> followedUsersList = buyerUser.getFollowed();*/
 
 
 
 
             //Al vendedor se le agrega al usuario comprador
-            //List<UserDTO> followersList = follow_user.getFollowers();
             List<UserDTO> followersList = sellerUser.getFollowers();
             if( followersList == null ){
                 followersList = new ArrayList<>();
@@ -130,7 +118,6 @@ public class UserRepository implements IUserRepository{
                     .orElse(null);
             if( userDTO2 == null && band ){
                 userDTO2 = new UserDTO(buyerUser.getUser_id(), buyerUser.getUser_name());
-                //System.out.println(buyerUser);
 
                 followersList.add(userDTO2);
                 sellerUser.setFollowers(followersList);
@@ -156,7 +143,6 @@ public class UserRepository implements IUserRepository{
             if( sellersDTO.getFollowers() != null ){
                 count = sellersDTO.getFollowers().size();
             }
-            //System.out.println(count);
             user.setFollowers_count(count);
         }
 
@@ -165,26 +151,7 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public SellersDTO followersList(Integer user_id) {
-        SellersDTO sellersDTO = findSellerByUserId(user_id);
-
-        if( sellersDTO != null ){
-            /*user.setUser_id(userDTO.getUser_id());
-            user.setUser_name(userDTO.getUser_name());*/
-            /*if( userDTO.getFollowers() != null ){
-                List<UserDTO> followersList = new ArrayList<>();
-
-                for( Integer i : userDTO.getFollowers() ){
-                    System.out.println(i);
-                    UserDTO follower = findUserByUserId(i);
-                    followersList.add(follower);
-                }
-                user.setFollowersList(followersList);
-            }*/
-            System.out.println(sellersDTO.getFollowers());
-
-        }
-
-        return sellersDTO;
+        return findSellerByUserId(user_id);
     }
 
     @Override
@@ -282,14 +249,7 @@ public class UserRepository implements IUserRepository{
                         .orElse(null);
 
                 if( userDTO != null ) {
-                    //userDTO = new UserDTO(sellerUser.getUser_id(), sellerUser.getUser_name());
                     followedList.remove(userDTO);
-
-                    /*Iterator itr = followedList.iterator();
-
-                    while (itr.hasNext()){
-
-                    }*/
 
                     buyerUser.setFollowed(followedList);
                     band = true;
@@ -306,8 +266,6 @@ public class UserRepository implements IUserRepository{
                         .orElse(null);
 
                 if (userDTO2 != null) {
-                    //userDTO2 = new UserDTO(buyerUser.getUser_id(), buyerUser.getUser_name());
-
                     followersList.remove(userDTO2);
                     sellerUser.setFollowers(followersList);
                 } else {
@@ -316,8 +274,6 @@ public class UserRepository implements IUserRepository{
             }
 
         }
-
-        System.out.println(sellerUser.toString());
 
         return band;
     }
@@ -372,55 +328,6 @@ public class UserRepository implements IUserRepository{
         return sellersDTO;
     }
 
-    @Override
-    public PostListDTO productsListSorted(Integer user_id, String order) {
-        SellersDTO sellersDTO = findSellerByUserId(user_id);
-        PostListDTO postListDTO = new PostListDTO();
-
-        if( sellersDTO != null ){
-
-            postListDTO.setUser_id(user_id);
-
-            List<PostUserDTO> postsUser = new ArrayList<>();
-            List<PostDTO> posts = new ArrayList<>();
-
-            postsUser = postDTOList.stream()
-                    .filter( post -> post.getUser_id() == user_id )
-                    .collect(Collectors.toList());
-
-            for( PostUserDTO postUser : postsUser ){
-                posts.add(
-                        new PostDTO(
-                                postUser.getId_post(),
-                                postUser.getDate(),
-                                postUser.getCategory(),
-                                postUser.getPrice(),
-                                postUser.getDetail()
-                        )
-                );
-            }
-
-            posts.sort(new Comparator<PostDTO>() {
-                @Override
-                public int compare(PostDTO o1, PostDTO o2) {
-                    return o2.getDate().compareTo(o1.getDate());
-                }
-            });
-
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyy");
-
-            LocalDate fifteenDaysAgo = LocalDate.now(ZoneId.of("America/Bogota")).minusDays(15);
-            System.out.println("dd/MM/yyy" + dtf.format(fifteenDaysAgo));
-
-            posts = posts.stream()
-                    .filter( post -> post.getDate().isAfter( fifteenDaysAgo ))
-                    .collect(Collectors.toList());
-
-            postListDTO.setPosts(posts);
-        }
-
-        return postListDTO;
-    }
 
     // BONUS
     @Override
@@ -441,7 +348,6 @@ public class UserRepository implements IUserRepository{
     public PostPromoCountDTO postPromoCount(Integer userId) {
         SellersDTO sellersDTO = findSellerByUserId(userId);
         PostPromoCountDTO user = new PostPromoCountDTO();
-        //Integer count = 0;
 
         if( sellersDTO != null ){
             user.setUser_id(sellersDTO.getUser_id());
@@ -490,31 +396,6 @@ public class UserRepository implements IUserRepository{
                         )
                 );
             }
-
-            /*posts.sort(new Comparator<PostDTO>() {
-                @Override
-                public int compare(PostDTO o1, PostDTO o2) {
-                    return o2.getDate().compareTo(o1.getDate());
-                }
-            });
-
-            if ( order.equals("date_asc") ){
-                posts.sort(new Comparator<PostDTO>() {
-                    @Override
-                    public int compare(PostDTO o1, PostDTO o2) {
-                        return o1.getDate().compareTo(o2.getDate());
-                    }
-                });
-            }*/
-
-            /*DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyy");
-
-            LocalDate fifteenDaysAgo = LocalDate.now(ZoneId.of("America/Bogota")).minusDays(15);
-            System.out.println("dd/MM/yyy" + dtf.format(fifteenDaysAgo));
-
-            posts = posts.stream()
-                    .filter( post -> post.getDate().isAfter( fifteenDaysAgo ))
-                    .collect(Collectors.toList());*/
 
             postPromoListDTO.setPosts(posts);
         }

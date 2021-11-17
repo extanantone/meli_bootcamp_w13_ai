@@ -14,7 +14,6 @@ public interface IUserService {
     Boolean unfollowUser(Integer user_id, Integer user_id_to_unfollow);
     BuyersDTO followedListSorted(Integer userId, String order);
     SellersDTO followersListSorted(Integer userId, String order);
-    PostListDTO productsListSorted(Integer user_id, String order);
 
     // BONUS
     Boolean createPostPromo(PostPromoUserDTO post);
