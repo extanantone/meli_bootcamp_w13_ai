@@ -122,7 +122,7 @@
   {
     "user_id": 4,
     "id_post": 40,
-    "date": "12-04-2021",
+    "date": "12-11-2021",
     "detail": {
       "product_id": 1,
       "product_name": "Pelota Nike Futbol Airlock Street X",
@@ -137,7 +137,7 @@
   {
     "user_id": 4,
     "id_post": 41,
-    "date": "20-04-2021",
+    "date": "07-11-2021",
     "detail": {
       "product_id": 2,
       "product_name": "Camiseta Boca Juniors",
@@ -147,12 +147,14 @@
       "notes": "Camiseta jugador oficial, talle XL"
     },
     "category": 115,
-    "price": 500.10
+    "price": 500.10,
+    "has_promo": true,
+    "discount": 0.50
   },
   {
     "user_id": 4,
     "id_post": 42,
-    "date": "06-06-2021",
+    "date": "06-11-2021",
     "detail": {
       "product_id": 4,
       "product_name": "Samsung Galaxy Fit 2",
@@ -162,6 +164,8 @@
       "notes": "con Bluetooth, pantalla AMOLED, bateria 15 dias de duracion"
     },
     "category": 120,
-    "price": 80.50
+    "price": 80.50,
+    "has_promo": true,
+    "discount": 0.25
   }
 ]

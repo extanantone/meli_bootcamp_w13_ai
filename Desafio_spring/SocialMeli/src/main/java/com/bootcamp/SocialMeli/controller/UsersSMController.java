@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controlador que maneja los endpoints relacionados con los usuarios.
+ */
 @RestController
 @RequestMapping("/users")
 public class UsersSMController {
@@ -49,7 +52,7 @@ public class UsersSMController {
 
     /**
      * Endpoint para crear un nuevo usuario, sin seguidores, sin seguidos, ni publicaciones.
-     * @param usuario
+     * @param usuario DTO con el ID y nombre del usuario a crear
      * @return
      */
     @PostMapping("/new")

@@ -8,6 +8,11 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que modela a todos los usuarios, ya sean vendedores o usuarios comunes.
+ * Cada usuario tiene una vinculación directa con sus seguidores y con los vendedores a los que sigue.
+ * Posee una lista con todas las publicaciones que realiza, incluyendo en la misma a las promociones.
+ */
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)

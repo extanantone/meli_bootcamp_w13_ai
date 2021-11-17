@@ -1,6 +1,7 @@
 package com.bootcamp.SocialMeli.repository;
 
 import com.bootcamp.SocialMeli.model.Producto;
+import com.bootcamp.SocialMeli.model.Promocion;
 import com.bootcamp.SocialMeli.model.Publicacion;
 import com.bootcamp.SocialMeli.model.Usuario;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -41,6 +42,10 @@ public class SocialMeliRepository implements ISocialMeliRepository{
         cargarPublicaciones();
     }
 
+    /**
+     * Lee desde un archivo .json todos los usuarios y los devuelve en una lista.
+     * @return lista de Usuario
+     */
     public List<Usuario> cargarUsuarios(){
         File file = null;
         try {
@@ -59,6 +64,9 @@ public class SocialMeliRepository implements ISocialMeliRepository{
         return usuarios;
     }
 
+    /**
+     * Lee desde un archivo .json todas las publicaciones y las carga en el Map de publicaciones
+     */
     public void cargarPublicaciones(){
         JSONParser jsonParser = new JSONParser();
 
@@ -71,7 +79,7 @@ public class SocialMeliRepository implements ISocialMeliRepository{
             for (Object json : publicaciones) {
                 Integer id = Math.toIntExact((Long)((JSONObject) json).get("user_id"));
                 Publicacion publicacion = parsearJsonPublicacion((JSONObject) json);
-                this.usuarios.get(id).agregarPublicacion(publicacion);
+                this.usuarios.get(id).agregarPublicacion(publicacion); //vinculo la publicacion con el vendedor
                 agregarPublicacion(publicacion); //se guarda en el repositorio de publicaciones
             }
 
@@ -86,8 +94,21 @@ public class SocialMeliRepository implements ISocialMeliRepository{
         }
     }
 
+    /**
+     * Parsea el JSON de un posteo a un objeto Publicacion
+     * @param jsonPub objeto en formato JSON
+     * @return objeto Publicacion
+     */
     private Publicacion parsearJsonPublicacion(JSONObject jsonPub){
-        Publicacion publicacion = new Publicacion();
+        Publicacion publicacion;
+        //se pueden cargar desde el json tanto publicaciones comunes como promociones
+        if(jsonPub.get("has_promo") != null){ //se chequea si se está leyendo una promocion
+            publicacion = new Promocion();
+            ((Promocion) publicacion).setHasPromo((boolean) jsonPub.get("has_promo"));
+            ((Promocion) publicacion).setDiscount((double) jsonPub.get("discount"));
+        }else{
+            publicacion = new Publicacion();
+        }
         publicacion.setIdPost(Math.toIntExact((Long) jsonPub.get("id_post")));
         publicacion.setCategory(Math.toIntExact((Long) jsonPub.get("category")));
         publicacion.setPrice((double) jsonPub.get("price"));
@@ -129,14 +150,5 @@ public class SocialMeliRepository implements ISocialMeliRepository{
     public void agregarUsuario(Usuario usuario){
         this.usuarios.put(usuario.getUserId(), usuario);
     }
-
-
-    /*
-    public List<Usuario> buscarSeguidores(Usuario vendedor){
-        List<Usuario> seguidores = this.usuarios.values().stream()
-                                        .filter(x -> x.getVendedoresSeguidos().contains(vendedor))
-                                        .collect(Collectors.toList());
-        return seguidores;
-    }*/
 
 }

@@ -24,9 +24,6 @@ public class SocialMeliService implements ISocialMeliService{
     @Autowired
     private ISocialMeliRepository socialMeliRepository;
 
-    //@Autowired
-    //private ModelMapper mapper;
-
     @Autowired
     private Mapper mapper;
 
@@ -55,9 +52,9 @@ public class SocialMeliService implements ISocialMeliService{
     }
 
     /**
-     * Obtiene la cantidad de usuarios seguidores de un vendedor
-     * @param userId
-     * @return
+     * Obtiene la cantidad de usuarios seguidores de un vendedor.
+     * @param userId identificador del vendedor
+     * @return DTO con los datos del vendedor y la cantidad de seguidores que posee
      */
     @Override
     public CantSeguidoresDTO getCantSeguidores(Integer userId) {
@@ -73,6 +70,11 @@ public class SocialMeliService implements ISocialMeliService{
         return cantSeguidoresDTO;
     }
 
+    /**
+     * Devuelve una lista con los datos de todos los seguidores de un vendedor.
+     * @param userId identificador del vendedor.
+     * @return DTO con los datos de todos los seguidores.
+     */
     @Override
     public SeguidoresDTO getSeguidores(Integer userId) {
         Usuario vendedor = this.socialMeliRepository.buscarUsuario(userId);
@@ -92,6 +94,13 @@ public class SocialMeliService implements ISocialMeliService{
         return seguidoresDTO;
     }
 
+    /**
+     * Igual que el método anterior pero con la diferencia que especifica el orden
+     * en el que aparecen los resultados.
+     * @param userId identificador del vendedor.
+     * @param order orden ascendente o descendente.
+     * @return DTO con los datos de todos los seguidores.
+     */
     @Override
     public SeguidoresDTO getSeguidores(Integer userId, String order) {
         SeguidoresDTO seguidoresDTO = getSeguidores(userId);
@@ -105,6 +114,11 @@ public class SocialMeliService implements ISocialMeliService{
         return seguidoresDTO;
     }
 
+    /**
+     * Obtiene una lista de los vendedores que sigue un usuario.
+     * @param userId identificador del usuario.
+     * @return DTO con la lista de vendedores seguidos.
+     */
     @Override
     public SeguidosDTO getVendedoresSeguidos(Integer userId) {
         Usuario usuario = this.socialMeliRepository.buscarUsuario(userId);
@@ -119,6 +133,13 @@ public class SocialMeliService implements ISocialMeliService{
         return seguidosDTO;
     }
 
+    /**
+     * Igual que el método anterior pero con la diferencia que especifica el orden
+     * en el que aparecen los resultados.
+     * @param userId identificador del usuario.
+     * @param order orden ascendente o descendente.
+     * @return DTO con los datos de todos los vendedores que sigue este usuario.
+     */
     @Override
     public SeguidosDTO getVendedoresSeguidos(Integer userId, String order) {
         SeguidosDTO seguidosDTO = getVendedoresSeguidos(userId);
@@ -132,6 +153,11 @@ public class SocialMeliService implements ISocialMeliService{
         return seguidosDTO;
     }
 
+    /**
+     * Crea una nueva publicacion (sea promocion o no).
+     * @param post DTO con los datos de la publicacion.
+     * @return
+     */
     @Override
     public SuccessDTO crearPublicacion(PublicacionDTO post) {
         Usuario usuario = this.socialMeliRepository.buscarUsuario(post.getUserId());
@@ -170,6 +196,12 @@ public class SocialMeliService implements ISocialMeliService{
         return new SuccessDTO(mensaje);
     }
 
+    /**
+     * Obtiene las publicaciones y promociones que postearon los vendedores que sigue
+     * determinado usuario en las últimas dos semanas.
+     * @param userId Identificador del usuario (seguidor).
+     * @return DTO con la lista de publicaciones ordenadas desde la mas reciente a la mas antigua.
+     */
     @Override
     public PublicacionesDTO getPublicacionesSeguidos(Integer userId) {
         Usuario usuario = this.socialMeliRepository.buscarUsuario(userId);
@@ -201,6 +233,13 @@ public class SocialMeliService implements ISocialMeliService{
         return publicacionesDTO;
     }
 
+    /**
+     * Igual que el método anterior, pero se especifica un orden para los posteos
+     * segun la fecha de publicacion.
+     * @param userId Identificador del cliente.
+     * @param order orden ascendente o descendente.
+     * @return DTO con la lista de publicaciones ordenadas.
+     */
     @Override
     public PublicacionesDTO getPublicacionesSeguidos(Integer userId, String order) {
         PublicacionesDTO publicacionesDTO = getPublicacionesSeguidos(userId);
@@ -233,6 +272,11 @@ public class SocialMeliService implements ISocialMeliService{
         return new SuccessDTO("Unfollowed successfully");
     }
 
+    /**
+     * Obtiene la lista de promociones que tiene determinado vendedor.
+     * @param userId Identificador del vendedor.
+     * @return DTO con la lista de promociones.
+     */
     @Override
     public PromocionesDTO getProductosEnPromocion(Integer userId) {
         Usuario vendedor = this.socialMeliRepository.buscarUsuario(userId);
@@ -252,6 +296,13 @@ public class SocialMeliService implements ISocialMeliService{
         return new PromocionesDTO(vendedor.getUserId(), vendedor.getUserName(), promos);
     }
 
+    /**
+     * Igual que el método anterior pero se especifica el orden en que se muestran las
+     * promociones segun el nombre del producto.
+     * @param userId Identificador del vendedor.
+     * @param order orden ascendente o descendente.
+     * @return DTO con la lista de promociones ordenada.
+     */
     @Override
     public PromocionesDTO getProductosEnPromocion(Integer userId, String order) {
         PromocionesDTO promocionesDTO = getProductosEnPromocion(userId);
@@ -278,6 +329,11 @@ public class SocialMeliService implements ISocialMeliService{
         return promociones;
     }
 
+    /**
+     * Obtiene la cantidad de publicaciones en promocion que tiene un vendedor.
+     * @param userId Identificador del vendedor.
+     * @return DTO con la cantidad de promociones.
+     */
     @Override
     public CantPromocionesDTO getCantPromociones(Integer userId) {
         Usuario vendedor = this.socialMeliRepository.buscarUsuario(userId);
@@ -295,6 +351,12 @@ public class SocialMeliService implements ISocialMeliService{
         return cantPromocionesDTO;
     }
 
+    /**
+     * Crea un nuevo usuario, con ID y nombre especificados, pero sin seguidores,
+     * ni vendedores seguidos, ni publicaciones.
+     * @param usuarioDTO DTO con ID y nombre del usuario.
+     * @return
+     */
     @Override
     public SuccessDTO crearUsuario(UsuarioDTO usuarioDTO) {
         //no puede haber dos usuarios con igual ID

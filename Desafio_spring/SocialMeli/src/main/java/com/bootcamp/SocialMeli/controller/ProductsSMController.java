@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controlador que gestiona los endpoints vinculados con los posteos y productos.
+ */
 @RestController
 @RequestMapping("/products")
 public class ProductsSMController {

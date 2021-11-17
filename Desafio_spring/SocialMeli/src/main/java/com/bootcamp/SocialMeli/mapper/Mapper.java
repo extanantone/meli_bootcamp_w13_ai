@@ -14,6 +14,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Utilidad que permite mapear ciertos DTO a objetos de dominio y viceversa.
+ */
 @Component
 public class Mapper {
 
@@ -46,19 +49,6 @@ public class Mapper {
         promocion.setDiscount(promocionDTO.getDiscount());
 
         return promocion;
-    }
-
-    public Producto detalleProductoDTOToProducto(DetalleProductoDTO detalleDTO){
-        Producto producto = new Producto();
-
-        producto.setProductId(detalleDTO.getProductId());
-        producto.setProductName(detalleDTO.getProductName());
-        producto.setType(detalleDTO.getType());
-        producto.setBrand(detalleDTO.getBrand());
-        producto.setColor(detalleDTO.getColor());
-        producto.setNotes(detalleDTO.getNotes());
-
-        return producto;
     }
 
     public PublicacionesDTO listPublicacionToPublicacionesDTO(int userId, List<Publicacion> publicaciones){
