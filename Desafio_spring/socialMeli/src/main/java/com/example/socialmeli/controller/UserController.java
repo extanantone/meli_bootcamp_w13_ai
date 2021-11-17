@@ -50,3 +50,5 @@ public class UserController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }
+//TODO mirar en los dto de resp de follow q si es vacio los devuelva
+//TODO agregar query post al get y agregar lapso de tiempo variable

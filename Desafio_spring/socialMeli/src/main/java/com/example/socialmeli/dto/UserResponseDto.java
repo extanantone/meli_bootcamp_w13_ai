@@ -1,6 +1,5 @@
 package com.example.socialmeli.dto;
 
-import com.example.socialmeli.model.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -16,13 +15,13 @@ import java.util.List;
 
 public class UserResponseDto extends UserDto{
     Integer followersCount;
-    Integer promoPostCount;
+    Integer promoProductsCount;
     List<UserDto> followers;
     List<UserDto> followed;
 
-    public UserResponseDto(Integer userId, String userName, Integer followersCount, Integer promoPostCount, List<UserDto> followers, List<UserDto> followed) {
+    public UserResponseDto(Integer userId, String userName, Integer followersCount, Integer promoProductsCount, List<UserDto> followers, List<UserDto> followed) {
         this.followersCount = followersCount;
-        this.promoPostCount = promoPostCount;
+        this.promoProductsCount = promoProductsCount;
         this.followers = followers;
         this.followed = followed;
         super.userId = userId;

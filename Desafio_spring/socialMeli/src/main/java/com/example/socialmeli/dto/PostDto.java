@@ -44,7 +44,11 @@ public class PostDto extends UserDto{
     }
 
     public LocalDate stringToLocalDate(){
-        return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        try {
+            return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        }catch (DateTimeException e){
+            throw new BadBodyRequestException("El formato de la fecha no es correcto");
+        }
     }
 
 }

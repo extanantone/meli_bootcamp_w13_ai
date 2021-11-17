@@ -26,22 +26,11 @@ public class UserRepository implements UserRepositoryInterface{
         User user4 = new User("Andres");
         User user1 = new User("Santiago");
 
-        user2.setUserFollowed(2);
-        user2.setUserFollowed(3);
-
-        user2.setUserFollowed(4);
-
         users.put(user1.getUserId(),user1);
         users.put(user2.getUserId(),user2);
         users.put(user3.getUserId(),user3);
         users.put(user4.getUserId(),user4);
 
-
-
-//        this.database = loadDataBase();
-//        database.forEach(uss ->{
-//            this.users.put(uss.getUserId(),uss);
-//        });
     }
     @Override
     public User getUser(Integer userId) {
