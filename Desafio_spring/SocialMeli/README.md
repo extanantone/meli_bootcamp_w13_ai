@@ -60,6 +60,7 @@ Status code 400
 ```
 Respuesta exitosa
 ```sh
+Status code 200
 {
   user_id: 3,
   user_name: "Carlos",
@@ -80,11 +81,26 @@ Respuesta exitosa
 | **Method** | **SIGN** |
 | --- | --- |
 | GET | /users/{user\_id}/followers/list |
-| **Ejemplo:** /users/1569/followers/list |
-| **Response** | {&quot;user\_id&quot;: 1569,&quot;user\_name&quot;: &quot;vendedor1&quot;,&quot;followers&quot;: [{&quot;user\_id&quot;: 4698,&quot;user\_name&quot;: &quot;usuario1&quot;},{&quot;user\_id&quot;: 1536,&quot;user\_name&quot;: &quot;usuario2&quot;},{&quot;user\_id&quot;: 2236,&quot;user\_name&quot;: &quot;usuario3&quot;}]} |
-|
-|
-|
+
+**Ejemplo**
+```sh
+/users/3/followers/list
+```
+*Respuesta exitosa*
+```sh
+Status code 200
+{
+  "user_id": 3,
+  "user_name": "Pedro",
+  "followers": [
+    {
+        "user_id": 1,
+        "user_name": "Nico"
+    }
+  ]
+}
+```
+
 
 **Filtros/Parámetros:**
 
@@ -95,13 +111,28 @@ Respuesta exitosa
 
 **US 0004:** Obtener un listado de todos los vendedores a los cuales sigue un determinado usuario (¿A quién sigo?)
 
-**Sign**** :**
-
 | **Method** | **SIGN** |
 | --- | --- |
 | GET | /users/{user\_id}/followed/list |
-| **Ejemplo:** /users/4698/followed/list |
-| **Response** | {&quot;user\_id&quot;: 4698,&quot;user\_name&quot;: &quot;usuario1&quot;,&quot;followed&quot;: [{&quot;user\_id&quot;: 1569,&quot;user\_name&quot;: &quot;vendedor1&quot;},{&quot;user\_id&quot;: 6932,&quot;user\_name&quot;: &quot;vendedor2&quot;},{&quot;user\_id&quot;: 6631,&quot;user\_name&quot;: &quot;vendedor3&quot;}]} |
+
+**Ejemplo**
+```sh
+/users/3/followed/list
+```
+*Respuesta exitosa*
+```sh
+Status code 200
+{
+  "user_id": 1,
+  "user_name": "Nico",
+  "followed": [
+    {
+        "user_id": 3,
+        "user_name": "Pedro"
+    }
+  ]
+}
+```
 
 **Filtros/Parámetros:**
 
@@ -112,13 +143,45 @@ Respuesta exitosa
 
 **US 0005:** Dar de alta una nueva publicación
 
-**Sign**** :**
 
 | **Method** | **SIGN** |
 | --- | --- |
 | POST | /products/post |
-| **PAYLOAD:** | {&quot;user\_id&quot;: 1235,&quot;id\_post&quot;: 18,&quot;date&quot;: &quot;29-04-2021&quot;,&quot;detail&quot;: {&quot;product\_id&quot;: 1,&quot;product\_name&quot;: &quot;Silla Gamer&quot;,&quot;type&quot;: &quot;Gamer&quot;,&quot;brand&quot;: &quot;Racer&quot;,&quot;color&quot;: &quot;Red &amp; Black&quot;,&quot;notes&quot;: &quot;Special Edition&quot;},&quot;category&quot;: 100,&quot;price&quot;: 1500.50} |
-| **RESPONSE** | Status Code 200 (todo OK)Status Code 400 (Bad Request) |
+
+*Ejemplo*
+```sh
+/products/post
+```
+*Respuesta exitosa*
+```sh
+Status code 200
+{
+  "user_id": 3,
+  "id_post": 18,
+  "date": "17-09-2021",
+  "detail": {
+    "product_id": 1,
+    "product_name": "Silla Gamer",
+    "type": "Gamer",
+    "brand": "Racer",
+    "color": "Red & Black",
+    "notes": "Special Edition"
+  },
+  "category": 100,
+  "price": 1500.50
+}
+
+```
+
+*Respuesta falida*
+```sh
+Status code 400
+{
+"code": "400",
+"message": "La operacion no se puede realizar: Los campos se ingresaron incorrectamente"
+}
+```
+
 
 **Filtros/Parámetros:**
 
@@ -138,14 +201,52 @@ Respuesta exitosa
 
 **US 0006:** Obtener un listado de las publicaciones realizadas por los vendedores que un usuario sigue en las últimas dos semanas (para esto tener en cuenta ordenamiento por fecha, publicaciones más recientes primero).
 
-**Sign**** :**
-
 | **Method** | **SIGN** |
 | --- | --- |
 | GET | /products/followed/{user\_id}/list |
-| **Ejemplo:** /products/followed/4698/list |
-| **RESPONSE:** | {&quot;user\_id&quot;: 4698,&quot;posts&quot;: [{&quot;id\_post&quot;: 32,&quot;date&quot;: &quot;01-05-2021&quot;,&quot;detail&quot;: {&quot;product\_id&quot;: 62,&quot;product\_name&quot;: &quot;Headset RGB Inalámbrico&quot;,&quot;type&quot;: &quot;Gamer&quot;,&quot;brand&quot;: &quot;Razer&quot;,&quot;color&quot;: &quot;Green with RGB&quot;,&quot;notes&quot;: &quot;Sin Batería&quot;},&quot;category&quot;: 120,&quot;price&quot;: 2800.50}, {&quot;id\_post&quot;: 18,&quot;date&quot;: &quot;29-04-2021&quot;,&quot;detail&quot;: {&quot;product\_id&quot;: 1,&quot;product\_name&quot;: &quot;Silla Gamer&quot;,&quot;type&quot;: &quot;Gamer&quot;,&quot;brand&quot;: &quot;Racer&quot;,&quot;color&quot;: &quot;Red &amp; Black&quot;,&quot;notes&quot;: &quot;Special Edition&quot;},&quot;category&quot;: 100,&quot;price&quot;: 15000.50}]}
-|
+
+*Ejemplo*
+```sh
+/products/followed/2/list
+```
+*Respuesta exitosa*
+```sh
+Status code 200
+{
+    "user_id": 1,
+    "posts": [
+        {
+            "id_post": 18,
+            "date": "17-09-2021",
+            "price": 1500.5,
+            "category": 100,
+            "detail": {
+                "product_id": 1,
+                "product_name": "Silla Gamer",
+                "type": "Gamer",
+                "brand": "Racer",
+                "color": "Red & Black",
+                "notes": "Special Edition"
+            }
+        },
+        {
+            "id_post": 28,
+            "date": "19-10-2021",
+            "price": 1500.5,
+            "category": 100,
+            "detail": {
+                "product_id": 3,
+                "product_name": "Teclado Gamer",
+                "type": "Gamer",
+                "brand": "Racer",
+                "color": "Red & Black",
+                "notes": "Special Edition"
+            }
+        }
+    ]
+}
+```
+
 
 **Filtros/Parámetros:**
 
@@ -155,12 +256,29 @@ Respuesta exitosa
 
 **US 0007:** Poder realizar la acción de &quot;Unfollow&quot; (dejar de seguir) a un determinado vendedor.
 
-**Sign**** :**
+
 
 | **Method** | **SIGN** |
 | --- | --- |
 | POST | /users/{user\_id}/unfollow/{user\_id\_to\_unfollow} |
-| **Ejemplo:** /users/1569/unfollow/1235 |
+
+
+**Ejemplo**
+```sh
+POST /users/1/unfollow/2
+```
+*Respuesta exitosa*
+```sh
+Status code 200
+```
+*Respuesta fallida*
+```sh
+Status code 400
+{
+  code: 400,
+  message: "La operacion no se puede realizar: No se encuentra el usuario 2"
+}
+```
 
 **Filtros/Parámetros:**
 
@@ -171,11 +289,13 @@ Respuesta exitosa
 
 **US 0008:** Ordenamiento alfabético ascendente y descendente
 
-**Sign**** :**
+
 
 | **Method** | **SIGN** |
 | --- | --- |
-| GET | **Ejemplos:** /users/{user\_id}/followers/list?order=name\_asc/users/{user\_id}/followers/list?order=name\_desc/users/{user\_id}/followed/list?order=name\_asc/users/{user\_id}/followed/list?order=name\_desc |
+| GET | /users/{user\_id}/followers/list?order={order} |
+| GET | /users/{user\_id}/followed/list?order={order} |
+
 
 | **order** | **Description** |
 | --- | --- |
@@ -184,18 +304,17 @@ Respuesta exitosa
 
 **US 0009:** Ordenamiento por fecha ascendente y descendente
 
-**Sign**** :**
 
 | **Method** | **SIGN** |
 | --- | --- |
-| GET | **Ejemplos:** /products/followed/{user\_id}/list?order=date\_asc/products/followed/{user\_id}/list?order=date\_desc |
+| GET | /products/followed/{user\_id}/list?order={order} |
+
 
 | **order** | **Description** |
 | --- | --- |
 | date\_asc | Fecha ascendente (de más antigua a más nueva) |
 | date\_desc | Fecha descendente (de más nueva a más antigua) |
 
-\ ***Nota:** Este ordenamiento aplica solo para la US-006
 
 ## Requerimientos técnicos sin implementación:
 **Extra Bonus**
@@ -272,3 +391,11 @@ Respuesta exitosa
 | price | double | Precio del producto |
 | has\_promo | boolean | Campo true o false para determinar si un producto está en promoción o no |
 | discount | double | En caso de que un producto estuviese en promoción, establece el monto de descuento. |
+
+
+### Mejorías a implementar
+- Operaciones CRUD para usuarios y productos.
+- Generación de los ID aleatorios y únicos.
+- Implementación de base de datos.
+- Agregar manejo de excepciones en la capa de repositorio.
+- Realización de test.
