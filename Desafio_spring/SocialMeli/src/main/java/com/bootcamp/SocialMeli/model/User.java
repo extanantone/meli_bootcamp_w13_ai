@@ -1,9 +1,6 @@
 package com.bootcamp.SocialMeli.model;
 
-import com.bootcamp.SocialMeli.exception.ActionNotAllowedException;
-import com.bootcamp.SocialMeli.exception.PostAlreadyExistsException;
-import com.bootcamp.SocialMeli.exception.UserIsAlreadyFollowingException;
-import com.bootcamp.SocialMeli.exception.UserIsNotFollowingException;
+import com.bootcamp.SocialMeli.exception.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,6 +46,7 @@ public class User implements IUser{
     public void addFollowed(User user) {
         int userId = user.getId();
         if (this.followed.containsKey(userId)) throw new UserIsAlreadyFollowingException(this.id, userId);
+        if (userId == this.id) throw new UserCannotFollowThemselfException(userId);
         if (!user.isSeller()) throw new ActionNotAllowedException("non-seller is not allowed to have followers");
         this.followed.put(userId, user);
     }
@@ -61,6 +59,7 @@ public class User implements IUser{
     public void addFollower(User user) {
         int userId = user.getId();
         if (this.followers.containsKey(userId)) throw new UserIsAlreadyFollowingException(userId, this.id);
+        if (userId == this.id) throw new UserCannotFollowThemselfException(userId);
         if (!this.isSeller) throw new ActionNotAllowedException("non-seller is not allowed to have followers");
         this.followers.put(userId, user);
     }

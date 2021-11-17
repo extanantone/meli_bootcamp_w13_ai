@@ -58,5 +58,14 @@ public class UserExceptionHandler {
                         e.getMessage() ),
                 HttpStatus.BAD_REQUEST );
     }
+
+    @ExceptionHandler(UserCannotFollowThemselfException.class)
+    public ResponseEntity<ErrorDTO> userCannotFollowThemselfHandler(UserCannotFollowThemselfException e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "user_cannot_follow_themselves",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST );
+    }
 }
 

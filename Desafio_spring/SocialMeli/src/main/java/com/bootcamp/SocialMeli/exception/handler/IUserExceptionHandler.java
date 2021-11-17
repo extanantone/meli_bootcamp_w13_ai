@@ -20,4 +20,7 @@ public interface IUserExceptionHandler {
 
     @ExceptionHandler(ActionNotAllowedException.class)
     ResponseEntity<ErrorDTO> actionNotAllowedHandler(ActionNotAllowedException e);
+
+    @ExceptionHandler(UserCannotFollowThemselfException.class)
+    ResponseEntity<ErrorDTO> userCannotFollowThemselfHandler(UserCannotFollowThemselfException e);
 }
