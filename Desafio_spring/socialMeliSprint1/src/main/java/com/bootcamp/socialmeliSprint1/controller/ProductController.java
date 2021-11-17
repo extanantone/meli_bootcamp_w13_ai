@@ -3,7 +3,7 @@ package com.bootcamp.socialmeliSprint1.controller;
 import com.bootcamp.socialmeliSprint1.dto.request.PostInDTO;
 import com.bootcamp.socialmeliSprint1.dto.request.PostInPromoDTO;
 import com.bootcamp.socialmeliSprint1.dto.response.post.ProductsPromoInfoDTO;
-import com.bootcamp.socialmeliSprint1.dto.response.post.SellerProductsInPromoListDTO;
+import com.bootcamp.socialmeliSprint1.dto.response.post.SellerProductsInPromoList;
 import com.bootcamp.socialmeliSprint1.dto.response.post.SellersPostsDTO;
 import com.bootcamp.socialmeliSprint1.service.IProductService;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +53,7 @@ public class ProductController {
     }
 
     @GetMapping(path = "/{user_id}/list")
-    public ResponseEntity<SellerProductsInPromoListDTO> getListProductsInPromo(@PathVariable Integer user_id){
+    public ResponseEntity<SellerProductsInPromoList> getListProductsInPromo(@PathVariable Integer user_id){
         return ResponseEntity.ok(productService.getProductsInPromo(user_id));
     }
 

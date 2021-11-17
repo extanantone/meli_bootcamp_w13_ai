@@ -1,10 +1,10 @@
 package com.bootcamp.socialmeliSprint1.dto.comparator;
 
-import com.bootcamp.socialmeliSprint1.dto.response.user.BasicUserInfoDTO;
+import com.bootcamp.socialmeliSprint1.dto.response.user.BasicUserInfo;
 
 import java.util.Comparator;
 
-public class ComparatorUserNameBasicUserDTO implements Comparator<BasicUserInfoDTO> {
+public class ComparatorUserNameBasicUserDTO implements Comparator<BasicUserInfo> {
 
     SortOrder order;
 
@@ -13,7 +13,7 @@ public class ComparatorUserNameBasicUserDTO implements Comparator<BasicUserInfoD
     }
 
     @Override
-    public int compare(BasicUserInfoDTO o1, BasicUserInfoDTO o2) {
+    public int compare(BasicUserInfo o1, BasicUserInfo o2) {
         return (order == SortOrder.ASC)
                 ? o1.getUserName().compareTo(o2.getUserName())
                 : o1.getUserName().compareTo(o2.getUserName()) * -1;

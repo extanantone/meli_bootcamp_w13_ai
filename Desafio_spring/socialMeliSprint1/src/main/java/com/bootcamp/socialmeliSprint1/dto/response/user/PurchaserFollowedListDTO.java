@@ -12,11 +12,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PurchaserFollowedListDTO extends BasicUserInfoDTO {
+public class PurchaserFollowedListDTO extends BasicUserInfo{
 
-    List<BasicUserInfoDTO> followed;
+    List<BasicUserInfo> followed;
 
-    public PurchaserFollowedListDTO(int userId, String userName, List<BasicUserInfoDTO> followed) {
+    public PurchaserFollowedListDTO(int userId, String userName, List<BasicUserInfo> followed) {
         super(userId, userName);
         this.followed = followed;
     }

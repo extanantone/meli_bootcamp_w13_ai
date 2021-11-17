@@ -2,7 +2,7 @@ package com.bootcamp.socialmeliSprint1.service;
 
 import com.bootcamp.socialmeliSprint1.dto.comparator.ComparatorUserNameBasicUserDTO;
 import com.bootcamp.socialmeliSprint1.dto.comparator.SortOrder;
-import com.bootcamp.socialmeliSprint1.dto.response.user.BasicUserInfoDTO;
+import com.bootcamp.socialmeliSprint1.dto.response.user.BasicUserInfo;
 import com.bootcamp.socialmeliSprint1.dto.response.user.PurchaserFollowedListDTO;
 import com.bootcamp.socialmeliSprint1.dto.response.user.SellerFollowersInfoDTO;
 import com.bootcamp.socialmeliSprint1.dto.response.user.SellerFollowersListDTO;
@@ -71,10 +71,10 @@ public class UserServiceImpl implements IUserService {
                 ()-> new NotFoundUsuarioException(sellerId)
         );
 
-        List<BasicUserInfoDTO> followers = new ArrayList<>();
+        List<BasicUserInfo> followers = new ArrayList<>();
 
         socialMeliRepository.getSellerFollowers(sellerId).stream().forEach(follower ->{
-            followers.add(new BasicUserInfoDTO(follower.getUserID(),follower.getUserName()));
+            followers.add(new BasicUserInfo(follower.getUserID(),follower.getUserName()));
         });
 
         return new SellerFollowersListDTO(sellerId, seller.getUserName(), followers);
@@ -87,10 +87,10 @@ public class UserServiceImpl implements IUserService {
                 () -> new NotFoundUsuarioException(purchaserId)
         );
 
-        List<BasicUserInfoDTO> followed = new ArrayList<>();
+        List<BasicUserInfo> followed = new ArrayList<>();
 
         socialMeliRepository.gerPurchaserFollowed(purchaserId).stream().forEach(follow ->{
-            followed.add(new BasicUserInfoDTO(follow.getUserID(),follow.getUserName()));
+            followed.add(new BasicUserInfo(follow.getUserID(),follow.getUserName()));
         });
 
         return new PurchaserFollowedListDTO(purchaserId,purchaser.getUserName(),followed);
@@ -141,7 +141,7 @@ public class UserServiceImpl implements IUserService {
         return res;
     }
 
-    private void sort(List<BasicUserInfoDTO> list, String order){
+    private void sort(List<BasicUserInfo> list, String order){
 
         StringTokenizer st = new StringTokenizer(order,"_");
 

@@ -138,7 +138,7 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public SellerProductsInPromoListDTO getProductsInPromo(Integer sellerId) {
+    public SellerProductsInPromoList getProductsInPromo(Integer sellerId) {
 
         Seller seller = socialMeliRepository.getSeller(sellerId).orElseThrow(
                 ()-> new NotFoundUsuarioException(sellerId)
@@ -154,7 +154,7 @@ public class ProductServiceImpl implements IProductService{
             }
         });
 
-        return new SellerProductsInPromoListDTO(sellerId,seller.getUserName(),posts);
+        return new SellerProductsInPromoList(sellerId,seller.getUserName(),posts);
     }
 
     @Override

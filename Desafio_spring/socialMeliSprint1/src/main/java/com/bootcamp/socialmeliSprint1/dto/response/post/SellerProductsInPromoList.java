@@ -1,6 +1,6 @@
 package com.bootcamp.socialmeliSprint1.dto.response.post;
 
-import com.bootcamp.socialmeliSprint1.dto.response.user.BasicUserInfoDTO;
+import com.bootcamp.socialmeliSprint1.dto.response.user.BasicUserInfo;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -14,11 +14,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class SellerProductsInPromoListDTO extends BasicUserInfoDTO {
+public class SellerProductsInPromoList extends BasicUserInfo {
 
     List<PostPromoOutDTO> posts;
 
-    public SellerProductsInPromoListDTO(int userId, String userName, List<PostPromoOutDTO> posts) {
+    public SellerProductsInPromoList(int userId, String userName, List<PostPromoOutDTO> posts) {
         super(userId, userName);
         this.posts = posts;
     }
