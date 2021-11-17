@@ -28,12 +28,12 @@ public class SocialMeliRepository implements ISocialMeliRepository{
     private Map<Integer, Usuario> usuarios;
     private Map<Integer, Publicacion> publicaciones;
 
-    private final String json_source = "develop/";
+    private final String jsonSource = "develop/";
 
     public SocialMeliRepository() {
         this.usuarios = new HashMap<>();
         List<Usuario> listaUsuarios = cargarUsuarios();
-
+        //se cargan los usuarios del json al Map
         for (Usuario user : listaUsuarios) {
             this.usuarios.put(user.getUserId(), user);
         }
@@ -44,7 +44,7 @@ public class SocialMeliRepository implements ISocialMeliRepository{
     public List<Usuario> cargarUsuarios(){
         File file = null;
         try {
-            file = ResourceUtils.getFile("classpath:" + json_source + "usuarios.json");
+            file = ResourceUtils.getFile("classpath:" + jsonSource + "usuarios.json");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class SocialMeliRepository implements ISocialMeliRepository{
     public void cargarPublicaciones(){
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader( "src/main/resources/" + json_source + "publicaciones.json"))
+        try (FileReader reader = new FileReader( "src/main/resources/" + jsonSource + "publicaciones.json"))
         {
             //Read JSON file
             JSONArray publicaciones = (JSONArray) jsonParser.parse(reader);

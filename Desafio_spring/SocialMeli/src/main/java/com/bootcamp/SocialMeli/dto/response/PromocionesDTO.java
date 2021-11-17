@@ -13,8 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PromocionesDTO extends UsuarioDTO{
-    //private Integer userId;
-    //private String userName;
+
     private List<InfoPromoDTO> posts;
 
     public PromocionesDTO(Integer userId, String userName, List<InfoPromoDTO> posts) {

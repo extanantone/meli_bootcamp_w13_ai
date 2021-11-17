@@ -47,6 +47,11 @@ public class UsersSMController {
         return new ResponseEntity<>(this.socialMeliService.unfollowVendedor(userId, userIdToUnfollow), HttpStatus.OK);
     }
 
+    /**
+     * Endpoint para crear un nuevo usuario, sin seguidores, sin seguidos, ni publicaciones.
+     * @param usuario
+     * @return
+     */
     @PostMapping("/new")
     public ResponseEntity<?> crearUsuario(@RequestBody UsuarioDTO usuario){
         return new ResponseEntity<>(this.socialMeliService.crearUsuario(usuario), HttpStatus.OK);

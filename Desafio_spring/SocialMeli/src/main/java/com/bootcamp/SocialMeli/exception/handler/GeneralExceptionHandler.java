@@ -4,6 +4,7 @@ import com.bootcamp.SocialMeli.dto.response.ErrorDTO;
 import com.bootcamp.SocialMeli.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +55,21 @@ public class GeneralExceptionHandler {
     @ExceptionHandler(InvalidDiscountException.class)
     public ResponseEntity<?> invalidDiscountException(){
         return new ResponseEntity<>(new ErrorDTO("El descuento a aplicar debe estar comprendido entre 0% y 100%"), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidPriceException.class)
+    public ResponseEntity<?> invalidPriceException(){
+        return new ResponseEntity<>(new ErrorDTO("El precio del producto no puede ser negativo"), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<?> nullPointerException(){
+        return new ResponseEntity<>(new ErrorDTO("Error en la request"), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> httpMessageNotReadableException(){
+        return new ResponseEntity<>(new ErrorDTO("Error en la request"), HttpStatus.BAD_REQUEST);
     }
 
 }

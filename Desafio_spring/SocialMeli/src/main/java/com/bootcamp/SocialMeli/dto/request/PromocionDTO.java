@@ -15,12 +15,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PromocionDTO extends PublicacionDTO {
-    private boolean has_promo;
+    private boolean hasPromo;
     private double discount;
 
-    public PromocionDTO(int userId, int idPost, LocalDate date, DetalleProductoDTO detail, int category, double price, boolean has_promo, double discount) {
+    public PromocionDTO(int userId, int idPost, LocalDate date, DetalleProductoDTO detail, int category, double price, boolean hasPromo, double discount) {
         super(userId, idPost, date, detail, category, price);
-        this.has_promo = has_promo;
+        this.hasPromo = hasPromo;
         this.discount = discount;
     }
 }

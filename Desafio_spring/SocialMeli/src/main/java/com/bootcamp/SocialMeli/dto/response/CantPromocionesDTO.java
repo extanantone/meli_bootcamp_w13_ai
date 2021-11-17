@@ -11,10 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class CantPromocionesDTO extends UsuarioDTO{
-    private Integer promo_products_count;
+    private Integer promoProductsCount;
 
-    public CantPromocionesDTO(Integer userId, String userName, Integer promo_products_count) {
+    public CantPromocionesDTO(Integer userId, String userName, Integer promoProductsCount) {
         super(userId, userName);
-        this.promo_products_count = promo_products_count;
+        this.promoProductsCount = promoProductsCount;
     }
 }

@@ -18,6 +18,8 @@ Estas se guardan en la misma lista con todas las publicaciones y cuando se solic
  - Para que un usuario pueda seguir a otro, éste debe ser un vendedor, es decir, tener al menos una publicación.
  - Los posteos no pueden contener una fecha futura.
  - El descuento a aplicar a las promociones debe estar comprendido entre el 0% y el 100%.
+ - Debido a que únicamente los vendedores pueden tener seguidores, toda consulta acerca de la cantidad o lista de seguidores que 
+se realice sobre un usuario no vendedor devolverá un mensaje de error (con un código 400 - Bad Request).
 
 ### Diagrama de clases del Modelo
 A continuación se muestra el diagrama de clases que contiene los objetos del dominio del problema y sus relaciones.
