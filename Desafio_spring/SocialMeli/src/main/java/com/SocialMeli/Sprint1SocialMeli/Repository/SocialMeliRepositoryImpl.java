@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Repository
 public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
@@ -56,6 +55,7 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
             comprador.deleteFollowed(vendedorId);
             Vendedor vendedor = vendedores.get(vendedorId);
             vendedor.deleteFollower(compradorId);
+
             return true;
 
         } else {
@@ -66,7 +66,7 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
 
     }
 
-    // Revisar si es util antes de entregar
+/*    // Revisar si es util antes de entregar
     @Override
     public List<Comprador> vendedorFollowersList(List<Integer> followerIds) {
 
@@ -75,12 +75,7 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
                 .collect(Collectors.toList());
 
         return compradorList;
-    }
-
-    @Override
-    public List<Vendedor> compradorFollowed(Integer compradorID) {
-        return null;
-    }
+    }*/
 
     @Override
     public boolean newPost(Integer venderdorId, Publicacion publicacion) {
@@ -88,37 +83,20 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
         List<Publicacion> publicacions = vendedores.get(venderdorId).getPosts();
         publicacions.add(publicacion);
         vendedores.get(venderdorId).setPosts(publicacions);
+
         return true;
     }
 
-    @Override
-    public List<Publicacion> postByVendedorOfComprador(Integer compradorID) {
-        return null;
-    }
-
-    @Override
-    public List<Comprador> vendedorFollowersOrderByName(Integer vendedorId, String orden) {
-
-        return null;
-    }
-
-    @Override
-    public List<Vendedor> compradorFollowedOrderByName(Integer compradorID, String orden) {
-        return null;
-    }
-
-    @Override
-    public List<Publicacion> postByVendedorOfCompradorOrderByDate(Integer compradorID, String orden) {
-        return null;
-    }
 
     @Override
     public Comprador getComprador(Integer compradorId) {
+
         return compradores.get(compradorId);
     }
 
     @Override
     public Vendedor getVendedor(Integer vendedorId) {
+
         return vendedores.get(vendedorId);
     }
 
@@ -126,22 +104,18 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     public Boolean existsFollow(Integer compradorId, Integer vendedorId) {
 
         Comprador comprador = getComprador(compradorId);
-        Boolean resp1 = comprador.getFolloweds().stream()
-                .anyMatch(c -> c.equals(vendedorId));
 
-        return resp1;
+        return comprador.getFolloweds().stream()
+                .anyMatch(c -> c.equals(vendedorId));
     }
 
     @Override
     public Boolean existPost(Integer vendedorId, Integer postId) {
 
-        boolean resp = vendedores.get(vendedorId)
+        return vendedores.get(vendedorId)
                 .getPosts()
                 .stream()
                 .anyMatch(ven -> ven.getPostId() == postId);
-
-
-        return resp;
     }
 
 

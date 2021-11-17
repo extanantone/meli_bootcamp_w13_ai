@@ -130,7 +130,6 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
             throw new NotFoundUsuarioException(publicacionDTO.getUserId());
         }
 
-        //TODO Crear validacion de si existe el id de la publicacion
         if (repositorio.existPost(publicacionDTO.getUserId(), publicacionDTO.getIdPost()))
             throw new PostIdDuplicateVendedorExeption(publicacionDTO.getUserId(), publicacionDTO.getIdPost());
 
@@ -157,12 +156,10 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
         List<Integer> followerdIds = comprador.getFolloweds();
         List<Vendedor> ven = followerdIds.stream().map(repositorio::getVendedor).collect(Collectors.toList());
 
-
         List<Publicacion> publicaciones = ven.stream().flatMap(u -> u.getPosts().stream()).filter(l -> l.getDate().isAfter(LocalDate.now().minusWeeks(2))).collect(Collectors.toList());
 
         List<PublicacionSinUserIdDTO> publicacionSinUserIdDTO = publicaciones.stream()
-                .map(p -> new PublicacionSinUserIdDTO(p.getPostId(), p.getCategory(), p.getPrice(), p.getDate(),
-                        new ProductoDTO(p.getDetail().getProductId(), p.getDetail().getProductName(), p.getDetail().getType(), p.getDetail().getBrand(), p.getDetail().getColor(), p.getDetail().getNotes())))
+                .map(p -> new PublicacionSinUserIdDTO(p.getPostId(), p.getCategory(), p.getPrice(), p.getDate(), new ProductoDTO(p.getDetail().getProductId(), p.getDetail().getProductName(), p.getDetail().getType(), p.getDetail().getBrand(), p.getDetail().getColor(), p.getDetail().getNotes())))
                 .collect(Collectors.toList());
 
 
