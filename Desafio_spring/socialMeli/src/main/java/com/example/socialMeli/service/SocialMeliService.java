@@ -156,13 +156,15 @@ public class SocialMeliService implements  ISocialMeliService{
             for (Vendedor ve: vendedores) {
                 PublicacionesVendedoresDTO retorno = new PublicacionesVendedoresDTO(ve.getUser_id(), ve.getName());
                 for (Publicacion p:ve.getPublicaciones()) {
-                    flag = verificarVendedorYFecha(p.getFecha());
-                    if(guardadas.size()!=0 && flag && guardadas.get(0).getId_publicacion()== p.getId_publicacion() && guardadas.get(0).getId_user() == ve.getUser_id() ){
-                        ProductoDTO producto = deProductoAProductoDTO(p);
-                        retorno.getPosts().add(crearPublicacionDTO(p, producto));
-                        guardadas.remove(0);
-                    }else if(!flag){
-                        guardadas.remove(0);
+                    if(guardadas.size()!=0){
+                        flag = verificarVendedorYFecha(guardadas.get(0).getFecha());
+                        if(flag && guardadas.get(0).getId_publicacion()== p.getId_publicacion() && guardadas.get(0).getId_user() == ve.getUser_id() ){
+                            ProductoDTO producto = deProductoAProductoDTO(p);
+                            retorno.getPosts().add(crearPublicacionDTO(p, producto));
+                            guardadas.remove(0);
+                        }else if(!flag){
+                            guardadas.remove(0);
+                        }
                     }
                 }
                 if(retorno.getPosts().size()!=0){
