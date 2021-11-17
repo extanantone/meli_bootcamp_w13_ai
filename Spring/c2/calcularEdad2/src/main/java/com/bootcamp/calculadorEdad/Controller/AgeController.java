@@ -16,6 +16,20 @@ public class AgeController {
 
         Period p = Period.between(cumple, hoy);
 
-        return p.getYears() + " años";
+        return p.getYears() + " años " + p.getMonths() + " meses";
     }
+
+//    @GetMapping(path = "/{day}/{month}/{year}")
+//    public String read(@PathVariable int day,
+//                       @PathVariable int month,
+//                       @PathVariable int year){
+//
+//        LocalDate now = LocalDate.now();
+//
+//        LocalDate past = LocalDate.of(year,month,day);
+//
+//        // int edad = now.getYear() - past.getYear();
+//
+//        return "edad : " + past.until(now).getYears();
+//    }
 }

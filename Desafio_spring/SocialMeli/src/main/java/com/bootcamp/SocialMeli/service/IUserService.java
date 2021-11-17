@@ -9,4 +9,6 @@ public interface IUserService {
     public FollowersDTO getFollowers(Integer userId, String order);
     public FollowedDTO getFollowed(Integer userId, String order);
     public void newPublication(PostDTO dto);
+    public PostsListDTO getPostsList(Integer userId, String order);
+
 }

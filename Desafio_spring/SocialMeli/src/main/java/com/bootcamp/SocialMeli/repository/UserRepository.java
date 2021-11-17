@@ -22,6 +22,16 @@ public class UserRepository implements IUserRepository{
     private Map<Integer, Post> posts = new HashMap<>();
     private Map<Integer, Detail> details = new HashMap<>();
 
+    public void addPost(Post post){
+        this.posts.put(post.getIdPost(), post);
+        System.out.println(post.toString());
+        System.out.println(posts.toString());
+    }
+
+    public Map<Integer, Post> getPosts() {
+        return posts;
+    }
+
     public UserRepository(List<User> usersList) {
         this.usersList = loadDataBase();
         System.out.println(this.usersList);

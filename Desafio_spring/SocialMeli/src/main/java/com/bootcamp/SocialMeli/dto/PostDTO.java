@@ -17,7 +17,7 @@ public class PostDTO {
     Integer userId;
     Integer idPost;
 //    @JsonFormat(pattern="dd-MM-YYYY")
-    LocalDate date;
+    String date;
     DetailDTO detail;
     Integer category;
     Double price;
@@ -25,7 +25,8 @@ public class PostDTO {
     public PostDTO(Integer userId, Integer idPost, String date, DetailDTO detail, Integer category, Double price) {
         this.userId = userId;
         this.idPost = idPost;
-        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+//        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        this.date = date;
         this.detail = detail;
         this.category = category;
         this.price = price;

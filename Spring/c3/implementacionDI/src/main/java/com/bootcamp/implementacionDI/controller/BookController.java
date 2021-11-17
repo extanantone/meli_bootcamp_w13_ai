@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class BookController {
+public class BookController {0
 
 //    El autowired inyecta la dependencia
 //    sin necesidad de crear un nuevo objeto

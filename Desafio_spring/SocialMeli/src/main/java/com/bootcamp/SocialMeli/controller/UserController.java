@@ -48,4 +48,10 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @GetMapping(path = "/products/followed/{user_id}/list")
+    public ResponseEntity getPostsList(@PathVariable("user_id") Integer userId, @RequestParam(required = false) String order){
+        PostsListDTO dto = service.getPostsList(userId, order);
+        return new ResponseEntity(dto, HttpStatus.OK);
+    }
+
 }
