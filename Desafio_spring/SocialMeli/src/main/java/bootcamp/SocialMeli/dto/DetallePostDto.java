@@ -1,6 +1,5 @@
 package bootcamp.SocialMeli.dto;
 
-
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -14,6 +13,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 
-public class ExceptionDto {
-    public String message;
+public class DetallePostDto {
+    public int itemId;
+    public String itemName;
+    private String type;
+
 }

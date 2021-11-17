@@ -1,6 +1,7 @@
 package bootcamp.SocialMeli.controller;
 
 import bootcamp.SocialMeli.dto.ExceptionDto;
+import bootcamp.SocialMeli.exception.InvalidPostException;
 import bootcamp.SocialMeli.exception.InvalidUserException;
 import bootcamp.SocialMeli.exception.NotFoundUserException;
 import org.springframework.http.HttpStatus;
@@ -18,5 +19,10 @@ public class ExceptionHandlerController {
     @ExceptionHandler(NotFoundUserException.class)
     public ResponseEntity<?> handlerNotFoundUser(NotFoundUserException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidPostException.class)
+    public ResponseEntity<?> handlerInvalidPost(InvalidPostException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionDto(e.getMessage()));
     }
 }
