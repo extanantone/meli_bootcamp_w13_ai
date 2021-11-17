@@ -156,13 +156,22 @@ public class SocialMeliService implements  ISocialMeliService{
         }
         return flag;
     }
+    public List<Publicacion> obtenerPublicacionesDeVendedoresQueSigo(List<Vendedor> vendedores, String order){
+        List<Publicacion> posts = new ArrayList<>();
+        for (Vendedor v: vendedores) {
+            for (Publicacion p: v.getPublicaciones()) {
+                posts.add(p);
+            }
+        }
+        posts = ordenar(posts, order);
+        return posts;
+    }
     public List<PublicacionesVendedoresDTO> obtenerPublicaciones (int id, String order) throws UsuarioNoEncontradoError{
         boolean flag, entra = true;
-        List<Publicacion> guardadas = SMRepositorio.retornarPublicaciones();
-        guardadas = ordenar(guardadas, order);
         List<PublicacionesVendedoresDTO>  posts = new ArrayList<>();
         Comprador compra = errorComprador(id);
         List<Vendedor> vendedores = compra.getSiguiendo();
+        List<Publicacion> guardadas = obtenerPublicacionesDeVendedoresQueSigo(vendedores, order);
         while(guardadas.size()>0 && entra){
             entra=verificaTamaño(vendedores);
             for (Vendedor ve: vendedores) {

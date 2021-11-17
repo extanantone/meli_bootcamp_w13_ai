@@ -26,6 +26,7 @@ public interface ISocialMeliService {
     public RespuestaSimpleDTO añadirPost (PublicacionDTO pub) throws UsuarioNoEncontradoError;
     public List<Publicacion>ordenar(List<Publicacion> guardadas, String order);
     public boolean verificaTamaño(List<?> lista);
+    public List<Publicacion> obtenerPublicacionesDeVendedoresQueSigo(List<Vendedor> vendedores, String order);
     List<PublicacionesVendedoresDTO> obtenerPublicaciones (int id, String order) throws UsuarioNoEncontradoError;
     public boolean verificarVendedorYFecha(LocalDate fecha);
     public RespuestaSimpleDTO dejarDeSeguir (int id_comprado, int id_vendedor) throws UsuarioNoEncontradoError;
