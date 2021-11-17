@@ -1,0 +1,24 @@
+package com.socialMeli.SocialMeli.userDto;
+
+public class ResponseDTO {
+    private String message="";
+
+    public ResponseDTO(String message) {
+        this.message = message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    @Override
+    public String toString() {
+        return "ResponseDTO{" +
+                "message='" + message + '\'' +
+                '}';
+    }
+}
