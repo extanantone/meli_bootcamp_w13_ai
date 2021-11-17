@@ -7,6 +7,7 @@ import com.example.socialmeli.model.PromoPost;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.repository.IPostRepository;
 import com.example.socialmeli.repository.IUserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -102,5 +103,12 @@ public class PostService implements IPostService{
             }
         }
         return userPosts;
+    }
+
+    @Override
+    public PromoCountDTO getPromoCount(Integer userId) {
+        User user = userRepository.find(userId);
+        PromoCountDTO promoCountDTO = new PromoCountDTO(user.getId(), user.getName(), user.getPromoPosts().size());
+        return promoCountDTO;
     }
 }

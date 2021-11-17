@@ -1,6 +1,7 @@
 package com.example.socialmeli.controller;
 
 import com.example.socialmeli.dto.PostDTO;
+import com.example.socialmeli.dto.PromoCountDTO;
 import com.example.socialmeli.dto.PromoPostDTO;
 import com.example.socialmeli.dto.UserPostDTO;
 import com.example.socialmeli.service.IPostService;
@@ -31,5 +32,10 @@ public class PostController {
     public ResponseEntity<?> postPromoPost(@RequestBody PromoPostDTO post) {
         postService.addPromoPost(post.getUserId(), post.getIdPost(), post);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("{user_id}/promo-post/count")
+    public ResponseEntity<PromoCountDTO> getPromoCount(@PathVariable("user_id") Integer userId) {
+        return new ResponseEntity<>(postService.getPromoCount(userId), HttpStatus.OK);
     }
 }
