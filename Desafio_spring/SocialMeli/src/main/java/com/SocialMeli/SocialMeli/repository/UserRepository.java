@@ -23,6 +23,7 @@ public class UserRepository implements IUserRepository{
 
         Map<Integer, User> sellers = new HashMap<>();
         sellers.put(seller1.getId(), seller1);
+        buyer2.setFollowed(sellers);
         sellers.put(seller2.getId(), seller2);
 
         Map<Integer, User> buyers = new HashMap<>();

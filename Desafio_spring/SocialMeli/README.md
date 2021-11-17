@@ -8,6 +8,53 @@ El objetivo de este desafío es aplicar los contenidos dados hasta el momento du
 Mercado Libre sigue creciendo y para el año que viene  tiene como objetivo empezar a implementar una serie de herramientas que permitan a los compradores y vendedores tener una experiencia totalmente innovadora, en donde el lazo que los una sea mucho más cercano.
 La fecha de lanzamiento se aproxima, por lo cual es necesaria la presentación de una versión Beta de lo que va a ser conocido como “SocialMeli”, en donde los compradores van a poder seguir a sus vendedores favoritos y enterarse de todas las novedades que los mismos posteen.
 
+### Criterios
+ * El sistema distingue vendedores de compradores, si bien ambos heredan de usuario solo los vendedores pueden tener seguidores, ademas un vendedor puede seguir a otro vendedor.
+ * Si el endpoint requiere un user_id de vendedor y se pasa el de un comprador retornara "Vendedor no encontrado"
+ * Si se requiere el user_id de un usuario (ya sea vendedor o comprador) y no lo encuentra se retornara "Usuario no encontrado"
+ * Solo los vendedores pueden realizar publicaciones de productos
+ * Los usuarios disponibles para pruebas son:
+```JSON
+    {
+        "id": 1,
+        "userName": "Seller1",
+        "followed": {},
+        "followers": {
+          "3": {
+            "id": 3,
+            "userName": "Buyer1"
+          },
+          "4": {
+            "id": 4,
+            "userName": "Buyer2"
+          }
+        },
+  
+        "id": 2,
+        "userName": "Seller2", 
+        "followed": {},
+        "followers": {},
+  
+        "id": 3,
+        "userName": "Buyer1",
+        "followed": {
+          "1": {
+            "id": 1,
+            "userName": "Seller1"
+          }
+        },
+  
+        "id": 4,
+        "userName": "Buyer2",
+        "followed": {
+          "1": {
+            "id": 1,
+            "userName": "Seller1"
+          }
+        }
+    }
+```
+
 ## Indice
 <a href="#US001">#US001</a><br>
 <a href="#US002">#US002</a><br>
