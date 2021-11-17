@@ -1,6 +1,6 @@
 package com.bootcamp.socialmeliSprint1.dto.response.post;
 
-import com.bootcamp.socialmeliSprint1.dto.response.user.BasicUserInfo;
+import com.bootcamp.socialmeliSprint1.dto.response.user.BasicUserInfoDTO;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ProductsPromoInfoDTO extends BasicUserInfo {
+public class ProductsPromoInfoDTO extends BasicUserInfoDTO {
 
     private int promoProductsCount;
 

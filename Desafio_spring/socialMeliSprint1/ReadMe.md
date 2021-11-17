@@ -9,6 +9,11 @@ Por lo cual es necesaria la presentación de una versión Beta de lo que va a se
 como “SocialMeli”, en donde los compradores van a poder seguir a sus vendedores favoritos
 y enterarse de todas las novedades que los mismos posteen.
 
+
+### ARQUITECTURA DEL SISTEMA
+
+![Arquitectura del Sistema](docs/diagramaClases.png)
+
 ### REQUERIMIENTOS DEL SISTEMA
 
 1. **US 0001:** Poder realizar la acción de "Follow" (seguir) a un determinado vendedor.

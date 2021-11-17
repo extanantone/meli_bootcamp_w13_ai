@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class BasicUserInfo {
+public class BasicUserInfoDTO {
     private int userId;
     private String userName;
 }
