@@ -214,7 +214,7 @@ publicaciones más recientes primero).
     **Entradas:**
 
     | Method | END-PONT |
-        | :---        |     :---:   |
+    | :---        |     :---:   |
     | **POST**   |  [localhost:8080/products/{user_id}/promo-post/count]() |
     | **Ejemplo**  | [localhost:8080/products/4/promo-post/count]() |
     
