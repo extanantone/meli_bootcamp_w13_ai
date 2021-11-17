@@ -1,11 +1,9 @@
 package com.example.socialmeli.service;
 
-import com.example.socialmeli.dto.PostDTO;
-import com.example.socialmeli.dto.PostListDTO;
-import com.example.socialmeli.dto.ProductDetailDTO;
-import com.example.socialmeli.dto.UserPostDTO;
+import com.example.socialmeli.dto.*;
 import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.PostDetail;
+import com.example.socialmeli.model.PromoPost;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.repository.IPostRepository;
 import com.example.socialmeli.repository.IUserRepository;
@@ -43,8 +41,29 @@ public class PostService implements IPostService{
                 post.getCategory(),
                 post.getPrice()
         );
-        userRepository.find(userId).addPost(postId);
-        postRepository.addPost(postId, postModel);
+        if (postRepository.addPost(postId, postModel)) { userRepository.find(userId).addPost(postId); }
+    }
+
+    public void addPromoPost(Integer userId, Integer postId, PromoPostDTO post) {
+        PostDetail postDetail = new PostDetail(
+                post.getDetail().getProductId(),
+                post.getDetail().getProductName(),
+                post.getDetail().getType(),
+                post.getDetail().getBrand(),
+                post.getDetail().getColor(),
+                post.getDetail().getNotes()
+        );
+        PromoPost promoPostModel = new PromoPost(
+                post.getIdPost(),
+                post.getUserId(),
+                post.getDate(),
+                postDetail,
+                post.getCategory(),
+                post.getPrice(),
+                post.isHasPromo(),
+                post.getDiscount()
+        );
+        if (postRepository.addPromoPost(postId, promoPostModel)) { userRepository.find(userId).addPromoPost(postId); }
     }
 
     public UserPostDTO getPosts(Integer userId, String order) {

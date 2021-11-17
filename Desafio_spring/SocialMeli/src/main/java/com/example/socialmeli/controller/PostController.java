@@ -1,6 +1,7 @@
 package com.example.socialmeli.controller;
 
 import com.example.socialmeli.dto.PostDTO;
+import com.example.socialmeli.dto.PromoPostDTO;
 import com.example.socialmeli.dto.UserPostDTO;
 import com.example.socialmeli.service.IPostService;
 import org.springframework.http.HttpStatus;
@@ -24,5 +25,11 @@ public class PostController {
     public ResponseEntity<UserPostDTO> getPosts(@PathVariable(value = "user_id")Integer userId,
                                                 @RequestParam(required = false) String order) {
         return new ResponseEntity<>(postService.getPosts(userId, order), HttpStatus.OK);
+    }
+
+    @PostMapping("/promo-post")
+    public ResponseEntity<?> postPromoPost(@RequestBody PromoPostDTO post) {
+        postService.addPromoPost(post.getUserId(), post.getIdPost(), post);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
