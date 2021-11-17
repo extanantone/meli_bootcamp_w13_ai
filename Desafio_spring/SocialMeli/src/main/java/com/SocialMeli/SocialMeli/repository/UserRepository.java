@@ -51,7 +51,9 @@ public class UserRepository implements IUserRepository{
         BuyersDTO buyersDTO = null;
         try{
             buyersDTO = buyersDTOList.get(user_id-1);
-            throw new IndexOutOfBoundsException("El usuario no existe con id -> " + user_id );
+
+            if ( buyersDTO == null)
+                throw new IndexOutOfBoundsException("El usuario no existe con id -> " + user_id );
 
         }catch (IndexOutOfBoundsException e){
             System.out.println(e.getMessage());
@@ -66,7 +68,9 @@ public class UserRepository implements IUserRepository{
         SellersDTO sellersDTO = null;
         try{
             sellersDTO = sellersDTOList.get(user_id-1);
-            throw new IndexOutOfBoundsException("El usuario no existe con id -> " + user_id );
+
+            if ( sellersDTO == null)
+                throw new IndexOutOfBoundsException("El usuario no existe con id -> " + user_id );
 
         }catch (IndexOutOfBoundsException e){
             System.out.println(e.getMessage());
@@ -116,6 +120,7 @@ public class UserRepository implements IUserRepository{
                     .filter( user -> buyerUser.getUser_id() == user.getUser_id() )
                     .findAny()
                     .orElse(null);
+
             if( userDTO2 == null && band ){
                 userDTO2 = new UserDTO(buyerUser.getUser_id(), buyerUser.getUser_name());
 
@@ -220,7 +225,7 @@ public class UserRepository implements IUserRepository{
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyy");
 
             LocalDate fifteenDaysAgo = LocalDate.now(ZoneId.of("America/Bogota")).minusDays(15);
-            System.out.println("dd/MM/yyy" + dtf.format(fifteenDaysAgo));
+            //System.out.println("dd/MM/yyy" + dtf.format(fifteenDaysAgo));
 
             posts = posts.stream()
                     .filter( post -> post.getDate().isAfter( fifteenDaysAgo ))
@@ -281,24 +286,24 @@ public class UserRepository implements IUserRepository{
     @Override
     public BuyersDTO followedListSorted(Integer userId, String order) {
         BuyersDTO buyersDTO = findBuyerByUserId(userId);
-        System.out.println(order);
 
-        if ( order.equals("name_asc") ){
-            buyersDTO.getFollowed().sort(new Comparator<UserDTO>() {
-                @Override
-                public int compare(UserDTO o1, UserDTO o2) {
-                    return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
-                }
-            });
-        }else if ( order.equals("name_desc") ){
-            buyersDTO.getFollowed().sort(new Comparator<UserDTO>() {
-                @Override
-                public int compare(UserDTO o1, UserDTO o2) {
-                    return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
-                }
-            }.reversed());
+        if( buyersDTO != null && buyersDTO.getFollowed() != null ){
+            if ( order.equals("name_asc") ){
+                buyersDTO.getFollowed().sort(new Comparator<UserDTO>() {
+                    @Override
+                    public int compare(UserDTO o1, UserDTO o2) {
+                        return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
+                    }
+                });
+            }else if ( order.equals("name_desc") ){
+                buyersDTO.getFollowed().sort(new Comparator<UserDTO>() {
+                    @Override
+                    public int compare(UserDTO o1, UserDTO o2) {
+                        return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
+                    }
+                }.reversed());
+            }
         }
-
 
         return buyersDTO;
     }
@@ -306,23 +311,26 @@ public class UserRepository implements IUserRepository{
     @Override
     public SellersDTO followersListSorted(Integer userId, String order) {
         SellersDTO sellersDTO = findSellerByUserId(userId);
-        System.out.println(order);
 
-        if ( order.equals("name_asc") ){
-            sellersDTO.getFollowers().sort(new Comparator<UserDTO>() {
-                @Override
-                public int compare(UserDTO o1, UserDTO o2) {
-                    return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
-                }
-            });
-        }else if ( order.equals("name_desc") ){
-            sellersDTO.getFollowers().sort(new Comparator<UserDTO>() {
-                @Override
-                public int compare(UserDTO o1, UserDTO o2) {
-                    return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
-                }
-            }.reversed());
+        if ( sellersDTO != null && sellersDTO.getFollowers() != null ){
+            if ( order.equals("name_asc") ){
+                sellersDTO.getFollowers().sort(new Comparator<UserDTO>() {
+                    @Override
+                    public int compare(UserDTO o1, UserDTO o2) {
+                        return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
+                    }
+                });
+            }else if ( order.equals("name_desc") ){
+                sellersDTO.getFollowers().sort(new Comparator<UserDTO>() {
+                    @Override
+                    public int compare(UserDTO o1, UserDTO o2) {
+                        return o1.getUser_name().compareToIgnoreCase(o2.getUser_name());
+                    }
+                }.reversed());
+            }
         }
+
+
 
 
         return sellersDTO;
@@ -357,7 +365,6 @@ public class UserRepository implements IUserRepository{
                     .filter( post -> post.getUser_id() == userId )
                     .collect(Collectors.toList());
 
-            System.out.println("SIZE--->" + posts.size());
 
             user.setPromo_products_count(posts.size());
 
