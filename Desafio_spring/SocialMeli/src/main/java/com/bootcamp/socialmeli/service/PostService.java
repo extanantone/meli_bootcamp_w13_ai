@@ -48,7 +48,8 @@ public class PostService implements IPostService {
     }
 
 
-    private List<Post> orderPostsByDate(List<Post> posts, String order) {
+    @Override
+    public List<Post> orderPostsByDate(List<Post> posts, String order) {
         Comparator<Post> orderType;
         if (order.equals("date_asc")) {
             orderType = Comparator.comparing(Post::getDate);
@@ -60,12 +61,14 @@ public class PostService implements IPostService {
         return this.sortPost(posts, orderType);
     }
 
-    private List<Post> sortPost(List<Post> posts, Comparator<Post> orderType) {
+    @Override
+    public List<Post> sortPost(List<Post> posts, Comparator<Post> orderType) {
         return posts.stream().sorted(orderType).collect(Collectors.toList());
     }
 
 
     // US0010
+    @Override
     public void createPromo(ReqPromotionDTO reqPromotionDTO) {
 
         //TODO: Make exceptions

@@ -39,7 +39,6 @@ public class UsersController {
     @GetMapping("/{user_id}/followers/list")
     public ResponseEntity<VendedorDTO> getSellerFollowers(@PathVariable Long user_id, String order) {
         return new ResponseEntity(this.vendedorService.getFollowersList(user_id, order), HttpStatus.OK);
-
     }
 
     // US0004

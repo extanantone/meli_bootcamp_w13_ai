@@ -14,10 +14,10 @@ public interface IVendedorRepository {
     public List<User> getFollowers(Long idUser);
     public List<User> getFolloweds(Long idUser);
     public void addFollow(Long idFollower, Long idFollowed);
+    public void unFollow(Long idFollower, Long idFollowed);
     //post
     public void addPostToUser(Long idUser, Post post);
     public List<Post> getRecentPosts(Long idUser);
-    public void unFollow(Long idFollower, Long idFollowed);
     public List<Post> getPromoPosts(Long idUser);
 
 }

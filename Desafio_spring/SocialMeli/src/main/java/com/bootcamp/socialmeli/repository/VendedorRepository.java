@@ -101,6 +101,7 @@ public class VendedorRepository implements IVendedorRepository {
     }
 
     // US 0007
+    @Override
     public void unFollow(Long idFollower, Long idFollowed) {
         User Follower = this.users.get(idFollower);
         Follower.unFollowed(idFollowed);
