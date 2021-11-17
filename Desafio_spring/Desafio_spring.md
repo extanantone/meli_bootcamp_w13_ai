@@ -23,7 +23,7 @@
      Si en vez de un vendedor se requiere un comprador puede enviarse el parámetro `seller: false`
 
 ## Pruebas
-Se comparte el link de Postman con el que fueron realizados los tests: `https://go.postman.co/workspace/My-Workspace~fd5a518b-bbbe-43dc-8eb1-5d75776bf417/collection/18145130-9590e9d8-2a54-4c9a-9e50-9787fa17cd0a`
+Se adjunto en este mismo directorio el archivo collection tipo JSON del que se pueden importar las pruebas realizadas en POSTMAN
 
 ## Consideraciones
 
