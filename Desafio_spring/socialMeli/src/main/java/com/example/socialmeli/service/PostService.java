@@ -38,7 +38,7 @@ public class PostService implements PostServiceInterface{
             throw new UserNotExistException(String.format("No existe el usuario con id %d", postReq.getUserId()));
         }
         if(postReq.getHasPromo()){
-            Double descuento = postReq.getDiscount();
+            double descuento = postReq.getDiscount() == null ? -1 : postReq.getDiscount();
             if (!(0 < descuento && descuento < 1)){
                 throw new BadBodyRequestException("El % de descuento ingresado no es valido");
             }

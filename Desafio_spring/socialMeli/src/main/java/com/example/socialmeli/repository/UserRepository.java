@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Repository
 public class UserRepository implements UserRepositoryInterface{
-    private Map<Integer, User> users = new HashMap<Integer,User>();
+    private Map<Integer, User> users = new HashMap<>();
 
     private List<User> database;
 

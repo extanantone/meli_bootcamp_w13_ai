@@ -26,11 +26,11 @@ public class PostDto extends UserDto{
     private String date;
     private Boolean hasPromo;
     private Double discount,price;
-    private Product detail;
+    private ProductDto detail;
 
-    public PostDto(Integer userId, Integer postId ,String date, String category, Boolean hasPromo, Double discount, Double price, Product detail) {
+    public PostDto(Integer userId, Integer postId ,String date, String category, Boolean hasPromo, Double discount, Double price, ProductDto detail) {
         try {
-            this.userId = userId;
+            super.setUserId(userId);
             this.postId = postId;
             this.date = date;
             this.category = category;

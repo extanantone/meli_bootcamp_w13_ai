@@ -22,8 +22,8 @@ public class PostRepository implements PostRepositoryInterface{
     @Override
     public List<Post> getPostFromUsersId(List<Integer> usersId){
         List<Post> postList = new ArrayList<>();
+        LocalDate now = LocalDate.now();
         posts.forEach((idPost,post)->{
-            LocalDate now = LocalDate.now();
             if((usersId.contains(post.getUserId()) && (ChronoUnit.DAYS.between(post.getDate(), now) < 15))){
                 postList.add(post);
             }

@@ -109,10 +109,11 @@ public class UserService implements UserServiceInterface{
         User user = userRepository.getUser(user_id);
         List<Integer> followedList = user.getFollowedList();
         List<User> userList = new ArrayList<>();
-        //TODO cambiar fors por maps y filters
         for(Integer user_follow_id : followedList){
             userList.add(userRepository.getUser(user_follow_id));
         }
+
+
         if(order != null){
             if(order.equalsIgnoreCase("name_asc")){
                 userList.sort(Comparator.comparing(User::getUserName));

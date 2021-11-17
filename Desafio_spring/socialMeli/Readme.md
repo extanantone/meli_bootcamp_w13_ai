@@ -5,12 +5,6 @@ Consideraciones:
 - Todos los usuarios son vendedores y pueden ser seguidos o seguir a cualquier otro.
 - A pesar de tener creado el endpoint para la creacion de los promo post, el endpoint por defecto está preparado para que si se envía el valor de has_promo: true, tomar ese post como una promo.
 
-## ToDo
-
-- Agregar un parametro a los get de post de los usuarios seguidos para poder obtener solo los promo post.
-- Modificar los fors por maps y filters
-- Optimizar algunos metodos extrayendo líneas de códigos a metodos más genericos
-- Manejar error en el caso de no enviar algun parametro requerido en el body
 ## Usuarios base
 
 Los usuarios se crean en el repositorio de usuarios:
