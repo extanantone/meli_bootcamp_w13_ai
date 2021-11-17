@@ -11,4 +11,6 @@ public interface IPostService
     ProductFollowedDTO listRecentFollowedProducts(int userId, String order);
 
     PromoPostCountDTO promoPostCount(int userId);
+
+    PromoPostListDTO promoPostList(int userId);
 }

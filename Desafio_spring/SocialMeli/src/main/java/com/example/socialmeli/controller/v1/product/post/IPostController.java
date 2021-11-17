@@ -3,8 +3,6 @@ package com.example.socialmeli.controller.v1.product.post;
 import com.example.socialmeli.dto.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RequestMapping("api/v1/products")
 public interface IPostController
 {
@@ -19,4 +17,7 @@ public interface IPostController
 
     @GetMapping("/{userId}/promo-post/count")
     PromoPostCountDTO promoPostcount(@PathVariable int userId);
+
+    @GetMapping("{userId}/list")
+    PromoPostListDTO promoPostList(@PathVariable int userId);
 }

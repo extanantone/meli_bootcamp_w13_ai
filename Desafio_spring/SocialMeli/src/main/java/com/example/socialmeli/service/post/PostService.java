@@ -58,6 +58,21 @@ public class PostService implements IPostService
     }
 
     @Override
+    public PromoPostListDTO promoPostList(int userId)
+    {
+        User user;
+        Map<Integer, User> userMap = userRepository.usersMap();
+        if (!userMap.containsKey(userId))
+            throw new BadRequestException("Usuario no encontrado");
+
+        user = userMap.get(userId);
+        ModelMapper modelMapper = new ModelMapper();
+        List<Post> promoPosts = user.getPosts().stream().filter(Post::isHasPromo).collect(Collectors.toList());
+        user.setPosts(promoPosts);
+        return modelMapper.map(user, PromoPostListDTO.class);
+    }
+
+    @Override
     public UserPromoPostDTO createPromo(UserPromoPostDTO userPromoPostDTO)
     {
         ModelMapper modelMapper = new ModelMapper();

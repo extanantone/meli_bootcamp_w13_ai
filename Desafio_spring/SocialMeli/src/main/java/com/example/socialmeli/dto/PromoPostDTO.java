@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PromoPostDTO
 {
-    private int userId;
     private int idPost;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;

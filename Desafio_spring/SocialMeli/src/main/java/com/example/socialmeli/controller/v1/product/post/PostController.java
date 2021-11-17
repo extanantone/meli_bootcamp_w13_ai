@@ -5,8 +5,6 @@ import com.example.socialmeli.service.post.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RestController
 public class PostController implements IPostController
 {
@@ -18,6 +16,12 @@ public class PostController implements IPostController
     public UserPostDTO createPost(UserPostDTO postDTO)
     {
         return postService.create(postDTO);
+    }
+
+    @Override
+    public PromoPostListDTO promoPostList(int userId)
+    {
+        return postService.promoPostList(userId);
     }
 
     @Override
