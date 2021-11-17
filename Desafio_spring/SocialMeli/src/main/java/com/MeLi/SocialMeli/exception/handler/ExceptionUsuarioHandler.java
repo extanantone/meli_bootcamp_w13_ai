@@ -3,6 +3,7 @@ package com.MeLi.SocialMeli.exception.handler;
 import com.MeLi.SocialMeli.DTO.ErrorNotFoundDTO;
 import com.MeLi.SocialMeli.exception.NotFoundCompradorException;
 import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
+import com.MeLi.SocialMeli.exception.NotPubException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,6 +19,11 @@ public class ExceptionUsuarioHandler {
 
     @ExceptionHandler(NotFoundVendedorException.class)
     public ResponseEntity<ErrorNotFoundDTO> getVendedor(NotFoundVendedorException e){
+        return new ResponseEntity<>(new ErrorNotFoundDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotPubException.class)
+    public ResponseEntity<ErrorNotFoundDTO> setPub(NotFoundVendedorException e){
         return new ResponseEntity<>(new ErrorNotFoundDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }
