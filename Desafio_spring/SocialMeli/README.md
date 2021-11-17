@@ -26,7 +26,7 @@ El desafío que se propone a continuación consta de 2 partes:
 - No pasar parametros incorrectos
 
 ### Testing con Postman
-Algunos test generados con postman ![PostmanJson]()
+Algunos test generados con postman [PostmanJson](https://raw.githubusercontent.com/extanantone/meli_bootcamp_w13_ai/felipe_cubillos/Desafio_spring/SocialMeli/docs/SocialMelli.postman_collection.json)
 
 ### Diagrama
 
