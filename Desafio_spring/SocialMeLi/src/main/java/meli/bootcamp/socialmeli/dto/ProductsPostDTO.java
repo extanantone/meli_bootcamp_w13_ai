@@ -1,18 +1,20 @@
 package meli.bootcamp.socialmeli.dto;
 
-import meli.bootcamp.socialmeli.model.Product;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ProductsPostDTO {
-    private int user_id;
-    private int id_post;
+    private int userId;
+    private int idPost;
     private String date;
     public ProductsDTO detail;
     public String category;
     public double price;
 
-    public ProductsPostDTO(int user_id, int id_post, String date, ProductsDTO detail, String category, double price) {
-        this.user_id = user_id;
-        this.id_post = id_post;
+    public ProductsPostDTO(int userId, int idPost, String date, ProductsDTO detail, String category, double price) {
+        this.userId = userId;
+        this.idPost = idPost;
         this.date = date;
         this.detail = detail;
         this.category = category;
@@ -22,20 +24,20 @@ public class ProductsPostDTO {
     public ProductsPostDTO() {
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public int getId_post() {
-        return id_post;
+    public int getIdPost() {
+        return idPost;
     }
 
-    public void setId_post(int id_post) {
-        this.id_post = id_post;
+    public void setIdPost(int idPost) {
+        this.idPost = idPost;
     }
 
     public String getDate() {
@@ -73,8 +75,8 @@ public class ProductsPostDTO {
     @Override
     public String toString() {
         return "ProductsPostDTO{" +
-                "user_id=" + user_id +
-                ", id_post=" + id_post +
+                "user_id=" + userId +
+                ", id_post=" + idPost +
                 ", date='" + date + '\'' +
                 ", detail=" + detail.toString() +
                 ", category='" + category + '\'' +

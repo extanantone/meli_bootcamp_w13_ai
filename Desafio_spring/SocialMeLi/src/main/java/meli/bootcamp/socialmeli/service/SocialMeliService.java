@@ -77,8 +77,8 @@ public class SocialMeliService implements ISocialMeliService{
      */
     @Override
     public void addPost(ProductsPostDTO newPost) {
-        userRepository.findUserById(newPost.getUser_id());
-        if (postRepository.findPostById(newPost.getId_post()) == null)
+        userRepository.findUserById(newPost.getUserId());
+        if (postRepository.findPostById(newPost.getIdPost()) == null)
             postRepository.addPost(postMapper.productoPostDTOtoPost(newPost));
         else
             throw new PostAlreadyExistException();
@@ -129,19 +129,32 @@ public class SocialMeliService implements ISocialMeliService{
      *
      */
     @Override
-    public FollowersListDTO getOrderedFollowersList(int userID, boolean searchFollowers, String order, boolean sortedResponse) {
+    public Object getOrderedFollowersList(int userID, boolean searchFollowers, String order, boolean sortedResponse) {
         User queryUser= userRepository.findUserById(userID);
-        return new FollowersListDTO(
-                queryUser.getUserId(),
-                userRepository.getUserNameById(queryUser.getUserId()),
-                (sortedResponse)
-                ?this.getSpecificUserNameList(searchFollowers, queryUser.getUserId()).stream()
-                        .sorted((order.equals("name_desc"))
-                            ?Comparator.comparing(UserDTO::getUserName).reversed()
-                            :Comparator.comparing(UserDTO::getUserName)) //Preguntar si es username o nombre_apellido
-                    .collect(Collectors.toList())
-                :this.getSpecificUserNameList(searchFollowers, queryUser.getUserId())
-        );
+        if (searchFollowers)
+            return new FollowersListDTO(
+                    queryUser.getUserId(),
+                    userRepository.getUserNameById(queryUser.getUserId()),
+                    (sortedResponse)
+                    ?this.getSpecificUserNameList(searchFollowers, queryUser.getUserId()).stream()
+                            .sorted((order.equals("name_desc"))
+                                ?Comparator.comparing(UserDTO::getUserName).reversed()
+                                :Comparator.comparing(UserDTO::getUserName)) //Preguntar si es username o nombre_apellido
+                        .collect(Collectors.toList())
+                    :this.getSpecificUserNameList(searchFollowers, queryUser.getUserId())
+            );
+        else
+            return new FollowedListDTO(
+                    queryUser.getUserId(),
+                    userRepository.getUserNameById(queryUser.getUserId()),
+                    (sortedResponse)
+                            ?this.getSpecificUserNameList(searchFollowers, queryUser.getUserId()).stream()
+                            .sorted((order.equals("name_desc"))
+                                    ?Comparator.comparing(UserDTO::getUserName).reversed()
+                                    :Comparator.comparing(UserDTO::getUserName)) //Preguntar si es username o nombre_apellido
+                            .collect(Collectors.toList())
+                            :this.getSpecificUserNameList(searchFollowers, queryUser.getUserId())
+            );
     }
 
     /**

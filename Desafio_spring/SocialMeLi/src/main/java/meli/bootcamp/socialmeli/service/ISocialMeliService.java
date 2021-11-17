@@ -49,7 +49,7 @@ public interface ISocialMeliService {
      * @param sortedResponse Devuelve un true si debe ordenar las respuestas.
      * @return FollowersListDTO
      */
-    FollowersListDTO getOrderedFollowersList(int userID, boolean searchFollowers, String order, boolean sortedResponse);
+    Object getOrderedFollowersList(int userID, boolean searchFollowers, String order, boolean sortedResponse);
 
     /**
      * @param productsPromoPostDTO Recibe el Promo Post a agregar.

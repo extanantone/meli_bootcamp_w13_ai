@@ -1,24 +1,28 @@
 package meli.bootcamp.socialmeli.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import java.util.List;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ProductsUserIDListDTO {
-    private int user_id;
+    private int userId;
     private List<ProductsPostByUserDTO> post;
 
-    public ProductsUserIDListDTO(int user_id, List<ProductsPostByUserDTO> post) {
-        this.user_id = user_id;
+    public ProductsUserIDListDTO(int userId, List<ProductsPostByUserDTO> post) {
+        this.userId = userId;
         this.post = post;
     }
 
     public ProductsUserIDListDTO() {}
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public List<ProductsPostByUserDTO> getPost() {

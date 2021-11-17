@@ -35,12 +35,12 @@ public class SocialController implements ISocialController{
         socialMeliService.addPost(newPost);
         GenericResponseDTO genericResponseDTO= new GenericResponseDTO();
         genericResponseDTO.getResponse().put("code","200");
-        genericResponseDTO.getResponse().put("response","Post " + newPost.getId_post() + " agregado exitosamente");
+        genericResponseDTO.getResponse().put("response","Post " + newPost.getIdPost() + " agregado exitosamente");
         return new ResponseEntity<>(genericResponseDTO, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<FollowersListDTO> getOrderedList(int user_id, String order, String method) {
+    public ResponseEntity<Object> getOrderedList(int user_id, String order, String method) {
         if ((method.equals("followers")) || (method.equals("followed"))) {
             boolean searchFollowers;
             searchFollowers = method.equals("followers");

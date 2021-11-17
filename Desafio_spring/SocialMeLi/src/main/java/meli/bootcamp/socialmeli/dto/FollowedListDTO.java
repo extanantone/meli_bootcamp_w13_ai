@@ -6,18 +6,18 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.util.List;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PromoPostDTO {
+public class FollowedListDTO {
     private int userId;
     private String userName;
-    private List<PromoPostBaseDTO> post;
+    private List<UserDTO> followed;
 
-    public PromoPostDTO(int userId, String userName, List<PromoPostBaseDTO> post) {
+    public FollowedListDTO(int userId, String userName, List<UserDTO> followed) {
         this.userId = userId;
         this.userName = userName;
-        this.post = post;
+        this.followed = followed;
     }
 
-    public PromoPostDTO() {
+    public FollowedListDTO() {
     }
 
     public int getUserId() {
@@ -36,11 +36,11 @@ public class PromoPostDTO {
         this.userName = userName;
     }
 
-    public List<PromoPostBaseDTO> getPost() {
-        return post;
+    public List<UserDTO> getFollowed() {
+        return followed;
     }
 
-    public void setPost(List<PromoPostBaseDTO> post) {
-        this.post = post;
+    public void setFollowed(List<UserDTO> followed) {
+        this.followed = followed;
     }
 }

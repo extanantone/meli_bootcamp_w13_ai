@@ -1,18 +1,20 @@
 package meli.bootcamp.socialmeli.dto;
 
-import meli.bootcamp.socialmeli.model.Product;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ProductsDTO {
-    private int product_id;
-    private String product_name;
+    private int productId;
+    private String productName;
     private String type;
     private String brand;
     private String color;
     private String notes;
 
-    public ProductsDTO(int product_id, String product_name, String type, String brand, String color, String notes) {
-        this.product_id = product_id;
-        this.product_name = product_name;
+    public ProductsDTO(int productId, String productName, String type, String brand, String color, String notes) {
+        this.productId = productId;
+        this.productName = productName;
         this.type = type;
         this.brand = brand;
         this.color = color;
@@ -22,20 +24,20 @@ public class ProductsDTO {
     public ProductsDTO() {
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public String getProduct_name() {
-        return product_name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public String getType() {

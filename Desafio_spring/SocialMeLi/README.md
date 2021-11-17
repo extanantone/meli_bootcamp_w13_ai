@@ -71,6 +71,9 @@ Ejecuta el siguiente endpoint:
 ```
 127.0.0.1:8080/users/{user_id}/follow/{user_id_to_follow}
 ```
+```
+Response DTO GenericResponseDTO como mensaje informativo.
+```
 
 Ejemplo:
 + Request: http://localhost:8080/users/25/follow/12
@@ -97,6 +100,9 @@ Ejecuta el siguiente endpoint:
 ```
 127.0.0.1:8080/users/{user_id}/followers/count
 ```
+```
+Response DTO: FollowersCountDTO
+```
 Ejemplo:
 + Request: http://localhost:8080/users/12/followers/count
 + Response 200: {
@@ -117,12 +123,15 @@ Ejecuta el siguiente endpoint:
 ```
 127.0.0.1:8080/users/{user_id}/followers/list
 ```
+```
+Response DTO: FollowersListDTO
+```
 Ejemplo:
 + Request: http://localhost:8080/users/12/followers/list
 + Response 200: {
   "userId": 12,
   "userName": "RocíoSCATTONE91962",
-  "mListUsers": [
+  "followers": [
   {
   "userID": 25,
   "userName": "MaríaQuiroga70055"
@@ -141,12 +150,15 @@ Ejecuta el siguiente endpoint:
 ```
 127.0.0.1:8080/users/{user_id}/followed/list
 ```
+```
+Response DTO: FollowedListDTO
+```
 Ejemplo:
 + Request: http://localhost:8080/users/25/followed/list
 + Response 200: {
   "userId": 25,
   "userName": "MaríaQuiroga70055",
-  "mListUsers": [
+  "followed": [
   {
   "userID": 12,
   "userName": "RocíoSCATTONE91962"
@@ -158,12 +170,16 @@ Ejemplo:
   "message": "El usuario no existe dentro del sistema."
   }
 
-### US 0005: Dar de alta una nu eva publicación🔩
+### US 0005: Dar de alta una nueva publicación🔩
 
 Ejecuta el siguiente endpoint:
 
 ```
 127.0.0.1:8080/products/post
+```
+```
+Request DTO: ProductsPostDTO (ProductsDTO)
+Response DTO: GenericResponseDTO
 ```
 Ejemplo:
 + Request: http://localhost:8080/products/post
@@ -205,6 +221,9 @@ Ejecuta el siguiente endpoint:
 
 ```
 127.0.0.1:8080/products/followed/{user_id}/list
+```
+```
+Response DTO: ProductsUserIDListDTO
 ```
 Ejemplo:
 + Request: http://localhost:8080/products/followed/25/list
@@ -253,6 +272,9 @@ Ejecuta el siguiente endpoint:
 ```
 127.0.0.1:8080/users/{user_id}/unfollow/{user_id_to_unfollow}
 ```
+```
+Response DTO: GenericResponseDTO
+```
 Ejemplo:
 + Request: http://
 + Response 200
@@ -267,6 +289,9 @@ Ejecuta alguno de los siguientes endpoint:
 127.0.0.1:8080/users/{user_id}/followers/list?order=name_desc
 127.0.0.1:8080/users/{user_id}/followed/list?order=name_asc
 127.0.0.1:8080/users/{user_id}/followed/list?order=name_desc
+```
+```
+Response DTO: FollowersListDTO & FollowedListDTO
 ```
 Ejemplo:
 + Request: http://localhost:8080/users/25/followed/list/?order=name_desc
@@ -292,6 +317,9 @@ Ejecuta el siguiente endpoint:
 ```
 127.0.0.1:8080/products/followed/{user_id}/list?order=date_asc
 127.0.0.1:8080/products/followed/{user_id}/list?order=date_desc
+```
+```
+Response DTO: ProductsUSerIDListDTO
 ```
 Ejemplo:
 + Request: http://localhost:8080/products/followed/25/list?order=name_desc
@@ -340,6 +368,10 @@ Ejecuta el siguiente endpoint:
 ```
 127.0.0.1:8080/products/promo-post
 ```
+```
+Request DTO: PromoPostByUserDTO
+Response DTO: GenericResponseDTO
+```
 Ejemplo:
 + Request: http://
   + Payload: {
@@ -382,6 +414,9 @@ Ejecuta el siguiente endpoint:
 ```
 127.0.0.1:8080/products/{user_id}/promo-post/count
 ```
+```
+Response DTO: PromoPostCountDTO
+```
 Ejemplo:
 + Request: http://localhost:8080/products/1569/promo-post/count
 + Response 200: {
@@ -401,11 +436,14 @@ Ejecuta el siguiente endpoint:
 ```
 127.0.0.1:8080/products/{user_id}/list
 ```
+```
+Response DTO: PromoPostDTO
+```
 Ejemplo:
 + Request: http://localhost:8080/products/1569/list
 + Response 200: {
   "user_id": 1569,
-  "use_name": "AliciaBoga87911",
+  "user_name": "AliciaBoga87911",
   "post": [
   {
   "id_post": 18,

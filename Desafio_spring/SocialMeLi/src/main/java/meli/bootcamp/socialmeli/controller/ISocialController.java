@@ -40,7 +40,7 @@ public interface ISocialController {
      *              entregara la lista con los productos de las ultimas dos semanas.
     * */
     @GetMapping(value = "/users/{user_id}/{method}/list")
-    ResponseEntity<FollowersListDTO> getOrderedList(@PathVariable int user_id, @RequestParam(defaultValue = "noOrder") String order, @PathVariable String method);
+    ResponseEntity<Object> getOrderedList(@PathVariable int user_id, @RequestParam(defaultValue = "noOrder") String order, @PathVariable String method);
 
     /**
      * @param newPost recibe el DTO de un nuevo producto a registrar

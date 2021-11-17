@@ -1,40 +1,44 @@
 package meli.bootcamp.socialmeli.dto;
 
-public class FollowersCountDTO {
-    private int user_id;
-    private String user_name;
-    private int followers_count;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-    public FollowersCountDTO(int user_id, String user_name, int followers_count) {
-        this.user_id = user_id;
-        this.user_name = user_name;
-        this.followers_count = followers_count;
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class FollowersCountDTO {
+    private int userId;
+    private String userName;
+    private int followersCount;
+
+    public FollowersCountDTO(int userId, String userName, int followersCount) {
+        this.userId = userId;
+        this.userName = userName;
+        this.followersCount = followersCount;
     }
 
     public FollowersCountDTO() {
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public int getFollowers_count() {
-        return followers_count;
+    public int getFollowersCount() {
+        return followersCount;
     }
 
-    public void setFollowers_count(int followers_count) {
-        this.followers_count = followers_count;
+    public void setFollowersCount(int followersCount) {
+        this.followersCount = followersCount;
     }
 }

@@ -1,16 +1,20 @@
 package meli.bootcamp.socialmeli.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import java.util.List;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class FollowersListDTO {
     private int userId;
     private String userName;
-    private List<UserDTO> mListUsers;
+    private List<UserDTO> followers;
 
-    public FollowersListDTO(int userId, String userName, List<UserDTO> mListUsers) {
+    public FollowersListDTO(int userId, String userName, List<UserDTO> followers) {
         this.userId = userId;
         this.userName = userName;
-        this.mListUsers = mListUsers;
+        this.followers = followers;
     }
 
     public FollowersListDTO() {
@@ -32,11 +36,11 @@ public class FollowersListDTO {
         this.userName = userName;
     }
 
-    public List<UserDTO> getmListUsers() {
-        return mListUsers;
+    public List<UserDTO> getFollowers() {
+        return followers;
     }
 
-    public void setmListUsers(List<UserDTO> mListUsers) {
-        this.mListUsers = mListUsers;
+    public void setFollowers(List<UserDTO> followers) {
+        this.followers = followers;
     }
 }
