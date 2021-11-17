@@ -40,6 +40,10 @@ public class UserService implements IUserService{
             throw new BadRequestException("Usuario no encontrado");
         }
 
+        if (userId == userToFollowId){
+            throw new BadRequestException("Un usuario no se puede seguir a si mismo");
+        }
+
         userRepository.addFollower(userId, userToFollowId);
         MessageDTOResponse followSellerDTO = new MessageDTOResponse();
         followSellerDTO.setMessage("Todo Ok");

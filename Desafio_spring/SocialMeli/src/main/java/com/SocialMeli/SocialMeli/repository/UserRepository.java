@@ -48,8 +48,8 @@ public class UserRepository implements IUserRepository{
     public boolean addFollower(int userId, int sellerId) {
         Seller seller = (Seller)this.users.get(sellerId);
         seller.getFollowers().put(userId, this.users.get(userId));
-        Buyer buyer = (Buyer) this.users.get(userId);
-        buyer.getFollowed().put(sellerId, this.users.get(sellerId));
+        User follower = this.users.get(userId);
+        follower.getFollowed().put(sellerId, this.users.get(sellerId));
         return true;
     }
 
@@ -70,8 +70,8 @@ public class UserRepository implements IUserRepository{
         Seller seller = (Seller)this.users.get(sellerId);
         seller.getFollowers().remove(userId);
 
-        Buyer buyer = (Buyer) this.users.get(userId);
-        buyer.getFollowed().remove(sellerId);
+        User follower = this.users.get(userId);
+        follower.getFollowed().remove(sellerId);
 
         return true;
     }

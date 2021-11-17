@@ -10,9 +10,10 @@ La fecha de lanzamiento se aproxima, por lo cual es necesaria la presentación d
 
 ### Criterios
  * El sistema distingue vendedores de compradores, si bien ambos heredan de usuario solo los vendedores pueden tener seguidores, ademas un vendedor puede seguir a otro vendedor.
- * Si el endpoint requiere un user_id de vendedor y se pasa el de un comprador retornara "Vendedor no encontrado"
- * Si se requiere el user_id de un usuario (ya sea vendedor o comprador) y no lo encuentra se retornara "Usuario no encontrado"
- * Solo los vendedores pueden realizar publicaciones de productos
+ * Si el endpoint requiere un user_id de vendedor y se pasa el de un comprador retornara "Vendedor no encontrado".
+ * Si se requiere el user_id de un usuario (ya sea vendedor o comprador) y no lo encuentra se retornara "Usuario no encontrado".
+ * Solo los vendedores pueden realizar publicaciones de productos.
+ * Un usuario no se puede seguir a si mismo.
  * Los usuarios disponibles para pruebas son:
 ```JSON
     {
