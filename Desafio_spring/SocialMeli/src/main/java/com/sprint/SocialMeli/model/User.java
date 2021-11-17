@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor @NoArgsConstructor
 @Getter
 public abstract class User {
-    int user_id;
-    String user_name;
+    int userId;
+    String userName;
 
     // Clase a sobreescribir según el Buyer o Seller, para así poder identificar a que clase pertenecen
     public abstract UserType getUserType();

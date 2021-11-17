@@ -5,57 +5,52 @@ import com.sprint.SocialMeli.dto.in.PromoPostDtoIn;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 @AllArgsConstructor
 @Getter
 public class Post {
-    int user_id;
-    int id_post;
+    int userId;
+    int idPost;
     LocalDate date;
-    int product_id;
-    String product_name;
+    int productId;
+    String productName;
     String type;
     String brand;
     String color;
     String notes;
     int category;
     double price;
-    boolean has_promo;
+    boolean hasPromo;
     double discount;
 
-    public Post(PostDtoIn postDtoIn) throws ParseException {
-        user_id = postDtoIn.getUser_id();
-        id_post = postDtoIn.getId_post();
+    public Post(PostDtoIn postDtoIn) {
+        userId = postDtoIn.getUserId();
+        idPost = postDtoIn.getIdPost();
         date = postDtoIn.getDate();
-        product_id = postDtoIn.getDetail().getProduct_id();
-        product_name = postDtoIn.getDetail().getProduct_name();
+        productId = postDtoIn.getDetail().getProductId();
+        productName = postDtoIn.getDetail().getProductName();
         type = postDtoIn.getDetail().getType();
         brand = postDtoIn.getDetail().getBrand();
         color = postDtoIn.getDetail().getColor();
         category = postDtoIn.getCategory();
         price = postDtoIn.getPrice();
-        has_promo = false;
+        hasPromo = false;
         discount = 0;
     }
 
-    public Post(PromoPostDtoIn promoPostDtoIn) throws ParseException {
-        user_id = promoPostDtoIn.getUser_id();
-        id_post = promoPostDtoIn.getId_post();
+    public Post(PromoPostDtoIn promoPostDtoIn) {
+        userId = promoPostDtoIn.getUserId();
+        idPost = promoPostDtoIn.getIdPost();
         date = promoPostDtoIn.getDate();
-        product_id = promoPostDtoIn.getDetail().getProduct_id();
-        product_name = promoPostDtoIn.getDetail().getProduct_name();
+        productId = promoPostDtoIn.getDetail().getProductId();
+        productName = promoPostDtoIn.getDetail().getProductName();
         type = promoPostDtoIn.getDetail().getType();
         brand = promoPostDtoIn.getDetail().getBrand();
         color = promoPostDtoIn.getDetail().getColor();
         category = promoPostDtoIn.getCategory();
         price = promoPostDtoIn.getPrice();
-        has_promo = promoPostDtoIn.isHas_promo();
+        hasPromo = promoPostDtoIn.isHasPromo();
         discount = promoPostDtoIn.getDiscount();
     }
 

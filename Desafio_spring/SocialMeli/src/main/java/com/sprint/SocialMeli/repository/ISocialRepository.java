@@ -4,10 +4,10 @@ import com.sprint.SocialMeli.model.Post;
 import com.sprint.SocialMeli.model.User;
 
 public interface ISocialRepository {
-    boolean existsUser(int user_id);
-    boolean existsPost(int post_id);
-    User getUser(int user_id);
-    void putUser(User user);
-    void putPost(Post post);
-    Post getPost(int id_post);
+    boolean existsUser(int userId);
+    boolean existsPost(int postId);
+    User getUser(int userId);
+    void createUser(User user);
+    void createPost(Post post);
+    Post getPost(int idPost);
 }

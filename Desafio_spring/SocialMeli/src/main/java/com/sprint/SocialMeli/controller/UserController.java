@@ -3,8 +3,6 @@ package com.sprint.SocialMeli.controller;
 import com.sprint.SocialMeli.dto.out.FollowedListDto;
 import com.sprint.SocialMeli.dto.out.FollowersCountDto;
 import com.sprint.SocialMeli.dto.out.FollowersListDto;
-import com.sprint.SocialMeli.exceptions.NotFoundException;
-import com.sprint.SocialMeli.exceptions.WrongTypeException;
 import com.sprint.SocialMeli.service.ISocialService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,21 +26,21 @@ public class UserController {
 
     // US0002
     @GetMapping("/{user_id}/followers/count")
-    public ResponseEntity<FollowersCountDto> followersCount(@PathVariable int user_id) throws WrongTypeException, NotFoundException {
+    public ResponseEntity<FollowersCountDto> followersCount(@PathVariable int user_id) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(socialService.getSellerFollowersCount(user_id));
     }
 
     // US0003 + US0008
     // Para fusionar las US se aplico el RequestParam como no requerido, de forma que se puede llamar con o sin el order.
     @GetMapping("/{user_id}/followers/list")
-    public ResponseEntity<FollowersListDto> followersListSorted(@PathVariable int user_id, @RequestParam(value = "order", required=false) String order) throws WrongTypeException, NotFoundException {
+    public ResponseEntity<FollowersListDto> followersListSorted(@PathVariable int user_id, @RequestParam(value = "order", required=false) String order) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(socialService.getSellerFollowersList(user_id, order));
     }
 
     // US0004 + US0008
     // Para fusionar las US se aplico el RequestParam como no requerido, de forma que se puede llamar con o sin el order.
     @GetMapping("/{user_id}/followed/list")
-    public ResponseEntity<FollowedListDto> followedList(@PathVariable int user_id,@RequestParam(value = "order", required=false)  String order) throws WrongTypeException, NotFoundException {
+    public ResponseEntity<FollowedListDto> followedList(@PathVariable int user_id,@RequestParam(value = "order", required=false)  String order) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(socialService.getBuyerFollowedList(user_id, order));
     }
 

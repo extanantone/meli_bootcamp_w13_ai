@@ -5,6 +5,7 @@ import com.sprint.SocialMeli.dto.in.PostDtoIn;
 import com.sprint.SocialMeli.dto.in.PromoPostDtoIn;
 import com.sprint.SocialMeli.dto.out.*;
 import com.sprint.SocialMeli.exceptions.DuplicateException;
+import com.sprint.SocialMeli.exceptions.InvalidOrderException;
 import com.sprint.SocialMeli.exceptions.NotFoundException;
 import com.sprint.SocialMeli.exceptions.WrongTypeException;
 import com.sprint.SocialMeli.model.*;
@@ -27,20 +28,20 @@ public class SocialService implements ISocialService{
 
 
     @Override
-    public void followSeller(int user_id, int user_id_to_follow) throws Exception {
+    public void followSeller(int userId, int userIdToFollow) throws Exception {
         // Valido que el usuario exista y tenga el rol pretendido
-        UserValidation(user_id, UserType.BUYER);
-        UserValidation(user_id_to_follow, UserType.SELLER);
+        UserValidation(userId, UserType.BUYER);
+        UserValidation(userIdToFollow, UserType.SELLER);
 
         // Transacciono para comprobar que se agreguen los seguidores, seguidos y actualicen en el repositorio conservando la consistencia.
         try{
-            Buyer buyer = (Buyer) socialRepository.getUser(user_id);
-            buyer.addFollowed(user_id_to_follow);
-            socialRepository.putUser(buyer);
+            Buyer buyer = (Buyer) socialRepository.getUser(userId);
+            buyer.addFollowed(userIdToFollow);
+            socialRepository.createUser(buyer);
 
-            Seller seller = (Seller) socialRepository.getUser(user_id_to_follow);
-            seller.addFollower(user_id);
-            socialRepository.putUser(seller);
+            Seller seller = (Seller) socialRepository.getUser(userIdToFollow);
+            seller.addFollower(userId);
+            socialRepository.createUser(seller);
         }
         catch (Exception e){
             throw new Exception("Error al seguir un usuario : " + e.getMessage());
@@ -50,48 +51,48 @@ public class SocialService implements ISocialService{
     }
 
     @Override
-    public FollowersCountDto getSellerFollowersCount(int user_id) throws WrongTypeException, NotFoundException {
-        UserValidation(user_id, UserType.SELLER);
-        Seller seller = (Seller) socialRepository.getUser(user_id);
+    public FollowersCountDto getSellerFollowersCount(int userId) throws WrongTypeException, NotFoundException {
+        UserValidation(userId, UserType.SELLER);
+        Seller seller = (Seller) socialRepository.getUser(userId);
 
         // Devuelvo los datos del vendedor junto a su cantidad de seguidores
-        return new FollowersCountDto(seller.getUser_id(),
-                seller.getUser_name(),
+        return new FollowersCountDto(seller.getUserId(),
+                seller.getUserName(),
                 seller.followersCount());
     }
 
     @Override
-    public FollowersListDto getSellerFollowersList(int user_id, String order) throws WrongTypeException, NotFoundException {
-        UserValidation(user_id, UserType.SELLER);
-        Seller seller = (Seller) socialRepository.getUser(user_id);
+    public FollowersListDto getSellerFollowersList(int userId, String order) throws WrongTypeException, NotFoundException, InvalidOrderException {
+        UserValidation(userId, UserType.SELLER);
+        Seller seller = (Seller) socialRepository.getUser(userId);
 
 
-        return new FollowersListDto(seller.getUser_id(),
-                seller.getUser_name(),
+        return new FollowersListDto(seller.getUserId(),
+                seller.getUserName(),
                 // Llamo a la función de orden con la lista mapeada de cada ID de seguidores con su correspondiente usuario del repositorio
                 orderUserByName(seller.getFollowersIds().stream()
                         .map(f -> socialRepository.getUser(f))
                         .collect(Collectors.toList()), order)
                         // Mapeo los datos de los seguidores al DTO de usuario
                             .stream()
-                            .map(u -> new UserDto(u.getUser_id(), u.getUser_name()))
+                            .map(u -> new UserDto(u.getUserId(), u.getUserName()))
                             .collect(Collectors.toList()));
     }
 
     @Override
-    public FollowedListDto getBuyerFollowedList(int user_id, String order) throws WrongTypeException, NotFoundException {
-        UserValidation(user_id, UserType.BUYER);
-        Buyer buyer = (Buyer) socialRepository.getUser(user_id);
+    public FollowedListDto getBuyerFollowedList(int userId, String order) throws WrongTypeException, NotFoundException, InvalidOrderException {
+        UserValidation(userId, UserType.BUYER);
+        Buyer buyer = (Buyer) socialRepository.getUser(userId);
 
-        return new FollowedListDto(buyer.getUser_id(),
-                buyer.getUser_name(),
+        return new FollowedListDto(buyer.getUserId(),
+                buyer.getUserName(),
                 // Llamo a la función de orden con la lista mapeada de cada ID de seguidos con su correspondiente usuario del repositorio
                 orderUserByName(buyer.getFollowedIds().stream()
                         .map(f -> socialRepository.getUser(f))
                         .collect(Collectors.toList()), order)
                         // Mapeo los datos de los seguidores al DTO de usuario
                         .stream()
-                            .map(u -> new UserDto(u.getUser_id(), u.getUser_name()))
+                            .map(u -> new UserDto(u.getUserId(), u.getUserName()))
                             .collect(Collectors.toList()));
     }
 
@@ -102,13 +103,15 @@ public class SocialService implements ISocialService{
     }
 
     @Override
-    public FollowedPostListDto getLastTwoWeeksPostsFromFollowed(int user_id, String order) throws WrongTypeException, NotFoundException {
-        UserValidation(user_id, UserType.BUYER);
-        Buyer buyer = (Buyer) socialRepository.getUser(user_id);
+    public FollowedPostListDto getLastTwoWeeksPostsFromFollowed(int userId, String order) throws WrongTypeException, NotFoundException, InvalidOrderException {
+        UserValidation(userId, UserType.BUYER);
+        Buyer buyer = (Buyer) socialRepository.getUser(userId);
 
         // Si lo llaman sin el parámetro de orden lo asumo como si es descendiente
         if(order == null)
             order = "date_desc";
+        else if(!order.equals("date_asc") && !order.equals("date_desc"))
+            throw new InvalidOrderException("El ordenamiento especificado es inválido");
 
         // Inicializo los post como una lista vacía
         List<Post> posts = new ArrayList<>();
@@ -124,7 +127,7 @@ public class SocialService implements ISocialService{
                                 .filter(p -> p.getDate().isAfter(LocalDate.now().minusWeeks(2).minusDays(1)))
                                 .collect(Collectors.toList())));
 
-        return new FollowedPostListDto(buyer.getUser_id(),
+        return new FollowedPostListDto(buyer.getUserId(),
                 // Realizo finalmente el ordenamiento y el mapeo al DTO correspondiente
                 (order.equals("date_asc") ?
                         posts.stream()
@@ -137,20 +140,20 @@ public class SocialService implements ISocialService{
     }
 
     @Override
-    public void unfollowSeller(int user_id, int user_id_to_unfollow) throws Exception {
+    public void unfollowSeller(int userId, int userIdToUnfollow) throws Exception {
         // Valido la existencia y rol de cada usuario
-        UserValidation(user_id, UserType.BUYER);
-        UserValidation(user_id_to_unfollow, UserType.SELLER);
+        UserValidation(userId, UserType.BUYER);
+        UserValidation(userIdToUnfollow, UserType.SELLER);
 
         // Transacciono para asegurar la consistencia
         try{
-            Buyer buyer = (Buyer) socialRepository.getUser(user_id);
-            buyer.deleteFollowed(user_id_to_unfollow);
-            socialRepository.putUser(buyer);
+            Buyer buyer = (Buyer) socialRepository.getUser(userId);
+            buyer.deleteFollowed(userIdToUnfollow);
+            socialRepository.createUser(buyer);
 
-            Seller seller = (Seller) socialRepository.getUser(user_id);
-            seller.deleteFollower(user_id);
-            socialRepository.putUser(seller);
+            Seller seller = (Seller) socialRepository.getUser(userIdToUnfollow);
+            seller.deleteFollower(userId);
+            socialRepository.createUser(seller);
         }
         catch(Exception e){
             throw new Exception("Error al dejar de seguir un usuario : " + e.getMessage());
@@ -165,79 +168,80 @@ public class SocialService implements ISocialService{
     }
 
     @Override
-    public PromoPostCountDto getPromoPostCount(int user_id) throws WrongTypeException, NotFoundException {
-        UserValidation(user_id, UserType.SELLER);
-        return new PromoPostCountDto(user_id,
-                socialRepository.getUser(user_id).getUser_name(),
+    public PromoPostCountDto getPromoPostCount(int userId) throws WrongTypeException, NotFoundException {
+        UserValidation(userId, UserType.SELLER);
+        return new PromoPostCountDto(userId,
+                socialRepository.getUser(userId).getUserName(),
                 // Obtengo los post del vendedor, los filtro por si tienen promoción, obtengo la cantidad y la casteo a entero, ya que el count devuelve un long.
-                (int) ((Seller)socialRepository.getUser(user_id))
+                (int) ((Seller)socialRepository.getUser(userId))
                         .getPostsIds().stream()
                         .map(p -> socialRepository.getPost(p))
-                        .filter(Post::isHas_promo)
+                        .filter(Post::isHasPromo)
                         .count());
     }
 
     @Override
-    public PromoPostList getPromoPostList(int user_id) throws WrongTypeException, NotFoundException {
-        UserValidation(user_id, UserType.SELLER);
-        Seller seller = (Seller) socialRepository.getUser(user_id);
+    public PromoPostList getPromoPostList(int userId) throws WrongTypeException, NotFoundException {
+        UserValidation(userId, UserType.SELLER);
+        Seller seller = (Seller) socialRepository.getUser(userId);
 
-        return new PromoPostList(seller.getUser_id(),
-                seller.getUser_name(),
+        return new PromoPostList(seller.getUserId(),
+                seller.getUserName(),
                 // Obtengo los posts, los filtro por si son de promoción y los paso al DTO correspondiente
                 seller.getPostsIds().stream()
                         .map(p -> socialRepository.getPost(p))
-                        .filter(Post::isHas_promo)
+                        .filter(Post::isHasPromo)
                         .map(PromoPostDtoOut::new)
                         .collect(Collectors.toList()));
     }
 
-    private void UserValidation(int user_id, UserType userType) throws WrongTypeException, NotFoundException {
+    private void UserValidation(int userId, UserType userType) throws WrongTypeException, NotFoundException {
         // Me fijo primero que tipo de usuario quiero validar
         if (userType.equals(UserType.BUYER)){
             // Si no existe lanzo una excepción de no encontrado
-            if(!socialRepository.existsUser(user_id))
-                throw new NotFoundException("El comprador no se ha encontrado");
+            if(!socialRepository.existsUser(userId))
+                throw new NotFoundException("El comprador con identificatorio " + userId + " no se ha encontrado");
             // Si existe, pero no es del tipo buscado lanzo una excepción de tipo incorrecto
-            else if(socialRepository.getUser(user_id).getUserType() != UserType.BUYER)
-                throw new WrongTypeException("El usuario no es un comprador");
+            else if(socialRepository.getUser(userId).getUserType() != UserType.BUYER)
+                throw new WrongTypeException("El usuario con identificatorio " + userId + " no es un comprador");
         }
         // Análogo a lo anterior pero con el vendedor, lo hago aparte para poder diferenciar los mensajes de cada uno
         else if (userType.equals(UserType.SELLER)){
-            if(!socialRepository.existsUser(user_id))
-                throw new NotFoundException("El vendedor no se ha encontrado");
-            else if(socialRepository.getUser(user_id).getUserType() != UserType.SELLER)
-                throw new WrongTypeException("El usuario no es un vendedor");
+            if(!socialRepository.existsUser(userId))
+                throw new NotFoundException("El vendedor con identificatorio " + userId + " no se ha encontrado");
+            else if(socialRepository.getUser(userId).getUserType() != UserType.SELLER)
+                throw new WrongTypeException("El usuario con identificatorio " + userId + " no es un vendedor");
         }
     }
 
-    private List<User> orderUserByName(List<User> users, String order){
+    private List<User> orderUserByName(List<User> users, String order) throws InvalidOrderException {
         // Si es nulo porque se llamó al endpoint sin el parámetro lo tomo como ascendente
         if(order == null || order.equals("name_asc"))
             return users.stream()
-                    .sorted(Comparator.comparing(User::getUser_name))
+                    .sorted(Comparator.comparing(User::getUserName))
                     .collect(Collectors.toList());
         else if(order.equals("name_desc"))
             return users.stream()
-                    .sorted(Comparator.comparing(User::getUser_name).reversed())
+                    .sorted(Comparator.comparing(User::getUserName).reversed())
                     .collect(Collectors.toList());
-        return users;
+        else
+            throw new InvalidOrderException("El ordenamiento especificado es inválido");
     }
 
     private void savePost(Post post) throws Exception {
         // Valido al usuario
-        UserValidation(post.getUser_id(), UserType.SELLER);
+        UserValidation(post.getUserId(), UserType.SELLER);
 
         // Me fijo si no existía ya un post con el mismo identificador que el nuevo
-        if(socialRepository.existsPost(post.getId_post()))
-            throw new DuplicateException("Ya existe un post con ese identificatorio");
+        if(socialRepository.existsPost(post.getIdPost()))
+            throw new DuplicateException("Ya existe un post con ese identificador");
 
         // Transacciono para conservar la consistencia
         try{
-            socialRepository.putPost(post);
-            Seller seller = (Seller) socialRepository.getUser(post.getUser_id());
-            seller.addPost(post.getId_post());
-            socialRepository.putUser(seller);
+            socialRepository.createPost(post);
+            Seller seller = (Seller) socialRepository.getUser(post.getUserId());
+            seller.addPost(post.getIdPost());
+            socialRepository.createUser(seller);
         }
         catch(Exception e){
             throw new Exception("Error al crear un nuevo post : " + e.getMessage());

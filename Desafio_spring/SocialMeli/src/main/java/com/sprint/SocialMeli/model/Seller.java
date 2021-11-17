@@ -6,20 +6,20 @@ public class Seller extends User {
     List<Integer> followersIds;
     List<Integer> postsIds;
 
-    public Seller(int user_id, String user_name) {
-        super(user_id, user_name);
+    public Seller(int userId, String userName) {
+        super(userId, userName);
         followersIds = new LinkedList<>();
         postsIds = new LinkedList<>();
     }
 
-    public void addFollower(int user_id){
-        if(!followersIds.contains(user_id))
-            followersIds.add(user_id);
+    public void addFollower(int userId){
+        if(!followersIds.contains(userId))
+            followersIds.add(userId);
     }
 
-    public void deleteFollower(int user_id){
-        if(!followersIds.contains(user_id))
-            followersIds.remove(user_id);
+    public void deleteFollower(int userId){
+        if(!followersIds.contains(userId))
+            followersIds.remove(userId);
     }
 
     public Integer followersCount(){
@@ -30,9 +30,9 @@ public class Seller extends User {
         return followersIds;
     }
 
-    public void addPost(int post_id){
-        if(!postsIds.contains(post_id))
-            postsIds.add(post_id);
+    public void addPost(int postId){
+        if(!postsIds.contains(postId))
+            postsIds.add(postId);
     }
 
     public List<Integer> getPostsIds(){

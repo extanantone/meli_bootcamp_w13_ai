@@ -1,6 +1,8 @@
 package com.sprint.SocialMeli.dto.out;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.sprint.SocialMeli.dto.DetailPostDto;
 import com.sprint.SocialMeli.model.Post;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,8 @@ import java.time.LocalDate;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+
 public class PostDtoOut {
     int id_post;
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
@@ -21,9 +25,9 @@ public class PostDtoOut {
 
     // Constructor personalizado para facilitar el parseo entre el modelo del dominio y el DTO
     public PostDtoOut(Post post){
-        id_post = post.getId_post();
+        id_post = post.getIdPost();
         date = post.getDate();
-        detail = new DetailPostDto(post.getProduct_id(), post.getProduct_name(), post.getType(), post.getBrand(), post.getColor(), post.getNotes());
+        detail = new DetailPostDto(post.getProductId(), post.getProductName(), post.getType(), post.getBrand(), post.getColor(), post.getNotes());
         category = post.getCategory();
         price = post.getPrice();
     }

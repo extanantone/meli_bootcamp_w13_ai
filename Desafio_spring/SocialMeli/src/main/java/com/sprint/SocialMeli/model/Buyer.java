@@ -7,19 +7,19 @@ import java.util.List;
 public class Buyer extends User {
     List<Integer> followedIds;
 
-    public Buyer(int user_id, String user_name) {
-        super(user_id, user_name);
+    public Buyer(int userId, String user_name) {
+        super(userId, user_name);
         followedIds = new LinkedList<>();
     }
 
-    public void addFollowed(int user_id){
-        if(!followedIds.contains(user_id))
-            followedIds.add(user_id);
+    public void addFollowed(int userId){
+        if(!followedIds.contains(userId))
+            followedIds.add(userId);
     }
 
-    public void deleteFollowed(int user_id){
-        if(!followedIds.contains(user_id))
-            followedIds.remove(user_id);
+    public void deleteFollowed(int userId){
+        if(!followedIds.contains(userId))
+            followedIds.remove(userId);
     }
 
     public Integer followedCount() {
