@@ -1,21 +1,26 @@
 package com.lgoyenechea.socialmeli.controller;
 
 import com.lgoyenechea.socialmeli.dto.*;
+import com.lgoyenechea.socialmeli.exception.ProductArgumentNotValidException;
 import com.lgoyenechea.socialmeli.exception.UserArgumentNotValidException;
 import com.lgoyenechea.socialmeli.exception.UserDoesNotExistsException;
-import com.lgoyenechea.socialmeli.service.ProductService;
+import com.lgoyenechea.socialmeli.service.IProductService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
-    private final ProductService productService;
+    private final IProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(IProductService productService) {
         this.productService = productService;
     }
 
@@ -23,10 +28,22 @@ public class ProductController {
         if (id < 1) throw new UserArgumentNotValidException("Invalid user id.");
     }
 
+    private void validateDate(String dateString) throws ProductArgumentNotValidException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        try {
+            LocalDate date = LocalDate.parse(dateString, formatter);
+            if (date.isAfter(LocalDate.now()))
+                throw new ProductArgumentNotValidException("Invalid date.");
+        } catch (DateTimeParseException e) {
+            throw new ProductArgumentNotValidException("Invalid date format.");
+        }
+    }
+
     @PostMapping("/post")
     ResponseEntity<PostDTO> newProductPost(@RequestBody PostCreationDTO newPost)
-            throws UserDoesNotExistsException {
+            throws UserDoesNotExistsException, ProductArgumentNotValidException {
 
+        validateDate(newPost.getDate());
         PostDTO post = productService.save(newPost);
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
@@ -44,8 +61,9 @@ public class ProductController {
 
     @PostMapping("/promo-post")
     ResponseEntity<PostPromoDTO> newProductWithPromoPost(@RequestBody PostCreationPromoDTO newPost)
-            throws UserDoesNotExistsException {
+            throws UserDoesNotExistsException, ProductArgumentNotValidException {
 
+        validateDate(newPost.getDate());
         PostPromoDTO post = productService.saveWithPromo(newPost);
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
@@ -55,7 +73,7 @@ public class ProductController {
             throws UserArgumentNotValidException, UserDoesNotExistsException {
 
         validateId(userId);
-        UserPromoPostCountDTO promoPostCount = productService.promoPostCount(userId);
+        UserPromoPostCountDTO promoPostCount = productService.postsPromoCount(userId);
         return new ResponseEntity<>(promoPostCount, HttpStatus.OK);
     }
 

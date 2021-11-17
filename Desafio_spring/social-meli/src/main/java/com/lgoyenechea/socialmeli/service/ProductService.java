@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductService {
+public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
@@ -31,6 +31,7 @@ public class ProductService {
         this.userService = userService;
     }
 
+    @Override
     public PostDTO save(PostCreationDTO newPost) throws UserDoesNotExistsException {
         if (!userRepository.existsById(newPost.getUserId()))
             throw new UserDoesNotExistsException(
@@ -40,6 +41,7 @@ public class ProductService {
         return ProductMapper.postToDto(post);
     }
 
+    @Override
     public UserFollowedPostsListDTO followedPostsList(Long userId, String order) throws UserArgumentNotValidException {
         UserFollowedListDTO userFollowedList = userService.followedList(userId, "name_asc");
 
@@ -58,6 +60,7 @@ public class ProductService {
         return ProductMapper.productToFollowedPostListDto(userId, posts);
     }
 
+    @Override
     public PostPromoDTO saveWithPromo(PostCreationPromoDTO newPost) throws UserDoesNotExistsException {
         if (!userRepository.existsById(newPost.getUserId()))
             throw new UserDoesNotExistsException(
@@ -67,7 +70,8 @@ public class ProductService {
         return ProductMapper.postToPromoDto(post);
     }
 
-    public UserPromoPostCountDTO promoPostCount(Long userId) throws UserDoesNotExistsException {
+    @Override
+    public UserPromoPostCountDTO postsPromoCount(Long userId) throws UserDoesNotExistsException {
         User user = userRepository.getById(userId);
         if (user == null) throw new UserDoesNotExistsException(
                 String.format(USER_ID_ERROR, userId));
@@ -80,6 +84,7 @@ public class ProductService {
         return ProductMapper.userToPromoPostCountDto(user, count);
     }
 
+    @Override
     public UserPostsPromoListDTO postsPromoList(Long userId) throws UserDoesNotExistsException {
         User user = userRepository.getById(userId);
         if (user == null) throw new UserDoesNotExistsException(

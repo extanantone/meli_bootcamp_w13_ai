@@ -9,6 +9,10 @@ Solución planteada para el desafío de Spring número 1.
 - Al realizar un POST de un posteo o un producto *no se pasan los ids* en el payload. Los ids se manejan automáticamente desde el repositorio (revisar payloads de endpoints). 
 - Los ids deben ser positivos mayores a 0 (cero).
 
+## Entity Model Diagram
+
+![entity_model_diagram_v1](./doc/model_diagram.jpg)
+
 ## Endpoints
 
  - **Crear nuevo usuario**

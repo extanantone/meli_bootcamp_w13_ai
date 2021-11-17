@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
 
     private final UserRepository userRepository;
 
@@ -26,11 +26,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Override
     public UserDTO save(UserCreationDTO newUser) {
         User user = userRepository.save(UserMapper.userCreationDtoToUser(newUser));
         return UserMapper.userToDto(user);
     }
 
+    @Override
     public UserFollowDTO follow(Long userId, Long userIdToFollow) throws UserDoesNotExistsException {
         User user = userRepository.getById(userId);
         User followed = userRepository.getById(userIdToFollow);
@@ -46,6 +48,7 @@ public class UserService {
         return UserMapper.userToFollow(user, followed);
     }
 
+    @Override
     public UserFollowersCountDTO followersCount(Long userId) throws UserDoesNotExistsException {
         User user = userRepository.getById(userId);
         if (user == null)
@@ -53,6 +56,7 @@ public class UserService {
         return UserMapper.userToFollowersCount(user);
     }
 
+    @Override
     public UserFollowersListDTO followersList(Long userId, String order) throws UserDoesNotExistsException {
         User user = userRepository.getById(userId);
         if (user == null)
@@ -69,6 +73,7 @@ public class UserService {
         return UserMapper.userToFollowersList(user, followers);
     }
 
+    @Override
     public UserFollowedListDTO followedList(Long userId, String order) throws UserDoesNotExistsException {
         User user = userRepository.getById(userId);
         if (user == null)
@@ -85,6 +90,7 @@ public class UserService {
         return UserMapper.userToFollowedList(user, followed);
     }
 
+    @Override
     public UserUnfollowDTO unfollow(Long userId, Long userIdToUnfollow)
             throws UserArgumentNotValidException, UserDoesNotFollowException {
         User user = userRepository.getById(userId);

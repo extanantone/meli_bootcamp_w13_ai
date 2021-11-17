@@ -4,7 +4,7 @@ import com.lgoyenechea.socialmeli.dto.*;
 import com.lgoyenechea.socialmeli.exception.UserArgumentNotValidException;
 import com.lgoyenechea.socialmeli.exception.UserDoesNotExistsException;
 import com.lgoyenechea.socialmeli.exception.UserDoesNotFollowException;
-import com.lgoyenechea.socialmeli.service.UserService;
+import com.lgoyenechea.socialmeli.service.IUserService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserService userService;
+    private final IUserService userService;
 
-    UserController(UserService userService) {
+    UserController(IUserService userService) {
         this.userService = userService;
     }
 

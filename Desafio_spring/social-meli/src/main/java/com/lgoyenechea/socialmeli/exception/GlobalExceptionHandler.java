@@ -16,6 +16,14 @@ public class GlobalExceptionHandler {
         return buildResponseEntity(error);
     }
 
+    @ExceptionHandler(value = ProductArgumentNotValidException.class)
+    public ResponseEntity<Object> productArgumentNotValidException(ProductArgumentNotValidException productArgumentNotValidException) {
+        Error error = new Error();
+        error.setStatus(HttpStatus.BAD_REQUEST);
+        error.setMessage(productArgumentNotValidException.getMessage());
+        return buildResponseEntity(error);
+    }
+
     @ExceptionHandler(value = UserDoesNotFollowException.class)
     public ResponseEntity<Object> userDoesNotFollowException(UserDoesNotFollowException userDoesNotFollowException) {
         Error error = new Error();
