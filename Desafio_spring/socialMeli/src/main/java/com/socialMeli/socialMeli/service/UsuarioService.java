@@ -54,10 +54,17 @@ public class UsuarioService implements IUsuarioService {
     }
 
     public SeguidoresUsuarioDTO mostrarSeguidoresDelUsuario(int user_id, String criterio){
-        SeguidoresUsuarioDTO response = this.mostrarSeguidores(user_id,criterio);
-        return response;
+        Usuario usuario = usuarioRepository.obtenerUsuario(user_id);
+        if(usuario==null){
+            throw new UserNotFoundException();
+        }
+        String nombre = usuario.getUser_name();
+        List<Usuario> followers = usuario.getFollowers();
+        followers = ordenarPorCriterio(followers,criterio);
+        List<UsuarioDto> followersDTO = followers.stream().map(u -> socialMeliMapper.usuarioAUsuarioDTO(u)).collect(Collectors.toList());
+        return new SeguidoresUsuarioDTO(user_id,nombre,followersDTO);
     }
-
+/*
     public SeguidoresUsuarioDTO mostrarSeguidores(int user_id,String criterio){
         Usuario usuario = usuarioRepository.obtenerUsuario(user_id);
         if(usuario==null){
@@ -69,12 +76,18 @@ public class UsuarioService implements IUsuarioService {
         List<UsuarioDto> followersDTO = followers.stream().map(u -> socialMeliMapper.usuarioAUsuarioDTO(u)).collect(Collectors.toList());
         return new SeguidoresUsuarioDTO(user_id,nombre,followersDTO);
     }
-
+*/
     public SeguidosUsuarioDTO mostrarSeguidosDelUsuario(int user_id, String criterio){
-        SeguidosUsuarioDTO response = mostrarSeguidos(user_id,criterio);
-        return response;
+        Usuario usuario = usuarioRepository.obtenerUsuario(user_id);
+        if (usuario==null){
+            throw new UserNotFoundException();
+        }
+        List<Usuario> followed = usuario.getFollowed();
+        followed = ordenarPorCriterio(followed,criterio);
+        List<UsuarioDto> followedDTO = followed.stream().map(u -> this.socialMeliMapper.usuarioAUsuarioDTO(u)).collect(Collectors.toList());
+        return new SeguidosUsuarioDTO(user_id,usuario.getUser_name(),followedDTO);
     }
-
+/*
     public SeguidosUsuarioDTO mostrarSeguidos(int user_id,String criterio){
         Usuario usuario = usuarioRepository.obtenerUsuario(user_id);
         if (usuario==null){
@@ -85,7 +98,7 @@ public class UsuarioService implements IUsuarioService {
         List<UsuarioDto> followedDTO = followed.stream().map(u -> this.socialMeliMapper.usuarioAUsuarioDTO(u)).collect(Collectors.toList());
         return new SeguidosUsuarioDTO(user_id,usuario.getUser_name(),followedDTO);
     }
-
+*/
     public void agregarPublicacion(PublicacionDTO publicacionDTO){
         Usuario usuario = usuarioRepository.obtenerUsuario(publicacionDTO.getUser_id());
         if (usuario == null){

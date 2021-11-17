@@ -1,4 +1,5 @@
 package com.socialMeli.socialMeli.controller;
+import com.socialMeli.socialMeli.dto.MensajeDTO;
 import com.socialMeli.socialMeli.dto.PublicacionDTO;
 import com.socialMeli.socialMeli.service.IUsuarioService;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ public class UsuarioController implements IUsuarioController {
     @PostMapping("/users/{user_id}/follow/{user_id_to_follow}")
     public ResponseEntity<?> follow(@PathVariable int user_id, @PathVariable int user_id_to_follow) {
         usuarioService.seguirUsuario(user_id, user_id_to_follow);
-        return new ResponseEntity("Usuario seguido", HttpStatus.OK);
+        return new ResponseEntity(new MensajeDTO("Usuario seguido"), HttpStatus.OK);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class UsuarioController implements IUsuarioController {
     @PostMapping("/products/post")
     public ResponseEntity<?> darDeAltaPublicacion(@RequestBody PublicacionDTO publicacionDto) {
         usuarioService.agregarPublicacion(publicacionDto);
-        return new ResponseEntity<>("Se ha publicado correctamente", HttpStatus.OK);
+        return new ResponseEntity<>(new MensajeDTO("Se ha publicado correctamente"), HttpStatus.OK);
     }
 
     @Override
@@ -60,7 +61,7 @@ public class UsuarioController implements IUsuarioController {
     @PostMapping("/users/{user_id}/unfollow/{user_id_to_unfollow}")
     public ResponseEntity<?> unfollow(@PathVariable int user_id, @PathVariable int user_id_to_unfollow) {
         usuarioService.dejarDeSeguirA(user_id, user_id_to_unfollow);
-        return new ResponseEntity<>("Usuario dejado de seguir", HttpStatus.OK);
+        return new ResponseEntity<>(new MensajeDTO("Usuario dejado de seguir"), HttpStatus.OK);
     }
 
 }

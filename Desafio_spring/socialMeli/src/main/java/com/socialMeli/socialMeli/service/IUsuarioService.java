@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 public interface IUsuarioService {
     ConteoDeSeguidoresDTO conteoDeSeguidores(int user_id);
-    SeguidoresUsuarioDTO mostrarSeguidores(int user_id,String criterio);
-    SeguidosUsuarioDTO mostrarSeguidos(int user_id,String criterio);
     void seguirUsuario(int user_id, int user_id_to_follow);
     ConteoDeSeguidoresDTO contabilizarSeguidores(int user_id);
     SeguidoresUsuarioDTO mostrarSeguidoresDelUsuario(int user_id, String criterio);
