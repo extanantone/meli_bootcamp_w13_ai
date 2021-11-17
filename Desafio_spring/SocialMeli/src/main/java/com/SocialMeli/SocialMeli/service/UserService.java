@@ -86,17 +86,43 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public SellersFollowedDTOResponse getFollowed(int buyerId) {
+    public SellersFollowedDTOResponse getFollowed(int buyerId, String order) {
         User buyer = userRepository.getUser(buyerId);
         if (buyer == null){
             throw new NotFoundException("Usuario no encontrado");
         }
 
-        SellersFollowedDTOResponse sellerFollowersDTO = UserMapper.userToSellersFollowedDTO(buyer);
+        SellersFollowedDTOResponse sellerFollowedDTO = UserMapper.userToSellersFollowedDTO(buyer);
         Map<Integer, User> followed = userRepository.getFollowed(buyerId);
-        sellerFollowersDTO.setFollowed(followed.values().stream().map(UserMapper::userToUserDTO).collect(Collectors.toList()));
 
-        return sellerFollowersDTO;
+        List<UserDTO> followedDTO = followed.values().stream().map(UserMapper::userToUserDTO).collect(Collectors.toList());
+
+        if (order != null){
+            String[] order_request = order.split("_");
+            if (order_request.length != 2) {
+                throw new BadRequestException("Formato de orden incorrecto");
+            }
+            String order_type = order_request[0];
+            String order_dir = order_request[1];
+
+            switch (order_type.toLowerCase()){
+                case "name":
+                    if (order_dir.toLowerCase().equals("desc")) {
+                        followedDTO = followedDTO.stream().sorted(Comparator.comparing(UserDTO::getUser_name).reversed()).collect(Collectors.toList());
+                    } else {
+                        if(order_dir.toLowerCase().equals("asc")){
+                            followedDTO = followedDTO.stream().sorted(Comparator.comparing(UserDTO::getUser_name)).collect(Collectors.toList());
+                        } else {
+                            throw new BadRequestException("Formato de orden incorrecto");
+                        }
+                    }
+                    break;
+                default:
+                    throw new BadRequestException("Formato de orden incorrecto");
+            }
+        }
+        sellerFollowedDTO.setFollowed(followedDTO);
+        return sellerFollowedDTO;
     }
 
     @Override

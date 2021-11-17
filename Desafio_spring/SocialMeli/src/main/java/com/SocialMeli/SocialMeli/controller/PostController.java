@@ -20,7 +20,7 @@ public class PostController {
     }
 
     @GetMapping("/products/followed/{user_id}/list")
-    public ResponseEntity<?> getByUserId(@PathVariable int user_id, @RequestParam String order) {
+    public ResponseEntity<?> getByUserId(@PathVariable int user_id, @RequestParam(name="order",required = false) String order) {
         return new ResponseEntity<>(postService.getByUser(user_id, order), HttpStatus.OK);
     }
 

@@ -16,9 +16,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class PostService implements IPostService{
@@ -63,7 +65,11 @@ public class PostService implements IPostService{
         }
 
         LocalDate date = LocalDate.now().minus(Period.ofDays(14));
-        List<Post> posts = postRepository.getByUserId(userId, date);
+
+        List<Post> posts = new ArrayList<>();
+        for (User user: buyer.getFollowed().values()){
+            posts.addAll(postRepository.getByUserId(user.getId(), date));
+        }
 
         PostsByUserDTOResponse postsByUserDTOResponse = new PostsByUserDTOResponse();
         postsByUserDTOResponse.setUser_id(userId);

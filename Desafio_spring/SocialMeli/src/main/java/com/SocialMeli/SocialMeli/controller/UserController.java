@@ -21,15 +21,14 @@ public class UserController {
     public ResponseEntity<?> getSellerCountFollowers(@PathVariable int userId){
         return new ResponseEntity<SellerCountFollowersDTOResponse>(userService.getSellerFollowersCount(userId), HttpStatus.OK);
     }
-
     @GetMapping("/users/{user_id}/followers/list")
-    public ResponseEntity<?> getFollowers(@PathVariable int user_id, @RequestParam String order){
+    public ResponseEntity<?> getFollowers(@PathVariable int user_id, @RequestParam(name="order",required = false) String order){
         return new ResponseEntity<SellerFollowersDTOResponse>(userService.getFollowers(user_id, order), HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}/followed/list")
-    public ResponseEntity<?> getFollowed(@PathVariable int user_id){
-        return new ResponseEntity<SellersFollowedDTOResponse>(userService.getFollowed(user_id), HttpStatus.OK);
+    public ResponseEntity<?> getFollowed(@PathVariable int user_id, @RequestParam(name="order",required = false) String order){
+        return new ResponseEntity<SellersFollowedDTOResponse>(userService.getFollowed(user_id, order), HttpStatus.OK);
     }
 
     @PostMapping("/users/{userId}/unfollow/{user_id_to_unfollow}")

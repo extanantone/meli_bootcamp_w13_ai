@@ -222,7 +222,7 @@ STATUS 400 BAD REQUEST
 }
 ```
 ---
-### <a id="US004">US004</a>
+### <a id="US004">US004</a> y <a id="US008">US008</a>
 Obtener un listado de todos los vendedores a los cuales sigue un determinado usuario (¿A quién sigo?)
 ```
 (GET)
