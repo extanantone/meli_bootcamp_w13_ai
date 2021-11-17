@@ -88,14 +88,14 @@ public class SocialMeliRepository implements ISocialMeliRepository {
     }
 
     @Override
-    public List<User> follower(Integer user_id) {
+    public List<User> followerList(Integer user_id) {
         return userId(user_id).getFollower().stream()
                 .map(this.userList::get)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<User> followed(Integer user_id) {
+    public List<User> followedList(Integer user_id) {
         return userId(user_id).getFollowed().stream()
                 .map(this.userList::get)
                 .collect(Collectors.toList());

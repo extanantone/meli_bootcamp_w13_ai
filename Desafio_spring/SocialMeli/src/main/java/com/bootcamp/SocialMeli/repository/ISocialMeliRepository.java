@@ -9,8 +9,8 @@ public interface ISocialMeliRepository {
     boolean checkUser(Integer user_id);
     void newFollow(Integer user_id, Integer user_id_to_follow);
     User userId(Integer user_id);
-    List<User> follower(Integer user_id);
-    List<User> followed (Integer user_id);
+    List<User> followerList(Integer user_id);
+    List<User> followedList (Integer user_id);
     Publication createPublication(Publication publication);
     List<Publication> recentPublication(Integer user_id);
     void deleteFollow(Integer user_id, Integer user_id_to_unfollow);

@@ -5,7 +5,7 @@ import com.bootcamp.SocialMeli.dto.FollowedDTO;
 import com.bootcamp.SocialMeli.dto.FollowerDTO;
 import com.bootcamp.SocialMeli.dto.MessageDTO;
 import com.bootcamp.SocialMeli.dto.PublicationDTO;
-import com.bootcamp.SocialMeli.exception.BadRequest;
+import com.bootcamp.SocialMeli.dto.UserPublicationDTO;
 import com.bootcamp.SocialMeli.model.Publication;
 import com.bootcamp.SocialMeli.service.ISocialMeliService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +36,13 @@ public class SocialMeliController {
     }
 
     @GetMapping("/users/{user_id}/followers/list")
-    ResponseEntity<FollowerDTO> followerList(@PathVariable Integer user_id)  {
-        return new ResponseEntity(this.isocialMeliService.followerList(user_id), HttpStatus.OK);
+    ResponseEntity<FollowerDTO> followerList(@PathVariable Integer user_id, @RequestParam(value = "order", required = false) String order)  {
+        return new ResponseEntity(this.isocialMeliService.followerList(user_id, order), HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}/followed/list")
-    ResponseEntity<FollowedDTO> followedList(@PathVariable Integer user_id) {
-        return new ResponseEntity<>(this.isocialMeliService.followedList(user_id), HttpStatus.OK);
+    ResponseEntity<FollowedDTO> followedList(@PathVariable Integer user_id, @RequestParam(value = "order", required = false) String order) {
+        return new ResponseEntity<>(this.isocialMeliService.followedList(user_id, order), HttpStatus.OK);
     }
 
     @PostMapping("/products/post")
@@ -54,7 +54,7 @@ public class SocialMeliController {
 
     @GetMapping("/products/followed/{user_id}/list")
     ResponseEntity<Publication> recentPublication(@PathVariable Integer user_id,@RequestParam(name= "order", required = false) String order){
-        PublicationDTO response = isocialMeliService.recentPublication(user_id, order);
+        UserPublicationDTO response = isocialMeliService.recentPublication(user_id, order);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 

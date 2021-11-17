@@ -1,5 +1,6 @@
 package com.bootcamp.SocialMeli.dto;
 
+import com.bootcamp.SocialMeli.model.Producto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

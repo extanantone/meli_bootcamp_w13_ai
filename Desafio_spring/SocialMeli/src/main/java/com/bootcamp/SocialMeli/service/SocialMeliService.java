@@ -6,6 +6,7 @@ import com.bootcamp.SocialMeli.dto.FollowerDTO;
 import com.bootcamp.SocialMeli.dto.ProductoDTO;
 import com.bootcamp.SocialMeli.dto.PublicationDTO;
 import com.bootcamp.SocialMeli.dto.UserDTO;
+import com.bootcamp.SocialMeli.dto.UserPublicationDTO;
 import com.bootcamp.SocialMeli.exception.NotFoundUserId;
 import com.bootcamp.SocialMeli.mapper.PublicationMapper;
 import com.bootcamp.SocialMeli.model.Producto;
@@ -40,22 +41,16 @@ public class SocialMeliService implements ISocialMeliService {
         return new UserDTO(userD.getUser_id(), userD.getUser_name());
     }
 
-    public ProductoDTO detailsProd(Producto producto) {
-        return new ProductoDTO(producto.getProduct_id(),
-                producto.getProduct_name(),
-                producto.getColor(),
-                producto.getBrand(),
-                producto.getNotes(),
-                producto.getType());
+    public PublicationDTO publicationToPublicationDTO(Publication publication) {
+        ProductoDTO detail = this.detailsProd(publication.getDetails());
+        return new PublicationDTO(publication.getUser_id(), publication.getId_post(),
+                publication.getDate(), detail,
+                publication.getCategory(), publication.getPrice());
     }
 
-    public PublicationDTO publicationToPublicationDTO(Publication publication) {
-        return new PublicationDTO(publication.getUser_id(),
-                publication.getId_post(),
-                publication.getDate(),
-                publication.getDetails(),
-                publication.getCategory(),
-                publication.getPrice());
+    public ProductoDTO detailsProd(Producto producto) {
+        return new ProductoDTO(producto.getProduct_id(), producto.getProduct_name(),
+                producto.getType(), producto.getBrand(), producto.getColor(), producto.getNotes());
     }
 
     @Override
@@ -78,7 +73,7 @@ public class SocialMeliService implements ISocialMeliService {
     public FollowerDTO followerList(Integer user_id, String order) {
         this.checkUser(user_id);
         User followerUser = this.iSocialMeliRepository.userId(user_id);
-        List<UserDTO> followerList = this.iSocialMeliRepository.follower(user_id).stream()
+        List<UserDTO> followerList = this.iSocialMeliRepository.followerList(user_id).stream()
                 .map(i -> userToUserDTO(i)).collect(Collectors.toList());
         if (Objects.nonNull(order)) {
             followerList = this.orderName(followerList, order);
@@ -92,9 +87,9 @@ public class SocialMeliService implements ISocialMeliService {
     public FollowedDTO followedList(Integer user_id, String order) {
         this.checkUser(user_id);
         User followed = this.iSocialMeliRepository.userId(user_id);
-        List<UserDTO> followedList = this.iSocialMeliRepository.followed(user_id).stream()
+        List<UserDTO> followedList = this.iSocialMeliRepository.followedList(user_id).stream()
                 .map(i -> userToUserDTO(i)).collect(Collectors.toList());
-        if(Objects.nonNull(order)){
+        if (Objects.nonNull(order)) {
             followedList = this.orderName(followedList, order);
         }
         return new FollowedDTO(followed.getUser_id(),
@@ -117,18 +112,17 @@ public class SocialMeliService implements ISocialMeliService {
     }
 
     @Override
-    public PublicationDTO recentPublication(Integer user_id, String order) {
+    public UserPublicationDTO recentPublication(Integer user_id, String order) {
         this.checkUser(user_id);
-        List<Publication> recentPost = this.iSocialMeliRepository.followed(user_id).stream()
+        List<Publication> recentPost = this.iSocialMeliRepository.followedList(user_id).stream()
                 .map(i -> this.iSocialMeliRepository.recentPublication(i.getUser_id())).flatMap(
                         Collection::stream).sorted(Comparator.comparing(Publication::getDate,
                         Collections.reverseOrder())).collect(Collectors.toList());
-
         if (Objects.nonNull(order)) {
             recentPost = this.orderPost(recentPost, order);
         }
-        return new PublicationDTO(user_id, recentPost.stream().map(
-                publicationToPublicationDTO(), PublicationDTO.class)).collect(Collectors.toList()));
+        return new UserPublicationDTO(user_id, recentPost.stream().map(p ->
+                this.publicationToPublicationDTO(p)).collect(Collectors.toList()));
     }
 
     private List<UserDTO> orderName(List<UserDTO> users, String order) {
