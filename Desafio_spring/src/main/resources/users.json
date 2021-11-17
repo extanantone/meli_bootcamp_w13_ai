@@ -1,0 +1,29 @@
+[
+  {
+    "userId" : 1,
+    "userName" : "david_castillo",
+    "name" : "david",
+    "lastName" : "castillo",
+    "followed" : [],
+    "followers" : [],
+    "posts" : []
+  },
+  {
+    "userId" : 2,
+    "userName" : "lorena_castillo",
+    "name" : "lorena",
+    "lastName" : "castillo",
+    "followed" : [],
+    "followers" : [],
+    "posts" : []
+  },
+  {
+    "userId" : 3,
+    "userName" : "luna_pachon",
+    "name" : "luna",
+    "lastName" : "pachon",
+    "followed" : [],
+    "followers" : [],
+    "posts" : []
+  }
+]
