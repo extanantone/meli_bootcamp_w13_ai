@@ -13,19 +13,14 @@ import java.util.Map;
 @Repository
 public class UserRepository implements UserRepositoryI{
     private Map<Integer, User> userList = new HashMap<Integer, User>(){{
-        User u1 = new User(1,"user1");
-
-        u1.addPublication(1);
+        User u1 = new User(1,"BuyerOne");
         put(1,u1);
-        u1 = new User(2,"vendendor2");
-
-        u1.addPublication(2);
+        u1 = new User(2,"BuyerTwo");
         put(2,u1);
-        u1 = new User(3,"vendendor3");
-        u1.addPublication(3);
-        u1.addPublication(4);
-        u1.addPublication(5);
+        u1 = new User(3,"SellerOne");
         put(3,u1);
+        u1 = new User(4,"SellerTwo");
+        put(4,u1);
     }};
 
 

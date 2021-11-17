@@ -1,5 +1,6 @@
 package com.socialmeli.socialmeli.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

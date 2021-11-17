@@ -16,20 +16,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class PostRepository implements PostRepositoryI{
-    private Map<Integer, Post> postList = new HashMap<Integer, Post>(){{
-        Product pro = new Product(1,"asdasd","asdaaa","asdasd","asdasd","asdasd");
-        Post p = new Post(1,1, LocalDate.of(2021,11,14),pro,1,12.03,false,0.0);
-
-        put(1,p);
-        p = new Post(2,2, LocalDate.of(2021,11,13),pro,1,11.03,false,0.0);
-        put(2,p);
-        p = new Post(3,3, LocalDate.of(2021,11,12),pro,1,10.03,false,0.0);
-        put(3,p);
-        p = new Post(3,4, LocalDate.of(2021,11,8),pro,1,10.03,false,0.0);
-        put(4,p);
-        p = new Post(3,5, LocalDate.of(2021,11,14),pro,1,10.03,true,12.5);
-        put(5,p);
-    }};
+    private Map<Integer, Post> postList = new HashMap<Integer, Post>();
 
     @Autowired
     private UserRepository userRepository;

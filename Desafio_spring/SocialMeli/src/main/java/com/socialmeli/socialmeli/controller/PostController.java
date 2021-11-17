@@ -42,5 +42,11 @@ public class PostController {
         return new ResponseEntity(userAndPostService.countPromoPost(user_id),HttpStatus.OK);
     }
 
+    @GetMapping("/{userId}/list")
+    ResponseEntity<?> ListPromoPost(@PathVariable("userId") int user_id){
+
+        return new ResponseEntity(userAndPostService.ListPromoPost(user_id),HttpStatus.OK);
+    }
+
 
 }

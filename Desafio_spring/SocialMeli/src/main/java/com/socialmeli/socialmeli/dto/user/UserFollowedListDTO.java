@@ -1,7 +1,5 @@
 package com.socialmeli.socialmeli.dto.user;
 
-import com.socialmeli.socialmeli.dto.post.PostDTO;
-import com.socialmeli.socialmeli.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,19 +10,19 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UserFollowexListDTO{
+public class UserFollowedListDTO {
     int user_id;
     String user_name;
-    List<UserDTO> followers;
+    List<UserDTO> followed;
 
-    public UserFollowexListDTO(int user_id, String user_name) {
+    public UserFollowedListDTO(int user_id, String user_name) {
         this.user_id = user_id;
         this.user_name = user_name;
-        followers = new ArrayList<UserDTO>();
+        followed = new ArrayList<UserDTO>();
     }
 
     public void addFollowers(UserDTO userDTO){
-        followers.add(userDTO);
+        followed.add(userDTO);
     }
 
 

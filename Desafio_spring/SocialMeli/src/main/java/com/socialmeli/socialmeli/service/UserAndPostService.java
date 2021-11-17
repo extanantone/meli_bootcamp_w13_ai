@@ -1,12 +1,9 @@
 package com.socialmeli.socialmeli.service;
 
 import com.socialmeli.socialmeli.dto.ResponseSuccessfullyDTO;
-import com.socialmeli.socialmeli.dto.post.FollowedSellerPostDTO;
-import com.socialmeli.socialmeli.dto.post.PostDTO;
-import com.socialmeli.socialmeli.dto.post.PostPromoCountDTO;
-import com.socialmeli.socialmeli.dto.post.PostWithoutDiscountDTO;
+import com.socialmeli.socialmeli.dto.post.*;
 import com.socialmeli.socialmeli.dto.user.UserFollowerCountDTO;
-import com.socialmeli.socialmeli.dto.user.UserFollowexListDTO;
+import com.socialmeli.socialmeli.dto.user.UserFollowersListDTO;
 import com.socialmeli.socialmeli.exceptions.postExceptions.ExistingPostException;
 import com.socialmeli.socialmeli.exceptions.userExceptions.*;
 import com.socialmeli.socialmeli.mapper.PostMapper;
@@ -24,7 +21,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -89,22 +85,22 @@ public class UserAndPostService implements UserAndPostServiceI {
     }
 
     @Override
-    public UserFollowexListDTO listUserFollowex(int user_id,boolean isFollowersList,String order) {
+    public UserFollowersListDTO listUserFollowex(int user_id, boolean isFollowersList, String order) {
         if (user_id>=0) {
             if (userRepository.userExists(user_id)) {
                 User user = userRepository.getUser(user_id);
-                UserFollowexListDTO userFollowersList = new UserFollowexListDTO(user.getUser_id(),user.getUser_name());
+                UserFollowersListDTO userFollowersList = new UserFollowersListDTO(user.getUser_id(),user.getUser_name(),isFollowersList);
 
                 List<Integer> followexList =isFollowersList? user.getFollowers():user.getFollowed();
                 for (Integer idUser: followexList) {
                     User followersUser = userRepository.getUser(idUser);
-                    userFollowersList.addFollowers(userMapper.userToUserDTO(followersUser));
+                    userFollowersList.addFollowers(userMapper.userToUserDTO(followersUser),isFollowersList);
                 }
 
                 if (order != null && order.contains("name_desc")) {
-                    Collections.sort(userFollowersList.getFollowers(), Collections.reverseOrder());
+                    Collections.sort(isFollowersList?userFollowersList.getFollowers():userFollowersList.getFollowed(), Collections.reverseOrder());
                 } else {
-                    Collections.sort(userFollowersList.getFollowers());
+                    Collections.sort(isFollowersList?userFollowersList.getFollowers():userFollowersList.getFollowed());
                 }
                 return userFollowersList;
             } else{
@@ -207,4 +203,22 @@ public class UserAndPostService implements UserAndPostServiceI {
             throw new NegativeIdException(user_id);
         }
     }
+
+    @Override
+    public ListPromoPostDTO ListPromoPost(int user_id) {
+        if (user_id>=0) {
+            if (userRepository.userExists(user_id)) {
+                User user = userRepository.getUser(user_id);
+                List<Integer> publicationList = user.getPublication();
+                List<PostDTO> postDTOList = publicationList.stream().filter(x->postMapper.postDTOToPost(postRepository.getPost(x)).isHas_promo()).map(e->postMapper.postDTOToPost(postRepository.getPost(e))).collect(Collectors.toList());
+                return new ListPromoPostDTO(user.getUser_id(),user.getUser_name(),postDTOList);
+            } else{
+                throw new NotFoundUserException(user_id);
+            }
+        } else{
+            throw new NegativeIdException(user_id);
+        }
+
+    }
+
 }
