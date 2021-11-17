@@ -3,6 +3,7 @@ package com.desafio_spring.principal.servicios;
 import com.desafio_spring.principal.dto.ConteosDTO;
 import com.desafio_spring.principal.dto.ListaPublicacionesDTO;
 import com.desafio_spring.principal.dto.PublicacionesDTO;
+import com.desafio_spring.principal.enumerados.EnumErrs;
 import com.desafio_spring.principal.enumerados.EnumOrdenes;
 import com.desafio_spring.principal.excepciones.NegocioException;
 import com.desafio_spring.principal.modelo.Producto;
@@ -12,7 +13,7 @@ import com.desafio_spring.principal.repositorios.IRepositorios;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 @Qualifier("ServicioPublicaciones")
 public class ServicioPublicaciones implements IServicioPublicaciones<PublicacionesDTO>{
 
@@ -72,7 +73,7 @@ public class ServicioPublicaciones implements IServicioPublicaciones<Publicacion
         else if(order.equals(EnumOrdenes.date_desc.name()))
             consulta.sort(Comparator.comparing(Publicacion::getDate).reversed());
         else
-            throw new NegocioException("No se reconoce el valor del campo order",105);
+            throw new NegocioException(EnumErrs.PARAMETER_NOT_FOUND.repMensaje(order),EnumErrs.PARAMETER_NOT_FOUND.getCodigo());
 
         consulta.forEach(x->{
             PublicacionesDTO nueva = mapper.map(x, PublicacionesDTO.class);
@@ -82,12 +83,23 @@ public class ServicioPublicaciones implements IServicioPublicaciones<Publicacion
         return salida;
     }
 
+    /**
+     * Consultar las publicaciones d eun id especifico
+     * @param userId : id ingresado para consultar las publicaciones del vendedor
+     * @return ConteosDTO
+     */
     @Override
     public ConteosDTO contarPublicaciones(Integer userId) {
         Usuario user = repos.findUserById(userId);
         return new ConteosDTO(user.getUserId(),user.getUserName(),null,null,repos.obtenerPubsDeVendedor(userId).size());
     }
 
+    /**
+     * de un vendedor obtener sus publicaciones en promocion
+     * @param userId : id del vendedor
+     * @param order : tipo de orden
+     * @return ListaPublicacionesDTO
+     */
     @Override
     public ListaPublicacionesDTO obtenerPubsPromocion(Integer userId,String order) {
         Usuario user = repos.findUserById(userId);
@@ -108,15 +120,20 @@ public class ServicioPublicaciones implements IServicioPublicaciones<Publicacion
         else if(order.equals(EnumOrdenes.date_desc.name()))
             pubsPromocion.sort(Comparator.comparing(PublicacionesDTO::getDate).reversed());
         else
-            throw new NegocioException("No se reconoce el valor del campo order",105);
+            throw new NegocioException(EnumErrs.PARAMETER_NOT_FOUND.repMensaje(order), EnumErrs.PARAMETER_NOT_FOUND.getCodigo());
 
         return new ListaPublicacionesDTO(userId,user.getUserName(),pubsPromocion);
     }
 
+    /**
+     * contar publicaciones en promocion
+     * @param userId : id del usuario a consultar
+     * @return ConteosDTO
+     */
     @Override
     public ConteosDTO contarPublicacionesPromo(Integer userId) {
         Usuario user = repos.findUserById(userId);
-        int conteoPromos = repos.obtenerPubsDeVendedor(userId).stream().filter(x->x.isHasPromo()).collect(Collectors.toList()).size();
+        int conteoPromos = repos.obtenerPubsDeVendedor(userId).stream().filter(Publicacion::isHasPromo).collect(Collectors.toList()).size();
         return new ConteosDTO(user.getUserId(),user.getUserName(),null,conteoPromos,null);
     }
 

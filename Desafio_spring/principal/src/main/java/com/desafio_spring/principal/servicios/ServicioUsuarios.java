@@ -3,6 +3,7 @@ package com.desafio_spring.principal.servicios;
 import com.desafio_spring.principal.dto.ConteosDTO;
 import com.desafio_spring.principal.dto.ListaUsuariosDTO;
 import com.desafio_spring.principal.dto.UsuarioDTO;
+import com.desafio_spring.principal.enumerados.EnumErrs;
 import com.desafio_spring.principal.enumerados.EnumOrdenes;
 import com.desafio_spring.principal.excepciones.NegocioException;
 import com.desafio_spring.principal.modelo.Usuario;
@@ -25,12 +26,22 @@ public class ServicioUsuarios {
     private ModelMapper mapper;
 
 
+    /**
+     * agregar un seguidos a las colecciones
+     * @param seguidor : id del seguidor
+     * @param seguido : id del seguido
+     */
     public void registrarSeguir(Integer seguidor, Integer seguido){
         Usuario seguidorLocal = repos.findUserById(seguidor);
         Usuario seguidoLocal = repos.findUserById(seguido);
         repos.registrarSeguidor(seguidoLocal,seguidorLocal);
     }
 
+    /**
+     * eliminar un seguidor de las colecciones
+     * @param seguidor : id del seguidor
+     * @param seguido : id del seguido
+     */
     public void dejarDeSeguir(Integer seguidor, Integer seguido){
         Usuario seguidorLocal = repos.findUserById(seguidor);
         Usuario seguidoLocal = repos.findUserById(seguido);
@@ -48,9 +59,9 @@ public class ServicioUsuarios {
     }
 
     /**
-     * Obtiene la lsita de seguidores
+     * Obtiene la lista de seguidores
      * @param seguido :id de usuario a quien siguen
-     * @param orden : parametro para identifcar el tipo de ordenamiento d ela lsita de salida
+     * @param orden : parametro para identificar el tipo de ordenamiento de la lista de salida
      * @return lista de seguidores del seguido
      */
     public ListaUsuariosDTO listaSeguidores(Integer seguido, String orden){
@@ -63,7 +74,7 @@ public class ServicioUsuarios {
         else if(orden.equals(EnumOrdenes.name_desc.name()))
             seguidores.sort(Comparator.comparing(Usuario::getUserName).reversed());
         else
-            throw new NegocioException("No se reconoce el valor del campo order",105);
+            throw new NegocioException(EnumErrs.PARAMETER_NOT_FOUND.repMensaje(orden),EnumErrs.PARAMETER_NOT_FOUND.getCodigo());
 
         seguidores.forEach(x->salida.getFollowers().add(new UsuarioDTO(x.getUserId(),x.getUserName())));
         return salida;
@@ -72,7 +83,7 @@ public class ServicioUsuarios {
     /**
      * Obtiene la lsita de usuarios a los que sigue
      * @param seguidor :id de usuario de quien sigue a otros
-     * @return
+     * @return lista de usuarios que sigue un usuario seguidor
      */
     public ListaUsuariosDTO listaSeguidos(Integer seguidor, String orden){
         Usuario seguidorLocal = repos.findUserById(seguidor);
@@ -84,8 +95,7 @@ public class ServicioUsuarios {
         else if(orden.equals(EnumOrdenes.name_desc.name()))
             seguidores.sort(Comparator.comparing(Usuario::getUserName).reversed());
         else
-            throw new NegocioException("No se reconoce el valor del campo order",105);
-
+            throw new NegocioException(EnumErrs.PARAMETER_NOT_FOUND.repMensaje(orden),EnumErrs.PARAMETER_NOT_FOUND.getCodigo());
 
         seguidores.forEach(x->salida.getFollowed().add(mapper.map(x,UsuarioDTO.class)));
         return salida;
