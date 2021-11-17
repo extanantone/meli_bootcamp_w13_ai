@@ -7,14 +7,14 @@
 Mercado Libre sigue creciendo y para el año que viene tiene como objetivo empezar a implementar una serie de herramientas que permitan a los compradores y vendedores tener una experiencia totalmente innovadora, en donde el lazo que los una sea mucho más cercano. 
 
 La fecha de lanzamiento se aproxima, por lo cual es necesaria la presentación de una versión Beta de lo que va a ser conocido como “SocialMeli”, en donde los compradores van a poder seguir a sus vendedores favoritos y enterarse de todas las novedades que los mismos posteen.
-## Requerimientos técnicos funcionales implementados:
-
 ### Consideraciones:
 * Los usuarios se encuentran creados por defecto (4 usuarios creados) a fines del desafío.
-* Los usuarios no se distinguen entre vendedores y compradores. 
+* Los usuarios no se distinguen entre vendedores y compradores.
 * Un usuario puede seguir a cualquier usuario a excepcion de si mismo.
 * Cualquier usuario puede postear un producto.
 * Un producto que se desee postear es necesario todos los campos completados correctamente, caso contrario no se realizará la operacion.
+## Requerimientos técnicos funcionales implementados:
+
 
 **US 0001:** Poder realizar la acción de &quot;Follow&quot; (seguir) a un determinado vendedor
 
@@ -49,13 +49,23 @@ Status code 400
 
 **US 0002:** Obtener el resultado de la cantidad de usuarios que siguen a un determinado vendedor
 
-
-
 | **Method** | **SIGN** |
 | --- | --- |
 | GET | /users/{user\_id}/followers/count |
-| **Ejemplo:** /users/1569/followers/count/ |
-| **Response** | {&quot;user\_id&quot;: 1569,&quot;user\_name&quot;: &quot;vendedor1&quot;,&quot;followers\_count&quot;: 35} |
+
+**Ejemplo**
+
+```sh
+/users/3/followers/count/
+```
+Respuesta exitosa
+```sh
+{
+  user_id: 3,
+  user_name: "Carlos",
+  followers_count: 2
+}
+```
 
 **Filtros/Parámetros:**
 
@@ -66,7 +76,6 @@ Status code 400
 
 **US 0003:** Obtener un listado de todos los usuarios que siguen a un determinado vendedor (¿Quién me sigue?)
 
-**Sign**** :**
 
 | **Method** | **SIGN** |
 | --- | --- |
@@ -188,6 +197,7 @@ Status code 400
 
 \ ***Nota:** Este ordenamiento aplica solo para la US-006
 
+## Requerimientos técnicos sin implementación:
 **Extra Bonus**
 
 **US 0010:** Llevar a cabo la publicación de un nuevo producto en promoción
