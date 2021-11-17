@@ -21,9 +21,10 @@ public class UserServiceImplements implements UserService{
     @Override
     public void followUser(int userId, int userIdToFollow) {
         User userNow = userRepository.findById(userId);
-        User userToFollow = userRepository.findById(userIdToFollow);
-        userToFollow.follow(userNow);
-
+        if(userIdToFollow != userId) {
+            User userToFollow = userRepository.findById(userIdToFollow);
+            userToFollow.follow(userNow);
+        }
     }
 
     @Override
@@ -61,7 +62,7 @@ public class UserServiceImplements implements UserService{
     @Override
     public UserFollowedDTO followed(int id, String order) {
         User user = userRepository.findById(id);
-        List<UserDTO> users = userRepository.getUsers().stream().filter(u -> u.isFollower(user)).map(UserDTO::new).collect(Collectors.toList());
+//        List<UserDTO> users = userRepository.getUsers().stream().filter(u -> u.isFollower(user)).map(UserDTO::new).collect(Collectors.toList());
 
         if(order.equals("name_desc")){
             List<User> sorted = user.getFollowers().stream().sorted(Comparator.comparing(User::getName).reversed()).collect(Collectors.toList());
@@ -99,7 +100,6 @@ public class UserServiceImplements implements UserService{
                 .stream().filter(u -> u.isFollower(user)).flatMap(us -> us.getPost().stream())
                 .filter(d -> d.getDate().isAfter(last14) && d.getDate().isBefore(now)).sorted(postOrder)
                 .map(PostWithoutDiscountDTO::new).collect(Collectors.toList());
-
 
         return new UserPostDTO(user.getId(), users);
     }
