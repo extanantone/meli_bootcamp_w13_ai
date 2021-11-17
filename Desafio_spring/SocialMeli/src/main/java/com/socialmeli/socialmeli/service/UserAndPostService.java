@@ -3,6 +3,7 @@ package com.socialmeli.socialmeli.service;
 import com.socialmeli.socialmeli.dto.ResponseSuccessfullyDTO;
 import com.socialmeli.socialmeli.dto.post.FollowedSellerPostDTO;
 import com.socialmeli.socialmeli.dto.post.PostDTO;
+import com.socialmeli.socialmeli.dto.post.PostPromoCountDTO;
 import com.socialmeli.socialmeli.dto.post.PostWithoutDiscountDTO;
 import com.socialmeli.socialmeli.dto.user.UserFollowerCountDTO;
 import com.socialmeli.socialmeli.dto.user.UserFollowexListDTO;
@@ -93,6 +94,7 @@ public class UserAndPostService implements UserAndPostServiceI {
             if (userRepository.userExists(user_id)) {
                 User user = userRepository.getUser(user_id);
                 UserFollowexListDTO userFollowersList = new UserFollowexListDTO(user.getUser_id(),user.getUser_name());
+
                 List<Integer> followexList =isFollowersList? user.getFollowers():user.getFollowed();
                 for (Integer idUser: followexList) {
                     User followersUser = userRepository.getUser(idUser);
@@ -191,4 +193,18 @@ public class UserAndPostService implements UserAndPostServiceI {
 
     }
 
+    @Override
+    public PostPromoCountDTO countPromoPost(int user_id) {
+        if (user_id>=0) {
+            if (userRepository.userExists(user_id)) {
+                User seller = userRepository.getUser(user_id);
+                int count =(int) seller.getPublication().stream().filter(e->postRepository.getPost(e).isHas_promo()).count();
+                return new PostPromoCountDTO(seller.getUser_id(),seller.getUser_name(),count);
+            } else{
+                throw new NotFoundUserException(user_id);
+            }
+        } else{
+            throw new NegativeIdException(user_id);
+        }
+    }
 }

@@ -36,5 +36,11 @@ public class PostController {
         return new ResponseEntity(userAndPostService.newPost(postDTO), HttpStatus.OK);
     }
 
+    @GetMapping("/{userId}/promo-post/count")
+    ResponseEntity<?> followedSellersPost(@PathVariable("userId") int user_id){
+
+        return new ResponseEntity(userAndPostService.countPromoPost(user_id),HttpStatus.OK);
+    }
+
 
 }

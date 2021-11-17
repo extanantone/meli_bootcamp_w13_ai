@@ -3,6 +3,7 @@ package com.socialmeli.socialmeli.service;
 import com.socialmeli.socialmeli.dto.ResponseSuccessfullyDTO;
 import com.socialmeli.socialmeli.dto.post.FollowedSellerPostDTO;
 import com.socialmeli.socialmeli.dto.post.PostDTO;
+import com.socialmeli.socialmeli.dto.post.PostPromoCountDTO;
 import com.socialmeli.socialmeli.dto.user.UserFollowerCountDTO;
 import com.socialmeli.socialmeli.dto.user.UserFollowexListDTO;
 
@@ -21,4 +22,6 @@ public interface UserAndPostServiceI {
     FollowedSellerPostDTO followedSellersPost(int user_id,String order);
 
     Map<String,Object> unfollow(int user_id,int user_id_to_unfollow);
+
+    PostPromoCountDTO countPromoPost(int user_id);
 }
