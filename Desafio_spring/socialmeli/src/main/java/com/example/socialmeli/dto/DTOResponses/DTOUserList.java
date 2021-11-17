@@ -1,4 +1,4 @@
-package com.example.socialmeli.dto;
+package com.example.socialmeli.dto.DTOResponses;
 
 import com.example.socialmeli.Models.User;
 import lombok.Getter;

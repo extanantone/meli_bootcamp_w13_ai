@@ -1,6 +1,10 @@
 package com.example.socialmeli.controller;
 
-import com.example.socialmeli.dto.*;
+import com.example.socialmeli.dto.DTORequest.DTOproductsRequest;
+import com.example.socialmeli.dto.DTOResponses.DTOResponseAmountUser;
+import com.example.socialmeli.dto.DTOResponses.DTOResponseListUser;
+import com.example.socialmeli.dto.DTOResponses.DTOEmptyJsonResponse;
+import com.example.socialmeli.services.IProductServices;
 import com.example.socialmeli.services.IUsersServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +16,8 @@ public class ControllerSocialMeli {
 
     @Autowired
     IUsersServices service;
+    @Autowired
+    IProductServices serviceProduct;
 
     @PostMapping("/users/{user_id}/follow/{user_id_to_follow}")
     public ResponseEntity<?> followUser(@PathVariable Integer user_id, @PathVariable Integer user_id_to_follow){
@@ -36,21 +42,38 @@ public class ControllerSocialMeli {
     }
 
     @GetMapping("/users/{user_id}/followed/list")
-    public ResponseEntity<DTOResponseListUserFollowed> listFollowed(@PathVariable Integer user_id, @RequestParam(defaultValue = "name_asc") String order){
-        return new ResponseEntity<DTOResponseListUserFollowed>(service.getListFollowed(user_id, order), HttpStatus.OK);
+    public ResponseEntity<DTOResponseListUser> listFollowed(@PathVariable Integer user_id, @RequestParam(defaultValue = "name_asc") String order){
+        return new ResponseEntity<DTOResponseListUser>(service.getListFollowed(user_id, order), HttpStatus.OK);
     }
 
 
     @PostMapping("/products/post")
     public ResponseEntity<?> newPost(@RequestBody DTOproductsRequest product){
-        service.createProduct(product);
-        return new ResponseEntity<>(new EmptyJsonResponse(), HttpStatus.OK) ;
+        serviceProduct.createProduct(product);
+        return new ResponseEntity<>(new DTOEmptyJsonResponse(), HttpStatus.OK) ;
+    }
+
+    @PostMapping("/products/promo-post")
+    public ResponseEntity<?> newPostPromo(@RequestBody DTOproductsRequest product){
+        serviceProduct.createProductPromo(product);
+        return new ResponseEntity<>(new DTOEmptyJsonResponse(), HttpStatus.OK) ;
+    }
+
+    @GetMapping("/products/{user_id}/promo-post/count")
+    public ResponseEntity<?> getAmountPostPromo(@PathVariable Integer user_id){
+        return new ResponseEntity<>(serviceProduct.getAmountProductsPromo(user_id), HttpStatus.OK);
     }
 
 
     @GetMapping("/products/followed/{user_id}/list")
     public ResponseEntity<?> feedFollowed(@PathVariable Integer user_id, @RequestParam(defaultValue = "date_desc") String order){
-        return new ResponseEntity<>(service.getFeedProducts(user_id, order), HttpStatus.OK);
+        return new ResponseEntity<>(serviceProduct.getFeedProducts(user_id, order), HttpStatus.OK);
     }
+
+    @GetMapping("/products/{user_id}/list")
+    public ResponseEntity<?> getPromoPostUser(@PathVariable Integer user_id, @RequestParam(defaultValue = "date_desc") String order){
+        return new ResponseEntity<>(serviceProduct.getPromos(user_id, order), HttpStatus.OK);
+    }
+
 
 }

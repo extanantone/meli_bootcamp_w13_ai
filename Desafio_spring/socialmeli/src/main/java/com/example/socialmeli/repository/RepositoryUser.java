@@ -16,6 +16,7 @@ import java.util.Hashtable;
 public class RepositoryUser implements IUserRepository{
     private Hashtable<Integer, User> usersList = new Hashtable();
     private ArrayList<Product> publicaciones = new ArrayList();
+    private ArrayList<Product> publicacionesPromo = new ArrayList();
 
 
     public RepositoryUser() {
@@ -51,8 +52,24 @@ public class RepositoryUser implements IUserRepository{
     }
 
     @Override
+    public Integer createPostPromo(Product product) {
+        for (Product currentProduct : publicacionesPromo){
+            if (product.getId_post() == currentProduct.getId_post()){
+                return null;
+            }
+        }
+        publicacionesPromo.add(product);
+        return 1;
+    }
+
+    @Override
     public ArrayList<Product> getListProducts() {
         return publicaciones;
+    }
+
+    @Override
+    public ArrayList<Product> getListProductsPromo() {
+        return publicacionesPromo;
     }
 
 

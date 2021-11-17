@@ -1,6 +1,5 @@
 package com.example.socialmeli.Models;
 
-import ch.qos.logback.core.util.InvocationGate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
