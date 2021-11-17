@@ -1,34 +1,37 @@
 package com.example.socialmeli.model;
 
 import com.example.socialmeli.exception.BadBodyRequestException;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Getter
 
 public class Post {
-    private static Integer post_id_count = 1;
-    private Integer user_id, post_id;
+    private static Integer postIdCount = 1;
+    private Integer userId, postId;
     private String category;
     private LocalDate date;
-    private Boolean has_promo;
+    private Boolean hasPromo;
     private Double discount,price;
     private Product detail;
 
-    public Post(Integer user_id, String date, String category, Boolean has_promo, Double discount, Double price, Product detail) {
+    public Post(Integer userId, String date, String category, Boolean hasPromo, Double discount, Double price, Product detail) {
         try {
-            this.user_id = user_id;
+            this.userId = userId;
             this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
             this.category = category;
-            this.has_promo = has_promo != null ? has_promo : false;
-            this.discount = has_promo != null ? discount : null;
+            this.hasPromo = hasPromo != null ? hasPromo : false;
+            this.discount = hasPromo != null ? discount : null;
             this.price = price;
             this.detail = detail;
-            this.post_id = post_id_count;
-            post_id_count++;
+            this.postId = postIdCount;
+            postIdCount++;
 
         }catch (DateTimeException e){
             throw new BadBodyRequestException("El formato de la fecha no es correcto");
@@ -36,8 +39,8 @@ public class Post {
 
     }
 
-    public void setHas_promo(Boolean has_promo) {
-        this.has_promo = has_promo;
+    public void setHasPromo(Boolean hasPromo) {
+        this.hasPromo = hasPromo;
     }
 
     public void setDiscount(Double discount) {

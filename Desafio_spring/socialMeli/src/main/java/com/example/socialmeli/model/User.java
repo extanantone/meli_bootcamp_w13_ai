@@ -13,54 +13,54 @@ import java.util.List;
 
 public class User {
 
-    private static Integer user_id_count = 1;
+    private static Integer userIdCount = 1;
 
-    private Integer user_id;
+    private Integer userId;
     private  String userName;
-    private List<Integer> user_followers; //seguidores
-    private  List<Integer> user_followed; //seguidos
+    private List<Integer> userFollowers; //seguidores
+    private  List<Integer> userFollowed; //seguidos
 
     public User(String user_name) {
         this.userName = user_name;
-        this.user_followers = new ArrayList<Integer>();
-        this.user_followed  = new ArrayList<Integer>();
-        this.user_id = this.user_id_count;
-        this.user_id_count++;
+        this.userFollowers = new ArrayList<Integer>();
+        this.userFollowed = new ArrayList<Integer>();
+        this.userId = this.userIdCount;
+        this.userIdCount++;
     }
 
     public void setUserFollower(Integer user_follower_id) {
-        this.user_followers.add(user_follower_id);
+        this.userFollowers.add(user_follower_id);
     }
 
     public void setUserFollowed(Integer user_followed_id) {
-        this.user_followed.add(user_followed_id);
+        this.userFollowed.add(user_followed_id);
     }
 
     public boolean checkUserFollower(Integer user_id){
-        return this.user_followers.contains(user_id);
+        return this.userFollowers.contains(user_id);
     }
 
     public boolean checkUserFollowed(Integer user_id){
-        return this.user_followed.contains(user_id);
+        return this.userFollowed.contains(user_id);
     }
 
     public Integer getFollowersCount(){
-        return this.user_followers.size();
+        return this.userFollowers.size();
     }
 
     public List<Integer> getFollowersList(){
-        return this.user_followers;
+        return this.userFollowers;
     }
 
     public List<Integer> getFollowedList(){
-        return this.user_followed;
+        return this.userFollowed;
     }
 
     public void unFollow(Integer follow_user_id){
-        this.user_followed.remove(follow_user_id);
+        this.userFollowed.remove(follow_user_id);
     }
     public void unFollowed(Integer followed_user_id){
-        this.user_followers.remove(followed_user_id);
+        this.userFollowers.remove(followed_user_id);
     }
 
 }

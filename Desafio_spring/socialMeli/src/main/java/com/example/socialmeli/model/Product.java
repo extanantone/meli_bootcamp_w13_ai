@@ -1,19 +1,23 @@
 package com.example.socialmeli.model;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 
 public class Product {
-    private static Integer product_id_count = 1;
-    Integer product_id;
-    private String product_name,type,brand,color,notes;
+    private static Integer productIdCount = 1;
+    private Integer productId;
+    private String productName,type,brand,color,notes;
 
-    public Product(Integer product_id, String product_name, String type, String brand, String color, String notes) {
-        this.product_id = this.product_id_count;
-        this.product_id_count++;
-        this.product_name = product_name;
+    public Product(Integer productId, String productName, String type, String brand, String color, String notes) {
+        this.productId = productIdCount;
+        productIdCount++;
+        this.productName = productName;
         this.type = type;
         this.brand = brand;
         this.color = color;

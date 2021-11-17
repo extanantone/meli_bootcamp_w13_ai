@@ -2,32 +2,34 @@ package com.example.socialmeli.dto;
 
 import com.example.socialmeli.model.Product;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 
 public class NewPostRequestDto {
-    private Integer post_id, user_id;
+    private Integer postId, userId;
     private String date,category;
-    private boolean has_promo;
+    private boolean hasPromo;
     private Double discount,price;
     private Product detail;
 
-    public NewPostRequestDto(Integer user_id, String date, String category, Boolean has_promo, Double discount, Double price, Product detail) {
-        this.user_id = user_id;
+    public NewPostRequestDto(Integer userId, String date, String category, Boolean hasPromo, Double discount, Double price, Product detail) {
+        this.userId = userId;
         this.date = date;
         this.category = category;
-        this.has_promo = has_promo != null ? has_promo : false;
+        this.hasPromo = hasPromo != null ? hasPromo : false;
         this.discount = discount;
         this.price = price;
         this.detail = detail;
     }
 
-    public boolean getHas_promo() {
-        return has_promo;
+    public boolean getHasPromo() {
+        return hasPromo;
     }
 }

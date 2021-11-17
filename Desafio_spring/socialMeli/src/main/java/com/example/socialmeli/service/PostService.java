@@ -27,13 +27,13 @@ public class PostService {
     UserRepository userRepository;
 
     public PostRequestResponseDto addPost(NewPostRequestDto postReq){
-        if(Objects.isNull(postReq.getUser_id())){
+        if(Objects.isNull(postReq.getUserId())){
             throw new BadBodyRequestException("El id del usuario no es valido");
         }
-        if(!userRepository.userExist(postReq.getUser_id())){
-            throw new UserNotExistException(String.format("No existe el usuario con id %d", postReq.getUser_id()));
+        if(!userRepository.userExist(postReq.getUserId())){
+            throw new UserNotExistException(String.format("No existe el usuario con id %d", postReq.getUserId()));
         }
-        if(postReq.getHas_promo()){
+        if(postReq.getHasPromo()){
             Double descuento = postReq.getDiscount();
             if (!(0 < descuento && descuento < 1)){
                 throw new BadBodyRequestException("El % de descuento ingresado no es valido");
@@ -43,10 +43,10 @@ public class PostService {
             throw new BadBodyRequestException("El Precio ingresado no es valido");
         }
 
-        System.out.println(userRepository.getUser(postReq.getUser_id()).getUserName());
-        Post post = new Post(postReq.getUser_id(),postReq.getDate(),postReq.getCategory(),postReq.getHas_promo(),postReq.getDiscount(),postReq.getPrice(),postReq.getDetail());
+        System.out.println(userRepository.getUser(postReq.getUserId()).getUserName());
+        Post post = new Post(postReq.getUserId(),postReq.getDate(),postReq.getCategory(),postReq.getHasPromo(),postReq.getDiscount(),postReq.getPrice(),postReq.getDetail());
         postRepository.setPost(post);
-        return new PostRequestResponseDto(String.format("Se creo el post con id: %d",post.getPost_id()));
+        return new PostRequestResponseDto(String.format("Se creo el post con id: %d",post.getPostId()));
     }
 
     public PostResponseDto getPostFromUserId(Integer user_id, String order){

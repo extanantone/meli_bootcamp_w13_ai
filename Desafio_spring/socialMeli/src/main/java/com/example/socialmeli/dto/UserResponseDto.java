@@ -2,7 +2,8 @@ package com.example.socialmeli.dto;
 
 import com.example.socialmeli.model.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,19 +12,21 @@ import java.util.List;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+
 public class UserResponseDto extends UserDto{
-    Integer followers_count;
-    Integer promo_post_count;
+    Integer followersCount;
+    Integer promoPostCount;
     //TODO mapper user to userdto
     List<User> followers;
     List<User> followed;
 
-    public UserResponseDto(Integer user_id,String user_name,Integer followers_count, Integer promo_post_count, List<User> followers, List<User> followed) {
-        this.followers_count = followers_count;
-        this.promo_post_count = promo_post_count;
+    public UserResponseDto(Integer userId, String userName, Integer followersCount, Integer promoPostCount, List<User> followers, List<User> followed) {
+        this.followersCount = followersCount;
+        this.promoPostCount = promoPostCount;
         this.followers = followers;
         this.followed = followed;
-        super.user_id = user_id;
-        super.user_name = user_name;
+        super.userId = userId;
+        super.userName = userName;
     }
 }

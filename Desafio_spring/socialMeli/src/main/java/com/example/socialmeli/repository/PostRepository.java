@@ -11,42 +11,42 @@ import java.util.*;
 public class PostRepository {
     private Map<Integer, Post> posts = new HashMap<Integer, Post>();
 
-    public Post getPosts(Integer id_post) {
-        return posts.get(id_post);
+    public Post getPosts(Integer idPost) {
+        return posts.get(idPost);
     }
 
     public Post setPost(Post post){
-        this.posts.put(post.getPost_id(),post);
+        this.posts.put(post.getPostId(),post);
         return post;
     }
 
-    public List<Post> getPostFromUsersId(List<Integer> users_id){
+    public List<Post> getPostFromUsersId(List<Integer> usersId){
         List<Post> postList = new ArrayList<>();
-        posts.forEach((id_post,post)->{
+        posts.forEach((idPost,post)->{
             LocalDate now = LocalDate.now();
-            if((users_id.contains(post.getUser_id()) && (ChronoUnit.DAYS.between(post.getDate(), now) < 15))){
+            if((usersId.contains(post.getUserId()) && (ChronoUnit.DAYS.between(post.getDate(), now) < 15))){
                 postList.add(post);
             }
         });
         return postList;
     }
 
-    public List<Post> getPostFromUserId(Integer user_id){
+    public List<Post> getPostFromUserId(Integer userId){
         List<Post> postList = new ArrayList<>();
-        posts.forEach((id_post,post)->{
-            if(user_id == post.getUser_id()){
+        posts.forEach((idPost,post)->{
+            if(userId == post.getUserId()){
                 postList.add(post);
             }
         });
         return postList;
     }
 
-    public List<Post> getPromoPostFromUserId(Integer user_id){
+    public List<Post> getPromoPostFromUserId(Integer userId){
         List<Post> postList = new ArrayList<>();
-        posts.forEach((id_post,post)->{
-            System.out.println(post.getHas_promo());
+        posts.forEach((idPost,post)->{
+            System.out.println(post.getHasPromo());
 
-            if((user_id == post.getUser_id()) && (post.getHas_promo())){
+            if((userId == post.getUserId()) && (post.getHasPromo())){
 
                 postList.add(post);
             }

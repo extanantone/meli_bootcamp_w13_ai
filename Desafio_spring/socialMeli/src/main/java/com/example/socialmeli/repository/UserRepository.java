@@ -3,8 +3,6 @@ package com.example.socialmeli.repository;
 import com.example.socialmeli.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -33,25 +31,25 @@ public class UserRepository {
 
         user2.setUserFollowed(4);
 
-        users.put(user1.getUser_id(),user1);
-        users.put(user2.getUser_id(),user2);
-        users.put(user3.getUser_id(),user3);
-        users.put(user4.getUser_id(),user4);
+        users.put(user1.getUserId(),user1);
+        users.put(user2.getUserId(),user2);
+        users.put(user3.getUserId(),user3);
+        users.put(user4.getUserId(),user4);
 
 
 
 //        this.database = loadDataBase();
 //        database.forEach(uss ->{
-//            this.users.put(uss.getUser_id(),uss);
+//            this.users.put(uss.getUserId(),uss);
 //        });
     }
 
-    public User getUser(Integer user_id) {
-        return this.users.get(user_id);
+    public User getUser(Integer userId) {
+        return this.users.get(userId);
     }
 
     public void addUser(User user){
-        this.users.put(user.getUser_id(),user);
+        this.users.put(user.getUserId(),user);
     }
 
     private List<User> loadDataBase() {
@@ -80,7 +78,7 @@ public class UserRepository {
         return userList;
     }
 
-    public boolean userExist (Integer user_id){
-        return this.users.containsKey(user_id);
+    public boolean userExist (Integer userId){
+        return this.users.containsKey(userId);
     }
 }

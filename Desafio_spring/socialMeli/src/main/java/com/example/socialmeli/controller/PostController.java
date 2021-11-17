@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+//TODO agregar orden data
 @RestController
 public class PostController {
     @Autowired
@@ -27,21 +27,21 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/products/followed/{user_id}/list")
-    public ResponseEntity<PostResponseDto> getPostFromUserFollows(@PathVariable Integer user_id, @RequestParam(name="order",required = false) String order) {
-        PostResponseDto response = postService.getPostFromUserId(user_id,order);
+    @GetMapping("/products/followed/{userId}/list")
+    public ResponseEntity<PostResponseDto> getPostFromUserFollows(@PathVariable Integer userId, @RequestParam(name="order",required = true) String order) {
+        PostResponseDto response = postService.getPostFromUserId(userId,order);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @GetMapping("/products/{user_id}/promo-post/count")
-    public ResponseEntity<UserResponseDto> getPromoPostCountFromUser(@PathVariable Integer user_id){
-        UserResponseDto response = postService.countPostFromUserId(user_id);
+    @GetMapping("/products/{userId}/promo-post/count")
+    public ResponseEntity<UserResponseDto> getPromoPostCountFromUser(@PathVariable Integer userId){
+        UserResponseDto response = postService.countPostFromUserId(userId);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @GetMapping("/products/{user_id}/promo-post")
-    public ResponseEntity<PostResponseDto> getPromoPostFromUser(@PathVariable Integer user_id){
-        PostResponseDto response = postService.getPromoPostFromUserId(user_id);
+    @GetMapping("/products/{userId}/promo-post")
+    public ResponseEntity<PostResponseDto> getPromoPostFromUser(@PathVariable Integer userId){
+        PostResponseDto response = postService.getPromoPostFromUserId(userId);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }
