@@ -12,6 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+  Buenas! El readme se encuentra dentro de la carpeta Desafio_Sprint junto con el archivo
+  de Postman por si además de los test es necesario probar algo.
+*   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   **/
+
 @RestController
 public class SocialController {
     ISocialService socialService;

@@ -134,12 +134,10 @@ public class SocialRepository implements ISocialRepository {
     }
 
     private void loadData() {
-        newCustomer(new Customer(1, "Customer b"));
-        newCustomer(new Customer(2, "Customer c"));
-        newCustomer(new Customer(3, "Customer a"));
+        newCustomer(new Customer(1, "Customer a"));
+        newCustomer(new Customer(2, "Customer b"));
+        newSeller(new Seller(3, "Seller a"));
         newSeller(new Seller(4, "Seller b"));
-        newSeller(new Seller(5, "Seller c"));
-        newSeller(new Seller(6, "Seller a"));
     }
 
 }
