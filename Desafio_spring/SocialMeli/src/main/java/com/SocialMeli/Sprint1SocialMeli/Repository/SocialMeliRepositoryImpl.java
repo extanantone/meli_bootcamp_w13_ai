@@ -66,7 +66,6 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
 
     }
 
-
     // Revisar si es util antes de entregar
     @Override
     public List<Comprador> vendedorFollowersList(List<Integer> followerIds) {

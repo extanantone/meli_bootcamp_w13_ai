@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,7 +67,7 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
     }
 
     @Override
-    public VendedorFollowersListDTO vendedorFollowesList(Integer vendedorId) {
+    public VendedorFollowersListDTO vendedorFollowesList(Integer vendedorId, String order) {
         Vendedor vendedor = repositorio.getVendedor(vendedorId);
         if (vendedor == null) {
             throw new NotFoundUsuarioException(vendedorId);
@@ -79,11 +80,23 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
                 .map(co -> new CompradorIdNameDTO(co.getUserID(), co.getUserName()))
                 .collect(Collectors.toList());
 
+        if (order != null) {
+            if (order.equalsIgnoreCase("name_asc")) {
+                compradorIdNameDTO.sort(Comparator.comparing(CompradorIdNameDTO::getUserName));
+            }
+
+
+            if (order.equalsIgnoreCase("name_desc")) {
+                compradorIdNameDTO.sort(Comparator.comparing(CompradorIdNameDTO::getUserName).reversed());
+            }
+        }
+
+
         return new VendedorFollowersListDTO(vendedor.getUserID(), vendedor.getUserName(), compradorIdNameDTO);
     }
 
     @Override
-    public CompradorFollowedListDTO compradorFollowedList(Integer compradorId) {
+    public CompradorFollowedListDTO compradorFollowedList(Integer compradorId, String order) {
         Comprador comprador = repositorio.getComprador(compradorId);
         if (comprador == null) {
             throw new NotFoundUsuarioException(compradorId);
@@ -95,6 +108,17 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
         List<VendedorIdNameDTO> vendedorIdNameDTO = ven.stream()
                 .map(ve -> new VendedorIdNameDTO(ve.getUserID(), ve.getUserName()))
                 .collect(Collectors.toList());
+
+        if (order != null) {
+            if (order.equalsIgnoreCase("name_asc")) {
+                vendedorIdNameDTO.sort(Comparator.comparing(VendedorIdNameDTO::getUserName));
+            }
+
+
+            if (order.equalsIgnoreCase("name_desc")) {
+                vendedorIdNameDTO.sort(Comparator.comparing(VendedorIdNameDTO::getUserName).reversed());
+            }
+        }
 
         return new CompradorFollowedListDTO(comprador.getUserID(), comprador.getUserName(), vendedorIdNameDTO);
     }
@@ -158,8 +182,7 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
         if (!repositorio.existsFollow(compradorId, vendedorId))
             throw new UserNoFollowExeption(vendedorId);
 
-
-        return  repositorio.unFollow(compradorId, vendedorId);
+        return repositorio.unFollow(compradorId, vendedorId);
     }
 
 

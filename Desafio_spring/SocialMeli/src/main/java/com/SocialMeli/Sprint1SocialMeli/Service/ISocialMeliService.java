@@ -11,15 +11,19 @@ public interface ISocialMeliService {
 
     VendedorFollowesCountDTO vendedorFollowesCount( Integer vendedorId);
 
-    VendedorFollowersListDTO vendedorFollowesList(Integer vendedorId);
+    VendedorFollowersListDTO vendedorFollowesList(Integer vendedorId, String Order);
 
-    CompradorFollowedListDTO compradorFollowedList(Integer compradorId);
+    CompradorFollowedListDTO compradorFollowedList(Integer compradorId, String Order);
 
     void createNewPublicacion(PublicacionDTO publicacionDTO);
 
     CompradorPublicacionesVendedorListDTO postByVendedorOfComprador(Integer compradorId);
 
     boolean unFollow(Integer compradorId, Integer vendedorId);
+
+
+
+
 
 
 }

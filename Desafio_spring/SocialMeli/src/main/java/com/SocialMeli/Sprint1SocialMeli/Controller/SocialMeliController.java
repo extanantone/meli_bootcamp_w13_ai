@@ -47,15 +47,17 @@ public class SocialMeliController {
 
 
     @GetMapping(path = "/users/{vendedorId}/followers/list")
-    public ResponseEntity<VendedorFollowesCountDTO> getVendedorFollowesList(@PathVariable Integer vendedorId) {
+    public ResponseEntity<VendedorFollowesCountDTO> getVendedorFollowesList(@PathVariable Integer vendedorId,
+                                                                            @RequestParam(name = "order", required = false) String order) {
 
-        return new ResponseEntity(service.vendedorFollowesList(vendedorId), HttpStatus.OK);
+        return new ResponseEntity(service.vendedorFollowesList(vendedorId, order), HttpStatus.OK);
     }
 
     @GetMapping(path = "/users/{compradoId}/followed/list")
-    public ResponseEntity<VendedorFollowesCountDTO> getCompradorFollowerdList(@PathVariable Integer compradoId) {
+    public ResponseEntity<VendedorFollowesCountDTO> getCompradorFollowerdList(@PathVariable Integer compradoId,
+                                                                              @RequestParam(name = "order", required = false) String order) {
 
-        return new ResponseEntity(service.compradorFollowedList(compradoId), HttpStatus.OK);
+        return new ResponseEntity(service.compradorFollowedList(compradoId, order), HttpStatus.OK);
     }
 
     @PostMapping("/products/post")
@@ -78,7 +80,7 @@ public class SocialMeliController {
     public ResponseEntity unFolowe(@PathVariable Integer compradorId,
                                    @PathVariable Integer vendedorId) {
 
-          service.unFollow(compradorId, vendedorId);
+        service.unFollow(compradorId, vendedorId);
         return new ResponseEntity("Se dejo de seguir correctamente ", HttpStatus.OK);
     }
 
