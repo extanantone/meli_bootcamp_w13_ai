@@ -1,6 +1,6 @@
 package com.example.socialmeli.service.post;
 
-import com.example.socialmeli.dto.*;
+import com.example.socialmeli.dto.post.*;
 import com.example.socialmeli.exception.BadRequestException;
 import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.User;
@@ -84,7 +84,7 @@ public class PostService implements IPostService
     }
 
     @Override
-    public ProductFollowedDTO listRecentFollowedProducts(int userId, String order)
+    public PostFollowedDTO listRecentFollowedProducts(int userId, String order)
     {
         User user;
         List<Post> orderedPosts;
@@ -99,6 +99,6 @@ public class PostService implements IPostService
         else
             orderedPosts = postRepository.findTwoWeeksBeforeOrderByDateDesc(userId);
         user.setPosts(orderedPosts);
-        return modelMapper.map(user, ProductFollowedDTO.class);
+        return modelMapper.map(user, PostFollowedDTO.class);
     }
 }

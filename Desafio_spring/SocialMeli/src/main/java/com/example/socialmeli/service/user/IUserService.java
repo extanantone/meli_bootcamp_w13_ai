@@ -1,8 +1,8 @@
 package com.example.socialmeli.service.user;
 
-import com.example.socialmeli.dto.FollowedListDTO;
-import com.example.socialmeli.dto.FollowerCountDTO;
-import com.example.socialmeli.dto.FollowerListDTO;
+import com.example.socialmeli.dto.user.FollowedListDTO;
+import com.example.socialmeli.dto.user.FollowerCountDTO;
+import com.example.socialmeli.dto.user.FollowerListDTO;
 
 public interface IUserService
 {

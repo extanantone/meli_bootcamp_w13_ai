@@ -1,6 +1,6 @@
-package com.example.socialmeli.dto;
+package com.example.socialmeli.dto.post;
 
-import com.example.socialmeli.model.User;
+import com.example.socialmeli.dto.post.PostDTO;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -11,8 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class FollowerDTO
+public class PostFollowedDTO
 {
     private int userId;
-    private String userName;
+    private List<PostDTO> posts;
 }

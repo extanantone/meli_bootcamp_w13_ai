@@ -1,6 +1,6 @@
 package com.example.socialmeli.controller.v1.product.post;
 
-import com.example.socialmeli.dto.*;
+import com.example.socialmeli.dto.post.*;
 import com.example.socialmeli.service.post.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +37,7 @@ public class PostController implements IPostController
     }
 
     @Override
-    public ProductFollowedDTO recentFollowedProducts(int userId, String order)
+    public PostFollowedDTO recentFollowedProducts(int userId, String order)
     {
         return postService.listRecentFollowedProducts(userId, order);
     }

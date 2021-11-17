@@ -1,4 +1,4 @@
-package com.example.socialmeli.dto;
+package com.example.socialmeli.dto.post;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -10,9 +10,9 @@ import java.util.List;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class FollowerCountDTO
+public class PromoPostListDTO
 {
-    private int userId;
+    private String userId;
     private String userName;
-    private int followersCount;
+    private List<PromoPostDTO> posts;
 }

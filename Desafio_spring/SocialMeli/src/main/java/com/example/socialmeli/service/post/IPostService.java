@@ -1,6 +1,6 @@
 package com.example.socialmeli.service.post;
 
-import com.example.socialmeli.dto.*;
+import com.example.socialmeli.dto.post.*;
 
 public interface IPostService
 {
@@ -8,7 +8,7 @@ public interface IPostService
 
     UserPromoPostDTO createPromo(UserPromoPostDTO userPromoPostDTO);
 
-    ProductFollowedDTO listRecentFollowedProducts(int userId, String order);
+    PostFollowedDTO listRecentFollowedProducts(int userId, String order);
 
     PromoPostCountDTO promoPostCount(int userId);
 
