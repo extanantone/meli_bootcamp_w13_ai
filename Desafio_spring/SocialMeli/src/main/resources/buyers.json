@@ -1,26 +1,26 @@
 [
   {
-    "user_name": "Raul buyer",
+    "user_name": "Raul",
     "user_id": 1
   },
   {
-    "user_name": "Josh buyer",
+    "user_name": "Josh ",
     "user_id": 3
   },
   {
-    "user_name": "Jose luis buyer",
+    "user_name": "Jose luis ",
     "user_id": 5
   },
   {
-    "user_name": "Roman buyer",
+    "user_name": "Roman ",
     "user_id": 4
   },
   {
-    "user_name": "Soup buyer",
+    "user_name": "Soup ",
     "user_id": 12
   },
   {
-    "user_name": "Lemon buyer",
+    "user_name": "Lemon ",
     "user_id": 10
   }
 ]

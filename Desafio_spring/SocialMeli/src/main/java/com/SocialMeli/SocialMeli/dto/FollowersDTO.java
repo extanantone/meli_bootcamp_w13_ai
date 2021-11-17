@@ -1,6 +1,6 @@
 package com.SocialMeli.SocialMeli.dto;
 
-import com.SocialMeli.SocialMeli.model.Seller;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

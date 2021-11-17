@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Seller extends User {
-    private List<Buyer> followers = new ArrayList<>();
+    private List<Buyer> followers = new ArrayList<Buyer>();
     private List<Post> posts = new ArrayList<>();
 
     public Seller(String user_name, int user_id) {

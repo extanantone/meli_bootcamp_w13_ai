@@ -12,14 +12,14 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Getter
 @Repository
 public class SocialMeliRepository implements ISocialMeliRepository {
         List<Buyer> buyers;
         List<Seller> sellers;
+
 
     SocialMeliRepository() {
         this.buyers = ListBuyers();
@@ -90,6 +90,7 @@ public class SocialMeliRepository implements ISocialMeliRepository {
     @Override
     public boolean post(Seller sell, Post post){
         sell.getPosts().add(post);
+
         return true;
     }
 
@@ -97,6 +98,15 @@ public class SocialMeliRepository implements ISocialMeliRepository {
     public Optional<Post> searchPost(List<Post> post , int id_post){
         return post.stream().filter(p -> p.getId_post() == id_post).findFirst();
     }
+
+
+    @Override
+    public boolean unfollow (Buyer buy, Seller sell){
+        sell.getFollowers().remove(buy);
+        buy.getFollowed().remove(sell);
+        return true;
+    }
+
 
 
 }
