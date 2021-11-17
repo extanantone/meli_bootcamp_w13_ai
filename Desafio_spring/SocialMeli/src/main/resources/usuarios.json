@@ -17,7 +17,15 @@
   },
   {
     "user_id": 3,
-    "user_name": "Bronco",
+    "user_name": "Fabrizio",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  },
+  {
+    "user_id": 4,
+    "user_name": "Nikita",
     "followed": [
     ],
     "followers": [

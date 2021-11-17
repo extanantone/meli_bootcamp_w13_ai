@@ -23,15 +23,16 @@ public class PublicacionMapper {
         return publicacion;
     }
 
-    public SoloPublicacionDTO publicacionASoloPublicacionDTO(Publicacion publicacion) {
-        SoloPublicacionDTO soloPublicacionDTO = new SoloPublicacionDTO();
-        soloPublicacionDTO.setIdPost(publicacion.getIdPost());
-        soloPublicacionDTO.setDate(publicacion.getDate());
-        soloPublicacionDTO.setCategory(publicacion.getCategory());
-        soloPublicacionDTO.setPrice(publicacion.getPrice());
-        soloPublicacionDTO.setDetail(productoMapper.productoAProductoDTO(publicacion.getDetail()));
-        return soloPublicacionDTO;
+    public PublicacionDTO publicacionAPublicacionDTO(Publicacion publicacion) {
+        PublicacionDTO publicacionDTO = new PublicacionDTO();
+        publicacionDTO.setIdPost(publicacion.getIdPost());
+        publicacionDTO.setDate(publicacion.getDate());
+        publicacionDTO.setCategory(publicacion.getCategory());
+        publicacionDTO.setPrice(publicacion.getPrice());
+        publicacionDTO.setDetail(productoMapper.productoAProductoDTO(publicacion.getDetail()));
+        return publicacionDTO;
     }
+
 
     public Publicacion publicacionPromoDTOAPublicacion(PublicacionPromoDTO publicacionPromoDTO) {
         Publicacion publicacion = new Publicacion();
@@ -46,16 +47,16 @@ public class PublicacionMapper {
         return publicacion;
     }
 
-    public SoloPublicacionPromoDTO publicacionASoloPublicacionPromoDTO(Publicacion publicacion) {
-        SoloPublicacionPromoDTO soloPublicacionPromoDTO = new SoloPublicacionPromoDTO();
-        soloPublicacionPromoDTO.setIdPost(publicacion.getIdPost());
-        soloPublicacionPromoDTO.setDate(publicacion.getDate());
-        soloPublicacionPromoDTO.setCategory(publicacion.getCategory());
-        soloPublicacionPromoDTO.setPrice(publicacion.getPrice());
-        soloPublicacionPromoDTO.setHasPromo(publicacion.getHasPromo());
-        soloPublicacionPromoDTO.setDiscount(publicacion.getDiscount());
-        soloPublicacionPromoDTO.setDetail(productoMapper.productoAProductoDTO(publicacion.getDetail()));
-        return soloPublicacionPromoDTO;
+    public PublicacionPromoDTO publicacionAPublicacionPromoDTO(Publicacion publicacion) {
+        PublicacionPromoDTO publicacionPromoDTO = new PublicacionPromoDTO();
+        publicacionPromoDTO.setIdPost(publicacion.getIdPost());
+        publicacionPromoDTO.setDate(publicacion.getDate());
+        publicacionPromoDTO.setCategory(publicacion.getCategory());
+        publicacionPromoDTO.setPrice(publicacion.getPrice());
+        publicacionPromoDTO.setHasPromo(publicacion.getHasPromo());
+        publicacionPromoDTO.setDiscount(publicacion.getDiscount());
+        publicacionPromoDTO.setDetail(productoMapper.productoAProductoDTO(publicacion.getDetail()));
+        return publicacionPromoDTO;
     }
 
 }

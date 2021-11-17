@@ -48,31 +48,31 @@ public class PublicacionService implements IPublicacionService {
     public PublicacionFollowedDTO listaPublicacionesFollowed(Integer userId) {
         controlExistenciaUsuario(userId);
         PublicacionFollowedDTO publicacionFollowedDTO;
-        List<SoloPublicacionDTO> listaSoloPublicacionDTO = iUsuarioService
+        List<PublicacionDTO> listaPublicacionDTO = iUsuarioService
                 .listaFollowed(userId)
                 .getFollowed()
                 .stream()
                 .map(followed -> iPublicacionRepository.devolverPublicaciones(followed.getUserId()))
                 .flatMap(Collection::stream)
-                .map(publicacion -> publicacionMapper.publicacionASoloPublicacionDTO(publicacion))
+                .map(publicacion -> publicacionMapper.publicacionAPublicacionDTO(publicacion))
                 .collect(Collectors.toList());
-        if (listaSoloPublicacionDTO.size() == 0) {
+        if (listaPublicacionDTO.size() == 0) {
             throw new BadRequestException("Followed/s sin publicaciones.");
         }
         LocalDate fechaActual = LocalDate.now();
-        listaSoloPublicacionDTO = listaSoloPublicacionDTO.stream()
+        listaPublicacionDTO = listaPublicacionDTO.stream()
                 .filter(publicacion -> publicacion.getDate()
                         .isAfter(fechaActual.minusDays(14)))
                 .collect(Collectors.toList());
-        listaSoloPublicacionDTO = listaSoloPublicacionDTO
+        listaPublicacionDTO = listaPublicacionDTO
                 .stream()
-                .sorted(Comparator.comparing(SoloPublicacionDTO::getDate)
+                .sorted(Comparator.comparing(PublicacionDTO::getDate)
                         .reversed())
                 .collect(Collectors.toList());
-        if (listaSoloPublicacionDTO.size() == 0) {
+        if (listaPublicacionDTO.size() == 0) {
             throw new BadRequestException("Followed/s con publicaciones más antiguas a 2 semanas.");
         }
-        publicacionFollowedDTO = new PublicacionFollowedDTO(userId, listaSoloPublicacionDTO);
+        publicacionFollowedDTO = new PublicacionFollowedDTO(userId, listaPublicacionDTO);
         return publicacionFollowedDTO;
     }
 
@@ -83,7 +83,7 @@ public class PublicacionService implements IPublicacionService {
                 .setPosts(listaPublicacionesFollowed
                         .getPosts()
                         .stream()
-                        .sorted(Comparator.comparing(SoloPublicacionDTO::getDate))
+                        .sorted(Comparator.comparing(PublicacionDTO::getDate))
                         .collect(Collectors.toList()));
         return listaPublicacionesFollowed;
     }
@@ -95,7 +95,7 @@ public class PublicacionService implements IPublicacionService {
                 .setPosts(listaPublicacionesFollowed
                         .getPosts()
                         .stream()
-                        .sorted(Comparator.comparing(SoloPublicacionDTO::getDate)
+                        .sorted(Comparator.comparing(PublicacionDTO::getDate)
                                 .reversed())
                         .collect(Collectors.toList()));
         return listaPublicacionesFollowed;
@@ -134,10 +134,10 @@ public class PublicacionService implements IPublicacionService {
     public PublicacionPromoListDTO listaPublicacionesPromo(Integer userId) {
         controlExistenciaUsuario(userId);
         String userName = iUsuarioRepository.devolverUsuario(userId).getUserName();
-        List<SoloPublicacionPromoDTO> publicacionPromoDTOLista = iPublicacionRepository
+        List<PublicacionPromoDTO> publicacionPromoDTOLista = iPublicacionRepository
                 .devolverPublicaciones(userId)
                 .stream()
-                .map(publicacion -> publicacionMapper.publicacionASoloPublicacionPromoDTO(publicacion))
+                .map(publicacion -> publicacionMapper.publicacionAPublicacionPromoDTO(publicacion))
                 .filter(publicacionPromoDTO -> publicacionPromoDTO.getHasPromo() && publicacionPromoDTO.getDiscount() > 0)
                 .collect(Collectors.toList());
         if (publicacionPromoDTOLista.size() == 0) {

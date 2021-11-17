@@ -2,6 +2,7 @@ package com.bootcamp.SocialMeli.dto.publicacion;
 
 import com.bootcamp.SocialMeli.dto.producto.ProductoDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PublicacionPromoDTO {
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer userId;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String userName;
     private Integer idPost;
     @JsonFormat(pattern = "dd-MM-yyyy")
