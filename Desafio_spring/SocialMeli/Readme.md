@@ -71,11 +71,11 @@ Se encuentran todos los modelos utilizados para la aplicacion.
 #### -repository
 Se encuentran los repositorios asociados a la aplicacion.
 
-####Para los usuarios: 
+#### Para los usuarios: 
 
 Obtenemos los usuarios desde un archivo JSON el cual, traslada todos los usuarios cargados. Se organizan en un HashMap con la estructura <Integer,Usuarios> , donde la clave es el id del usuario.
 
-####Para el repositorio de followers:
+#### Para el repositorio de followers:
 
 Almacenamos la informacion de la siguiente manera:
 Tenemos un HashMap <Integer,Followers> en el cual la clave es el Id del usuario.
@@ -247,7 +247,7 @@ localhost:8080/users/{user_id}/followed/list?order=name_asc
 localhost:8080/users/{user_id}/followed/list?order=name_desc
 
 
-###Response:
+### Response:
 
 200 - OK
 
