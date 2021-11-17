@@ -1,0 +1,20 @@
+package com.bootcamp.SocialMeli.dto.user;
+
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class UserFollowersCountDTO extends UserDTO {
+    private int followersCount;
+
+    public UserFollowersCountDTO(int userId, String userName, int followersCount) {
+        super(userId, userName);
+        this.followersCount = followersCount;
+    }
+}
