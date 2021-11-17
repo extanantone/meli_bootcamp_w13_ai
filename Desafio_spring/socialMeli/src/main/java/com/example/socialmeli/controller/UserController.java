@@ -20,7 +20,7 @@ public class UserController {
         PostRequestResponseDto response = userService.followUser(userId,userIdToFollow);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    //TODO @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+
     @GetMapping("/users/{userId}/followers/count")
     public ResponseEntity<UserResponseDto> getFollowersCount(@PathVariable Integer userId){
         UserResponseDto response = userService.getFollowersCount(userId);

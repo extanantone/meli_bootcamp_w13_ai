@@ -21,10 +21,9 @@ public class Post {
     private Double discount,price;
     private Product detail;
 
-    public Post(Integer userId, String date, String category, Boolean hasPromo, Double discount, Double price, Product detail) {
-        try {
+    public Post(Integer userId, LocalDate date, String category, Boolean hasPromo, Double discount, Double price, Product detail) {
             this.userId = userId;
-            this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            this.date = date;
             this.category = category;
             this.hasPromo = hasPromo != null ? hasPromo : false;
             this.discount = hasPromo != null ? discount : null;
@@ -32,11 +31,6 @@ public class Post {
             this.detail = detail;
             this.postId = postIdCount;
             postIdCount++;
-
-        }catch (DateTimeException e){
-            throw new BadBodyRequestException("El formato de la fecha no es correcto");
-        }
-
     }
 
     public void setHasPromo(Boolean hasPromo) {

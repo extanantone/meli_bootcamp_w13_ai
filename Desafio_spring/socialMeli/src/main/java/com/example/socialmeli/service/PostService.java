@@ -8,12 +8,15 @@ import com.example.socialmeli.exception.BadBodyRequestException;
 import com.example.socialmeli.exception.BadParamsRequestException;
 import com.example.socialmeli.exception.UserNotExistException;
 import com.example.socialmeli.model.Post;
+import com.example.socialmeli.model.Product;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.repository.PostRepository;
 import com.example.socialmeli.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -42,8 +45,11 @@ public class PostService {
         if(postReq.getPrice() <= 0){
             throw new BadBodyRequestException("El Precio ingresado no es valido");
         }
+        LocalDate now = LocalDate.now();
+        if (ChronoUnit.DAYS.between(postReq.getDate(), now) < 0){
+            throw new BadBodyRequestException("La fecha ingresada no es valida");
+        }
 
-        System.out.println(userRepository.getUser(postReq.getUserId()).getUserName());
         Post post = new Post(postReq.getUserId(),postReq.getDate(),postReq.getCategory(),postReq.getHasPromo(),postReq.getDiscount(),postReq.getPrice(),postReq.getDetail());
         postRepository.setPost(post);
         return new PostRequestResponseDto(String.format("Se creo el post con id: %d",post.getPostId()));
@@ -85,7 +91,7 @@ public class PostService {
         return new UserResponseDto(user_id,user.getUserName(),null,count,null,null);
     }
 
-    public PostResponseDto getPromoPostFromUserId(Integer user_id){
+    public PostResponseDto getPromoPostFromUserId(Integer user_id, String order){
 
         if(Objects.isNull(user_id)){
             throw new BadParamsRequestException("El id del usuario no es valido");
@@ -96,6 +102,19 @@ public class PostService {
 
         User user = userRepository.getUser(user_id);
         List<Post> postList = postRepository.getPromoPostFromUserId(user_id);
+
+        if(order != null){
+            if(order.equalsIgnoreCase("name_asc")){
+                postList.sort(Comparator.comparing(p -> p.getDetail().getProductName()));
+            }else if(order.equalsIgnoreCase("name_desc")){
+                postList.sort(Comparator.comparing(p -> p.getDetail().getProductName(),Comparator.reverseOrder()));
+            }else if (order.equalsIgnoreCase("date_desc")) {
+                postList.sort(Comparator.comparing(Post::getDate).reversed());
+            }else{
+                postList.sort(Comparator.comparing(Post::getDate));
+            }
+        }
+
         return new PostResponseDto(user_id,user.getUserName(),postList);
     }
 }

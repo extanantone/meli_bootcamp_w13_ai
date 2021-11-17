@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-//TODO agregar orden data
+
 @RestController
 public class PostController {
     @Autowired
@@ -28,7 +28,7 @@ public class PostController {
     }
 
     @GetMapping("/products/followed/{userId}/list")
-    public ResponseEntity<PostResponseDto> getPostFromUserFollows(@PathVariable Integer userId, @RequestParam(name="order",required = true) String order) {
+    public ResponseEntity<PostResponseDto> getPostFromUserFollows(@PathVariable Integer userId, @RequestParam(name="order",required = false) String order) {
         PostResponseDto response = postService.getPostFromUserId(userId,order);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
@@ -40,8 +40,8 @@ public class PostController {
     }
 
     @GetMapping("/products/{userId}/promo-post")
-    public ResponseEntity<PostResponseDto> getPromoPostFromUser(@PathVariable Integer userId){
-        PostResponseDto response = postService.getPromoPostFromUserId(userId);
+    public ResponseEntity<PostResponseDto> getPromoPostFromUser(@PathVariable Integer userId,@RequestParam(name="order",required = false) String order){
+        PostResponseDto response = postService.getPromoPostFromUserId(userId,order);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }
