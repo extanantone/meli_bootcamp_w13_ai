@@ -35,7 +35,6 @@ public class UserController {
     @GetMapping("/{user_id}/followers/count")
     public ResponseEntity<?> followerCount (
             @PathVariable int user_id){
-//        this.userService.followerCount(user_id);
         return new ResponseEntity<>( this.userService.followerCount(user_id), HttpStatus.OK);
     }
 
@@ -44,8 +43,34 @@ public class UserController {
 //      Obtener un listado de todos los usuarios que siguen a un determinado vendedor (¿Quién me sigue?)
     @GetMapping("/{user_id}/followers/list")
     public ResponseEntity<?> followerList (
-            @PathVariable int user_id){
-//        this.userService.followerCount(user_id);
-        return new ResponseEntity<>( this.userService.followerList(user_id), HttpStatus.OK);
+            @PathVariable int user_id,
+            @RequestParam(value = "order", required = false) String order){
+        return new ResponseEntity<>( this.userService.followerList(user_id, order), HttpStatus.OK);
     }
+
+
+//================               US 0004            ================================
+//      Obtener un listado de todos los vendedores a los cuales sigue un determinado usuario (¿A quién sigo?)
+    @GetMapping("/{user_id}/followed/list")
+    public ResponseEntity<?> followedList (
+            @PathVariable int user_id,
+            @RequestParam(value = "order", required = false) String order){
+        return new ResponseEntity<>( this.userService.followedList(user_id, order), HttpStatus.OK);
+    }
+
+
+//================               US 0007            ================================
+//      Poder realizar la acción de "Unfollow" (dejar de seguir) a un determinado vendedor.
+    @PostMapping("/{user_id}/unfollow/{user_id_to_follow}")
+    public ResponseEntity<?> unfollowSeller (
+            @PathVariable int user_id,
+            @PathVariable int user_id_to_follow){
+        this.userService.unfollowSeller( user_id, user_id_to_follow);
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
+
+
 }
+
+

@@ -4,22 +4,14 @@ import com.Sprint1.SocialMeli.model.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
-
-public class FollowerDTO extends User {
-    private int user_id;
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode
+public class FollowerDTO  {
+    public int user_id;
     private String user_name;
 
-    public FollowerDTO(User user) {
-        this.user_id = user.getUser_id();
-        this.user_name = user.getUser_name();
 
-    }
 
     @Override
     public String toString() {
@@ -28,4 +20,6 @@ public class FollowerDTO extends User {
                 ", user_name='" + user_name + '\'' +
                 '}';
     }
+
+
 }

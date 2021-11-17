@@ -21,11 +21,11 @@ public class User {
     private String user_name;
 
 
-    private ArrayList<User> followers = new ArrayList();
+    private ArrayList<FollowerDTO> followers = new ArrayList();
 
-    private ArrayList<User> followed = new ArrayList();
+    private ArrayList<FollowerDTO> followed = new ArrayList();
 
-    private ArrayList<User> post = new ArrayList();
+    private ArrayList<Post> post = new ArrayList();
 
     public User(int user_id, String user_name) {
         this.user_id = user_id;
@@ -38,7 +38,7 @@ public class User {
                 "user_id=" + user_id +
                 ", user_name='" + user_name + '\'' +
                 ", followers=" + followers +
-
+                ", followed=" + followed +
                 ", post=" + post +
                 '}';
     }

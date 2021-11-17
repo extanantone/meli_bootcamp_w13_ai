@@ -1,6 +1,7 @@
 package com.Sprint1.SocialMeli.repository;
 
 import com.Sprint1.SocialMeli.exceptions.NotFoundException;
+import com.Sprint1.SocialMeli.model.Post;
 import com.Sprint1.SocialMeli.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +11,7 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +53,8 @@ public class UserRepository implements IUserRepository {
         }
         return user;
     }
+
+
 
 
 

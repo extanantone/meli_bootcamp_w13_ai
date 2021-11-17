@@ -1,29 +1,32 @@
 package com.Sprint1.SocialMeli.dto;
 
-
+import com.Sprint1.SocialMeli.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter @Setter @NoArgsConstructor
-public class FollowCountDTO {
+public class FollowedListDTO {
     private int user_id;
     private String user_name;
-    private int followers_count;
+    private List<FollowerDTO> followed;
 
-    public FollowCountDTO(int user_id, String user_name, int followers_count) {
+    public FollowedListDTO(int user_id, String user_name, List<FollowerDTO> followed) {
         this.user_id = user_id;
         this.user_name = user_name;
-        this.followers_count = followers_count;
+        this.followed = followed;
     }
 
     @Override
     public String toString() {
-        return "FollowCountDTO{" +
+        return "{" +
                 "user_id=" + user_id +
                 ", user_name='" + user_name + '\'' +
-                ", followers_count=" + followers_count +
+                ", followed=" + followed +
                 '}';
     }
 }
