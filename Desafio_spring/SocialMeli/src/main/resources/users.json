@@ -34,23 +34,5 @@
     "followers": [],
     "followed": [],
     "posts": []
-  },
-  {
-    "id": 5,
-    "username": "gonzalo_fernandez",
-    "email": "gonzalo_fernandez@mail.com",
-    "password": "e0w9finkdk",
-    "followers": [],
-    "followed": [],
-    "posts": []
-  },
-  {
-    "id": 6,
-    "username": "fernando_gonzalez",
-    "email": "fernando_gonzalez@mail.com",
-    "password": "0fehwiondfolm",
-    "followers": [],
-    "followed": [],
-    "posts": []
   }
 ]
