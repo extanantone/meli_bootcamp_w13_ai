@@ -26,4 +26,6 @@ Se trato en lo posible de controlar los edge cases como un usuario que se siga a
 * En los metodos de ordenamiento maneje valores por defecto para evitar excepciones.
 * Termine todos los puntos incluidos los bonus.
 * Me hubiera gustado refactorizar mas, implementar los mapers, pero pienso que pude disfrutarlo mucho, como pedian.
+* por aca tengo json para pruebas https://www.getpostman.com/collections/3ba81e45a996ea19b292 falta declarar una variable URL=http://localhost:8080
+
 
