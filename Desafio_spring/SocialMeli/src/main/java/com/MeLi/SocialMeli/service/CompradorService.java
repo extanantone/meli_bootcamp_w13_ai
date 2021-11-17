@@ -3,8 +3,6 @@ package com.MeLi.SocialMeli.service;
 import com.MeLi.SocialMeli.DTO.*;
 import com.MeLi.SocialMeli.exception.NotFoundCompradorException;
 import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
-import com.MeLi.SocialMeli.mapper.CompradorMapper;
-import com.MeLi.SocialMeli.mapper.DatosSeguidoresMapper;
 import com.MeLi.SocialMeli.mapper.InfoSeguidosMapper;
 import com.MeLi.SocialMeli.mapper.VendedorMapper;
 import com.MeLi.SocialMeli.model.Comprador;
@@ -28,7 +26,6 @@ public class CompradorService implements CompradorServiceImplement {
         this.compradorRepositoryImplement = compradorRepositoryImplement;
         this.vendedorRepositoryImplement = vendedorRepositoryImplement;
     }
-
 
     @Override
     public SeguimientoDTO seguir(int idSeguidor, int idSeguido) throws NotFoundCompradorException, NotFoundVendedorException {
@@ -61,4 +58,14 @@ public class CompradorService implements CompradorServiceImplement {
     public void anadirSeguido(Comprador comprador) {
 
     }
+
+    @Override
+    public SeguimientoDTO dejarSeguir(int idSeguidor, int idSeguido) throws NotFoundVendedorException, NotFoundCompradorException{
+        Comprador comprador = compradorRepositoryImplement.find(idSeguidor).orElseThrow(() -> new NotFoundCompradorException(idSeguidor));
+        Vendedor vendedor = vendedorRepositoryImplement.find(idSeguido).orElseThrow(()->new NotFoundVendedorException(idSeguido));
+        comprador.unfollow(vendedor);
+        vendedor.unfollowed(comprador);
+        return new SeguimientoDTO(comprador.getId(),comprador.getNombre(),vendedor.getId(),vendedor.getNombre(),comprador .getNombre() + " has dejado de seguir a " + vendedor.getNombre());
+    }
+
 }

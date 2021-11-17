@@ -18,6 +18,10 @@ public class Comprador extends Usuario{
         seguidos.put(vendedor.getId(), vendedor.getNombre());
     }
 
+    public void unfollow(Vendedor vendedor){
+        seguidos.keySet().removeIf(key -> key == vendedor.getId());
+    }
+
     public HashMap<Integer, String> getSeguidos(){
         return seguidos;
     }

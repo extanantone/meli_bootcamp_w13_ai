@@ -19,6 +19,10 @@ public class Vendedor extends Usuario{
         seguidores.put(comprador.getId(), comprador.getNombre());
     }
 
+    public void unfollowed(Comprador comprador){
+        seguidores.keySet().removeIf(key -> key == comprador.getId());
+    }
+
     public int getCantSeguidores(){
         return seguidores.size();
     }

@@ -28,7 +28,12 @@ public class CompradorController {
     }
 
     @GetMapping("/users/{user_id}/followed/list")
-    public ResponseEntity<InfoSeguidosDTO> seguirVendedor(@PathVariable int user_id) throws NotFoundVendedorException, NotFoundCompradorException {
+    public ResponseEntity<InfoSeguidosDTO> listarSeguidos(@PathVariable int user_id) throws NotFoundVendedorException, NotFoundCompradorException {
         return new ResponseEntity<>(compradorServiceImplement.verSeguidos(user_id), HttpStatus.OK);
+    }
+
+    @PostMapping("/users/{user_id}/unfollow/{user_id_to_unfollow}")
+    public ResponseEntity<SeguimientoDTO> dejarSeguir(@PathVariable int user_id, @PathVariable int user_id_to_unfollow) throws NotFoundCompradorException, NotFoundVendedorException{
+        return new ResponseEntity<>(compradorServiceImplement.dejarSeguir(user_id, user_id_to_unfollow), HttpStatus.OK);
     }
 }
