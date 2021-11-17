@@ -11,8 +11,8 @@ public class UserRepository implements IUserRepository{
     Map<Integer, User> users = new HashMap<>();
 
     public UserRepository() {
-        this.add(1, "Juan", true);
-        this.add(2, "Pedro", true);
+        this.add(1, "Juan", false);
+        this.add(2, "Pedro", false);
         this.add(3, "Agustina", true);
         this.add(4, "Azul", true);
     }
@@ -29,8 +29,8 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public User add(int userId, String userName, boolean canSell) {
-        User user = new User(userId, userName, canSell);
+    public User add(int userId, String userName, boolean isSeller) {
+        User user = new User(userId, userName, isSeller);
         if (this.users.containsKey(userId)) throw new UserAlreadyExistsException(userId);
         this.users.put(userId, user);
         return user;

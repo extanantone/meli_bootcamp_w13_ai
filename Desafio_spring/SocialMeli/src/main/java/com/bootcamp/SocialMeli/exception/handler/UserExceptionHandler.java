@@ -1,10 +1,7 @@
 package com.bootcamp.SocialMeli.exception.handler;
 
 import com.bootcamp.SocialMeli.dto.ErrorDTO;
-import com.bootcamp.SocialMeli.exception.UserAlreadyExistsException;
-import com.bootcamp.SocialMeli.exception.UserIsAlreadyFollowingException;
-import com.bootcamp.SocialMeli.exception.UserIsNotFollowingException;
-import com.bootcamp.SocialMeli.exception.UserNotFoundException;
+import com.bootcamp.SocialMeli.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -51,6 +48,15 @@ public class UserExceptionHandler {
                         e.getMessage() ),
                 HttpStatus.BAD_REQUEST );
 
+    }
+
+    @ExceptionHandler(ActionNotAllowedException.class)
+    public ResponseEntity<ErrorDTO> actionNotAllowedHandler(ActionNotAllowedException e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "action_not_allowed",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST );
     }
 }
 

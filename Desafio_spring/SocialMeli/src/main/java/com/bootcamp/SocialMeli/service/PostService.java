@@ -4,9 +4,9 @@ import com.bootcamp.SocialMeli.dto.FollowedPostsDTO;
 import com.bootcamp.SocialMeli.dto.PostDTO;
 import com.bootcamp.SocialMeli.dto.PromoPostsCountDTO;
 import com.bootcamp.SocialMeli.dto.PromoPostsDTO;
+import com.bootcamp.SocialMeli.exception.ActionNotAllowedException;
 import com.bootcamp.SocialMeli.exception.UserNotFoundException;
 import com.bootcamp.SocialMeli.mapper.IPostMapper;
-import com.bootcamp.SocialMeli.mapper.PostMapper;
 import com.bootcamp.SocialMeli.model.Post;
 import com.bootcamp.SocialMeli.model.User;
 import com.bootcamp.SocialMeli.repository.IPostRepository;
@@ -28,12 +28,11 @@ public class PostService implements IPostService{
 
     @Override
     public void addPost(Post post) {
-        postRepository.add(post);
         int userId = post.getUserId();
-
         User user = userRepository.find(userId).orElseThrow(() ->
                 new UserNotFoundException(userId));
         user.addPost(post);
+        postRepository.add(post);
     }
 
     @Override
@@ -65,7 +64,6 @@ public class PostService implements IPostService{
             else if (order.get().equals("date_desc")) {
                 listOfPosts.sort(Comparator.comparing(PostDTO::getDate).reversed());
             }
-            //tirar excepción si el orden es otro?
         }
 
         FollowedPostsDTO followedPosts = new FollowedPostsDTO(userId, listOfPosts);
@@ -108,7 +106,6 @@ public class PostService implements IPostService{
                         .sort(Comparator.comparing(post -> post.getDetail().getProductName()));
                 Collections.reverse(listOfPromoPosts);
             }
-            //tirar excepción si el orden es otro?
         }
 
         PromoPostsDTO promoPostsDTO = new PromoPostsDTO(userId, user.getName(), listOfPromoPosts);

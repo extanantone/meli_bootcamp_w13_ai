@@ -8,7 +8,7 @@ import java.util.Optional;
 
 
 public interface IUserService {
-    void add(int userId, String userName, boolean canSell);
+    void add(int userId, String userName, boolean isSeller);
     void follow(int followerId, int followedId);
     void unfollow(int followerId, int followedId);
     FollowersListDTO getFollowers(int userId, Optional<String> order);

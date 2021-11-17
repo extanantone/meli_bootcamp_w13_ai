@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface IUserRepository {
     Optional<User> find(int userId);
     List<User> findAll();
-    User add(int userId, String userName, boolean canSell);
+    User add(int userId, String userName, boolean isSeller);
 }
