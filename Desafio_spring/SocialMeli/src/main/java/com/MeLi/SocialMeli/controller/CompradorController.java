@@ -7,10 +7,7 @@ import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
 import com.MeLi.SocialMeli.service.CompradorServiceImplement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -28,8 +25,8 @@ public class CompradorController {
     }
 
     @GetMapping("/users/{user_id}/followed/list")
-    public ResponseEntity<InfoSeguidosDTO> listarSeguidos(@PathVariable int user_id) throws NotFoundVendedorException, NotFoundCompradorException {
-        return new ResponseEntity<>(compradorServiceImplement.verSeguidos(user_id), HttpStatus.OK);
+    public ResponseEntity<InfoSeguidosDTO> listarSeguidos(@PathVariable int user_id, @RequestParam(defaultValue = "") String order) throws NotFoundVendedorException, NotFoundCompradorException {
+        return new ResponseEntity<>(compradorServiceImplement.verSeguidos(user_id, order), HttpStatus.OK);
     }
 
     @PostMapping("/users/{user_id}/unfollow/{user_id_to_unfollow}")

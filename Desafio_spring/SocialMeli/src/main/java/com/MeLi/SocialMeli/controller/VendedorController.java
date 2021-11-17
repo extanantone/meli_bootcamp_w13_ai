@@ -24,7 +24,7 @@ public class VendedorController {
     }
 
     @GetMapping("/users/{user_id}/followers/list")
-    public ResponseEntity<DatosSeguidoresDTO> getInfoSeguidores(@PathVariable int user_id) throws NotFoundVendedorException {
-        return new ResponseEntity<>(vendedorServiceImplement.getInfoSeguidores(user_id), HttpStatus.OK);
+    public ResponseEntity<DatosSeguidoresDTO> getInfoSeguidores(@PathVariable int user_id, @RequestParam(defaultValue = "") String order) throws NotFoundVendedorException {
+        return new ResponseEntity<>(vendedorServiceImplement.getInfoSeguidores(user_id, order), HttpStatus.OK);
     }
 }

@@ -17,14 +17,11 @@ public class VendedorRepository implements VendedorRepositoryImplement{
     HashMap<Integer, Vendedor> vendedores = new HashMap();
 
     public VendedorRepository(){
-        Vendedor vendedor1 = new Vendedor(1,"Juan");
+        Vendedor vendedor1 = new Vendedor(3,"Juan");
         vendedores.put(vendedor1.getId(),vendedor1);
 
-        Vendedor vendedor2 = new Vendedor(2,"Camilo");
+        Vendedor vendedor2 = new Vendedor(4,"Camilo");
         vendedores.put(vendedor2.getId(),vendedor2);
-
-        Vendedor vendedor3 = new Vendedor(3,"Andrés");
-        vendedores.put(vendedor3.getId(),vendedor3);
     }
 
     @Override

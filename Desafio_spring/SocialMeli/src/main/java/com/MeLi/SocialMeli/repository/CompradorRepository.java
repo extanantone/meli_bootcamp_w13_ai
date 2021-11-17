@@ -1,14 +1,10 @@
 package com.MeLi.SocialMeli.repository;
 
 import com.MeLi.SocialMeli.model.Comprador;
-import com.MeLi.SocialMeli.model.Usuario;
-import com.MeLi.SocialMeli.model.Vendedor;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public class CompradorRepository implements CompradorRepositoryImplement{
@@ -21,14 +17,11 @@ public class CompradorRepository implements CompradorRepositoryImplement{
 
         Comprador comprador2 = new Comprador(2,"Ivan");
         compradores.put(comprador2.getId(),comprador2);
-
-        Comprador comprado3 = new Comprador(3,"Daniel");
-        compradores.put(comprado3.getId(),comprado3);
     }
 
     @Override
-    public Set<Map.Entry<Integer, Comprador>> findAll() {
-        return compradores.entrySet();
+    public HashMap<Integer, Comprador> findAll() {
+        return compradores;
     }
 
     @Override

@@ -8,5 +8,5 @@ public interface VendedorServiceImplement {
 
     SeguidoresDTO contarSeguidores(int idVendedor) throws NotFoundVendedorException;
 
-    DatosSeguidoresDTO getInfoSeguidores(int idVendedor) throws NotFoundVendedorException;
+    DatosSeguidoresDTO getInfoSeguidores(int idVendedor, String order) throws NotFoundVendedorException;
 }

@@ -8,6 +8,8 @@ import com.MeLi.SocialMeli.mapper.PublicacionMapper;
 import com.MeLi.SocialMeli.model.Comprador;
 import com.MeLi.SocialMeli.model.Producto;
 import com.MeLi.SocialMeli.model.Publicacion;
+import com.MeLi.SocialMeli.model.Vendedor;
+import com.MeLi.SocialMeli.repository.CompradorRepositoryImplement;
 import com.MeLi.SocialMeli.repository.PublicacionRepositoryImplement;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +22,11 @@ import java.util.Map;
 public class PublicacionService implements PublicacionServiceImplement{
 
     private PublicacionRepositoryImplement publicacionRepositoryImplement;
+    private CompradorRepositoryImplement compradorRepositoryImplement;
 
-    public PublicacionService(PublicacionRepositoryImplement publicacionRepositoryImplement){
+    public PublicacionService(PublicacionRepositoryImplement publicacionRepositoryImplement, CompradorRepositoryImplement compradorRepositoryImplement){
         this.publicacionRepositoryImplement = publicacionRepositoryImplement;
+        this.compradorRepositoryImplement = compradorRepositoryImplement;
     }
 
     @Override
@@ -42,14 +46,13 @@ public class PublicacionService implements PublicacionServiceImplement{
         ArrayList publicacionesUsuario = new ArrayList();
 
         for (Map.Entry<Integer, Publicacion> entry : publicaciones.entrySet()) {
-            if(entry.getValue().getUser_id() == idUser){
+            if (entry.getValue().getUser_id() == idUser) {
                 Publicacion publicacion = entry.getValue();
                 publicacionesUsuario.add(publicacion);
-            }else{
+            } else {
                 throw (new NotFoundVendedorException(idUser));
             }
         }
-
         return publicacionesUsuario;
     }
 

@@ -11,10 +11,8 @@ import com.MeLi.SocialMeli.repository.CompradorRepositoryImplement;
 import com.MeLi.SocialMeli.repository.VendedorRepositoryImplement;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CompradorService implements CompradorServiceImplement {
@@ -37,15 +35,23 @@ public class CompradorService implements CompradorServiceImplement {
     }
 
     @Override
-    public InfoSeguidosDTO verSeguidos(int idComprador) throws NotFoundCompradorException, NotFoundVendedorException {
+    public InfoSeguidosDTO verSeguidos(int idComprador, String order) throws NotFoundCompradorException, NotFoundVendedorException {
+
         Comprador comprador = compradorRepositoryImplement.find(idComprador).orElseThrow(() -> new NotFoundCompradorException(idComprador));
-        HashMap<Integer, String> seguidores = comprador.getSeguidos();
+        HashMap<Integer, String> seguidos = comprador.getSeguidos();
         List<VendedorDTO> seguidosDatos = new ArrayList<>();
 
-        for (Map.Entry<Integer, String> entry : seguidores.entrySet()) {
+        for (Map.Entry<Integer, String> entry : seguidos.entrySet()) {
             Vendedor vendedor = vendedorRepositoryImplement.find(entry.getKey()).orElseThrow(() -> new NotFoundVendedorException(entry.getKey()));
             seguidosDatos.add(VendedorMapper.vendedorToVendedorDTO(vendedor));
         }
+
+        if(order.equals("name_desc")){
+            seguidosDatos = seguidosDatos.stream().sorted(Comparator.comparing(VendedorDTO::getUser_name).reversed()).collect(Collectors.toList());
+        }else if(order.equals("name_asc")){
+            seguidosDatos = seguidosDatos.stream().sorted(Comparator.comparing(VendedorDTO::getUser_name)).collect(Collectors.toList());
+        }
+
         return InfoSeguidosMapper.infoSeguidosToInfoSeguidosDTO(comprador, seguidosDatos);
     }
 

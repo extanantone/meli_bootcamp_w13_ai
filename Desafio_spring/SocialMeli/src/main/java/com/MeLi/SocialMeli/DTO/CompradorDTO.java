@@ -3,6 +3,7 @@ package com.MeLi.SocialMeli.DTO;
 import com.MeLi.SocialMeli.model.Comprador;
 import com.MeLi.SocialMeli.model.Usuario;
 
+
 public class CompradorDTO{
 
     private int user_id;
