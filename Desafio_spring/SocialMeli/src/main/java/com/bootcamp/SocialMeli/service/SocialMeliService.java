@@ -3,80 +3,162 @@ package com.bootcamp.SocialMeli.service;
 import com.bootcamp.SocialMeli.dto.CountDTO;
 import com.bootcamp.SocialMeli.dto.FollowedDTO;
 import com.bootcamp.SocialMeli.dto.FollowerDTO;
+import com.bootcamp.SocialMeli.dto.ProductoDTO;
 import com.bootcamp.SocialMeli.dto.PublicationDTO;
-import com.bootcamp.SocialMeli.exception.BadRequest;
+import com.bootcamp.SocialMeli.dto.UserDTO;
+import com.bootcamp.SocialMeli.exception.NotFoundUserId;
 import com.bootcamp.SocialMeli.mapper.PublicationMapper;
-import com.bootcamp.SocialMeli.mapper.UserMapper;
+import com.bootcamp.SocialMeli.model.Producto;
 import com.bootcamp.SocialMeli.model.Publication;
+import com.bootcamp.SocialMeli.model.User;
 import com.bootcamp.SocialMeli.repository.ISocialMeliRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class SocialMeliService implements ISocialMeliService {
 
+    @Autowired
     ISocialMeliRepository iSocialMeliRepository;
-    UserMapper userMapper;
+    @Autowired
     PublicationMapper publicationMapper;
 
-
-    public SocialMeliService(ISocialMeliRepository iSocialMeliRepository) {
-        this.iSocialMeliRepository = iSocialMeliRepository;
-        this.userMapper = userMapper;
-        this.publicationMapper = publicationMapper;
-    }
-
-    public void userNotFound(Integer user_id) {
-        if (iSocialMeliRepository.findUser(user_id) == false) {
-            throw new BadRequest("no existe el usuario número" + user_id);
+    public void checkUser(Integer user_id) {
+        if (iSocialMeliRepository.checkUser(user_id) == false) {
+            throw new NotFoundUserId(user_id);
         }
     }
 
+    public UserDTO userToUserDTO(User userD) {
+        return new UserDTO(userD.getUser_id(), userD.getUser_name());
+    }
+
+    public ProductoDTO detailsProd(Producto producto) {
+        return new ProductoDTO(producto.getProduct_id(),
+                producto.getProduct_name(),
+                producto.getColor(),
+                producto.getBrand(),
+                producto.getNotes(),
+                producto.getType());
+    }
+
+    public PublicationDTO publicationToPublicationDTO(Publication publication) {
+        return new PublicationDTO(publication.getUser_id(),
+                publication.getId_post(),
+                publication.getDate(),
+                publication.getDetails(),
+                publication.getCategory(),
+                publication.getPrice());
+    }
+
     @Override
-    public void addNewFollow(Integer user_id, Integer user_id_to_follow) throws BadRequest {
-        iSocialMeliRepository.addNewFollowed(user_id, user_id_to_follow);
-        iSocialMeliRepository.addNewFollower(user_id, user_id_to_follow);
+    public void newFollow(Integer user_id, Integer user_id_to_follow) {
+        this.checkUser(user_id);
+        this.checkUser(user_id_to_follow);
+        iSocialMeliRepository.newFollow(user_id, user_id_to_follow);
     }
 
     @Override
     public CountDTO followerCount(Integer user_id) {
-        userNotFound(user_id);
-        CountDTO countDTO = userMapper.countDTO(iSocialMeliRepository.userId(user_id));
-        if (countDTO.getCount() == 0) {
-            throw new BadRequest("No tiene ningun seguidor el usuario: " + user_id);
-        }
-        return countDTO;
+        this.checkUser(user_id);
+        User follower = this.iSocialMeliRepository.userId(user_id);
+        return new CountDTO(follower.getUser_id(),
+                follower.getUser_name(),
+                follower.followersCount());
     }
 
     @Override
-    public FollowerDTO followerList(Integer user_id) {
-        userNotFound(user_id);
-        FollowerDTO followerDTO = userMapper.followerDTO(iSocialMeliRepository.userId(user_id));
-        if (followerDTO.getFollowers().size() == 0) {
-            throw new BadRequest("No tiene seguidores el usuario " + user_id);
+    public FollowerDTO followerList(Integer user_id, String order) {
+        this.checkUser(user_id);
+        User followerUser = this.iSocialMeliRepository.userId(user_id);
+        List<UserDTO> followerList = this.iSocialMeliRepository.follower(user_id).stream()
+                .map(i -> userToUserDTO(i)).collect(Collectors.toList());
+        if (Objects.nonNull(order)) {
+            followerList = this.orderName(followerList, order);
         }
-        return followerDTO;
+        return new FollowerDTO(followerUser.getUser_id(),
+                followerUser.getUser_name(),
+                followerList);
     }
 
     @Override
-    public FollowedDTO followedList(Integer user_id) {
-        userNotFound(user_id);
-        FollowedDTO followedDTO = userMapper.followedDTO(iSocialMeliRepository.userId(user_id));
-        if (followedDTO.getFollowed().size() == 0) {
-            throw new BadRequest("No sigue a nadie el usuario " + user_id);
+    public FollowedDTO followedList(Integer user_id, String order) {
+        this.checkUser(user_id);
+        User followed = this.iSocialMeliRepository.userId(user_id);
+        List<UserDTO> followedList = this.iSocialMeliRepository.followed(user_id).stream()
+                .map(i -> userToUserDTO(i)).collect(Collectors.toList());
+        if(Objects.nonNull(order)){
+            followedList = this.orderName(followedList, order);
         }
-        return followedDTO;
+        return new FollowedDTO(followed.getUser_id(),
+                followed.getUser_name(),
+                followedList);
     }
 
     @Override
-    public Publication newPublication(PublicationDTO publicationDTO) throws BadRequest {
-        return iSocialMeliRepository.createPublication(publicationMapper.newPublication(publicationDTO));
+    public Publication newPublication(PublicationDTO publicationDTO) {
+        return iSocialMeliRepository.createPublication(
+                PublicationMapper.newPublication(publicationDTO));
     }
 
     @Override
     public void deleteFollow(Integer user_id, Integer user_id_to_unfollow) {
         if (user_id.equals(user_id_to_unfollow)) {
-            iSocialMeliRepository.deleteFollower(user_id, user_id_to_unfollow);
-            iSocialMeliRepository.deleteFollowed(user_id, user_id_to_unfollow);
+            iSocialMeliRepository.deleteFollow(user_id, user_id_to_unfollow);
+            iSocialMeliRepository.deleteFollow(user_id, user_id_to_unfollow);
         }
+    }
+
+    @Override
+    public PublicationDTO recentPublication(Integer user_id, String order) {
+        this.checkUser(user_id);
+        List<Publication> recentPost = this.iSocialMeliRepository.followed(user_id).stream()
+                .map(i -> this.iSocialMeliRepository.recentPublication(i.getUser_id())).flatMap(
+                        Collection::stream).sorted(Comparator.comparing(Publication::getDate,
+                        Collections.reverseOrder())).collect(Collectors.toList());
+
+        if (Objects.nonNull(order)) {
+            recentPost = this.orderPost(recentPost, order);
+        }
+        return new PublicationDTO(user_id, recentPost.stream().map(
+                publicationToPublicationDTO(), PublicationDTO.class)).collect(Collectors.toList()));
+    }
+
+    private List<UserDTO> orderName(List<UserDTO> users, String order) {
+        Comparator<UserDTO> orderType;
+        if (order.equals("name_asc")) {
+            orderType = Comparator.comparing(UserDTO::getUser_name);
+        } else if (order.equals("name_desc")) {
+            orderType = Comparator.comparing(UserDTO::getUser_name,
+                    Collections.reverseOrder());
+        } else return null;
+        return this.comparatorUser(users, orderType);
+    }
+
+    private List<UserDTO> comparatorUser(List<UserDTO> users, Comparator<UserDTO> orderType) {
+        return users.stream().sorted(orderType).collect(Collectors.toList());
+    }
+
+    private List<Publication> orderPost(List<Publication> publications, String order) {
+        Comparator<Publication> orderComparator;
+        if (order.equals("date_asc")) {
+            orderComparator = Comparator.comparing(Publication::getDate);
+        } else if (order.equals("date_desc")) {
+            orderComparator = Comparator.comparing(Publication::getDate,
+                    Collections.reverseOrder());
+        } else return null;
+        return this.comparatorPublication(publications, orderComparator);
+    }
+
+    private List<Publication> comparatorPublication(List<Publication> publicationA,
+                                                    Comparator<Publication> orderType) {
+        return publicationA.stream().sorted(orderType).collect(Collectors.toList());
     }
 }

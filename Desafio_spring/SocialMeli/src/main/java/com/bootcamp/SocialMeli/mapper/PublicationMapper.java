@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PublicationMapper {
 
-    public Publication newPublication(PublicationDTO publicationDTO){
+    public static Publication newPublication(PublicationDTO publicationDTO){
         Publication publication = new Publication();
         publication.setUser_id(publicationDTO.getUser_id());
         publication.setId_post(publicationDTO.getId_post());

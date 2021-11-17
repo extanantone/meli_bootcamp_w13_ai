@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductoDTO {
+public class ProductoDTO{
     private int product_id;
     private String product_name;
     private String type;

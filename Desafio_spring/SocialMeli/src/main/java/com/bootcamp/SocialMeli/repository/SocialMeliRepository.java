@@ -10,19 +10,23 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Repository
 public class SocialMeliRepository implements ISocialMeliRepository {
 
-    List<User> userList;
     private HashMap<Integer, Publication> publicationList;
+    private HashMap<Integer, User> userList;
 
     public SocialMeliRepository() {
-        this.userList = userJson();
-        this.publicationList = new HashMap<>();
+        this.userList = (HashMap<Integer, User>) this.userJson();
+        this.publicationList = (HashMap<Integer, Publication>) this.publicationJson();
     }
 
     public List<User> userJson() {
@@ -45,33 +49,56 @@ public class SocialMeliRepository implements ISocialMeliRepository {
         return userList;
     }
 
-    @Override
-    public void addNewFollower(Integer user_id, Integer user_id_to_follow) {
-        User follower = userId(user_id);
-        if (!userList.equals(null)) {
-            this.userList.stream().filter(user -> user.getUser_id().equals(user_id_to_follow))
-                    .findFirst().orElse(null).getFollowers().add(follower);
+    public List<Publication> publicationJson() {
+        File file = null;
+        try {
+            file = ResourceUtils.getFile(
+                    "classpath:post.json");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
+        ObjectMapper objectMapper = new ObjectMapper();
+        TypeReference<List<Publication>> typeRef = new TypeReference<>() {
+        };
+        List<Publication> publicationList = null;
+        try {
+            publicationList = objectMapper.readValue(file, typeRef);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return publicationList;
     }
 
     @Override
-    public void addNewFollowed(Integer user_id, Integer user_id_to_follow) {
-        User followed = userId(user_id_to_follow);
-        if (!userList.equals(null)) {
-            this.userList.stream().filter(user -> user.getUser_id().equals(user_id))
-                    .findFirst().orElse(null).getFollowers().add(followed);
-        }
+    public void newFollow(Integer user_id, Integer user_id_to_follow) {
+        User follower = this.userList.get(user_id);
+        follower.follow(user_id);
+        User followed = this.userList.get(user_id_to_follow);
+        followed.addFolower(user_id);
     }
 
     @Override
     public User userId(Integer user_id) {
-        return this.userList.stream().filter(user ->
-                user.getUser_id().equals(user_id)).findFirst().orElse(null);
+        return this.userList.get(user_id);
     }
 
     @Override
-    public boolean findUser(Integer user_id) {
-        return this.userList.stream().anyMatch(user -> user.getUser_id().equals(user_id));
+    public boolean checkUser(Integer user_id) {
+        return Objects.nonNull(this.userList.get(user_id));
+    }
+
+    @Override
+    public List<User> follower(Integer user_id) {
+        return userId(user_id).getFollower().stream()
+                .map(this.userList::get)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> followed(Integer user_id) {
+        return userId(user_id).getFollowed().stream()
+                .map(this.userList::get)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -81,12 +108,19 @@ public class SocialMeliRepository implements ISocialMeliRepository {
     }
 
     @Override
-    public void deleteFollower(Integer user_id, Integer user_id_to_unfollow) {
-
+    public void deleteFollow(Integer user_id, Integer user_id_to_unfollow) {
+        User uFollower = userId(user_id);
+        uFollower.unfollowFollower(user_id);
+        User uFollowed = userId(user_id_to_unfollow);
+        uFollowed.unfollow(user_id_to_unfollow);
     }
 
     @Override
-    public void deleteFollowed(Integer user_id, Integer user_id_to_unfollow) {
-
+    public List<Publication> recentPublication(Integer user_id) {
+        LocalDate now = LocalDate.now();
+        return userList.get(user_id).getPublication().stream()
+                .map(this.publicationList::get).filter(i ->
+                        DAYS.between(i.getDate(), now) < 15)
+                .collect(Collectors.toList());
     }
 }

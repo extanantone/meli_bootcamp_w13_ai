@@ -1,16 +1,17 @@
 package com.bootcamp.SocialMeli.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.io.Serializable;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class CountDTO {
-    private Integer user_id;
-    private String user_name;
+public class CountDTO extends UserDTO implements Serializable {
     private Integer count;
+
+    public CountDTO(Integer user_id, String user_name, Integer fCount) {
+        super(user_id, user_name);
+        this.count = fCount;
+    }
 }

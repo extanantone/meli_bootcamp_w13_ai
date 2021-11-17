@@ -1,18 +1,18 @@
 package com.bootcamp.SocialMeli.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class FollowedDTO {
-private Integer user_id;
-private String user_name;
+public class FollowedDTO extends UserDTO implements Serializable {
 private List<UserDTO> followed;
+
+public FollowedDTO (Integer user_id, String user_name, List<UserDTO> followed){
+    super(user_id, user_name);
+    this.followed = followed;
+}
 }
