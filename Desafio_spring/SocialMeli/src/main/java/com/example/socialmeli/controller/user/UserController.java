@@ -1,4 +1,4 @@
-package com.example.socialmeli.controller.v1.user;
+package com.example.socialmeli.controller.user;
 
 import com.example.socialmeli.dto.user.FollowedListDTO;
 import com.example.socialmeli.dto.user.FollowerCountDTO;
