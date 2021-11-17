@@ -15,14 +15,14 @@ _SocialMeli es la solución al desafió del Sprint 1, realizado hasta la histori
   | **1**  |usuario uno|
   | **2**  |usuario dos|
   | **3**  |vendedor uno|
-| **4**  |vendedor dos|
+  | **4**  |vendedor dos|
 
 ## End-Points 📋
 
 1. **US 0001:** Poder realizar la acción de "Follow" (seguir) a un determinado vendedor.
 
    | Method | END-PONT |
-            | :---       |     :---:   |
+   | :---       |     :---:   |
    | **POST**   |  localhost:8080/users/{user_id}/follow/{user_id_to_follow} |
    | **Ejemplo** | localhost:8080/users/1/follow/2 |
    
@@ -48,7 +48,7 @@ _SocialMeli es la solución al desafió del Sprint 1, realizado hasta la histori
 3. **US 0003:** Obtener un listado de todos los usuarios que siguen a un determinado vendedor (¿Quién me sigue?)
 
    | Method | END-PONT |
-         | :---        |     :---:   |
+   | :---        |     :---:   |
    | **GET**   |  localhost:8080/users/{user_id}/followers/list |
    | **Ejemplo**  | localhost:8080/users/1/followers/list |
 
@@ -59,7 +59,7 @@ _SocialMeli es la solución al desafió del Sprint 1, realizado hasta la histori
 4. **US 0004:** Obtener un listado de todos los vendedores a los cuales sigue un determinado usuario (¿A quién sigo?)
 
    | Method | END-PONT |
-         | :---        |     :---:   |
+   | :---        |     :---:   |
    | **GET**   |  localhost:8080/users/{user_id}/followed/list |
    | **Ejemplo**  | localhost:8080/users/1/followed/list |
 
@@ -70,7 +70,7 @@ _SocialMeli es la solución al desafió del Sprint 1, realizado hasta la histori
 5. **US 0005:** Dar de alta una nueva publicación
 
    | Method | END-PONT |
-         | :---        |     :---:   |
+   | :---        |     :---:   |
    | **POST**   |  localhost:8080/products/post |
    | **Ejemplo**  | localhost:8080/products/post |
 
@@ -105,7 +105,7 @@ _SocialMeli es la solución al desafió del Sprint 1, realizado hasta la histori
    publicaciones más recientes primero).
 
    | Method | END-PONT |
-         | :---        |     :---:   |
+   | :---        |     :---:   |
    | **GET**   |  localhost:8080/products/followed/{user_id}/list |
    | **Ejemplo**  | localhost:8080/products/followed/1/list |
 
@@ -116,7 +116,7 @@ _SocialMeli es la solución al desafió del Sprint 1, realizado hasta la histori
 7. **US 0007:** Poder realizar la acción de "Unfollow" (dejar de seguir) a un determinado vendedor.
 
    | Method | END-PONT |
-         | :---       |     :---:   |
+   | :---       |     :---:   |
    | **GET**   |  localhost:8080/users/{user_id}/unfollow/{user_id_to_unfollow}|
    | **Ejemplo** | localhost:8080/users/2/unfollow/1 |
 
@@ -128,7 +128,7 @@ _SocialMeli es la solución al desafió del Sprint 1, realizado hasta la histori
 8. **US 0008:** Ordenamiento alfabético ascendente y descendente.
 
    | Method | END-PONT |
-         | :---       |     :---:   |
+   | :---       |     :---:   |
    | **GET**   |  localhost:8080/users/{user_id}/followers/list|
    | **Ejemplo** | localhost:8080/users/1/followers/list?order=name_asc |
    | **Ejemplo** | localhost:8080/users/1/followers/list?order=name_desc|
@@ -145,7 +145,7 @@ _SocialMeli es la solución al desafió del Sprint 1, realizado hasta la histori
 9. **US 0009:** Ordenamiento por fecha ascendente y descendente.
 
    | Method | END-PONT |
-      | :---       |     :---:   |
+   | :---       |     :---:   |
    | **GET**   |  localhost:8080/products/followed/{user_id}/list |
    | **Ejemplo** | localhost:8080/products/followed/1/list?order=date_asc |
    | **Ejemplo** | localhost:8080/products/followed/1/list?order=date_desc |
@@ -159,7 +159,7 @@ _SocialMeli es la solución al desafió del Sprint 1, realizado hasta la histori
 10. **US 0010:** Llevar a cabo la publicación de un nuevo producto en promoción.
 
     | Method | END-PONT |
-        | :---        |     :---:   |
+    | :---        |     :---:   |
     | **POST**   |  localhost:8080/products/promo-post |
     | **Ejemplo**  | localhost:8080/products/promo-post |
 
@@ -197,7 +197,7 @@ _SocialMeli es la solución al desafió del Sprint 1, realizado hasta la histori
 11. **US 0011:** Obtener la cantidad de productos en promoción de un determinado vendedor
 
     | Method | END-PONT |
-        | :---        |     :---:   |
+    | :---        |     :---:   |
     | **POST**   |  localhost:8080/products/{user_id}/promo-post/count |
     | **Ejemplo**  | localhost:8080/products/1/promo-post/count |
 
@@ -207,10 +207,10 @@ _SocialMeli es la solución al desafió del Sprint 1, realizado hasta la histori
 
 12. **US 0012:** Obtener un listado de todos los productos en promoción de un determinado vendedor.
 
-      | Method | END-PONT |
-          | :---        |     :---:   |
-      | **POST**   |  localhost:8080/products/{user_id}/list |
-      | **Ejemplo**  | localhost:8080/products/1/list |
+    | Method | END-PONT |
+    | :---        |     :---:   |
+    | **POST**   |  localhost:8080/products/{user_id}/list |
+    | **Ejemplo**  | localhost:8080/products/1/list |
     
     * **Excepciones agregadas:**
       * El usuario debe existir.
