@@ -20,4 +20,7 @@ public interface IPostController
 
     @GetMapping("{userId}/list")
     PromoPostListDTO promoPostList(@PathVariable int userId, @RequestParam(required = false) String order);
+
+    @GetMapping("{userId}/post/list")
+    PostFollowedDTO postList(@PathVariable int userId);
 }

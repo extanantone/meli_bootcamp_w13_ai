@@ -11,20 +11,28 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class PostService implements IPostService
 {
+
     @Autowired
     IPostRepository postRepository;
 
     @Autowired
     IUserRepository userRepository;
+
+    private User getUser(int userId) throws BadRequestException
+    {
+
+        Map<Integer, User> userMap = userRepository.usersMap();
+        if (!userMap.containsKey(userId))
+            throw new BadRequestException("Usuario no encontrado");
+        return (userMap.get(userId));
+    }
 
     @Override
     public UserPostDTO create(UserPostDTO userPostDTO)
@@ -38,35 +46,32 @@ public class PostService implements IPostService
     }
 
     @Override
-    public PromoPostCountDTO promoPostCount(int userId)
+    public PromoPostCountDTO promoPostCount(int userId) throws BadRequestException
     {
-        Map<Integer, User> userMap = userRepository.usersMap();
-        if (!userMap.containsKey(userId))
-            throw new BadRequestException("Usuario no encontrado");
-
-
-        User user = userMap.get(userId);
-        List<Post> promoPosts = user.getPosts().stream().filter(Post::isHasPromo).collect(Collectors.toList());
-        user.setPosts(promoPosts);
+        User user = getUser(userId);
         ModelMapper modelMapper = new ModelMapper();
         TypeMap<User, PromoPostCountDTO> propertyMapper = modelMapper.createTypeMap(User.class, PromoPostCountDTO.class);
         Converter<Collection, Integer> collectionToSize = c -> c.getSource().size();
         propertyMapper.addMappings(
-                mapper -> mapper.using(collectionToSize).map(User::getPosts, PromoPostCountDTO::setPromoProductsCount)
+                mapper -> mapper.using(collectionToSize).map(src -> postRepository.findPromoPosts(userId),
+                        PromoPostCountDTO::setPromoProductsCount)
         );
         return modelMapper.map(user, PromoPostCountDTO.class);
     }
 
     @Override
+    public PostFollowedDTO listPosts(int userId)
+    {
+        User user = getUser(userId);
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(user, PostFollowedDTO.class);
+    }
+
+    @Override
     public PromoPostListDTO promoPostList(int userId, String order)
     {
-        User user;
-        Map<Integer, User> userMap = userRepository.usersMap();
+        User user = getUser(userId);
         List<Post> promoPost;
-        if (!userMap.containsKey(userId))
-            throw new BadRequestException("Usuario no encontrado");
-
-        user = userMap.get(userId);
         ModelMapper modelMapper = new ModelMapper();
         if (order != null)
         {
@@ -98,13 +103,9 @@ public class PostService implements IPostService
     @Override
     public PostFollowedDTO listRecentFollowedPosts(int userId, String order)
     {
-        User user;
-        List<Post> orderedPosts;
-        Map<Integer, User> userMap = userRepository.usersMap();
-        if (!userMap.containsKey(userId))
-            throw new BadRequestException("Usuario no encontrado");
 
-        user = userMap.get(userId);
+        User user = getUser(userId);
+        List<Post> orderedPosts;
         ModelMapper modelMapper = new ModelMapper();
         if (order == null || order.equals("date_desc"))
             orderedPosts = postRepository.findFollowedTwoWeeksBeforeOrderByDateDesc(userId);

@@ -13,4 +13,6 @@ public interface IPostService
     PromoPostCountDTO promoPostCount(int userId);
 
     PromoPostListDTO promoPostList(int userId, String order);
+
+    PostFollowedDTO listPosts(int userId);
 }

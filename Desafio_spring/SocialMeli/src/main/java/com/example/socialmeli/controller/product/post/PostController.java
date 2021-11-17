@@ -37,6 +37,12 @@ public class PostController implements IPostController
     }
 
     @Override
+    public PostFollowedDTO postList(int userId)
+    {
+        return postService.listPosts(userId);
+    }
+
+    @Override
     public PostFollowedDTO recentFollowedProducts(int userId, String order)
     {
         return postService.listRecentFollowedPosts(userId, order);
