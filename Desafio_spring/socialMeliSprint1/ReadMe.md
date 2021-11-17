@@ -29,7 +29,7 @@ y enterarse de todas las novedades que los mismos posteen.
    
       **Nota:** Nadie sigue a nadie, nadie tiene publicaciones.
     
-    * **Entradas:**
+    **Entradas:**
    
       | Method | END-PONT |
       | :---       |     :---:   |
@@ -42,7 +42,7 @@ y enterarse de todas las novedades que los mismos posteen.
     corresponder al de un usuario vendedor y deberá existir previamente en el repositorio,
     en caso contrario se lanzará una excepción.
    
-    * **Entradas:**
+    **Entradas:**
 
       | Method | END-PONT |
       | :---       |     :---:   |
@@ -55,7 +55,7 @@ y enterarse de todas las novedades que los mismos posteen.
       corresponder al de un usuario vendedor y deberá existir previamente en el repositorio,
       en caso contrario se lanzará una excepción.
 
-    * **Entradas:**
+    **Entradas:**
 
       | Method | END-PONT |
       | :---        |     :---:   |
@@ -68,7 +68,7 @@ y enterarse de todas las novedades que los mismos posteen.
       corresponder al de un usuario comprador y deberá existir previamente en el repositorio,
       en caso contrario se lanzará una excepción.
 
-    * **Entradas:**
+    **Entradas:**
 
       | Method | END-PONT |
       | :---        |     :---:   |
@@ -82,14 +82,14 @@ y enterarse de todas las novedades que los mismos posteen.
     le asignará el correspondiente post. Por otro lado, el id de un post
    será único, es decir, no podrán existir 2 posts con el mismo id.
 
-    * **Entradas:**
+    **Entradas:**
 
       | Method | END-PONT |
       | :---        |     :---:   |
       | **POST**   |  [localhost:8080/products/post]() |
       | **Ejemplo**  | [localhost:8080/products/post]() |
 
-    * **Ejemplo Body**:
+    **Ejemplo Body**:
 
    ````
       {
@@ -115,7 +115,7 @@ publicaciones más recientes primero).
 
     * **Restricciones:** El id ingresado debe corresponder al de un usuario comprador existente.
 
-    * **Entradas:**
+    **Entradas:**
 
       | Method | END-PONT |
       | :---        |     :---:   |
@@ -129,7 +129,7 @@ publicaciones más recientes primero).
     Debe tenerse en cuenta, que un usuario no puede dejar de seguir a otro usuario,
     si actualmente no es un seguidor de este.
     
-    * **Entradas:**
+    **Entradas:**
 
       | Method | END-PONT |
       | :---       |     :---:   |
@@ -156,12 +156,78 @@ publicaciones más recientes primero).
 
 9. **US 0009:** Ordenamiento por fecha ascendente y descendente.
 
+    * **Restricciones:** Los usuarios deben existir en el correspondiente Rol. 
+      Adicionalmente, el parámetro "date_" debe estar escrito correctamente, así
+      como el orden seleccionado "asc" o "desc".
+
+   **Entradas:**
+
+   | Method | END-PONT |
+   | :---       |     :---:   |
+   | **GET**   |  [localhost:8080/products/followed/{user_id}/list]() |
+   | **Ejemplo** | [localhost:8080/products/followed/1/list?order=date_asc]() |
+   | **Ejemplo** | [localhost:8080/products/followed/1/list?order=date_desc]() |
+
 
 10. **US 0010:** Llevar a cabo la publicación de un nuevo producto en promoción.
 
+    * **Restricciones:** Debe existir el usuario vendedor al cual se
+      le asignará el correspondiente post. Por otro lado, el id de un post
+      será único, es decir, no podrán existir 2 posts con el mismo id,
+      indiferentemente de que se encuentre o no en promoción, deberá tener
+      un id diferente.
+
+    **Entradas:**
+
+    | Method | END-PONT |
+    | :---        |     :---:   |
+    | **POST**   |  [localhost:8080/products/promopost]() |
+    | **Ejemplo**  | [localhost:8080/products/promopost]() |
+
+    **Ejemplo Body**:
+
+       ````
+      {
+         "user_id": 4,
+         "id_post": 6,
+         "date": "06-11-2021",
+         "detail": {
+             "product_id": 1,
+             "product_name": "Silla Promo",
+             "type": "Gamer",
+             "brand": "Racer",
+             "color": "Red & Black",
+             "notes": "Special Edition"
+         },
+         "category": 100,
+         "price": 1500.50,
+         "has_promo": true,
+         "discount":0.10
+      }
+    ````
 
 11. **US 0011:** Obtener la cantidad de productos en promoción de un determinado vendedor
 
+    * **Restricciones:** El parámetro user_id, deberá corresponder al id de un usuario vendedor
+    que exista previamente en el repositorio.
+
+    **Entradas:**
+
+    | Method | END-PONT |
+        | :---        |     :---:   |
+    | **POST**   |  [localhost:8080/products/{user_id}/promo-post/count]() |
+    | **Ejemplo**  | [localhost:8080/products/4/promo-post/count]() |
+    
 
 12. **US 0012:** Obtener un listado de todos los productos en promoción de un determinado vendedor.
 
+* **Restricciones:** El parámetro user_id, deberá corresponder al id de un usuario vendedor
+  que exista previamente en el repositorio.
+
+  **Entradas:**
+
+  | Method | END-PONT |
+  | :---        |     :---:   |
+  | **POST**   |  [localhost:8080/products/{user_id}/list]() |
+  | **Ejemplo**  | [localhost:8080/products/4/list]() |
+    
