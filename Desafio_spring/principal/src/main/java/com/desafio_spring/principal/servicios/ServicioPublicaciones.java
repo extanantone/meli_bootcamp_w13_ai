@@ -33,7 +33,7 @@ public class ServicioPublicaciones implements IServicioPublicaciones<Publicacion
 
     /**
      * Crear publicacion en base a los DTO
-     * @param nuevo Nueva publicacion con todos sus datos apra ser creada
+     * @param nuevo Nueva publicacion con todos sus datos para ser creada
      */
     @Override
     public void crearPublicacion(PublicacionesDTO nuevo){
@@ -45,7 +45,7 @@ public class ServicioPublicaciones implements IServicioPublicaciones<Publicacion
 
     /**
      * Crear publicacion en base a los DTO
-     * @param nuevo Nueva publicacion con todos sus datos apra ser creada
+     * @param nuevo Nueva publicacion con todos sus datos para ser creada
      */
     @Override
     public void crearPublicacionPromo(PublicacionesDTO nuevo){

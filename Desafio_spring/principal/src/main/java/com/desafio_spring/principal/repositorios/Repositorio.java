@@ -42,17 +42,23 @@ public class Repositorio implements IRepositorios{
         users.put(3,new Usuario(3,"Rolando"));
         users.put(4,new Usuario(4,"Rebeca"));
 
+        /*
         posts.put(1, new Publicacion(1,LocalDate.now(), new Producto(1,"Silla Gamer","Gamer","Racer","Red & Black","Special Edition"),"100",1500.5,users.get(1),false,0.0));
         posts.put(2, new Publicacion(2,LocalDate.now(), new Producto(123,"Silla Gamer2","Gamer2","Racer2","Red & Black2","Special Edition2"),"100",1500.5,users.get(2),false,0.0));
         posts.put(3, new Publicacion(3,LocalDate.now(), new Producto(12,"Silla Gamer3","Gamer3","Racer3","Red & Black3","Special Edition3"),"100",1500.5,users.get(3),false,0.0));
         posts.put(4, new Publicacion(4,LocalDate.now(), new Producto(3,"Silla Gamer4","Gamer4","Racer4","Red & Black4","Special Edition4"),"100",1500.5,users.get(4),false,0.0));
+        */
+
         /*
          * relacionar posts con usuarios
          */
+
+        /*
         userPosts.put(users.get(1).getUserId(),new ArrayList<>(List.of(posts.get(1))));
         userPosts.put(users.get(2).getUserId(),new ArrayList<>(List.of(posts.get(2))));
         userPosts.put(users.get(3).getUserId(),new ArrayList<>(List.of(posts.get(3))));
         userPosts.put(users.get(4).getUserId(),new ArrayList<>(List.of(posts.get(4))));
+         */
 
         /*
          * usuarioySeguidores

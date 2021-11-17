@@ -81,7 +81,7 @@ public class ServicioUsuarios {
     }
 
     /**
-     * Obtiene la lsita de usuarios a los que sigue
+     * Obtiene la lista de usuarios a los que sigue
      * @param seguidor :id de usuario de quien sigue a otros
      * @return lista de usuarios que sigue un usuario seguidor
      */
