@@ -62,7 +62,9 @@ agregados por el cliente.
 
 ## Ejecutando los endpoints ⚙️
 
-_Podes abrir postman y ejecutar los endpoints de la siguente manera:_
+_Puedes abrir postman y ejecutar los endpoints de la siguente manera:_
+Nota: Hay un archivo en los recursos llamado _SocialMeli.postman_collection.json_ que se puede importar en postman con 
+las consultas realizadas.
 
 ### US 0001: Poder realizar la acción de "Follow" (seguir) a un determinado vendedor 🔩
 
@@ -129,8 +131,8 @@ Response DTO: FollowersListDTO
 Ejemplo:
 + Request: http://localhost:8080/users/12/followers/list
 + Response 200: {
-  "userId": 12,
-  "userName": "RocíoSCATTONE91962",
+  "user_id": 12,
+  "user_name": "RocíoSCATTONE91962",
   "followers": [
   {
   "userID": 25,
@@ -156,8 +158,8 @@ Response DTO: FollowedListDTO
 Ejemplo:
 + Request: http://localhost:8080/users/25/followed/list
 + Response 200: {
-  "userId": 25,
-  "userName": "MaríaQuiroga70055",
+  "user_id": 25,
+  "user_name": "MaríaQuiroga70055",
   "followed": [
   {
   "userID": 12,
@@ -296,9 +298,9 @@ Response DTO: FollowersListDTO & FollowedListDTO
 Ejemplo:
 + Request: http://localhost:8080/users/25/followed/list/?order=name_desc
 + Response 200: {
-  "userId": 25,
-  "userName": "MaríaQuiroga70055",
-  "mListUsers": [
+  "user_id": 25,
+  "user_name": "MaríaQuiroga70055",
+  "followed": [
   {
   "userID": 12,
   "userName": "RocíoSCATTONE91962"
