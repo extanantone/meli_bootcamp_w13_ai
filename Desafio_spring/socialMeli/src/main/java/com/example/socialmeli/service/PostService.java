@@ -68,7 +68,7 @@ public class PostService {
                 postList.sort(Comparator.comparing(Post::getDate));
             }
         }
-        return new PostResponseDto(postList);
+        return new PostResponseDto(user_id,user.getUserName(),postList);
     }
 
     public UserResponseDto countPostFromUserId(Integer user_id){
@@ -96,6 +96,6 @@ public class PostService {
 
         User user = userRepository.getUser(user_id);
         List<Post> postList = postRepository.getPromoPostFromUserId(user_id);
-        return new PostResponseDto(postList);
+        return new PostResponseDto(user_id,user.getUserName(),postList);
     }
 }

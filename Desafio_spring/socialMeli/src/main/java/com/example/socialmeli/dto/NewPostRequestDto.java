@@ -1,12 +1,14 @@
 package com.example.socialmeli.dto;
 
 import com.example.socialmeli.model.Product;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 
 public class NewPostRequestDto {
     private Integer post_id, user_id;

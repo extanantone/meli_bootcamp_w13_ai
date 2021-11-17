@@ -22,12 +22,14 @@ public class UserService {
     }
 
     public PostRequestResponseDto followUser(Integer user_id, Integer user_id_to_follow){
-
         if(Objects.isNull(user_id)){
             throw new BadParamsRequestException("El id del usuario no es valido");
         }
         if(Objects.isNull(user_id_to_follow)){
             throw new BadParamsRequestException("El id del usuario a seguir no es valido");
+        }
+        if(user_id == user_id_to_follow){
+            throw new BadParamsRequestException("Los ids de usuario no pueden ser iguales");
         }
         if(!userRepository.userExist(user_id)){
             throw new UserNotExistException(String.format("No existe el usuario con id %d", user_id));
@@ -81,14 +83,12 @@ public class UserService {
         for(Integer user_follow_id : followsList){
             userList.add(userRepository.getUser(user_follow_id));
         }
-        if (order != null) {
-            switch (order) {
-                case "name_asc": {
-                    userList.sort(Comparator.comparing(User::getUserName));
-                }
-                case "name_desc": {
-                    userList.sort(Comparator.comparing(User::getUserName).reversed());
-                }
+        if(order != null){
+            if(order.equalsIgnoreCase("name_asc")){
+                userList.sort(Comparator.comparing(User::getUserName));
+            }
+            if(order.equalsIgnoreCase("name_desc")){
+                userList.sort(Comparator.comparing(User::getUserName).reversed());
             }
         }
         return new UserResponseDto(user_id,user.getUserName(),null,null,userList,null);
@@ -106,24 +106,23 @@ public class UserService {
         User user = userRepository.getUser(user_id);
         List<Integer> followedList = user.getFollowedList();
         List<User> userList = new ArrayList<>();
+        //TODO cambiar fors por maps y filters
         for(Integer user_follow_id : followedList){
             userList.add(userRepository.getUser(user_follow_id));
         }
         if(order != null){
-            switch (order){
-                case "name_asc":{
-                    userList.sort(Comparator.comparing(User::getUserName));
-                }
-                case "name_desc":{
-                    userList.sort(Comparator.comparing(User::getUserName).reversed());
-                }
+            if(order.equalsIgnoreCase("name_asc")){
+                userList.sort(Comparator.comparing(User::getUserName));
+            }
+            if(order.equalsIgnoreCase("name_desc")){
+                userList.sort(Comparator.comparing(User::getUserName).reversed());
             }
         }
         return new UserResponseDto(user_id,user.getUserName(),null,null,null,userList);
     }
 
-    public Map<Integer,User> getUsers(){
-        return userRepository.getUsers();
+    public UsersResponseDto getUsers(){
+        return new UsersResponseDto(userRepository.getUsers());
     }
 
     public PostRequestResponseDto unfollow(Integer user_id, Integer user_id_to_unfollow){
@@ -133,6 +132,9 @@ public class UserService {
         }
         if(Objects.isNull(user_id_to_unfollow)){
             throw new BadParamsRequestException("El id del usuario a seguir no es valido");
+        }
+        if(user_id == user_id_to_unfollow){
+            throw new BadParamsRequestException("Los ids de usuario no pueden ser iguales");
         }
         if(!userRepository.userExist(user_id)){
             throw new UserNotExistException(String.format("No existe el usuario con id %d", user_id));

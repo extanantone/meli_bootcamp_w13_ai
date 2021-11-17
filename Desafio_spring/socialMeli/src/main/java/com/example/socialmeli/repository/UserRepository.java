@@ -11,6 +11,7 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +23,16 @@ public class UserRepository {
     private List<User> database;
 
     public UserRepository() {
-        User user1 = new User("Santiago");
         User user2 = new User("Sofia");
         User user3 = new User("Tomas");
-        User user4 = new User("Jeison");
+        User user4 = new User("Andres");
+        User user1 = new User("Santiago");
+
+        user2.setUserFollowed(2);
+        user2.setUserFollowed(3);
+
+        user2.setUserFollowed(4);
+
         users.put(user1.getUser_id(),user1);
         users.put(user2.getUser_id(),user2);
         users.put(user3.getUser_id(),user3);
@@ -65,8 +72,12 @@ public class UserRepository {
         return users;
     }
 
-    public Map<Integer, User> getUsers() {
-        return users;
+    public List<User> getUsers() {
+        List<User> userList = new ArrayList<>();
+        this.users.forEach((k,u) ->{
+            userList.add(u);
+        });
+        return userList;
     }
 
     public boolean userExist (Integer user_id){

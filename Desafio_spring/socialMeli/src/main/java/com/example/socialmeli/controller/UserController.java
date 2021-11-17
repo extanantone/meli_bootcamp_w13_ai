@@ -2,6 +2,7 @@ package com.example.socialmeli.controller;
 
 import com.example.socialmeli.dto.PostRequestResponseDto;
 import com.example.socialmeli.dto.UserResponseDto;
+import com.example.socialmeli.dto.UsersResponseDto;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,9 @@ public class UserController {
     @PostMapping("/users/{user_id}/follow/{user_id_to_follow}")
     public ResponseEntity<PostRequestResponseDto> followUser (@PathVariable Integer user_id, @PathVariable Integer user_id_to_follow){
         PostRequestResponseDto response = userService.followUser(user_id,user_id_to_follow);
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-//TODO verificar el follow al mismo usuario
-//TODO Revisar orden alfabetico
+    //TODO @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     @GetMapping("/users/{user_id}/followers/count")
     public ResponseEntity<UserResponseDto> getFollowersCount(@PathVariable Integer user_id){
         UserResponseDto response = userService.getFollowersCount(user_id);
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<Map<Integer, User>> test (){
+    public ResponseEntity<UsersResponseDto> test (){
         return new ResponseEntity<>(userService.getUsers(),HttpStatus.OK);
     }
 
