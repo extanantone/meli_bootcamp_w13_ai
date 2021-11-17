@@ -79,11 +79,16 @@ public class ProductMapper {
     }
 
     public static PostPromoDTO postToPromoDto(Post post) {
-        PostDTO dto = postToDto(post);
-        PostPromoDTO promoDto = (PostPromoDTO) dto;
-        promoDto.setHasPromo(post.getHasPromo());
-        promoDto.setDiscount(post.getDiscount());
-        return promoDto;
+        PostPromoDTO dto = new PostPromoDTO();
+        dto.setIdPost(post.getId());
+        dto.setUserId(post.getUserId());
+        dto.setCategory(post.getCategory());
+        dto.setDate(post.getDate().format(DATE_TIME_FORMATTER));
+        dto.setPrice(post.getPrice());
+        dto.setDetail(productToDto(post.getDetail()));
+        dto.setHasPromo(post.getHasPromo());
+        dto.setDiscount(post.getDiscount());
+        return dto;
     }
 
     public static UserPromoPostCountDTO userToPromoPostCountDto(User user, int count) {

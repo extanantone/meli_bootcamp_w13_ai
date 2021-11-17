@@ -2,6 +2,7 @@ package com.lgoyenechea.socialmeli.service;
 
 import com.lgoyenechea.socialmeli.dto.*;
 import com.lgoyenechea.socialmeli.dto.mapper.UserMapper;
+import com.lgoyenechea.socialmeli.exception.UserDoesNotExistsException;
 import com.lgoyenechea.socialmeli.exception.UserDoesNotFollowException;
 import com.lgoyenechea.socialmeli.model.User;
 import com.lgoyenechea.socialmeli.exception.UserArgumentNotValidException;
@@ -17,27 +18,25 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final String USER_ID_ERROR = "User with id %s does not exists";
+    private final String TWO_USER_ID_ERROR = "User with id %s or %s does not exists";
+
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public UserDTO save(UserCreationDTO newUser) throws UserArgumentNotValidException {
-        if (newUser.getUserName() == null || newUser.getUserName().equals(""))
-            throw new UserArgumentNotValidException("Invalid user name.");
-
+    public UserDTO save(UserCreationDTO newUser) {
         User user = userRepository.save(UserMapper.userCreationDtoToUser(newUser));
         return UserMapper.userToDto(user);
     }
 
-    public UserFollowDTO follow(Long userId, Long userIdToFollow) throws UserArgumentNotValidException {
-        if (userId.equals(userIdToFollow))
-            throw new UserArgumentNotValidException("Users id cannot match.");
-
+    public UserFollowDTO follow(Long userId, Long userIdToFollow) throws UserDoesNotExistsException {
         User user = userRepository.getById(userId);
         User followed = userRepository.getById(userIdToFollow);
 
         if (user == null || followed == null)
-            throw new UserArgumentNotValidException("Invalid user id.");
+            throw new UserDoesNotExistsException(
+                    String.format(TWO_USER_ID_ERROR, userId, userIdToFollow));
 
         if (!user.getFollowed().contains(followed.getId())) {
             user.getFollowed().add(followed.getId());
@@ -46,15 +45,17 @@ public class UserService {
         return UserMapper.userToFollow(user, followed);
     }
 
-    public UserFollowersCountDTO followersCount(Long userId) throws UserArgumentNotValidException {
+    public UserFollowersCountDTO followersCount(Long userId) throws UserDoesNotExistsException {
         User user = userRepository.getById(userId);
-        if (user == null) throw new UserArgumentNotValidException("Invalid user id.");
+        if (user == null)
+            throw new UserDoesNotExistsException(String.format(USER_ID_ERROR, userId));
         return UserMapper.userToFollowersCount(user);
     }
 
-    public UserFollowersListDTO followersList(Long userId, String order) throws UserArgumentNotValidException {
+    public UserFollowersListDTO followersList(Long userId, String order) throws UserDoesNotExistsException {
         User user = userRepository.getById(userId);
-        if (user == null) throw new UserArgumentNotValidException("Invalid user id.");
+        if (user == null)
+            throw new UserDoesNotExistsException(String.format(USER_ID_ERROR, userId));
 
         List<User> followers = user.getFollowers().stream()
                 .map(userRepository::getById)
@@ -69,9 +70,10 @@ public class UserService {
         return UserMapper.userToFollowersList(user, followers);
     }
 
-    public UserFollowedListDTO followedList(Long userId, String order) throws UserArgumentNotValidException {
+    public UserFollowedListDTO followedList(Long userId, String order) throws UserDoesNotExistsException {
         User user = userRepository.getById(userId);
-        if (user == null) throw new UserArgumentNotValidException("Invalid user id.");
+        if (user == null)
+            throw new UserDoesNotExistsException(String.format(USER_ID_ERROR, userId));
 
         List<User> followed = user.getFollowed().stream()
                 .map(userRepository::getById)
@@ -88,14 +90,12 @@ public class UserService {
 
     public UserUnfollowDTO unfollow(Long userId, Long userIdToUnfollow)
             throws UserArgumentNotValidException, UserDoesNotFollowException {
-        if (userId.equals(userIdToUnfollow))
-            throw new UserArgumentNotValidException("Users id cannot match.");
-
         User user = userRepository.getById(userId);
         User userToUnfollow = userRepository.getById(userIdToUnfollow);
 
         if (user == null || userToUnfollow == null)
-            throw new UserArgumentNotValidException("Invalid user id.");
+            throw new UserDoesNotExistsException(
+                    String.format(TWO_USER_ID_ERROR, userId, userIdToUnfollow));
 
         if (user.getFollowed().contains(userToUnfollow.getId())) {
             user.getFollowed().remove(userToUnfollow.getId());

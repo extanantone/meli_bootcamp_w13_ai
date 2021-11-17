@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class UserRepository implements IRepository<Long, User> {
+public class UserRepository implements IRepository<Long, User>, IUserRepository<Long> {
 
     private final List<User> users = new ArrayList<>();
     private long idCounter = 1;
@@ -30,5 +30,10 @@ public class UserRepository implements IRepository<Long, User> {
     private void setId(User user) {
         user.setId(idCounter);
         idCounter++;
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return users.stream().anyMatch(user -> user.getId().equals(id));
     }
 }
