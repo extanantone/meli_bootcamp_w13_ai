@@ -16,12 +16,12 @@ public class UserRepository implements IUserRepository{
     protected Map<Integer, User> users = new HashMap<>();
 
     public UserRepository(){
-        Seller seller1 = new Seller(1, "Seller1", new HashMap<>(), new HashMap<>());
-        Seller seller2 = new Seller(2, "Seller2", new HashMap<>(), new HashMap<>());
-        Buyer buyer1 = new Buyer(3, "Buyer1", new HashMap<>());
-        Buyer buyer2 = new Buyer(4, "Buyer2", new HashMap<>());
+        Buyer buyer1 = new Buyer(1, "Buyer1", new HashMap<>());
+        Buyer buyer2 = new Buyer(2, "Buyer2", new HashMap<>());
+        Seller seller1 = new Seller(3, "Seller1", new HashMap<>(), new HashMap<>());
+        Seller seller2 = new Seller(4, "Seller2", new HashMap<>(), new HashMap<>());
 
-        Map<Integer, User> sellers = new HashMap<>();
+        /*Map<Integer, User> sellers = new HashMap<>();
         sellers.put(seller1.getId(), seller1);
         buyer2.setFollowed(sellers);
         sellers.put(seller2.getId(), seller2);
@@ -31,12 +31,12 @@ public class UserRepository implements IUserRepository{
         buyers.put(buyer2.getId(), buyer2);
 
         seller1.setFollowers(buyers);
-        buyer1.setFollowed(sellers);
+        buyer1.setFollowed(sellers);*/
 
-        users.put(1, seller1);
-        users.put(2, seller2);
-        users.put(3, buyer1);
-        users.put(4, buyer2);
+        users.put(1, buyer1);
+        users.put(2, buyer2);
+        users.put(3, seller1);
+        users.put(4, seller2);
     }
 
     @Override

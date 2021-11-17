@@ -17,41 +17,22 @@ La fecha de lanzamiento se aproxima, por lo cual es necesaria la presentación d
 ```JSON
     {
         "id": 1,
-        "userName": "Seller1",
+        "userName": "Buyer1",
         "followed": {},
-        "followers": {
-          "3": {
-            "id": 3,
-            "userName": "Buyer1"
-          },
-          "4": {
-            "id": 4,
-            "userName": "Buyer2"
-          }
-        },
-  
+    
         "id": 2,
-        "userName": "Seller2", 
+        "userName": "Buyer2",
+        "followed": {},
+  
+        "id": 3,
+        "userName": "Seller1",
         "followed": {},
         "followers": {},
   
-        "id": 3,
-        "userName": "Buyer1",
-        "followed": {
-          "1": {
-            "id": 1,
-            "userName": "Seller1"
-          }
-        },
-  
         "id": 4,
-        "userName": "Buyer2",
-        "followed": {
-          "1": {
-            "id": 1,
-            "userName": "Seller1"
-          }
-        }
+        "userName": "Seller2", 
+        "followed": {},
+        "followers": {}
     }
 ```
 
@@ -87,7 +68,7 @@ Poder realizar la acción de "Follow" (seguir) a un determinado vendedor
 
 Request
 ```
-http://localhost:8080/users/3/follow/1
+http://localhost:8080/users/1/follow/3
 ```
 Response
 ```JSON
@@ -100,7 +81,7 @@ STATUS 200 OK
 
 Request
 ```
-http://localhost:8080/users/1/follow/3
+http://localhost:8080/users/3/follow/1
 ```
 Response
 ```JSON
@@ -112,7 +93,7 @@ STATUS 400 BAD REQUEST
 ---
 Request
 ```
-http://localhost:8080/users/99/follow/1
+http://localhost:8080/users/99/follow/3
 ```
 Response
 ```JSON
@@ -135,21 +116,21 @@ Obtener el resultado de la cantidad de usuarios que siguen a un determinado vend
 ---
 Request
 ```
-http://localhost:8080/users/1/followers/count/
+http://localhost:8080/users/3/followers/count/
 ```
 Response
 ```JSON
 STATUS 200 OK
 {
-  "user_id": 1,
+  "user_id": 3,
   "user_name": "Seller1",
-  "followers_count": 2
+  "followers_count": 0
 }
 ```
 ---
 Request
 ```
-http://localhost:8080/users/3/followers/count/
+http://localhost:8080/users/1/followers/count/
 ```
 Response
 ```JSON
@@ -173,21 +154,21 @@ Obtener un listado de todos los usuarios que siguen a un determinado vendedor (�
 ---
 Request
 ```
-http://localhost:8080/users/1/followers/list?order=name_asc
+http://localhost:8080/users/3/followers/list?order=name_asc
 ```
 Response
 ```JSON
 STATUS 200 OK
 {
-  "user_id": 1,
+  "user_id": 3,
   "user_name": "Seller1",
   "followers": [
     {
-      "user_id": 3,
+      "user_id": 1,
       "user_name": "Buyer1"
     },
     {
-      "user_id": 4,
+      "user_id": 2,
       "user_name": "Buyer2"
     }
   ]
@@ -196,21 +177,21 @@ STATUS 200 OK
 ---
 Request
 ```
-http://localhost:8080/users/1/followers/list?order=name_desc
+http://localhost:8080/users/3/followers/list?order=name_desc
 ```
 Response
 ```JSON
 STATUS 200 OK
 {
-  "user_id": 1,
+  "user_id": 3,
   "user_name": "Seller1",
   "followers": [
     {
-      "user_id": 4,
+      "user_id": 2,
       "user_name": "Buyer2"
     },
     {
-      "user_id": 3,
+      "user_id": 1,
       "user_name": "Buyer1"
     }
   ]
@@ -231,7 +212,7 @@ STATUS 404 NOT FOUND
 ---
 Request
 ```
-http://localhost:8080/users/1/followers/list?order=nombre
+http://localhost:8080/users/3/followers/list?order=nombre
 ```
 Response
 ```JSON
@@ -254,23 +235,19 @@ Obtener un listado de todos los vendedores a los cuales sigue un determinado usu
 ---
 Request
 ```
-http://localhost:8080/users/3/followed/list
+http://localhost:8080/users/1/followed/list
 ```
 Response
 ```JSON
 STATUS 200 OK
 {
-  "user_id": 3,
+  "user_id": 1,
   "user_name": "Buyer1",
   "followed": [
     {
-      "user_id": 1,
+      "user_id": 3,
       "user_name": "Seller1"
     },
-    {
-      "user_id": 2,
-      "user_name": "Seller2"
-    }
   ]
 }
 ```
@@ -301,7 +278,7 @@ http://localhost:8080/products/post
 ```
 ```JSON
 {
-  "user_id": 1,
+  "user_id": 3,
   "id_post": 1,
   "date": "12-11-2021",
   "detail": {
@@ -359,7 +336,7 @@ http://localhost:8080/products/post
 ```
 ```JSON
 {
-  "user_id": 1,
+  "user_id": 3,
   "id_post": 1,
   "date": "12-11-2021",
   "detail": {
@@ -473,7 +450,7 @@ Poder realizar la acción de "Unfollow" (dejar de seguir) a un determinado vende
 ---
 Request
 ```
-http://localhost:8080/users/3/unfollow/1
+http://localhost:8080/users/1/unfollow/3
 ```
 Response
 ```JSON
@@ -485,7 +462,7 @@ STATUS 200 OK
 ---
 Request
 ```
-http://localhost:8080/users/3/unfollow/4
+http://localhost:8080/users/1/unfollow/2
 ```
 Response
 ```JSON
@@ -497,7 +474,7 @@ STATUS 404 NOT FOUND
 ---
 Request
 ```
-http://localhost:8080/users/99/unfollow/1
+http://localhost:8080/users/99/unfollow/3
 ```
 Response
 ```JSON
@@ -523,7 +500,7 @@ http://localhost:8080/products/promo-post
 ```
 ```JSON
 {
-  "user_id": 1,
+  "user_id": 3,
   "id_post": 7,
   "date": "12-11-2021",
   "detail": {
@@ -585,7 +562,7 @@ http://localhost:8080/products/post
 ```
 ```JSON
 {
-  "user_id": 1,
+  "user_id": 3,
   "id_post": 7,
   "date": "12-11-2021",
   "detail": {
@@ -623,21 +600,21 @@ Obtener la cantidad de productos en promoción de un determinado vendedor
 ---
 Request
 ```
-http://localhost:8080/products/1/promo-post/count
+http://localhost:8080/products/3/promo-post/count
 ```
 Response
 ```JSON
 STATUS 200 OK
 {
-  "user_id": 1,
+  "user_id": 3,
   "user_name": "Seller1",
-  "promo_products_count": 2
+  "promo_products_count": 1
 }
 ```
 ---
 Request
 ```
-http://localhost:8080/products/4/promo-post/count
+http://localhost:8080/products/1/promo-post/count
 ```
 Response
 ```JSON
@@ -667,7 +644,7 @@ Response
 ```JSON
 STATUS 200 OK
 {
-  "user_id": 1,
+  "user_id": 3,
   "posts": [
     {
       "id_post": 1,
