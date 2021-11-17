@@ -160,14 +160,16 @@ public class SocialMeliService implements  ISocialMeliService{
         List<Publicacion> posts = new ArrayList<>();
         for (Vendedor v: vendedores) {
             for (Publicacion p: v.getPublicaciones()) {
-                posts.add(p);
+                if(verificarVendedorYFecha(p.getFecha())){
+                    posts.add(p);
+                }
             }
         }
         posts = ordenar(posts, order);
         return posts;
     }
     public List<PublicacionesVendedoresDTO> obtenerPublicaciones (int id, String order) throws UsuarioNoEncontradoError{
-        boolean flag, entra = true;
+        boolean entra = true;
         List<PublicacionesVendedoresDTO>  posts = new ArrayList<>();
         Comprador compra = errorComprador(id);
         List<Vendedor> vendedores = compra.getSiguiendo();
@@ -179,15 +181,10 @@ public class SocialMeliService implements  ISocialMeliService{
                 List<Publicacion> publi = ordenar(ve.getPublicaciones(), order);
                 entra=verificaTamaño(publi);
                 for (Publicacion p:publi) {
-                    if(guardadas.size()!=0){
-                        flag = verificarVendedorYFecha(guardadas.get(0).getFecha());
-                        if(flag && guardadas.get(0).getId_publicacion()== p.getId_publicacion() && guardadas.get(0).getId_user() == ve.getUser_id() ){
-                            ProductoDTO producto = deProductoAProductoDTO(p);
-                            retorno.getPosts().add(crearPublicacionDTO(p, producto));
-                            guardadas.remove(0);
-                        }else if(!flag){
-                            guardadas.remove(0);
-                        }
+                    if(guardadas.size()!=0 &&guardadas.get(0).getId_publicacion()== p.getId_publicacion() && guardadas.get(0).getId_user() == ve.getUser_id() ){
+                        ProductoDTO producto = deProductoAProductoDTO(p);
+                        retorno.getPosts().add(crearPublicacionDTO(p, producto));
+                        guardadas.remove(0);
                     }
                 }
                 if(retorno.getPosts().size()!=0){
