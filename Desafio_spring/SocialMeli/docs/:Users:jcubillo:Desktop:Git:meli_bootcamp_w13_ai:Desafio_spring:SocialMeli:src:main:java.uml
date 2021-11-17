@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/jcubillo/Desktop/Git/meli_bootcamp_w13_ai/Desafio_spring/SocialMeli/src/main/java</OriginalElement>
+  <nodes>
+    <node x="692.0" y="470.0">com.bootcamp.socialmeli.model.Promotion</node>
+    <node x="9.5" y="80.0">com.bootcamp.socialmeli.dto.ReqProductDTO</node>
+    <node x="715.0" y="390.0">com.bootcamp.socialmeli.model.Post</node>
+    <node x="493.0" y="545.0">com.bootcamp.socialmeli.controller.UsersController</node>
+    <node x="598.0" y="315.0">com.bootcamp.socialmeli.dto.UserCountDTO</node>
+    <node x="435.5" y="235.0">com.bootcamp.socialmeli.dto.UserDTO</node>
+    <node x="0.0" y="620.0">com.bootcamp.socialmeli.dto.UserPostDTO</node>
+    <node x="404.0" y="620.0">com.bootcamp.socialmeli.model.PostProduct</node>
+    <node x="134.25" y="0.0">com.bootcamp.socialmeli.dto.PostDTO</node>
+    <node x="261.0" y="390.0">com.bootcamp.socialmeli.service.IVendedorService</node>
+    <node x="194.0" y="315.0">com.bootcamp.socialmeli.dto.UserPromoListDTO</node>
+    <node x="416.0" y="315.0">com.bootcamp.socialmeli.dto.VendedorDTO</node>
+    <node x="788.0" y="315.0">com.bootcamp.socialmeli.dto.UserPromoAllDTO</node>
+    <node x="0.0" y="545.0">com.bootcamp.socialmeli.SocialMeliApplication</node>
+    <node x="497.0" y="390.0">com.bootcamp.socialmeli.service.IPostService</node>
+    <node x="2.0" y="470.0">com.bootcamp.socialmeli.repository.VendedorRepository</node>
+    <node x="598.0" y="620.0">com.bootcamp.socialmeli.model.User</node>
+    <node x="0.0" y="160.0">com.bootcamp.socialmeli.dto.ReqPromotionDTO</node>
+    <node x="0.0" y="315.0">com.bootcamp.socialmeli.dto.CompradorDTO</node>
+    <node x="713.0" y="545.0">com.bootcamp.socialmeli.controller.PostController</node>
+    <node x="265.0" y="545.0">com.bootcamp.socialmeli.dto.PostProductDTO</node>
+    <node x="499.0" y="470.0">com.bootcamp.socialmeli.service.PostService</node>
+    <node x="0.0" y="390.0">com.bootcamp.socialmeli.repository.IVendedorRepository</node>
+    <node x="203.0" y="620.0">com.bootcamp.socialmeli.dto.MessageDTO</node>
+    <node x="263.5" y="470.0">com.bootcamp.socialmeli.service.VendedorService</node>
+    <node x="207.50000000000003" y="80.0">com.bootcamp.socialmeli.dto.PromotionDTO</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.bootcamp.socialmeli.service.PostService" target="com.bootcamp.socialmeli.service.IPostService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.bootcamp.socialmeli.model.Promotion" target="com.bootcamp.socialmeli.model.Post" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.bootcamp.socialmeli.dto.ReqProductDTO" target="com.bootcamp.socialmeli.dto.PostDTO" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="98.5" y="55.0" />
+      <point x="194.75" y="55.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.bootcamp.socialmeli.dto.ReqPromotionDTO" target="com.bootcamp.socialmeli.dto.ReqProductDTO" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.bootcamp.socialmeli.dto.UserPromoAllDTO" target="com.bootcamp.socialmeli.dto.UserDTO" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="884.5" y="290.0" />
+      <point x="497.0" y="290.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.bootcamp.socialmeli.dto.UserCountDTO" target="com.bootcamp.socialmeli.dto.UserDTO" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="683.0" y="290.0" />
+      <point x="497.0" y="290.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.bootcamp.socialmeli.repository.VendedorRepository" target="com.bootcamp.socialmeli.repository.IVendedorRepository" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.bootcamp.socialmeli.dto.PromotionDTO" target="com.bootcamp.socialmeli.dto.PostDTO" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="291.0" y="55.0" />
+      <point x="194.75" y="55.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.bootcamp.socialmeli.dto.UserPromoListDTO" target="com.bootcamp.socialmeli.dto.UserDTO" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="295.0" y="290.0" />
+      <point x="497.0" y="290.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.bootcamp.socialmeli.service.VendedorService" target="com.bootcamp.socialmeli.service.IVendedorService" relationship="REALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.bootcamp.socialmeli.dto.VendedorDTO" target="com.bootcamp.socialmeli.dto.UserDTO" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.bootcamp.socialmeli.dto.CompradorDTO" target="com.bootcamp.socialmeli.dto.UserDTO" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="87.0" y="290.0" />
+      <point x="497.0" y="290.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.6477611940298508" showDependencies="false" x="490.5" y="325.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
