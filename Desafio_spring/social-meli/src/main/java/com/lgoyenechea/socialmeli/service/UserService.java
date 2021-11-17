@@ -9,6 +9,7 @@ import com.lgoyenechea.socialmeli.exception.UserArgumentNotValidException;
 import com.lgoyenechea.socialmeli.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,9 +64,7 @@ public class UserService {
                 .collect(Collectors.toList());
 
         if (order.equals("name_desc"))
-            followers = followers.stream()
-                    .sorted(Comparator.comparing(User::getName).reversed())
-                    .collect(Collectors.toList());
+            Collections.reverse(followers);
 
         return UserMapper.userToFollowersList(user, followers);
     }
@@ -81,9 +80,7 @@ public class UserService {
                 .collect(Collectors.toList());
 
         if (order.equals("name_desc"))
-            followed = followed.stream()
-                    .sorted(Comparator.comparing(User::getName).reversed())
-                    .collect(Collectors.toList());
+            Collections.reverse(followed);
 
         return UserMapper.userToFollowedList(user, followed);
     }
