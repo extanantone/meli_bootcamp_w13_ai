@@ -25,6 +25,9 @@ El desafío que se propone a continuación consta de 2 partes:
 - No pueden seguir al usuario más de una vez.
 - No pasar parametros incorrectos
 
+### Testing con Postman
+Algunos test generados con postman ![PostmanJson]()
+
 ### Diagrama
 
 ![Class Diagram](https://raw.githubusercontent.com/extanantone/meli_bootcamp_w13_ai/felipe_cubillos/Desafio_spring/SocialMeli/docs/Diagram.png)
