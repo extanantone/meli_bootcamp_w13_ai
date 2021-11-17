@@ -60,14 +60,13 @@ public class UserRepository implements IUserRepository {
     }
 
 
-
     @Override
-    public Usuarios crearVendedor(Usuarios v) {
+    public Usuarios createUser(Usuarios v) {
         return listaUsuarios.put(v.getId(),v);
     }
 
     @Override
-    public Usuarios obtenerUsuarioPorID(int id) {
+    public Usuarios getUserByUserId(int id) {
         return listaUsuarios.get(id);
     }
 }

@@ -22,7 +22,7 @@ public class PostRepository implements IPostRepository {
 
 
     @Override
-    public Post crearPublicacion(Post p) {
+    public Post createPost(Post p) {
 
         PromoPost pr = new PromoPost();
         publicaciones.add(pr);
@@ -32,7 +32,7 @@ public class PostRepository implements IPostRepository {
     }
 
     @Override
-    public List<Post> obtenerPublicacionesPorVendedorIdPosteriores2Semanas(int userId, String order) {
+    public List<Post> getPostsFromFollowedUsersSinceTwoWeeks(int userId, String order) {
 
         List<Post> response = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class PostRepository implements IPostRepository {
     }
 
     @Override
-    public List<Post> getPromoPostListOfUserId(int userId) {
+    public List<Post> getPromoPostOfUser(int userId) {
 
         List <Post> response = new ArrayList<>();
 

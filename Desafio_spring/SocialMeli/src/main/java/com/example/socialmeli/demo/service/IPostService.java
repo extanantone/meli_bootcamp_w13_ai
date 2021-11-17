@@ -9,18 +9,17 @@ import com.example.socialmeli.demo.dto.serviceToController.DTOUserPromoPostCount
 import com.example.socialmeli.demo.dto.serviceToController.DTOUserPromoPostList;
 import org.springframework.http.ResponseEntity;
 
-public interface IPublicacionService {
+public interface IPostService {
 
     public ResponseEntity createPost(DTOPost p);
 
     public ResponseEntity createPromoPost(DTOPromoPost publicacion);
 
-    public ResponseEntity<DTOPostsFromMyFollowedUsers> getPostsFromUserFollowersSinceTwoWeeks(DTORequestPostsFromFolloweds request);
+    public ResponseEntity<DTOPostsFromMyFollowedUsers> getPostsFromFollowedUsersSinceTwoWeeks(DTORequestPostsFromFolloweds request);
 
     public ResponseEntity<DTOUserPromoPostList> getPromoPostListOfUserId(DTOUserId request);
 
     public ResponseEntity<DTOUserPromoPostCount> countPromoPostOfUser(DTOUserId userId);
-
 
 
 }

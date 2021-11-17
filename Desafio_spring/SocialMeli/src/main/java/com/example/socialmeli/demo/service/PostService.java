@@ -6,7 +6,6 @@ import com.example.socialmeli.demo.dto.serviceToController.*;
 import com.example.socialmeli.demo.exception.UserNotFoundException;
 import com.example.socialmeli.demo.mapper.PostMapper;
 import com.example.socialmeli.demo.mapper.PromoMapper;
-import com.example.socialmeli.demo.model.Product;
 import com.example.socialmeli.demo.model.Post;
 import com.example.socialmeli.demo.model.PromoPost;
 import com.example.socialmeli.demo.repository.IPostRepository;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PostService implements IPublicacionService{
+public class PostService implements IPostService {
 
     @Autowired
     IPostRepository iPublicacionRepository;
@@ -35,7 +34,7 @@ public class PostService implements IPublicacionService{
 
         Post postToSave = new Post();
         postToSave = PostMapper.DtoPostToPost(publicacion);
-        iPublicacionRepository.crearPublicacion(postToSave);
+        iPublicacionRepository.createPost(postToSave);
 
        return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -45,14 +44,14 @@ public class PostService implements IPublicacionService{
 
         PromoPost postToSave = new PromoPost();
         postToSave = PromoMapper.DtoPostToPost(publicacion);
-        iPublicacionRepository.crearPublicacion(postToSave);
+        iPublicacionRepository.createPost(postToSave);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @Override
-    public ResponseEntity<DTOPostsFromMyFollowedUsers> getPostsFromUserFollowersSinceTwoWeeks(DTORequestPostsFromFolloweds request) {
+    public ResponseEntity<DTOPostsFromMyFollowedUsers> getPostsFromFollowedUsersSinceTwoWeeks(DTORequestPostsFromFolloweds request) {
 
         int userId = request.getUserId();
         String order = request.getOrder();
@@ -79,7 +78,7 @@ public class PostService implements IPublicacionService{
 
         for (DTOUsuario uDTO: followedUsersFromUser) {
 
-            postsFromVendor = iPublicacionRepository.obtenerPublicacionesPorVendedorIdPosteriores2Semanas(uDTO.getUserId(),order);
+            postsFromVendor = iPublicacionRepository.getPostsFromFollowedUsersSinceTwoWeeks(uDTO.getUserId(),order);
 
             for (Post p: postsFromVendor) {
 
@@ -113,33 +112,13 @@ public class PostService implements IPublicacionService{
         response.setUserId(vendorId);
         response.setUserName(searchedUser.getUserName());
 
-        responseFromRepository = iPublicacionRepository.getPromoPostListOfUserId(vendorId);
+        responseFromRepository = iPublicacionRepository.getPromoPostOfUser(vendorId);
 
         for (Post p: responseFromRepository) {
 
             DTOPromoPost post = new DTOPromoPost();
             post = PromoMapper.PostToDtoPromoPost(p);
-           /* post.setIdPost(p.getIdPost());
-            post.setUserId(p.getUserId());
-            post.setCategory(p.getCategory());
-            post.setHasPromo(p.hasPromo());
-            post.setDiscount(p.hasDiscount());
-            post.setDate(p.getDate());
-            post.setPrice(p.getPrice());
-
-
-            DTOProduct prod = new DTOProduct();
-            prod.setProductId(p.getDetail().getProductId());
-            prod.setType(p.getDetail().getType());
-            prod.setProductName(p.getDetail().getProductName());
-            prod.setNotes(p.getDetail().getNotes());
-            prod.setColor(p.getDetail().getColor());
-            prod.setBrand(p.getDetail().getBrand());
-
-            post.setDetail(prod); */
-
             response.addPostToList(post);
-
         }
 
         return new ResponseEntity<>(response,HttpStatus.OK);
@@ -167,4 +146,5 @@ public class PostService implements IPublicacionService{
 
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+
 }

@@ -1,7 +1,6 @@
 package com.example.socialmeli.demo.service;
 
 import com.example.socialmeli.demo.dto.DTOUsuario;
-import com.example.socialmeli.demo.exception.UserNotFoundException;
 import com.example.socialmeli.demo.model.Usuarios;
 import com.example.socialmeli.demo.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class UserService implements IUserService {
         Usuarios searchedUser = new Usuarios();
         DTOUsuario searchedUserDTO = new DTOUsuario();
 
-        searchedUser = iUsuarioRepository.obtenerUsuarioPorID(id);
+        searchedUser = iUsuarioRepository.getUserByUserId(id);
 
         if(searchedUser == null)
             return null;

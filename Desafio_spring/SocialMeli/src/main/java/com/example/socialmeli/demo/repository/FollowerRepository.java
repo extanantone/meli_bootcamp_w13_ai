@@ -57,7 +57,7 @@ public class FollowerRepository implements IFollowerRepository{
                 userFollowedList = listaDeFollowers.get(followerUserId);
             }
 
-            userToFollow = usuarioRepository.obtenerUsuarioPorID(followedUserId);
+            userToFollow = usuarioRepository.getUserByUserId(followedUserId);
 
             if(listaDeFollowers.get(followerUserId).getUsuariosSeguidos().get(followedUserId) == null){
                 listaDeFollowers.get(followerUserId).getUsuariosSeguidos().put(followedUserId, userToFollow);
@@ -96,7 +96,7 @@ public class FollowerRepository implements IFollowerRepository{
 
             if(usuarios.getValue().getUsuariosSeguidos().containsKey(vendedorUserId)){
                 Usuarios usuarioSeguidor = new Usuarios();
-                usuarioSeguidor = usuarioRepository.obtenerUsuarioPorID(usuarios.getKey());
+                usuarioSeguidor = usuarioRepository.getUserByUserId(usuarios.getKey());
                 seguidoresDelVendedor.add(usuarioSeguidor);
             }
 

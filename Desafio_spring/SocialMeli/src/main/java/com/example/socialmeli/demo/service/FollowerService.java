@@ -65,15 +65,15 @@ IUserService usuarioService;
     public DTOUserFollowerCount getFollowersCountByUserID(DTOUserId request) {
 
         int userID = request.getUserId();
+        int userFollowersCount = 0;
         String userName;
         List<Usuarios> userFollowers;
-        int userFollowersCount = 0;
 
         DTOUserFollowerCount response = new DTOUserFollowerCount();
         DTOUsuario user = new DTOUsuario();
 
         //Vamos a obtener el usuario solicitado
-            user = usuarioService.getUserByUserId(userID);
+        user = usuarioService.getUserByUserId(userID);
 
         if(user == null)
             throw new UserNotFoundException();
@@ -88,6 +88,8 @@ IUserService usuarioService;
         else
             userFollowersCount = 0;
 
+
+        //Se arma el response
         response.setUserId(userID);
         response.setUserName(userName);
         response.setFollowersCount(userFollowersCount);
@@ -118,16 +120,12 @@ IUserService usuarioService;
         for (Usuarios u: userFollowers) {
 
             DTOUsuario uDTO = new DTOUsuario();
-           /* uDTO.setUser_id(u.getId());
-            uDTO.setUser_name(u.getUsername()); */
-
             uDTO = UsuarioMapper.UsuarioTODtoUsuario(u);
             response.addFollowerToList(uDTO);
         }
 
         response.setUserId(userID);
         response.setUserName(userName);
-
 
         return response;
     }
@@ -154,11 +152,7 @@ IUserService usuarioService;
         for (Usuarios u: followedUsers) {
 
             DTOUsuario uDTO = new DTOUsuario();
-            /*uDTO.setUser_id(u.getId());
-            uDTO.setUser_name(u.getUsername());*/
-
             uDTO = UsuarioMapper.UsuarioTODtoUsuario(u);
-
             response.addFollowerToList(uDTO);
         }
 
@@ -188,6 +182,8 @@ IUserService usuarioService;
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 
 
 }

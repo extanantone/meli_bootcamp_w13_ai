@@ -31,8 +31,6 @@ public class FollowerController {
 
     return iFollowerService.followUser(request);
 
-
-
     }
 
 

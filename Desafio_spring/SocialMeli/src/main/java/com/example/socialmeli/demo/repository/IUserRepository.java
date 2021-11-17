@@ -5,9 +5,9 @@ import com.example.socialmeli.demo.model.Usuarios;
 
 public interface IUserRepository {
 
-    public Usuarios crearVendedor(Usuarios v);
+    public Usuarios createUser(Usuarios v);
 
-    public Usuarios obtenerUsuarioPorID(int id);
+    public Usuarios getUserByUserId(int id);
 
 
 

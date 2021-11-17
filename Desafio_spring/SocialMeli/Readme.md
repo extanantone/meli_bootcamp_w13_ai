@@ -25,14 +25,30 @@ Los usuarios con id 1 y 2 estan destinados a ser compradores, mientras que los u
 Para este sistema tuvimos las siguientes consideraciones:
 
 - Todos los usuarios que utilicen este sistema se representan mediante la clase modelo "Usuarios". Se tomo esta consideracion debido a que consideramos que todo usuario puede seguir a otro usuario debido a que se puede utilizar la misma cuenta de un usuario para pasar de ser solo un "comprador" a un "vendedor".
+Por lo tanto, todos los usuarios pueden seguirse entre si.
+
 - Los datos iniciales de los usuarios se levantan desde el repository de Usuarios.
+
+- Para almacenar a los seguidores de cada usuario, nos centramos en crear una clase "Followers"
+
+En la misma tenemos los siguientes atributos:
+
+- userId (int): el id del usuario que esta asociado con el usuario para el cual se crea el registro
+- usuariosSeguidos (Map<Integer, Usuarios>): en el cual contenemos a todos los usuarios seguidos por este usuario en particular.
+
+Decidi utilizar esta estructura ya que me parecia mas comodo al momento de realizar las consultas por los usuarios seguidos de un determinado usuario, o para analizar a quien sigue.
+Otra estrategia hubiera sido almacenar otro HashMap para los followers de cada usuario, pero al dejar de seguir a un determinado usuario se deberia actualizar tanto los followeds del usuario como los followers del usuario que recibio el unfollow.
+
+- Para los DTO, decidi utilizar dos paquetes separados:
+  - controllerToService: todos los DTO recibidos por el controlador o que son enviados al service.
+  - serviceToController: todos los DTO que son enviados desde el service al controlador para responder.
 
 
 ## Estructura del proyecto
 El proyecto se ha separado en la siguiente estructura de paquetes:
 
 #### -comparator
-Aqui se encuentran las clases tipo "Comparator" utilizadas para ordenar los response de determinados endpoints. Se encuentran las clases de ordenamiento ascendente y descendiente para el nombre de los usuarios y la fecha de las publicaciones.
+Aqui se encuentran las clases tipo "Comparator" utilizadas para ordenar los response de determinados endpoints. Se encuentran las clases de ordenamiento ascendente y descendiente para el nombre de los usuarios y la fecha de las publicaciones utilizados en las US 0006, 0008 y 0009.
 
 #### -controller
 Se encuentran los controller de la aplicacion. Se separan en:
@@ -41,10 +57,7 @@ Se encuentran los controller de la aplicacion. Se separan en:
 -PromoPostController: administra todos los endpoints referidos a publicaciones con promocion de los usuarios.
 
 #### -dto
-Se encuentran todos los DTOs utilizados para la aplicación. Dentro se encuentran dos paquetes por distintos tipos de DTO:
--controllerToService: todos los DTO recibidos por el controlador o que son enviados al service.
--serviceToController: todos los DTO que son enviados desde el service al controlador para responder.
-
+Se encuentran todos los DTOs utilizados para la aplicación.
 
 #### -exception
 Paquete donde se manejan las excepciones de la aplicacion.
@@ -55,20 +68,18 @@ Se encuentran los mapper utilizados en la aplicacion. Se utilizan para mapear lo
 #### -model
 Se encuentran todos los modelos utilizados para la aplicacion. 
 
-Los principales son:
-
--Followers
-
--Post
-
--Product
-
--PromoPost
-
--Usuarios
-
 #### -repository
 Se encuentran los repositorios asociados a la aplicacion.
+
+####Para los usuarios: 
+
+Obtenemos los usuarios desde un archivo JSON el cual, traslada todos los usuarios cargados. Se organizan en un HashMap con la estructura <Integer,Usuarios> , donde la clave es el id del usuario.
+
+####Para el repositorio de followers:
+
+Almacenamos la informacion de la siguiente manera:
+Tenemos un HashMap <Integer,Followers> en el cual la clave es el Id del usuario.
+
 
 #### -service
 Se encuentran los servicios asociados a la aplicacion

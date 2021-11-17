@@ -7,12 +7,12 @@ import java.util.List;
 
 public interface IPostRepository {
 
-    public Post crearPublicacion(Post p);
+    public Post createPost(Post p);
 
-   public List<Post>  obtenerPublicacionesPorVendedorIdPosteriores2Semanas(int userId, String order);
+    public List<Post> getPostsFromFollowedUsersSinceTwoWeeks(int userId, String order);
 
-    public List<Post> getPromoPostListOfUserId(int userId);
+    public List<Post> getPromoPostOfUser(int userId);
 
-   public int countPromoPostOfUser(int userId);
+    public int countPromoPostOfUser(int userId);
 
 }
