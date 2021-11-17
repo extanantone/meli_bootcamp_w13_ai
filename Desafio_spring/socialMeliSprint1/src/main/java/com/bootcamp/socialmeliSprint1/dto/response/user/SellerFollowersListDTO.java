@@ -13,11 +13,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class SellerFollowersListDTO extends BasicUserInfo{
+public class SellerFollowersListDTO extends BasicUserInfoDTO {
 
-    List<BasicUserInfo> followers;
+    List<BasicUserInfoDTO> followers;
 
-    public SellerFollowersListDTO(int userId, String userName, List<BasicUserInfo> followers) {
+    public SellerFollowersListDTO(int userId, String userName, List<BasicUserInfoDTO> followers) {
         super(userId, userName);
         this.followers = followers;
     }

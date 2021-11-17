@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class SellerFollowersInfoDTO extends BasicUserInfo{
+public class SellerFollowersInfoDTO extends BasicUserInfoDTO {
     private int followersCount;
     public SellerFollowersInfoDTO(int userId, String userName, int followersCount) {
         super(userId, userName);
