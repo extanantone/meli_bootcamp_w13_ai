@@ -1,0 +1,21 @@
+[
+  {
+    "user_id": 1,
+    "user_name": "Camilo_vendedor1"
+  },
+  {
+    "user_id": 2,
+    "user_name": "Andres_vendedor2"
+
+  },
+  {
+    "user_id": 3,
+    "user_name": "Pablo_vendedor3"
+
+  },
+  {
+    "user_id": 4,
+    "user_name": "Santiago_vendedor4"
+
+  }
+]
