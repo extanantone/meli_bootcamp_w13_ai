@@ -55,11 +55,11 @@ public class PostService implements IPostService {
 
         int userId = request.getUserId();
         String order = request.getOrder();
-        List<DTOPostFollowers> postsFromVendorDTO = new ArrayList<>();
         List<Post> postsFromVendor = new ArrayList<>();
         List<DTOUsuario> followedUsersFromUser = new ArrayList<>();
-        DTOPostsFromMyFollowedUsers response = new DTOPostsFromMyFollowedUsers();
+        List<DTOPostFollowers> postsFromVendorDTO = new ArrayList<>();
         DTOUserFollowedList followedUsersFromUserDTO = new DTOUserFollowedList();
+        DTOPostsFromMyFollowedUsers response = new DTOPostsFromMyFollowedUsers();
 
         //Verificamos que el usuario exista
         DTOUsuario searchedUser = iUserService.getUserByUserId(userId);

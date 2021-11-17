@@ -71,6 +71,7 @@ public class PostRepository implements IPostRepository {
 
         response = publicaciones.stream().filter(x -> x.getUserId() == userId)
                 .filter(p -> p.getUserId() == userId && p.hasPromo() == true)
+                .sorted(new DescendingPostDateSorter())
                 .collect(Collectors.toList());
 
 

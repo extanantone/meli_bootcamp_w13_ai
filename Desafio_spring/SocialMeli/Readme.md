@@ -42,6 +42,8 @@ Otra estrategia hubiera sido almacenar otro HashMap para los followers de cada u
 - Para los DTO, decidi utilizar dos paquetes separados:
   - controllerToService: todos los DTO recibidos por el controlador o que son enviados al service.
   - serviceToController: todos los DTO que son enviados desde el service al controlador para responder.
+  
+- Para las publicaciones, cree una clase Post y una clase PromoPost que hereda de Post. En mi repository, todas las publicaciones son almacenadas en el mismo Map, ya que esto es permitido por el polimorfismo. Por lo tanto, endpoints como "Obtener publicaciones de los usuarios que sigo de no mas de dos semanas de antiguedad" tambien incluye las publicaciones con promocion.
 
 
 ## Estructura del proyecto

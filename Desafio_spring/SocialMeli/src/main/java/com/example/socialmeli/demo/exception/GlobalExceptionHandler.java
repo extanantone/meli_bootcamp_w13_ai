@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> userNotFoundException(){
-        return new ResponseEntity<>("El usuario al cual se intenta identificar no se encuentra registrado.", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("No se ha encontrado al usuario solicitado.", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(VendorNotFoundException.class)
@@ -25,12 +25,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFollowingToUserException.class)
     public ResponseEntity<?> userNotFollowingToUserRequested(){
-        return new ResponseEntity<>("El usuario ingresado no se encontraba siguiendo al usuario que se especificó.", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("El usuario no se encontraba siguiendo al usuario solicitado.", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UserAlreadyFollowingToUser.class)
     public ResponseEntity<?> userAleradyFollowingToUser(){
-        return new ResponseEntity<>("El usuario solicitado ya se encuentra siguiendo al usuario a seguir.", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("El usuario ya se encuentra siguiendo al usuario enviado.", HttpStatus.BAD_REQUEST);
     }
 
 

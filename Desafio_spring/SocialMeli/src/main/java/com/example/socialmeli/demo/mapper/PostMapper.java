@@ -23,9 +23,7 @@ public class PostMapper {
 
         DTOProduct productDTO = new DTOProduct();
         productDTO = ProductMapper.convertProductTODTOProduct(p.getDetail());
-
         post.setDetail(productDTO);
-
 
         return post;
     }
@@ -42,7 +40,6 @@ public class PostMapper {
 
         Product product = new Product();
         product = ProductMapper.convertDTOProductToProduct(p.getDetail());
-
         post.setDetail(product);
 
         return post;
