@@ -161,6 +161,8 @@ public class SocialMeliService implements  ISocialMeliService{
                         ProductoDTO producto = deProductoAProductoDTO(p);
                         retorno.getPosts().add(crearPublicacionDTO(p, producto));
                         guardadas.remove(0);
+                    }else if(!flag){
+                        guardadas.remove(0);
                     }
                 }
                 if(retorno.getPosts().size()!=0){
@@ -168,8 +170,7 @@ public class SocialMeliService implements  ISocialMeliService{
                 }
             }
         }
-
-            return posts;
+        return posts;
     }
 
     public RespuestaSimpleDTO dejarDeSeguir (int id_comprado, int id_vendedor) throws UsuarioNoEncontradoError {
