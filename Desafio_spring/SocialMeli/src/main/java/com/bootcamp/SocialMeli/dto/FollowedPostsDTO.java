@@ -25,7 +25,7 @@ public class FollowedPostsDTO {
         this.posts = new ArrayList<>();
     }
 
-    public void addPost(PostDTO post){
+    public void addPost(PostDTO post) {
         this.posts.add(post);
     }
 }

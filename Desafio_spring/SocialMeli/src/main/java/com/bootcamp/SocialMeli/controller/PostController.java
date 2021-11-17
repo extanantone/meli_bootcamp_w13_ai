@@ -8,9 +8,9 @@ import com.bootcamp.SocialMeli.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 public class PostController implements IPostController {
@@ -26,9 +26,9 @@ public class PostController implements IPostController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<FollowedPostsDTO> getFollowedPosts(int user_id) {
-        FollowedPostsDTO followedPosts = postService.getFollowedPosts(user_id);
+    @GetMapping("/products/followed/{user_id}/list")
+    public ResponseEntity<FollowedPostsDTO> getFollowedPosts(@PathVariable int user_id, @RequestParam Optional<String> order) {
+        FollowedPostsDTO followedPosts = postService.getFollowedPosts(user_id, order);
         return new ResponseEntity<>(followedPosts, HttpStatus.OK);
     }
 }
