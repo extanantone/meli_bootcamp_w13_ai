@@ -417,4 +417,9 @@ Para los items de promocion filtra quienes tengan la bandera hasPromo en true
 -         GET http://localhost:8080/products/3/promo-post/count
 ![img](16.png)
 
+**13.** Lista de todas las promopost
+
+-         GET http://localhost:8080/products/3/list
+
+![IMG](17.png)
 
