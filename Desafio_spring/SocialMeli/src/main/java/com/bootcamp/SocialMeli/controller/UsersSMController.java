@@ -1,5 +1,6 @@
 package com.bootcamp.SocialMeli.controller;
 
+import com.bootcamp.SocialMeli.dto.response.UsuarioDTO;
 import com.bootcamp.SocialMeli.service.ISocialMeliService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,11 @@ public class UsersSMController {
     @PostMapping("/{user_id}/unfollow/{user_id_to_unfollow}")
     public ResponseEntity<?> unfollowVendedor(@PathVariable("user_id") Integer userId, @PathVariable("user_id_to_unfollow") Integer userIdToUnfollow){
         return new ResponseEntity<>(this.socialMeliService.unfollowVendedor(userId, userIdToUnfollow), HttpStatus.OK);
+    }
+
+    @PostMapping("/new")
+    public ResponseEntity<?> crearUsuario(@RequestBody UsuarioDTO usuario){
+        return new ResponseEntity<>(this.socialMeliService.crearUsuario(usuario), HttpStatus.OK);
     }
 
 }

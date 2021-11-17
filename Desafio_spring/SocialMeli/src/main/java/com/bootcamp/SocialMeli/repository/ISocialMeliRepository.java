@@ -9,6 +9,7 @@ public interface ISocialMeliRepository {
     Usuario buscarUsuario(Integer idUsuario);
     Publicacion buscarPublicacion(Integer idPublicacion);
     void agregarPublicacion(Publicacion publicacion);
+    void agregarUsuario(Usuario usuario);
 
    // public List<Usuario> buscarSeguidores(Usuario vendedor);
 }

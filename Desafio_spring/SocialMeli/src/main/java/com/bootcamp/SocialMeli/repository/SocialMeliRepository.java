@@ -125,6 +125,11 @@ public class SocialMeliRepository implements ISocialMeliRepository{
         this.publicaciones.put(publicacion.getIdPost(), publicacion);
     }
 
+    @Override
+    public void agregarUsuario(Usuario usuario){
+        this.usuarios.put(usuario.getUserId(), usuario);
+    }
+
 
     /*
     public List<Usuario> buscarSeguidores(Usuario vendedor){

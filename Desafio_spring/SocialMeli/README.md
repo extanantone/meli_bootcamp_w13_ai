@@ -20,4 +20,23 @@ Estas se guardan en la misma lista con todas las publicaciones y cuando se solic
  - El descuento a aplicar a las promociones debe estar comprendido entre el 0% y el 100%.
 
 ### Diagrama de clases del Modelo
+A continuación se muestra el diagrama de clases que contiene los objetos del dominio del problema y sus relaciones.
+
 ![alt text](doc/socialmeli_class_diagram/modelClassDiagram.png)
+
+## Nuevas Features
+En esta versión de SocialMeli permite la creación de nuevos usuarios. 
+La misma se realiza mediante un POST al endpoint /users/new.
+
+POST /users/new
+
+Request:
+
+    {
+        "user_id" : 123,
+        "user_name" : "usuario123"
+    }
+
+En principio, los nuevos usuarios creados serán usuarios comunes (no vendedores) y no seguirán a nadie ni tendrán seguidores.
+Sin embargo, se pueden utilizar los otros endpoints de la aplicación para modificar estas características, es decir, que este nuevo usuario
+comience a tener publicaciones, a seguir a otros vendedores y tener sus seguidores.

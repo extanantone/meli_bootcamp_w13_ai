@@ -47,7 +47,7 @@ public class SocialMeliService implements ISocialMeliService{
         }
         boolean loSigo = seguidor.getVendedoresSeguidos().contains(vendedor);
         if(loSigo){ //true = ya lo sigo
-            throw new AlreadyFollowException(String.format("El usuario (ID %d) ya era seguidor del vendedor (ID %d)", idSeguidor, idVendedor));
+            throw new AlreadyFollowException(String.format("El usuario (ID %d) ya es seguidor del vendedor (ID %d)", idSeguidor, idVendedor));
         }
         seguidor.seguirVendedor(vendedor);
         vendedor.agregarSeguidor(seguidor);
@@ -282,5 +282,20 @@ public class SocialMeliService implements ISocialMeliService{
         cantPromocionesDTO.setPromo_products_count(getPromociones(usuario).size());
 
         return cantPromocionesDTO;
+    }
+
+    @Override
+    public SuccessDTO crearUsuario(UsuarioDTO usuarioDTO) {
+        //no puede haber dos usuarios con igual ID
+        if(this.socialMeliRepository.buscarUsuario(usuarioDTO.getUserId()) != null){
+            throw new DuplicateIDException("Ya existe un usuario con ID: " + usuarioDTO.getUserId());
+        }
+
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setUserId(usuarioDTO.getUserId());
+        nuevoUsuario.setUserName(usuarioDTO.getUserName());
+
+        this.socialMeliRepository.agregarUsuario(nuevoUsuario);
+        return new SuccessDTO("Usuario creado exitosamente");
     }
 }
