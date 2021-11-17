@@ -8,17 +8,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-
+import java.util.List;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class CountFollowersDTO extends UserDTO implements Serializable {
-    private int followersCount;
-
-    public CountFollowersDTO(int userId, String userName, int followersCount){
-        super(userId, userName);
-        this.followersCount=followersCount;
-    }
+public class ListPromoDTO implements Serializable {
+    private int userId;
+    private String userName;
+    private List<PromoResponseDTO> posts;
 }

@@ -1,6 +1,5 @@
 package com.meli.SocialMeli.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -15,11 +14,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Setter
 @Getter
-public class PostDTO implements Serializable {
-    private int idPost;
-    @JsonFormat(pattern="dd-MM-yyyy")
-    private LocalDate date;
-    private int category;
-    private double price;
-    private ProductDTO detail;
+public class PromoResponseDTO extends PostDTO implements Serializable {
+    private boolean hasPromo;
+    private double discount;
+
+    public PromoResponseDTO(int idPost, LocalDate date, int category, double price, ProductDTO detail, boolean hasPromo, double discount) {
+        super(idPost, date, category, price, detail);
+        this.hasPromo = hasPromo;
+        this.discount = discount;
+    }
 }

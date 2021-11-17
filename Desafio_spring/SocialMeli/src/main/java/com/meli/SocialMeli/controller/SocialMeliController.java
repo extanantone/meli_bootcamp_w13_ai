@@ -21,7 +21,7 @@ public class SocialMeliController implements ISocialMeliController {
     }
 
     @Override
-    public ResponseEntity<CountFollowersDTO> countFollowers(int userId) {
+    public ResponseEntity<CountDTO> countFollowers(int userId) {
         return new ResponseEntity<>(socialMeliService.countFollowers(userId), HttpStatus.OK);
     }
 
@@ -48,5 +48,20 @@ public class SocialMeliController implements ISocialMeliController {
     @Override
     public ResponseEntity<MensajeDTO> unfollow(int userId, int userIdFollow) {
         return new ResponseEntity<>(socialMeliService.unfollow(userId, userIdFollow), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<MensajeDTO> addPromo(PromoDTO promo) {
+        return new ResponseEntity<>(socialMeliService.addPromo(promo), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ListPromoDTO> listPromo(int userId, String order) {
+        return new ResponseEntity<>(socialMeliService.listPromo(userId, order), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<CountDTO> countPromo(int userId) {
+        return new ResponseEntity<>(socialMeliService.countPromos(userId), HttpStatus.OK);
     }
 }

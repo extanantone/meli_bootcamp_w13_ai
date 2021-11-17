@@ -3,6 +3,7 @@ package com.meli.SocialMeli.helper;
 import com.meli.SocialMeli.dto.*;
 import com.meli.SocialMeli.model.Post;
 import com.meli.SocialMeli.model.Product;
+import com.meli.SocialMeli.model.Promo;
 import com.meli.SocialMeli.model.User;
 import org.modelmapper.ModelMapper;
 
@@ -70,6 +71,32 @@ public class Helper {
             postsDTO.add(postDTO);
         }
         lista.setPosts(postsDTO);
+        return lista;
+    }
+
+    public static Promo promoDTOToPromo(PromoDTO promoDTO){
+        Promo promo = new Promo();
+        Product product = new Product();
+        ModelMapper modelMapper = new ModelMapper();
+        product = modelMapper.map(promoDTO.getDetail(), Product.class);
+        promo = modelMapper.map(promoDTO, Promo.class);
+        promo.setDetail(product);
+        return promo;
+    }
+
+    public static ListPromoDTO listPromoToListPromoDTO(List<Promo> promoList, User usr){
+        ListPromoDTO lista= new ListPromoDTO();
+        lista.setUserId(usr.getUserId());
+        lista.setUserName(usr.getUserName());
+        ModelMapper modelMapper = new ModelMapper();
+        ProductDTO prod = new ProductDTO();
+        List<PromoResponseDTO> promosDTO = new LinkedList<>();
+        for(Promo promo: promoList){
+            prod = modelMapper.map(promo.getDetail(), ProductDTO.class);
+            PromoResponseDTO promoDTO = new PromoResponseDTO(promo.getIdPost(),promo.getDate(), promo.getCategory(), promo.getPrice(),prod, promo.isHasPromo(), promo.getDiscount());
+            promosDTO.add(promoDTO);
+        }
+        lista.setPosts(promosDTO);
         return lista;
     }
 

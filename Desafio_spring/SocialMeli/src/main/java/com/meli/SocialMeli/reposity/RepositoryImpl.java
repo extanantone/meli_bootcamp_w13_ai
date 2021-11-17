@@ -3,6 +3,7 @@ package com.meli.SocialMeli.reposity;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.SocialMeli.model.Post;
+import com.meli.SocialMeli.model.Promo;
 import com.meli.SocialMeli.model.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
@@ -16,13 +17,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class RepositoryUser implements IRepositoryUser{
+public class RepositoryImpl implements IRepository {
     private HashMap<Integer, User> database;
     private List<Post> databasePost;
+    private List<Promo> databasePromo;
 
-    public RepositoryUser() {
+    public RepositoryImpl() {
         database = loadDataBase();
         databasePost = new LinkedList<>();
+        databasePromo = new LinkedList<>();
     }
 
     private HashMap<Integer, User> loadDataBase() {
@@ -101,7 +104,6 @@ public class RepositoryUser implements IRepositoryUser{
 
     public boolean containProduct(int userId, int idProduct){
         return databasePost.stream().filter(p-> p.getUserId()==userId).anyMatch(p->p.getDetail().getProductId()==idProduct);
-
     }
 
     @Override
@@ -116,5 +118,26 @@ public class RepositoryUser implements IRepositoryUser{
         follow.setFollowed(followed);
         database.put(idUser, usr);
         database.put(idUserFollower, follow);
+    }
+
+    @Override
+    public void addPromo(Promo promo) {
+        databasePromo.add(promo);
+    }
+
+    @Override
+    public List<Promo> listPromoUsr(int userId) {
+        List<Promo> promo = databasePromo.stream().filter(p-> p.getUserId()==userId).collect(Collectors.toUnmodifiableList());
+        return promo;
+    }
+
+    @Override
+    public boolean containPromo(int idPostPromo) {
+        return databasePromo.stream().anyMatch(p->p.getIdPost()==idPostPromo);
+    }
+
+    @Override
+    public boolean containProductPromo(int userId, int idProductPromo) {
+        return databasePromo.stream().filter(p-> p.getUserId()==userId).anyMatch(p->p.getDetail().getProductId()==idProductPromo);
     }
 }
