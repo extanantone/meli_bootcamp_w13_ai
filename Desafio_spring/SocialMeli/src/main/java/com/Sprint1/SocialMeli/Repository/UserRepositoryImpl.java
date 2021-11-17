@@ -46,22 +46,16 @@ public class UserRepositoryImpl implements IUserRepository{
 
     }
 
-    //TODO: BOrrar
-    public HashMap<Integer, User> prueba(){
-        return baseUsers;
-    }
-
     @Override
     public User obtenerUsuario(int userId) {
         return baseUsers.get(userId);
     }
 
     @Override
-    //TODO: Aclarar en el informe porqué usé solo una lista
     public int obtenerCantSeguidores(int userId) {
         AtomicInteger cantSeguidores = new AtomicInteger();
 
-        baseUsers.forEach((integer, user) ->
+        baseUsers.forEach((id, user) ->
         {if (user.getFolloweds().stream().filter(x -> x.getUserId() == userId).findFirst().isPresent()){
             cantSeguidores.getAndIncrement();
         }});
@@ -71,10 +65,9 @@ public class UserRepositoryImpl implements IUserRepository{
 
     @Override
     public List<UserShortDTO> obtenerListaSeguidores(int userId) {
-
         List<UserShortDTO> listaSeguidores = new ArrayList<UserShortDTO>();
 
-        baseUsers.forEach((integer, user) ->
+        baseUsers.forEach((id, user) ->
         {if (user.getFolloweds().stream().filter(x -> x.getUserId() == userId).findFirst().isPresent()){
             listaSeguidores.add(new UserShortDTO(user));
         }});
@@ -108,27 +101,31 @@ public class UserRepositoryImpl implements IUserRepository{
 
     @Override
     public Boolean agregarFollowed(int userId, int user_id_to_follow) {
-        //TODO: AGREGAR TRY CATCH Y DEVOLVER FALSE
-        User usuarioActual = baseUsers.get(userId);
-        List<UserShortDTO> followedsActual= usuarioActual.getFolloweds();
-        User usuarioASeguir = baseUsers.get(user_id_to_follow);
+        try{
+            User usuarioActual = baseUsers.get(userId);
+            List<UserShortDTO> followedsActual= usuarioActual.getFolloweds();
+            User usuarioASeguir = baseUsers.get(user_id_to_follow);
 
-        followedsActual.add(new UserShortDTO(usuarioASeguir));
+            followedsActual.add(new UserShortDTO(usuarioASeguir));
 
-        //baseUsers.replace(userId, usuarioActual);
-
-        return true;
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     @Override
     public Boolean quitarFollowed(int userId, int user_id_to_unfollow) {
-        //TODO: AGREGAR TRY CATCH Y DEVOLVER FALSE
-        User usuarioActual = baseUsers.get(userId);
-        List<UserShortDTO> followedsActual= usuarioActual.getFolloweds();
+        try{
+            User usuarioActual = baseUsers.get(userId);
+            List<UserShortDTO> followedsActual= usuarioActual.getFolloweds();
 
-        followedsActual.removeIf(u -> u.getUserId() == user_id_to_unfollow);
+            followedsActual.removeIf(u -> u.getUserId() == user_id_to_unfollow);
 
-        return true;
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
 }

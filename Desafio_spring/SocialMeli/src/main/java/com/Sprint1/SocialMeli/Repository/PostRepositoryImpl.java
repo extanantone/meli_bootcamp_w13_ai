@@ -1,5 +1,7 @@
 package com.Sprint1.SocialMeli.Repository;
 
+import com.Sprint1.SocialMeli.DTO.PostFullDTO;
+import com.Sprint1.SocialMeli.DTO.UserShortDTO;
 import com.Sprint1.SocialMeli.Model.Post;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,11 +50,6 @@ public class PostRepositoryImpl implements IPostRepository {
 
     }
 
-    //TODO: BOrrar
-    public HashMap<Integer, Post> pruebaPost(){
-        return basePosts;
-    }
-
     @Override
     public Boolean crearPublicacion(Post publicacion) {
 
@@ -62,6 +59,11 @@ public class PostRepositoryImpl implements IPostRepository {
         }catch (Exception e){
             return false;
         }
+    }
+
+    @Override
+    public Boolean existePost(int postId) {
+        return basePosts.containsKey(postId);
     }
 
     @Override
@@ -99,5 +101,17 @@ public class PostRepositoryImpl implements IPostRepository {
         });
 
         return cantPromoPost.get();
+    }
+
+    @Override
+    public List<PostFullDTO> obtenerListPromoPost(int vendedorId) {
+        List<PostFullDTO> listaPosts = new ArrayList<PostFullDTO>();
+
+        basePosts.forEach((postId, post) ->
+        {if ((post.getUserId() == vendedorId) && post.getHasPromo()){
+            listaPosts.add(new PostFullDTO(post));
+        }});
+
+        return listaPosts;
     }
 }

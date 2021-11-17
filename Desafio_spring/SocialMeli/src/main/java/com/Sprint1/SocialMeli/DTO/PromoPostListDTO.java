@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class PromoPostListDTO {
 
     private int userId;
     private String userName;
-    private int promoProductsCount;
+    private List<PostFullDTO> posts;
 
     public PromoPostListDTO(User usuario){
         this.userId = usuario.getUserId();

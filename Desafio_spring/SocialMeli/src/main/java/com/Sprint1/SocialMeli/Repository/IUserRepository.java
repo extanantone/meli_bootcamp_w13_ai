@@ -16,9 +16,6 @@ public interface IUserRepository {
 
     public Boolean quitarFollowed (int userId, int user_id_to_unfollow);
 
-    //TODO: BORRAR
-    public HashMap<Integer, User> prueba();
-
     public User obtenerUsuario (int userId);
 
     public int obtenerCantSeguidores (int userId);

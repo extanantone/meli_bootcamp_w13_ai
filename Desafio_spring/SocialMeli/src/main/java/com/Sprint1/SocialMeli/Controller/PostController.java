@@ -1,9 +1,6 @@
 package com.Sprint1.SocialMeli.Controller;
 
-import com.Sprint1.SocialMeli.DTO.PostFullDTO;
-import com.Sprint1.SocialMeli.DTO.PostListDTO;
-import com.Sprint1.SocialMeli.DTO.PostShortDTO;
-import com.Sprint1.SocialMeli.DTO.PromoPostCountDTO;
+import com.Sprint1.SocialMeli.DTO.*;
 import com.Sprint1.SocialMeli.Service.IPostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,68 +18,55 @@ public class PostController {
         this.postService = postService;
     }
 
+    //US_0005
     @PostMapping("/post")
-    public ResponseEntity<String> altaPublicacion (@RequestBody PostShortDTO publicacion){
-
-        //TODO: Agregar validaciones
-
+    public ResponseEntity<ResponseDTO> altaPublicacion (@RequestBody PostShortDTO publicacion){
         if(postService.crearPublicacion(publicacion)){
-            return new ResponseEntity<String>(
-                    "Todo OK",
+            return new ResponseEntity<ResponseDTO>(
+                    new ResponseDTO("Todo OK"),
                     HttpStatus.OK);
         }else{
-            return new ResponseEntity<String>(
-                    "Bad Request",
+            return new ResponseEntity<ResponseDTO>(
+                    new ResponseDTO("Bad Request"),
                     HttpStatus.BAD_REQUEST);
         }
     }
 
+    //US_0006 y US_0009
     @GetMapping("/followed/{user_id}/list")
     public ResponseEntity<PostListDTO> obtenerListPosts (@PathVariable("user_id") Integer userId, @RequestParam(value = "order", required = false) String order){
-
-        //TODO: Agregar validaciones
-
         return new ResponseEntity<PostListDTO>(
                 postService.obtenerListadoPostsDeVendedor(userId, order),
                 HttpStatus.OK);
     }
 
+    //US_0010
     @PostMapping("/promopost")
-    public ResponseEntity<String> altaPublicacionPromocion (@RequestBody PostFullDTO publicacionFull){
-
-        //TODO: Agregar validaciones (Validar si vino el compo hasPromo y Discount)
-
+    public ResponseEntity<ResponseDTO> altaPublicacionPromocion (@RequestBody PostFullDTO publicacionFull){
         if(postService.crearPostPromocion(publicacionFull)){
-            return new ResponseEntity<String>(
-                    "Todo OK",
+            return new ResponseEntity<ResponseDTO>(
+                    new ResponseDTO("OK"),
                     HttpStatus.OK);
         }else{
-            return new ResponseEntity<String>(
-                    "Bad Request",
+            return new ResponseEntity<ResponseDTO>(
+                    new ResponseDTO("Bad Request"),
                     HttpStatus.BAD_REQUEST);
         }
     }
 
+    //US_0011
     @GetMapping("/{user_id}/promo-post/count")
     public ResponseEntity<PromoPostCountDTO> obtenerCantPromoPost (@PathVariable("user_id") Integer userId){
-
-        //TODO: Agregar validaciones
-
         return new ResponseEntity<PromoPostCountDTO>(
                 postService.obtenerCantPromoPost(userId),
                 HttpStatus.OK);
     }
 
-
-
-
-    //TODO: BORRAR
-    @GetMapping("/pruebaPost")
-    public ResponseEntity<HashMap> obtenerPrueba ()
-    {
-
-        return new ResponseEntity<HashMap>(
-                postService.pruebaPost(),
+    //US_0012
+    @GetMapping("/{user_id}/list")
+    public ResponseEntity<PromoPostListDTO> obtenerListPromoPost (@PathVariable("user_id") Integer userId, @RequestParam(value = "order", required = false) String order){
+        return new ResponseEntity<PromoPostListDTO>(
+                postService.obtenerListPromoPost(userId, order),
                 HttpStatus.OK);
     }
 }

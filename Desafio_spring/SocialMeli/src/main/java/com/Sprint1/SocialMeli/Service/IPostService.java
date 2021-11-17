@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface IPostService {
-    //TODO: BORRAR
-    public HashMap<Integer, Post> pruebaPost();
-
     public Boolean crearPublicacion(PostShortDTO publicacion);
 
     public PostListDTO obtenerListadoPostsDeVendedor (int userId, String order);
@@ -19,5 +16,5 @@ public interface IPostService {
 
     public PromoPostCountDTO obtenerCantPromoPost (int vendedorId);
 
-    //public PromoPostListDTO obtenerListPromoPost (int vendedorId);
+    public PromoPostListDTO obtenerListPromoPost (int vendedorId, String order);
 }
