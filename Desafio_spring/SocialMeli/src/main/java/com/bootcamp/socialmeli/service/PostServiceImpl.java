@@ -38,7 +38,7 @@ public class PostServiceImpl  implements IPostService{
             if(userRepository.getUser(post.getUserID()) == null) throw new UserNotFoundException(post.getUserID());
             return postRepository.savePost(postMapper.createPostDTOToPost(post),post.getUserID());
         } catch (NullPointerException e) {
-            throw new MissingBodyAttributeException(e.getMessage());
+            throw new MissingBodyAttributeException("Missing Body Attribute");
         }
 
     }

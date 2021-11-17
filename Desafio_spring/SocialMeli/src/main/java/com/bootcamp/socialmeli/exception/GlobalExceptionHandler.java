@@ -37,4 +37,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<GenericExceptionDTO> badRequestExceptionHandler(BadRequestException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericExceptionDTO(HttpStatus.BAD_REQUEST.value(),e.getMessage()));
     }
+
+    @ExceptionHandler(IllegalRequestParamException.class)
+    public ResponseEntity<GenericExceptionDTO> badRequestExceptionHandler(IllegalRequestParamException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericExceptionDTO(HttpStatus.BAD_REQUEST.value(),e.getMessage()));
+    }
 }
