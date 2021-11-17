@@ -42,5 +42,26 @@ public class UsuarioRepository implements IRepository {
                 .filter(l -> l.getDate().isAfter(LocalDate.now().minusWeeks(2))).collect(Collectors.toList());
     }
 
+    @Override
+    public User findUserByLastName(String lastname) {
+        return users.stream().filter(u->u.getLastname().equals(lastname)).findFirst().orElse(null);
+    }
+
+    @Override
+    public void save(User created) {
+        users.add(created);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return users;
+    }
+
+    @Override
+    public List<User> findAllVendedores() {
+        return users.stream().filter(u->u.isSeller())
+                .collect(Collectors.toList());
+    }
+
 
 }

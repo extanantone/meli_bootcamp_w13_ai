@@ -12,4 +12,12 @@ public interface IRepository {
     List<User> followedUser(User user);
 
     List<Post> getLastPostTwoWeekAgo(int userId);
+
+    User findUserByLastName(String lastname);
+
+    void save(User created);
+
+    List<User> findAll();
+
+    List<User> findAllVendedores();
 }

@@ -1,9 +1,8 @@
 package bootcamp.SocialMeli.services;
 
-import bootcamp.SocialMeli.dto.CountSellerFollowersDto;
-import bootcamp.SocialMeli.dto.ListFollowerDto;
-import bootcamp.SocialMeli.dto.NewPostDto;
-import bootcamp.SocialMeli.dto.PostListDto;
+import bootcamp.SocialMeli.dto.*;
+
+import java.util.List;
 
 public interface IService {
 
@@ -32,5 +31,12 @@ public interface IService {
     PostListDto getListPostByUserDesc(int id);
 
     void unfollowUser(int id, int sellerId);
+
+    Integer addUser(UserRequestDto dto);
+
+    List<UsuariosDto> getAllUsers();
+
+    List<UsuariosDto> getAllSellers();
+
 
 }

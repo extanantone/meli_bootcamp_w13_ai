@@ -54,8 +54,8 @@ public class Services implements IService {
         else if (!seller.isSeller())
             throw new InvalidUserException("Este usuario no es vendedor");
 
-        List<ListFollowerDto> items = seller.getFollowers().stream()
-                .map(i -> new ListFollowerDto(i.getId(), i.getName()))
+        List<ItemFollowerDto> items = seller.getFollowers().stream()
+                .map(i -> new ItemFollowerDto(i.getId(), i.getName()))
                 .collect(Collectors.toList());
 
         return new ListFollowerDto(seller.getId(), seller.getName(), items);
@@ -69,9 +69,9 @@ public class Services implements IService {
         else if (!seller.isSeller())
             throw new InvalidUserException("Este usuario no es vendedor");
 
-        List<ListFollowerDto> items = seller.getFollowers().stream()
+        List<ItemFollowerDto> items = seller.getFollowers().stream()
                 .sorted(Comparator.comparing(User::getName))
-                .map(i -> new ListFollowerDto(i.getId(), i.getName()))
+                .map(i -> new ItemFollowerDto(i.getId(), i.getName()))
                 .collect(Collectors.toList());
 
         return new ListFollowerDto(seller.getId(), seller.getName(), items);
@@ -85,9 +85,9 @@ public class Services implements IService {
         else if (!seller.isSeller())
             throw new InvalidUserException("Este usuario no es vendedor");
 
-        List<ListFollowerDto> items = seller.getFollowers().stream()
+        List<ItemFollowerDto> items = seller.getFollowers().stream()
                 .sorted(Comparator.comparing(User::getName).reversed())
-                .map(i -> new ListFollowerDto(i.getId(), i.getName()))
+                .map(i -> new ItemFollowerDto(i.getId(), i.getName()))
                 .collect(Collectors.toList());
 
         return new ListFollowerDto(seller.getId(), seller.getName(), items);
@@ -98,9 +98,9 @@ public class Services implements IService {
         User user = iRepository.getUserById(userId);
         if (user == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
-        List<ListFollowerDto> items = iRepository.followedUser(user)
+        List<ItemFollowerDto> items = iRepository.followedUser(user)
                 .stream().sorted(Comparator.comparing(User::getName))
-                .map(u -> new ListFollowerDto(u.getId(), u.getName()))
+                .map(u -> new ItemFollowerDto(u.getId(), u.getName()))
                 .collect(Collectors.toList());
         return new ListFollowerDto(user.getId(), user.getName(), items);
     }
@@ -110,9 +110,9 @@ public class Services implements IService {
         User user = iRepository.getUserById(userId);
         if (user == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
-        List<ListFollowerDto> items = iRepository.followedUser(user)
+        List<ItemFollowerDto> items = iRepository.followedUser(user)
                 .stream().sorted(Comparator.comparing(User::getName).reversed())
-                .map(u -> new ListFollowerDto(u.getId(), u.getName()))
+                .map(u -> new ItemFollowerDto(u.getId(), u.getName()))
                 .collect(Collectors.toList());
         return new ListFollowerDto(user.getId(), user.getName(), items);
     }
@@ -122,8 +122,8 @@ public class Services implements IService {
         User user = iRepository.getUserById(userId);
         if (user == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
-        List<ListFollowerDto> items = iRepository.followedUser(user)
-                .stream().map(u -> new ListFollowerDto(u.getId(), u.getName()))
+        List<ItemFollowerDto> items = iRepository.followedUser(user)
+                .stream().map(u -> new ItemFollowerDto(u.getId(), u.getName()))
                 .collect(Collectors.toList());
         return new ListFollowerDto(user.getId(), user.getName(), items);
     }
@@ -180,6 +180,31 @@ public class Services implements IService {
         else if (!vendedor.isSeller())
             throw new InvalidUserException("El usuario ingresado no es vendedor");
         vendedor.unfollow(user);
+    }
+
+    @Override
+    public Integer addUser(UserRequestDto dto) {
+        User user = iRepository.findUserByLastName(dto.getLastname());
+        if (user != null)
+            throw new InvalidUserException("Ya existe un usuario con ese apellido");
+        User created = new User(dto.getUsername(), dto.getLastname(), dto.isSeller());
+        iRepository.save(created);
+        return created.getId();
+    }
+
+    @Override
+    public List<UsuariosDto> getAllUsers() {
+        return iRepository.findAll().stream()
+                .map(u -> new UsuariosDto(u.getId(), u.getLastname(), u.getName(), u.isSeller()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UsuariosDto> getAllSellers() {
+        List<User> users = iRepository.findAllVendedores();
+        return users.stream()
+                .map(u -> new UsuariosDto(u.getId(), u.getLastname(), u.getName(), u.isSeller()))
+                .collect(Collectors.toList());
     }
 
 }
