@@ -1,14 +1,11 @@
 package com.bootcamp.socialmeli.repository;
 
 import com.bootcamp.socialmeli.model.Post;
-import com.bootcamp.socialmeli.model.Product;
-import com.bootcamp.socialmeli.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class ProductRepository implements IProductRepository{
@@ -18,7 +15,6 @@ public class ProductRepository implements IProductRepository{
     public ProductRepository(){
         postList = new ArrayList<>();
     }
-
 
     @Override
     public void postProduct(Post post) {
@@ -33,9 +29,7 @@ public class ProductRepository implements IProductRepository{
 
         for (Post p : postList){
             boolean isInPeriod = p.getDate().isEqual(date) || p.getDate().isAfter(date);
-            if(p.getUserId() == userId && isInPeriod){
-                postListFiltered.add(p);
-            }
+            if(p.getUserId() == userId && isInPeriod)   postListFiltered.add(p);
         }
         return postListFiltered;
     }

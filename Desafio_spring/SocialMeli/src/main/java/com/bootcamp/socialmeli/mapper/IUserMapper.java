@@ -6,7 +6,6 @@ import com.bootcamp.socialmeli.model.User;
 import java.util.List;
 
 public interface IUserMapper {
-    //User userFromUserDTO(UserDTO userDTO);
     UserDTO userToUserDTO(User user);
     UserTotalFollowersDTO toUserTotalFollowersDTO(User user, int totalFollowers);
     List<UserDTO> userListToUserListDTO(List<User> userList);

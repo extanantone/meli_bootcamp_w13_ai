@@ -10,13 +10,6 @@ import java.util.List;
 @Component
 public class UserMapper implements IUserMapper{
 
-/*
-    @Override
-    public User userFromUserDTO(UserDTO userDTO) {
-        return null;
-    }
-*/
-
     @Override
     public UserDTO userToUserDTO(User user) {
         UserDTO userDTO = new UserDTO(user.getId(), user.getName());
@@ -25,11 +18,10 @@ public class UserMapper implements IUserMapper{
 
     @Override
     public UserTotalFollowersDTO toUserTotalFollowersDTO(User user, int totalFollowers) {
-        UserTotalFollowersDTO userTotalFollowersDTO = new UserTotalFollowersDTO(
+        return new UserTotalFollowersDTO(
                 user.getId(),
                 user.getName(),
                 totalFollowers);
-        return userTotalFollowersDTO;
     }
 
     @Override
@@ -47,17 +39,14 @@ public class UserMapper implements IUserMapper{
     public UserFollowersDTO toUserFollowersDTO(User user, List<User> followers) {
         List<UserDTO> followersListDTO = userListToUserListDTO(followers);
 
-        UserFollowersDTO userFollowersDTO = new UserFollowersDTO(user.getId(), user.getName(), followersListDTO);
-        return userFollowersDTO;
+        return new UserFollowersDTO(user.getId(), user.getName(), followersListDTO);
     }
 
     @Override
     public UserFollowedDTO toUserFollowedDTO(User user, List<User> followed) {
         List<UserDTO> followedListDTO = userListToUserListDTO(followed);
 
-        UserFollowedDTO userFollowedDTO = new UserFollowedDTO(user.getId(), user.getName(), followedListDTO);
-        return userFollowedDTO;
+        return new UserFollowedDTO(user.getId(), user.getName(), followedListDTO);
     }
-
 
 }

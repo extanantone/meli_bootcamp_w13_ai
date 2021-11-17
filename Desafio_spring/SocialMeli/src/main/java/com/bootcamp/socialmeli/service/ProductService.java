@@ -3,6 +3,9 @@ package com.bootcamp.socialmeli.service;
 import com.bootcamp.socialmeli.dto.PostDTO;
 import com.bootcamp.socialmeli.dto.RequestPostDTO;
 import com.bootcamp.socialmeli.dto.ResponsePostDTO;
+import com.bootcamp.socialmeli.exception.NotFoundUserException;
+import com.bootcamp.socialmeli.exception.NotPossibleOperationException;
+import com.bootcamp.socialmeli.exception.NotPostProductException;
 import com.bootcamp.socialmeli.mapper.IProductMapper;
 import com.bootcamp.socialmeli.model.Post;
 import com.bootcamp.socialmeli.model.User;
@@ -25,32 +28,33 @@ public class ProductService implements IProductService{
     IUserRepository iUserRepository;
 
     @Override
-    public void postProduct(RequestPostDTO requestPostDTO) {
+    public void postProduct(RequestPostDTO requestPostDTO) throws NotPossibleOperationException{
         Post post = iProductMapper.postDTOToPost(requestPostDTO);
+        if (post == null)   throw new NotPostProductException();
         iProductRepository.postProduct(post);
+
     }
 
     @Override
-    public ResponsePostDTO getProductsFollowed(int userId, String order) {
+    public ResponsePostDTO getProductsFollowed(int userId, String order) throws NotPossibleOperationException {
         User user = iUserRepository.getUser(userId);
-        List<User> usersFollowed = iUserRepository.getUsersFollowed(user.getId());
+        if (user == null)   throw new NotFoundUserException(userId);
+
+        List<User> usersFollowed = iUserRepository.getUsersFollowed(user);
         List<Post> postList = new ArrayList<>();
 
         for (User u : usersFollowed){
             postList.addAll(iProductRepository.getPost(u.getId()));
         }
 
-        if(order != null){
-            postList.sort((p1, p2) -> comparePost(p1,p2,order));
-        }
+        if(order != null)   postList.sort((p1, p2) -> comparePost(p1,p2,order));
 
         List<PostDTO> postListDTO = new ArrayList<>();
         for (Post p : postList){
             postListDTO.add(iProductMapper.postDTOFromPost(p));
         }
 
-        ResponsePostDTO requestPostDTO = new ResponsePostDTO(user.getId(), postListDTO);
-        return requestPostDTO;
+        return new ResponsePostDTO(user.getId(), postListDTO);
     }
 
     private int comparePost(Post p1, Post p2, String order){

@@ -1,11 +1,11 @@
 package com.bootcamp.socialmeli.repository;
 
 import com.bootcamp.socialmeli.model.User;
-//import com.bootcamp.socialmeli.model.UserFollow;
 import org.springframework.stereotype.Repository;
 
+import javax.management.RuntimeErrorException;
+import java.rmi.NoSuchObjectException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 public class UserRepository implements IUserRepository{
@@ -31,23 +31,35 @@ public class UserRepository implements IUserRepository{
         return null;
     }
 
-    @Override
-    public boolean followUser(int userId, int userFollowedId) {
+/*    @Override
+    public void followUser(int userId, int userFollowedId) {
         User user = getUser(userId);
-        if (user != null) {
-            User userFollowed = getUser(userFollowedId);
-            user.addFollowed(userFollowedId);
-            userFollowed.addFollower(userId);
-            return true;
-        }
-        return false;
+        if (user == null) throw new RuntimeException();
+
+        User userFollowed = getUser(userFollowedId);
+        user.addFollowed(userFollowedId);
+        userFollowed.addFollower(userId);
+    }*/
+
+    @Override
+    public void followUser(User user, User userToFollow) {
+        if (user == null || userToFollow == null)   throw new RuntimeException();
+
+        user.addFollowed(userToFollow.getId());
+        userToFollow.addFollower(user.getId());
     }
 
+/*
     @Override
     public int getTotalUserFollowers(int userId) {
         User user = getUser(userId);
         return user.getFollowersUserId().size();
+    }
+*/
 
+    @Override
+    public int getTotalUserFollowers(User user) {
+        return user.getFollowersUserId().size();
     }
 
     @Override
@@ -62,26 +74,19 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public boolean unfollowUser(int userId, int userToUnfollowId) {
-        User user = getUser(userId);
-        if (user != null) {
-            User userFollowed = getUser(userToUnfollowId);
-            user.removeFollowed(userToUnfollowId);
-            userFollowed.removeFollower(userId);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public List<User> getUsersFollowed(int userId) {
-        User user = getUser(userId);
+    public List<User> getUsersFollowed(User user) {
         List<User> usersFollowed = new ArrayList<>();
 
         for (int id : user.getFollowedUserId()){
             usersFollowed.add(getUser(id));
         }
         return usersFollowed;
+    }
+
+    @Override
+    public void unfollowUser(User user, User userToUnfollow) {
+        user.removeFollowed(userToUnfollow.getId());
+        userToUnfollow.removeFollower(user.getId());
     }
 
 }
