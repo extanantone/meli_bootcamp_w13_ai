@@ -11,5 +11,5 @@ import lombok.Getter;
 
 public class UserDto {
     int userId;
-    String user_name;
+    String userName;
 }
