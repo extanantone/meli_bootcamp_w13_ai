@@ -1,9 +1,6 @@
 package bootcamp.SocialMeli.services;
 
-import bootcamp.SocialMeli.dto.CountSellerFollowersDto;
-import bootcamp.SocialMeli.dto.DetallePostDto;
-import bootcamp.SocialMeli.dto.ListFollowerDto;
-import bootcamp.SocialMeli.dto.NewPostDto;
+import bootcamp.SocialMeli.dto.*;
 import bootcamp.SocialMeli.exception.InvalidUserException;
 import bootcamp.SocialMeli.exception.NotFoundUserException;
 import bootcamp.SocialMeli.model.Post;
@@ -142,5 +139,47 @@ public class Services implements IService{
                 detalle.getItemName(), detalle.getType(), dto.getCategoria(), dto.getPrecio()));
     }
 
+    @Override
+    public PostListDto getListPostByUser(int userId) {
+        if(iRepository.getUserById(userId)==null)
+            throw new NotFoundUserException("No existe el usuario ingresado");
+        List<Post> posts = iRepository.getLastPostTwoWeekAgo(userId);
+        List<DataPostDto> productos = posts.stream().map(i->new DataPostDto(i.getPostId(), i.getPrecio(), i.getCategoria(),
+                new DetallePostDto(i.getItemId(), i.getItemName(), i.getType()), i.getDate().toString())).collect(Collectors.toList());
+        return new PostListDto(userId, productos);
+    }
+
+    @Override
+    public PostListDto getListPostByUserAsc(int id) {
+        if(iRepository.getUserById(id)==null)
+            throw new NotFoundUserException("No existe el usuario ingresado");
+        List<Post> posts =  iRepository.getLastPostTwoWeekAgo(id);
+        List<DataPostDto> productos = posts.stream().sorted(Comparator.comparing(Post::getDate))
+                .map(i->new DataPostDto(i.getPostId(), i.getPrecio(), i.getCategoria(),
+                        new DetallePostDto(i.getItemId(), i.getItemName(), i.getType()), i.getDate().toString())).collect(Collectors.toList());
+        return new PostListDto(id,productos);
+    }
+
+    @Override
+    public PostListDto getListPostByUserDesc(int id) {
+        if(iRepository.getUserById(id)==null)
+            throw new NotFoundUserException("No existe el usuario ingresado");
+        List<Post> posts =  iRepository.getLastPostTwoWeekAgo(id);
+        List<DataPostDto> productos = posts.stream().sorted(Comparator.comparing(Post::getDate).reversed())
+                .map(i->new DataPostDto(i.getPostId(), i.getPrecio(), i.getCategoria(),
+                        new DetallePostDto(i.getItemId(), i.getItemName(), i.getType()), i.getDate().toString())).collect(Collectors.toList());
+        return new PostListDto(id,productos);
+    }
+
+    @Override
+    public void unfollowUser(int id, int userId) {
+        User user = iRepository.getUserById(id);
+        User vendedor = iRepository.getUserById(userId);
+        if(user == null || vendedor == null)
+            throw new NotFoundUserException("Ninguno de los usuarios ingresado existe");
+        else if(!vendedor.isSeller())
+            throw new InvalidUserException("El usuario ingresado no es vendedor");
+        vendedor.unfollow(user);
+    }
 
 }

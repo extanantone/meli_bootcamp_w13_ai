@@ -1,9 +1,12 @@
 package bootcamp.SocialMeli.repository;
 
+import bootcamp.SocialMeli.model.Post;
 import bootcamp.SocialMeli.model.User;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,8 +19,6 @@ public class UsuarioRepository implements IRepository{
         users = new ArrayList<>();
         users.add(new User("Jorge", "De Michiel", false));
         users.add(new User("Pablo", "Perez", false));
-        users.add(new User("Luis", "Fernandez", false));
-        users.add(new User("Marta", "Sanchez", true));
         users.add(new User("Victoria", "Lopez", true));
         users.add(new User("Caludia", "Suarez", true));
     }
@@ -34,6 +35,12 @@ public class UsuarioRepository implements IRepository{
         return users.stream()
                 .filter(u-> u.isFollower(user))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Post> getLastPostTwoWeekAgo(int userId) {
+        return users.stream().filter(u->u.isFollower(getUserById(userId))).flatMap(u->u.getPosts().stream())
+                .filter(l->l.getDate().isAfter(LocalDate.now().minusWeeks(2))).collect(Collectors.toList());
     }
 
 

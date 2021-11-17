@@ -3,6 +3,7 @@ package bootcamp.SocialMeli.services;
 import bootcamp.SocialMeli.dto.CountSellerFollowersDto;
 import bootcamp.SocialMeli.dto.ListFollowerDto;
 import bootcamp.SocialMeli.dto.NewPostDto;
+import bootcamp.SocialMeli.dto.PostListDto;
 
 public interface IService {
 
@@ -18,8 +19,10 @@ public interface IService {
     ListFollowerDto getFollowed(int userId);
     void addPost(NewPostDto dto);
 
+    PostListDto getListPostByUser(int userId);
+    PostListDto getListPostByUserAsc(int id);
+    PostListDto getListPostByUserDesc(int id);
 
-
-
+    void unfollowUser(int id, int sellerId);
 
 }

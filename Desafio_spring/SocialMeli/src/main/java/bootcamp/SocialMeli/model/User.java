@@ -65,11 +65,16 @@ public class User {
     }
 
     public void addPost(Post post){
-        //System.out.println(post.getId());
         if (!seller)
             throw new InvalidUserException("Este usuario no es vendedor");
         if(posts.contains(post))
             throw new InvalidPostException("Ya existe una misma publicación para este usuariio");
         posts.add(post);
+    }
+
+    public void unfollow(User user) {
+        if(!followers.contains(user))
+            throw new NotFoundUserException("El usuario ingresado no sigue al vendedor");
+        followers.remove(user);
     }
 }

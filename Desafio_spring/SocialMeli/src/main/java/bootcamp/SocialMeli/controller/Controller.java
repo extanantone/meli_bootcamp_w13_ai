@@ -2,6 +2,7 @@ package bootcamp.SocialMeli.controller;
 import bootcamp.SocialMeli.dto.CountSellerFollowersDto;
 import bootcamp.SocialMeli.dto.ListFollowerDto;
 import bootcamp.SocialMeli.dto.NewPostDto;
+import bootcamp.SocialMeli.dto.PostListDto;
 import bootcamp.SocialMeli.services.IService;
 import bootcamp.SocialMeli.services.Services;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class Controller {
     }
 
     @GetMapping("/users/{userId}/followed/list")
-    public ListFollowerDto getFollowed(@PathVariable int userId,@RequestParam(defaultValue = "") String order){
+    public ListFollowerDto getFollowed(@PathVariable int userId,@RequestParam(defaultValue = "") String order) {
         if(order.equals("name_asc"))
             return iService.getListFollowedAsc(userId);
         else if(order.equals("name_desc"))
@@ -52,8 +53,20 @@ public class Controller {
 
     @PostMapping("/products/post")
     public void addPost (@RequestBody NewPostDto dto) {
-       // System.out.println(dto.getDate());
         iService.addPost(dto);
     }
-    
+
+    @GetMapping("/products/followed/{user_id}/list")
+    public PostListDto getlistPostTwoWeekAgo(@PathVariable int user_id, @RequestParam(defaultValue = "") String order) {
+        if(order.equals("date_asc"))
+            return iService.getListPostByUserAsc(user_id);
+        else if(order.equals("date_desc"))
+            return iService.getListPostByUserDesc(user_id);
+        return iService.getListPostByUser(user_id);
+    }
+
+    @PostMapping("/users/{user_id}/unfollow/{user_id_to_unfollow}")
+    public void unfollow(@PathVariable int user_id, @PathVariable int user_id_to_unfollow){
+        iService.unfollowUser(user_id, user_id_to_unfollow);
+    }
 }
