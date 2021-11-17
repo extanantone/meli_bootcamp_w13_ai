@@ -15,31 +15,53 @@ y enterarse de todas las novedades que los mismos posteen.
 
     * **Restricciones:** En el sistema se tienen 2 tipos de usuario, Purchaser(comprador)
     y Seller(vendedor). Dado lo anterior, un usuario comprador solo podrá seguir a un usuario vendedor
-    y un usuario vendedor solo podrá ser seguido.
-   
+    y un usuario vendedor solo podrá ser seguido. Por otro lado, los usuarios deben existir previamente
+    en el repositorio. Adicionalmente, un usuario no podrá seguir multiples veces a otro usuario.
+    
+    - **Usuarios en el repositorio:**
+           
+        | id_user| Rol | 
+        | :---   |:---:|
+        | **1**  |Comprador|
+        | **2**  |Comprador|
+        | **3**  |Comprador|
+        | **4**  |Vendedor|
+        | **5**  |Vendedor|
+    
     * **Entradas:**
    
+      | Method | END-PONT |
+      | :---       |     :---:   |
+      | **POST**   |  [localhost:8080/users/{user_id}/follow/{user_id_to_follow}]() |
+      | **Ejemplo** | [localhost:8080/users/1/follow/4]() |
+    
+3. **US 0002:** Obtener el resultado de la cantidad de usuarios que siguen a un determinado vendedor.
+
+    * **Restricciones:** Dada la restricción del requerimiento US0001, el id ingresado deberá
+    corresponder al de un usuario vendedor y deberá existir previamente en el repositorio,
+    en caso contrario se lanzará una excepción.
+   
+    * **Entradas:**
+
+      | Method | END-PONT |
+      | :---       |     :---:   |
+      | **POST**   |  [localhost:8080/users/{user_id}/followers/count]() |
+      | **Ejemplo** | [localhost:8080/users/4/followers/count]() |
+
+4. **US 0003:** Obtener un listado de todos los usuarios que siguen a un determinado vendedor (¿Quién me sigue?)
+
+    * **Restricciones:** Dada la restricción del requerimiento US0001, el id ingresado deberá
+      corresponder al de un usuario vendedor y deberá existir previamente en el repositorio,
+      en caso contrario se lanzará una excepción.
+
+    * **Entradas:**
+
       | Method | END-PONT |
       | :---        |     :---:   |
-      | **POST**   |  [localhost:8080/users/{user_id}/follow/{user_id_to_follow}]() |
-      | **Ejemplo**  | [localhost:8080/users/1/follow/4]() |
-    
-2. **US 0002:** Obtener el resultado de la cantidad de usuarios que siguen a un determinado vendedor.
+      | **POST**   |  [localhost:8080/users/{user_id}/followers/list]() |
+      | **Ejemplo**  | [localhost:8080/users/4/followers/list]() |
 
-    * **Restricciones:** Dada la restricción del requerimiento anterior, el id ingresado deberá
-    corresponder al de un usuario vendedor, en caso contrario se lanzará una excepción.
-   
-    * **Entradas:**
-
-      | Method | END-PONT |
-            | :---        |     :---:   |
-      | **POST**   |  [localhost:8080/users/{user_id}/followers/count]() |
-      | **Ejemplo**  | [localhost:8080/users/4/followers/count]() |
-
-3. **US 0003:** Obtener un listado de todos los usuarios que siguen a un determinado vendedor (¿Quién me sigue?)
-
-
-4. **US 0004:** Obtener un listado de todos los vendedores a los cuales sigue un determinado usuario (¿A quién sigo?)
+5. **US 0004:** Obtener un listado de todos los vendedores a los cuales sigue un determinado usuario (¿A quién sigo?)
 
 
 5. **US 0005:** Dar de alta una nueva publicación

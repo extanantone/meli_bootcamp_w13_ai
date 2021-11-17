@@ -18,11 +18,11 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
 
         this.purchasers = new HashMap<>();
         this.sellers = new HashMap<>();
-        purchasers.put(1,new Purchaser(1,"juan525c"));
-        purchasers.put(2,new Purchaser(2,"andres747c"));
-        purchasers.put(3,new Purchaser(3,"brian8474c"));
-        sellers.put(4,new Seller(4,"Lucas323v"));
-        sellers.put(5,new Seller(5,"David323v"));
+        purchasers.put(1,new Purchaser(1,"Comprador1"));
+        purchasers.put(2,new Purchaser(2,"Comprador2"));
+        purchasers.put(3,new Purchaser(3,"Comprador3"));
+        sellers.put(4,new Seller(4,"Vendedor1"));
+        sellers.put(5,new Seller(5,"Vendedor2"));
 
     }
 
