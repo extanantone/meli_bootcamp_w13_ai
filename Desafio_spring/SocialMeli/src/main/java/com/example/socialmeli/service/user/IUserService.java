@@ -6,11 +6,13 @@ import com.example.socialmeli.dto.FollowerListDTO;
 
 public interface IUserService
 {
-    FollowerListDTO follow(int user_id, int user_id_to_follow);
+    FollowerListDTO follow(int userId, int userIdToFollow);
 
-    FollowerCountDTO countFollowers(int user_id);
+    FollowerListDTO unfollow(int userId, int userIdToFollow);
 
-    FollowerListDTO followers(int user_id);
+    FollowerCountDTO countFollowers(int userId);
 
-    FollowedListDTO followed(int user_id);
+    FollowerListDTO followers(int userId, String order);
+
+    FollowedListDTO followed(int userId, String order);
 }

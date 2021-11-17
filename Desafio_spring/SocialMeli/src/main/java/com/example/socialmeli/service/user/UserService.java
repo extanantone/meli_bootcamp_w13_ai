@@ -22,40 +22,54 @@ public class UserService implements IUserService
     IUserRepository userRepository;
 
     @Override
-    public FollowedListDTO followed(int user_id)
+    public FollowedListDTO followed(int userId, String order)
     {
         Map<Integer, User> userMap = userRepository.usersMap();
-        if (!userMap.containsKey(user_id))
+        if (!userMap.containsKey(userId))
             throw new BadRequestException("Usuario no encontrado");
 
         User user;
-        user = userMap.get(user_id);
+        user = userMap.get(userId);
+        if (order != null)
+        {
+            if (order.equals("name_asc"))
+                user.setFollowed(userRepository.findFollowedOrderByNameAsc(userId));
+            else if (order.equals("name_desc"))
+                user.setFollowed(userRepository.findFollowedOrderByNameDesc(userId));
+        }
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(user, FollowedListDTO.class);
     }
 
     @Override
-    public FollowerListDTO followers(int user_id)
+    public FollowerListDTO followers(int userId, String order)
     {
         Map<Integer, User> userMap = userRepository.usersMap();
-        if (!userMap.containsKey(user_id))
+        if (!userMap.containsKey(userId))
             throw new BadRequestException("Usuario no encontrado");
 
         User user;
-        user = userMap.get(user_id);
+        user = userMap.get(userId);
+        if (order != null)
+        {
+            if (order.equals("name_asc"))
+                user.setFollowers(userRepository.findFollowersOrderByNameAsc(userId));
+            else if (order.equals("name_desc"))
+                user.setFollowers(userRepository.findFollowersOrderByNameDesc(userId));
+        }
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(user, FollowerListDTO.class);
     }
 
     @Override
-    public FollowerCountDTO countFollowers(int user_id)
+    public FollowerCountDTO countFollowers(int userId)
     {
         Map<Integer, User> userMap = userRepository.usersMap();
-        if (!userMap.containsKey(user_id))
+        if (!userMap.containsKey(userId))
             throw new BadRequestException("Usuario no encontrado");
 
         User user;
-        user = userMap.get(user_id);
+        user = userMap.get(userId);
         ModelMapper modelMapper = new ModelMapper();
         TypeMap<User, FollowerCountDTO> propertyMapper = modelMapper.createTypeMap(User.class, FollowerCountDTO.class);
         Converter<Collection, Integer> collectionToSize = c -> c.getSource().size();
@@ -66,17 +80,34 @@ public class UserService implements IUserService
     }
 
     @Override
-    public FollowerListDTO follow(int user_id, int user_id_to_follow)
+    public FollowerListDTO follow(int userId, int userIdToFollow)
     {
         Map<Integer, User> userMap = userRepository.usersMap();
-        if (!userMap.containsKey(user_id) || !userMap.containsKey(user_id_to_follow))
+        if (!userMap.containsKey(userId) || !userMap.containsKey(userIdToFollow))
             throw new BadRequestException("Usuario no encontrado");
 
         User user, userToFollow;
-        user = userMap.get(user_id);
-        userToFollow = userMap.get(user_id_to_follow);
+        user = userMap.get(userId);
+        userToFollow = userMap.get(userIdToFollow);
         if (!user.follow(userToFollow))
             throw new BadRequestException("No puedes seguir a este usuario");
+
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(user, FollowerListDTO.class);
+    }
+
+    @Override
+    public FollowerListDTO unfollow(int userId, int userIdToUnfollow)
+    {
+        Map<Integer, User> userMap = userRepository.usersMap();
+        if (!userMap.containsKey(userId) || !userMap.containsKey(userIdToUnfollow))
+            throw new BadRequestException("Usuario no encontrado");
+
+        User user, userToUnfollow;
+        user = userMap.get(userId);
+        userToUnfollow = userMap.get(userIdToUnfollow);
+        if (!user.unfollow(userToUnfollow))
+            throw new BadRequestException("No puedes dejar de seguir a este usuario");
 
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(user, FollowerListDTO.class);

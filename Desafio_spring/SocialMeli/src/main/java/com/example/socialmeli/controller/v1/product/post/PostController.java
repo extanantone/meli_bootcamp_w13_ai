@@ -1,0 +1,41 @@
+package com.example.socialmeli.controller.v1.product.post;
+
+import com.example.socialmeli.dto.*;
+import com.example.socialmeli.service.post.IPostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
+
+@RestController
+public class PostController implements IPostController
+{
+
+    @Autowired
+    IPostService postService;
+
+    @Override
+    public UserPostDTO createPost(UserPostDTO postDTO)
+    {
+        return postService.create(postDTO);
+    }
+
+    @Override
+    public PromoPostCountDTO promoPostcount(int userId)
+    {
+        return postService.promoPostCount(userId);
+    }
+
+    @Override
+    public UserPromoPostDTO createPromoPost(UserPromoPostDTO promoPostDTO)
+    {
+        return postService.createPromo(promoPostDTO);
+    }
+
+    @Override
+    public ProductFollowedDTO recentFollowedProducts(int userId, String order)
+    {
+        return postService.listRecentFollowedProducts(userId, order);
+    }
+
+}

@@ -14,26 +14,32 @@ public class UserController implements IUserController
     IUserService userService;
 
     @Override
-    public FollowedListDTO followed(int user_id)
+    public FollowedListDTO followed(int userId, String order)
     {
-        return userService.followed(user_id);
+        return userService.followed(userId, order);
     }
 
     @Override
-    public FollowerListDTO followers(int user_id)
+    public FollowerListDTO followers(int userId, String order)
     {
-        return userService.followers(user_id);
+        return userService.followers(userId, order);
     }
 
     @Override
-    public FollowerCountDTO countFollowers(int user_id)
+    public FollowerCountDTO countFollowers(int userId)
     {
-        return userService.countFollowers(user_id);
+        return userService.countFollowers(userId);
     }
 
     @Override
-    public FollowerListDTO follow(int user_id, int user_id_to_follow)
+    public FollowerListDTO follow(int userId, int userIdToFollow)
     {
-        return userService.follow(user_id, user_id_to_follow);
+        return userService.follow(userId, userIdToFollow);
+    }
+
+    @Override
+    public FollowerListDTO unfollow(int userId, int userIdToUnfollow)
+    {
+        return userService.unfollow(userId, userIdToUnfollow);
     }
 }

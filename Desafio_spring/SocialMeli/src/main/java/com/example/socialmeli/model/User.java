@@ -18,12 +18,14 @@ public class User
     private String userName;
     private List<User> followers;
     private List<User> followed;
+    private List<Post> posts;
 
     public User()
     {
         this.userId = globUserId++;
         this.followers = new LinkedList<>();
         this.followed = new LinkedList<>();
+        this.posts = new LinkedList<>();
     }
     public User(String userName)
     {
@@ -31,6 +33,7 @@ public class User
         this.userName = userName;
         this.followers = new LinkedList<>();
         this.followed = new LinkedList<>();
+        this.posts = new LinkedList<>();
     }
 
     private boolean alreadyFollowing(User user)
@@ -50,7 +53,7 @@ public class User
 
     public boolean unfollow(User user)
     {
-        if (user == null || alreadyFollowing(user) || this.getUserId() == user.getUserId())
+        if (user == null || !alreadyFollowing(user) || this.getUserId() == user.getUserId())
             return false;
 
         this.followers.remove(user);
@@ -58,4 +61,12 @@ public class User
         return true;
     }
 
+    public boolean addPost(Post post)
+    {
+        if (post.getUserId() != this.userId)
+            return false;
+
+        this.posts.add(post);
+        return true;
+    }
 }
