@@ -32,7 +32,7 @@ y enterarse de todas las novedades que los mismos posteen.
     * **Entradas:**
 
       | Method | END-PONT |
-            | :---        |     :---:   |
+      | :---        |     :---:   |
       | **POST**   |  [localhost:8080/users/{user_id}/followers/count]() |
       | **Ejemplo**  | [localhost:8080/users/4/followers/count]() |
 
