@@ -32,7 +32,7 @@ public class SocialMeliService implements ISocialMeliService {
     PublicationMapper publicationMapper;
 
     public void checkUser(Integer user_id) {
-        if (iSocialMeliRepository.checkUser(user_id) == false) {
+        if (!iSocialMeliRepository.checkUser(user_id)) {
             throw new NotFoundUserId(user_id);
         }
     }

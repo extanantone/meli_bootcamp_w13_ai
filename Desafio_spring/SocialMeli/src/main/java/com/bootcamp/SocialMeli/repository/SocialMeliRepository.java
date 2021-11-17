@@ -84,7 +84,7 @@ public class SocialMeliRepository implements ISocialMeliRepository {
 
     @Override
     public boolean checkUser(Integer user_id) {
-        return Objects.nonNull(this.userList.get(user_id));
+        return !Objects.isNull(this.userList.get(user_id));
     }
 
     @Override
