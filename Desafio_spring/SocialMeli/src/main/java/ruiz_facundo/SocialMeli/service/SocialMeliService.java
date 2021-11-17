@@ -66,7 +66,7 @@ public class SocialMeliService implements SocialMeliServiceI {
                 stream().map(u -> this.socialMapper.UserToUserDTO(u)).
                 collect(Collectors.toList());
         if (!Objects.isNull(criteria)) {
-            followersList = this.orderUserDTOsByName(followersList, criteria);
+            followersList = this.sortUserDTOsByName(followersList, criteria);
         }
         return new UserFollowersDTO(followedUser.getId(), followedUser.getName(), followersList);
     }
@@ -78,14 +78,14 @@ public class SocialMeliService implements SocialMeliServiceI {
         List<UserDTO> followedList = this.socialRepository.getFollowed(idUser).
                 stream().map(u -> this.socialMapper.UserToUserDTO(u)).collect(Collectors.toList());
         if (!Objects.isNull(criteria)) {
-            followedList = this.orderUserDTOsByName(followedList, criteria);
+            followedList = this.sortUserDTOsByName(followedList, criteria);
         }
         return new UserFollowedDTO(followerUser.getId(), followerUser.getName(), followedList);
     }
 
     @Override
     public void publish (RequestPostDTO newPostReq) {
-        this.validateRequestPost(newPostReq);
+        this.checkRequestPost(newPostReq);
         this.socialRepository.addPostToUser(newPostReq.getUserId(),
                 this.socialMapper.RequestPostDTOToPost(newPostReq));
     }
@@ -98,7 +98,7 @@ public class SocialMeliService implements SocialMeliServiceI {
                 flatMap(Collection::stream).sorted(Comparator.comparing(Post::getPublishDate,
                 Collections.reverseOrder())).collect(Collectors.toList());
         if (!Objects.isNull(criteria)) {
-            recentPostsByFollowed = this.orderPostsByDate(recentPostsByFollowed, criteria);
+            recentPostsByFollowed = this.sortPostsByDate(recentPostsByFollowed, criteria);
         }
         return new UserPostsDTO(idUser, recentPostsByFollowed.stream().map(
                 p -> this.socialMapper.PostToPostDTO(p)).collect(Collectors.toList()));
@@ -106,7 +106,7 @@ public class SocialMeliService implements SocialMeliServiceI {
 
     @Override
     public void publishPromo (RequestPromotionDTO newPromoReq) {
-        this.validateRequestPost(newPromoReq);
+        this.checkRequestPost(newPromoReq);
         if (!newPromoReq.isHasPromo()) {
             throw new InvalidPostException("La publicación no tiene promoción");
         }
@@ -131,7 +131,7 @@ public class SocialMeliService implements SocialMeliServiceI {
         User vendor = this.socialRepository.getUser(idUser);
         List<Post> promos = this.socialRepository.getPromoPosts(idUser);
         if (!Objects.isNull(criteria)) {
-            promos = this.orderPostsByProductName(promos, criteria);
+            promos = this.sortPostsByProductName(promos, criteria);
         }
         return new UserNamePostsDTO(vendor.getId(), vendor.getName(), promos.stream().
                 map(p -> this.socialMapper.PromotionToPromotionDTO(p)).collect(Collectors.toList()));
@@ -143,29 +143,7 @@ public class SocialMeliService implements SocialMeliServiceI {
         }
     }
 
-    private List<UserDTO> orderUserDTOsByName (List<UserDTO> inUsers, String criteria) {
-        Comparator<UserDTO> criteriaComp;
-        if (criteria.equals("name_asc")) {
-            criteriaComp = Comparator.comparing(UserDTO::getUserName);
-        } else if (criteria.equals("name_desc")) {
-            criteriaComp = Comparator.comparing(UserDTO::getUserName,
-                    Collections.reverseOrder());
-        } else throw new InvalidSortCriteriaException();
-        return this.sortUserDTOsByComparator(inUsers, criteriaComp);
-    }
-
-    private List<Post> orderPostsByDate (List<Post> inPosts, String criteria) {
-        Comparator<Post> criteriaComp;
-        if (criteria.equals("date_asc")) {
-            criteriaComp = Comparator.comparing(Post::getPublishDate);
-        } else if (criteria.equals("date_desc")) {
-            criteriaComp = Comparator.comparing(Post::getPublishDate,
-                    Collections.reverseOrder());
-        } else throw new InvalidSortCriteriaException();
-        return this.sortPostsByComparator(inPosts, criteriaComp);
-    }
-
-    private void validateRequestPost (RequestPostDTO newPostReq) {
+    private void checkRequestPost(RequestPostDTO newPostReq) {
         this.checkUser(newPostReq.getUserId());
         Long newPostId = newPostReq.getIdPost();
         if (this.socialRepository.isValidPost(newPostId)) {
@@ -182,7 +160,29 @@ public class SocialMeliService implements SocialMeliServiceI {
         }
     }
 
-    private List<Post> orderPostsByProductName (List<Post> inPosts, String criteria) {
+    private List<UserDTO> sortUserDTOsByName(List<UserDTO> inUsers, String criteria) {
+        Comparator<UserDTO> criteriaComp;
+        if (criteria.equals("name_asc")) {
+            criteriaComp = Comparator.comparing(UserDTO::getUserName);
+        } else if (criteria.equals("name_desc")) {
+            criteriaComp = Comparator.comparing(UserDTO::getUserName,
+                    Collections.reverseOrder());
+        } else throw new InvalidSortCriteriaException();
+        return this.sortUserDTOsByComparator(inUsers, criteriaComp);
+    }
+
+    private List<Post> sortPostsByDate(List<Post> inPosts, String criteria) {
+        Comparator<Post> criteriaComp;
+        if (criteria.equals("date_asc")) {
+            criteriaComp = Comparator.comparing(Post::getPublishDate);
+        } else if (criteria.equals("date_desc")) {
+            criteriaComp = Comparator.comparing(Post::getPublishDate,
+                    Collections.reverseOrder());
+        } else throw new InvalidSortCriteriaException();
+        return this.sortPostsByComparator(inPosts, criteriaComp);
+    }
+
+    private List<Post> sortPostsByProductName(List<Post> inPosts, String criteria) {
         Comparator<Post> criteriaComp;
         if (criteria.equals("name_asc")) {
             criteriaComp = Comparator.comparing(p -> p.getProductOnSale().getName());
