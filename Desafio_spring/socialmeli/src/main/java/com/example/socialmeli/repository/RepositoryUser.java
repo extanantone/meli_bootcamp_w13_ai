@@ -20,6 +20,10 @@ public class RepositoryUser implements IUserRepository{
 
 
     public RepositoryUser() {
+        createUsers();
+    }
+
+    private void createUsers(){
         User user1 = new User("Pedro");
         User user2 = new User("Pablo");
         User user3 = new User("Camila");
