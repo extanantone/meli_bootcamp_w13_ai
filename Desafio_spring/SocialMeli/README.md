@@ -53,3 +53,5 @@ Ejemplos:
 
 /products/followed/{user_id}/list?order=date_desc
 
+Mi idea principal fue separar a los compradores de los vendedores, desarrollar 2 exceptions, y crear los dto necesarios para mapiar la info al controller, dentro del repository agrege las funcionalidades de busqueda, check,etc.
+
