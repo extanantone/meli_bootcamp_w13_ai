@@ -1,9 +1,6 @@
 package com.SocialMeli.Sprint1SocialMeli.Service;
 
-import com.SocialMeli.Sprint1SocialMeli.DTO.CompradorFollowedListDTO;
-import com.SocialMeli.Sprint1SocialMeli.DTO.PublicacionDTO;
-import com.SocialMeli.Sprint1SocialMeli.DTO.VendedorFollowersListDTO;
-import com.SocialMeli.Sprint1SocialMeli.DTO.VendedorFollowesCountDTO;
+import com.SocialMeli.Sprint1SocialMeli.DTO.*;
 import com.SocialMeli.Sprint1SocialMeli.Model.Comprador;
 
 public interface ISocialMeliService {
@@ -20,6 +17,9 @@ public interface ISocialMeliService {
 
     void createNewPublicacion(PublicacionDTO publicacionDTO);
 
+    CompradorPublicacionesVendedorListDTO postByVendedorOfComprador(Integer compradorId);
+
+    boolean unFollow(Integer compradorId, Integer vendedorId);
 
 
 }

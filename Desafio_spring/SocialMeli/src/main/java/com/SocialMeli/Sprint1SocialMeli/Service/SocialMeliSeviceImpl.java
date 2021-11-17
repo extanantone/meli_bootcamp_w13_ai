@@ -2,7 +2,8 @@ package com.SocialMeli.Sprint1SocialMeli.Service;
 
 import com.SocialMeli.Sprint1SocialMeli.DTO.*;
 import com.SocialMeli.Sprint1SocialMeli.Exception.NotFoundUsuarioException;
-import com.SocialMeli.Sprint1SocialMeli.Exception.PostIdDuplicateVendedor;
+import com.SocialMeli.Sprint1SocialMeli.Exception.PostIdDuplicateVendedorExeption;
+import com.SocialMeli.Sprint1SocialMeli.Exception.UserNoFollowExeption;
 import com.SocialMeli.Sprint1SocialMeli.Exception.UserduplicateFollowExeption;
 import com.SocialMeli.Sprint1SocialMeli.Model.Comprador;
 import com.SocialMeli.Sprint1SocialMeli.Model.Producto;
@@ -105,11 +106,11 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
             throw new NotFoundUsuarioException(publicacionDTO.getUserId());
         }
 
-        //Crear validacion de si existe el id de la publicacion
-        // validar que producto o publicacion campos vacios
+        //TODO Crear validacion de si existe el id de la publicacion
         if (repositorio.existPost(publicacionDTO.getUserId(), publicacionDTO.getIdPost()))
-            throw new PostIdDuplicateVendedor(publicacionDTO.getUserId(), publicacionDTO.getIdPost());
+            throw new PostIdDuplicateVendedorExeption(publicacionDTO.getUserId(), publicacionDTO.getIdPost());
 
+        //TODO error de fecha mal ingresada
         LocalDate fecha = LocalDate.parse(publicacionDTO.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
         ProductoDTO proDTO = publicacionDTO.getDetail();
@@ -119,6 +120,46 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
 
         repositorio.newPost(publicacionDTO.getUserId(), publi);
 
+    }
+
+    @Override
+    public CompradorPublicacionesVendedorListDTO postByVendedorOfComprador(Integer compradorId) {
+
+        Comprador comprador = repositorio.getComprador(compradorId);
+        if (comprador == null) {
+            throw new NotFoundUsuarioException(compradorId);
+        }
+
+        List<Integer> followerdIds = comprador.getFolloweds();
+        List<Vendedor> ven = followerdIds.stream().map(f -> repositorio.getVendedor(f)).collect(Collectors.toList());
+
+
+        List<Publicacion> publicaciones = ven.stream().flatMap(u -> u.getPosts().stream()).filter(l -> l.getDate().isAfter(LocalDate.now().minusWeeks(2))).collect(Collectors.toList());
+
+        List<PublicacionSinUserIdDTO> publicacionSinUserIdDTO = publicaciones.stream()
+                .map(p -> new PublicacionSinUserIdDTO(p.getPostId(), p.getCategory(), p.getPrice(), p.getDate(),
+                        new ProductoDTO(p.getDetail().getProductId(), p.getDetail().getProductName(), p.getDetail().getType(), p.getDetail().getBrand(), p.getDetail().getColor(), p.getDetail().getNotes())))
+                .collect(Collectors.toList());
+
+
+        return new CompradorPublicacionesVendedorListDTO(comprador.getUserID(), publicacionSinUserIdDTO);
+    }
+
+    @Override
+    public boolean unFollow(Integer compradorId, Integer vendedorId) {
+
+        if (repositorio.getComprador(compradorId) == null) {
+            throw new NotFoundUsuarioException(compradorId);
+        }
+        if (repositorio.getVendedor(vendedorId) == null) {
+            throw new NotFoundUsuarioException(vendedorId);
+        }
+
+        if (!repositorio.existsFollow(compradorId, vendedorId))
+            throw new UserNoFollowExeption(vendedorId);
+
+
+        return  repositorio.unFollow(compradorId, vendedorId);
     }
 
 

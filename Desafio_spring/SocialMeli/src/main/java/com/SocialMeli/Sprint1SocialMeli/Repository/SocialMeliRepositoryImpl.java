@@ -5,7 +5,6 @@ import com.SocialMeli.Sprint1SocialMeli.Model.Publicacion;
 import com.SocialMeli.Sprint1SocialMeli.Model.Vendedor;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,8 +48,22 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     }
 
     @Override
-    public boolean unFollow(Integer compradorID, Integer vendedorId) {
-        return false;
+    public boolean unFollow(Integer compradorId, Integer vendedorId) {
+
+        if (compradores.containsKey(compradorId) || vendedores.containsKey(vendedorId)) {
+
+            Comprador comprador = compradores.get(compradorId);
+            comprador.deleteFollowed(vendedorId);
+            Vendedor vendedor = vendedores.get(vendedorId);
+            vendedor.deleteFollower(compradorId);
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
     }
 
 
@@ -73,8 +86,7 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     @Override
     public boolean newPost(Integer venderdorId, Publicacion publicacion) {
 
-
-        List<Publicacion> publicacions = new ArrayList<>();
+        List<Publicacion> publicacions = vendedores.get(venderdorId).getPosts();
         publicacions.add(publicacion);
         vendedores.get(venderdorId).setPosts(publicacions);
         return true;

@@ -27,8 +27,9 @@ public class SocialMeliController {
     @PostMapping(path = "/users/{compradorId}/follow/{vendedorId}")
     public ResponseEntity<?> follow(@PathVariable Integer compradorId,
                                     @PathVariable Integer vendedorId) {
+
         service.addFollowed(compradorId, vendedorId);
-        return new ResponseEntity("Se ha seguido Comprador",HttpStatus.OK);
+        return new ResponseEntity("Se ha seguido Comprador", HttpStatus.OK);
     }
 
 
@@ -58,11 +59,28 @@ public class SocialMeliController {
     }
 
     @PostMapping("/products/post")
-    public ResponseEntity createNewPublicacion(@RequestBody PublicacionDTO puDTO){
+    public ResponseEntity createNewPublicacion(@RequestBody PublicacionDTO puDTO) {
 
         service.createNewPublicacion(puDTO);
 
-       return new ResponseEntity("se creo correctamente",HttpStatus.OK);
+        return new ResponseEntity("se creo correctamente", HttpStatus.OK);
     }
+
+
+    @GetMapping(path = "/products/followed/{compradorId}/list")
+    public ResponseEntity<VendedorFollowesCountDTO> getCompradorofVendedorPublicacionesList(@PathVariable Integer compradorId) {
+
+        return new ResponseEntity(service.postByVendedorOfComprador(compradorId), HttpStatus.OK);
+    }
+
+
+    @GetMapping(path = "/users/{compradorId}/unfollow/{vendedorId}")
+    public ResponseEntity unFolowe(@PathVariable Integer compradorId,
+                                   @PathVariable Integer vendedorId) {
+
+          service.unFollow(compradorId, vendedorId);
+        return new ResponseEntity("Se dejo de seguir correctamente ", HttpStatus.OK);
+    }
+
 
 }

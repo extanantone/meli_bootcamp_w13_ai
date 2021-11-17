@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
-@ControllerAdvice (annotations = RestController.class)
+@ControllerAdvice(annotations = RestController.class)
 
 public class ExceptionSocialMeliHandler {
 
@@ -17,8 +17,8 @@ public class ExceptionSocialMeliHandler {
         return new ResponseEntity<>(
                 new ErrorDTO(
                         "not_found_usuario",
-                        e.getMessage() ),
-                HttpStatus.NOT_FOUND );
+                        e.getMessage()),
+                HttpStatus.NOT_FOUND);
 
     }
 
@@ -28,19 +28,30 @@ public class ExceptionSocialMeliHandler {
         return new ResponseEntity<>(
                 new ErrorDTO(
                         "duplicate_key",
-                        e.getMessage() ),
-                HttpStatus.BAD_REQUEST );
+                        e.getMessage()),
+                HttpStatus.BAD_REQUEST);
 
     }
 
 
-    @ExceptionHandler(PostIdDuplicateVendedor.class)
-    public ResponseEntity<ErrorDTO> get(PostIdDuplicateVendedor e) {
+    @ExceptionHandler(PostIdDuplicateVendedorExeption.class)
+    public ResponseEntity<ErrorDTO> get(PostIdDuplicateVendedorExeption e) {
         return new ResponseEntity<>(
                 new ErrorDTO(
                         "duplicate_key",
-                        e.getMessage() ),
-                HttpStatus.BAD_REQUEST );
+                        e.getMessage()),
+                HttpStatus.BAD_REQUEST);
+
+    }
+
+
+    @ExceptionHandler(UserNoFollowExeption.class)
+    public ResponseEntity<ErrorDTO> get(UserNoFollowExeption e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "No_preset_key",
+                        e.getMessage()),
+                HttpStatus.BAD_REQUEST);
 
     }
 }
