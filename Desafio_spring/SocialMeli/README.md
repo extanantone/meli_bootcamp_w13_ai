@@ -21,6 +21,6 @@ El desafío que se propone a continuación consta de 2 partes:
 
 ### Diagrams
 
-![Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/Zingam/Markdown-Document-UML-Use-Test/master/UML/Instance.puml)
+![Class Diagram](https://raw.githubusercontent.com/extanantone/meli_bootcamp_w13_ai/felipe_cubillos/Desafio_spring/SocialMeli/docs/%3AUsers%3Ajcubillo%3ADesktop%3AGit%3Ameli_bootcamp_w13_ai%3ADesafio_spring%3ASocialMeli%3Asrc%3Amain%3Ajava.uml)
 The Diagram
 Class Diagram
