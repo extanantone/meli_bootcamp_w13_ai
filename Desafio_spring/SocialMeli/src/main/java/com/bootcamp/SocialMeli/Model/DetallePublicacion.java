@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DetallePublicacion {
-    private int productId;
+    private Integer productId;
     private String productName;
     private String type;
     private String brand;

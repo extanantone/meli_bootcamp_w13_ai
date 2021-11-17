@@ -13,12 +13,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class SeguidorDTO {
-    private int idUser;
+    private Integer idUser;
     private String userName;
-    private int idUserFollow;
+    private Integer idUserFollow;
     private String nameFollowed;
 
-    public SeguidorDTO(String userName, int idUser, String nameFollowed, int idUserFollow) {
+    public SeguidorDTO(String userName, Integer idUser, String nameFollowed, Integer idUserFollow) {
         this.userName=userName;
         this.idUser=idUser;
         this.idUserFollow=idUserFollow;

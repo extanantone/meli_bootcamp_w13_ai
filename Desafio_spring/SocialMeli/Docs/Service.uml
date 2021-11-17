@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.bootcamp.SocialMeli.Service</OriginalElement>
+  <nodes>
+    <node x="0.0" y="390.0">com.bootcamp.SocialMeli.Service.SocialService</node>
+    <node x="0.0" y="0.0">com.bootcamp.SocialMeli.Service.ISocialService</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.bootcamp.SocialMeli.Service.SocialService" target="com.bootcamp.SocialMeli.Service.ISocialService">
+      <point x="0.0" y="-181.5" />
+      <point x="0.0" y="170.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="80.0" y="242.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

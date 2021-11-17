@@ -11,13 +11,13 @@ import lombok.Setter;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Usuario {
 
-    private int userId;
+    private Integer userId;
     private String userName;
 
-    public Usuario(int userId, String userName) {
+    public Usuario(Integer userId, String userName) {
     }
 
-    private static int con_id=0;
+    private static Integer con_id=0;
     public Usuario(){
         userId =++con_id;
     }
