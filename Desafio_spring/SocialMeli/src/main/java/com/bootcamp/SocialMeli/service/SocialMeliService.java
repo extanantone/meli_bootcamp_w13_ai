@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class SocialMeliService implements ISocialMeliService {
-
     @Autowired
     ISocialMeliRepository iSocialMeliRepository;
     @Autowired
@@ -75,7 +74,7 @@ public class SocialMeliService implements ISocialMeliService {
         User followerUser = this.iSocialMeliRepository.userId(user_id);
         List<UserDTO> followerList = this.iSocialMeliRepository.followerList(user_id).stream()
                 .map(i -> userToUserDTO(i)).collect(Collectors.toList());
-        if (Objects.nonNull(order)) {
+        if (!Objects.isNull(order)) {
             followerList = this.orderName(followerList, order);
         }
         return new FollowerDTO(followerUser.getUser_id(),
@@ -89,7 +88,7 @@ public class SocialMeliService implements ISocialMeliService {
         User followed = this.iSocialMeliRepository.userId(user_id);
         List<UserDTO> followedList = this.iSocialMeliRepository.followedList(user_id).stream()
                 .map(i -> userToUserDTO(i)).collect(Collectors.toList());
-        if (Objects.nonNull(order)) {
+        if (!Objects.isNull(order)) {
             followedList = this.orderName(followedList, order);
         }
         return new FollowedDTO(followed.getUser_id(),

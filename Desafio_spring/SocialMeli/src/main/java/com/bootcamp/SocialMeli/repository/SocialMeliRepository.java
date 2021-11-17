@@ -25,48 +25,12 @@ public class SocialMeliRepository implements ISocialMeliRepository {
     private HashMap<Integer, User> userList;
 
     public SocialMeliRepository() {
-        this.userList = (HashMap<Integer, User>) this.userJson();
-        this.publicationList = (HashMap<Integer, Publication>) this.publicationJson();
-    }
-
-    public List<User> userJson() {
-        File file = null;
-        try {
-            file = ResourceUtils.getFile(
-                    "classpath:user.json");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        ObjectMapper objectMapper = new ObjectMapper();
-        TypeReference<List<User>> typeRef = new TypeReference<>() {
-        };
-        List<User> userList = null;
-        try {
-            userList = objectMapper.readValue(file, typeRef);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return userList;
-    }
-
-    public List<Publication> publicationJson() {
-        File file = null;
-        try {
-            file = ResourceUtils.getFile(
-                    "classpath:post.json");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        ObjectMapper objectMapper = new ObjectMapper();
-        TypeReference<List<Publication>> typeRef = new TypeReference<>() {
-        };
-        List<Publication> publicationList = null;
-        try {
-            publicationList = objectMapper.readValue(file, typeRef);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return publicationList;
+ this.userList = new HashMap<>();
+ this.publicationList = new HashMap<>();
+ this.userList.put(1, new User(1, "Bl3nker"));
+ this.userList.put(2, new User(2, "Ladyteff"));
+ this.userList.put(3, new User(3, "Minujin"));
+ this.userList.put(4, new User(4, "BlenkiEnPapel"));
     }
 
     @Override
@@ -80,11 +44,6 @@ public class SocialMeliRepository implements ISocialMeliRepository {
     @Override
     public User userId(Integer user_id) {
         return this.userList.get(user_id);
-    }
-
-    @Override
-    public boolean checkUser(Integer user_id) {
-        return !Objects.isNull(this.userList.get(user_id));
     }
 
     @Override

@@ -16,7 +16,6 @@ import java.time.LocalDate;
 public class Publication {
     private int user_id;
     private int id_post;
-    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
     private Producto details;
     private int category;

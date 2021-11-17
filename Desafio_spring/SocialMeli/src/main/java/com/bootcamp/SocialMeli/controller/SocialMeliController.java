@@ -36,30 +36,35 @@ public class SocialMeliController {
     }
 
     @GetMapping("/users/{user_id}/followers/list")
-    ResponseEntity<FollowerDTO> followerList(@PathVariable Integer user_id, @RequestParam(value = "order", required = false) String order)  {
+    ResponseEntity<FollowerDTO> followerList(@PathVariable Integer user_id,
+                                             @RequestParam(value = "order", required = false) String order)  {
         return new ResponseEntity(this.isocialMeliService.followerList(user_id, order), HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}/followed/list")
-    ResponseEntity<FollowedDTO> followedList(@PathVariable Integer user_id, @RequestParam(value = "order", required = false) String order) {
+    ResponseEntity<FollowedDTO> followedList(@PathVariable Integer user_id,
+                                             @RequestParam(value = "order", required = false) String order) {
         return new ResponseEntity<>(this.isocialMeliService.followedList(user_id, order), HttpStatus.OK);
     }
 
     @PostMapping("/products/post")
-    public ResponseEntity<Publication> createPublication(@RequestBody PublicationDTO publicationDTO) {
-        Publication response = isocialMeliService.newPublication(publicationDTO);
-        return new ResponseEntity<>(response , HttpStatus.OK);
+    public ResponseEntity<MessageDTO> createPublication(@RequestBody PublicationDTO publicationDTO) {
+        isocialMeliService.newPublication(publicationDTO);
+        MessageDTO msj = new MessageDTO("Se subió la publicación");
+        return new ResponseEntity<>(msj , HttpStatus.OK);
     }
 
 
     @GetMapping("/products/followed/{user_id}/list")
-    ResponseEntity<Publication> recentPublication(@PathVariable Integer user_id,@RequestParam(name= "order", required = false) String order){
+    ResponseEntity<Publication> recentPublication(@PathVariable Integer user_id,
+                                                  @RequestParam(name= "order", required = false) String order){
         UserPublicationDTO response = isocialMeliService.recentPublication(user_id, order);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @PostMapping("/users/{user_id}/unfollow/{user_id_to_unfollow}")
-    ResponseEntity<MessageDTO> unfollow(@PathVariable Integer user_id, @PathVariable Integer user_id_to_unfollow) {
+    ResponseEntity<MessageDTO> unfollow(@PathVariable Integer user_id,
+                                        @PathVariable Integer user_id_to_unfollow) {
         this.isocialMeliService.deleteFollow(user_id, user_id_to_unfollow);
         MessageDTO msg = new MessageDTO("Ya le dejaste de seguir");
         return new ResponseEntity<>(msg, HttpStatus.OK);

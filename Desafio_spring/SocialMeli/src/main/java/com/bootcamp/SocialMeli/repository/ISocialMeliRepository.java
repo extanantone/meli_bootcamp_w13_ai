@@ -6,7 +6,6 @@ import com.bootcamp.SocialMeli.model.User;
 import java.util.List;
 
 public interface ISocialMeliRepository {
-    boolean checkUser(Integer user_id);
     void newFollow(Integer user_id, Integer user_id_to_follow);
     User userId(Integer user_id);
     List<User> followerList(Integer user_id);
@@ -14,5 +13,4 @@ public interface ISocialMeliRepository {
     Publication createPublication(Publication publication);
     List<Publication> recentPublication(Integer user_id);
     void deleteFollow(Integer user_id, Integer user_id_to_unfollow);
-
 }

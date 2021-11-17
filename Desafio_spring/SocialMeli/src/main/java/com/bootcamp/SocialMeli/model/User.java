@@ -44,7 +44,7 @@ public class User {
     }
 
     public boolean unfollowFollower(Integer follower) {
-        return this.follower.removeIf(i -> i == follower);
+        eturn this.follower.removeIf(i -> i == follower);
     }
 
     public void publicar(Integer newPublication) {
