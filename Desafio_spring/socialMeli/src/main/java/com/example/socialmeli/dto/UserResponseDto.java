@@ -17,11 +17,10 @@ import java.util.List;
 public class UserResponseDto extends UserDto{
     Integer followersCount;
     Integer promoPostCount;
-    //TODO mapper user to userdto
-    List<User> followers;
-    List<User> followed;
+    List<UserDto> followers;
+    List<UserDto> followed;
 
-    public UserResponseDto(Integer userId, String userName, Integer followersCount, Integer promoPostCount, List<User> followers, List<User> followed) {
+    public UserResponseDto(Integer userId, String userName, Integer followersCount, Integer promoPostCount, List<UserDto> followers, List<UserDto> followed) {
         this.followersCount = followersCount;
         this.promoPostCount = promoPostCount;
         this.followers = followers;

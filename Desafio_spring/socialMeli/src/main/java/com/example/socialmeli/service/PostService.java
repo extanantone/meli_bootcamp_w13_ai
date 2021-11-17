@@ -21,7 +21,7 @@ import java.util.Objects;
 
 @Service
 
-public class PostService {
+public class PostService implements PostServiceInterface{
     @Autowired
     PostRepository postRepository;
     @Autowired
@@ -29,6 +29,7 @@ public class PostService {
     @Autowired
     SocialMeliMapper socialMeliMapper;
 
+    @Override
     public PostRequestResponseDto addPost(PostDto postReq){
         if(Objects.isNull(postReq.getUserId())){
             throw new BadBodyRequestException("El id del usuario no es valido");
@@ -46,7 +47,7 @@ public class PostService {
             throw new BadBodyRequestException("El Precio ingresado no es valido");
         }
         LocalDate now = LocalDate.now();
-        if (ChronoUnit.DAYS.between(postReq.getDate(), now) < 0){
+        if (ChronoUnit.DAYS.between(postReq.stringToLocalDate(), now) < 0){
             throw new BadBodyRequestException("La fecha ingresada no es valida");
         }
 
@@ -55,6 +56,7 @@ public class PostService {
         return new PostRequestResponseDto(String.format("Se creo el post con id: %d",post.getPostId()));
     }
 
+    @Override
     public PostResponseDto getPostFromUserId(Integer user_id, String order){
 
         if(Objects.isNull(user_id)){
@@ -79,6 +81,7 @@ public class PostService {
         return new PostResponseDto(user_id,user.getUserName(),postDtoList);
     }
 
+    @Override
     public UserResponseDto countPostFromUserId(Integer user_id){
 
         if(Objects.isNull(user_id)){
@@ -93,6 +96,7 @@ public class PostService {
         return new UserResponseDto(user_id,user.getUserName(),null,count,null,null);
     }
 
+    @Override
     public PostResponseDto getPromoPostFromUserId(Integer user_id, String order){
 
         if(Objects.isNull(user_id)){

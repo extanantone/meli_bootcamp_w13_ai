@@ -12,16 +12,14 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserService {
+public class UserService implements UserServiceInterface{
 
     @Autowired
     UserRepository userRepository;
     @Autowired
     SocialMeliMapper socialMeliMapper;
-    public UserService() {
 
-    }
-
+    @Override
     public PostRequestResponseDto followUser(Integer user_id, Integer user_id_to_follow){
         if(Objects.isNull(user_id)){
             throw new BadParamsRequestException("El id del usuario no es valido");
@@ -59,6 +57,7 @@ public class UserService {
         return new PostRequestResponseDto(String.format("El usuario %s sigue correctamente a %s",user.getUserName(),userToFollow.getUserName()));
     }
 
+    @Override
     public UserResponseDto getFollowersCount(Integer user_id){
         if(Objects.isNull(user_id)){
             throw new BadParamsRequestException("El id del usuario no es valido");
@@ -71,6 +70,7 @@ public class UserService {
         return new UserResponseDto(user_id,user.getUserName(),count,null,null,null);
     }
 
+    @Override
     public UserResponseDto getFollowersList(Integer user_id,String order){
         if(Objects.isNull(user_id)){
             throw new BadParamsRequestException("El id del usuario no es valido");
@@ -92,10 +92,12 @@ public class UserService {
                 userList.sort(Comparator.comparing(User::getUserName).reversed());
             }
         }
-        return new UserResponseDto(user_id,user.getUserName(),null,null,userList,null);
+        List<UserDto> userDtoList = socialMeliMapper.userToUserDto(userList);
+        return new UserResponseDto(user_id,user.getUserName(),null,null,userDtoList,null);
 
     }
 
+    @Override
     public UserResponseDto getFollowedList(Integer user_id, String order){
         if(Objects.isNull(user_id)){
             throw new BadParamsRequestException("El id del usuario no es valido");
@@ -119,14 +121,17 @@ public class UserService {
                 userList.sort(Comparator.comparing(User::getUserName).reversed());
             }
         }
-        return new UserResponseDto(user_id,user.getUserName(),null,null,null,userList);
+        List<UserDto> userDtoList = socialMeliMapper.userToUserDto(userList);
+        return new UserResponseDto(user_id,user.getUserName(),null,null,null,userDtoList);
     }
 
+    @Override
     public UsersResponseDto getUsers(){
         List<UserDto> userDtoList = socialMeliMapper.userToUserDto(userRepository.getUsers());
         return new UsersResponseDto(userDtoList);
     }
 
+    @Override
     public PostRequestResponseDto unfollow(Integer user_id, Integer user_id_to_unfollow){
 
         if(Objects.isNull(user_id)){

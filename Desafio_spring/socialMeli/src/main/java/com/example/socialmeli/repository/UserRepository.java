@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class UserRepository {
+public class UserRepository implements UserRepositoryInterface{
     private Map<Integer, User> users = new HashMap<Integer,User>();
 
     private List<User> database;
@@ -43,7 +43,7 @@ public class UserRepository {
 //            this.users.put(uss.getUserId(),uss);
 //        });
     }
-
+    @Override
     public User getUser(Integer userId) {
         return this.users.get(userId);
     }
@@ -51,8 +51,8 @@ public class UserRepository {
     public void addUser(User user){
         this.users.put(user.getUserId(),user);
     }
-
-    private List<User> loadDataBase() {
+    @Override
+    public List<User> loadDataBase() {
         File file = null;
         try {
             file = ResourceUtils.getFile("classpath:user.json");
@@ -69,7 +69,7 @@ public class UserRepository {
         }
         return users;
     }
-
+    @Override
     public List<User> getUsers() {
         List<User> userList = new ArrayList<>();
         this.users.forEach((k,u) ->{
@@ -77,7 +77,7 @@ public class UserRepository {
         });
         return userList;
     }
-
+    @Override
     public boolean userExist (Integer userId){
         return this.users.containsKey(userId);
     }

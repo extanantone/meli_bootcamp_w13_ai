@@ -8,18 +8,18 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Repository
-public class PostRepository {
-    private Map<Integer, Post> posts = new HashMap<Integer, Post>();
+public class PostRepository implements PostRepositoryInterface{
+    private Map<Integer, Post> posts = new HashMap<>();
 
     public Post getPosts(Integer idPost) {
         return posts.get(idPost);
     }
-
+    @Override
     public Post setPost(Post post){
         this.posts.put(post.getPostId(),post);
         return post;
     }
-
+    @Override
     public List<Post> getPostFromUsersId(List<Integer> usersId){
         List<Post> postList = new ArrayList<>();
         posts.forEach((idPost,post)->{
@@ -30,7 +30,7 @@ public class PostRepository {
         });
         return postList;
     }
-
+    @Override
     public List<Post> getPostFromUserId(Integer userId){
         List<Post> postList = new ArrayList<>();
         posts.forEach((idPost,post)->{
@@ -40,7 +40,7 @@ public class PostRepository {
         });
         return postList;
     }
-
+    @Override
     public List<Post> getPromoPostFromUserId(Integer userId){
         List<Post> postList = new ArrayList<>();
         posts.forEach((idPost,post)->{

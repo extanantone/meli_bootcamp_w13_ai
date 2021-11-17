@@ -17,11 +17,11 @@ public class SocialMeliMapper {
     }
 
     public PostDto postToPostDto (Post post){
-        return new PostDto(post.getUserId(),post.getPostId(),post.getCategory(),post.getDate().toString(),post.getHasPromo(),post.getDiscount(),post.getPrice(),post.getDetail());
+        return new PostDto(post.getUserId(),post.getPostId(),post.localDateToString(),post.getCategory(),post.getHasPromo(),post.getDiscount(),post.getPrice(),post.getDetail());
     }
 
     public Post postDtoToPost (PostDto post){
-        return new Post(post.getUserId(),post.getDate(),post.getCategory(),post.getHasPromo(),post.getDiscount(),post.getPrice(),post.getDetail());
+        return new Post(post.getUserId(),post.stringToLocalDate(),post.getCategory(),post.getHasPromo(),post.getDiscount(),post.getPrice(),post.getDetail());
     }
 
     public List<UserDto> userToUserDto (List<User> users){
@@ -33,10 +33,11 @@ public class SocialMeliMapper {
     }
 
     public List<PostDto> postListToPostDtoList (List<Post> posts){
-        List<PostDto> usersDto = new ArrayList<>();
-        posts.forEach(post ->{
-            usersDto.add(this.postToPostDto(post));
+        List<PostDto> postsDto = new ArrayList<>();
+        posts.forEach((Post post) ->{
+            PostDto postDto = this.postToPostDto(post);
+            postsDto.add(postDto);
         });
-        return usersDto;
+        return postsDto;
     }
 }

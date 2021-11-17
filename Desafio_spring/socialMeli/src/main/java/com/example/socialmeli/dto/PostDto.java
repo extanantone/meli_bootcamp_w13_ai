@@ -1,12 +1,15 @@
 package com.example.socialmeli.dto;
 
 import com.example.socialmeli.exception.BadBodyRequestException;
+import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.Product;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.tomcat.jni.Local;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -20,7 +23,7 @@ import java.time.format.DateTimeFormatter;
 public class PostDto extends UserDto{
     private Integer postId;
     private String category;
-    private LocalDate date;
+    private String date;
     private Boolean hasPromo;
     private Double discount,price;
     private Product detail;
@@ -29,7 +32,7 @@ public class PostDto extends UserDto{
         try {
             this.userId = userId;
             this.postId = postId;
-            this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            this.date = date;
             this.category = category;
             this.hasPromo = hasPromo != null ? hasPromo : false;
             this.discount = discount;
@@ -39,4 +42,9 @@ public class PostDto extends UserDto{
             throw new BadBodyRequestException("El formato de la fecha no es correcto");
         }
     }
+
+    public LocalDate stringToLocalDate(){
+        return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    }
+
 }

@@ -40,4 +40,8 @@ public class Post {
     public void setDiscount(Double discount) {
         this.discount = discount;
     }
+
+    public String localDateToString(){
+        return this.date.toString();
+    }
 }
