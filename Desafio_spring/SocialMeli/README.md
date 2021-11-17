@@ -28,6 +28,9 @@ El desafío que se propone a continuación consta de 2 partes:
 ### Testing con Postman
 Algunos test generados con postman [PostmanJson](https://raw.githubusercontent.com/extanantone/meli_bootcamp_w13_ai/felipe_cubillos/Desafio_spring/SocialMeli/docs/SocialMelli.postman_collection.json)
 
+#### Ejemplo
+![PostManImage](https://github.com/extanantone/meli_bootcamp_w13_ai/blob/felipe_cubillos/Desafio_spring/SocialMeli/docs/Postman%20test.png?raw=true)
+
 ### Diagrama
 
 ![Class Diagram](https://raw.githubusercontent.com/extanantone/meli_bootcamp_w13_ai/felipe_cubillos/Desafio_spring/SocialMeli/docs/Diagram.png)
