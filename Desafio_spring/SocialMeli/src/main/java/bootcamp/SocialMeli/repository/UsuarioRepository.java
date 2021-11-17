@@ -6,16 +6,15 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class UsuarioRepository implements IRepository{
+public class UsuarioRepository implements IRepository {
 
     private List<User> users;
 
-    public UsuarioRepository(){
+    public UsuarioRepository() {
         users = new ArrayList<>();
         users.add(new User("Jorge", "De Michiel", false));
         users.add(new User("Pablo", "Perez", false));
@@ -24,23 +23,23 @@ public class UsuarioRepository implements IRepository{
     }
 
     @Override
-    public User getUserById(int id){
+    public User getUserById(int id) {
         return users.stream()
-                .filter(i -> i.getId()==id)
+                .filter(i -> i.getId() == id)
                 .findFirst().orElse(null);
     }
 
     @Override
     public List<User> followedUser(User user) {
         return users.stream()
-                .filter(u-> u.isFollower(user))
+                .filter(u -> u.isFollower(user))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Post> getLastPostTwoWeekAgo(int userId) {
-        return users.stream().filter(u->u.isFollower(getUserById(userId))).flatMap(u->u.getPosts().stream())
-                .filter(l->l.getDate().isAfter(LocalDate.now().minusWeeks(2))).collect(Collectors.toList());
+        return users.stream().filter(u -> u.isFollower(getUserById(userId))).flatMap(u -> u.getPosteos().stream())
+                .filter(l -> l.getDate().isAfter(LocalDate.now().minusWeeks(2))).collect(Collectors.toList());
     }
 
 

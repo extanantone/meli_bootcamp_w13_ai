@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 
 @Service
-public class Services implements IService{
+public class Services implements IService {
 
     public IRepository iRepository;
     private DateTimeFormatter DataTimeFormatter;
@@ -31,32 +31,32 @@ public class Services implements IService{
     public void followUser(int idUser, int idSeller) {
         User seller = iRepository.getUserById(idSeller);
         User user = iRepository.getUserById(idUser);
-        if(seller==null || user==null)
-            throw  new NotFoundUserException("No se encontró el usuario para seguirlo");
+        if (seller == null || user == null)
+            throw new NotFoundUserException("No se encontró el usuario para seguirlo");
         seller.addFollower(user);
     }
 
     @Override
     public CountSellerFollowersDto getCountBySeller(int idSeller) {
         User seller = iRepository.getUserById(idSeller);
-        if(seller==null)
+        if (seller == null)
             throw new NotFoundUserException("No se encontro al vendedor");
-        else if(!seller.isSeller())
+        else if (!seller.isSeller())
             throw new InvalidUserException("El usuario ingresado no es un vendedor");
-        return new CountSellerFollowersDto(seller.getId(),seller.getName(),seller.getFollowers().size());
+        return new CountSellerFollowersDto(seller.getId(), seller.getName(), seller.getFollowers().size());
     }
 
     @Override
     public ListFollowerDto getFollowerList(int idSeller) {
         User seller = iRepository.getUserById(idSeller);
-        if(seller==null)
+        if (seller == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
-        else if(!seller.isSeller())
+        else if (!seller.isSeller())
             throw new InvalidUserException("Este usuario no es vendedor");
 
-        List<ListFollowerDto> items= seller.getFollowers().stream()
-                            .map(i->new ListFollowerDto(i.getId(), i.getName()))
-                            .collect(Collectors.toList());
+        List<ListFollowerDto> items = seller.getFollowers().stream()
+                .map(i -> new ListFollowerDto(i.getId(), i.getName()))
+                .collect(Collectors.toList());
 
         return new ListFollowerDto(seller.getId(), seller.getName(), items);
     }
@@ -64,74 +64,74 @@ public class Services implements IService{
     @Override
     public ListFollowerDto getListFollowerAsc(int userId) {
         User seller = iRepository.getUserById(userId);
-        if(seller==null)
+        if (seller == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
-        else if(!seller.isSeller())
+        else if (!seller.isSeller())
             throw new InvalidUserException("Este usuario no es vendedor");
 
         List<ListFollowerDto> items = seller.getFollowers().stream()
                 .sorted(Comparator.comparing(User::getName))
-                .map(i->new ListFollowerDto(i.getId(),i.getName()))
+                .map(i -> new ListFollowerDto(i.getId(), i.getName()))
                 .collect(Collectors.toList());
 
-        return new ListFollowerDto(seller.getId(),seller.getName(), items);
+        return new ListFollowerDto(seller.getId(), seller.getName(), items);
     }
 
     @Override
     public ListFollowerDto getListFollowerDesc(int userId) {
         User seller = iRepository.getUserById(userId);
-        if(seller==null)
+        if (seller == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
-        else if(!seller.isSeller())
+        else if (!seller.isSeller())
             throw new InvalidUserException("Este usuario no es vendedor");
 
         List<ListFollowerDto> items = seller.getFollowers().stream()
                 .sorted(Comparator.comparing(User::getName).reversed())
-                .map(i->new ListFollowerDto(i.getId(),i.getName()))
+                .map(i -> new ListFollowerDto(i.getId(), i.getName()))
                 .collect(Collectors.toList());
 
-        return new ListFollowerDto(seller.getId(),seller.getName(), items);
+        return new ListFollowerDto(seller.getId(), seller.getName(), items);
     }
 
     @Override
     public ListFollowerDto getListFollowedAsc(int userId) {
         User user = iRepository.getUserById(userId);
-        if(user==null)
+        if (user == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
         List<ListFollowerDto> items = iRepository.followedUser(user)
                 .stream().sorted(Comparator.comparing(User::getName))
-                .map(u->new ListFollowerDto(u.getId(),u.getName()))
+                .map(u -> new ListFollowerDto(u.getId(), u.getName()))
                 .collect(Collectors.toList());
-        return new ListFollowerDto(user.getId(),user.getName(),items);
+        return new ListFollowerDto(user.getId(), user.getName(), items);
     }
 
     @Override
     public ListFollowerDto getListFollowedDesc(int userId) {
         User user = iRepository.getUserById(userId);
-        if(user==null)
+        if (user == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
         List<ListFollowerDto> items = iRepository.followedUser(user)
                 .stream().sorted(Comparator.comparing(User::getName).reversed())
-                .map(u->new ListFollowerDto(u.getId(),u.getName()))
+                .map(u -> new ListFollowerDto(u.getId(), u.getName()))
                 .collect(Collectors.toList());
-        return new ListFollowerDto(user.getId(),user.getName(),items);
+        return new ListFollowerDto(user.getId(), user.getName(), items);
     }
 
     @Override
     public ListFollowerDto getFollowed(int userId) {
         User user = iRepository.getUserById(userId);
-        if(user==null)
+        if (user == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
         List<ListFollowerDto> items = iRepository.followedUser(user)
-                .stream().map(u->new ListFollowerDto(u.getId(),u.getName()))
+                .stream().map(u -> new ListFollowerDto(u.getId(), u.getName()))
                 .collect(Collectors.toList());
-        return new ListFollowerDto(user.getId(),user.getName(),items);
+        return new ListFollowerDto(user.getId(), user.getName(), items);
     }
 
     @Override
     public void addPost(NewPostDto dto) {
         User user = iRepository.getUserById(dto.getUserId());
-        if(user==null)
+        if (user == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
         DetallePostDto detalle = dto.getDetalle();
         System.out.println(dto.getPostId());
@@ -141,43 +141,43 @@ public class Services implements IService{
 
     @Override
     public PostListDto getListPostByUser(int userId) {
-        if(iRepository.getUserById(userId)==null)
+        if (iRepository.getUserById(userId) == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
         List<Post> posts = iRepository.getLastPostTwoWeekAgo(userId);
-        List<DataPostDto> productos = posts.stream().map(i->new DataPostDto(i.getPostId(), i.getPrecio(), i.getCategoria(),
+        List<DataPostDto> productos = posts.stream().map(i -> new DataPostDto(i.getPostId(), i.getPrecio(), i.getCategoria(),
                 new DetallePostDto(i.getItemId(), i.getItemName(), i.getType()), i.getDate().toString())).collect(Collectors.toList());
         return new PostListDto(userId, productos);
     }
 
     @Override
     public PostListDto getListPostByUserAsc(int id) {
-        if(iRepository.getUserById(id)==null)
+        if (iRepository.getUserById(id) == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
-        List<Post> posts =  iRepository.getLastPostTwoWeekAgo(id);
+        List<Post> posts = iRepository.getLastPostTwoWeekAgo(id);
         List<DataPostDto> productos = posts.stream().sorted(Comparator.comparing(Post::getDate))
-                .map(i->new DataPostDto(i.getPostId(), i.getPrecio(), i.getCategoria(),
+                .map(i -> new DataPostDto(i.getPostId(), i.getPrecio(), i.getCategoria(),
                         new DetallePostDto(i.getItemId(), i.getItemName(), i.getType()), i.getDate().toString())).collect(Collectors.toList());
-        return new PostListDto(id,productos);
+        return new PostListDto(id, productos);
     }
 
     @Override
     public PostListDto getListPostByUserDesc(int id) {
-        if(iRepository.getUserById(id)==null)
+        if (iRepository.getUserById(id) == null)
             throw new NotFoundUserException("No existe el usuario ingresado");
-        List<Post> posts =  iRepository.getLastPostTwoWeekAgo(id);
+        List<Post> posts = iRepository.getLastPostTwoWeekAgo(id);
         List<DataPostDto> productos = posts.stream().sorted(Comparator.comparing(Post::getDate).reversed())
-                .map(i->new DataPostDto(i.getPostId(), i.getPrecio(), i.getCategoria(),
+                .map(i -> new DataPostDto(i.getPostId(), i.getPrecio(), i.getCategoria(),
                         new DetallePostDto(i.getItemId(), i.getItemName(), i.getType()), i.getDate().toString())).collect(Collectors.toList());
-        return new PostListDto(id,productos);
+        return new PostListDto(id, productos);
     }
 
     @Override
     public void unfollowUser(int id, int userId) {
         User user = iRepository.getUserById(id);
         User vendedor = iRepository.getUserById(userId);
-        if(user == null || vendedor == null)
+        if (user == null || vendedor == null)
             throw new NotFoundUserException("Ninguno de los usuarios ingresado existe");
-        else if(!vendedor.isSeller())
+        else if (!vendedor.isSeller())
             throw new InvalidUserException("El usuario ingresado no es vendedor");
         vendedor.unfollow(user);
     }

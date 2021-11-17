@@ -20,8 +20,8 @@ public class Post {
     String type;
     int categoria;
     int precio;
- //   boolean b;
-  //  int i;
+    //   boolean b;
+    //  int i;
 
     @Override
     public boolean equals(Object o) {

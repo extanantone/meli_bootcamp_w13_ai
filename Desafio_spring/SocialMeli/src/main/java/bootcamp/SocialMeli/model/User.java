@@ -23,26 +23,26 @@ public class User {
     public String lastname;
     public List<User> followers;
     public boolean seller;
-    private List<Post> posts;
+    private List<Post> posteos;
 
 
-    public User(){
-        id=++cont;
+    public User() {
+        id = ++cont;
         followers = new ArrayList();
-        posts = new ArrayList();
+        posteos = new ArrayList();
     }
 
-    public User(String name, String lastname, boolean seller){
+    public User(String name, String lastname, boolean seller) {
         this();
         this.name = name;
         this.lastname = lastname;
         this.seller = seller;
     }
 
-    public void addFollower(User follower){
-        if(!seller)
+    public void addFollower(User follower) {
+        if (!seller)
             throw new InvalidUserException("No se puede seguir al usuario");
-        else if(followers.contains(follower))
+        else if (followers.contains(follower))
             throw new InvalidUserException("Estas siguiendo a este usuario");
         followers.add(follower);
     }
@@ -60,20 +60,20 @@ public class User {
         return Objects.hash(id);
     }
 
-    public boolean isFollower(User user){
-        return  followers.contains(user);
+    public boolean isFollower(User user) {
+        return followers.contains(user);
     }
 
-    public void addPost(Post post){
+    public void addPost(Post post) {
         if (!seller)
             throw new InvalidUserException("Este usuario no es vendedor");
-        if(posts.contains(post))
+        if (posteos.contains(post))
             throw new InvalidPostException("Ya existe una misma publicación para este usuariio");
-        posts.add(post);
+        posteos.add(post);
     }
 
     public void unfollow(User user) {
-        if(!followers.contains(user))
+        if (!followers.contains(user))
             throw new NotFoundUserException("El usuario ingresado no sigue al vendedor");
         followers.remove(user);
     }

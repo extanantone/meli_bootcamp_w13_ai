@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface IRepository {
     User getUserById(int id);
+
     List<User> followedUser(User user);
+
     List<Post> getLastPostTwoWeekAgo(int userId);
 }
