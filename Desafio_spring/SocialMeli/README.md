@@ -33,7 +33,7 @@ procedimiento en US-004
 Se crea un controller, repositorio y service por post y por user.
 
 Para los post se realiza una lista de los mismos, ya que no hay que editar
-ni eliminarlos, solo realizan respectivos filtros. 
+ni eliminarlos, solo realizar respectivos filtros. 
 
 se valida que el id del post no se repita.
 
