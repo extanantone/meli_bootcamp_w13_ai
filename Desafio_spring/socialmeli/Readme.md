@@ -406,3 +406,15 @@ Para los items de promocion filtra quienes tengan la bandera hasPromo en true
 
 -       GET http://localhost:8080/products/followed/1/list?order=date_asc
 ![img](14.png)
+
+**11.** Agregar promo post
+
+-         POST http://localhost:8080/products/promo-post
+![img](15.png)
+
+**12.** Contar promo post
+
+-         GET http://localhost:8080/products/3/promo-post/count
+![img](16.png)
+
+
