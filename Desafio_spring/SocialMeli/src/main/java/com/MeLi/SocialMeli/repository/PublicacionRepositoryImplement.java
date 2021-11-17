@@ -4,10 +4,12 @@ import com.MeLi.SocialMeli.model.Publicacion;
 import com.MeLi.SocialMeli.model.Vendedor;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 public interface PublicacionRepositoryImplement {
     Publicacion nuevaPublicacion(Publicacion pub);
     HashMap<Integer, Publicacion> findAll();
     Optional<Publicacion> find(Integer id);
+    List<Publicacion> publicacionesVendedor(int id);
 }

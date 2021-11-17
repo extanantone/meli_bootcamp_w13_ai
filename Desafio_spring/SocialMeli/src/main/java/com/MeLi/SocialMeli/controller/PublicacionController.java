@@ -1,6 +1,8 @@
 package com.MeLi.SocialMeli.controller;
 
+import com.MeLi.SocialMeli.DTO.PubVendedoresDTO;
 import com.MeLi.SocialMeli.DTO.PublicacionDTO;
+import com.MeLi.SocialMeli.exception.NotFoundCompradorException;
 import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
 import com.MeLi.SocialMeli.exception.NotPubException;
 import com.MeLi.SocialMeli.model.Publicacion;
@@ -27,7 +29,7 @@ public class PublicacionController{
     }
 
     @GetMapping("/products/followed/{user_id}/list")
-    public ResponseEntity<List<Publicacion>> getPublicaciones(@PathVariable int user_id) throws NotFoundVendedorException {
-        return new ResponseEntity<>(publicacionServiceImplement.obtenerPublicaciones(user_id), HttpStatus.OK);
+    public ResponseEntity<PubVendedoresDTO> getPublicaciones(@PathVariable int user_id, @RequestParam(required = false) String order) throws NotFoundVendedorException, NotFoundCompradorException {
+        return new ResponseEntity<PubVendedoresDTO>(publicacionServiceImplement.obtenerPublicaciones(user_id, order), HttpStatus.OK);
     }
 }

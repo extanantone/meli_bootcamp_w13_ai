@@ -4,10 +4,7 @@ import com.MeLi.SocialMeli.model.Publicacion;
 import com.MeLi.SocialMeli.model.Vendedor;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class PublicacionRepository implements PublicacionRepositoryImplement{
@@ -22,6 +19,18 @@ public class PublicacionRepository implements PublicacionRepositoryImplement{
 
     public HashMap<Integer, Publicacion> findAll() {
         return pubList;
+    }
+
+    public List<Publicacion> publicacionesVendedor(int id){
+
+        List<Publicacion> publicaciones = new ArrayList<>();
+
+        for (Map.Entry<Integer, Publicacion> entry: pubList.entrySet()) {
+            if(entry.getValue().getUser_id() == id){
+                publicaciones.add(entry.getValue());
+            }
+        }
+        return  publicaciones;
     }
 
     @Override

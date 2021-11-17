@@ -1,6 +1,10 @@
 package com.MeLi.SocialMeli.service;
 
+import com.MeLi.SocialMeli.DTO.CompradorDTO;
+import com.MeLi.SocialMeli.DTO.PubVendedoresDTO;
 import com.MeLi.SocialMeli.DTO.PublicacionDTO;
+import com.MeLi.SocialMeli.DTO.VendedorDTO;
+import com.MeLi.SocialMeli.exception.NotFoundCompradorException;
 import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
 import com.MeLi.SocialMeli.exception.NotPubException;
 import com.MeLi.SocialMeli.mapper.CompradorMapper;
@@ -13,20 +17,21 @@ import com.MeLi.SocialMeli.repository.CompradorRepositoryImplement;
 import com.MeLi.SocialMeli.repository.PublicacionRepositoryImplement;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PublicacionService implements PublicacionServiceImplement{
 
     private PublicacionRepositoryImplement publicacionRepositoryImplement;
     private CompradorRepositoryImplement compradorRepositoryImplement;
+    private CompradorServiceImplement compradorServiceImplement;
 
-    public PublicacionService(PublicacionRepositoryImplement publicacionRepositoryImplement, CompradorRepositoryImplement compradorRepositoryImplement){
+    public PublicacionService(PublicacionRepositoryImplement publicacionRepositoryImplement, CompradorRepositoryImplement compradorRepositoryImplement, CompradorServiceImplement compradorServiceImplement){
         this.publicacionRepositoryImplement = publicacionRepositoryImplement;
         this.compradorRepositoryImplement = compradorRepositoryImplement;
+        this.compradorServiceImplement = compradorServiceImplement;
     }
 
     @Override
@@ -40,20 +45,17 @@ public class PublicacionService implements PublicacionServiceImplement{
     }
 
     @Override
-    public List<Publicacion> obtenerPublicaciones(int idUser) throws NotFoundVendedorException{
+    public PubVendedoresDTO obtenerPublicaciones(int idUser, String order) throws NotFoundVendedorException, NotFoundCompradorException {
 
-        HashMap<Integer, Publicacion> publicaciones = publicacionRepositoryImplement.findAll();
         ArrayList publicacionesUsuario = new ArrayList();
+        LocalDate fechaActual = LocalDate.now();
+        List<VendedorDTO> vendedores = compradorServiceImplement.verSeguidos(idUser, "name_asc").getFollowed();
 
-        for (Map.Entry<Integer, Publicacion> entry : publicaciones.entrySet()) {
-            if (entry.getValue().getUser_id() == idUser) {
-                Publicacion publicacion = entry.getValue();
-                publicacionesUsuario.add(publicacion);
-            } else {
-                throw (new NotFoundVendedorException(idUser));
-            }
+        for(int i = 0; i < vendedores.size(); i++){
+            List<Publicacion> publicacionesVendedor = publicacionRepositoryImplement.publicacionesVendedor(vendedores.get(i).getUser_id());
+            publicacionesUsuario.addAll(publicacionesVendedor.stream().filter(pub -> pub.getDate().isAfter(fechaActual.minusDays(14))).collect(Collectors.toList()));
         }
-        return publicacionesUsuario;
-    }
 
+        return new PubVendedoresDTO(idUser,publicacionesUsuario);
+    }
 }
