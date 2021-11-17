@@ -16,7 +16,7 @@ La fecha de lanzamiento se aproxima, por lo cual es necesaria la presentación d
 ## Requerimientos técnicos funcionales implementados:
 
 
-**US 0001:** Poder realizar la acción de &quot;Follow&quot; (seguir) a un determinado vendedor
+>**US 0001:** Poder realizar la acción de &quot;Follow&quot; (seguir) a un determinado vendedor
 
 | **Method** | **SIGN** |
 | --- | --- |
@@ -47,7 +47,7 @@ Status code 400
 
 
 
-**US 0002:** Obtener el resultado de la cantidad de usuarios que siguen a un determinado vendedor
+>**US 0002:** Obtener el resultado de la cantidad de usuarios que siguen a un determinado vendedor
 
 | **Method** | **SIGN** |
 | --- | --- |
@@ -75,7 +75,7 @@ Status code 200
 | user\_id | int | Número que identifica a cada usuario |
 | user\_name | String | Nombre de usuario asociado a la user\_id |
 
-**US 0003:** Obtener un listado de todos los usuarios que siguen a un determinado vendedor (¿Quién me sigue?)
+>**US 0003:** Obtener un listado de todos los usuarios que siguen a un determinado vendedor (¿Quién me sigue?)
 
 
 | **Method** | **SIGN** |
@@ -109,7 +109,7 @@ Status code 200
 | user\_id | int | Número que identifica a cada usuario |
 | user\_name | String | Nombre de usuario asociado a la user\_id |
 
-**US 0004:** Obtener un listado de todos los vendedores a los cuales sigue un determinado usuario (¿A quién sigo?)
+>**US 0004:** Obtener un listado de todos los vendedores a los cuales sigue un determinado usuario (¿A quién sigo?)
 
 | **Method** | **SIGN** |
 | --- | --- |
@@ -141,7 +141,7 @@ Status code 200
 | user\_id | int | Número que identifica a cada usuario |
 | user\_name | String | Nombre de usuario asociado a la user\_id |
 
-**US 0005:** Dar de alta una nueva publicación
+>**US 0005:** Dar de alta una nueva publicación
 
 
 | **Method** | **SIGN** |
@@ -199,7 +199,7 @@ Status code 400
 | category | int | Identificador que sirve para conocer la categoría a la que pertenece un producto. Por ejemplo: 100: Sillas, 58: Teclados |
 | price | double | Precio del producto |
 
-**US 0006:** Obtener un listado de las publicaciones realizadas por los vendedores que un usuario sigue en las últimas dos semanas (para esto tener en cuenta ordenamiento por fecha, publicaciones más recientes primero).
+>**US 0006:** Obtener un listado de las publicaciones realizadas por los vendedores que un usuario sigue en las últimas dos semanas (para esto tener en cuenta ordenamiento por fecha, publicaciones más recientes primero).
 
 | **Method** | **SIGN** |
 | --- | --- |
@@ -254,7 +254,7 @@ Status code 200
 | --- | --- | --- |
 | user\_id | int | Número que identifica a cada usuario |
 
-**US 0007:** Poder realizar la acción de &quot;Unfollow&quot; (dejar de seguir) a un determinado vendedor.
+>**US 0007:** Poder realizar la acción de &quot;Unfollow&quot; (dejar de seguir) a un determinado vendedor.
 
 
 
@@ -287,7 +287,7 @@ Status code 400
 | user\_id | int | Número que identifica al usuario actual |
 | user\_id\_to\_unfollow | int | Número que identifica al usuario a dejar de seguir |
 
-**US 0008:** Ordenamiento alfabético ascendente y descendente
+>**US 0008:** Ordenamiento alfabético ascendente y descendente
 
 
 
@@ -302,7 +302,7 @@ Status code 400
 | name\_asc | Alfabético ascendente. |
 | name\_desc | Alfabético descendente. |
 
-**US 0009:** Ordenamiento por fecha ascendente y descendente
+>**US 0009:** Ordenamiento por fecha ascendente y descendente
 
 
 | **Method** | **SIGN** |
