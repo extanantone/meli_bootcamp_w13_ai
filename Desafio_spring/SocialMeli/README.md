@@ -13,23 +13,23 @@ Se adjunta link de colección de postman con los distintos endpoints de cada pun
 **1.-** *Poder realizar la acción de “Follow” (seguir) a un determinado vendedor:*
  * "/users/{user_id}/follow/{user_id_to_follow}" --> POST
  
-**2.-** +Obtener el resultado de la cantidad de usuarios que siguen a un determinado vendedor:*
-* "/users/{user_id}/followers/count" --> GET
+**2.-** *Obtener el resultado de la cantidad de usuarios que siguen a un determinado vendedor:*
+ **"/users/{user_id}/followers/count" --> GET
 
 **3.-** *Obtener un listado de todos los usuarios que siguen a un determinado vendedor (¿Quién me sigue?):*
-"/users/{user_id}/followers/list" --> GET
+**"/users/{user_id}/followers/list" --> GET
 "/users/{user_id}/followed/list?order=name_asc" --> GET
 "/users/{user_id}/followed/list?order=name_desc" --> GET
 
 **4.-** *Obtener un listado de todos los vendedores a los cuales sigue un determinado usuario (¿A quién sigo?):*
-"/users/{userId}/followed/list" --> GET
+**"/users/{userId}/followed/list" --> GET
 "/users/{userId}/followed/list?order=name_asc" --> GET
 "/users/{userId}/followed/list?order=name_desc" --> GET
 
 **5.-** *Dar de alta una nueva publicación:*
-"/products/post"  --> POST
+**"/products/post"  --> POST
 
-BODY: 
+*BODY: 
 {
     "user_id": 3,
     "post_id": 45,
@@ -44,11 +44,11 @@ BODY:
 }
 
 **6.-** *Obtener un listado de las publicaciones realizadas en las últimas dos semanas, por los vendedores que un usuario sigue (para esto tener en cuenta ordenamiento por fecha, publicaciones más recientes primero):*
-"/products/followed/{user_id}/list" --> GET
+**"/products/followed/{user_id}/list" --> GET
 "/products/followed/{user_id}/list?order=date_asc" --> GET
 "/products/followed/{user_id}/list?order=date_desc" --> GET
 
 **7.-** *Poder realizar la acción de “Unfollow” (dejar de seguir) a un determinado vendedor:*
-"/users/{user_id}/unfollow/{user_id_to_unfollow}" --> POST
+**"/users/{user_id}/unfollow/{user_id_to_unfollow}" --> POST
 
 
