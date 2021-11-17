@@ -3,6 +3,8 @@ package com.socialmeli.service;
 import com.socialmeli.dto.*;
 import com.socialmeli.dto.SellerFollowersCountDto;
 
+import java.util.List;
+
 public interface IUserService {
 
     void followUser(int idUser,int idSeller);
@@ -29,4 +31,10 @@ public interface IUserService {
     PostCount getCountPromoDiscount(int userId);
 
     ProductDiscountListDto getProductDiscountListDto(int seller);
+
+    Integer addUser(UserRequestDto dto);
+
+    List<UserDto> getAllUsers();
+
+    List<UserDto> getAllSellers();
 }

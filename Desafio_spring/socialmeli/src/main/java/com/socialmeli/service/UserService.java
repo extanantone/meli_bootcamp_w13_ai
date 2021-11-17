@@ -2,6 +2,7 @@ package com.socialmeli.service;
 
 import com.socialmeli.dto.*;
 import com.socialmeli.exception.InvalidSellerException;
+import com.socialmeli.exception.InvalidUserException;
 import com.socialmeli.exception.NotFoundUserException;
 import com.socialmeli.model.Post;
 import com.socialmeli.model.User;
@@ -210,5 +211,30 @@ public class UserService implements IUserService{
                 new DiscountDtoWithoutUser(i.getId(), i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),i.getPrice(),i.isHasDiscount(),i.getDiscount()))
                 .collect(Collectors.toList());
         return new ProductDiscountListDto(seller,user.getName(),dtos);
+    }
+
+    @Override
+    public Integer addUser(UserRequestDto dto) {
+        User user = iUserRepository.findUserByEmail(dto.getEmail());
+        if(user!=null)
+            throw new InvalidUserException("Exist user with same email");
+        User created = new User(dto.getUsername(),dto.getEmail(),dto.isSeller());
+        iUserRepository.save(created);
+        return created.getId();
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        return iUserRepository.findAll().stream()
+                .map(u->new UserDto(u.getId(),u.getEmail(),u.getName(),u.isSeller()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDto> getAllSellers() {
+        List<User> users =  iUserRepository.findAllSellers();
+        return  users.stream()
+                .map(u->new UserDto(u.getId(),u.getEmail(),u.getName(),u.isSeller()))
+                .collect(Collectors.toList());
     }
 }

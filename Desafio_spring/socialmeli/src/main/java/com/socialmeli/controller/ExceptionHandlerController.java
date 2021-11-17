@@ -3,6 +3,7 @@ package com.socialmeli.controller;
 import com.socialmeli.dto.ErrorDto;
 import com.socialmeli.exception.InvalidPostException;
 import com.socialmeli.exception.InvalidSellerException;
+import com.socialmeli.exception.InvalidUserException;
 import com.socialmeli.exception.NotFoundUserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,10 @@ public class ExceptionHandlerController {
     @ExceptionHandler(DateTimeException.class)
     public ResponseEntity<?> handleTime(DateTimeException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDto("Invalid date"));
+    }
+
+    @ExceptionHandler(InvalidUserException.class)
+    public ResponseEntity<?> handlerInvalidUser(InvalidUserException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDto(e.getMessage()));
     }
 }

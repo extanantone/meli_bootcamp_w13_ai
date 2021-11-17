@@ -354,6 +354,8 @@ Para los items de promocion filtra quienes tengan la bandera hasPromo en true
 ![img](5.png)
 
 -       POST POST http://localhost:8080/products/post
+  
+
         {
           "user_id": 4,
           "id_post": 30,
@@ -423,3 +425,83 @@ Para los items de promocion filtra quienes tengan la bandera hasPromo en true
 
 ![IMG](17.png)
 
+
+
+# Nuevos de propuesta
+
+#### Todos los usuarios
+
+GET
+
+URL http://localhost:8080/users
+
+RESPONSE PAYLOAD
+
+    [
+      {
+        "id":3,
+        "email":"diego@mail.com",
+        "username":"Diego",
+        "seller":true
+      }
+    ]
+
+
+- id: int
+- email: String
+- username: String
+- seller: boolean
+
+
+### Todos los vendedores
+
+GET 
+
+URL http://localhost:8080/users/sellers
+
+RESPONSE PAYLOAD
+
+    [
+      {
+        "id":3,
+        "email":"diego@mail.com",
+        "username":"Diego",
+        "seller":true
+      }
+    ]
+
+
+- id: int
+- email: String
+- username: String
+- seller: boolean
+
+### Nuevo usuario
+
+POST
+
+URL http://localhost:8080/users
+
+PAYLOAD
+
+    {
+      "email":"test@test.com",
+      "username":"Jorge",
+      "seller":true
+    }
+
+- email: String
+    
+- username: String
+
+- seller: boolean
+
+
+Response PAYLOAD:
+
+    {
+      "id": 5
+    }
+ - id: int
+
+Error status 400 si existe un usuario con el mismo email registrado

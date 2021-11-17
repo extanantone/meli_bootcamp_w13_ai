@@ -1,5 +1,4 @@
 package com.socialmeli.repository;
-
 import com.socialmeli.model.Post;
 import com.socialmeli.model.User;
 
@@ -11,4 +10,12 @@ public interface IUserRepository {
     List<Post> getPostLastTwoWeeksOfFollowed(int idUser);
 
     List<Post> getPromoPostByUserId(int userId);
+
+    User findUserByEmail(String email);
+
+    void save(User created);
+
+    List<User> findAll();
+
+    List<User> findAllSellers();
 }

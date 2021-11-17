@@ -1,10 +1,14 @@
 package com.socialmeli.controller;
 
 import com.socialmeli.dto.*;
+import com.socialmeli.model.User;
 import com.socialmeli.service.IUserService;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -17,8 +21,9 @@ public class UserController {
 
     @PostMapping("/users/{userId}/follow/{sellerId}")
     @ResponseStatus(HttpStatus.OK)
-    public void follow(@PathVariable int userId,@PathVariable int sellerId){
+    public Map<String,String> follow(@PathVariable int userId,@PathVariable int sellerId){
         iUserService.followUser(userId,sellerId);
+        return Map.of("menssage","follow");
     }
 
     @GetMapping("/users/{userId}/followers/count")
@@ -45,9 +50,11 @@ public class UserController {
     }
 
     @PostMapping("/products/post")
-    public void addPost(@RequestBody PostDto dto){
+    public Map<String,String> addPost(@RequestBody PostDto dto){
         //System.out.println(dto.getDate());
         iUserService.addPost(dto);
+        return Map.of("menssage","post was added");
+
     }
 
     @GetMapping("/products/followed/{id}/list")
@@ -58,13 +65,15 @@ public class UserController {
     }
 
     @PostMapping("/users/{id}/unfollow/{seller}")
-    public void unfollow(@PathVariable int id,@PathVariable int seller){
+    public Map<String,String> unfollow(@PathVariable int id,@PathVariable int seller){
         iUserService.unfollowSeller(id,seller);
+        return Map.of("menssage","Correct unfollow");
     }
 
     @PostMapping("/products/promo-post")
-    public void  addPromoPost(@RequestBody DicountPostDto dto){
+    public Map<String,String>  addPromoPost(@RequestBody DicountPostDto dto){
         iUserService.addPostDiscount(dto);
+        return Map.of("menssage","add new promopost item");
     }
 
     @GetMapping("/products/{userId}/promo-post/count")
@@ -75,6 +84,21 @@ public class UserController {
     @GetMapping("/products/{seller}/list")
     public ProductDiscountListDto getProductDiscountListDto(@PathVariable int seller){
         return iUserService.getProductDiscountListDto(seller);
+    }
+
+    @PostMapping("/users")
+    public Map<String, Integer> addUser(@RequestBody UserRequestDto dto){
+        return Map.of("id",iUserService.addUser(dto));
+    }
+
+    @GetMapping("/users")
+    public List<UserDto> getUsers(){
+        return iUserService.getAllUsers();
+    }
+
+    @GetMapping("/users/sellers")
+    public List<UserDto> getSellers(){
+        return  iUserService.getAllSellers();
     }
 
 

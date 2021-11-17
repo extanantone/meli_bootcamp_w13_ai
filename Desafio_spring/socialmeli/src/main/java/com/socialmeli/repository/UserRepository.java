@@ -2,9 +2,7 @@ package com.socialmeli.repository;
 
 import com.socialmeli.model.Post;
 import com.socialmeli.model.User;
-import org.apache.el.lang.FunctionMapperImpl;
 import org.springframework.stereotype.Repository;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +41,27 @@ public class UserRepository implements IUserRepository{
     @Override
     public List<Post> getPromoPostByUserId(int userId) {
         return users.stream().flatMap(u->u.getPosts().stream()).filter(p->p.isHasDiscount())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return users.stream().filter(u->u.getEmail().equals(email)).findFirst().orElse(null);
+    }
+
+    @Override
+    public void save(User created) {
+        users.add(created);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return users;
+    }
+
+    @Override
+    public List<User> findAllSellers() {
+        return users.stream().filter(u->u.isSeller())
                 .collect(Collectors.toList());
     }
 }
