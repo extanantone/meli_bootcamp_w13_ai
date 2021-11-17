@@ -2,6 +2,7 @@ package com.example.socialmeli.controller;
 
 import com.example.socialmeli.dto.PostsDto;
 import com.example.socialmeli.dto.ResponseDto;
+import com.example.socialmeli.exception.BadRequestException;
 import com.example.socialmeli.model.Post;
 import com.example.socialmeli.server.IProductServer;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,10 @@ public class PostController {
 
     @PostMapping(value= {"/post", "/promo-post"})
     public ResponseEntity<ResponseDto> createPost(@RequestBody Post post) {
+
+        if(post.getDiscount() == null && post.getHasPromo()) {
+            throw new BadRequestException("Ingresa un descuento a la promo");
+        }
 
         productServer.createPost(post);
 
