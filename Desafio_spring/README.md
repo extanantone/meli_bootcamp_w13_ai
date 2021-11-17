@@ -23,4 +23,6 @@ Se trato en lo posible de controlar los edge cases como un usuario que se siga a
   
 * La capa de servicios la dividi por los servicios o acciones relacionadas con el usuario y las relacionadas con producto con su respectiva interface.
 * La capa de Repository tiene tambien interface.
+* En los metodos de ordenamiento maneje valores por defecto para evitar excepciones.
+* Me hubiera gustado refactorizar mas, implementar los mapers, pero pienso que pude disfrutarlo mucho, como pedian.
 
