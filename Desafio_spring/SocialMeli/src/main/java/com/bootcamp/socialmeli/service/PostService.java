@@ -1,9 +1,9 @@
 package com.bootcamp.socialmeli.service;
 
-import com.bootcamp.socialmeli.dto.PostDTO;
-import com.bootcamp.socialmeli.dto.ReqProductDTO;
-import com.bootcamp.socialmeli.dto.UserPostDTO;
+import com.bootcamp.socialmeli.dto.*;
 import com.bootcamp.socialmeli.model.Post;
+import com.bootcamp.socialmeli.model.Promotion;
+import com.bootcamp.socialmeli.model.User;
 import com.bootcamp.socialmeli.repository.VendedorRepository;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -25,7 +25,6 @@ public class PostService implements IPostService {
 
 
     ModelMapper mapper = new ModelMapper();
-
 
 
     //US0005
@@ -61,8 +60,32 @@ public class PostService implements IPostService {
         return this.sortPost(posts, orderType);
     }
 
-    private List<Post> sortPost (List<Post> posts, Comparator<Post> orderType) {
+    private List<Post> sortPost(List<Post> posts, Comparator<Post> orderType) {
         return posts.stream().sorted(orderType).collect(Collectors.toList());
     }
 
+
+    // US0010
+    public void createPromo(ReqPromotionDTO reqPromotionDTO) {
+
+        //TODO: Make exceptions
+        vendedorRepository.addPostToUser(reqPromotionDTO.getUserId(),
+                mapper.map(reqPromotionDTO, Promotion.class));
+    }
+
+
+    @Override
+    public UserPromoListDTO getPromosCount(Long idUser) {
+        User user = vendedorRepository.getUser(idUser);
+        Integer promosCount = vendedorRepository.getPromoPosts(idUser).size();
+        return new UserPromoListDTO(idUser, user.getUserName(), promosCount);
+    }
+
+    @Override
+    public UserPromoAllDTO getAllPromotionsList(Long idUser) {
+        User user = vendedorRepository.getUser(idUser);
+        List<Post> promotions = vendedorRepository.getPromoPosts(idUser);
+        return new UserPromoAllDTO(user.getUserId(), user.getUserName(), promotions.stream().
+                map(p -> mapper.map(p, PromotionDTO.class)).collect(Collectors.toList()));
+    }
 }

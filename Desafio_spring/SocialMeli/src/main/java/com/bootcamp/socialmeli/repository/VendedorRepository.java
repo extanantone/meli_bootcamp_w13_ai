@@ -2,6 +2,7 @@ package com.bootcamp.socialmeli.repository;
 
 import com.bootcamp.socialmeli.dto.PostDTO;
 import com.bootcamp.socialmeli.model.Post;
+import com.bootcamp.socialmeli.model.Promotion;
 import com.bootcamp.socialmeli.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -87,8 +88,8 @@ public class VendedorRepository implements IVendedorRepository {
 
     @Override
     public void addPostToUser(Long idUser, Post post) {
-        this.users.get(idUser).addNewPost(post.getId());
-        this.post.put(post.getId(),post);
+        this.users.get(idUser).addNewPost(post.getIdPost());
+        this.post.put(post.getIdPost(),post);
     }
 
     @Override
@@ -105,6 +106,14 @@ public class VendedorRepository implements IVendedorRepository {
         Follower.unFollowed(idFollowed);
         User Followed = this.users.get(idFollowed);
         Followed.removeFollower(idFollower);
+    }
+
+
+    // US 0011
+    @Override
+    public List<Post> getPromoPosts(Long idUser) {
+        return this.users.get(idUser).getPosts().stream().map(this.post::get).
+                filter(Post::isHasPromo).collect(Collectors.toList());
     }
 
 }

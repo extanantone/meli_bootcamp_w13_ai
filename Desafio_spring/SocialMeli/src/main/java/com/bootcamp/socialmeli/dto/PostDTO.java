@@ -24,6 +24,4 @@ public class PostDTO implements Serializable {
     private PostProductDTO detail;
     private Integer category;
     private Double price;
-
-
 }

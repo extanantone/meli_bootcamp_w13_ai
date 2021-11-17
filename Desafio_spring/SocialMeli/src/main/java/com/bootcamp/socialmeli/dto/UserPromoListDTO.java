@@ -6,19 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ReqProductDTO extends PostDTO {
+public class UserPromoListDTO extends UserDTO{
+    private Integer promoProductsCount;
 
-    private Long userId;
-
-    public ReqProductDTO(Long idPost, LocalDate date, PostProductDTO detail, Integer category, Double price, Long userId) {
-        super(idPost, date, detail, category, price);
-        this.userId = userId;
+    public UserPromoListDTO(long userId, String userName, Integer promoProductsCount) {
+        super(userId, userName);
+        this.promoProductsCount = promoProductsCount;
     }
-
 }

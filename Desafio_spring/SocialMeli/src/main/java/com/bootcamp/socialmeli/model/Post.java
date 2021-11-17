@@ -16,10 +16,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Post {
-    private Long id;
+    private Long idPost;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
     private PostProduct detail;
     private Integer category;
     private Double price;
+
+    public boolean isHasPromo () { return false; }
 }
