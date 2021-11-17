@@ -2,14 +2,13 @@ package com.SocialMeli.SocialMeli.controller;
 
 import com.SocialMeli.SocialMeli.dto.*;
 import com.SocialMeli.SocialMeli.exceptions.NotFoundException;
-import com.SocialMeli.SocialMeli.model.Post;
 import com.SocialMeli.SocialMeli.service.ISocialMeliService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.PDLOverrideSupported;
+
 import java.util.List;
 
 @RestController
