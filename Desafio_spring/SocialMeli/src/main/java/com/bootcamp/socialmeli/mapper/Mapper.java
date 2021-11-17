@@ -94,8 +94,38 @@ public class Mapper implements IMapper {
                 LocalDate.parse(postDTO.getDate(), dateFormatter),
                 postDTO.getCategory(),
                 postDTO.getPrice(),
+                false,
+                0.0,
                 postDTO.getUserId(),
                 postDTO.getDetail().getProductId()
+        );
+    }
+
+    @Override
+    public PromoPostDTO postToPromoPostDTO(Post post) {
+        return new PromoPostDTO(
+                post.getId(),
+                post.getDate().format(dateFormatter),
+                post.getCategory(),
+                post.getPrice(),
+                post.hasPromo(),
+                post.getDiscount(),
+                post.getUserId(),
+                this.productToProductDTO(productRepository.getProduct(post.getProductId()))
+        );
+    }
+
+    @Override
+    public Post promoPostDTOToPost(PromoPostDTO promoPostDTO) {
+        return new Post(
+                promoPostDTO.getPostId(),
+                LocalDate.parse(promoPostDTO.getDate(), dateFormatter),
+                promoPostDTO.getCategory(),
+                promoPostDTO.getPrice(),
+                promoPostDTO.hasPromo(),
+                promoPostDTO.getDiscount(),
+                promoPostDTO.getUserId(),
+                promoPostDTO.getDetail().getProductId()
         );
     }
 }

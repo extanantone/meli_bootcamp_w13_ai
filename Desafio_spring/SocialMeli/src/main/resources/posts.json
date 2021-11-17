@@ -5,7 +5,9 @@
     "productId": 1,
     "category": 1,
     "price": 1800.5,
-    "userId": 2
+    "userId": 2,
+    "hasPromo": true,
+    "discount": 0.2
   },
   {
     "id": 2,
@@ -13,7 +15,9 @@
     "productId": 2,
     "category": 1,
     "price": 2800.0,
-    "userId": 2
+    "userId": 2,
+    "hasPromo": true,
+    "discount": 0.1
   },
   {
     "id": 3,
@@ -21,6 +25,8 @@
     "productId": 3,
     "category": 2,
     "price": 3550.0,
-    "userId": 2
+    "userId": 2,
+    "hasPromo": false,
+    "discount": 0.0
   }
 ]

@@ -1,7 +1,6 @@
 package com.bootcamp.socialmeli.service;
 
-import com.bootcamp.socialmeli.dto.PostDTO;
-import com.bootcamp.socialmeli.dto.UserWithPostsDTO;
+import com.bootcamp.socialmeli.dto.*;
 import com.bootcamp.socialmeli.exceptions.BadRequestException;
 import com.bootcamp.socialmeli.exceptions.NotFoundException;
 import com.bootcamp.socialmeli.mapper.IMapper;
@@ -98,5 +97,49 @@ public class PostService implements IPostService {
             return ans;
         });
         return posts;
+    }
+
+    @Override
+    public PromoPostDTO getPromoPost(long id) {
+        checkPostExistence(id);
+        return mapper.postToPromoPostDTO(postRepository.getPost(id));
+    }
+
+    @Override
+    public PromoPostDTO createPromoPost(PromoPostDTO promoPostDTO) {
+        if (postRepository.getPost(promoPostDTO.getPostId()) != null) {
+            throw new BadRequestException("Post already exists");
+        }
+        Product productToCreate = mapper.productDTOToProduct(promoPostDTO.getDetail());
+        if (productRepository.getProduct(productToCreate.getId()) != null) {
+            throw new BadRequestException("Product already exists");
+        }
+        productRepository.createProduct(productToCreate);
+        Post postCreated = postRepository.createPost(mapper.promoPostDTOToPost(promoPostDTO));
+        userRepository.getUser(promoPostDTO.getUserId()).getPosts().add(postCreated);
+        return mapper.postToPromoPostDTO(postCreated);
+    }
+
+    @Override
+    public UserWithCountDTO getUserWithPromoPostCount(long id) {
+        userService.checkUserExistence(id);
+        User user = userRepository.getUser(id);
+        return new UserWithCountDTO(
+                user.getId(),
+                user.getUsername(),
+                getUserWithPromoPosts(id).getPosts().size()
+        );
+    }
+
+    @Override
+    public UserWithPromoPostsDTO getUserWithPromoPosts(long id) {
+        userService.checkUserExistence(id);
+        User user = userRepository.getUser(id);
+        List<PromoPostDTO> promoPosts = user.getPosts().stream().filter(
+                Post::hasPromo
+        ).map(
+                mapper::postToPromoPostDTO
+        ).collect(Collectors.toList());
+        return new UserWithPromoPostsDTO(id, promoPosts);
     }
 }

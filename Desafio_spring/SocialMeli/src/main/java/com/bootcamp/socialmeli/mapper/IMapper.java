@@ -15,4 +15,6 @@ public interface IMapper {
     public Product productDTOToProduct(ProductDTO productDTO);
     public PostDTO postToPostDTO(Post post);
     public Post postDTOToPost(PostDTO postDTO);
+    public PromoPostDTO postToPromoPostDTO(Post post);
+    public Post promoPostDTOToPost(PromoPostDTO promoPostDTO);
 }

@@ -1,9 +1,6 @@
 package com.bootcamp.socialmeli.service;
 
-import com.bootcamp.socialmeli.dto.UserCreationDTO;
-import com.bootcamp.socialmeli.dto.UserDTO;
-import com.bootcamp.socialmeli.dto.UserWithFollowersDTO;
-import com.bootcamp.socialmeli.dto.UserWithFollowedDTO;
+import com.bootcamp.socialmeli.dto.*;
 import com.bootcamp.socialmeli.exceptions.BadRequestException;
 import com.bootcamp.socialmeli.exceptions.NotFoundException;
 import com.bootcamp.socialmeli.mapper.IMapper;
@@ -69,9 +66,14 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int getFollowerCount(long id) {
+    public UserWithCountDTO getFollowerCount(long id) {
         checkUserExistence(id);
-        return userRepository.getUser(id).getFollowers().size();
+        User user = userRepository.getUser(id);
+        return new UserWithCountDTO(
+                user.getId(),
+                user.getUsername(),
+                userRepository.getUser(id).getFollowers().size()
+        );
     }
 
     @Override
@@ -81,9 +83,14 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int getFollowedCount(long id) {
+    public UserWithCountDTO getFollowedCount(long id) {
         checkUserExistence(id);
-        return userRepository.getUser(id).getFollowed().size();
+        User user = userRepository.getUser(id);
+        return new UserWithCountDTO(
+                user.getId(),
+                user.getUsername(),
+                userRepository.getUser(id).getFollowed().size()
+        );
     }
 
     @Override

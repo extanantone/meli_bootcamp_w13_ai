@@ -1,7 +1,6 @@
 package com.bootcamp.socialmeli.controller;
 
-import com.bootcamp.socialmeli.dto.PostDTO;
-import com.bootcamp.socialmeli.dto.UserWithPostsDTO;
+import com.bootcamp.socialmeli.dto.*;
 import com.bootcamp.socialmeli.service.IPostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +41,38 @@ public class PostController {
         }
         return new ResponseEntity<>(
                 resBody,
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping("/promo-post")
+    public ResponseEntity<PromoPostDTO> createPromoPost(@RequestBody PromoPostDTO promoPostDTO) {
+        return new ResponseEntity<>(
+                postService.createPromoPost(promoPostDTO),
+                HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping("/promo-post/{id}")
+    public ResponseEntity<PromoPostDTO> getPromoPost(@PathVariable long id) {
+        return new ResponseEntity<>(
+                postService.getPromoPost(id),
+                HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping("/{id}/promo-post/count")
+    public ResponseEntity<UserWithCountDTO> getUserWithPromoPostsCount(@PathVariable long id) {
+        return new ResponseEntity<>(
+                postService.getUserWithPromoPostCount(id),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/{id}/promo-post/list")
+    public ResponseEntity<UserWithPromoPostsDTO> getUserWithPromoPosts(@PathVariable long id) {
+        return new ResponseEntity<>(
+                postService.getUserWithPromoPosts(id),
                 HttpStatus.OK
         );
     }

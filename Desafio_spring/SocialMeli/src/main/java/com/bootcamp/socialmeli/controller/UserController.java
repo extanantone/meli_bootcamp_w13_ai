@@ -1,9 +1,6 @@
 package com.bootcamp.socialmeli.controller;
 
-import com.bootcamp.socialmeli.dto.UserCreationDTO;
-import com.bootcamp.socialmeli.dto.UserDTO;
-import com.bootcamp.socialmeli.dto.UserWithFollowedDTO;
-import com.bootcamp.socialmeli.dto.UserWithFollowersDTO;
+import com.bootcamp.socialmeli.dto.*;
 import com.bootcamp.socialmeli.service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +55,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/followers/count")
-    public ResponseEntity<Integer> getFollowerCount(@PathVariable long id) {
+    public ResponseEntity<UserWithCountDTO> getFollowerCount(@PathVariable long id) {
         return new ResponseEntity<>(
                 userService.getFollowerCount(id),
                 HttpStatus.OK
@@ -79,7 +76,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/followed/count")
-    public ResponseEntity<Integer> getFollowedCount(@PathVariable long id) {
+    public ResponseEntity<UserWithCountDTO> getFollowedCount(@PathVariable long id) {
         return new ResponseEntity<>(
                 userService.getFollowedCount(id),
                 HttpStatus.OK

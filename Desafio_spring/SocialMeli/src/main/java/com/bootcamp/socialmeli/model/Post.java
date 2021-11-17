@@ -27,6 +27,8 @@ public class Post {
 
     private int category;
     private double price;
+    private boolean hasPromo;
+    private double discount;
 
     private long userId;
     private long productId;
@@ -37,5 +39,21 @@ public class Post {
         this.price = price;
         this.userId = userId;
         this.productId = productId;
+        this.hasPromo = false;
+        this.discount = 0.0;
+    }
+
+    public Post(LocalDate date, int category, double price, long userId, long productId, boolean hasPromo, double discount) {
+        this.date = date;
+        this.category = category;
+        this.price = price;
+        this.userId = userId;
+        this.productId = productId;
+        this.hasPromo = hasPromo;
+        this.discount = discount;
+    }
+
+    public boolean hasPromo() {
+        return hasPromo;
     }
 }
