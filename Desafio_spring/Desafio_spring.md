@@ -21,19 +21,15 @@ localhost:8080/users/{user_id}/follow/{user_id_to_follow}
 - ```json {
     "code": "200", 
     "message": "OK"
-    
 - ```json {
     "errorCode": "400",
     "errorMessage": "El usuario no puede seguirse a si mismo"
-    
 - ```json {
     "errorCode": "404",
     "errorMessage": "Usuario no encontrado id: X"
-    
 - ```json {
     "errorCode": "500",
     "errorMessage": "Error Interno del Servidor"
-    
 ## Dejar de seguir (POST)
 
 Un usuario puede dejar de seguir a otro.
@@ -47,19 +43,15 @@ localhost:8080/users/{user_id}/unfollow/{user_id_to_follow}
 - ```json {
     "code": "200", 
     "message": "OK"
-    
 - ```json {
     "errorCode": "400",
     "errorMessage": "El usuario no puede dejar de seguirse a si mismo"
-    
 - ```json {
     "errorCode": "404",
     "errorMessage": "Usuario no encontrado id: X"
-    
 - ```json {
     "errorCode": "500",
     "errorMessage": "Error Interno del Servidor"
-    
 ## Cantidad de seguidores (GET)
 
 Muestra la cantidad de seguidores que tiene un usuario.
@@ -74,11 +66,9 @@ localhost:8080/users/{user_id}/followers/count
     "user_id": 1,
     "user_name": "lozano1",
     "followers_count": 1
-    
 - ```json {
     "errorCode": "404",
     "errorMessage": "Usuario no encontrado id: X"
-    
 ## Lista de seguidores (GET)
 
 Muestra la lista de seguidores que tiene un usuario.
@@ -98,15 +88,12 @@ localhost:8080/users/{user_id}/followers/list?order=name_desc
     ],
     "user_id": 1,
     "user_name": "lozano1"
-    
 - ```json {
     "errorCode": 400,
     "errorMessage": "Valor ilegal para el request param order."
-    
 - ```json {
     "errorCode": 404,
     "errorMessage": "Usuario no encontrado id: 100"
-    
 ## Lista de seguidos (GET)
 
 Muestra la lista de seguidos que tiene un usuario.
@@ -126,15 +113,12 @@ localhost:8080/users/{user_id}/followed/list?order=name_desc
     ],
     "user_id": 1,
     "user_name": "lozano1"
-    
 - ```json {
     "errorCode": 400,
     "errorMessage": "Valor ilegal para el request param order."
-    
 - ```json {
     "errorCode": 404,
     "errorMessage": "Usuario no encontrado id: 100"
-    
 ## Dar de alta una publicacion (POST)
 
 Crea un publicacion de acuento a la informacion enviada en el body.
@@ -145,8 +129,7 @@ localhost:8080/products/post
 
 ### Payload
 
-```json 
-{
+```json {
   "user_id": 3,
   "id_post": null,
   "date": "16-11-2021",
@@ -169,15 +152,12 @@ localhost:8080/products/post
 
 - ```json {
     "post_id": 7
-    
 - ```json {
     "errorCode": 400,
     "errorMessage": "Missing Body Attribute"
-    
 - ```json {
     "errorCode": 404,
     "errorMessage": "Usuario no encontrado id: 100"
-    
 ## Lista de publicaciones de seguidos (GET)
 
 Muestra la lista de publicaciones realizadas en las ultimas dos semanas por los seguidos que tiene un usuario.
@@ -224,15 +204,12 @@ localhost:8080/products/followed/{user_id}/list?order=date_desc
         }
     ],
     "user_id": 2
-    
 - ```json {
     "errorCode": 400,
     "errorMessage": "Valor ilegal para el request param order."
-    
 - ```json {
     "errorCode": 404,
     "errorMessage": "Usuario no encontrado id: 100"
-    
 ## Cantidad de publicaciones en promocion de usuario (GET)
 
 Muestra la cantidad de publicaciones en promocion de usuario.
@@ -247,11 +224,9 @@ localhost:8080/products/{user_id}/promo-post/count
     "user_id": 1,
     "user_name": "lozano1",
     "promo_products_count": 4
-    
 - ```json {
     "errorCode": 404,
     "errorMessage": "Usuario no encontrado id: 100"
-    
 ## Lista de publicaciones en promocion de usuario (GET)
 
 Muestra la lista de publicaciones en promocion de usuario.
@@ -299,12 +274,9 @@ localhost:8080/products/{user_id}/promo-post/list?order=date_asc
     ],
     "user_id": 1,
     "user_name": "lozano1"
-    
 - ```json {
     "errorCode": 400,
     "errorMessage": "Valor ilegal para el request param order."
-    
 - ```json {
     "errorCode": 404,
     "errorMessage": "Usuario no encontrado id: 100"
-    
