@@ -1,7 +1,7 @@
 package com.socialMeli.SocialMeli.controller;
 
 import com.socialMeli.SocialMeli.model.Post;
-import com.socialMeli.SocialMeli.postDTO.PromoPostDTO;
+import com.socialMeli.SocialMeli.postDTO.PromoPostInDTO;
 import com.socialMeli.SocialMeli.service.PostService;
 import com.socialMeli.SocialMeli.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,13 +89,18 @@ public class ApplicationController {
     }
 
     @PostMapping("/products/promo-post")
-    public ResponseEntity<Optional> createPromoPost(@RequestBody PromoPostDTO post){
+    public ResponseEntity<Optional> createPromoPost(@RequestBody PromoPostInDTO post){
         return new ResponseEntity<Optional>(Optional.of(postService.create(post,userService.getUserRepository().getList_users())), HttpStatus.OK);
     }
 
     @GetMapping("/products/{user_id}/promo-post/count")
     public ResponseEntity<Optional> promoProductsCount(@PathVariable Integer user_id){
         return new ResponseEntity<Optional>(Optional.of(postService.promoProductsCount(user_id,userService.getUserRepository().getList_users())), HttpStatus.OK);
+    }
+
+    @GetMapping("/products/{user_id}/list")
+    public ResponseEntity<Optional> promoProductsList(@PathVariable Integer user_id){
+        return new ResponseEntity<Optional>(Optional.of(postService.promoProductsList(user_id,userService.getUserRepository().getList_users())), HttpStatus.OK);
     }
 
 }

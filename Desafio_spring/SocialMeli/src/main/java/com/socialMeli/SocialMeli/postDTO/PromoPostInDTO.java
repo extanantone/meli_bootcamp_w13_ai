@@ -10,7 +10,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class PromoPostDTO {
+public class PromoPostInDTO {
+    private Integer user_id;
     private Integer id_post;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
@@ -19,14 +20,4 @@ public class PromoPostDTO {
     private Double price;
     private Boolean has_promo;
     private Double discount;
-
-    public PromoPostDTO(Post post) {
-        this.id_post=post.getId_post();
-        this.date=post.getDate();
-        this.detail=post.getDetail();
-        this.category=post.getCategory();
-        this.price= post.getPrice();
-        this.has_promo=post.getHas_promo();
-        this.discount=post.getDiscount();
-    }
 }

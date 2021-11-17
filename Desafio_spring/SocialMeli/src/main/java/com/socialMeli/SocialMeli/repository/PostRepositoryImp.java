@@ -4,17 +4,14 @@ import com.socialMeli.SocialMeli.exception.postExceptions.ExistingPostException;
 import com.socialMeli.SocialMeli.exception.postExceptions.NotFoundIdPostException;
 import com.socialMeli.SocialMeli.model.Post;
 import com.socialMeli.SocialMeli.model.User;
-import com.socialMeli.SocialMeli.postDTO.PostDTO;
 import com.socialMeli.SocialMeli.postDTO.PostFollowedDTO;
-import com.socialMeli.SocialMeli.postDTO.PromoPostDTO;
+import com.socialMeli.SocialMeli.postDTO.PromoPostInDTO;
+import com.socialMeli.SocialMeli.postDTO.PromoPostListDTO;
 import com.socialMeli.SocialMeli.postDTO.PromoProductsCountDTO;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Repository
 public class PostRepositoryImp implements PostRepository{
@@ -32,7 +29,7 @@ public class PostRepositoryImp implements PostRepository{
     }
 
     @Override
-    public Post create(PromoPostDTO promoPostDTO) {
+    public Post create(PromoPostInDTO promoPostDTO) {
         if(promoPostDTO.getId_post()==null){
             throw new NotFoundIdPostException();
         }
@@ -69,5 +66,12 @@ public class PostRepositoryImp implements PostRepository{
         List<Post> list1=postList.values().stream().filter(posts-> posts.getUser_id()==user.getId() && posts.getHas_promo()==true).collect(Collectors.toList());
         PromoProductsCountDTO promo_count=new PromoProductsCountDTO(user.getId(), user.getUsername(), list1.size());
         return promo_count;
+    }
+
+    @Override
+    public PromoPostListDTO promoProductsList(User user) {
+        List<Post> list1=postList.values().stream().filter(posts-> posts.getUser_id()==user.getId() && posts.getHas_promo()==true).collect(Collectors.toList());
+        PromoPostListDTO promoPostListDTO=new PromoPostListDTO(user.getId(),user.getUsername(),list1);
+        return promoPostListDTO;
     }
 }

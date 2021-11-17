@@ -1,7 +1,7 @@
 package com.socialMeli.SocialMeli.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.socialMeli.SocialMeli.postDTO.PromoPostDTO;
+import com.socialMeli.SocialMeli.postDTO.PromoPostInDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,7 +31,7 @@ public class Post {
         this.discount=0.0;
     }
 
-    public Post(PromoPostDTO promoPostDTO) {
+    public Post(PromoPostInDTO promoPostDTO) {
         this.user_id = promoPostDTO.getUser_id();
         this.id_post = promoPostDTO.getId_post();
         this.date = promoPostDTO.getDate();

@@ -3,10 +3,7 @@ package com.socialMeli.SocialMeli.service;
 import com.socialMeli.SocialMeli.exception.userExceptions.NotFoundUserException;
 import com.socialMeli.SocialMeli.model.Post;
 import com.socialMeli.SocialMeli.model.User;
-import com.socialMeli.SocialMeli.postDTO.PostDTO;
-import com.socialMeli.SocialMeli.postDTO.PostFollowedDTO;
-import com.socialMeli.SocialMeli.postDTO.PromoPostDTO;
-import com.socialMeli.SocialMeli.postDTO.PromoProductsCountDTO;
+import com.socialMeli.SocialMeli.postDTO.*;
 import com.socialMeli.SocialMeli.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +27,7 @@ public class PostServiceImp implements PostService{
     }
 
     @Override
-    public Post create(PromoPostDTO post, HashMap usersList) {
+    public Post create(PromoPostInDTO post, HashMap usersList) {
         if(verifyUsers(post.getUser_id(),usersList)){
             return postRepository.create(post);
         }else{
@@ -64,6 +61,15 @@ public class PostServiceImp implements PostService{
     public PromoProductsCountDTO promoProductsCount(Integer user_id, HashMap<Integer, User> list_users) {
         if(verifyUsers(user_id,list_users)){
             return postRepository.promoProductsCount(list_users.get(user_id));
+        }else{
+            throw new NotFoundUserException();
+        }
+    }
+
+    @Override
+    public PromoPostListDTO promoProductsList(Integer user_id, HashMap<Integer, User> list_users) {
+        if(verifyUsers(user_id,list_users)){
+            return postRepository.promoProductsList(list_users.get(user_id));
         }else{
             throw new NotFoundUserException();
         }
