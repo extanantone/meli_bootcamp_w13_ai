@@ -55,21 +55,12 @@ y enterarse de todas las novedades que los mismos posteen.
       en caso contrario se lanzará una excepción.
 
     * **Entradas:**
-<<<<<<< HEAD
 
       | Method | END-PONT |
       | :---        |     :---:   |
       | **POST**   |  [localhost:8080/users/{user_id}/followers/list]() |
       | **Ejemplo**  | [localhost:8080/users/4/followers/list]() |
 
-=======
-
-      | Method | END-PONT |
-      | :---        |     :---:   |
-      | **POST**   |  [localhost:8080/users/{user_id}/followers/list]() |
-      | **Ejemplo**  | [localhost:8080/users/4/followers/list]() |
-
->>>>>>> 3bbd52d582a5cb5bfd31e90ac905c8f470dda3ac
 5. **US 0004:** Obtener un listado de todos los vendedores a los cuales sigue un determinado usuario (¿A quién sigo?)
 
 
@@ -97,5 +88,4 @@ publicaciones más recientes primero).
 
 
 12. **US 0012:** Obtener un listado de todos los productos en promoción de un determinado vendedor.
-
 
