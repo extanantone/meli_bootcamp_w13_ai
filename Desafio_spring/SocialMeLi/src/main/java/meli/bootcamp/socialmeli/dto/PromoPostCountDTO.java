@@ -1,40 +1,44 @@
 package meli.bootcamp.socialmeli.dto;
 
-public class PromoPostCountDTO {
-    private int user_id;
-    private String user_name;
-    private int promo_post_count;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-    public PromoPostCountDTO(int user_id, String user_name, int promo_post_count) {
-        this.user_id = user_id;
-        this.user_name = user_name;
-        this.promo_post_count = promo_post_count;
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class PromoPostCountDTO {
+    private int userId;
+    private String userName;
+    private int promoPostCount;
+
+    public PromoPostCountDTO(int userId, String userName, int promoPostCount) {
+        this.userId = userId;
+        this.userName = userName;
+        this.promoPostCount = promoPostCount;
     }
 
     public PromoPostCountDTO() {
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public int getPromo_post_count() {
-        return promo_post_count;
+    public int getPromoPostCount() {
+        return promoPostCount;
     }
 
-    public void setPromo_post_count(int promo_post_count) {
-        this.promo_post_count = promo_post_count;
+    public void setPromoPostCount(int promoPostCount) {
+        this.promoPostCount = promoPostCount;
     }
 }

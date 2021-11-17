@@ -112,4 +112,9 @@ public class SocialController implements ISocialController{
     public ResponseEntity<PromoPostCountDTO> countPromoPostBySeller(int user_id) {
         return new ResponseEntity<>(socialMeliService.countPromoPost(user_id), HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<PromoPostDTO> listPromoPostByUser(int user_id) {
+        return new ResponseEntity<>(socialMeliService.listPromoPostByUSer(user_id), HttpStatus.OK);
+    }
 }

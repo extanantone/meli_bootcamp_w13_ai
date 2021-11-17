@@ -24,4 +24,5 @@ public interface ISocialMeliService {
     FollowersListDTO getOrderedFollowersList(int userID, boolean searchFollowers, String order, boolean sortedResponse);
     void newPromoPost(ProductsPromoPostDTO productsPromoPostDTO);
     PromoPostCountDTO countPromoPost(int userID);
+    PromoPostDTO listPromoPostByUSer(int userID);
 }

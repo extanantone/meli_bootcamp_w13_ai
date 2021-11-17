@@ -41,7 +41,10 @@ public interface ISocialController {
     @GetMapping(value = "/products/{user_id}/promo-post/count")
     ResponseEntity<PromoPostCountDTO> countPromoPostBySeller(@PathVariable int user_id);
 
-    //
+    @GetMapping(value = "/products/{user_id}/list")
+    ResponseEntity<PromoPostDTO> listPromoPostByUser(@PathVariable int user_id);
+
+    //Obtener todas las listas almacenadas durante la ejecución del sistema
     @GetMapping("/listaSeguidores")
     List<UserFollow> lista();
 

@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -177,8 +176,8 @@ public class SocialMeliService implements ISocialMeliService{
 
     @Override
     public void newPromoPost(ProductsPromoPostDTO productsPromoPostDTO) {
-        userRepository.findUserById(productsPromoPostDTO.getUser_id());
-        if (promoPostRepository.findPromoPostById(productsPromoPostDTO.getId_post()) == null)
+        userRepository.findUserById(productsPromoPostDTO.getUserId());
+        if (promoPostRepository.findPromoPostById(productsPromoPostDTO.getIdPost()) == null)
             promoPostRepository.addPromoPost(promoPostMapper.productoPromoPostDTOtoPromoPost(productsPromoPostDTO));
         else
             throw new PostAlreadyExistException();
@@ -191,6 +190,18 @@ public class SocialMeliService implements ISocialMeliService{
                 userRepository.getUserNameById(userID),
                 (int) promoPostRepository.getAllList().stream()
                     .filter(post -> post.getUserId() == userID).count()
+        );
+    }
+
+    @Override
+    public PromoPostDTO listPromoPostByUSer(int userID) {
+        return new PromoPostDTO(
+                userID,
+                userRepository.getUserNameById(userID),
+                promoPostRepository.getAllList().stream()
+                        .filter(promoPost -> promoPost.getUserId() == userID)
+                        .map(promoPost -> promoPostMapper.promoPostToPromoPostDTO(promoPost))
+                        .collect(Collectors.toList())
         );
     }
 }
