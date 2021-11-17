@@ -45,16 +45,8 @@ public class UserService implements IUserService{
     public UserFollowersDTO getUsersFollowers(int id, String order) {
         User user = iUserRepository.getUser(id);
         List<User> followers = iUserRepository.getUsersFollowers(user.getId());
-        followers.sort((u1, u2)-> {
-            if (order.equals("name_asc")) {
-                return u1.getName().compareTo(u2.getName());
-            } else if (order.equals("name_desc")){
-                return (u1.getName().compareTo(u2.getName())) * -1;
-            } else {
-                //TIRAR EXCEPCION SOBRE ORDEN NO RECONOCIDO
-                return 0;
-            }
-        });
+        followers.sort((u1, u2) -> compareUser(u1, u2, order));
+
         return iUserMapper.toUserFollowersDTO(user, followers);
     }
 
@@ -69,16 +61,8 @@ public class UserService implements IUserService{
     public UserFollowedDTO getUsersFollowed(int id, String order) {
         User user = iUserRepository.getUser(id);
         List<User> followed = iUserRepository.getUsersFollowed(user.getId());
-        followed.sort((u1, u2)-> {
-            if (order.equals("name_asc")) {
-                return u1.getName().compareTo(u2.getName());
-            } else if (order.equals("name_desc")){
-                return (u1.getName().compareTo(u2.getName())) * -1;
-            } else {
-                //TIRAR EXCEPCION SOBRE ORDEN NO RECONOCIDO
-                return 0;
-            }
-        });
+        followed.sort((u1, u2) -> compareUser(u1, u2, order));
+
         return iUserMapper.toUserFollowedDTO(user, followed);
     }
 
@@ -89,6 +73,17 @@ public class UserService implements IUserService{
         User userToUnfollow = iUserRepository.getUser(userToUnfollowId);
         //AGREGAR VALIDACIONES
         iUserRepository.unfollowUser(user.getId(), userToUnfollow.getId());
+    }
+
+    private int compareUser(User u1, User u2, String order){
+        if (order.equals("name_asc")) {
+            return u1.getName().compareTo(u2.getName());
+        } else if (order.equals("name_desc")){
+            return (u1.getName().compareTo(u2.getName())) * -1;
+        } else {
+            //TIRAR EXCEPCION SOBRE ORDEN NO RECONOCIDO
+            return 0;
+        }
     }
 
 }

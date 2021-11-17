@@ -1,20 +1,19 @@
 package com.bootcamp.socialmeli.dto;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class RequestPostDTO {
+public class RequestPostDTO extends PostDTO{
     private int userId;
-    private int idPost;
-    private String date;
-    private double price;
-    private int category;
-    private RequestProductDTO detail;
+
+    public RequestPostDTO(int idPost, String date, double price, int category, ProductDTO detail, int userId) {
+        super(idPost, date, price, category, detail);
+        this.userId = userId;
+    }
 }
