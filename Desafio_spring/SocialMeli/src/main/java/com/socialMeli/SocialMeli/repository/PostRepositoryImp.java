@@ -1,9 +1,14 @@
 package com.socialMeli.SocialMeli.repository;
 
+import com.socialMeli.SocialMeli.exception.postExceptions.ExistingPostException;
+import com.socialMeli.SocialMeli.exception.postExceptions.NotFoundIdPostException;
 import com.socialMeli.SocialMeli.model.Post;
 import com.socialMeli.SocialMeli.model.User;
 import com.socialMeli.SocialMeli.postDTO.PostDTO;
 import com.socialMeli.SocialMeli.postDTO.PostFollowedDTO;
+import com.socialMeli.SocialMeli.postDTO.PromoPostDTO;
+import com.socialMeli.SocialMeli.postDTO.PromoProductsCountDTO;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -16,6 +21,25 @@ public class PostRepositoryImp implements PostRepository{
     private Map<Integer,Post> postList=new HashMap<>();
     @Override
     public Post create(Post post) {
+        if(post.getId_post()==null){
+            throw new NotFoundIdPostException();
+        }
+        if(postList.get(post.getId_post())!=null){
+            throw new ExistingPostException();
+        }
+        postList.put(post.getId_post(),post);
+        return post;
+    }
+
+    @Override
+    public Post create(PromoPostDTO promoPostDTO) {
+        if(promoPostDTO.getId_post()==null){
+            throw new NotFoundIdPostException();
+        }
+        if(postList.get(promoPostDTO.getId_post())!=null){
+            throw new ExistingPostException();
+        }
+        Post post=new Post(promoPostDTO);
         postList.put(post.getId_post(),post);
         return post;
     }
@@ -40,5 +64,10 @@ public class PostRepositoryImp implements PostRepository{
         return postFollowedDTO;
     }
 
-
+    @Override
+    public PromoProductsCountDTO promoProductsCount(User user) {
+        List<Post> list1=postList.values().stream().filter(posts-> posts.getUser_id()==user.getId() && posts.getHas_promo()==true).collect(Collectors.toList());
+        PromoProductsCountDTO promo_count=new PromoProductsCountDTO(user.getId(), user.getUsername(), list1.size());
+        return promo_count;
+    }
 }

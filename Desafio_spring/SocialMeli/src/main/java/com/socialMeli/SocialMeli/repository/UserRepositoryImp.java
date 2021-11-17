@@ -1,5 +1,7 @@
 package com.socialMeli.SocialMeli.repository;
 
+import com.socialMeli.SocialMeli.exception.userExceptions.AlreadyFollowedUserException;
+import com.socialMeli.SocialMeli.exception.userExceptions.NotFollowingUserException;
 import com.socialMeli.SocialMeli.userDto.*;
 import com.socialMeli.SocialMeli.model.User;
 import org.springframework.stereotype.Repository;
@@ -31,7 +33,9 @@ public class UserRepositoryImp implements UserRepository{
     public UserFollowDTO follow(Integer user_id, Integer user_to_follow_id) {
         User user = list_users.get(user_id);
         User user_to_follow = list_users.get(user_to_follow_id);
-        //aca se puede verificar que no este siguiendo al usuario
+        if(user.getFollowing().contains(user_to_follow_id)){
+            throw new AlreadyFollowedUserException();
+        }
         user.getFollowing().add(user_to_follow_id);
         user_to_follow.getFollowers().add(user_id);
         UserFollowDTO userDTO = new UserFollowDTO(user);
@@ -71,6 +75,9 @@ public class UserRepositoryImp implements UserRepository{
 
     @Override
     public UserFollowDTO unfollow(Integer user_id, Integer user_id_to_unfollow) {
+        if(!list_users.get(user_id).getFollowing().contains(user_id_to_unfollow)){
+            throw new NotFollowingUserException();
+        }
         list_users.get(user_id).getFollowing().remove(user_id_to_unfollow);
         list_users.get(user_id_to_unfollow).getFollowers().remove(user_id);
         UserFollowDTO userDTO = new UserFollowDTO(list_users.get(user_id));

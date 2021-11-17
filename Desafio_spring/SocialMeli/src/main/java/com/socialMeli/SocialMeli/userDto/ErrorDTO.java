@@ -1,9 +1,9 @@
 package com.socialMeli.SocialMeli.userDto;
 
-public class ResponseDTO {
+public class ErrorDTO {
     private String message="";
 
-    public ResponseDTO(String message) {
+    public ErrorDTO(String message) {
         this.message = message;
     }
 

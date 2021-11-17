@@ -1,5 +1,7 @@
 package com.socialMeli.SocialMeli.service;
 
+import com.socialMeli.SocialMeli.exception.userExceptions.FollowItselfException;
+import com.socialMeli.SocialMeli.exception.userExceptions.NotFoundUserException;
 import com.socialMeli.SocialMeli.userDto.*;
 import com.socialMeli.SocialMeli.model.User;
 import com.socialMeli.SocialMeli.repository.UserRepository;
@@ -21,8 +23,14 @@ public class UserServiceImp implements UserService{
 
     @Override
     public UserFollowDTO follow(Integer user_id, Integer user_to_follow_id) {
-
-        return userRepository.follow(user_id,user_to_follow_id);
+        if(verifyUsers(user_id,user_to_follow_id)){
+            if(user_id==user_to_follow_id){
+                throw new FollowItselfException();
+            }
+            return userRepository.follow(user_id,user_to_follow_id);
+        }else{
+            throw new NotFoundUserException();
+        }
     }
 
     @Override
@@ -48,42 +56,62 @@ public class UserServiceImp implements UserService{
 
     @Override
     public UserFollowersCountDTO countFollowers(Integer user_id) {
-        return userRepository.countFollowers(user_id);
+        if(verifyUsers(user_id)){
+            return userRepository.countFollowers(user_id);
+        }else{
+            throw new NotFoundUserException();
+        }
     }
 
     @Override
     public FollowersListDTO listFollowers(Integer user_id) {
-         return userRepository.listFollowers(user_id);
+        if(verifyUsers(user_id)){
+            return userRepository.listFollowers(user_id);
+        }else{
+            throw new NotFoundUserException();
+        }
     }
 
     @Override
     public FollowersListDTO listFollowers(Integer user_id, String order) {
-        if(order.equals("name_asc")){
-            List orderedList = userRepository.listFollowers(user_id).getFollowers().stream().sorted(Comparator.comparing(UserInfoDTO::getUser_name)).collect(Collectors.toList());
-            FollowersListDTO listDTO = new FollowersListDTO(user_id,userRepository.getList_users().get(user_id).getUsername(),orderedList);
-            return listDTO;
+        if(verifyUsers(user_id)){
+            if(order.equals("name_asc")){
+                List orderedList = userRepository.listFollowers(user_id).getFollowers().stream().sorted(Comparator.comparing(UserInfoDTO::getUser_name)).collect(Collectors.toList());
+                FollowersListDTO listDTO = new FollowersListDTO(user_id,userRepository.getList_users().get(user_id).getUsername(),orderedList);
+                return listDTO;
+            }else{
+                List orderedList = userRepository.listFollowers(user_id).getFollowers().stream().sorted(Comparator.comparing(UserInfoDTO::getUser_name).reversed()).collect(Collectors.toList());
+                FollowersListDTO listDTO = new FollowersListDTO(user_id,userRepository.getList_users().get(user_id).getUsername(),orderedList);
+                return listDTO;
+            }
         }else{
-            List orderedList = userRepository.listFollowers(user_id).getFollowers().stream().sorted(Comparator.comparing(UserInfoDTO::getUser_name).reversed()).collect(Collectors.toList());
-            FollowersListDTO listDTO = new FollowersListDTO(user_id,userRepository.getList_users().get(user_id).getUsername(),orderedList);
-            return listDTO;
+            throw new NotFoundUserException();
         }
     }
 
     @Override
     public FollowedListDTO listFollowed(Integer user_id) {
-        return userRepository.listFollowed(user_id);
+        if(verifyUsers(user_id)){
+            return userRepository.listFollowed(user_id);
+        }else{
+            throw new NotFoundUserException();
+        }
     }
 
     @Override
     public FollowedListDTO listFollowed(Integer user_id, String order) {
-        if(order.equals("name_asc")){
-            List orderedList = userRepository.listFollowed(user_id).getFollowed().stream().sorted(Comparator.comparing(UserInfoDTO::getUser_name)).collect(Collectors.toList());
-            FollowedListDTO listDTO = new FollowedListDTO(user_id,userRepository.getList_users().get(user_id).getUsername(),orderedList);
-            return listDTO;
+        if(verifyUsers(user_id)){
+            if(order.equals("name_asc")){
+                List orderedList = userRepository.listFollowed(user_id).getFollowed().stream().sorted(Comparator.comparing(UserInfoDTO::getUser_name)).collect(Collectors.toList());
+                FollowedListDTO listDTO = new FollowedListDTO(user_id,userRepository.getList_users().get(user_id).getUsername(),orderedList);
+                return listDTO;
+            }else{
+                List orderedList = userRepository.listFollowed(user_id).getFollowed().stream().sorted(Comparator.comparing(UserInfoDTO::getUser_name).reversed()).collect(Collectors.toList());
+                FollowedListDTO listDTO = new FollowedListDTO(user_id,userRepository.getList_users().get(user_id).getUsername(),orderedList);
+                return listDTO;
+            }
         }else{
-            List orderedList = userRepository.listFollowed(user_id).getFollowed().stream().sorted(Comparator.comparing(UserInfoDTO::getUser_name).reversed()).collect(Collectors.toList());
-            FollowedListDTO listDTO = new FollowedListDTO(user_id,userRepository.getList_users().get(user_id).getUsername(),orderedList);
-            return listDTO;
+            throw new NotFoundUserException();
         }
     }
 
@@ -93,6 +121,10 @@ public class UserServiceImp implements UserService{
 
     @Override
     public UserFollowDTO unfollow(Integer user_id, Integer user_id_to_unfollow) {
-        return userRepository.unfollow(user_id,user_id_to_unfollow);
+        if(verifyUsers(user_id,user_id_to_unfollow)){
+            return userRepository.unfollow(user_id,user_id_to_unfollow);
+        }else{
+            throw new NotFoundUserException();
+        }
     }
 }
