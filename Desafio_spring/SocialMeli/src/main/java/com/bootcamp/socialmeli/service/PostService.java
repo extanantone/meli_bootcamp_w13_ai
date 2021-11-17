@@ -37,28 +37,32 @@ public class PostService implements IPostService {
     //US0006
     @Override
     public UserPostDTO getRecientPost(Long idUser, String order) {
-        List<Post> recentPostsByFollowed = vendedorRepository.getRecentPosts(idUser);
+        List<Post> recentPostsByFollowed = vendedorRepository.getFolloweds(idUser).stream().map(
+                        u -> vendedorRepository.getRecentPosts(u.getUserId())).
+                flatMap(Collection::stream).sorted(Comparator.comparing(Post::getPublishDate,
+                        Collections.reverseOrder())).collect(Collectors.toList());
         if (!Objects.isNull(order)) {
-            recentPostsByFollowed = this.orderPostsByDate(recentPostsByFollowed, order);
+            recentPostsByFollowed = orderPostsByDate(recentPostsByFollowed, order);
         }
         return new UserPostDTO(idUser, recentPostsByFollowed.stream().map(
                 p -> mapper.map(p, PostDTO.class)).collect(Collectors.toList()));
     }
 
 
-    private List<Post> orderPostsByDate(List<Post> inPosts, String order) {
-        List<Post> post = inPosts;
+    private List<Post> orderPostsByDate(List<Post> posts, String order) {
+        Comparator<Post> orderType;
         if (order.equals("date_asc")) {
-            post = post.stream().sorted(
-                            Comparator.comparing(Post::getPublishDate)).
-                    collect(Collectors.toList());
+            orderType = Comparator.comparing(Post::getPublishDate);
         } else if (order.equals("date_desc")) {
-            post = post.stream().sorted(
-                            Comparator.comparing(Post::getPublishDate, Collections.reverseOrder())).
-                    collect(Collectors.toList());
-            //TODO: Throw except
+            orderType = Comparator.comparing(Post::getPublishDate,
+                    Collections.reverseOrder());
+            // TODO: make except
         } else return null;
-        return post;
+        return this.sortPost(posts, orderType);
+    }
+
+    private List<Post> sortPost (List<Post> posts, Comparator<Post> orderType) {
+        return posts.stream().sorted(orderType).collect(Collectors.toList());
     }
 
 }

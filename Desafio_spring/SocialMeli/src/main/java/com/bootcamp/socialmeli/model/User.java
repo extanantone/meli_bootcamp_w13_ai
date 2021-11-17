@@ -36,8 +36,16 @@ public class User {
         this.followed.add(idNewFollowed);
     }
 
+    public boolean unFollowed (Long idFollowed) {
+        return this.followed.removeIf(i -> i == idFollowed);
+    }
+
     public void addFollower (Long idNewFollower) {
         this.followers.add(idNewFollower);
+    }
+
+    public boolean removeFollower (Long idFollower) {
+        return this.followers.removeIf(i -> i == idFollower);
     }
 
     public Integer getFollowersCount () {

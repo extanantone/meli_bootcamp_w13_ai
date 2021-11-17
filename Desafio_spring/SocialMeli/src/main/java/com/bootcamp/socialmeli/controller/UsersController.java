@@ -37,8 +37,8 @@ public class UsersController {
 
     // US0003
     @GetMapping("/{user_id}/followers/list")
-    public ResponseEntity<VendedorDTO> getSellerFollowers(@PathVariable Long user_id) {
-        return new ResponseEntity(this.vendedorService.getFollowersList(user_id), HttpStatus.OK);
+    public ResponseEntity<VendedorDTO> getSellerFollowers(@PathVariable Long user_id, String order) {
+        return new ResponseEntity(this.vendedorService.getFollowersList(user_id, order), HttpStatus.OK);
 
     }
 
@@ -46,8 +46,18 @@ public class UsersController {
     @GetMapping("/{user_id}/followed/list")
     public ResponseEntity<CompradorDTO> getBuyllerFollowers(@PathVariable Long user_id) {
         return new ResponseEntity(this.vendedorService.getFollowedsList(user_id), HttpStatus.OK);
-
-
     }
+
+    // US0007
+    @PostMapping("/{user_id}/unfollow/{user_id_to_follow}")
+    ResponseEntity<MessageDTO> unFollow(
+            @PathVariable("user_id") Long user_id,
+            @PathVariable("user_id_to_follow") Long user_id_to_follow) {
+        this.vendedorService.unFollow(user_id, user_id_to_follow);
+        MessageDTO outMessage = new MessageDTO("Ok");
+        return new ResponseEntity(outMessage, HttpStatus.OK);
+    }
+
+    // US0008
 
 }

@@ -66,14 +66,14 @@ public class VendedorRepository implements IVendedorRepository {
 
     @Override
     public List<User> getFollowers(Long idUser) {
-        return this.users.get(idUser).getFollowers().stream().map(
-                i -> this.users.get(i)).collect(Collectors.toList());
+        return this.users.get(idUser).getFollowers().stream().map(this.users::get).
+                collect(Collectors.toList());
     }
 
     @Override
     public List<User> getFolloweds(Long idUser) {
-        return this.users.get(idUser).getFollowed().stream().map(
-                i -> this.users.get(i)).collect(Collectors.toList());
+        return this.users.get(idUser).getFollowed().stream().map(this.users::get).
+                collect(Collectors.toList());
     }
 
     // US0001
@@ -95,10 +95,16 @@ public class VendedorRepository implements IVendedorRepository {
     public List<Post> getRecentPosts(Long idUser) {
         LocalDate now = LocalDate.now();
         return this.users.get(idUser).getPosts().stream().map(
-                        i -> this.post.get(i)).filter(
-                        p -> DAYS.between(p.getPublishDate(), now) < 14).
+                        this.post::get).filter(p -> DAYS.between(p.getPublishDate(), now) < 14).
                 collect(Collectors.toList());
     }
 
+    // US 0007
+    public void unFollow(Long idFollower, Long idFollowed) {
+        User Follower = this.users.get(idFollower);
+        Follower.unFollowed(idFollowed);
+        User Followed = this.users.get(idFollowed);
+        Followed.removeFollower(idFollower);
+    }
 
 }

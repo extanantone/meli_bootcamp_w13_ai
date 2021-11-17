@@ -17,6 +17,7 @@ public interface IVendedorRepository {
     //post
     public void addPostToUser(Long idUser, Post post);
     public List<Post> getRecentPosts(Long idUser);
+    public void unFollow(Long idFollower, Long idFollowed);
 
 
 }

@@ -29,8 +29,8 @@ public class PostController {
     @GetMapping("/followed/{user_id}/list")
     public ResponseEntity<UserPostDTO> getRecentPostsByFollowed (
             @PathVariable("user_id") Long idUser,
-            @RequestParam(value = "order", required = false) String prefix) {
-        return new ResponseEntity(postService.getRecientPost(idUser, prefix),
+            @RequestParam(value = "order", required = false) String order) {
+        return new ResponseEntity(postService.getRecientPost(idUser, order),
                 HttpStatus.OK);
     }
 

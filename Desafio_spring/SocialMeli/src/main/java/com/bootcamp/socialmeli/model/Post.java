@@ -1,5 +1,6 @@
 package com.bootcamp.socialmeli.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Post {
     private Long id;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate publishDate;
     private PostProduct productOnSale;
     private Integer category;
