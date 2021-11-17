@@ -10,6 +10,13 @@ import java.util.*;
 public class UserRepository implements IUserRepository{
     Map<Integer, User> users = new HashMap<>();
 
+    public UserRepository() {
+        this.add(1, "Juan", true);
+        this.add(2, "Pedro", true);
+        this.add(3, "Agustina", true);
+        this.add(4, "Azul", true);
+    }
+
     @Override
     public Optional<User> find(int userId) {
         if (!this.users.containsKey(userId)) return Optional.empty();

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
 
 public interface IUserController {
-    @GetMapping("preload")
-    ResponseEntity<Void> preload();
 
     @GetMapping("users/{user_id}/follow/{user_id_to_follow}")
     ResponseEntity<Void> follow(

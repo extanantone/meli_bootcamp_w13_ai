@@ -13,23 +13,12 @@ import java.util.Collections;
 import java.util.Optional;
 
 @RestController
-public class UserController {
+public class UserController implements IUserController {
 
     /* TODO: input validation */
 
     @Autowired
     IUserService userService;
-
-    @GetMapping("preload")
-    public ResponseEntity<Void> preload(){
-        userService.add(1, "Juan", true);
-        userService.add(2, "Pedro", true);
-        userService.add(3, "Agustina", true);
-        userService.add(4, "Azul", true);
-        return new ResponseEntity(HttpStatus.OK);
-        //pasar esto a un json?
-        //tenerlos creados desde antes en el repository?
-    }
 
     @GetMapping("users/{user_id}/follow/{user_id_to_follow}")
     public ResponseEntity<Void> follow(
