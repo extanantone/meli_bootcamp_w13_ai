@@ -3,7 +3,7 @@ package com.example.socialmeli.controller.v1.product.post;
 import com.example.socialmeli.dto.post.*;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("api/v1/products")
+@RequestMapping("products")
 public interface IPostController
 {
     @PostMapping("/post")

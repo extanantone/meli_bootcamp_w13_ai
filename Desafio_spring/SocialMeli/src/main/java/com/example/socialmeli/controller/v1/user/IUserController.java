@@ -5,7 +5,7 @@ import com.example.socialmeli.dto.user.FollowerCountDTO;
 import com.example.socialmeli.dto.user.FollowerListDTO;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("api/v1/users")
+@RequestMapping("users")
 public interface IUserController
 {
     @PostMapping("/{userId}/follow/{userIdToFollow}")
