@@ -25,31 +25,38 @@ public class UserController {
     }
 
     @GetMapping("/users/{user_id}/followers/count")
-    public ResponseEntity countFollowers(@PathVariable("user_id") Integer userId){
+    public ResponseEntity countFollowers(@PathVariable("user_id") Integer userId) {
         FollowerCountDTO dto = service.countFollowers(userId);
         return new ResponseEntity(dto, HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}/followed/list")
-    public ResponseEntity getFollowed(@PathVariable("user_id") Integer userId, @RequestParam(required = false) String order){
+    public ResponseEntity getFollowed(@PathVariable("user_id") Integer userId, @RequestParam(required = false) String order) {
         FollowedDTO dto = service.getFollowed(userId, order);
         return new ResponseEntity(dto, HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}/followers/list")
-    public ResponseEntity getFollowers(@PathVariable("user_id") Integer userId, @RequestParam(required = false) String order){
+    public ResponseEntity getFollowers(@PathVariable("user_id") Integer userId, @RequestParam(required = false) String order) {
         FollowersDTO dto = service.getFollowers(userId, order);
         return new ResponseEntity(dto, HttpStatus.OK);
     }
 
-    @PostMapping(path="/products/post")
-    public ResponseEntity newPublication(@RequestBody PostDTO dto){
+    @PostMapping(path = "/products/post")
+    public ResponseEntity newPublication(@RequestBody PostDTO dto) {
         service.newPublication(dto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    // NO FUNCIONA TODAVIA
+//    @PostMapping(path = "/products/promo-post")
+//    public ResponseEntity newPromoPublication(@RequestBody PromoPostDTO dto) {
+//        service.newPublication(dto);
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
+
     @GetMapping(path = "/products/followed/{user_id}/list")
-    public ResponseEntity getPostsList(@PathVariable("user_id") Integer userId, @RequestParam(required = false) String order){
+    public ResponseEntity getPostsList(@PathVariable("user_id") Integer userId, @RequestParam(required = false) String order) {
         PostsListDTO dto = service.getPostsList(userId, order);
         return new ResponseEntity(dto, HttpStatus.OK);
     }

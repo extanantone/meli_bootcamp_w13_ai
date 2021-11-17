@@ -1,5 +1,7 @@
 package com.bootcamp.SocialMeli.repository;
 
+import com.bootcamp.SocialMeli.exceptions.IdAlreadyCreatedException;
+import com.bootcamp.SocialMeli.exceptions.UserNotFoundException;
 import com.bootcamp.SocialMeli.model.Detail;
 import com.bootcamp.SocialMeli.model.Post;
 import com.bootcamp.SocialMeli.model.User;
@@ -17,15 +19,13 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public class UserRepository implements IUserRepository{
+public class UserRepository implements IUserRepository {
     private final List<User> usersList;
     private Map<Integer, Post> posts = new HashMap<>();
-    private Map<Integer, Detail> details = new HashMap<>();
+//    private Map<Integer, Detail> details = new HashMap<>();
 
-    public void addPost(Post post){
+    public void addPost(Post post) {
         this.posts.put(post.getIdPost(), post);
-        System.out.println(post.toString());
-        System.out.println(posts.toString());
     }
 
     public Map<Integer, Post> getPosts() {
@@ -41,10 +41,12 @@ public class UserRepository implements IUserRepository{
         return usersList;
     }
 
-    public Optional<User> getUser(Integer userId){
-        return this.usersList.stream()
+    public Optional<User> getUser(Integer userId) {
+        Optional<User> user = this.usersList.stream()
                 .filter(u -> u.getUserId().equals(userId))
                 .findFirst();
+        if (user.isEmpty()) throw new UserNotFoundException("No se encontro el usuario: " + userId);
+        return user;
     }
 
     private List<User> loadDataBase() {
@@ -55,7 +57,8 @@ public class UserRepository implements IUserRepository{
             e.printStackTrace();
         }
         ObjectMapper objectMapper = new ObjectMapper();
-        TypeReference<List<User>> typeRef = new TypeReference<>() {};
+        TypeReference<List<User>> typeRef = new TypeReference<>() {
+        };
         List<User> users = null;
         try {
             users = objectMapper.readValue(file, typeRef);
@@ -65,18 +68,21 @@ public class UserRepository implements IUserRepository{
         return users;
     }
 
-    @Override
-    public void followUser(Integer userId, Integer userIdToFollow) {
-        User user = usersList.stream()
-                .filter(u -> u.getUserId().equals(userId))
-                .findFirst()
-                .orElse(null);
-        User userToFollow = usersList.stream()
-                .filter(u -> u.getUserId().equals(userIdToFollow))
-                .findFirst()
-                .orElse(null);
+//    @Override
+//    public void followUser(Integer userId, Integer userIdToFollow) {
+//        User user = usersList.stream()
+//                .filter(u -> u.getUserId().equals(userId))
+//                .findFirst()
+//                .orElse(null);
+//        User userToFollow = usersList.stream()
+//                .filter(u -> u.getUserId().equals(userIdToFollow))
+//                .findFirst()
+//                .orElse(null);
+//        if (user.getFollowed().containsKey(userIdToFollow)) {
+//            throw new IdAlreadyCreatedException("El usuario " + userId + " ya sigue al usuario " + userToFollow);
+//        }
+//        user.addFollowed(userToFollow);
+//        userToFollow.addFollower(user);
+//    }
 
-        user.addFollowed(userToFollow);
-        userToFollow.addFollower(user);
-    }
 }

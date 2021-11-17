@@ -1,6 +1,8 @@
 package com.bootcamp.SocialMeli.service;
 
 import com.bootcamp.SocialMeli.dto.*;
+import com.bootcamp.SocialMeli.exceptions.IdAlreadyCreatedException;
+import com.bootcamp.SocialMeli.exceptions.SameUserException;
 import com.bootcamp.SocialMeli.model.Detail;
 import com.bootcamp.SocialMeli.model.Post;
 import com.bootcamp.SocialMeli.model.User;
@@ -8,6 +10,7 @@ import com.bootcamp.SocialMeli.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sound.midi.InvalidMidiDataException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -21,30 +24,34 @@ public class UserService implements IUserService {
 
     @Override
     public void followUser(Integer userId, Integer userIdToFollow) {
-        // valida que existan (falta manejar excepciones)
-        if (!userId.equals(userIdToFollow)) {
-            User user = repository.getUser(userId).orElse(null);
-            User userToFollow = repository.getUser(userIdToFollow).orElse(null);
-            //repository.followUser(userId, userIdToFollow);
-            user.addFollowed(userToFollow);
-            userToFollow.addFollower(user);
-//            System.out.println(repository.getUsersList());
+        if (userId.equals(userIdToFollow)) {
+            throw new SameUserException("Un usuario no se puede seguir a si mismo.");
         }
+        User user = repository.getUser(userId).orElse(null);
+        User userToFollow = repository.getUser(userIdToFollow).orElse(null);
+        if (user.getFollowed().containsKey(userIdToFollow)) {
+            throw new IdAlreadyCreatedException("El usuario " + userId + " ya sigue al usuario " + userIdToFollow);
+        }
+        user.addFollowed(userToFollow);
+        userToFollow.addFollower(user);
     }
 
     @Override
     public void unfollowUser(Integer userId, Integer userIdToUnfollow) {
-        if (!userId.equals(userIdToUnfollow)) {
-            User user = repository.getUser(userId).orElse(null);
-            User userToUnfollow = repository.getUser(userIdToUnfollow).orElse(null);
-            user.deleteFollowed(userToUnfollow);
-            userToUnfollow.deleteFollower(user);
+        if (userId.equals(userIdToUnfollow)) {
+            throw new SameUserException("Un usuario no se sigue a si mismo.");
         }
+        User user = repository.getUser(userId).orElse(null);
+        User userToUnfollow = repository.getUser(userIdToUnfollow).orElse(null);
+        user.deleteFollowed(userToUnfollow);
+        userToUnfollow.deleteFollower(user);
     }
 
     @Override
     public void newPublication(PostDTO dto) {
-//        System.out.println(dto.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        if (repository.getPosts().containsKey(dto.getIdPost())) {
+            throw new IdAlreadyCreatedException("Ya existe un post con el id: " + dto.getIdPost());
+        }
         repository.addPost(
                 new Post(dto.getUserId(),
                         dto.getIdPost(),
@@ -58,7 +65,6 @@ public class UserService implements IUserService {
                         dto.getCategory(),
                         dto.getPrice()));
     }
-
 
     @Override
     public FollowerCountDTO countFollowers(Integer userId) {
@@ -122,7 +128,7 @@ public class UserService implements IUserService {
         List<PostDTO> postDTOList = new ArrayList<>();
         for (Map.Entry<Integer, Post> post : repository.getPosts().entrySet()
         ) {
-            if (vendedores.containsKey(post.getValue().getUserId())){
+            if (vendedores.containsKey(post.getValue().getUserId())) {
                 postList.add(post.getValue());
             }
         }
@@ -142,12 +148,11 @@ public class UserService implements IUserService {
                         collect(Collectors.toList());
             }
         }
-        for (Post p : postList){
+        for (Post p : postList) {
             postDTOList.add(
                     new PostDTO(p.getUserId(),
                             p.getIdPost(),
                             p.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
-//                            LocalDate.parse(p.getDate().toString(), DateTimeFormatter.ofPattern("dd-MM-yyyy")).toString(),
                             new DetailDTO(p.getDetail().getProductId(),
                                     p.getDetail().getProductName(),
                                     p.getDetail().getType(),
@@ -160,4 +165,5 @@ public class UserService implements IUserService {
         PostsListDTO dto = new PostsListDTO(userId, postDTOList);
         return dto;
     }
+
 }

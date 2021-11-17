@@ -1,6 +1,11 @@
 package com.bootcamp.SocialMeli.dto;
 
-public class FollowerCountDTO extends UserDTO{
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class FollowerCountDTO extends UserDTO {
     private Integer followersCount;
 
     public FollowerCountDTO(Integer userId, String userName, Integer followersCount) {
@@ -8,11 +13,4 @@ public class FollowerCountDTO extends UserDTO{
         this.followersCount = followersCount;
     }
 
-    public Integer getFollowersCount() {
-        return followersCount;
-    }
-
-    public void setFollowersCount(Integer followersCount) {
-        this.followersCount = followersCount;
-    }
 }

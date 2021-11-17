@@ -5,17 +5,18 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class UserDTO {
-
+public class PostsListDTO {
     private Integer userId;
-    private String userName;
+    private List<PostDTO> posts;
 
-    public UserDTO(Integer userId, String userName) {
+    public PostsListDTO(Integer userId, List<PostDTO> posts) {
         this.userId = userId;
-        this.userName = userName;
+        this.posts = posts;
     }
 
 }
