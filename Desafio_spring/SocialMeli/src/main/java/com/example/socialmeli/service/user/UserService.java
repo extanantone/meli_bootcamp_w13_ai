@@ -1,6 +1,6 @@
 package com.example.socialmeli.service.user;
 
-import com.example.socialmeli.controller.mapper.FollowerMapper;
+import com.example.socialmeli.mapper.FollowerMapper;
 import com.example.socialmeli.dto.user.FollowedListDTO;
 import com.example.socialmeli.dto.user.FollowerCountDTO;
 import com.example.socialmeli.dto.user.FollowerListDTO;

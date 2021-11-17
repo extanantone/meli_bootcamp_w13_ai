@@ -1,4 +1,4 @@
-package com.example.socialmeli.controller.mapper;
+package com.example.socialmeli.mapper;
 
 import com.example.socialmeli.dto.user.FollowerDTO;
 import com.example.socialmeli.model.User;
