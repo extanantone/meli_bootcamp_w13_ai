@@ -98,6 +98,6 @@ public class ProductService {
     private boolean twoWeeksAgoCheck(LocalDate date) {
         return date.equals(LocalDate.now()) ||
                 (date.isBefore(LocalDate.now()) &&
-                        date.isAfter(LocalDate.now().minusDays(14L)));
+                        date.isAfter(LocalDate.now().minusWeeks(2)));
     }
 }
