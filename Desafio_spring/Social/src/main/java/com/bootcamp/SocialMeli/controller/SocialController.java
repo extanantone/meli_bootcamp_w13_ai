@@ -3,11 +3,13 @@ package com.bootcamp.SocialMeli.controller;
 import com.bootcamp.SocialMeli.dto.CountFollowersDTO;
 import com.bootcamp.SocialMeli.dto.FollowedsDTO;
 import com.bootcamp.SocialMeli.dto.FollowersDTO;
+import com.bootcamp.SocialMeli.dto.UnFollowDTO;
 import com.bootcamp.SocialMeli.exception.NotFoundUserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -63,8 +65,7 @@ public class SocialController {
         );
     }
 
-    // 4
-    // /users/{user_id}/followed/list
+    // 4. /users/{user_id}/followed/list
     @GetMapping("/users/{user_id}/followed/list")
     public ResponseEntity<FollowedsDTO> getfolloweds(
             @PathVariable int user_id) throws NotFoundUserException {
@@ -73,8 +74,16 @@ public class SocialController {
         );
     }
 
+    // 5. /products/post
 
+  //7.
 
+    @PostMapping("/users/{userId}/unfollow/{userIdToUnFollow}")
+    public ResponseEntity<UnFollowDTO> getUnFollow(
+            @PathVariable int userId, @PathVariable int userIdToUnFollow) throws NotFoundUserException {
+        UnFollowDTO response = socialService.getUnFollow(userId,userIdToUnFollow);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
 
 
 

@@ -1,9 +1,6 @@
 package com.bootcamp.SocialMeli.service;
 
-import com.bootcamp.SocialMeli.dto.FollowedsDTO;
-import com.bootcamp.SocialMeli.dto.CountFollowersDTO;
-import com.bootcamp.SocialMeli.dto.FollowDTO;
-import com.bootcamp.SocialMeli.dto.FollowersDTO;
+import com.bootcamp.SocialMeli.dto.*;
 import com.bootcamp.SocialMeli.exception.NotFoundUserException;
 import com.bootcamp.SocialMeli.model.Buyer;
 import com.bootcamp.SocialMeli.model.Seller;
@@ -81,15 +78,24 @@ public class SocialService implements ISocialService {
         return new FollowedsDTO(buyer.getId_Buyer(),buyer.getName(),buyer.getFolloweds());
     }
 
+    // 7. /users/{user_id}/unfollow/{user_id_to_unfollow
+    @Override
+    public UnFollowDTO getUnFollow(int ids ,int idb) throws NotFoundUserException {
+        Seller seller =socialRepository.finds(ids)
+                .orElseThrow( ()->
+                        new NotFoundUserException(ids)
+                );
 
+        Buyer buyer=socialRepository.findb(idb)
+                .orElseThrow( ()->
+                        new NotFoundUserException(idb)
 
+                );
 
+        seller.getFollowers().remove(buyer);
 
-
-
-
-
-
+        return new UnFollowDTO(idb,ids);
+    }
 
 
 }
