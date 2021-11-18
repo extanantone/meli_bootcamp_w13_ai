@@ -82,4 +82,9 @@ public class SocialMeliRepository implements ISocialMeliRepository {
                         DAYS.between(i.getDate(), now) < 15)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public boolean checkUser(Integer user_id) {
+        return !Objects.isNull(this.userList.get(user_id));
+    }
 }
