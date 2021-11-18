@@ -36,7 +36,7 @@ public class UserAndPostService implements UserAndPostServiceI {
     UserMapper userMapper;
 
     @Autowired
-    PostMapper postMapper;
+    PostMapper postMapper; //Si los metodos son static, no es necesario inyectar la clase
 
     @Autowired
     ResponseSuccessfullyDTO responseSuccessfullyDTO;

@@ -8,7 +8,7 @@ import com.socialmeli.socialmeli.model.Product;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PostMapper {
+public  class PostMapper {
 
     public Product productDTOToProduct(ProductDTO productDTO){
         return new Product(productDTO.getProduct_id(),productDTO.getProduct_name(),productDTO.getType(),productDTO.getBrand(),productDTO.getColor(),productDTO.getNotes());
