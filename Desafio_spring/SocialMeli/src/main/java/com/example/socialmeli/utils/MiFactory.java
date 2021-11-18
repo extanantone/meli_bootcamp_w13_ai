@@ -1,5 +1,7 @@
 package com.example.socialmeli.utils;
 
+import com.example.socialmeli.dto.UserDTO;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,39 +11,15 @@ public class MiFactory {
 
     public static Sorter getInstance(String sorter)  {
 
-        FileReader reader = null;
-        try {
-            reader = new FileReader("src/main/resources/sorter.properties");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        Properties p = new Properties();
-
-        try {
-            p.load(reader);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String property = p.getProperty(sorter);
-
-        Class c = null;
-        try {
-            c = Class.forName(property);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            return (Sorter) c.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        if( sorter.equals("name_asc"))
+            return new AlphaAscSorter();
+        if( sorter.equals("name_desc"))
+            return new AlphaDescSorter();
+        if( sorter.equals("date_desc"))
+            return new DateDescSorter();
+        if( sorter.equals("date_asc"))
+            return new DateAscSorter();
+        return (a, b) -> 0; // all is equal
 
     }
 

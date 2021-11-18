@@ -1,6 +1,5 @@
 package com.example.socialmeli.repositories;
 
-import com.example.socialmeli.exceptions.PostNotFoundException;
 import com.example.socialmeli.model.Post;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,15 +17,17 @@ public class PostRepository implements IRepository<Post> {
 
     List<Post> posts;
 
-    public PostRepository(){this.posts = loadRepository();}
+    public PostRepository(){
+        this.posts = loadFromFile("classpath:postsSocialMeli.json");
 
-    @Override
-    public List<Post> loadRepository() {
-        List<Post> postsList = null;
+    }
+    public static List<Post>  loadFromFile(String path) {
+
+        List<Post> loadedData = null;
 
         File file = null;
         try {
-            file = ResourceUtils.getFile("classpath:postsSocialMeli.json");
+            file = ResourceUtils.getFile(path);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -35,13 +36,15 @@ public class PostRepository implements IRepository<Post> {
         TypeReference<List<Post>> typeRef = new TypeReference<>() {};
 
         try {
-            postsList = objectMapper.readValue(file, typeRef);
+            loadedData = objectMapper.readValue(file, typeRef);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return postsList;
+        return loadedData;
+
     }
+
 
     @Override
     public void push(Post newElement) {
@@ -51,14 +54,14 @@ public class PostRepository implements IRepository<Post> {
     }
 
     @Override
-    public Optional<Post> getById(Integer id) {
+    public Optional<Post> findId(Integer id) {
         return posts.stream()
                 .filter(post -> post.getIdPost().equals(id))
                 .findFirst();
     }
 
     @Override
-    public List<Post> getAll() {
+    public List<Post> findAll() {
         return this.posts;
     }
 

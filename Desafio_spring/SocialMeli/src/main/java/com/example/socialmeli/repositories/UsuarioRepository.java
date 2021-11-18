@@ -1,7 +1,5 @@
 package com.example.socialmeli.repositories;
 
-import com.example.socialmeli.exceptions.UserNotFoundException;
-import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,10 +17,35 @@ public class UsuarioRepository implements IRepository<User> {
 
     List<User> users;
 
-    public UsuarioRepository(){this.users = loadRepository();}
+    public UsuarioRepository(){
+        this.users = loadFromFile("classpath:usersSocialMeli.json");
+    }
+    public static List<User>  loadFromFile(String path) {
+
+        List<User> loadedData = null;
+
+        File file = null;
+        try {
+            file = ResourceUtils.getFile(path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        TypeReference<List<User>> typeRef = new TypeReference<>() {};
+
+        try {
+            loadedData = objectMapper.readValue(file, typeRef);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return loadedData;
+
+    }
 
     @Override
-    public Optional<User> getById(Integer id) {
+    public Optional<User> findId(Integer id) {
         return users.stream()
                 .filter(us -> us.getUserId().equals(id))
                 .findFirst();
@@ -30,7 +53,7 @@ public class UsuarioRepository implements IRepository<User> {
     }
 
     @Override
-    public List<User> getAll(){
+    public List<User> findAll(){
         return this.users;
     }
 
@@ -45,28 +68,4 @@ public class UsuarioRepository implements IRepository<User> {
         users.removeIf(user -> user.getUserId().equals(id));
     }
 
-    @Override
-    public List<User> loadRepository(){
-
-        List<User> userJson = null;
-
-        File file = null;
-        try {
-            file = ResourceUtils.getFile("classpath:usersSocialMeli.json");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        TypeReference<List<User>> typeRef = new TypeReference<>() {};
-
-        try {
-            userJson = objectMapper.readValue(file, typeRef);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return userJson;
-
-    }
 }

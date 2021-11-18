@@ -40,11 +40,12 @@ public class SocialMeliService implements IService {
     //  >>>> USER METHODS
     //!depracted
     public User getUserById(Integer id) throws UserNotFoundException {
-        return userRepository.getById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return userRepository.findId(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     public void createUser(UserDTO newUser) throws UserAlreadyInUseException, UserNotFoundException {
-        List<User> users = userRepository.getAll();
+        List<User> users = userRepository.findAll();
 
         if(users.stream().anyMatch( user -> user.getUserId().equals(newUser.getUserId()))){
             throw new UserAlreadyInUseException(newUser.getUserId());
@@ -140,7 +141,7 @@ public class SocialMeliService implements IService {
 
     public List<UserDTO> getFollowedList(Integer userId, String order) throws UserNotFoundException {
 
-        List<User> allUsers = userRepository.getAll();
+        List<User> allUsers = userRepository.findAll();
 
         if( !userExists(userId) ){
             throw new UserNotFoundException(userId);
@@ -170,11 +171,12 @@ public class SocialMeliService implements IService {
     }
 
     private boolean userExists(Integer id){
-        return userRepository.getAll().stream().anyMatch( user -> user.getUserId().equals(id) );
+        return userRepository.findAll().stream()
+                .anyMatch(user -> user.getUserId().equals(id) );
     }
 
     private boolean postExists(Integer id){
-        return postRepository.getAll().stream()
+        return postRepository.findAll().stream()
                 .anyMatch( post -> post.getIdPost().equals(id) );
     }
 
@@ -183,7 +185,7 @@ public class SocialMeliService implements IService {
     public PostDTO getPostById(Integer postId) throws PostNotFoundException {
 
         return mapper.map(
-                this.postRepository.getById(postId),
+                this.postRepository.findId(postId),
                 PostDTO.class
         );
     }
@@ -207,7 +209,7 @@ public class SocialMeliService implements IService {
     }
 
     public void deletePostById(Integer id) throws PostNotFoundException {
-        if( !postRepository.getAll().stream().anyMatch(post -> post.getIdPost().equals(id)) ){
+        if( !postRepository.findAll().stream().anyMatch(post -> post.getIdPost().equals(id)) ){
             throw new PostNotFoundException(id);
         }
         postRepository.removeById(id);
@@ -217,11 +219,11 @@ public class SocialMeliService implements IService {
 
         if(!userExists(userId)){ throw new UserNotFoundException(userId);}
 
-        postRepository.getAll().removeIf(post -> post.getUserId().equals(userId));
+        postRepository.findAll().removeIf(post -> post.getUserId().equals(userId));
     }
 
     private List<PostDTO> getUserPosts(Integer id){
-        return this.postRepository.getAll().stream()
+        return this.postRepository.findAll().stream()
                 .filter(post -> post.getUserId().equals(id))
                 .map( post -> mapper.map( post, PostDTO.class ) )
                 .collect(Collectors.toList());
@@ -257,7 +259,7 @@ public class SocialMeliService implements IService {
     }
 
     public List<PostDTO> getAllPosts(){
-        return postRepository.getAll().stream()
+        return postRepository.findAll().stream()
                 .map(post -> mapper.map(post, PostDTO.class) )
                 .collect(Collectors.toList());
     }
@@ -268,7 +270,7 @@ public class SocialMeliService implements IService {
         User user = this.getUserById(userId);
 
         Integer cantidad = Math.
-                toIntExact(postRepository.getAll().stream().filter(post ->
+                toIntExact(postRepository.findAll().stream().filter(post ->
                     post.getUserId().equals(userId) && post.isHasPromo()
                 ).count());
 
@@ -284,7 +286,7 @@ public class SocialMeliService implements IService {
 
         PostsResponseDTO response = new PostsResponseDTO();
 
-        List<PostDTO> promoPosts =  postRepository.getAll().stream()
+        List<PostDTO> promoPosts =  postRepository.findAll().stream()
                 .filter( post -> post.isHasPromo() && post.getUserId().equals(userId))
                 .map( post -> mapper.map(post, PostDTO.class) )
                 .collect(Collectors.toList());
