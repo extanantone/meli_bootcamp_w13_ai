@@ -17,6 +17,10 @@ No se tuvo en cuenta los errores como que no ingresen un dato o mal formato
 ## Usuarios Creados 🎁
 
 ```
-
+        compradores.put(1, new Comprador(1, "juan525c"));
+        compradores.put(2, new Comprador(2, "andres747c"));
+        compradores.put(3, new Comprador(3, "brian8474c"));
+        vendedores.put(4, new Vendedor(4, "Lucas323v"));
+        vendedores.put(5, new Vendedor(5, "David323v"));
 ```
 
