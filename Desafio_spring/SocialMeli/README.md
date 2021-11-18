@@ -1,12 +1,12 @@
-﻿# SocialMeli
+# SocialMeli
 
 Se contempla desarrollar una API Rest correspondiendo a una plataforma en donde los usuarios van a poder seguir a sus vendedores favoritos y enterarse de las publicaciones de estos.
 Los requerimientos técnicos se pueden consultar en [este](https://docs.google.com/document/d/1GACGp97BXSvC0lNNLuPtbLgD0cGLsT-Y) documento.
 
 
-## Swagger
+## Swagger - Documentación de endpoints
 
-Se disponibiliza la documentación de API en Swagger a través de [este](https://app.swaggerhub.com/apis/tomas-wagner/Sprint1-Spring/1.0) link.
+Se disponibiliza la documentación de API en Swagger a través de [este](https://app.swaggerhub.com/apis/tomas-wagner/SocialMeli/1.0) link.
 Allí podemos encontrar datos de los distintos endpoints generados, incluyendo ejemplos.
 
 ## Consideraciones
@@ -26,7 +26,3 @@ Se contempla levantar excepciones para:
  - Acción no permitida, al intentar realizar una acción involucrando a un usuario no-vendedor que demande privilegios de vendedor.
 
 En endpoints que contemplen ordenamiento, se optó por no levantar excepciones al llegar un criterio de orden desconocido. En vez, simplemente se devuelve la lista de recursos buscada sin ordenar.
-
-
-
-
