@@ -102,4 +102,11 @@ public class SocialMeliController {
         return new ResponseEntity(service.getProductoPromoCount(vendedorId), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/products/{vendedorId}/list")
+    public ResponseEntity<VendedorPublicacionConDescuentoListDTO> VendedorProductDesc(@PathVariable Integer vendedorId) {
+
+
+        return new ResponseEntity(service.getVendedorProductDesc(vendedorId), HttpStatus.OK);
+    }
+
 }

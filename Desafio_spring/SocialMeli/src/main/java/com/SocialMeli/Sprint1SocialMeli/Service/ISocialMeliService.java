@@ -23,6 +23,7 @@ public interface ISocialMeliService {
 
     PublicacionConDescuentoCountDTO getProductoPromoCount(Integer vendedorId);
 
+    VendedorPublicacionConDescuentoListDTO getVendedorProductDesc(Integer vendedorId);
 
 
 

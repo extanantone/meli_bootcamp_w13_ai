@@ -204,5 +204,23 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
         return new PublicacionConDescuentoCountDTO(vendedor.getUserID(), vendedor.getUserName(), publicaciones.size());
     }
 
+    @Override
+    public VendedorPublicacionConDescuentoListDTO getVendedorProductDesc(Integer vendedorId) {
+        Vendedor vendedor = repositorio.getVendedor(vendedorId);
+
+        if (vendedor == null) {
+            throw new NotFoundUsuarioException(vendedorId);
+        }
+
+        List<PublicacionConDescuentoDTO> publicacionConDescuentoDTO = repositorio.getProductoPromoCountByVendedorId(vendedorId).stream()
+                .map(p -> new PublicacionConDescuentoDTO(p.getPostId(), p.getCategory(), p.getPrice(), p.getDate(),
+                        new ProductoDTO(p.getDetail().getProductId(), p.getDetail().getProductName(), p.getDetail().getType(), p.getDetail().getBrand(), p.getDetail().getColor(), p.getDetail().getNotes())
+                        , p.getHasPromo(), p.getDiscount()))
+                .collect(Collectors.toList());
+
+
+        return new VendedorPublicacionConDescuentoListDTO(vendedor.getUserID(), vendedor.getUserName(), publicacionConDescuentoDTO);
+    }
+
 
 }
