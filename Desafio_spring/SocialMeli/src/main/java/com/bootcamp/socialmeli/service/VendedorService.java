@@ -4,6 +4,7 @@ import com.bootcamp.socialmeli.dto.CompradorDTO;
 import com.bootcamp.socialmeli.dto.UserCountDTO;
 import com.bootcamp.socialmeli.dto.UserDTO;
 import com.bootcamp.socialmeli.dto.VendedorDTO;
+import com.bootcamp.socialmeli.exception.FollowFound;
 import com.bootcamp.socialmeli.model.User;
 import com.bootcamp.socialmeli.repository.IVendedorRepository;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class VendedorService implements IVendedorService {
     //US0001
     @Override
     public void addFollower(long idFollowed, long idFollwer) {
+
         vendedorRepository.addFollow(idFollowed, idFollwer);
     }
 
