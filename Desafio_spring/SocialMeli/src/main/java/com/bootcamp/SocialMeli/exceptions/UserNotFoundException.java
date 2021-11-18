@@ -1,9 +1,12 @@
 package com.bootcamp.SocialMeli.exceptions;
 
-public class UserNotFoundException {
-    public String message;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+@ResponseStatus (value = HttpStatus.NOT_FOUND, reason = "no exite el usuario")
+public class UserNotFoundException extends RuntimeException{
     public UserNotFoundException(String message) {
-        this.message = message;
+        super(message);
     }
+
 }
