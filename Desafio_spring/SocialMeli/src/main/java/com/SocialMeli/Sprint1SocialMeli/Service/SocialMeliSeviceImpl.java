@@ -138,7 +138,7 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
         ProductoDTO proDTO = publicacionDTO.getDetail();
         Producto pro = new Producto(proDTO.getProductId(), proDTO.getProductName(), proDTO.getType(), proDTO.getBrand(), proDTO.getColor(), proDTO.getNotes());
 
-        repositorio.newPost(publicacionDTO.getUserId(), new Publicacion(publicacionDTO.getIdPost(), publicacionDTO.getCategory(), publicacionDTO.getPrice(), fecha, pro , publicacionDTO.getHasPromo() !=null ? publicacionDTO.getHasPromo():false , publicacionDTO.getDiscount()));
+        repositorio.newPost(publicacionDTO.getUserId(), new Publicacion(publicacionDTO.getIdPost(), publicacionDTO.getCategory(), publicacionDTO.getPrice(), fecha, pro, publicacionDTO.getHasPromo() != null ? publicacionDTO.getHasPromo() : false, publicacionDTO.getDiscount()));
 
     }
 
@@ -189,6 +189,19 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
             throw new UserNoFollowExeption(vendedorId);
 
         return repositorio.unFollow(compradorId, vendedorId);
+    }
+
+    @Override
+    public PublicacionConDescuentoCountDTO getProductoPromoCount(Integer vendedorId) {
+        Vendedor vendedor = repositorio.getVendedor(vendedorId);
+
+        if (vendedor == null) {
+            throw new NotFoundUsuarioException(vendedorId);
+        }
+
+        List<Publicacion> publicaciones = repositorio.getProductoPromoCountByVendedorId(vendedorId);
+
+        return new PublicacionConDescuentoCountDTO(vendedor.getUserID(), vendedor.getUserName(), publicaciones.size());
     }
 
 

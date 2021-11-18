@@ -22,5 +22,7 @@ public interface ISocialMeliRepository {
 
     Boolean existPost(Integer vendedorId, Integer postId);
 
+    List<Publicacion> getProductoPromoCountByVendedorId(Integer vendedorId);
+
 
 }

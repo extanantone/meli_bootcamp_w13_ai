@@ -21,6 +21,7 @@ public interface ISocialMeliService {
 
     boolean unFollow(Integer compradorId, Integer vendedorId);
 
+    PublicacionConDescuentoCountDTO getProductoPromoCount(Integer vendedorId);
 
 
 

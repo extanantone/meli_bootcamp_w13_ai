@@ -90,8 +90,16 @@ public class SocialMeliController {
 
         service.createNewPublicacion(puConDesDTO);
 
-        return new ResponseEntity(new ResponseDTO("200", "Su Producto se Publico Correctamente"), HttpStatus.OK);
+        return new ResponseEntity(new ResponseDTO("200", "Su Producto con descuento se Publico Correctamente"), HttpStatus.OK);
     }
 
+
+
+    @GetMapping(path = "/products/{vendedorId}/promo-post/count")
+    public ResponseEntity<PublicacionConDescuentoCountDTO> productoPromoCount(@PathVariable Integer vendedorId) {
+
+
+        return new ResponseEntity(service.getProductoPromoCount(vendedorId), HttpStatus.OK);
+    }
 
 }

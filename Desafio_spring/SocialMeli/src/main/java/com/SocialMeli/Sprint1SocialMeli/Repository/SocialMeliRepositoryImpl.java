@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
@@ -105,6 +106,13 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
                 .getPosts()
                 .stream()
                 .anyMatch(ven -> ven.getPostId() == postId);
+    }
+
+    @Override
+    public List<Publicacion> getProductoPromoCountByVendedorId(Integer vendedorId) {
+
+        return  vendedores.get(vendedorId).getPosts().stream().filter(v -> v.getHasPromo() == true).collect(Collectors.toList());
+
     }
 
 
