@@ -3,6 +3,7 @@ package com.bootcamp.SocialMeli.dto;
 import com.bootcamp.SocialMeli.model.Post;
 import com.bootcamp.SocialMeli.model.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -15,8 +16,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @NoArgsConstructor
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PostDTO implements Serializable {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) int userId;
@@ -26,5 +27,6 @@ public class PostDTO implements Serializable {
     int category;
     double price;
     boolean hasPromo;
-    double discount;
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT) double discount;
+
 }
