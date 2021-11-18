@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository("PostRepository")
 public class PostRepository implements IRepository<Post> {
@@ -50,9 +51,10 @@ public class PostRepository implements IRepository<Post> {
     }
 
     @Override
-    public Post getById(Integer id) throws PostNotFoundException {
-        //return posts.stream().findFirst().orElseThrow(null);
-        return posts.stream().filter(post -> post.getIdPost().equals(id)).findFirst().orElseThrow(() -> new PostNotFoundException(id));
+    public Optional<Post> getById(Integer id) {
+        return posts.stream()
+                .filter(post -> post.getIdPost().equals(id))
+                .findFirst();
     }
 
     @Override
