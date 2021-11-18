@@ -25,35 +25,33 @@ public class SocialMeliController {
                                                       @PathVariable Integer user_id_to_follow) {
         service.serviceFollow(user_id, user_id_to_follow);
         return new ResponseEntity<>(new MensajeExcepcionDTO("OK","El comprador "+user_id+" comenzo a seguir a vendedor "+user_id_to_follow), HttpStatus.OK);
-                /*"EL COMPRADOR: " + user_id +
-                " COMENZO A SEGUIR A VENDEDOR: " + user_id_to_follow, HttpStatus.OK);*/
+
     }
 
-    //@ResponseBody
     @GetMapping("/users/{user_id}/followers/count") //US-02
     public ResponseEntity<CountSeguidoresDTO> contadorSeguidores(
             @PathVariable Integer user_id) {
-        return new ResponseEntity<CountSeguidoresDTO>(service.serviceCountVendedorFollowers(user_id), HttpStatus.OK);
+        return new ResponseEntity<>(service.serviceCountVendedorFollowers(user_id), HttpStatus.OK);
     }
 
     @ResponseBody
     @GetMapping("/users/{user_id}/followers/list") //US-03 y US-08
     public ResponseEntity<SeguidoresDTO> listadoSeguidores(
             @PathVariable Integer user_id, @RequestParam(defaultValue = "name_asc") String order) {
-        return new ResponseEntity<SeguidoresDTO>(service.serviceVendedorListFollowers(user_id, order), HttpStatus.OK);
+        return new ResponseEntity<>(service.serviceVendedorListFollowers(user_id, order), HttpStatus.OK);
     }
 
     @ResponseBody
     @GetMapping("/users/{user_id}/followed/list") //US-04 y US-08
     public ResponseEntity<SeguidosDTO> listadoSeguidos(
             @PathVariable Integer user_id, @RequestParam(defaultValue = "name_asc") String order) {
-        return new ResponseEntity<SeguidosDTO>(service.serviceCompradorListFollowed(user_id, order), HttpStatus.OK);
+        return new ResponseEntity<>(service.serviceCompradorListFollowed(user_id, order), HttpStatus.OK);
     }
 
     @PostMapping("/products/post") //US-05
     public ResponseEntity<MensajeExcepcionDTO> nuevaPublicacion(@RequestBody PublicacionDTO publi) throws Exception {
         service.serviceNewPost(publi);
-        return new ResponseEntity<MensajeExcepcionDTO>(new MensajeExcepcionDTO("OK","NUEVA PUBLICACION CREADA"), HttpStatus.OK);
+        return new ResponseEntity<>(new MensajeExcepcionDTO("OK","NUEVA PUBLICACION CREADA"), HttpStatus.OK);
     }
 
     @ResponseBody
