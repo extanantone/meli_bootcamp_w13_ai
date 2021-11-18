@@ -13,7 +13,7 @@ Allí podemos encontrar datos de los distintos endpoints generados, incluyendo e
 
 Los datos de precarga se incluyen en el constructor del repositorio de usuarios, para que se carguen en el momento de instanciar el mismo.
 
-Se optó por implementar una única clase User, que tenga una bandera isSeller que indique si al usuario se le deben conceder permisos de vendedor (subir publicaciones, ser seguido) o no.
+En vez de dos clases Buyer y Seller que hereden de User, se optó por implementar una única clase User, que tenga una bandera isSeller que indique si al usuario se le deben conceder permisos de vendedor (subir publicaciones, ser seguido) o no.
 
 En caso de no encontrar un recurso se devuelve un status code 404 (Not Found. Para todo el resto de excepciones que se levanten, se devuelve un status code 400 (Bad Request).
 
