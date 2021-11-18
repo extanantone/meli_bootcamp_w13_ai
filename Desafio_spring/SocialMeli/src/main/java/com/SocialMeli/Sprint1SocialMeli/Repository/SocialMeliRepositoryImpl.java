@@ -66,17 +66,6 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
 
     }
 
-/*    // Revisar si es util antes de entregar
-    @Override
-    public List<Comprador> vendedorFollowersList(List<Integer> followerIds) {
-
-        List<Comprador> compradorList = followerIds.stream()
-                .map(f -> compradores.get(f))
-                .collect(Collectors.toList());
-
-        return compradorList;
-    }*/
-
     @Override
     public boolean newPost(Integer venderdorId, Publicacion publicacion) {
 

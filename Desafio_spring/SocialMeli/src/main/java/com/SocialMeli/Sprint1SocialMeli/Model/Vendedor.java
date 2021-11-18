@@ -6,19 +6,16 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class Vendedor extends Usuario{
+public class Vendedor extends Usuario {
 
     List<Publicacion> posts;
     List<Integer> followers;
-
 
 
     public Vendedor(int userID, String userName) {
@@ -27,12 +24,11 @@ public class Vendedor extends Usuario{
         this.followers = new ArrayList<>();
     }
 
-    public void addFollower(Integer vendedorId)
-    {
+    public void addFollower(Integer vendedorId) {
         followers.add(vendedorId);
     }
-    public void deleteFollower(Integer vendedorId)
-    {
+
+    public void deleteFollower(Integer vendedorId) {
         followers.remove(vendedorId);
     }
 }

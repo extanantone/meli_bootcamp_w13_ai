@@ -24,12 +24,11 @@ public class Comprador extends Usuario {
         this.followeds = new ArrayList<>();
     }
 
-    public void addFollowed(Integer vendedorId)
-    {
+    public void addFollowed(Integer vendedorId) {
         followeds.add(vendedorId);
     }
-    public void deleteFollowed(Integer vendedorId)
-    {
+
+    public void deleteFollowed(Integer vendedorId) {
         followeds.remove(vendedorId);
     }
 

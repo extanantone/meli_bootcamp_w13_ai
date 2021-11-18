@@ -1,10 +1,7 @@
 package com.SocialMeli.Sprint1SocialMeli.Controller;
 
 
-import com.SocialMeli.Sprint1SocialMeli.DTO.CompradorDTO;
-import com.SocialMeli.Sprint1SocialMeli.DTO.PublicacionDTO;
-import com.SocialMeli.Sprint1SocialMeli.DTO.ResponseDTO;
-import com.SocialMeli.Sprint1SocialMeli.DTO.VendedorFollowesCountDTO;
+import com.SocialMeli.Sprint1SocialMeli.DTO.*;
 import com.SocialMeli.Sprint1SocialMeli.Service.ISocialMeliService;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -30,7 +27,7 @@ public class SocialMeliController {
                                               @PathVariable Integer vendedorId) {
 
         boolean b = service.addFollowed(compradorId, vendedorId);
-        return new ResponseEntity(new ResponseDTO("Resultado " + b, "Vendedor "+ vendedorId + " Seguido correctamente" ), HttpStatus.OK);
+        return new ResponseEntity(new ResponseDTO("Resultado " + b, "Vendedor " + vendedorId + " Seguido correctamente"), HttpStatus.OK);
     }
 
 
@@ -66,7 +63,7 @@ public class SocialMeliController {
 
         service.createNewPublicacion(puDTO);
 
-        return new ResponseEntity(new ResponseDTO("200", "Su Producto se Publico Correctamente" ), HttpStatus.OK);
+        return new ResponseEntity(new ResponseDTO("200", "Su Producto se Publico Correctamente"), HttpStatus.OK);
     }
 
 
@@ -74,17 +71,26 @@ public class SocialMeliController {
     public ResponseEntity<VendedorFollowesCountDTO> getCompradorofVendedorPublicacionesList(@PathVariable Integer compradorId,
                                                                                             @RequestParam(name = "order", required = false) String order) {
 
-        return new ResponseEntity(service.postByVendedorOfComprador(compradorId,order), HttpStatus.OK);
+        return new ResponseEntity(service.postByVendedorOfComprador(compradorId, order), HttpStatus.OK);
     }
 
 
     @GetMapping(path = "/users/{compradorId}/unfollow/{vendedorId}")
     public ResponseEntity<ResponseDTO> unFolowe(@PathVariable Integer compradorId,
-                                   @PathVariable Integer vendedorId) {
+                                                @PathVariable Integer vendedorId) {
 
         boolean unFollow = service.unFollow(compradorId, vendedorId);
 
-        return new ResponseEntity(new ResponseDTO("Resultado " + unFollow, "Vendedor "+ vendedorId + " Se dejo de seguir correctamente" ), HttpStatus.OK);
+        return new ResponseEntity(new ResponseDTO("Resultado " + unFollow, "Vendedor " + vendedorId + " Se dejo de seguir correctamente"), HttpStatus.OK);
+    }
+
+
+    @PostMapping("/products/promo-post")
+    public ResponseEntity<ResponseDTO> createNewPublicacionConDescuento(@RequestBody PublicacionDTO puConDesDTO) {
+
+        service.createNewPublicacion(puConDesDTO);
+
+        return new ResponseEntity(new ResponseDTO("200", "Su Producto se Publico Correctamente"), HttpStatus.OK);
     }
 
 

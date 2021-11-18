@@ -13,10 +13,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Publicacion {
 
-    private int postId,category;
+    private int postId, category;
     private double price;
     private LocalDate date;
     private Producto detail;
+    private Boolean hasPromo;
+    private double discount;
+
+
+
+
 
 
 }

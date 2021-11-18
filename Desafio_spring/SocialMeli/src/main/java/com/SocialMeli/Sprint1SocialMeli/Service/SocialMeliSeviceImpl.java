@@ -133,15 +133,12 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
         if (repositorio.existPost(publicacionDTO.getUserId(), publicacionDTO.getIdPost()))
             throw new PostIdDuplicateVendedorExeption(publicacionDTO.getUserId(), publicacionDTO.getIdPost());
 
-        //TODO error de fecha mal ingresada
         LocalDate fecha = LocalDate.parse(publicacionDTO.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
         ProductoDTO proDTO = publicacionDTO.getDetail();
         Producto pro = new Producto(proDTO.getProductId(), proDTO.getProductName(), proDTO.getType(), proDTO.getBrand(), proDTO.getColor(), proDTO.getNotes());
 
-        Publicacion publi = new Publicacion(publicacionDTO.getIdPost(), publicacionDTO.getCategory(), publicacionDTO.getPrice(), fecha, pro);
-
-        repositorio.newPost(publicacionDTO.getUserId(), publi);
+        repositorio.newPost(publicacionDTO.getUserId(), new Publicacion(publicacionDTO.getIdPost(), publicacionDTO.getCategory(), publicacionDTO.getPrice(), fecha, pro , publicacionDTO.getHasPromo() !=null ? publicacionDTO.getHasPromo():false , publicacionDTO.getDiscount()));
 
     }
 
@@ -159,7 +156,8 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
         List<Publicacion> publicaciones = ven.stream().flatMap(u -> u.getPosts().stream()).filter(l -> l.getDate().isAfter(LocalDate.now().minusWeeks(2))).collect(Collectors.toList());
 
         List<PublicacionSinUserIdDTO> publicacionSinUserIdDTO = publicaciones.stream()
-                .map(p -> new PublicacionSinUserIdDTO(p.getPostId(), p.getCategory(), p.getPrice(), p.getDate(), new ProductoDTO(p.getDetail().getProductId(), p.getDetail().getProductName(), p.getDetail().getType(), p.getDetail().getBrand(), p.getDetail().getColor(), p.getDetail().getNotes())))
+                .map(p -> new PublicacionSinUserIdDTO(p.getPostId(), p.getCategory(), p.getPrice(), p.getDate(),
+                        new ProductoDTO(p.getDetail().getProductId(), p.getDetail().getProductName(), p.getDetail().getType(), p.getDetail().getBrand(), p.getDetail().getColor(), p.getDetail().getNotes())))
                 .collect(Collectors.toList());
 
 

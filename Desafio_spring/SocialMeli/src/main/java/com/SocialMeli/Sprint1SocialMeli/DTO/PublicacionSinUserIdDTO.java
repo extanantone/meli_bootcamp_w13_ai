@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PublicacionSinUserIdDTO {
 
-    private int idPost,category;
+    private int idPost, category;
     private double price;
     private LocalDate date;
     private ProductoDTO detail;
