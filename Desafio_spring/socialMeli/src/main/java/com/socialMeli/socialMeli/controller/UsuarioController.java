@@ -63,5 +63,4 @@ public class UsuarioController implements IUsuarioController {
         usuarioService.dejarDeSeguirA(user_id, user_id_to_unfollow);
         return new ResponseEntity<>(new MensajeDTO("Usuario dejado de seguir"), HttpStatus.OK);
     }
-
 }
