@@ -7,8 +7,12 @@ El objetivo de este desafío es aplicar los contenidos dados hasta el momento du
 
 
 ## Criterios 🚀
+```
+Se pensó Como Vendedor y Comprador como dos entidades separadas
+Se tuvo en cuenta ciertas validaciones de los id
+No se tuvo en cuenta los errores como que no ingresen un dato o mal formato 
 
-
+```
 
 
 
