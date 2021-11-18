@@ -1,0 +1,48 @@
+@startuml Ej2 Imprimir documentos
+
+skinparam ClassAttributeIconSize 0
+
+interface Imprimible {
+    + {static} imprimir(Imprimible doc)
+    + imprimir()
+}
+
+class Curriculum {
+    - datosPersona : Persona
+    - habilidades : List
+
+    + imprimir()
+}
+
+class "Libro en PDF" as pdf {
+    - cantPaginas : int
+    - autor : String 
+    - titulo : String 
+    - genero : String
+
+    + imprimir()
+}
+
+class Informe {
+    - texto : String
+    - cantPaginas : int 
+    - autor : String 
+    - revisor : String 
+
+    + imprimir()
+}
+
+class Persona {
+    - nombre : String 
+    - edad : int 
+    - dni : long
+    - domicilio : String
+}
+
+Imprimible <|.. Curriculum
+Imprimible <|.. pdf 
+Imprimible <|.. Informe
+
+Persona <- Curriculum
+
+@enduml

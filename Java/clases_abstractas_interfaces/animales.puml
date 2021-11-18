@@ -1,0 +1,42 @@
+@startuml Ej3 Animales
+
+skinparam ClassAttributeIconSize 0
+
+abstract class Animal <<abstract>> {
+    + {abstract} emitirSonido()
+    + {static} comerAnimal(Animal animal)
+    + comerAnimal()
+}
+
+class Perro {
+    + emitirSonido()
+    + comerCarne()
+}
+
+class Gato {
+    + emitirSonido()
+    + comerCarne()
+}
+
+class Vaca {
+    + emitirSonido()
+    + comerHierba()
+}
+
+interface Carnivoro {
+    + {abstract} comerCarne()
+}
+
+interface Herviboro {
+    + {abstract} comerHierba()
+}
+
+Animal <|-- Perro
+Animal <|-- Gato 
+Animal <|-- Vaca
+
+Carnivoro <|.. Perro 
+Carnivoro <|.. Gato 
+Herviboro <|.. Vaca
+
+@enduml
