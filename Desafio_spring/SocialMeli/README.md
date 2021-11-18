@@ -26,3 +26,5 @@ Se contempla levantar excepciones para:
  - Acción no permitida, al intentar realizar una acción involucrando a un usuario no-vendedor que demande privilegios de vendedor.
 
 En endpoints que contemplen ordenamiento, se optó por no levantar excepciones al llegar un criterio de orden desconocido. En vez, simplemente se devuelve la lista de recursos buscada sin ordenar.
+
+La aplicación se configuró para levantar el servidor en el puerto 3000.
