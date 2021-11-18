@@ -164,52 +164,6 @@ public class SocialMeliSeviceImpl implements ISocialMeliService {
         return listadoPublicacionesDTO;
     }
 
-    /*@Override
-    public List<ListadoPublicacionesDTO> serviceListadoPublicaciones(int id_user, String Order) {
-        validarComprador(id_user);
-        if (repositorio.getComprador(id_user).getFolloweds().isEmpty()){throw new NotFollowedException(id_user);}
-
-        List<Publicacion> publicacionDeSeguidos = new ArrayList<>();
-        List<ListadoPublicacionesDTO> publicacionesDeSeguidosUltimos14Dias = new ArrayList<>();
-        LocalDate fecha14DiasAntes = LocalDate.now().minusDays(14);
-        boolean band=false;
-
-        for(int i=0; i<repositorio.getComprador(id_user).getFolloweds().size();i++){
-            for (int j = 0; j < repositorio.getPublicaciones().size(); j++) {
-                if(repositorio.getComprador(id_user).getFolloweds().get(i)==repositorio.getPublicaciones().get(j).getUser_id());
-                {publicacionDeSeguidos.add(repositorio.getPublicaciones().get(j));band=true;}}
-
-            if(band){
-            publicacionesDeSeguidosUltimos14Dias.add(new ListadoPublicacionesDTO(repositorio.getComprador(id_user).getFolloweds().get(i),publicacionDeSeguidos));
-            publicacionDeSeguidos=null;
-            band=false;}
-        }
-
-        for (int i = 0; i < publicacionesDeSeguidosUltimos14Dias.size() ; i++) {
-            for (int j = 0; j < publicacionesDeSeguidosUltimos14Dias.get(i).getPosts().size(); j++) {
-                if (publicacionesDeSeguidosUltimos14Dias.get(i).getPosts().get(j).getDate().isBefore(fecha14DiasAntes)) {
-                    publicacionesDeSeguidosUltimos14Dias.get(i).getPosts().remove(j);}}
-            if (publicacionesDeSeguidosUltimos14Dias.get(i).getPosts().isEmpty())
-            {publicacionesDeSeguidosUltimos14Dias.remove(i);}
-        }
-
-                //FILTRO DEL LISTADO SOLAMENTE LAS PUBLICACIONES DE VENDEDORES QUE SIGUE EL COMPRADOR RECIBIDO POR PARAMETRO
-        for (int i = 0; i < repositorio.getComprador(id_user_comprador).getFolloweds().size(); i++) {
-            publicacionesDTO.setUser_id(repositorio.getComprador(id_user_comprador).getFolloweds().get(i));
-
-            for (int j = 0; j < publicacionesLast14Days.size(); j++) {
-
-                if (publicacionesLast14Days.get(j).getUser_id() == repositorio.getComprador(id_user_comprador).getFolloweds().get(i))
-                {publicacionesDTO.agregarPosts(publicacionesLast14Days.get(j));}}
-
-            if(!publicacionesDTO.getPosts().isEmpty()){listadoPublicacionesDTO.add(publicacionesDTO);}
-            publicacionesDTO.getPosts().clear();
-
-        }
-
-        return publicacionesDeSeguidosUltimos14Dias;
-    }*/ // INTENTO DE MEJORAR US-06
-
     @Override // US-07 Sprint 1
     public void serviceUnFollow(Integer id_comprador, Integer id_vendedor) {
         validarComprador(id_comprador);
