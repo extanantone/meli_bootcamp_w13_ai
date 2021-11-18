@@ -48,35 +48,4 @@ public class UsersController {
         service.unfollow(userId, userIdToUnfollow);
     }
 
-
-
-    /*
-
-
-    //US 0014 - Agregado
-    @GetMapping("/users/products/{userId}")
-    public PostsResponseDTO getUserPosts(@PathVariable Integer userId) throws UserNotFoundException {
-        return this.service.getUserPostRequest(userId);
-    }
-
-    //US 0013 - Agregado
-    @GetMapping("/users/{userId}")
-    public UserDTO getUser(@PathVariable Integer userId) throws UserNotFoundException {
-        return service.getUserById(userId);
-    }
-
-    //US 0017 - Agregado
-    @PostMapping("/users/newuser")
-    public void createNewUser(@RequestBody UserDTO newUser) throws UserAlreadyInUseException, UserNotFoundException {
-        service.createUser(newUser);
-    }
-
-    //US 0018 - Agregado
-    @PostMapping("/users/delete/{userId}")
-    public void deleteUser(@PathVariable Integer userId) throws UserNotFoundException {
-        service.deleteUserById(userId);
-    }
-
-    */
-
 }

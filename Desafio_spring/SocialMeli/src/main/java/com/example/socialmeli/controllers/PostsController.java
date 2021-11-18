@@ -58,34 +58,4 @@ public class PostsController {
         return service.getPromoPosts(userId);
     }
 
-    /*
-
-    //US 0015 - Agregado
-    @GetMapping("/products")
-    public List<PostDTO> getAll() {
-        return service.getAllPosts();
-    }
-
-    //US 0019 - Agregado
-    @PostMapping("/products/delete/{postId}")
-    public void deletePostById(@PathVariable Integer postId) throws PostNotFoundException {
-        service.deletePostById(postId);
-    }
-
-    //US 0016 - Agregado
-    @GetMapping("/products/{postId}")
-    public PostDTO getPost(@PathVariable Integer postId) throws PostNotFoundException {
-        return service.getPostById(postId);
-    }
-
-
-
-    //    >>> REQUESTS PARA PROMOS <<<
-
-
-    @PostMapping("/products/deleteall/{userId}")
-    public void deleteAllPostsUser(@PathVariable Integer userId) throws UserNotFoundException {
-        service.deletePostByUserId(userId);
-    }*/
-
 }

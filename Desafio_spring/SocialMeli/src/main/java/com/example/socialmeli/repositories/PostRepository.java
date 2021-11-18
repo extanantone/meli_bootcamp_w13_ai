@@ -9,8 +9,10 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository("PostRepository")
 public class PostRepository implements IRepository<Post> {
@@ -67,6 +69,19 @@ public class PostRepository implements IRepository<Post> {
 
     @Override
     public void removeById(Integer id){
-        posts.removeIf( post -> post.getIdPost().equals(id) );
+        this.posts.removeIf( post -> post.getIdPost().equals(id) );
+    }
+
+    public List<Object> findByUserId(Integer userId) {
+        return this.posts.stream()
+                .filter(post -> post.getUserId().equals(userId))
+                .collect(Collectors.toList());
+    }
+
+    public List<Object> findByUserIdAndHasPromo(Integer userId, boolean hasPromo) {
+        return this.posts.stream()
+                .filter(post ->
+                        post.getUserId().equals(userId) && post.isHasPromo() == hasPromo)
+                .collect(Collectors.toList());
     }
 }
