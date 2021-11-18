@@ -124,7 +124,7 @@ public class SocialRepository implements ISocialRepository{
             if (publications.containsKey(u.getId())){ //Si se encuentra el id en publicaciones es vendedor
                 List<Publication> publication = publications.get(u.getId())
                         .stream().filter(p -> p.getDate()
-                                .isAfter(LocalDate.now().minusDays(14)))
+                                .isAfter(LocalDate.now().minusDays(15)))
                         .collect(Collectors.toList());
                 publicationsSellers.addAll(publication);
             }
