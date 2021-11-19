@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -67,16 +68,24 @@ public class PostRepository implements IRepository<Post> {
         return this.posts;
     }
 
-    public List<Object> findByUserId(Integer userId) {
+    public List<Post> findByUserId(Integer userId) {
         return this.posts.stream()
                 .filter(post -> post.getUserId().equals(userId))
                 .collect(Collectors.toList());
     }
 
-    public List<Object> findByUserIdAndHasPromo(Integer userId, boolean hasPromo) {
+    public List<Post> findByUserIdAndHasPromo(Integer userId, boolean hasPromo) {
         return this.posts.stream()
                 .filter(post ->
                         post.getUserId().equals(userId) && post.isHasPromo() == hasPromo)
+                .collect(Collectors.toList());
+    }
+
+    public List<Post> findByUserIdAndAfterDate(Integer userId, Date date) {
+        return this.posts.stream()
+                .filter(post ->
+                        post.getUserId().equals(userId) &&
+                                post.getDate().compareTo(date) > 0 )
                 .collect(Collectors.toList());
     }
 }

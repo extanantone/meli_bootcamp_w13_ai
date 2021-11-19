@@ -33,7 +33,9 @@ public class PostsController {
 
     //US 0006
     @GetMapping("/followed/{userId}/list")
-    public PostsResponseDTO getFollowedPostList(@PathVariable Integer userId, @RequestParam @Nullable String order) throws UserNotFoundException {
+    public PostsResponseDTO getFollowedPostList(
+            @PathVariable Integer userId,
+            @RequestParam(required = false) String order) {
         return service.getFollowedPostList(userId, order);
     }
 

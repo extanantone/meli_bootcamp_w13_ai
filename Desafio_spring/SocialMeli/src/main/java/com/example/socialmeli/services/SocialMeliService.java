@@ -14,10 +14,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -126,7 +127,7 @@ public class SocialMeliService implements IService {
 
         Sorter sorter = MiFactory.getInstance(order == null ? "name_desc" : order);
 
-        return userRepository.findFollowers(userId).stream()
+        return userRepository.findFolloweds(userId).stream()
                 .map( u -> mapper.map(u, UserDTO.class))
                 .sorted( (u,b) -> sorter.sort(u,b))
                 .collect(Collectors.toList());
@@ -185,29 +186,7 @@ public class SocialMeliService implements IService {
                 .collect(Collectors.toList());
     }
 
-    public PostsResponseDTO getFollowedPostList(Integer id, String order) throws UserNotFoundException {
-            Sorter sorter = MiFactory.getInstance(order == null ? "date_desc" : order );
 
-            PostsResponseDTO response = new PostsResponseDTO();
-
-            List<PostDTO> postsList = getFollowedList(id,null).stream().
-                    flatMap(user -> getUserPosts(user.getUserId()).stream()).
-                    sorted( (u,b) -> sorter.sort(u,b) ).
-                    filter(post ->
-                            post.getDate().compareTo(
-                                    Date.from(
-                                            LocalDate.now()
-                                                    .minusDays(14)
-                                                    .atStartOfDay(
-                                                            ZoneId.systemDefault()
-                                                    ).toInstant())) >0).
-                    collect(Collectors.toList());
-
-            response.setUserId(id);
-            response.setPosts(postsList);
-
-            return response;
-    }
 
 
     public PostsResponseDTO getUserPostRequest(Integer id) throws UserNotFoundException {
@@ -256,4 +235,32 @@ public class SocialMeliService implements IService {
     }
 
 
+    public PostsResponseDTO getFollowedPostList(Integer userId, String order) {
+
+        //vamos a hacer una lista con todos los posts de los usuarios que estan
+        //en followed filtrados por los más recientes (de dos semanas para acá)
+        Date twoWeeksAgo = Date.from( LocalDate.now()
+                .minusDays(14)
+                .atStartOfDay( ZoneId.systemDefault())
+                .toInstant() );
+
+        List<Post> followedPosts = new LinkedList<>();
+        for ( User userFollowed : userRepository.findFolloweds(userId) ) {
+            followedPosts.addAll(
+                    postRepository.findByUserIdAndAfterDate(
+                            userFollowed.getUserId(),
+                            twoWeeksAgo) );
+        }
+
+        Sorter sorter = MiFactory.getInstance(order);
+
+        List<PostDTO> followedPostsDTO = followedPosts.stream()
+                .map(post -> mapper.map(post, PostDTO.class))
+                .sorted((postA, postB) -> sorter.sort(postA, postB))
+                .collect(Collectors.toList());
+
+        PostsResponseDTO response = new PostsResponseDTO(userId, followedPostsDTO);
+
+        return response;
+    }
 }
