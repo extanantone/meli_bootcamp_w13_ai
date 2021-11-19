@@ -56,7 +56,7 @@ public class PostRepository implements IRepository<Post> {
     }
 
     @Override
-    public Optional<Post> findId(Integer id) {
+    public Optional<Post> findById(Integer id) {
         return posts.stream()
                 .filter(post -> post.getIdPost().equals(id))
                 .findFirst();
@@ -65,11 +65,6 @@ public class PostRepository implements IRepository<Post> {
     @Override
     public List<Post> findAll() {
         return this.posts;
-    }
-
-    @Override
-    public void removeById(Integer id){
-        this.posts.removeIf( post -> post.getIdPost().equals(id) );
     }
 
     public List<Object> findByUserId(Integer userId) {

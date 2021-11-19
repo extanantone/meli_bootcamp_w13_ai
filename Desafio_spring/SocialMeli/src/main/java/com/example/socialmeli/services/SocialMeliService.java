@@ -40,24 +40,8 @@ public class SocialMeliService implements IService {
     //  >>>> USER METHODS
     //!depracted
     public User getUserById(Integer id) throws UserNotFoundException {
-        return userRepository.findId(id)
+        return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
-    }
-
-    public void createUser(UserDTO newUser) throws UserAlreadyInUseException, UserNotFoundException {
-        List<User> users = userRepository.findAll();
-
-        if(users.stream().anyMatch( user -> user.getUserId().equals(newUser.getUserId()))){
-            throw new UserAlreadyInUseException(newUser.getUserId());
-        }
-
-        for(Integer id : newUser.getFollowersId()){
-            if( !users.stream().anyMatch( user -> user.getUserId().equals(id) )){
-                throw new UserNotFoundException(id);
-            }
-        }
-
-        userRepository.push(mapper.map(newUser, User.class));
     }
 
     public void follow(Integer userId, Integer userToFollowId) throws UserNotFoundException, UserAlreadyInUseException, UserSelfUseException {
@@ -136,23 +120,17 @@ public class SocialMeliService implements IService {
 
     public List<UserDTO> getFollowedList(Integer userId, String order) throws UserNotFoundException {
 
-        List<User> allUsers = userRepository.findAll();
-
         if( !userExists(userId) ){
             throw new UserNotFoundException(userId);
         }
 
         Sorter sorter = MiFactory.getInstance(order == null ? "name_desc" : order);
 
-        return allUsers.stream().filter(user -> isFollowing(user,userId))
+        return userRepository.findFollowers(userId).stream()
                 .map( u -> mapper.map(u, UserDTO.class))
                 .sorted( (u,b) -> sorter.sort(u,b))
                 .collect(Collectors.toList());
 
-    }
-
-    private boolean isFollowing(User userFollower, Integer followId){
-        return userFollower.getFollowersId().stream().anyMatch(id -> id.equals(followId));
     }
 
     public CountFollowersResponseDTO countFollowers(Integer id) throws UserNotFoundException {
@@ -166,11 +144,11 @@ public class SocialMeliService implements IService {
     }
 
     private boolean userExists(Integer id){
-        return userRepository.findId(id).isPresent();
+        return userRepository.findById(id).isPresent();
     }
 
     private boolean postExists(Integer id){
-        return postRepository.findId(id).isPresent();
+        return postRepository.findById(id).isPresent();
     }
 
     //  >>>> POSTS METHODS
@@ -178,7 +156,7 @@ public class SocialMeliService implements IService {
     public PostDTO getPostById(Integer postId) throws PostNotFoundException {
 
         return mapper.map(
-                this.postRepository.findId(postId),
+                this.postRepository.findById(postId),
                 PostDTO.class
         );
     }
@@ -201,13 +179,6 @@ public class SocialMeliService implements IService {
                 mapper.map( newPost, Post.class) );
     }
 
-    public void deletePostById(Integer id) throws PostNotFoundException {
-        if( ! postExists(id) ){
-            throw new PostNotFoundException(id);
-        }
-        postRepository.removeById(id);
-    }
-
     private List<PostDTO> getUserPosts(Integer id){
         return this.postRepository.findByUserId(id).stream()
                 .map( post -> mapper.map( post, PostDTO.class ) )
@@ -222,7 +193,14 @@ public class SocialMeliService implements IService {
             List<PostDTO> postsList = getFollowedList(id,null).stream().
                     flatMap(user -> getUserPosts(user.getUserId()).stream()).
                     sorted( (u,b) -> sorter.sort(u,b) ).
-                    filter(post -> post.getDate().compareTo(Date.from(LocalDate.now().minusDays(14).atStartOfDay(ZoneId.systemDefault()).toInstant())) >0).
+                    filter(post ->
+                            post.getDate().compareTo(
+                                    Date.from(
+                                            LocalDate.now()
+                                                    .minusDays(14)
+                                                    .atStartOfDay(
+                                                            ZoneId.systemDefault()
+                                                    ).toInstant())) >0).
                     collect(Collectors.toList());
 
             response.setUserId(id);

@@ -1,5 +1,6 @@
 package com.example.socialmeli.repositories;
 
+import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository("UserRepository")
 public class UsuarioRepository implements IRepository<User> {
@@ -45,7 +47,7 @@ public class UsuarioRepository implements IRepository<User> {
     }
 
     @Override
-    public Optional<User> findId(Integer id) {
+    public Optional<User> findById(Integer id) {
         return users.stream()
                 .filter(us -> us.getUserId().equals(id))
                 .findFirst();
@@ -58,14 +60,14 @@ public class UsuarioRepository implements IRepository<User> {
     }
 
     @Override
-    public void push(User newElement) {
-        this.users.add(newElement);
+    public void push(Post newElement) {
+        throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void removeById(Integer id) {
-        users.forEach(user -> user.getFollowersId().removeIf( idFollower -> idFollower.equals(id )));
-        users.removeIf(user -> user.getUserId().equals(id));
+    public List<User> findFollowers(Integer id) {
+        return this.findAll().stream()
+                .filter(user -> user.getFollowersId().contains(id) )
+                .collect(Collectors.toList());
     }
 
 }

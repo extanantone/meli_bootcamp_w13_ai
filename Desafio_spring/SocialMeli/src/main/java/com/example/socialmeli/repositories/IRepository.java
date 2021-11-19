@@ -16,12 +16,10 @@ import java.util.Optional;
 
 public interface IRepository<T> {
 
-    void push(T newElement);
-
-    Optional<T> findId(Integer id);
+    Optional<T> findById(Integer id);
 
     List<T> findAll();
 
-    void removeById(Integer id);
+    void push(Post newElement);
 
 }
