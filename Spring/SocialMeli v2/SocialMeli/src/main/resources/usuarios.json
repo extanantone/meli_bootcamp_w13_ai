@@ -1,0 +1,34 @@
+[
+  {
+    "user_id": 1,
+    "user_name": "Marina",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  },
+  {
+    "user_id": 2,
+    "user_name": "Rex",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  },
+  {
+    "user_id": 3,
+    "user_name": "Bronco",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  },
+  {
+    "user_id": 4,
+    "user_name": "Fabrizio",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  }
+]
