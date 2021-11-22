@@ -1,0 +1,26 @@
+[
+  {
+    "name": "comprador 1",
+    "user_id": 1
+  },
+  {
+    "name": "comprador 2",
+    "user_id": 2
+  },
+  {
+    "name": "comprador 3",
+    "user_id": 11
+  },
+  {
+    "name": "comprador 4",
+    "user_id": 12
+  },
+  {
+    "name": "Andrea",
+    "user_id": 21
+  },
+  {
+    "name": "Zamara",
+    "user_id": 22
+  }
+]
