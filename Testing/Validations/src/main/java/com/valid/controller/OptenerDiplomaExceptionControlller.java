@@ -1,5 +1,7 @@
 package com.valid.controller;
 
+import com.valid.dto.ResponseErrorDto;
+import com.valid.exceptions.StudentNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,5 +20,10 @@ public class OptenerDiplomaExceptionControlller {
             errors.put(f.getField(),f.getDefaultMessage());
         });
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+    @ExceptionHandler(StudentNotFoundException.class)
+    public ResponseEntity<?> handlerStudentNotFound(StudentNotFoundException e){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseErrorDto(e.getMessage()));
     }
 }

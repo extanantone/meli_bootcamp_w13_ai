@@ -5,11 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class FinalNoteDto {
     private String studentName;
-    private double avergae;
+    private double averageScore;
+    private List<SubjectDto> subjects;
+    private String message;
 }
