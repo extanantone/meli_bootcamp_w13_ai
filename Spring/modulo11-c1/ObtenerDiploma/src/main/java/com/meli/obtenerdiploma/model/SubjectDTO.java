@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
 @Getter @Setter
 public class SubjectDTO {
     @NotEmpty(message = "El nombre de la materia no puede estar vacío")
-    @Pattern(regexp = "([A-Z])\\w+", message = "El nombre de la materia debe comenzar con mayúscula")
+    @Pattern(regexp = "\\A[A-Z|À-Ù|\\u00f1|Á-Ú|Ä-Ü].*\\z", message = "El nombre de la materia debe comenzar con mayúscula")
     @Size(max = 30, message = "La longitud del nombre no puede superar los 30 caracteres")
     String name;
 
