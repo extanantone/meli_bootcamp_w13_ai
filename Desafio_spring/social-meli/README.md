@@ -9,6 +9,20 @@ Solución planteada para el desafío de Spring número 1.
 - Al realizar un POST de un posteo o un producto *no se pasan los ids* en el payload. Los ids se manejan automáticamente desde el repositorio (revisar payloads de endpoints). 
 - Los ids deben ser positivos mayores a 0 (cero).
 - Cuando se utilizan filtros de asc y desc, se toma por defecto el valor asc si no se pasa ningun filtro. 
+- Los errores son lanzados mostrando un json del tipo: 
+ ```json
+ {
+  "status": "status"
+  "message": "message"
+ }
+ ```
+ Ejemplo:
+ ```json
+ {
+  "status": "BAD_REQUEST"
+  "message": "User with id 1 does not exists"
+ }
+ ```
 
 ## Entity Model Diagram
 
