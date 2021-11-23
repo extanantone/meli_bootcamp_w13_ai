@@ -30,4 +30,6 @@ public class FoodRepository implements IFoodRepository{
     public Food getFootByName(String name) {
         return foods.stream().filter(it->it.getName().equals(name)).findFirst().orElse(new Food());
     }
+
+
 }
