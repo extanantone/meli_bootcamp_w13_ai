@@ -50,7 +50,7 @@ public class DishServiceTest {
     }
 
     @Test
-    void DishWithoutIngredientThenCalories523(){
+    void DishWithIngredientThenCalories523(){
         // Arrange
         String dishName = "aksjhd";
         List<IngredientDTO> ingredients = new ArrayList<>();
