@@ -1,14 +1,15 @@
 package com.meli.obtenerdiploma.model;
 
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ErrorDTO {
-    String message;
-
-    public ErrorDTO(String inMessage) {
-        this.message = inMessage;
-    }
+    private String name;
+    private String description;
 }
