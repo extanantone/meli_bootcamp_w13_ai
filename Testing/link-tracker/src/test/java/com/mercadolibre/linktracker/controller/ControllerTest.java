@@ -59,9 +59,7 @@ public class ControllerTest {
         LinkDTO expectedLink = new LinkDTO();
         expectedLink.setLinkId(0);
         Mockito.when(service.create(firstLink)).thenReturn(expectedLink);
-
         LinkDTO createdLink = service.create(firstLink);
-
         Mockito.verify(service, Mockito.times(1)).
                 create(Mockito.any(LinkDTO.class));
         assertEquals(0, createdLink.getLinkId());
@@ -75,10 +73,8 @@ public class ControllerTest {
         LinkDTO secondCreatedLink = new LinkDTO(1, "http://facebook.com", null, 0);
         Mockito.when(service.create(firstLink)).thenReturn(firstCreatedLink);
         Mockito.when(service.create(secondLink)).thenReturn(secondCreatedLink);
-
         LinkDTO previousLink = service.create(firstLink);
         LinkDTO newLink = service.create(secondLink);
-
         assertNotEquals(previousLink.getLinkId(), newLink.getLinkId());
     }
 

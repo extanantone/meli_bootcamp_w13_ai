@@ -5,9 +5,6 @@ import com.mercadolibre.linktracker.repositories.LinkRepository;
 import com.mercadolibre.linktracker.repositories.LinkRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -73,7 +70,6 @@ public class RepositoryTest {
         LinkDTO dto2 =new LinkDTO(2,"https://www.google.com.ar",null,0);
         repository.save(dto1);
         repository.save(dto2);
-
         assertEquals(repository.findLinkByLinkId(3), Optional.empty());
         assertEquals(repository.findLinkByLinkId(4), Optional.empty());
 
