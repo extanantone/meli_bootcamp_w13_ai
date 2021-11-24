@@ -1,5 +1,6 @@
 package com.meli.obtenerdiploma.repository;
 
+import com.meli.obtenerdiploma.exception.StudentNotFoundException;
 import com.meli.obtenerdiploma.model.StudentDTO;
 import com.meli.obtenerdiploma.service.StudentService;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,9 +48,8 @@ public class StudentServiceTest {
 
     @Test
     public void shouldntFindUnexistUser(){
-        Mockito.when(dao.findById(2l)).thenReturn(null);
-        StudentDTO result = service.read(2l);
-        assertNull(result);
+        Mockito.when(dao.findById(2l)).thenThrow(StudentNotFoundException.class);
+        assertThrows(StudentNotFoundException.class,()->service.read(2l));
         Mockito.verify(dao,Mockito.times(1)).findById(Mockito.anyLong());
     }
 
