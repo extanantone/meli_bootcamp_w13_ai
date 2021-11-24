@@ -3,17 +3,14 @@ package com.mercadolibre.linktracker.service;
 import com.mercadolibre.linktracker.dto.LinkDTO;
 import com.mercadolibre.linktracker.repositories.LinkRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.servlet.mvc.condition.RequestConditionHolder;
-
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -129,6 +126,22 @@ public class ServiceTest {
         service.invalidate(1);
 
         Mockito.verify(repository, Mockito.times(1)).findLinkByLinkId(Mockito.anyInt());
+
+    }
+
+    @Test
+    @DisplayName("when id not exist in invalid method")
+    void test1() {
+
+        Integer linkeId = 90;
+
+
+        Mockito.when(repository.findLinkByLinkId(linkeId)).thenReturn(Optional.empty());
+
+        service.invalidate(linkeId);
+
+        Mockito.verify(repository,Mockito.times(1)).findLinkByLinkId(linkeId);
+        Mockito.verify(repository,Mockito.never()).delete(Mockito.any(LinkDTO.class));
 
     }
 
