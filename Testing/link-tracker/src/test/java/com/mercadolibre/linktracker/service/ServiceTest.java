@@ -145,6 +145,20 @@ public class ServiceTest {
 
     }
 
+    @Test
+    public void firstCreatedLinkHasIdZero() {
+        LinkDTO firstLink = new LinkDTO();
+        LinkDTO savedLink = new LinkDTO();
+        savedLink.setLinkId(0);
+        Mockito.when(repository.save(firstLink)).thenReturn(savedLink);
+
+        LinkDTO createdLink = service.create(firstLink);
+
+        Mockito.verify(repository,Mockito.atLeastOnce()).
+                save(Mockito.any(LinkDTO.class));
+        assertEquals(savedLink.getLinkId(), createdLink.getLinkId());
+    }
+
 
 
 
