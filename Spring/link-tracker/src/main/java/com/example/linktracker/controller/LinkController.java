@@ -3,6 +3,7 @@ package com.example.linktracker.controller;
 import com.example.linktracker.dto.LinkDTO;
 import com.example.linktracker.dto.LinkIdDTO;
 import com.example.linktracker.dto.LinkUrlPassDTO;
+import com.example.linktracker.mapper.LinkMapper;
 import com.example.linktracker.service.LinkService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class LinkController {
 
     @PostMapping("/link")
     public ResponseEntity<LinkIdDTO> crear(@RequestBody LinkUrlPassDTO dto) {
-        LinkIdDTO linkIdDTO = linkService.guardar(dto);
+        LinkIdDTO linkIdDTO = linkService.guardar(LinkMapper.urlDtoToLink(dto));
         return new ResponseEntity<>(linkIdDTO, HttpStatus.CREATED);
     }
 

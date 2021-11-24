@@ -17,10 +17,9 @@ public class LinkService {
         this.repositorio = repositorio;
     }
 
-    public LinkIdDTO guardar(LinkUrlPassDTO url) {
-        Link nuevoLink = LinkMapper.urlDtoToLink(url);
-        repositorio.guardar(nuevoLink);
-        return LinkMapper.linkToIdDTO(nuevoLink);
+    public LinkIdDTO guardar(Link link) {
+        repositorio.guardar(link);
+        return LinkMapper.linkToIdDTO(link);
     }
 
     public String redireccionar(Integer id, String pass) {
