@@ -1,7 +1,6 @@
 package com.mercadolibre.linktracker.controller;
 
 import com.mercadolibre.linktracker.dto.LinkDTO;
-import com.mercadolibre.linktracker.repositories.LinkRepository;
 import com.mercadolibre.linktracker.service.LinkService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,10 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
 import javax.servlet.http.HttpServletResponse;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -55,6 +51,35 @@ public class ControllerTest {
             e.printStackTrace();
             fail();
         }
+    }
+
+    @Test
+    public void firstCreatedLinkHasIdZero() {
+        LinkDTO firstLink = new LinkDTO(null, "http://google.com", null, 0);
+        LinkDTO expectedLink = new LinkDTO();
+        expectedLink.setLinkId(0);
+        Mockito.when(service.create(firstLink)).thenReturn(expectedLink);
+
+        LinkDTO createdLink = service.create(firstLink);
+
+        Mockito.verify(service, Mockito.times(1)).
+                create(Mockito.any(LinkDTO.class));
+        assertEquals(0, createdLink.getLinkId());
+    }
+
+    @Test
+    public void newCreatedLinkHasDifferentId() {
+        LinkDTO firstLink = new LinkDTO(null, "http://google.com", null, 0);
+        LinkDTO firstCreatedLink = new LinkDTO(0, "http://google.com", null, 0);
+        LinkDTO secondLink = new LinkDTO(null, "http://facebook.com", null, 0);
+        LinkDTO secondCreatedLink = new LinkDTO(1, "http://facebook.com", null, 0);
+        Mockito.when(service.create(firstLink)).thenReturn(firstCreatedLink);
+        Mockito.when(service.create(secondLink)).thenReturn(secondCreatedLink);
+
+        LinkDTO previousLink = service.create(firstLink);
+        LinkDTO newLink = service.create(secondLink);
+
+        assertNotEquals(previousLink.getLinkId(), newLink.getLinkId());
     }
 
 
