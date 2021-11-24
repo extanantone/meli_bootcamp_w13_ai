@@ -1,11 +1,13 @@
 package com.meli.obtenerdiploma.integration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.meli.obtenerdiploma.model.StudentDTO;
 import com.meli.obtenerdiploma.model.SubjectDTO;
 import com.meli.obtenerdiploma.repository.StudentDAO;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +21,9 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -33,6 +37,7 @@ public class IntegrationTestObtenerDiploma {
     static StudentDAO studentDAO = new StudentDAO();
 
     private static ObjectWriter writer;
+    private static ObjectMapper mapper;
 
     SubjectDTO kahoot;
     SubjectDTO musica;
@@ -43,14 +48,15 @@ public class IntegrationTestObtenerDiploma {
 
     @BeforeAll
     public static void setUp() {
-        writer = new ObjectMapper()
+        mapper = new ObjectMapper();
+        writer = mapper
                 .configure(SerializationFeature.WRAP_ROOT_VALUE, false)
-                .writer().withDefaultPrettyPrinter();
+                .writer();
 
     }
 
     @BeforeEach
-    public void beforeEach() {
+    public void beforEach() {
         kahoot = new SubjectDTO("Kahoot", 1.0);
         musica = new SubjectDTO("Musica", 9.0);
         poo =    new SubjectDTO("POO",    2.0);
@@ -63,7 +69,12 @@ public class IntegrationTestObtenerDiploma {
     }
 
     @Test
-    public void testGivenValidUserIdGetDiplomaWithAverageScore() throws Exception {
+    public void testGivenValidUserIdGetDiplomaWithAverangeScore() throws Exception {
+
+        Map mapKahoot = mapper.convertValue(kahoot, Map.class);
+        Map mapMusica = mapper.convertValue(musica, Map.class);
+        Map mapPoo =    mapper.convertValue(poo, Map.class);
+
 
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get("/analyzeScores/{studentId}", 1))
@@ -72,11 +83,12 @@ public class IntegrationTestObtenerDiploma {
                 .andExpect(jsonPath("$.studentName").value("Anibal"))
                 .andExpect(jsonPath("$.averageScore").value(4.0))
                 .andExpect(jsonPath("$.subjects.length()").value(3))
-                //.andExpect(jsonPath("$.subjects", Matchers.containsInAnyOrder(jsonKahoot, jsonMusica, jsonPoo)))
-                .andExpect(jsonPath("$.subjects[?(@.name == \""+kahoot.getName()+"\"  && @.score == "+kahoot.getScore()+")]").exists())
-                .andExpect(jsonPath("$.subjects[?(@.name == \""+musica.getName()+"\"  && @.score == "+musica.getScore()+")]").exists())
-                .andExpect(jsonPath("$.subjects[?(@.name == \""+poo.getName()   +"\"  && @.score == "+poo.getScore()+")]").exists());
-
+                .andExpect(jsonPath("$.subjects", Matchers.containsInAnyOrder(mapPoo, mapMusica, mapKahoot)));
+                /*.andExpect(jsonPath("$.subjects[?(@.name == \""+kahoot.getName()+"\"  && @.score == "+kahoot.getScore()+")]").exists())
+                .andExpect(jsonPath("$.subjects[?(@.name == \""+musica.getName()+"\"  && @.score == "+kahoot.getScore()+")]").exists())
+                .andExpect(jsonPath("$.subjects[?(@.name == \""+poo.getName()   +"\"  && @.score == "+kahoot.getScore()+")]").exists())
+                 ;*/
+        throw new Exception("algo!");
 
     }
 
@@ -87,20 +99,13 @@ public class IntegrationTestObtenerDiploma {
         String userJson = writer.writeValueAsString(student);
         System.out.println(userJson);
 
-        ResultMatcher expectedStatus = status().isOk();
-        ResultMatcher expectedJson = content().json(userJson);
-        ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(
-                "/analyzeScores/{studentId}",
-                1);
-
         // Act & Assert
-        mockMvc.perform(request)
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(expectedContentType)
-                .andExpect(expectedJson)
-                .andExpect(expectedStatus);
+        mockMvc.perform(MockMvcRequestBuilders.get("/analyzeScores/{studentId}",1))
+                .andDo( MockMvcResultHandlers.print() )
+                .andExpect( content().contentType( MediaType.APPLICATION_JSON) )
+                .andExpect( content().json(userJson) )
+                .andExpect( status().isOk() );
+
         // andExpectAll funciona a partir de la version 2.6 de Spring Boot
                 /*.andExpectAll(
                         expectedStatus,
@@ -110,6 +115,10 @@ public class IntegrationTestObtenerDiploma {
 
     }
 
+    /**
+     * Este metodo
+     * @throws Exception
+     */
     @Test
     void testGivenAnInvalidStudentIdThrowExceptionMessage() throws Exception {
 
