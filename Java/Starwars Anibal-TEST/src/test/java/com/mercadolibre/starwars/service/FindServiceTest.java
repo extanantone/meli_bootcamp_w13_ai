@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class FindServiceTest {
@@ -22,7 +21,7 @@ class FindServiceTest {
     CharacterRepositoryImpl characterRepository;
 
     @InjectMocks
-    FindService findService;
+    FindService service;
 
     @Test
     void findCharacters(){
@@ -68,20 +67,18 @@ class FindServiceTest {
         expectedList.add(characterDTO1);
         expectedList.add(characterDTO2);
         expectedList.add(characterDTO3);
-
-
-
-
-        //Act
-       // List<CharacterDTO> currentList = characterRepository.findAllByNameContains(lastName);
+        //Mocks
         Mockito.when(characterRepository.findAllByNameContains(lastName))
                 .thenReturn(expectedList);
-        //Assert atLeast (verifico que se haya podido ejecutar al menos 1 vez)
-        Mockito.verify(characterRepository,
-                Mockito.atLeastOnce()).findAllByNameContains();
 
-        //        Mockito.verify(repo, Mockito.atLeastOnce()).findIngredientByName(Mockito.anyString());
-        Assertions.assertEquals();
+        //Act
+        List<CharacterDTO> currentList = service.find(lastName); //Siempre van a ser iguales current y expect,
+                                                                // porque este llama al metodo findAllByNameContains del repository
+                                                                // que a su vez, por mock devuelve el expect
+
+        //Assert atLeast (verifico que se haya podido ejecutar al menos 1 vez)
+        Mockito.verify(characterRepository, Mockito.atLeastOnce()).findAllByNameContains(lastName);
+        Assertions.assertEquals(expectedList,currentList);
     }
 
 }
