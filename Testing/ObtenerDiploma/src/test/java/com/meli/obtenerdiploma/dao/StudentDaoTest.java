@@ -1,5 +1,6 @@
 package com.meli.obtenerdiploma.dao;
 
+import com.meli.obtenerdiploma.exception.StudentNotFoundException;
 import com.meli.obtenerdiploma.model.StudentDTO;
 import com.meli.obtenerdiploma.repository.IStudentDAO;
 import com.meli.obtenerdiploma.repository.IStudentRepository;
@@ -33,6 +34,7 @@ public class StudentDaoTest {
 
     @AfterEach
     public void reset(){
+        for (StudentDTO d: dtos) studentDAO.delete(d.getId());
         for(StudentDTO dto:dtos){
             if(!studentDAO.exists(dto)){
                 studentDAO.save(dto);
@@ -50,14 +52,25 @@ public class StudentDaoTest {
     }
 
     @Test
+    public void shouldntBeFindUnexistUser(){
+        assertThrows(StudentNotFoundException.class,
+                ()->studentDAO.findById(111l));
+    }
+
+    @Test
     public void shouldBeDeleteExist(){
         try {
-            studentDAO.delete(1l);
+            assertTrue(studentDAO.delete(1l));
             Set<StudentDTO> ex = studentRepository.findAll();
             assertEquals(ex.size(),1);
         }catch (Exception e){
             fail();
         }
+    }
+
+    @Test
+    public void shouldntBeDeleteUnExistUser(){
+        assertFalse(studentDAO.delete(222l));
     }
 
     @Test

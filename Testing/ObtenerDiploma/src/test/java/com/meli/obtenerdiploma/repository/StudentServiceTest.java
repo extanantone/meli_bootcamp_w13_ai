@@ -11,17 +11,22 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class StudentServiceTest {
-    
+
     @Mock
     private IStudentDAO dao;
 
+    @Mock
+    private IStudentRepository repository;
+
     @InjectMocks
     private StudentService service;
+
 
     @Test
     public void shouldBeFindExistUser(){
@@ -65,6 +70,21 @@ public class StudentServiceTest {
     public void shouldBeUpdateUser(){
         service.update(new StudentDTO());
         Mockito.verify(dao,Mockito.times(1)).save(Mockito.any(StudentDTO.class));
+    }
+
+    @Test
+    public void shouldBeDeleteUser(){
+        service.delete(48l);
+        Mockito.verify(dao,Mockito.times(1)).delete(48l);
+    }
+
+
+    @Test
+    public void ShouldBeReturnAllUsers(){
+        Set<StudentDTO> dtos = Set.of(new StudentDTO());
+        Mockito.when(repository.findAll()).thenReturn(dtos);
+        Set<StudentDTO> result = service.getAll();
+        assertEquals(dtos,result);
     }
 
 }
