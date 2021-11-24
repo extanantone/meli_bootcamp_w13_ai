@@ -8,6 +8,5 @@ class ObetenerDiplomaApplicationTests {
 
 	@Test
 	public void contextLoads() {
-
-	}
+			}
 }
