@@ -14,6 +14,6 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor
 public class PostPromoUserDTO extends PostPromoDTO{
     @NotNull( message = "La id no puede estar vacía.")
-    @Positive( message = "La id debe ser numérica.")
+    @Positive( message = "El id debe ser mayor a cero")
     private Integer user_id;
 }

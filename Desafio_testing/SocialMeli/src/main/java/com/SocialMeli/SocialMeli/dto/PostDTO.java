@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Setter
 public class PostDTO {
     @NotNull( message = "La id no puede estar vacía.")
-    @Positive( message = "La id debe ser numérica.")
+    @Positive( message = "El id debe ser mayor a cero")
     private Integer id_post;
 
     @NotEmpty( message = "La fecha no puede estar vacía.")

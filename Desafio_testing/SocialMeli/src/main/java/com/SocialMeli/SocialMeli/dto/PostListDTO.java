@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 public class PostListDTO {
     @NotNull( message = "La id no puede estar vacía.")
-    @Positive( message = "La id debe ser numérica.")
+    @Positive( message = "El id debe ser mayor a cero")
     private Integer user_id;
     private List<PostDTO> posts;
 }
