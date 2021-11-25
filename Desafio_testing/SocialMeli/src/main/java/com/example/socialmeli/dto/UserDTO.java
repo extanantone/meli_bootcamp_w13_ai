@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +16,9 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class UserDTO {
 
+    @Valid
+    @NotNull(message = "La id no puede estar vacia")
+    @Min(value = 1, message = "El id debe ser mayor a 0")
     private Integer userId;
     private String userName;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
