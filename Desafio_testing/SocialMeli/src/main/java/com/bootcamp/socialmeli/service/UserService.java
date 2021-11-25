@@ -53,6 +53,8 @@ public class UserService implements IUserService {
 
     @Override
     public void followUser(long followerId, long followedId) {
+        checkUserExistence(followerId);
+        checkUserExistence(followedId);
         User follower = userRepository.getUser(followerId);
         User followed = userRepository.getUser(followedId);
         if (followed.getFollowers().contains(follower)) {
@@ -101,6 +103,8 @@ public class UserService implements IUserService {
 
     @Override
     public void unfollowUser(long followerId, long followedId) {
+        checkUserExistence(followerId);
+        checkUserExistence(followedId);
         User follower = userRepository.getUser(followerId);
         User followed = userRepository.getUser(followedId);
         if (followed.getFollowers().contains(follower)) {
