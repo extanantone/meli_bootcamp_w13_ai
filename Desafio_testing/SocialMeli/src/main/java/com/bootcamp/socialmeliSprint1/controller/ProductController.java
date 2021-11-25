@@ -9,6 +9,8 @@ import com.bootcamp.socialmeliSprint1.service.IProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -20,7 +22,7 @@ public class ProductController {
     }
 
     @PostMapping(path = "/post")
-    public ResponseEntity<String> createPost(@RequestBody PostInDTO post){
+    public ResponseEntity<String> createPost(@Valid @RequestBody PostInDTO post){
 
         productService.createPost(post);
         return ResponseEntity.ok("El post con id:" + post.getIdPost()
@@ -40,7 +42,7 @@ public class ProductController {
     }
 
     @PostMapping(path = "/promopost")
-    public ResponseEntity<String> createPromoPost(@RequestBody PostInPromoDTO post){
+    public ResponseEntity<String> createPromoPost(@Valid @RequestBody PostInPromoDTO post){
 
         productService.createPostPromo(post);
         return ResponseEntity.ok("El post promocional con id:" + post.getIdPost()

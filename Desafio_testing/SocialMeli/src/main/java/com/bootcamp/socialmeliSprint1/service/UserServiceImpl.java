@@ -13,7 +13,6 @@ import com.bootcamp.socialmeliSprint1.entitiy.Purchaser;
 import com.bootcamp.socialmeliSprint1.entitiy.Seller;
 import com.bootcamp.socialmeliSprint1.exception.userException.PurchaserAlreadyFollowSeller;
 import com.bootcamp.socialmeliSprint1.repository.ISocialMeliRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 
@@ -26,11 +25,8 @@ public class UserServiceImpl implements IUserService {
 
     private final ISocialMeliRepository socialMeliRepository;
 
-    private final ModelMapper mapper;
-
     public UserServiceImpl(ISocialMeliRepository repository) {
         this.socialMeliRepository = repository;
-        this.mapper = new ModelMapper();
     }
 
     @Override
