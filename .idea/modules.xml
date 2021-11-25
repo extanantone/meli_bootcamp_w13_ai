@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Spring/Clase2/Clase2.iml" filepath="$PROJECT_DIR$/Spring/Clase2/Clase2.iml" />
       <module fileurl="file://$PROJECT_DIR$/Spring/Clase3/Clase3.iml" filepath="$PROJECT_DIR$/Spring/Clase3/Clase3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Desafio_spring/SocialMeli/SocialMeli.iml" filepath="$PROJECT_DIR$/Desafio_spring/SocialMeli/SocialMeli.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Desafio_testing/SocialMeli/SocialMeliTesting.iml" filepath="$PROJECT_DIR$/Desafio_testing/SocialMeli/SocialMeliTesting.iml" />
       <module fileurl="file://$PROJECT_DIR$/Spring/Clase3/calculadora-calorias/calculadora-calorias.iml" filepath="$PROJECT_DIR$/Spring/Clase3/calculadora-calorias/calculadora-calorias.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/meli_bootcamp_w13_ai.iml" filepath="$PROJECT_DIR$/.idea/meli_bootcamp_w13_ai.iml" />
       <module fileurl="file://$PROJECT_DIR$/Spring/Clase3/starwars/starwars.iml" filepath="$PROJECT_DIR$/Spring/Clase3/starwars/starwars.iml" />
