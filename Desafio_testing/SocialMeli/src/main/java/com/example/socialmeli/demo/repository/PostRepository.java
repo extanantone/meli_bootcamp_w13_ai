@@ -27,8 +27,8 @@ public class PostRepository implements IPostRepository {
     @Override
     public Post createPost(Post p) {
 
-        PromoPost pr = new PromoPost();
-        publicaciones.add(pr);
+        //PromoPost pr = new PromoPost();
+        //publicaciones.add(pr);
 
         publicaciones.add(p);
         return p;

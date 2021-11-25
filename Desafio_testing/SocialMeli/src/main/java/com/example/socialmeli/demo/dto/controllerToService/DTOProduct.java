@@ -1,5 +1,6 @@
 package com.example.socialmeli.demo.dto.controllerToService;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -25,10 +26,10 @@ public class DTOProduct {
 
     @NotNull(message = "El campo no puede estar vacio.")
     @Size(max = 40, message = "La longitud no puede superar los 40 caracteres.")
-    @Pattern(regexp="([A-Z]|[a-z]|[0-9]| )+", message = "El campo no puede poseer caracteres especiales.")
+    @Pattern(regexp="([A-Z]|[a-z]|[0-9]|ñ|á|é|í|ó|ú|Á|É|Í|Ó|Ú| |, )+", message = "El campo no puede poseer caracteres especiales.")
     private String productName;
 
-    @NotNull(message = "El campo no puede estar vacio")
+   @NotNull(message = "El campo no puede estar vacio")
     @Size(max = 15, message = "La longitud no puede superar los 15 caracteres.")
     @Pattern(regexp="([A-Z]|[a-z]|[0-9])+", message = "El campo no puede poseer caracteres especiales.")
     private String type;
@@ -43,8 +44,9 @@ public class DTOProduct {
     @Pattern(regexp="([A-Z]|[a-z]|[0-9])+", message = "El campo no puede poseer caracteres especiales.")
     private String color;
 
-    @Size(max = 80, message = "La longitud no puede superar los 80 caracteres.")
-    @Pattern(regexp="([A-Z]|[a-z]|[0-9])+", message = "El campo no puede poseer caracteres especiales.")
+   @Size(max = 80, message = "La longitud no puede superar los 80 caracteres.")
+    @Pattern(regexp="([A-Z]|[a-z]|[0-9]| )+", message = "El campo no puede poseer caracteres especiales.")
+   @JsonInclude(JsonInclude.Include.NON_NULL)
     private String notes;
 
 

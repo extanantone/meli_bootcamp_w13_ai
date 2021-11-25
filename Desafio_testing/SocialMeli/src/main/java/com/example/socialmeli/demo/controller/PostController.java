@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 public class PostController {
 
@@ -17,7 +19,7 @@ public class PostController {
 
     //US 0005: crear una nueva publicacion
     @PostMapping("/products/post")
-    public ResponseEntity createPost(@RequestBody DTOPost request){
+    public ResponseEntity createPost(@Valid @RequestBody DTOPost request){
         return iPostService.createPost(request);
     }
 

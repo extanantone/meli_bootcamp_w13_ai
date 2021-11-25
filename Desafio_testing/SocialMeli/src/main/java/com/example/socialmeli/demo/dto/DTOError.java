@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,5 +15,6 @@ import lombok.Setter;
 public class DTOError {
     private String name;
     private String description;
+    private HashMap<String,List<String>> errorFields;
 
 }

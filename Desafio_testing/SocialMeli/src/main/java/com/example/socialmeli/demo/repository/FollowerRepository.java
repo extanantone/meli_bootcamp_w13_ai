@@ -83,8 +83,6 @@ public class FollowerRepository implements IFollowerRepository{
         else
             throw new UserNotFollowingToUserException();
 
-
-
     }
 
     @Override

@@ -7,6 +7,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -36,10 +41,48 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<DTOError> handleValidationExceptions(MethodArgumentNotValidException e) {
-        DTOError error = new DTOError("MethodArgumentNotValidException", e.getBindingResult().getFieldError().getDefaultMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    ResponseEntity<DTOError> validatingDataTypes(MethodArgumentNotValidException exception){
+        DTOError errorDTO = new DTOError();
+        errorDTO.setName("Payload's Field Not Valid Exception");
+        errorDTO.setDescription("There are some fields that don't respect validations");
+
+        HashMap<String, List<String>> errors = new HashMap<>();
+
+        exception.getFieldErrors().forEach( e -> {
+            String field = e.getField();
+            String msg = e.getDefaultMessage();
+
+            // Example 1
+
+/*            List<String> errorFields = new ArrayList<>();
+            if (errors.containsKey(e.getField())){
+                errorFields = errors.get(field);
+            }
+            errorFields.add(msg);
+            errors.put(field, errorFields);*/
+
+            //example 2
+
+/*            errors.computeIfAbsent(field,f -> new ArrayList<>(){ { add(msg); } });
+            errors.computeIfPresent(field, (f, l) -> new ArrayList<>(){ { addAll(l); add(msg); } });*/
+
+            // Example 3
+
+            errors.compute(field, ($, l) ->
+                    new ArrayList<>(){
+                        {
+                            addAll(!Objects.isNull(l) ? l : new ArrayList<>());
+                            add(msg);
+                        }
+                    }
+            );
+        });
+        errorDTO.setErrorFields(errors);
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
+
+
+
 
 
 

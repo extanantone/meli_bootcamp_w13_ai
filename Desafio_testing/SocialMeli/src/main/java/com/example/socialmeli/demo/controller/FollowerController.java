@@ -30,7 +30,7 @@ public class FollowerController {
     public ResponseEntity followUser(    @PathVariable int user_id,
                                          @PathVariable int user_id_to_follow)
     {
-    @Valid DTOFollowUser request = new DTOFollowUser();
+    DTOFollowUser request = new DTOFollowUser();
     request.setUserId(user_id);
     request.setUserIdToFollow(user_id_to_follow);
 
