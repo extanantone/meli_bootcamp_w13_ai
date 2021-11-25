@@ -11,7 +11,7 @@ import com.bootcamp.socialmeliSprint1.entitiy.Product;
 import com.bootcamp.socialmeliSprint1.entitiy.Purchaser;
 import com.bootcamp.socialmeliSprint1.entitiy.Seller;
 import com.bootcamp.socialmeliSprint1.exception.sortException.BadSorterParamRequest;
-import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundUsuarioException;
+import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundUserException;
 import com.bootcamp.socialmeliSprint1.exception.postException.PostIdAlreadyExists;
 import com.bootcamp.socialmeliSprint1.repository.ISocialMeliRepository;
 import org.modelmapper.ModelMapper;
@@ -38,7 +38,7 @@ public class ProductServiceImpl implements IProductService{
     public void createPost(PostInDTO postIn) {
 
         Seller seller = socialMeliRepository.getSeller(postIn.getUserId()).orElseThrow(
-                ()-> new NotFoundUsuarioException(postIn.getUserId())
+                ()-> new NotFoundUserException(postIn.getUserId())
         );
 
         if(seller.getPost(postIn.getIdPost())!=null){
@@ -78,7 +78,7 @@ public class ProductServiceImpl implements IProductService{
     public SellersPostsDTO getSellersPosts(Integer purchaserId) {
 
         Purchaser purchaser = socialMeliRepository.getPurchaser(purchaserId).orElseThrow(
-                () -> new NotFoundUsuarioException(purchaserId)
+                () -> new NotFoundUserException(purchaserId)
         );
 
         var allPost = socialMeliRepository.getSellersPosts(purchaserId);
@@ -141,7 +141,7 @@ public class ProductServiceImpl implements IProductService{
     public SellerProductsInPromoListDTO getProductsInPromo(Integer sellerId) {
 
         Seller seller = socialMeliRepository.getSeller(sellerId).orElseThrow(
-                ()-> new NotFoundUsuarioException(sellerId)
+                ()-> new NotFoundUserException(sellerId)
         );
 
         var post = seller.getPosts().values();

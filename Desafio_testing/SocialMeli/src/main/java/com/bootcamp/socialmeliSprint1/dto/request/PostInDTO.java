@@ -22,7 +22,7 @@ public class PostInDTO {
 
     @NotNull(message = "No puede estar vacío.")
     @Positive(message = "Debe ser mayor a cero")
-    private int userId;
+    private Integer userId;
 
     @NotNull(message = "No puede estar vacío.")
     @Positive(message = "Debe ser mayor a cero")
@@ -34,10 +34,10 @@ public class PostInDTO {
     private @Valid ProductInDTO detail;
 
     @NotNull(message = "No puede estar vacía.")
-    private int category;
+    private Integer category;
 
     @NotNull(message = "No puede estar vacío.")
     @DecimalMax(value = "10000000.00", message = "El precio máximo por producto es de 10000000.00")
-    private double price;
+    private Double price;
 
 }

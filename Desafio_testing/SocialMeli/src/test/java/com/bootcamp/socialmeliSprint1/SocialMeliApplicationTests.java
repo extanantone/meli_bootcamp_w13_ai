@@ -8,7 +8,7 @@ import static org.mockito.Mockito.when;
 
 import com.bootcamp.socialmeliSprint1.entitiy.Purchaser;
 import com.bootcamp.socialmeliSprint1.entitiy.Seller;
-import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundUsuarioException;
+import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundUserException;
 import com.bootcamp.socialmeliSprint1.exception.userException.PurchaserAlreadyFollowSeller;
 import com.bootcamp.socialmeliSprint1.repository.ISocialMeliRepository;
 import com.bootcamp.socialmeliSprint1.service.IUserService;
@@ -20,7 +20,6 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 @SpringBootTest
@@ -82,7 +81,7 @@ class SocialMeliApplicationTests {
         try {
             uservice.addFollowed(1, 2);
             fail();
-        } catch (NotFoundUsuarioException e) {
+        } catch (NotFoundUserException e) {
             assertNotNull(e);
         }
         
@@ -95,7 +94,7 @@ class SocialMeliApplicationTests {
             
             uservice.addFollowed(1, 3);
 
-        } catch (NotFoundUsuarioException e) {
+        } catch (NotFoundUserException e) {
             
             assertNotNull(e);
             fail();

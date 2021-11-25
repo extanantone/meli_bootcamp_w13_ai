@@ -8,7 +8,7 @@ import com.bootcamp.socialmeliSprint1.dto.response.user.SellerFollowersInfoDTO;
 import com.bootcamp.socialmeliSprint1.dto.response.user.SellerFollowersListDTO;
 import com.bootcamp.socialmeliSprint1.exception.sortException.BadSorterParamRequest;
 import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundFollower;
-import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundUsuarioException;
+import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundUserException;
 import com.bootcamp.socialmeliSprint1.entitiy.Purchaser;
 import com.bootcamp.socialmeliSprint1.entitiy.Seller;
 import com.bootcamp.socialmeliSprint1.exception.userException.PurchaserAlreadyFollowSeller;
@@ -33,11 +33,11 @@ public class UserServiceImpl implements IUserService {
     public void addFollowed(Integer purchaserId, Integer sellerId) {
 
         Seller seller = socialMeliRepository.getSeller(sellerId).orElseThrow(
-                ()-> new NotFoundUsuarioException(sellerId)
+                ()-> new NotFoundUserException(sellerId)
         );
 
         Purchaser purchaser = socialMeliRepository.getPurchaser(purchaserId).orElseThrow(
-                () -> new NotFoundUsuarioException(purchaserId)
+                () -> new NotFoundUserException(purchaserId)
         );
 
         //        validar que NO se sigan anteriormente
@@ -54,7 +54,7 @@ public class UserServiceImpl implements IUserService {
     public SellerFollowersInfoDTO getSellerFollowersCount(Integer sellerId) {
 
         Seller seller = socialMeliRepository.getSeller(sellerId).orElseThrow(
-                ()-> new NotFoundUsuarioException(sellerId)
+                ()-> new NotFoundUserException(sellerId)
         );
 
         return new SellerFollowersInfoDTO(seller.getUserID(),seller.getUserName(), seller.getFollowers().size());
@@ -64,7 +64,7 @@ public class UserServiceImpl implements IUserService {
     public SellerFollowersListDTO getSellerFollowersList(Integer sellerId) {
 
         Seller seller = socialMeliRepository.getSeller(sellerId).orElseThrow(
-                ()-> new NotFoundUsuarioException(sellerId)
+                ()-> new NotFoundUserException(sellerId)
         );
 
         List<BasicUserInfoDTO> followers = new ArrayList<>();
@@ -80,7 +80,7 @@ public class UserServiceImpl implements IUserService {
     public PurchaserFollowedListDTO getPurchaserFollowedList(Integer purchaserId) {
 
         Purchaser purchaser = socialMeliRepository.getPurchaser(purchaserId).orElseThrow(
-                () -> new NotFoundUsuarioException(purchaserId)
+                () -> new NotFoundUserException(purchaserId)
         );
 
         List<BasicUserInfoDTO> followed = new ArrayList<>();
@@ -97,11 +97,11 @@ public class UserServiceImpl implements IUserService {
 
 //        validar que existan
         Seller seller = socialMeliRepository.getSeller(sellerId).orElseThrow(
-                ()-> new NotFoundUsuarioException(sellerId)
+                ()-> new NotFoundUserException(sellerId)
         );
 
         Purchaser purchaser = socialMeliRepository.getPurchaser(purchaserId).orElseThrow(
-                () -> new NotFoundUsuarioException(purchaserId)
+                () -> new NotFoundUserException(purchaserId)
         );
 
 //        validar que se sigan anteriormente

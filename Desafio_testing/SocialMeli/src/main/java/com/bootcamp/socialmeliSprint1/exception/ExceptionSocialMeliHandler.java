@@ -3,7 +3,7 @@ package com.bootcamp.socialmeliSprint1.exception;
 import com.bootcamp.socialmeliSprint1.dto.response.error.ErrorDTO;
 import com.bootcamp.socialmeliSprint1.exception.sortException.BadSorterParamRequest;
 import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundFollower;
-import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundUsuarioException;
+import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundUserException;
 import com.bootcamp.socialmeliSprint1.exception.userException.PurchaserAlreadyFollowSeller;
 import com.bootcamp.socialmeliSprint1.exception.postException.PostIdAlreadyExists;
 import org.springframework.http.HttpStatus;
@@ -52,8 +52,8 @@ public class ExceptionSocialMeliHandler {
 
 
 
-    @ExceptionHandler(NotFoundUsuarioException.class)
-    public ResponseEntity<ErrorDTO> NotFoundUser(NotFoundUsuarioException e) {
+    @ExceptionHandler(NotFoundUserException.class)
+    public ResponseEntity<ErrorDTO> NotFoundUser(NotFoundUserException e) {
         return new ResponseEntity<>(
                 new ErrorDTO(
                         "Status Code 400: Not_found_user",

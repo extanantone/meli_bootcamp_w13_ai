@@ -17,7 +17,7 @@ public class ProductInDTO {
 
     @NotNull(message = "No puede estar vacío.")
     @Positive(message = "Debe ser mayor a cero")
-    private int productId;
+    private Integer productId;
 
     @NotEmpty(message = "No puede estar vacío.")
     @Size(max = 40 , min = 1, message = "La longitud no puede superar los 40 caracteres.")
