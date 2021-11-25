@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/products")
 public class PostController {
@@ -25,7 +27,7 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
+    public ResponseEntity<PostDTO> createPost(@RequestBody @Valid PostDTO postDTO) {
         return new ResponseEntity<>(
                 postService.createPost(postDTO),
                 HttpStatus.CREATED
@@ -33,7 +35,10 @@ public class PostController {
     }
 
     @GetMapping("followed/{userId}/list")
-    public ResponseEntity<UserWithPostsDTO> getLast2WeeksFollowedPosts(@PathVariable long userId, @RequestParam(value = "order", required = false) String order) {
+    public ResponseEntity<UserWithPostsDTO> getLast2WeeksFollowedPosts(
+            @PathVariable long userId,
+            @RequestParam(value = "order", required = false) String order
+    ) {
         UserWithPostsDTO resBody = postService.getLatestFollowedPosts(userId, 2);
         if (order != null) {
             order = order.replace("date_", "");

@@ -4,6 +4,7 @@ package com.bootcamp.socialmeli.exceptions;
 import com.bootcamp.socialmeli.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -44,6 +45,15 @@ public class GlobalExceptionHandler {
         message += e.getFieldErrors().stream()
                 .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage() + "\n")
                 .collect(Collectors.joining());
+        return new ResponseEntity<>(
+                new ErrorDTO(400, message),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorDTO> HttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        String message = e.getMessage();
         return new ResponseEntity<>(
                 new ErrorDTO(400, message),
                 HttpStatus.BAD_REQUEST

@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Pattern;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,10 +19,16 @@ import lombok.Setter;
 public class PostDTO {
 
     private long postId;
+
+    @Pattern(regexp = "(\\d{2}-\\d{2}-\\d{4})")
     private String date;
+
     private int category;
+
+    @DecimalMax(value = "10000000.0")
     private double price;
 
     private long userId;
-    private ProductDTO detail;
+
+    private @Valid ProductDTO detail;
 }
