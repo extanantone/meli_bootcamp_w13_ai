@@ -2,10 +2,7 @@ package com.example.socialmeli.unit;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
-
-import com.example.socialmeli.exceptions.UserAlreadyInUseException;
 import com.example.socialmeli.exceptions.UserNotFoundException;
-import com.example.socialmeli.exceptions.UserSelfUseException;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.repositories.UsuarioRepository;
 import com.example.socialmeli.services.SocialMeliService;
@@ -40,10 +37,11 @@ public class SocialMeliServiceTest {
     }
 
     @Nested
+    @DisplayName("T-0001 Usuario a seguir")
     class T0001 {
         @DisplayName("T-0001 Usuario a seguir existe")
         @Test
-        public void userToFollowExist()  {
+        public void userToFollowExistTest()  {
             //Arrange
             Integer userId = 1;
             Integer userToFollowId = 3;
@@ -67,7 +65,7 @@ public class SocialMeliServiceTest {
 
         @DisplayName("T-0001 Usuario a seguir No existe")
         @Test
-        public void userToFollowNotExist() {
+        public void userToFollowNotExistTest() {
             //Arrange
             Integer userId = 1;
             Integer userToFollowId = 5;
@@ -87,10 +85,11 @@ public class SocialMeliServiceTest {
         }
     }
     @Nested
-    @DisplayName("T-0002 Usuario a dejar de seguir  existe")
+    @DisplayName("T-0001 Usuario a dejar de seguir")
     class T0002 {
+        @DisplayName("T-0002 Usuario a dejar de seguir  existe")
         @Test
-        public void userToUnFollowExist()  {
+        public void userToUnFollowExistTest()  {
             //Arrange
             Integer userId = 1;
             Integer userToUnFollowId = 3;
@@ -111,7 +110,7 @@ public class SocialMeliServiceTest {
         }
         @DisplayName("T-0002 Usuario a dejar de seguir No existe")
         @Test
-        public void userToUnFollowNotExist() {
+        public void userToUnFollowNotExistTest() {
             //Arrange
             Integer userId = 1;
             Integer userToFollowId = 5;
@@ -125,6 +124,13 @@ public class SocialMeliServiceTest {
                     () -> service.unfollow(userId, userToFollowId), "Usuario no Existe");
 
         }
+    }
+/*
+Verificar que el tipo de ordenamiento alfabético exista (US-0008)
+ */
+    @Test
+    public void test(){
+
     }
 
 
