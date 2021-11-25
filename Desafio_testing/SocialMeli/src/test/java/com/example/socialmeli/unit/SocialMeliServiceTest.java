@@ -43,7 +43,7 @@ public class SocialMeliServiceTest {
     class T0001 {
         @DisplayName("T-0001 Usuario a seguir existe")
         @Test
-        public void userToFollowExist() throws UserNotFoundException, UserSelfUseException, UserAlreadyInUseException {
+        public void userToFollowExist()  {
             //Arrange
             Integer userId = 1;
             Integer userToFollowId = 3;
@@ -57,7 +57,7 @@ public class SocialMeliServiceTest {
                             .filter(us -> us.getUserId().equals(userToFollowId))
                             .findFirst());
             //Act
-            service.follow(userId, userToFollowId);
+            assertDoesNotThrow(()-> service.follow(userId, userToFollowId)); ;
             //Assert
             assertEquals(1, user3.getFollowersId().size());
             assertTrue(user3.getFollowersId().contains(1));
@@ -90,7 +90,7 @@ public class SocialMeliServiceTest {
     @DisplayName("T-0002 Usuario a dejar de seguir  existe")
     class T0002 {
         @Test
-        public void userToUnFollowExist() throws UserNotFoundException, UserSelfUseException, UserAlreadyInUseException {
+        public void userToUnFollowExist()  {
             //Arrange
             Integer userId = 1;
             Integer userToUnFollowId = 3;
@@ -101,7 +101,8 @@ public class SocialMeliServiceTest {
                             .filter(us -> us.getUserId().equals(userToUnFollowId))
                             .findFirst());
             //Act
-            service.unfollow(userId, userToUnFollowId);
+            assertDoesNotThrow( ()->service.unfollow(userId, userToUnFollowId));
+
             //Assert
             assertEquals(0, user3.getFollowersId().size());
             assertFalse(user3.getFollowersId().contains(1));
@@ -125,5 +126,7 @@ public class SocialMeliServiceTest {
 
         }
     }
+
+
 
 }
