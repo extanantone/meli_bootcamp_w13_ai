@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -71,7 +72,7 @@ public class ApplicationController {
     /*--------------------------------POST CONTROLLER-------------------------------------*/
 
     @PostMapping("/products/post")
-    public ResponseEntity<Optional> createPost(@RequestBody Post post){
+    public ResponseEntity<Optional> createPost(@Valid @RequestBody Post post){
         return new ResponseEntity<Optional>(Optional.of(postService.create(post,userService.getUserRepository().getList_users())), HttpStatus.OK);
     }
 

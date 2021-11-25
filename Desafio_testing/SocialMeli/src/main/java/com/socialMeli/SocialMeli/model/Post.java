@@ -5,18 +5,38 @@ import com.socialMeli.SocialMeli.postDTO.PromoPostInDTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
 @Setter
-public class Post {
+public class Post{
+    @NotNull(message = "no se acepta user_id null")
+    @Positive(message = "el user_id debe ser mayor a 0")
     private Integer user_id;
+
+    @NotNull(message = "no se acepta post_id null")
+    @Positive(message = "el post_id debe ser mayor a 0")
     private Integer id_post;
+
+
+    @NotNull(message = "no se acepta una fecha null")
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
+
+    @Valid
     private ProductDetails detail;
+
+    @NotNull(message = "no se acepta una category null")
     private Integer category;
+
+    @NotNull(message = "no se acepta price null")
+    @Positive(message = "el price debe ser mayor a 0")
+    @Max(value = 10000000,message = "el precio maximo es de 10.000.000")
     private Double price;
+
     private Boolean has_promo;
     private Double discount;
 

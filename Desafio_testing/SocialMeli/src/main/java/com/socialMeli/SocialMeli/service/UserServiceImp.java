@@ -33,8 +33,7 @@ public class UserServiceImp implements UserService{
         }
     }
 
-    @Override
-    public boolean verifyUsers(Integer user_id, Integer user_id_to_follow){
+    private boolean verifyUsers(Integer user_id, Integer user_id_to_follow){
         User user1=userRepository.getList_users().get(user_id);
         User user2=userRepository.getList_users().get(user_id_to_follow);
         if(user1 != null && user2 != null){
@@ -44,8 +43,7 @@ public class UserServiceImp implements UserService{
         }
     }
 
-    @Override
-    public boolean verifyUsers(Integer user_id){
+    private boolean verifyUsers(Integer user_id){
         User user1=userRepository.getList_users().get(user_id);
         if(user1 != null){
             return true;

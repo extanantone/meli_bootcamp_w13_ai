@@ -8,8 +8,6 @@ import com.socialMeli.SocialMeli.userDto.UserFollowersCountDTO;
 
 public interface UserService {
     UserFollowDTO follow(Integer user_id, Integer user_to_follow_id);
-    boolean verifyUsers(Integer user_id);
-    boolean verifyUsers(Integer user_id, Integer user_id_to_follow);
     UserFollowersCountDTO countFollowers(Integer user_id);
     FollowersListDTO listFollowers(Integer user_id);
     FollowersListDTO listFollowers(Integer user_id,String order);
