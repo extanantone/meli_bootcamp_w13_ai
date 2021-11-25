@@ -21,7 +21,7 @@ public class StudentDTO {
      */
 
     @Size(min=1, max=50, message = "La longitud del nombre no puede superar los {max} caracteres.")
-    @Pattern(regexp = "([A-Z]|[0-9])[\\s|A-Z|a-z|ñ|á|é|í|ó|ú|Á|É|Í|Ó|Ú]*$", message = "El nombre del alumno debe comenzar con mayúscula.")
+    @Pattern(regexp = "(^[A-Z]|[0-9]|[ÑÁÉÍÓÚ]).*", message = "El nombre del alumno debe comenzar con mayúscula.")
     @NotBlank(message = "El nombre del alumno no puede estar vacío.")
     String studentName;
     String message;
