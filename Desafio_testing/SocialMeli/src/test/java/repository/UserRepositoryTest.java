@@ -40,5 +40,20 @@ public class UserRepositoryTest {
         Assertions.assertEquals(sellersDTO,current);
     }
 
+    @Test
+    void userFollowedSuccess(){
+        // Arrange
+        Integer user_id = 1;
+        UserDTO userDTO = new UserDTO(null, "Camilo");
+        UserDTO sellersDTO = repo.createSellers(userDTO);
+        UserDTO buyerDTO = repo.createBuyers(userDTO);
+
+        // Act
+        Boolean followStatus = repo.follow(buyerDTO.getUser_id(), user_id);
+
+        // Assert
+        Assertions.assertTrue(followStatus);
+    }
+
 
 }
