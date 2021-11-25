@@ -23,29 +23,29 @@ public class ProductoDTO {
     @Size(max=40, message = "La longitud no puede superar los 40 caracteres.")
     @NotNull(message = "El campo no puede estar vacío.")
     @NotEmpty(message = "El campo no puede estar vacío.")
-    @Pattern(regexp="[0-9A-Za-z|ñ|ó|í|á|é|ú|Á|Ó|É|Í|Ú|\\s]*$", message = "El campo no puede poseer caracteres especiales.")
+    @Pattern(regexp="[0-9A-Za-zñóíáéúÁÓÉÍÚ|\\s]*$", message = "El campo no puede poseer caracteres especiales.")
     private String productName;
 
     @Size(max = 15, message = "La longitud no puede superar los 15 caracteres.")
     @NotNull(message = "El campo no puede estar vacío.")
     @NotEmpty(message = "El campo no puede estar vacío.")
-    @Pattern(regexp="[0-9A-Za-z|ñ|ó|í|á|é|ú|Á|Ó|É|Í|Ú|\\s]*$", message = "El campo no puede poseer caracteres especiales.")
+    @Pattern(regexp="[0-9A-Za-zñóíáéúÁÓÉÍÚ]*$", message = "El campo no puede poseer caracteres especiales.")
     private String type;
 
     @Size(max = 40,message = "La longitud no puede superar los 40 caracteres.")
     @NotNull(message = "El campo no puede estar vacío.")
     @NotEmpty(message = "El campo no puede estar vacío.")
-    @Pattern(regexp="[0-9A-Za-z|ñ|ó|í|á|é|ú|Á|Ó|É|Í|Ú|\\s]*$", message = "El campo no puede poseer caracteres especiales.")
+    @Pattern(regexp="[0-9A-Za-zñóíáéúÁÓÉÍÚ|\\s]*$", message = "El campo no puede poseer caracteres especiales.")
     private String brand;
 
     @Size(max = 15,message = "La longitud no puede superar los 15 caracteres.")
     @NotNull(message = "El campo no puede estar vacío.")
     @NotEmpty(message = "El campo no puede estar vacío.")
-    @Pattern(regexp="[0-9A-Za-z|ñ|ó|í|á|é|ú|Á|Ó|É|Í|Ú|\\s]*$", message = "El campo no puede poseer caracteres especiales.")
+    @Pattern(regexp="[0-9A-Za-zñóíáéúÁÓÉÍÚ|\\s]*$", message = "El campo no puede poseer caracteres especiales.")
     private String color;
 
     @Size(max = 80,message = "La longitud no puede superar los 80 caracteres.")
-    @Pattern(regexp="[0-9A-Za-z|ñ|ó|í|á|é|ú|Á|Ó|É|Í|Ú|\\s]*$", message = "El campo no puede poseer caracteres especiales.")
+    @Pattern(regexp="[0-9A-Za-zñóíáéúÁÓÉÍÚ|\\s]*$", message = "El campo no puede poseer caracteres especiales.")
     private String notes;
 
 }
