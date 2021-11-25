@@ -40,6 +40,9 @@ public class UserRepositoryTest {
         Assertions.assertEquals(sellersDTO,current);
     }
 
+
+    // En dado caso que cualquiera de los dos usuarios no exista
+    // se retornará un false porque en ningun momento se van seguir
     @Test
     void userFollowedSuccess(){
         // Arrange
@@ -55,6 +58,9 @@ public class UserRepositoryTest {
         Assertions.assertTrue(followStatus);
     }
 
+
+    // En dado caso que cualquiera de los dos usuarios no exista
+    // se retornará un false porque en ningun momento se podrían seguir
     @Test
     void userUnfollowedSuccess(){
         // Arrange
@@ -70,6 +76,28 @@ public class UserRepositoryTest {
         // Assert
         Assertions.assertTrue(followStatus);
     }
+
+
+    // Siempre va a retornar el usuario sin importar si le envìas o no el order
+    // al igual si el usuario escribe mal el order
+    @Test
+    void checkingSortedAlphaTypeSellers(){
+        // Arrange
+        String order = "name_asc";
+        Integer user_id = 1;
+        UserDTO userDTO = new UserDTO(null, "Camilo");
+        repo.createSellers(userDTO);
+
+        // Act
+        SellersDTO sellersDTO = repo.followersListSorted(user_id, order);
+
+        // Assert
+        Assertions.assertNotNull(sellersDTO);
+
+    }
+
+
+
 
 
 }
