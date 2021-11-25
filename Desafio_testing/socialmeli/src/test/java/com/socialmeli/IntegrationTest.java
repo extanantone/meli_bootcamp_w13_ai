@@ -3,9 +3,10 @@ package com.socialmeli;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.socialmeli.dto.DetailDto;
 import com.socialmeli.dto.PostDto;
+import com.socialmeli.dto.UserDto;
 import com.socialmeli.model.User;
 import com.socialmeli.repository.IUserRepository;
-import org.junit.jupiter.api.AfterEach;
+import com.socialmeli.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -31,33 +31,15 @@ public class IntegrationTest {
     private MockMvc mock;
 
     @Autowired
-    private IUserRepository repository;
+    private UserRepository repository;
 
-    private boolean execution=false;
-
-    private List<User> users = new ArrayList<>();
 
     private ObjectMapper mapper = new ObjectMapper();
 
 
     @BeforeEach
     public void setup(){
-        if(!execution){
-            int cont = 1;
-            for(User u:repository.findAll()) {
-                u.setId(cont);
-                users.add(u);
-                cont++;
-            }
-            execution=true;
-        }
-        // Clear Memory data
-        repository.findAll().clear();
-        for(User u:users){
-            repository.save(u);
-            u.setPosts(new ArrayList<>());
-            u.setFollowers(new ArrayList<>());
-        }
+        repository.reset();
 
     }
 
@@ -143,6 +125,8 @@ public class IntegrationTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isBadRequest());
     }
+
+
 
     @Test
     public void shouldntBeCountFollowerList() throws Exception{
@@ -287,6 +271,25 @@ public class IntegrationTest {
                 .andExpect(jsonPath("$[0].seller").value(true))
                 .andExpect(jsonPath("$[1].seller").value(true));
     }
+
+    @Test
+    public void  shouldBeAddUser() throws Exception{
+        UserDto dto = new UserDto(5,"add@mail.com","axx",true);
+        String json = mapper.writeValueAsString(dto);
+        mock.perform(post("/users").content(json).contentType("application/json"))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void shouldntBeAddUserWithRepeatEmail() throws Exception{
+        UserDto dto = new UserDto(5,"add@mail.com","axx",true);
+        String json = mapper.writeValueAsString(dto);
+        mock.perform(post("/users").content(json).contentType("application/json"))
+                .andExpect(status().is2xxSuccessful());
+        mock.perform(post("/users").content(json).contentType("application/json"))
+                .andExpect(status().is4xxClientError());
+    }
+
 
 
 }

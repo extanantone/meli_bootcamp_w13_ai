@@ -14,11 +14,7 @@ public class UserRepository implements IUserRepository{
     private List<User> users;
 
     public UserRepository(){
-        users = new ArrayList<>();
-        users.add(new User("Juan","juan@mail.com",false));
-        users.add(new User("David","david@mail.com",false));
-        users.add(new User("Diego","diego@mail.com",true));
-        users.add(new User("Pablo","pablo@mail.com",true));
+        reset();
     }
 
     @Override
@@ -64,4 +60,14 @@ public class UserRepository implements IUserRepository{
         return users.stream().filter(u->u.isSeller())
                 .collect(Collectors.toList());
     }
+
+    public void reset(){
+        users = new ArrayList<>();
+        users.add(new User("Juan","juan@mail.com",false));
+        users.add(new User("David","david@mail.com",false));
+        users.add(new User("Diego","diego@mail.com",true));
+        users.add(new User("Pablo","pablo@mail.com",true));
+       for (int i=0;i<4;i++) users.get(i).setId(i+1);
+    }
+
 }
