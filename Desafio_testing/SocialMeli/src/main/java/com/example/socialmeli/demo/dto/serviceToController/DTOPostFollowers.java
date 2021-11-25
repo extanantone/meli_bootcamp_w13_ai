@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Getter
@@ -18,7 +20,10 @@ import java.time.LocalDate;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DTOPostFollowers {
 
+    @NotNull(message = "El id del post no puede estar vacio")
+    @Min(value = 0, message = "El id del post debe ser mayor a 0.")
     private int idPost;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
     private DTOProduct detail;
