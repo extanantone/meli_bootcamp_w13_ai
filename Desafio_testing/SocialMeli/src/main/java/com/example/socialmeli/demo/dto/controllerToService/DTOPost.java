@@ -9,9 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 
@@ -22,17 +20,24 @@ import java.time.LocalDate;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DTOPost {
 
+    @NotNull(message = "La id no puede estar vacia.")
+    @Positive(message = "El id debe ser mayor a 0")
     private int userId;
 
-    @NotNull(message = "El id del post no puede estar vacio")
-    @Min(value = 0, message = "El id del post debe ser mayor a 0.")
+    @NotNull(message = "La id no puede estar vacia.")
+    @Positive(message = "El id debe ser mayor a 0")
     private int idPost;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
-    @NotNull(message = "La fecha de publicación no puede estar vacia.")
+    @NotNull(message = "La fecha no puede estar vacia.")
     private LocalDate date;
     private DTOProduct detail;
+
+    @NotNull(message = "El campo no puede estar vacio.")
     private int category;
+
+    @NotNull(message = "El campo no puede estar vacio.")
+    @DecimalMax(value = "10.000.000", message = "El precio máximo por producto es de 10.000.000.")
     private double price;
 
 

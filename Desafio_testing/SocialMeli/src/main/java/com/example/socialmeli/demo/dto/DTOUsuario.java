@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -17,6 +15,8 @@ import javax.validation.constraints.Size;
 
 public class DTOUsuario {
 
+    @NotNull(message = "La id no puede estar vacia.")
+    @Positive(message = "El id debe ser mayor a 0")
     private int userId;
 
     @NotBlank(message = "El nombre de la materia no puede estar vacío.")

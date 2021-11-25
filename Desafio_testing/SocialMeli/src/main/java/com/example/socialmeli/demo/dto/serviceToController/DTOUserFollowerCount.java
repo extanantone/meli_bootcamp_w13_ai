@@ -7,9 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -18,6 +16,8 @@ import javax.validation.constraints.Size;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DTOUserFollowerCount {
 
+    @NotNull(message = "La id no puede estar vacia.")
+    @Positive(message = "El id debe ser mayor a 0")
     private int userId;
 
     @NotBlank(message = "El nombre de la materia no puede estar vacío.")

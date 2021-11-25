@@ -7,9 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +17,8 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DTOUserPromoPostList {
 
+    @NotNull(message = "La id no puede estar vacia.")
+    @Positive(message = "El id debe ser mayor a 0")
     private int userId;
 
     @NotBlank(message = "El nombre de la materia no puede estar vacío.")

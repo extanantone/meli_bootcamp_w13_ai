@@ -1,7 +1,9 @@
 package com.example.socialmeli.demo.exception;
 
+import com.example.socialmeli.demo.dto.DTOError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -31,6 +33,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserAlreadyFollowingToUser.class)
     public ResponseEntity<?> userAleradyFollowingToUser(){
         return new ResponseEntity<>("El usuario ya se encuentra siguiendo al usuario enviado.", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<DTOError> handleValidationExceptions(MethodArgumentNotValidException e) {
+        DTOError error = new DTOError("MethodArgumentNotValidException", e.getBindingResult().getFieldError().getDefaultMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
 
