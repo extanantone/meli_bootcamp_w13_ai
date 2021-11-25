@@ -1,0 +1,456 @@
+{
+	"info": {
+		"_postman_id": "a68984d3-f336-4a06-bb9c-3412f208d47f",
+		"name": "SocialMeli",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "US 001: Seguir a un nuevo usuario",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"nombre\": \"Piña colada con pisco\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Pisco\",\n        \"peso\": 200\n        }\n    ]\n},\n{\n    \"nombre\": \"Piña colada con ron\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Ron\",\n        \"peso\": 2\n        }\n    ]\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/25/follow/12",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"25",
+						"follow",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 002: Cantidad de seguidores",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"nombre\": \"Piña colada con pisco\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Pisco\",\n        \"peso\": 200\n        }\n    ]\n},\n{\n    \"nombre\": \"Piña colada con ron\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Ron\",\n        \"peso\": 2\n        }\n    ]\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/12/followers/count",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"12",
+						"followers",
+						"count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 003: Lista los seguidores de un usuario",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"nombre\": \"Piña colada con pisco\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Pisco\",\n        \"peso\": 200\n        }\n    ]\n},\n{\n    \"nombre\": \"Piña colada con ron\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Ron\",\n        \"peso\": 2\n        }\n    ]\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/12/followers/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"12",
+						"followers",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 004: Lista los vendedores que sigue un usuario",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"nombre\": \"Piña colada con pisco\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Pisco\",\n        \"peso\": 200\n        }\n    ]\n},\n{\n    \"nombre\": \"Piña colada con ron\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Ron\",\n        \"peso\": 2\n        }\n    ]\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/125/followed/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"125",
+						"followed",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UD 005: Subir nueva publicación",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"user_id\": 12,\n  \"id_post\": 13,\n  \"date\": \"13-11-2021\",\n  \"detail\": {\n    \"product_id\": 1,\n    \"product_name\": \"Silla Gamer\",\n    \"type\": \"Gamer\",\n    \"brand\": \"Racer\",\n    \"color\": \"Red & Black\",\n    \"notes\": \"Special Edition\"\n  },\n  \"category\": 100,\n  \"price\": 1500.50\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/products/post",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 006: Listado de las publicaciones Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/products/followed/2/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"followed",
+						"2",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 007: Dejar de seguir a un usuario.",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/25/unfollow/12",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"25",
+						"unfollow",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 008: Lista los seguidores de un usuario Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"nombre\": \"Piña colada con pisco\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Pisco\",\n        \"peso\": 200\n        }\n    ]\n},\n{\n    \"nombre\": \"Piña colada con ron\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Ron\",\n        \"peso\": 2\n        }\n    ]\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/listaSeguidores?order=name_asc",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"listaSeguidores"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "name_asc"
+						},
+						{
+							"key": "order",
+							"value": "name_desc",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 009: Listado de las publicaciones",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/products/followed/125/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"followed",
+						"125",
+						"list"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "name_asc",
+							"disabled": true
+						},
+						{
+							"key": "order",
+							"value": "name_desc",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 010: Agregar promo post.",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"user_id\": 1569,\n  \"id_post\": 18,\n  \"date\": \"29-04-2021\",\n  \"detail\": {\n    \"product_id\": 1,\n    \"product_name\": \"Silla Gamer\",\n    \"type\": \"Gamer\",\n    \"brand\": \"Racer\",\n    \"color\": \"Red & Black\",\n    \"notes\": \"Special Edition\"\n  },\n  \"category\": \"100\",\n  \"price\": 1500.5,\n  \"has_promo\": true,\n  \"discount\": 0.25\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/products/promo-post",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"promo-post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 011: Contar los promo post por userID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"nombre\": \"Piña colada con pisco\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Pisco\",\n        \"peso\": 200\n        }\n    ]\n},\n{\n    \"nombre\": \"Piña colada con ron\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Ron\",\n        \"peso\": 2\n        }\n    ]\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/products/12/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"12",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US 012: Listar promopost.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/products/followed/2/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"followed",
+						"2",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar todos los post",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"nombre\": \"Piña colada con pisco\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Pisco\",\n        \"peso\": 200\n        }\n    ]\n},\n{\n    \"nombre\": \"Piña colada con ron\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Ron\",\n        \"peso\": 2\n        }\n    ]\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/listaPost",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"listaPost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar todos los seguimientos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"nombre\": \"Piña colada con pisco\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Pisco\",\n        \"peso\": 200\n        }\n    ]\n},\n{\n    \"nombre\": \"Piña colada con ron\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Ron\",\n        \"peso\": 2\n        }\n    ]\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/listaPost",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"listaPost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar todos los promo post",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"nombre\": \"Piña colada con pisco\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Pisco\",\n        \"peso\": 200\n        }\n    ]\n},\n{\n    \"nombre\": \"Piña colada con ron\",\n    \"ingredientesRecetaList\": [\n        {\n        \"nombre\": \"Piña colada\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Piña colade\",\n        \"peso\": 194\n        },\n        {\n        \"nombre\": \"Ron\",\n        \"peso\": 2\n        }\n    ]\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/listaPost",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"listaPost"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
