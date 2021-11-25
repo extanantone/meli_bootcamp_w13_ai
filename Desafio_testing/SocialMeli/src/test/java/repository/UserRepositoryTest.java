@@ -1,5 +1,6 @@
 package repository;
 
+import com.SocialMeli.SocialMeli.dto.PostListDTO;
 import com.SocialMeli.SocialMeli.dto.SellersDTO;
 import com.SocialMeli.SocialMeli.dto.UserDTO;
 import com.SocialMeli.SocialMeli.repository.UserRepository;
@@ -93,7 +94,7 @@ public class UserRepositoryTest {
     // Siempre va a retornar el usuario sin importar si le envìas o no el order
     // al igual si el usuario escribe mal el order
     @Test
-    @DisplayName("")
+    @DisplayName("Con valor para el parámetro order")
     void checkingSortedAlphaTypeSellers(){
         // Arrange
         String order = "name_asc";
@@ -103,6 +104,22 @@ public class UserRepositoryTest {
 
         // Act
         SellersDTO sellersDTO = repo.followersListSorted(user_id, order);
+
+        // Assert
+        Assertions.assertNotNull(sellersDTO);
+
+    }
+
+    @Test
+    @DisplayName("Sin valor para el parámetro order")
+    void checkingSortedAlphaTypeSellersWithoutOrder(){
+        // Arrange
+        Integer user_id = 1;
+        UserDTO userDTO = new UserDTO(null, "Camilo");
+        repo.createSellers(userDTO);
+
+        // Act
+        SellersDTO sellersDTO = repo.followersListSorted(user_id, null);
 
         // Assert
         Assertions.assertNotNull(sellersDTO);
@@ -148,6 +165,42 @@ public class UserRepositoryTest {
         //Assertions.assertTrue(userDTOList.containsAll(userDTOList));
         //assertThat(userDTOList, hasItems(followerTest));
 
+
+    }
+
+
+    @Test
+    @DisplayName("Con parámetro de order")
+    void checkingSortedDateTypeSellers(){
+        // Arrange
+        String order = "name_asc";
+        Integer user_id = 1;
+        UserDTO userDTO = new UserDTO(null, "Camilo");
+        repo.createSellers(userDTO);
+
+
+        // Act
+        PostListDTO postListDTO = repo.postList(user_id, order);
+
+        // Assert
+        Assertions.assertNotNull(postListDTO);
+
+    }
+
+    @Test
+    @DisplayName("Sin parámetro de order")
+    void checkingSortedDateTypeSellersWithoutOrder(){
+        // Arrange
+        Integer user_id = 1;
+        UserDTO userDTO = new UserDTO(null, "Camilo");
+        repo.createSellers(userDTO);
+
+
+        // Act
+        PostListDTO postListDTO = repo.postList(user_id, null);
+
+        // Assert
+        Assertions.assertNotNull(postListDTO);
 
     }
 

@@ -6,6 +6,7 @@ import com.SocialMeli.SocialMeli.dto.UserDTO;
 import com.SocialMeli.SocialMeli.repository.UserRepository;
 import com.SocialMeli.SocialMeli.service.UserService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -57,6 +58,7 @@ public class UserControllerTest {
     // Siempre va a retornar el usuario sin importar si le envìa o no el order
     // al igual si el usuario escribe mal el order
     @Test
+    @DisplayName("Con parámetro de order")
     void checkingSortedAlphaTypeSellers(){
         // Arrange
         String order = "name_asc";
@@ -67,6 +69,50 @@ public class UserControllerTest {
 
         // Assert
         verify(serviceMock, atLeastOnce()).followersListSorted(user_id,order);
+
+    }
+
+    @Test
+    @DisplayName("Sin parámetro de order")
+    void checkingSortedAlphaTypeSellersWithoutOrder(){
+        // Arrange
+        Integer user_id = 1;
+
+        // Act
+        controller.followersListSorted(user_id,null);
+
+        // Assert
+        verify(serviceMock, atLeastOnce()).followersListSorted(user_id,null);
+
+    }
+
+
+    @Test
+    @DisplayName("Con parámetro de order")
+    void checkingSortedDateTypeSellers(){
+        // Arrange
+        String order = "name_asc";
+        Integer user_id = 1;
+
+        // Act
+        controller.postListParam(user_id,order);
+
+        // Assert
+        verify(serviceMock, atLeastOnce()).postList(user_id,order);
+
+    }
+
+    @Test
+    @DisplayName("Sin parámetro de order")
+    void checkingSortedDateTypeSellersWithoutOrder(){
+        // Arrange
+        Integer user_id = 1;
+
+        // Act
+        controller.postListParam(user_id,null);
+
+        // Assert
+        verify(serviceMock, atLeastOnce()).postList(user_id,null);
 
     }
 }
