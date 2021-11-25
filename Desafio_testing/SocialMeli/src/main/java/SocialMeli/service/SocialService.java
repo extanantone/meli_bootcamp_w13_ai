@@ -9,6 +9,7 @@ import SocialMeli.dto.response.list.PostListDTO;
 import SocialMeli.dto.response.count.PromoCountDTO;
 import SocialMeli.exception.AlredyFollowedException;
 import SocialMeli.exception.NotFollowedException;
+import SocialMeli.exception.OrderMethodInexistentException;
 import SocialMeli.mapper.ISocialMapper;
 import SocialMeli.model.Customer;
 import SocialMeli.model.Post;
@@ -31,27 +32,30 @@ public class SocialService implements ISocialService {
         this.socialMapper = socialMapper;
     }
 
-    private List<Customer> sortCustomerByName(List<Customer> userList, String type) {
+    public List<Customer> sortCustomerByName(List<Customer> userList, String type) {
         if (type != null) {
             if (type.equals("name_asc")) userList.sort(Comparator.comparing(Customer::getUserName));
-            if (type.equals("name_desc")) userList.sort(Comparator.comparing(Customer::getUserName).reversed());
+            else if (type.equals("name_desc")) userList.sort(Comparator.comparing(Customer::getUserName).reversed());
+            else throw new OrderMethodInexistentException();
         }
         return userList;
     }
 
-    private List<Seller> sortSellerByName(List<Seller> userList, String type) {
+    public List<Seller> sortSellerByName(List<Seller> userList, String type) {
         if (type != null) {
             if (type.equals("name_asc")) userList.sort(Comparator.comparing(Seller::getUserName));
-            if (type.equals("name_desc")) userList.sort(Comparator.comparing(Seller::getUserName).reversed());
+            else if (type.equals("name_desc")) userList.sort(Comparator.comparing(Seller::getUserName).reversed());
+            else throw new OrderMethodInexistentException();
         }
         return userList;
     }
 
 
-    private List<Post> sortPostByDate(List<Post> postList, String type) {
+    public List<Post> sortPostByDate(List<Post> postList, String type) {
         if (type != null) {
             if (type.equals("date_asc")) postList.sort(Comparator.comparing(Post::getDate));
-            if (type.equals("date_asc")) postList.sort(Comparator.comparing(Post::getDate).reversed());
+            else if (type.equals("date_desc")) postList.sort(Comparator.comparing(Post::getDate).reversed());
+            else throw new OrderMethodInexistentException();
         }
         return postList;
     }

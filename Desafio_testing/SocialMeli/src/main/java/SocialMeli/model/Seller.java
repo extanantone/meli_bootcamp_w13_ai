@@ -1,11 +1,13 @@
 package SocialMeli.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
+@EqualsAndHashCode
 public class Seller extends User {
     Set<Integer> followersIdSet = new HashSet<>();
     Set<Integer> postIdSet = new HashSet<>();

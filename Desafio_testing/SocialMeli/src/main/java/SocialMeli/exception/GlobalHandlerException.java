@@ -46,4 +46,9 @@ public class GlobalHandlerException {
         return new ResponseEntity<>(new ExceptionDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(OrderMethodInexistentException.class)
+    public ResponseEntity<ExceptionDTO> OrderMethodException() {
+        return new ResponseEntity<>(new ExceptionDTO("Selected order method inexistent"), HttpStatus.BAD_REQUEST);
+    }
+
 }

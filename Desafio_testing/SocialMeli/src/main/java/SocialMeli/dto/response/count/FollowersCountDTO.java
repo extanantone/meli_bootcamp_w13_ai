@@ -1,9 +1,11 @@
 package SocialMeli.dto.response.count;
 
 import SocialMeli.dto.response.UserDTO;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode
 public class FollowersCountDTO extends UserDTO {
     int followersCount;
 

@@ -1,5 +1,6 @@
 package SocialMeli.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -8,6 +9,7 @@ import java.util.Set;
 
 @Getter
 @ToString
+@EqualsAndHashCode
 public class Customer extends User {
     Set<Integer> followedsIdSet = new HashSet<>();
 
