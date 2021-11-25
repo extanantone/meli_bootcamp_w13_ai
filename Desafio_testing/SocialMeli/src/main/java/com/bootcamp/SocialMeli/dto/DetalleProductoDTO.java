@@ -17,7 +17,7 @@ import javax.validation.constraints.*;
 public class DetalleProductoDTO {
     @NotNull(message = "El ID no puede estar vacío.")
     @Positive(message = "El ID debe ser mayor a cero.")
-    private int productId;
+    private Integer productId;
 
     @NotBlank(message = "El campo product_name no puede estar vacío.")
     @Size(max = 40, message = "La longitud no puede superar los 40 caracteres.")

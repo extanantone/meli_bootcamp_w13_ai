@@ -13,13 +13,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Publicacion {
-    private int idPost;
+    private Integer idPost;
     private LocalDate date;
     private Producto producto;
-    private double price;
-    private int category;
+    private Double price;
+    private Integer category;
 
-    public Publicacion(int idPost, LocalDate date, double price, Producto producto, int category) {
+    public Publicacion(Integer idPost, LocalDate date, Double price, Producto producto, Integer category) {
         this.idPost = idPost;
         this.date = date;
         this.price = price;

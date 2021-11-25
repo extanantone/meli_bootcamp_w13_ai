@@ -13,10 +13,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Promocion extends Publicacion{
-    private boolean hasPromo;
-    private double discount;
+    private Boolean hasPromo;
+    private Double discount;
 
-    public Promocion(int idPost, LocalDate date, double price, Producto producto, int category, boolean hasPromo, double discount) {
+    public Promocion(Integer idPost, LocalDate date, Double price, Producto producto, Integer category, Boolean hasPromo, Double discount) {
         super(idPost, date, price, producto, category);
         this.hasPromo = hasPromo;
         this.discount = discount;

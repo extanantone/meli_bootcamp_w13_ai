@@ -19,14 +19,14 @@ import java.time.LocalDate;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PromocionDTO extends PublicacionDTO {
     @NotNull(message = "El campo has_promo no puede estar vacío.")
-    private boolean hasPromo;
+    private Boolean hasPromo;
 
     @NotNull(message = "El porcentaje de descuento no puede estar vacío.")
     @DecimalMin(value = "0.0", inclusive = true, message = "El descuento mínimo es 0%.")
     @DecimalMax(value = "100.0", inclusive = true, message = "El descuento máximo es 100%.")
-    private double discount;
+    private Double discount;
 
-    public PromocionDTO(int userId, int idPost, LocalDate date, DetalleProductoDTO detail, int category, double price, boolean hasPromo, double discount) {
+    public PromocionDTO(Integer userId, Integer idPost, LocalDate date, DetalleProductoDTO detail, Integer category, Double price, Boolean hasPromo, Double discount) {
         super(userId, idPost, date, detail, category, price);
         this.hasPromo = hasPromo;
         this.discount = discount;

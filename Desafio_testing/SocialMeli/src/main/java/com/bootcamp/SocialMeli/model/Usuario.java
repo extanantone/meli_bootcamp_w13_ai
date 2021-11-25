@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Usuario {
-    private int userId;
+    private Integer userId;
     private String userName;
     private List<Usuario> vendedoresSeguidos;  //los vendedores a los cuales este usuario sigue
     private List<Usuario> seguidores;
@@ -31,7 +31,7 @@ public class Usuario {
         this.publicaciones = new ArrayList<>();
     }
 
-    public Usuario(int userId, String userName, List<Usuario> vendedoresSeguidos, List<Usuario> seguidores, List<Publicacion> publicaciones) {
+    public Usuario(Integer userId, String userName, List<Usuario> vendedoresSeguidos, List<Usuario> seguidores, List<Publicacion> publicaciones) {
         this.userId = userId;
         this.userName = userName;
         this.vendedoresSeguidos = vendedoresSeguidos;

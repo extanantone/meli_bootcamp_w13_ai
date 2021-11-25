@@ -45,7 +45,7 @@ public class Mapper {
         promocion.setCategory(promocionDTO.getCategory());
         promocion.setProducto(getModelMapper().map(promocionDTO.getDetail(), Producto.class));
 
-        promocion.setHasPromo(promocionDTO.isHasPromo());
+        promocion.setHasPromo(promocionDTO.getHasPromo());
         promocion.setDiscount(promocionDTO.getDiscount());
 
         return promocion;
@@ -79,7 +79,7 @@ public class Mapper {
         infoPromoDTO.setCategory(promocion.getCategory());
         infoPromoDTO.setPrice(promocion.getPrice());
         infoPromoDTO.setDetail(getModelMapper().map(promocion.getProducto(), DetalleProductoDTO.class));
-        infoPromoDTO.setHasPromo(promocion.isHasPromo());
+        infoPromoDTO.setHasPromo(promocion.getHasPromo());
         infoPromoDTO.setDiscount(promocion.getDiscount());
 
         return infoPromoDTO;
