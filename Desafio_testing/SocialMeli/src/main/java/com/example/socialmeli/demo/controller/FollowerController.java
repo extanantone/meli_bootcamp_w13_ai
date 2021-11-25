@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @RestController
 public class FollowerController {
@@ -25,8 +27,9 @@ public class FollowerController {
 
     //US 0001: seguir a un usuario
     @PostMapping("/users/{user_id}/follow/{user_id_to_follow}")
-    public ResponseEntity followUser(@PathVariable int user_id, @PathVariable int user_id_to_follow){
-
+    public ResponseEntity followUser(    @PathVariable int user_id,
+                                         @PathVariable int user_id_to_follow)
+    {
     @Valid DTOFollowUser request = new DTOFollowUser();
     request.setUserId(user_id);
     request.setUserIdToFollow(user_id_to_follow);
