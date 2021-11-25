@@ -44,12 +44,12 @@ public class LinkController {
   }
 
   @GetMapping("metrics/{linkId}")
-  public LinkDTO metrics(@PathVariable Integer linkId) throws IOException {
+  public LinkDTO metrics(@PathVariable Integer linkId) {
     return linkService.metrics(linkId);
   }
 
   @PostMapping("invalidate/{linkId}")
-  public void invalidate(@PathVariable Integer linkId) throws IOException {
+  public void invalidate(@PathVariable Integer linkId) {
     linkService.invalidate(linkId);
   }
 }

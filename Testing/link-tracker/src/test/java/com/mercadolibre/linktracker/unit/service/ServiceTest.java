@@ -102,6 +102,103 @@ public class ServiceTest {
 
         //Assert
         Assertions.assertNull(currentLinkDTO);
-        verify(mockLinkRepository,atLeast(1)).findLinkByLinkId(linkId);
+        verify(mockLinkRepository, atLeast(1)).findLinkByLinkId(linkId);
+    }
+
+    @Test
+    public void testRedirectWithCorrectPassword(){
+        //Arrange
+        Integer id = 0;
+        String passwd = "1234";
+        Optional<LinkDTO> linkBuscado = Optional.of(new LinkDTO());
+        linkBuscado.get().setLinkId(id);
+        linkBuscado.get().setPassword("1234");
+
+        //Act
+        when(mockLinkRepository.findLinkByLinkId(id)).thenReturn(linkBuscado);
+        LinkDTO linkCurrent = linkServiceImpl.redirect(id, passwd);
+
+        //Assert
+        Assertions.assertEquals(0, linkCurrent.getLinkId());
+        Assertions.assertEquals("1234", linkCurrent.getPassword());
+        verify(mockLinkRepository, atLeastOnce()).findLinkByLinkId(id);
+    }
+
+    @Test
+    public void testRedirectWithInvalidPassword(){
+        //Arrange
+
+        //Act
+
+        //Assert
+    }
+
+    @Test
+    public void testRedirectWithPasswordAndNotExistingLinkId(){
+        //Arrange
+        Integer linkId = 100;
+        String passwd = "1234";
+
+        //Act
+        when(mockLinkRepository.findLinkByLinkId(linkId)).thenReturn(Optional.empty());
+        LinkDTO currentLinkDTO =  linkServiceImpl.redirect(linkId, passwd);
+
+        //Assert
+        Assertions.assertNull(currentLinkDTO);
+        verify(mockLinkRepository, atLeast(1)).findLinkByLinkId(linkId);
+    }
+
+    @Test
+    public void testGetMetricsWithValidId(){
+        //Arrange
+        Integer id = 0;
+        LinkDTO linkExpected = database.get(0);
+
+        //Act
+        when(mockLinkRepository.findLinkByLinkId(id)).thenReturn(Optional.ofNullable(linkExpected));
+        LinkDTO linkCurrent = linkServiceImpl.metrics(id);
+
+        //Assert
+        Assertions.assertEquals(linkExpected, linkCurrent);
+        verify(mockLinkRepository, atLeastOnce()).findLinkByLinkId(id);
+    }
+
+    @Test
+    public void testGetMetricsWithNotFoundId(){
+        //Arrange
+        Integer id = 555;
+
+        //Act
+        when(mockLinkRepository.findLinkByLinkId(id)).thenReturn(Optional.empty());
+        LinkDTO linkCurrent = linkServiceImpl.metrics(id);
+
+        //Assert
+        Assertions.assertNull(linkCurrent);
+        verify(mockLinkRepository, atLeastOnce()).findLinkByLinkId(id);
+    }
+
+    @Test
+    public void testInvalidateAnExistingId(){
+        //Arrange
+        Integer id = 0;
+        LinkDTO linkToDelete = new LinkDTO();
+        linkToDelete.setLinkId(0);
+
+        //Act
+        when(mockLinkRepository.findLinkByLinkId(id)).thenReturn(Optional.of(linkToDelete));
+        //when(mockLinkRepository.delete(linkToDelete));
+        linkServiceImpl.invalidate(id);
+
+        //Assert
+
+    }
+
+    @Test
+    public void testInvalidateANotFoundId(){
+        //Arrange
+
+        //Act
+
+        //Assert
     }
 }
