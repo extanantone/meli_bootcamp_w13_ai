@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.validation.ConstraintViolationException;
 import java.time.DateTimeException;
 
 @ControllerAdvice
@@ -37,6 +38,11 @@ public class ExceptionHandlerController {
     @ExceptionHandler(InvalidUserException.class)
     public ResponseEntity<?> handlerInvalidUser(InvalidUserException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<?> handlerValidations(ConstraintViolationException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid validations");
     }
 
 
