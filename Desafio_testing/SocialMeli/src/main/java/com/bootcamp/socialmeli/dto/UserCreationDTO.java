@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -18,10 +20,13 @@ import javax.validation.constraints.NotBlank;
 public class UserCreationDTO {
 
     @NotBlank(message = "Can't be empty")
+    @Size(max = 15, message = "Max size 15")
+    @Pattern(regexp = "[A-Za-z0-9_.]*", message = "Can't have special characters nor spaces")
     private String username;
 
     @Email
     private String email;
 
+    @Size(min = 8, max = 16, message = "Size must be between 8 and 16 characters")
     private String password;
 }
