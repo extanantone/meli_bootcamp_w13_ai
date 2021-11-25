@@ -55,5 +55,21 @@ public class UserRepositoryTest {
         Assertions.assertTrue(followStatus);
     }
 
+    @Test
+    void userUnfollowedSuccess(){
+        // Arrange
+        Integer user_id = 1;
+        UserDTO userDTO = new UserDTO(null, "Camilo");
+        UserDTO sellersDTO = repo.createSellers(userDTO);
+        UserDTO buyerDTO = repo.createBuyers(userDTO);
+        repo.follow(buyerDTO.getUser_id(), sellersDTO.getUser_id());
+
+        // Act
+        Boolean followStatus = repo.unfollow(buyerDTO.getUser_id(), user_id);
+
+        // Assert
+        Assertions.assertTrue(followStatus);
+    }
+
 
 }
