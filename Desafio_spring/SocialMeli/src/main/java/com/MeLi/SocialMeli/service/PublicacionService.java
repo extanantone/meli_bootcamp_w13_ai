@@ -47,13 +47,19 @@ public class PublicacionService implements PublicacionServiceImplement{
     @Override
     public PubVendedoresDTO obtenerPublicaciones(int idUser, String order) throws NotFoundVendedorException, NotFoundCompradorException {
 
-        ArrayList publicacionesUsuario = new ArrayList();
+        List publicacionesUsuario = new ArrayList();
         LocalDate fechaActual = LocalDate.now();
         List<VendedorDTO> vendedores = compradorServiceImplement.verSeguidos(idUser, "name_asc").getFollowed();
 
         for(int i = 0; i < vendedores.size(); i++){
             List<Publicacion> publicacionesVendedor = publicacionRepositoryImplement.publicacionesVendedor(vendedores.get(i).getUser_id());
             publicacionesUsuario.addAll(publicacionesVendedor.stream().filter(pub -> pub.getDate().isAfter(fechaActual.minusDays(14))).collect(Collectors.toList()));
+        }
+
+        if(order.equals("date_desc")){
+            publicacionesUsuario = (List) publicacionesUsuario.stream().sorted(Comparator.comparing(Publicacion::getDate).reversed()).collect(Collectors.toList());
+        }else if(order.equals("date_asc")){
+            publicacionesUsuario = (List) publicacionesUsuario.stream().sorted(Comparator.comparing(Publicacion::getDate)).collect(Collectors.toList());
         }
 
         return new PubVendedoresDTO(idUser,publicacionesUsuario);
