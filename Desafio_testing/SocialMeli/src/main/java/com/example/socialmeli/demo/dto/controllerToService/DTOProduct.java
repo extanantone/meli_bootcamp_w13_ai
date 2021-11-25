@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,7 +17,10 @@ import lombok.Setter;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DTOProduct {
 
-private int productId;
+    @NotNull
+    @Pattern(regexp="[0-9]+", message = "El id del producto debe ser tipo numero")
+    private int productId;
+
 private String productName;
 private String type;
 private String brand;

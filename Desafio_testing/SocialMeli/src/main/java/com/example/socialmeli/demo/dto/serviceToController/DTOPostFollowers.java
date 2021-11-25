@@ -25,6 +25,7 @@ public class DTOPostFollowers {
     private int idPost;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
+    @NotNull(message = "La fecha de publicación no puede estar vacia.")
     private LocalDate date;
     private DTOProduct detail;
     private int category;
