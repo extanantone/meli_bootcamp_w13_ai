@@ -2,6 +2,7 @@ package com.socialmeli;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.socialmeli.dto.DetailDto;
+import com.socialmeli.dto.DicountPostDto;
 import com.socialmeli.dto.PostDto;
 import com.socialmeli.dto.UserDto;
 import com.socialmeli.model.User;
@@ -71,7 +72,7 @@ public class IntegrationTest {
 
     @Test
     public void shouldBeAddPost() throws Exception{
-        PostDto post = new PostDto(3,1,"01-01-2021",new DetailDto(1,"shoes","shoes","app","black","ok"),1,1);
+        PostDto post = new PostDto(3,1,"01-01-2021",new DetailDto(1,"shoes","shoes","app","black","ok"),1,4000.0);
         String json = mapper.writeValueAsString(post);
         mock.perform(post("/products/post").contentType("application/json").content(json)).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is2xxSuccessful());
@@ -79,7 +80,7 @@ public class IntegrationTest {
 
     @Test
     public void shouldntBeAddPostIfUserIsNull() throws Exception{
-        PostDto post = new PostDto(null,1,"01-01-2021",new DetailDto(1,"shoes","shoes","app","black","ok"),1,1);
+        PostDto post = new PostDto(null,1,"01-01-2021",new DetailDto(1,"shoes","shoes","app","black","ok"),1,4000.0);
         String json = mapper.writeValueAsString(post);
         mock.perform(post("/products/post").contentType("application/json").content(json)).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isBadRequest());
@@ -87,7 +88,7 @@ public class IntegrationTest {
 
     @Test
     public void shouldntBeAddPostIfUserNotExist() throws Exception{
-        PostDto post = new PostDto(20,1,"01-01-2021",new DetailDto(1,"shoes","shoes","app","black","ok"),1,1);
+        PostDto post = new PostDto(20,1,"01-01-2021",new DetailDto(1,"shoes","shoes","app","black","ok"),1,4000.0);
         String json = mapper.writeValueAsString(post);
         mock.perform(post("/products/post").contentType("application/json").content(json)).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isNotFound());
@@ -95,7 +96,7 @@ public class IntegrationTest {
 
     @Test
     public void shouldntBeAddRepeatPostId() throws Exception{
-        PostDto post = new PostDto(3,1,"01-01-2021",new DetailDto(1,"shoes","shoes","app","black","ok"),1,1);
+        PostDto post = new PostDto(3,1,"01-01-2021",new DetailDto(1,"shoes","shoes","app","black","ok"),1,4000.0);
         String json = mapper.writeValueAsString(post);
         mock.perform(post("/products/post").contentType("application/json").content(json)).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is2xxSuccessful());
@@ -228,7 +229,7 @@ public class IntegrationTest {
         LocalDate date = LocalDate.now();
 
         String current = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        PostDto post = new PostDto(4,1,current,new DetailDto(1,"shoes","shoes","app","black","ok"),1,1);
+        PostDto post = new PostDto(4,1,current,new DetailDto(1,"shoes","shoes","app","black","ok"),1,4000.0);
         String json = mapper.writeValueAsString(post);
         mock.perform(post("/products/post").contentType("application/json").content(json)).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is2xxSuccessful());
@@ -242,7 +243,7 @@ public class IntegrationTest {
                 .andExpect(status().is2xxSuccessful());
         LocalDate date = LocalDate.now().minusWeeks(3);
         String current = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        PostDto post = new PostDto(4,1,current,new DetailDto(1,"shoes","shoes","app","black","ok"),1,1);
+        PostDto post = new PostDto(4,1,current,new DetailDto(1,"shoes","shoes","app","black","ok"),1,4.000);
         String json = mapper.writeValueAsString(post);
         mock.perform(post("/products/post").contentType("application/json").content(json)).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is2xxSuccessful());
@@ -290,6 +291,23 @@ public class IntegrationTest {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    @Test
+    public void shouldBeAddPromoPost() throws Exception{
+        DicountPostDto dto = new DicountPostDto(4,1,"01-01-2021",new DetailDto(1,"shoes","shoes","app","black","ok"),1,4.000,true,0.9);
+        String json = mapper.writeValueAsString(dto);
+        mock.perform(post("/products/promo-post").content(json).contentType("application/json"))
+                .andExpect(status().is2xxSuccessful());
+
+    }
+
+    @Test
+    public void shouldntBeAddPromopostIfUserUnexist() throws Exception{
+        DicountPostDto dto = new DicountPostDto(40,1,"01-01-2021",new DetailDto(1,"shoes","shoes","app","black","ok"),1,4.000,true,0.9);
+        String json = mapper.writeValueAsString(dto);
+        mock.perform(post("/products/promo-post").content(json).contentType("application/json"))
+                .andExpect(status().isNotFound());
+    }
 
 
 }

@@ -24,7 +24,7 @@ public class Post {
     private String color;
     private String notes;
     private int category;
-    private int price;
+    private double price;
     private boolean hasDiscount;
     private double discount;
 

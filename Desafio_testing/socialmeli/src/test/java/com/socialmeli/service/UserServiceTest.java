@@ -378,14 +378,14 @@ public class UserServiceTest {
     @Test
     public void shouldntBeAddPostIfUserNotExist(){
         Mockito.when(iUserRepository.getUserById(1)).thenReturn(null);
-        assertThrows(NotFoundUserException.class,()->userService.addPost(new PostDto(1,1,LocalDate.now().toString(),null,1,1)));
+        assertThrows(NotFoundUserException.class,()->userService.addPost(new PostDto(1,1,LocalDate.now().toString(),null,1,4000.0)));
         Mockito.verify(iUserRepository,Mockito.times(1)).getUserById(Mockito.anyInt());
     }
 
     @Test
     public void shouldBeAddNewPost(){
         User user = new User("pablo","pablo@mail.com",true);
-        PostDto post = new PostDto(1,1,"01-01-2021",new DetailDto(1,"zapato","","","",""),1,1);
+        PostDto post = new PostDto(1,1,"01-01-2021",new DetailDto(1,"zapato","","","",""),1,4000.0);
         Mockito.when(iUserRepository.getUserById(1)).thenReturn(user);
         assertDoesNotThrow(()->userService.addPost(post));
         assertEquals(user.getPosts().size(),1);
@@ -394,7 +394,7 @@ public class UserServiceTest {
     @Test
     public void shouldntBeAddNewPostIfExistPostWithSameId(){
         User user = new User("pablo","pablo@mail.com",true);
-        PostDto post = new PostDto(1,1,"01-01-2021",new DetailDto(1,"zapato","","","",""),1,1);
+        PostDto post = new PostDto(1,1,"01-01-2021",new DetailDto(1,"zapato","","","",""),1,4000.0);
         Post postentity = new Post();
         postentity.setId(1);
         user.addPost(postentity);

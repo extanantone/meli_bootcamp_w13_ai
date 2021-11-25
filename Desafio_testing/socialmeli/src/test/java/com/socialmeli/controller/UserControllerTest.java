@@ -103,7 +103,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldBeAddPostDto(){
-        userController.addPost(new PostDto(1,1,"2021-01-01",null,1,1));
+        userController.addPost(new PostDto(1,1,"2021-01-01",null,1,4.000));
         Mockito.verify(iUserService,Mockito.times(1)).addPost(Mockito.any(PostDto.class));
     }
 

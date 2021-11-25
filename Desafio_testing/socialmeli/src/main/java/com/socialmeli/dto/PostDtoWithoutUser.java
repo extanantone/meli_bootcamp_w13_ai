@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,5 +22,5 @@ public class PostDtoWithoutUser {
     private String date;
     private DetailDto detail;
     private int category;
-    private int price;
+    private String price;
 }

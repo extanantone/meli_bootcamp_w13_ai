@@ -36,15 +36,17 @@ public class PostDto {
 
 
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotEmpty
+    @NotEmpty(message = "La fecha no puede estar vacia")
     private String date;
 
 
     @Valid
-    @NotNull
+    @NotNull(message = "El detalle no puede ser nulo")
     private DetailDto detail;
 
-    private int category;
+    @NotNull(message = "La categoria no puede estar vacia")
+    private Integer category;
 
-    private int price;
+    @NotNull(message = "El precio no puede estar vacio")
+    private Double price;
 }

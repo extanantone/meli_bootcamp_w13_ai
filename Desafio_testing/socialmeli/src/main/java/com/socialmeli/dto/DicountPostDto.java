@@ -17,4 +17,9 @@ public class DicountPostDto extends PostDto{
     private double discount;
 
 
+    public DicountPostDto(int idUser, int idPost, String date, DetailDto detail, int category, double price, boolean hasDiscount, double discount) {
+        super(idUser,idPost,date,detail,category,price);
+        this.discount = discount;
+        this.hasDiscount = hasDiscount;
+    }
 }
