@@ -115,4 +115,18 @@ public class UserControllerTest {
         verify(serviceMock, atLeastOnce()).postList(user_id,null);
 
     }
+
+    @Test
+    @DisplayName("Verificando que la cantidad de seguidores sea la correcta")
+    void checkingAmountFollowersFromSellers(){
+        // Arrange
+        Integer user_id = 0;
+
+        // Act
+        controller.followersCount(user_id);
+
+        // Assert
+        verify(serviceMock, atLeastOnce()).followersCount(user_id);
+
+    }
 }

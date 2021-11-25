@@ -1,5 +1,6 @@
 package repository;
 
+import com.SocialMeli.SocialMeli.dto.FollowersCountDTO;
 import com.SocialMeli.SocialMeli.dto.PostListDTO;
 import com.SocialMeli.SocialMeli.dto.SellersDTO;
 import com.SocialMeli.SocialMeli.dto.UserDTO;
@@ -201,6 +202,30 @@ public class UserRepositoryTest {
 
         // Assert
         Assertions.assertNotNull(postListDTO);
+
+    }
+
+    @Test
+    @DisplayName("Verificando que la cantidad de seguidores sea la correcta")
+    void checkingAmountFollowersFromSellers(){
+        // Arrange
+        Integer user_id = 1;
+        UserDTO userDTO = new UserDTO(null, "Camilo");
+        repo.createSellers(userDTO);
+        repo.createBuyers(new UserDTO(null, "Vanesa"));
+        repo.createBuyers(new UserDTO(null, "Ana"));
+        repo.createBuyers(new UserDTO(null, "Martín"));
+
+        repo.follow(1,1);
+        repo.follow(2,1);
+        repo.follow(3,1);
+
+
+        // Act
+        FollowersCountDTO sellersDTO = repo.followersCount(user_id);
+
+        // Assert
+        Assertions.assertEquals(3, sellersDTO.getFollowers_count());
 
     }
 
