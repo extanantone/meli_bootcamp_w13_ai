@@ -1,10 +1,13 @@
 package com.bootcamp.socialmeli.util;
 
+import com.bootcamp.socialmeli.model.Post;
+import com.bootcamp.socialmeli.model.Product;
 import com.bootcamp.socialmeli.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 
@@ -14,6 +17,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class TestUtilsGenerator {
@@ -56,4 +61,34 @@ public class TestUtilsGenerator {
         );
     }
 
+    public static List<Object> getPostProduct(long postProductId, long userId, String productName, double discount, boolean isRecent) {
+        List<Object> postProduct = new ArrayList<>();
+        boolean hasPromo = false;
+        if (discount > 0.0) {
+            hasPromo = true;
+        }
+        LocalDate date = LocalDate.now().minusDays(5);
+        if (!isRecent) {
+            date = date.minusDays(20);
+        }
+        postProduct.add(new Post(
+                postProductId,
+                date,
+                1,
+                100.0,
+                hasPromo,
+                0.0,
+                userId,
+                postProductId
+        ));
+        postProduct.add(new Product(
+                postProductId,
+                productName,
+                "type",
+                "brand",
+                "color",
+                "notes"
+        ));
+        return postProduct;
+    }
 }
