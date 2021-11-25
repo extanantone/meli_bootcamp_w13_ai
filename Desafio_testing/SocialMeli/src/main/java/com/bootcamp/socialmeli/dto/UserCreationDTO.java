@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -19,6 +16,7 @@ import javax.validation.constraints.Size;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class UserCreationDTO {
 
+    @NotNull(message = "Can't be empty")
     @NotBlank(message = "Can't be empty")
     @Size(max = 15, message = "Max size 15")
     @Pattern(regexp = "[A-Za-z0-9_.]*", message = "Can't have special characters nor spaces")

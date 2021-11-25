@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -15,20 +17,29 @@ import javax.validation.constraints.Size;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ProductDTO {
 
-    private long productId;
+    @NotNull(message = "Can't be empty")
+    private Long productId;
 
+    @NotNull(message = "Can't be empty")
+    @NotBlank(message = "Can't be empty")
     @Size(max = 40, message = "Max size 40")
     @Pattern(regexp = "[a-zA-Z0-9., ]*", message = "Can't have special characters")
     private String productName;
 
+    @NotNull(message = "Can't be empty")
+    @NotBlank(message = "Can't be empty")
     @Size(max = 15, message = "Max size 15")
     @Pattern(regexp = "[a-zA-Z0-9., ]*", message = "Can't have special characters")
     private String type;
 
+    @NotNull(message = "Can't be empty")
+    @NotBlank(message = "Can't be empty")
     @Size(max = 25, message = "Max size 25")
     @Pattern(regexp = "[a-zA-Z0-9., ]*", message = "Can't have special characters")
     private String brand;
 
+    @NotNull(message = "Can't be empty")
+    @NotBlank(message = "Can't be empty")
     @Size(max = 15, message = "Max size 15")
     @Pattern(regexp = "[a-zA-Z0-9., ]*", message = "Can't have special characters")
     private String color;
