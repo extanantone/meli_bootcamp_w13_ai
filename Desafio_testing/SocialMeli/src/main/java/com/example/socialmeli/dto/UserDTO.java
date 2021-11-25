@@ -7,6 +7,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +19,18 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class UserDTO {
 
+    @NotNull (message = "La id no puede estar vacía.")
+    @Positive (message = "El id debe ser mayor a cero.")
     private Integer userId;
+
+    @NotEmpty(message = "El campo no puede estar vacío.")
+    @Max(value = 15, message = "La longitud no puede superar los 15 caracteres.")
+    @Pattern(regexp="\\A[A-Z|À-Ù|\\u00f1|Á-Ú|Ä-Ü][A-Z|À-Ù|\\u00f1|\\u00d1|Á-Ú|Ä-Ü||á-ú|ä-ü|a-z|0-9]*[,|.]?(\\s[A-Z|À-Ù|\\u00f1|\\u00d1|Á-Ú|Ä-Ü|á-ú|ä-ü|a-z|0-9]*[,|.]?)*\\z", message = "El campo no puede poseer caracteres especiales")
     private String userName;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Integer> followersId = new ArrayList<>();
+    private List<
+            @NotNull(message = "La id no puede estar vacía")
+            @Positive(message = "El id debe ser mayor a cero")
+            Integer> followersId = new ArrayList<>();
 }

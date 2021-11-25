@@ -2,15 +2,15 @@ package com.example.socialmeli.controllers;
 
 import com.example.socialmeli.exceptions.InvalidPromoException;
 import com.example.socialmeli.exceptions.PostAlreadyExistException;
-import com.example.socialmeli.exceptions.PostNotFoundException;
 import com.example.socialmeli.exceptions.UserNotFoundException;
 import com.example.socialmeli.dto.PostDTO;
 import com.example.socialmeli.dto.response.CountPromosResponseDTO;
 import com.example.socialmeli.dto.response.PostsResponseDTO;
 import com.example.socialmeli.services.SocialMeliService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class PostsController {
 
     //US 0005
     @PostMapping("/post")
-    public void loadPost(@RequestBody PostDTO newPost) throws PostAlreadyExistException, InvalidPromoException, UserNotFoundException {
+    public void loadPost(@RequestBody @Valid PostDTO newPost) throws PostAlreadyExistException, InvalidPromoException, UserNotFoundException {
         service.pushPost(newPost);
     }
 
