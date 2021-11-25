@@ -38,4 +38,6 @@ public class ExceptionHandlerController {
     public ResponseEntity<?> handlerInvalidUser(InvalidUserException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDto(e.getMessage()));
     }
+
+
 }

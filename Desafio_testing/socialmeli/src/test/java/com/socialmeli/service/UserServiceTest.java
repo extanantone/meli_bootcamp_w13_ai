@@ -1,7 +1,9 @@
 package com.socialmeli.service;
 
 import com.socialmeli.dto.*;
+import com.socialmeli.exception.InvalidPostException;
 import com.socialmeli.exception.InvalidSellerException;
+import com.socialmeli.exception.InvalidUserException;
 import com.socialmeli.exception.NotFoundUserException;
 import com.socialmeli.model.Post;
 import com.socialmeli.model.User;
@@ -322,5 +324,119 @@ public class UserServiceTest {
         Mockito.verify(iUserRepository,Mockito.times(1)).getUserById(1);
 
     }
+
+    @Test
+    public void shoundntBeFoundFollowerlIstForUnexistUser(){
+
+        Mockito.when(iUserRepository.getUserById(1)).thenReturn(null);
+        assertThrows(NotFoundUserException.class,()->userService.getFollowerList(1));
+        Mockito.verify(iUserRepository,Mockito.times(1)).getUserById(1);
+
+    }
+
+    @Test
+    public void shouldntBeFoundFollowerListForUserNotSeller(){
+        Mockito.when(iUserRepository.getUserById(1)).thenReturn(new User("pablo","pablo@mail.com",false));
+        assertThrows(InvalidSellerException.class,()->userService.getFollowerList(1));
+        Mockito.verify(iUserRepository,Mockito.times(1)).getUserById(1);
+    }
+
+    @Test
+    public void shouldBeFoundFollowerList(){
+        User user = new User("pablo","pablo@mail.com",true);
+        user.addFollower(new User("Luis","luis@mail.com",false));
+        Mockito.when(iUserRepository.getUserById(1)).thenReturn(user);
+        FollowerListDto list = userService.getFollowerList(1);
+        assertEquals(list.getUserId(),user.getId());
+        assertEquals(list.getUserName(),user.getName());
+        assertEquals(list.getFollowers().size(),1);
+        Mockito.verify(iUserRepository,Mockito.times(1)).getUserById(1);
+    }
+
+    @Test
+    public void shouldntBeFindFollowed(){
+        Mockito.when(iUserRepository.getUserById(1)).thenReturn(null);
+        assertThrows(NotFoundUserException.class,()->userService.getFollowed(1));
+        Mockito.verify(iUserRepository,Mockito.times(1)).getUserById(Mockito.anyInt());
+    }
+
+    @Test
+    public void shouldBeFindFollowed(){
+        User user = new User("pablo","pablo@mail.com",true);
+        user.setId(1);
+        Mockito.when(iUserRepository.getUserById(1)).thenReturn(user);
+        List<User> followed = List.of();
+        Mockito.when(iUserRepository.followedUser(user)).thenReturn(followed);
+        FollowedListDto listDto = userService.getFollowed(1);
+        assertEquals(listDto.getUserId(),user.getId());
+        assertEquals(listDto.getUserName(),user.getName());
+        assertTrue(listDto.getFollowed().isEmpty());
+        Mockito.verify(iUserRepository,Mockito.times(1)).getUserById(Mockito.anyInt());
+        Mockito.verify(iUserRepository,Mockito.times(1)).followedUser(user);
+    }
+
+    @Test
+    public void shouldntBeAddPostIfUserNotExist(){
+        Mockito.when(iUserRepository.getUserById(1)).thenReturn(null);
+        assertThrows(NotFoundUserException.class,()->userService.addPost(new PostDto(1,1,LocalDate.now().toString(),null,1,1)));
+        Mockito.verify(iUserRepository,Mockito.times(1)).getUserById(Mockito.anyInt());
+    }
+
+    @Test
+    public void shouldBeAddNewPost(){
+        User user = new User("pablo","pablo@mail.com",true);
+        PostDto post = new PostDto(1,1,"01-01-2021",new DetailDto(1,"zapato","","","",""),1,1);
+        Mockito.when(iUserRepository.getUserById(1)).thenReturn(user);
+        assertDoesNotThrow(()->userService.addPost(post));
+        assertEquals(user.getPosts().size(),1);
+    }
+
+    @Test
+    public void shouldntBeAddNewPostIfExistPostWithSameId(){
+        User user = new User("pablo","pablo@mail.com",true);
+        PostDto post = new PostDto(1,1,"01-01-2021",new DetailDto(1,"zapato","","","",""),1,1);
+        Post postentity = new Post();
+        postentity.setId(1);
+        user.addPost(postentity);
+        Mockito.when(iUserRepository.getUserById(1)).thenReturn(user);
+        assertThrows(InvalidPostException.class,()->userService.addPost(post));
+        assertEquals(user.getPosts().size(),1);
+    }
+
+    @Test
+    public void shouldntBeAddNewUserIfExist(){
+        User user = new User("Juan","juan@test.com",true);
+        Mockito.when(iUserRepository.findUserByEmail("juan@test.com")).thenReturn(user);
+        assertThrows(InvalidUserException.class,()->userService.addUser(new UserRequestDto("Juan","juan@test.com",true)));
+        Mockito.verify(iUserRepository,Mockito.times(1)).findUserByEmail(Mockito.anyString());
+    }
+
+    @Test
+    public void souldntBeFindPostWithDiscountExceptionIfUserUnexist(){
+        Mockito.when(iUserRepository.getUserById(1)).thenReturn(null);
+        assertThrows(NotFoundUserException.class,()->userService.getProductDiscountListDto(1));
+        Mockito.verify(iUserRepository,Mockito.times(1)).getUserById(Mockito.anyInt());
+    }
+
+    @Test
+    public void souldntBeFindPostWithDiscountExceptionIfUserIsNotSeller(){
+        Mockito.when(iUserRepository.getUserById(1)).thenReturn(new User("Juan","juan@test.com",false));
+        assertThrows(InvalidSellerException.class,()->userService.getProductDiscountListDto(1));
+        Mockito.verify(iUserRepository,Mockito.times(1)).getUserById(Mockito.anyInt());
+
+    }
+
+    @Test
+    public void shouldBeFinAllSellers(){
+        Mockito.when(iUserRepository.findAllSellers()).thenReturn(List.of());
+        assertTrue(userService.getAllSellers().isEmpty());
+    }
+
+    @Test
+    public void shouldBeFinAllUsers(){
+        Mockito.when(iUserRepository.findAll()).thenReturn(List.of());
+        assertTrue(userService.getAllUsers().isEmpty());
+    }
+
 
 }
