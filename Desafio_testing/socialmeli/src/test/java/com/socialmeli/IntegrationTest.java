@@ -6,17 +6,20 @@ import com.socialmeli.dto.PostDto;
 import com.socialmeli.model.User;
 import com.socialmeli.repository.IUserRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,16 +40,16 @@ public class IntegrationTest {
     private ObjectMapper mapper = new ObjectMapper();
 
 
-    @AfterEach
+    @BeforeEach
     public void setup(){
         if(!execution){
-            execution=true;
             int cont = 1;
             for(User u:repository.findAll()) {
                 u.setId(cont);
                 users.add(u);
                 cont++;
             }
+            execution=true;
         }
         // Clear Memory data
         repository.findAll().clear();
@@ -232,5 +235,58 @@ public class IntegrationTest {
                 .andExpect(status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print());
     }
+
+
+    @Test
+    public void shouldBeListPostOfLas2Weeks() throws Exception{
+        mock.perform(post("/users/2/follow/4")).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is2xxSuccessful());
+        LocalDate date = LocalDate.now();
+
+        String current = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        PostDto post = new PostDto(4,1,current,new DetailDto(1,"shoes","shoes","app","black","ok"),1,1);
+        String json = mapper.writeValueAsString(post);
+        mock.perform(post("/products/post").contentType("application/json").content(json)).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is2xxSuccessful());
+        mock.perform(get("/products/followed/2/list")).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is2xxSuccessful()).andExpect(jsonPath("$.posts.length()").value(1));
+    }
+
+    @Test
+    public void shouldntGetItemPostIfNotIs2WeeksOld() throws Exception{
+        mock.perform(post("/users/2/follow/4")).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is2xxSuccessful());
+        LocalDate date = LocalDate.now().minusWeeks(3);
+        String current = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        PostDto post = new PostDto(4,1,current,new DetailDto(1,"shoes","shoes","app","black","ok"),1,1);
+        String json = mapper.writeValueAsString(post);
+        mock.perform(post("/products/post").contentType("application/json").content(json)).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is2xxSuccessful());
+        mock.perform(get("/products/followed/2/list")).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is2xxSuccessful()).andExpect(jsonPath("$.posts.length()").value(0));
+    }
+
+    @Test
+    public void shouldBeFindItemsForNegativePost() throws  Exception{
+        mock.perform(get("/products/followed/-2/list")).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldListAllUsers() throws Exception{
+        mock.perform(get("/users"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.length()").value(4));
+    }
+
+    @Test
+    public void shouldFindAllSellers() throws Exception{
+        mock.perform(get("/users/sellers"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].seller").value(true))
+                .andExpect(jsonPath("$[1].seller").value(true));
+    }
+
 
 }
