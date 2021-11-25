@@ -44,7 +44,7 @@ public class SocialMeliController {
         return new ResponseEntity<>(seguidos, HttpStatus.OK);
     }
     @PostMapping("/products/post")
-    public ResponseEntity<RespuestaSimpleDTO> postear(@Valid @RequestBody PublicacionDTO pub) throws UsuarioNoEncontradoError, MethodArgumentNotValidException, HttpMessageNotReadableException {
+    public ResponseEntity<RespuestaSimpleDTO> postear(@RequestBody @Valid PublicacionDTO pub) throws UsuarioNoEncontradoError, MethodArgumentNotValidException, HttpMessageNotReadableException {
         RespuestaSimpleDTO rta = SMservicio.añadirPost(pub);
         return new ResponseEntity<>(rta, HttpStatus.OK);
     }
