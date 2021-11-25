@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -21,7 +23,7 @@ public class ProductController {
 
     // US0005
     @PostMapping("/post")
-    public HttpStatus newProduct(@RequestBody PostDtoIn postDtoIn) throws Exception {
+    public HttpStatus newProduct(@RequestBody @Valid PostDtoIn postDtoIn) throws Exception {
         socialService.newPost(postDtoIn);
         return HttpStatus.OK;
     }
@@ -35,7 +37,7 @@ public class ProductController {
 
     // US0010
     @PostMapping("/promo-post")
-    public HttpStatus newPromoProduct(@RequestBody PromoPostDtoIn promoPostDtoIn) throws Exception {
+    public HttpStatus newPromoProduct(@RequestBody @Valid PromoPostDtoIn promoPostDtoIn) throws Exception {
         socialService.newPromoPost(promoPostDtoIn);
         return HttpStatus.OK;
     }

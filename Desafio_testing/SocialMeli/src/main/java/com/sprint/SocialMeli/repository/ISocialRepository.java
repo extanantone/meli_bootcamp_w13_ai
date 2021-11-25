@@ -7,7 +7,7 @@ public interface ISocialRepository {
     boolean existsUser(int userId);
     boolean existsPost(int postId);
     User getUser(int userId);
-    void createUser(User user);
+    void putUser(User user);
     void createPost(Post post);
     Post getPost(int idPost);
 }

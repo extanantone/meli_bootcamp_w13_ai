@@ -50,7 +50,7 @@ public class SocialRepository implements ISocialRepository{
         return users.get(userId);
     }
 
-    public void createUser(User user){
+    public void putUser(User user){
         users.put(user.getUserId(), user);
     }
 

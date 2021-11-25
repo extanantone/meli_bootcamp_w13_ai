@@ -37,11 +37,11 @@ public class SocialService implements ISocialService{
         try{
             Buyer buyer = (Buyer) socialRepository.getUser(userId);
             buyer.addFollowed(userIdToFollow);
-            socialRepository.createUser(buyer);
+            socialRepository.putUser(buyer);
 
             Seller seller = (Seller) socialRepository.getUser(userIdToFollow);
             seller.addFollower(userId);
-            socialRepository.createUser(seller);
+            socialRepository.putUser(seller);
         }
         catch (Exception e){
             throw new Exception("Error al seguir un usuario : " + e.getMessage());
@@ -149,11 +149,11 @@ public class SocialService implements ISocialService{
         try{
             Buyer buyer = (Buyer) socialRepository.getUser(userId);
             buyer.deleteFollowed(userIdToUnfollow);
-            socialRepository.createUser(buyer);
+            socialRepository.putUser(buyer);
 
             Seller seller = (Seller) socialRepository.getUser(userIdToUnfollow);
             seller.deleteFollower(userId);
-            socialRepository.createUser(seller);
+            socialRepository.putUser(seller);
         }
         catch(Exception e){
             throw new Exception("Error al dejar de seguir un usuario : " + e.getMessage());
@@ -241,7 +241,7 @@ public class SocialService implements ISocialService{
             socialRepository.createPost(post);
             Seller seller = (Seller) socialRepository.getUser(post.getUserId());
             seller.addPost(post.getIdPost());
-            socialRepository.createUser(seller);
+            socialRepository.putUser(seller);
         }
         catch(Exception e){
             throw new Exception("Error al crear un nuevo post : " + e.getMessage());

@@ -2,13 +2,15 @@ package com.sprint.SocialMeli.model;
 
 import com.sprint.SocialMeli.dto.in.PostDtoIn;
 import com.sprint.SocialMeli.dto.in.PromoPostDtoIn;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
+@Setter
+@Data
+@NoArgsConstructor
 public class Post {
     int userId;
     int idPost;
@@ -50,7 +52,7 @@ public class Post {
         color = promoPostDtoIn.getDetail().getColor();
         category = promoPostDtoIn.getCategory();
         price = promoPostDtoIn.getPrice();
-        hasPromo = promoPostDtoIn.isHasPromo();
+        hasPromo = promoPostDtoIn.getHasPromo();
         discount = promoPostDtoIn.getDiscount();
     }
 
