@@ -276,21 +276,22 @@ public class UserServiceTest {
         Mockito.when(iUserRepository.getUserById(1)).thenReturn(user);
         Mockito.when(iUserRepository.getPostLastTwoWeeksOfFollowed(1)).thenReturn(
                 List.of(
-                        new Post(5, LocalDate.now().minusDays(3),3,"zapato","zapato","","black","",10,1,false,0),
-                        new Post(6, LocalDate.now().minusDays(4),4,"zapato","zapato","","black","",10,1,false,0),
-                        new Post(7, LocalDate.now().minusDays(5),5,"zapato","zapato","","black","",10,1,false,0)
+                        new Post(5, LocalDate.now().minusDays(3),3,"zapato","zapato","","black","",10,1.0,false,0),
+                        new Post(6, LocalDate.now().minusDays(4),4,"zapato","zapato","","black","",10,1.0,false,0),
+                        new Post(8, LocalDate.now().minusDays(4),4,"zapato","zapato","","black","",10,1.0,false,0),
+                        new Post(7, LocalDate.now().minusDays(5),5,"zapato","zapato","","black","",10,1.0,false,0)
                 ));
         ListPostDto listPostDto = userService.getListDtoSubscriptionByUserAndOrderByDateDesc(1);
         Mockito.verify(iUserRepository,Mockito.times(1)).getUserById(1);
         Mockito.verify(iUserRepository,Mockito.times(1)).getPostLastTwoWeeksOfFollowed(1);
-        assertEquals(listPostDto.getPosts().size(),3);
+        assertEquals(listPostDto.getPosts().size(),4);
         for(int i=1;i<3;i++){
             PostDtoWithoutUser fdto = listPostDto.getPosts().get(i-1);
             PostDtoWithoutUser sdto = listPostDto.getPosts().get(i);
             assertNotEquals(fdto.getPostId(),sdto.getPostId());
             LocalDate fdate = LocalDate.parse(fdto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             LocalDate sdate = LocalDate.parse(sdto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            assertTrue(fdate.isAfter(sdate));
+            assertTrue(!fdate.isBefore(sdate));
         }
     }
 
