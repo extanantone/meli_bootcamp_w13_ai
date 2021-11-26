@@ -246,6 +246,81 @@ public class UserRepositoryTest {
 
     }
 
+
+    @Test
+    @DisplayName("Verificar ordenamiento por fecha de los posts ascendentemente")
+    void checkingSortedDateAscSellers(){
+        // Arrange
+        String order = "date_asc";
+        Integer user_id = 1;
+        UserDTO userDTO = new UserDTO(null, "Camilo");
+        repo.createSellers(userDTO);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+        PostDTO postDTO = new PostDTO(1,LocalDate.parse("12/11/2021",formatter),1,123.89,null);
+        PostUserDTO postUserDTO = new PostUserDTO(user_id, postDTO);
+        repo.createPost(postUserDTO);
+
+        PostDTO postDTO2 = new PostDTO(2,LocalDate.parse("25/11/2021",formatter),2,234.65,null);
+        PostUserDTO postUserDTO2 = new PostUserDTO(user_id, postDTO2);
+        repo.createPost(postUserDTO2);
+
+        PostDTO postDTO3 = new PostDTO(3,LocalDate.parse("17/11/2021",formatter),2,234.65,null);
+        PostUserDTO postUserDTO3 = new PostUserDTO(user_id, postDTO3);
+        repo.createPost(postUserDTO3);
+
+        List<PostDTO> postDTOList = new ArrayList<>();
+        postDTOList.add(postDTO);
+        postDTOList.add(postDTO3);
+        postDTOList.add(postDTO2);
+
+
+        // Act
+        PostListDTO postListDTO = repo.postList(user_id, order);
+
+        // Assert
+        Assertions.assertEquals(postDTOList, postListDTO.getPosts());
+
+    }
+
+    @Test
+    @DisplayName("Verificar ordenamiento por fecha de los post descendentemente")
+    void checkingSortedDateDescSellers(){
+        // Arrange
+        String order = "date_desc";
+        Integer user_id = 1;
+        UserDTO userDTO = new UserDTO(null, "Camilo");
+        repo.createSellers(userDTO);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+        PostDTO postDTO = new PostDTO(1,LocalDate.parse("12/11/2021",formatter),1,123.89,null);
+        PostUserDTO postUserDTO = new PostUserDTO(user_id, postDTO);
+        repo.createPost(postUserDTO);
+
+        PostDTO postDTO2 = new PostDTO(2,LocalDate.parse("25/11/2021",formatter),2,234.65,null);
+        PostUserDTO postUserDTO2 = new PostUserDTO(user_id, postDTO2);
+        repo.createPost(postUserDTO2);
+
+        PostDTO postDTO3 = new PostDTO(3,LocalDate.parse("17/11/2021",formatter),2,234.65,null);
+        PostUserDTO postUserDTO3 = new PostUserDTO(user_id, postDTO3);
+        repo.createPost(postUserDTO3);
+
+        List<PostDTO> postDTOList = new ArrayList<>();
+        postDTOList.add(postDTO2);
+        postDTOList.add(postDTO3);
+        postDTOList.add(postDTO);
+
+
+        // Act
+        PostListDTO postListDTO = repo.postList(user_id, order);
+
+        // Assert
+        Assertions.assertEquals(postDTOList, postListDTO.getPosts());
+
+    }
+
+
+
     @Test
     @DisplayName("Verificando que la cantidad de seguidores sea la correcta")
     void checkingAmountFollowersFromSellers(){

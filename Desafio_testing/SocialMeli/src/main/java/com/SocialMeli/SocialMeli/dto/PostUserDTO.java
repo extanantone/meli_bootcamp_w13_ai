@@ -17,6 +17,11 @@ public class PostUserDTO extends PostDTO{
     @Positive( message = "El id debe ser mayor a cero")
     private Integer user_id;
 
+    public PostUserDTO(Integer user_id, PostDTO postDTO) {
+        super(postDTO.getId_post(), postDTO.getDate(), postDTO.getCategory(), postDTO.getPrice(), postDTO.getDetail());
+        this.user_id = user_id;
+    }
+
     @Override
     public String toString() {
         return "PostUserDTO{" +

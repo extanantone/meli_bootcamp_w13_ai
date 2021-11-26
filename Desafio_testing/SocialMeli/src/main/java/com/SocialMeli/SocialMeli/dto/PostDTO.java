@@ -1,10 +1,7 @@
 package com.SocialMeli.SocialMeli.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
@@ -14,8 +11,7 @@ import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class PostDTO {
     @NotNull( message = "La id no puede estar vacía.")
     @Positive( message = "El id debe ser mayor a cero")
