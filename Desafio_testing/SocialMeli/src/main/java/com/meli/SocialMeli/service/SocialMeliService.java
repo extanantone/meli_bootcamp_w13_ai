@@ -60,7 +60,7 @@ public class SocialMeliService implements ISocialMeliService{
                     break;
                 default:            throw new BadRequestException("order: "+order+" es inválido, solo acepta name_asc o name_desc");
             }
-            usr.setFollowers(followed);
+            usr.setFollowed(followed);
         }
         return Helper.listFollowersToFollowers(usr);
 
