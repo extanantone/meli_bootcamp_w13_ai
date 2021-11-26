@@ -7,7 +7,6 @@ import com.example.socialmeli.model.PromoPost;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.repository.IPostRepository;
 import com.example.socialmeli.repository.IUserRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
