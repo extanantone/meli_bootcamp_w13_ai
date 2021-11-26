@@ -46,6 +46,18 @@ public class UserRepositoryTest {
         userRepository.deleteUser(user.getUserId());
 
         //Assert
+        Assertions.assertEquals(user, userRepository.findUserById(user.getUserId()));
+    }
+
+    @Test
+    public void deleteNotExistingUser(){
+        //Arrange
+        User user= TestUtils.createNewUserWithName("Juan");
+
+        //Act
+        userRepository.deleteUser(user.getUserId());
+
+        //Assert
         Assertions.assertThrows(
                 UserNotExistException.class,
                 () -> userRepository.getUserNameById(user.getUserId()),

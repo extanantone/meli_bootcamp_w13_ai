@@ -57,19 +57,4 @@ public class PromoPostRepositoryTest {
         Assertions.assertTrue(promoPostRepository.existPromoPost(promoPost.getPostId()));
         Assertions.assertEquals(promoPostRepository.findPromoPostById(promoPost.getPostId()).get(), promoPost);
     }
-
-    @Test
-    public void updatePostWithOneProduct(){
-        //Arrange
-        PromoPost promoPost= TestUtils.getPromoPostWithRandomPostIDForAnyUser();
-
-        //Act
-        promoPostRepository.addPromoPost(promoPost);
-
-        //Assert
-        Assertions.assertTrue(promoPostRepository.existPromoPost(promoPost.getPostId()));
-        Assertions.assertEquals(
-                promoPostRepository.findPromoPostById(promoPost.getPostId()),
-                promoPost);
-    }
 }

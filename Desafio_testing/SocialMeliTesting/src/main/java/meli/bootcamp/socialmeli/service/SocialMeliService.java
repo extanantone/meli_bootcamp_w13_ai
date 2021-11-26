@@ -28,24 +28,29 @@ public class SocialMeliService implements ISocialMeliService{
 
     private final IUSerFollowRepository userFollowRepository;
 
-    @Autowired
-    private PostRepository postRepository;
+    private final IPostRepository postRepository;
 
     @Autowired
     private PromoPostRepository promoPostRepository;
 
-    @Autowired
-    private PostMapper postMapper;
+    PostMapper postMapper;
 
     @Autowired
     private PromoProductMapper promoPostMapper;
 
     UserMapper userMapper;
 
-    public SocialMeliService(UserMapper userMapper, IUserRepository userRepository, IUSerFollowRepository userFollowRepository) {
+    public SocialMeliService(
+            UserMapper userMapper,
+            IUserRepository userRepository,
+            IUSerFollowRepository userFollowRepository,
+            IPostRepository postRepository,
+            PostMapper postMapper) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.userFollowRepository = userFollowRepository;
+        this.postRepository = postRepository;
+        this.postMapper = postMapper;
     }
 
     /**
@@ -99,12 +104,16 @@ public class SocialMeliService implements ISocialMeliService{
      */
     @Override
     public ProductsUserIDListDTO listSortedPostByUserID(int user_id, String order){
-        boolean isOrder= !order.equals("noOrder");
-        User queryUser= userRepository.findUserById(user_id);
-        return new ProductsUserIDListDTO(
-                queryUser.getUserId(),
-                this.getSpecificDateList(order, queryUser.getUserId(), isOrder)
-        );
+        if (!order.equals("noOrder") && !order.equals("date_asc") && !order.equals("date_desc"))
+            throw new OrderTypeNotValidException();
+        else{
+            boolean isOrder = !order.equals("noOrder");
+            User queryUser = userRepository.findUserById(user_id);
+            return new ProductsUserIDListDTO(
+                    queryUser.getUserId(),
+                    this.getSpecificDateList(order, queryUser.getUserId(), isOrder)
+            );
+        }
     }
 
     /**
@@ -151,7 +160,6 @@ public class SocialMeliService implements ISocialMeliService{
     public Object getOrderedFollowersList(int userID, boolean searchFollowers, String order, boolean sortedResponse) {
         if (sortedResponse && ((!order.equals("name_asc")) && (!order.equals("name_desc"))))
             throw new OrderTypeNotValidException();
-
         else {
             User queryUser = userRepository.findUserById(userID);
             if (searchFollowers)
@@ -292,8 +300,8 @@ public class SocialMeliService implements ISocialMeliService{
                                 .map(UserFollow::getFollowedUser)
                                 .collect(Collectors.toList())).contains(post.getUserId())
                 )
-                .filter(post -> (post.getDate().until(LocalDate.now().minusWeeks(2), ChronoUnit.DAYS) < 14))
-                .sorted((isOrder)?((order.equals("name_desc"))
+                .filter(post -> (LocalDate.now().minusWeeks(2).compareTo(post.getDate()) < 0))
+                .sorted((isOrder)?((order.equals("date_desc"))
                         ?Comparator.comparing(Post::getDate).reversed()
                         :Comparator.comparing(Post::getDate)):(Comparator.comparing(Post::getPostId))
                 )
