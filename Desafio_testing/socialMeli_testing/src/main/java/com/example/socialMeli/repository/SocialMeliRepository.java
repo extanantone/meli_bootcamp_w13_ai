@@ -105,14 +105,7 @@ public class SocialMeliRepository implements  ISocialMeliRepository{
         compra.getSiguiendo().add(vende);
         return true;
     }
-    @Override
-    public void imprimirSeguidores (Vendedor vende){
-        int i=0;
-        for (Comprador c: vende.getSeguidores()) {
-            System.out.println(c.getName());
-            System.out.println(i++);
-        }
-    }
+
     @Override
     public boolean postear (Vendedor vende, Publicacion post){
         vende.getPublicaciones().add(post);

@@ -80,4 +80,27 @@ public class SocialMeliRepositoryTest {
                 () -> assertEquals(1, vende.getPublicaciones().size()));
     }
 
+    @Test
+    void dejarDeSeguir(){
+        Vendedor vende = new Vendedor("vendedor 1",3);
+        Comprador compra = new Comprador("comprador 1", 2);
+        repo.seguir(compra,vende);
+        Boolean flag = repo.dejarDeSeguir(compra, vende);
+        List<Vendedor> siguiendo = compra.getSiguiendo();
+        List<Comprador> seguidores = vende.getSeguidores();
+        assertAll("noSeguidor", () -> assertEquals(true, flag),
+                () -> assertEquals(0, siguiendo.size()),
+                () -> assertEquals(0, seguidores.size()));
+    }
+    @Test
+    void buscarPost(){
+        SocialMeliUtils utiles = new SocialMeliUtils();
+        Vendedor vende = new Vendedor("vendedor 1",3);
+        Publicacion pub = utiles.postQuemado();
+        vende.getPublicaciones().add(pub);
+        Publicacion actual = repo.buscarPost(vende.getPublicaciones(),pub.getId_publicacion());
+        assertAll("post", () -> assertEquals(pub.getId_publicacion(), actual.getId_publicacion()),
+                () -> assertEquals(pub.getId_user(), pub.getId_user()));
+    }
+
 }
