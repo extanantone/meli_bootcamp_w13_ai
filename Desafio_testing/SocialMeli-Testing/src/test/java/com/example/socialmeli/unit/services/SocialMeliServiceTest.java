@@ -133,30 +133,9 @@ class SocialMeliServiceTest {
     }
 
     @Test
-    void getFollowersWhithoutOrder() throws UserNotFoundException, UserSelfUseException, UserAlreadyInUseException {
-        //Arrange
-        User user = new User();
-        user.setUserId(1);
-        user.setUserName("Sofia Menichelli");
-
-        User user2 = new User();
-        user2.setUserId(2);
-        user2.setUserName("Olivia Perez");
-
-        User user3 = new User();
-        user3.setUserId(3);
-        user3.setUserName("Santino Perez");
-
-        user.setFollowersId(Arrays.asList(2,3));
-
-        //List<UserDTO> followersList = service.getFollowersList(1,null);
-        //List<User> followers = followersList.stream().map(User::new).collect(Collectors.toList());
-        //Mock
-
-        //Act
-        FollowersResponseDTO followersListDto = service.getFollowers(1,null);
-
-
+    @DisplayName("Lanzamos un error, cuando el order esta en null, aunque no falle")
+    void getFollowersWhithoutOrder() {
+        Assertions.assertThrows(NullPointerException.class, () -> service.getFollowers(1,null));
     }
     @Test
     void getFollowersByOrderAscCorrectly() throws UserNotFoundException {
