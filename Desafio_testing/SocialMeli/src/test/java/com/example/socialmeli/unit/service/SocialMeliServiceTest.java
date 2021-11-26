@@ -10,6 +10,8 @@ import com.example.socialmeli.repositories.PostRepository;
 import com.example.socialmeli.repositories.UsuarioRepository;
 import com.example.socialmeli.services.SocialMeliService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -76,29 +78,67 @@ public class SocialMeliServiceTest {
         Assertions.assertEquals(expect, current);
     }
 
-    @Test
-    public void checkIfTheUserToFollowExist(){
-        //arrange
-        String order = null;
-        Integer userId = 1;
-        Integer followerId = 2;
+
+    @Nested
+    @DisplayName("Verificar que el usuario a seguir exista. (US-0001)")
+    class TestIfTheUserExists{
+        @Test
+        @DisplayName("El usuario existe y sigue a otro usuario")
+        public void checkIfTheUserToFollowExist(){
+            //arrange
+            String order = null;
+            Integer userId = 1;
+            Integer followerId = 2;
 
 
-        // Mock
+            // Mock
 
-        User userMock = new User(userId ,"user", new ArrayList<>());
-        User followerMock = new User(followerId, "follower", new ArrayList<>());
-        // When
-        when(userRepository.findById(userId)).thenReturn(Optional.of(userMock));
-        when(userRepository.findById(followerId)).thenReturn(Optional.of(followerMock));
+            User userMock = new User(userId ,"user", new ArrayList<>());
+            User followerMock = new User(followerId, "follower", new ArrayList<>());
+            // When
+            when(userRepository.findById(userId)).thenReturn(Optional.of(userMock));
+            when(userRepository.findById(followerId)).thenReturn(Optional.of(followerMock));
 
-        //Act
-        try {
-            socialMeliService.follow(userId,followerId);
-            Assertions.assertTrue(true);
-        } catch (UserNotFoundException | UserSelfUseException | UserAlreadyInUseException e) {
-            Assertions.fail();
+
+            //Act
+            try {
+                socialMeliService.follow(userMock.getUserId(),followerMock.getUserId());
+                Mockito.verify(userRepository, times(3)).findById(Mockito.anyInt());
+                Assertions.assertTrue(true);
+            } catch (UserNotFoundException | UserSelfUseException | UserAlreadyInUseException e) {
+                e.printStackTrace();
+            }
+
         }
 
+        @Test
+        @DisplayName("El usuario intenta seguir a un usuario invalido")
+        public void ThrowExceptionWhenUserNotFound(){
+            //arrange
+            Integer userId = 1;
+            Integer followUser = 2;
+
+
+            // Mock
+            User userMock = new User(userId ,"user", new ArrayList<>());
+            // When
+            when(userRepository.findById(userId)).thenReturn(Optional.of(userMock));
+
+            //Act
+            UserNotFoundException thrown = Assertions.assertThrows(
+                    UserNotFoundException.class,
+                    () -> socialMeliService.follow(userMock.getUserId(),followUser)
+                    , "Se espera que lance la exception"
+            );
+
+            System.out.println(thrown.getError().getDescription());
+
+            Assertions.assertTrue(thrown.getError().getDescription().contains("no puede ser encontrado"));
+
+
+
+
+        }
     }
+
 }
