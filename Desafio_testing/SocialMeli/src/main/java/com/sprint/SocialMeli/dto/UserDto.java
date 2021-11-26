@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.*;
@@ -14,6 +15,7 @@ import javax.validation.constraints.*;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Validated
 @Data
+@NoArgsConstructor
 // No se usa nunca de entrada pero bueno agrego igual como sería la validación del userName
 public class UserDto {
     @NotNull(message = "El id no puede estar vacío")

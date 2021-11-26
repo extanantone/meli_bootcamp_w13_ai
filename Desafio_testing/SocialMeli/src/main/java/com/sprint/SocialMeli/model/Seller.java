@@ -12,14 +12,13 @@ public class Seller extends User {
         postsIds = new LinkedList<>();
     }
 
-    public void addFollower(int userId){
+    public void addFollower(Integer userId){
         if(!followersIds.contains(userId))
             followersIds.add(userId);
     }
 
-    public void deleteFollower(int userId){
-        if(!followersIds.contains(userId))
-            followersIds.remove(userId);
+    public void deleteFollower(Integer userId){
+        followersIds.remove(userId);
     }
 
     public Integer followersCount(){
@@ -30,7 +29,7 @@ public class Seller extends User {
         return followersIds;
     }
 
-    public void addPost(int postId){
+    public void addPost(Integer postId){
         if(!postsIds.contains(postId))
             postsIds.add(postId);
     }
