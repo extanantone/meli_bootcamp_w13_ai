@@ -149,11 +149,11 @@ IPostRepository postRepository;
     @Test
     void testThatPostsFromUserFollowedVendorsAreNewerThantTwoWeeksAgo(){
 
-        //Arrange}
+        //Arrange
         int expectedCorrectPosts = 2;
         List<Post> responsePosts = new ArrayList<>();
         LocalDate today = LocalDate.now();
-        LocalDate dateFromTwoWeeks = LocalDate.now().minusWeeks(3);
+        LocalDate dateFromThreeWeeks = LocalDate.now().minusWeeks(3);
 
         Post p1 = new Post();
         Post p2 = new Post();
@@ -162,7 +162,7 @@ IPostRepository postRepository;
         p2.setUserId(3);
         p3.setUserId(3);
         p1.setDate(today);
-        p2.setDate(dateFromTwoWeeks);
+        p2.setDate(dateFromThreeWeeks);
         p3.setDate(today);
 
         postRepository.createPost(p1);
