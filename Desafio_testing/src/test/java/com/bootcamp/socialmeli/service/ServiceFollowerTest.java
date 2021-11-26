@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 
 import static com.bootcamp.socialmeli.repository.UserRepository.inicializarUsers;
+import static com.bootcamp.socialmeli.repository.UserRepository.listUsers;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -60,5 +61,30 @@ class ServiceFollowerTest {
     }
 
 
+    @Test
+    void getCountFollowersTest(){
+
+        inicializarUsers();
+
+        int countFollowers = 3;
+        int userId = 1;
+
+        User user1 = listUsers.get(0);
+        User user2 = listUsers.get(1);
+        User user3 = listUsers.get(2);
+        User user4 = listUsers.get(3);
+
+        user2.getListFolows().put(1,user1);
+        user3.getListFolows().put(1,user1);
+        user4.getListFolows().put(1,user1);
+
+        Mockito.when(userRepository.getCountFollowersOfuser(userId)).thenReturn(3);
+
+        int count = userRepository.getCountFollowersOfuser(userId);
+
+        Assertions.assertEquals(countFollowers,count);
+
+
+    }
 
 }
