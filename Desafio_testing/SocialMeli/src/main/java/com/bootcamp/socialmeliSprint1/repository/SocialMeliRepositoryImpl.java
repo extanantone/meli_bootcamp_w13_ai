@@ -60,7 +60,7 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     }
 
     @Override
-    public List<Seller> gerPurchaserFollowed(Integer purchaserId) {
+    public List<Seller> getPurchaserFollowed(Integer purchaserId) {
         var s = purchasers.get(purchaserId).getFollowed();
         List<Seller> followed = new ArrayList<>();
         s.stream().forEach(e->{
@@ -78,7 +78,7 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     @Override
     public List<Post> getSellersPosts(Integer purchaserId) {
 
-        List<Seller> followed = gerPurchaserFollowed(purchaserId);
+        List<Seller> followed = getPurchaserFollowed(purchaserId);
 
         List<Post> posts = new ArrayList<>();
 

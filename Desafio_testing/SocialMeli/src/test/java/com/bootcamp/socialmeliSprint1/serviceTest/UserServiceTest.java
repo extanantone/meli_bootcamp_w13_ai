@@ -2,6 +2,7 @@ package com.bootcamp.socialmeliSprint1.serviceTest;
 
 import com.bootcamp.socialmeliSprint1.entitiy.Purchaser;
 import com.bootcamp.socialmeliSprint1.entitiy.Seller;
+import com.bootcamp.socialmeliSprint1.exception.sortException.BadSorterParamRequest;
 import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundFollower;
 import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundUserException;
 import com.bootcamp.socialmeliSprint1.exception.userException.PurchaserAlreadyFollowSeller;
@@ -15,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -29,10 +31,13 @@ public class UserServiceTest {
     @InjectMocks
     UserServiceImpl userService;
 
+    /**************************************************************************
+     *
+     * T-0001: Verificar que el usuario a seguir exista. (US-0001)
+     *
+     **************************************************************************/
+
     /**
-     *
-     * T-0001: Verificar que el usuario a seguir exista. (US-0001) Se Cumple
-     *
      * This test is successfull if the followed exist.
      */
     @Test
@@ -71,6 +76,7 @@ public class UserServiceTest {
      *
      * This test is successful if the user followed don't exist and then this throws an exception.
      */
+
     @Test
     void ShouldNOtToCanToFindFollowedForFollow() {
 
@@ -145,10 +151,13 @@ public class UserServiceTest {
     }
 
 
+    /***************************************************************************
+     *
+     * T-0002: Verificar que el usuario a dejar de seguir exista. (US-0007)
+     *
+     **************************************************************************/
+
     /**
-     *
-     * T-0002: Verificar que el usuario a dejar de seguir exista. (US-0007) Se Cumple
-     *
      * This test is successfull if the followed exist.
      */
     @Test
@@ -280,6 +289,285 @@ public class UserServiceTest {
             assertTrue(true);
         }
     }
+
+
+    /***************************************************************************
+     *
+     * T-0003: Verificar que el tipo de ordenamiento alfabético exista (US-0008)
+     *
+     **************************************************************************/
+
+        /**
+         * First, need test the getSellerFollowersList method getPurchaserFollowedList
+         * ,there are used for get the lists without specific order. Then, the
+         * getSellerFollowersListSort method or the getPurchaserFollowedListSort,
+         * get there lists and apply a specific sorter.
+         */
+
+    /**
+     * By Seller's followed list
+     *
+     * This test is successful if the seller user exists and
+     * the method return a list of Seller's Followers.
+      */
+    @Test
+     void ShouldGetFullListFollowersOfSellerBySellerId() {
+
+//        Arrange
+
+        Integer sellerId = 3;
+
+        List<Purchaser> followers = new ArrayList<>();
+
+        Purchaser purchaser1 = new Purchaser(1,"Purchaser1");
+
+        Purchaser purchaser2 = new Purchaser(2,"Purchaser2");
+
+        Seller seller = new Seller(3, "Seller1");
+
+        followers.add(purchaser1);
+        followers.add(purchaser2);
+//        Act
+
+        Mockito.when(mockRepository.getSeller(sellerId))
+                .thenReturn(Optional.of(seller));
+        Mockito.when(mockRepository.getSellerFollowers(sellerId))
+                .thenReturn(followers);
+
+//        Assert
+
+        try {
+            userService.getSellerFollowersList(sellerId);
+            assertTrue(true);
+        }catch (NotFoundUserException e){
+            fail();
+        }
+
+    }
+
+    /**
+     * This test is successful if the method throws an exception
+     * because the sellerId no exists in the repository.
+     */
+    @Test
+    void ShouldNotGetFullListFollowersOfSellerBySellerIdBecauseSellerDontExist() {
+
+//        Arrange
+
+        Integer sellerId = 5;
+
+        Seller seller = new Seller(3, "Seller1");
+
+//        Act
+        Mockito.when(mockRepository.getSeller(sellerId))
+                .thenReturn(Optional.empty());
+
+//        Assert
+
+        try {
+            userService.getSellerFollowersList(sellerId);
+            fail();
+        }catch (NotFoundUserException e){
+            assertTrue(true);
+        }
+
+    }
+
+/**
+* Now need to test the alphabetic sort options
+ * Remember, the sorting is independent of  list to sort.
+ * Then, now needs to test the getPurchaserFollowedList method
+ * and the sort options.
+*/
+
+    /**
+     * By Seller's followed list
+     *
+     * This test is successful if the purchaser user exists and
+     * the method return a list of Purchaser's Followed.
+     */
+    @Test
+    void ShouldGetFullListFollowedOfPurchaserByPurchaserId() {
+
+//        Arrange
+
+        Integer purchaserId = 1;
+
+        List<Seller> followed = new ArrayList<>();
+
+        Seller seller1 = new Seller(3,"Seller1");
+
+        Seller seller2 = new Seller(4,"Seller2");
+
+        Purchaser purchaser = new Purchaser(1, "Purchaser");
+
+        followed.add(seller1);
+        followed.add(seller2);
+//        Act
+
+        Mockito.when(mockRepository.getPurchaser(purchaserId))
+                .thenReturn(Optional.of(purchaser));
+        Mockito.when(mockRepository.getPurchaserFollowed(purchaserId))
+                .thenReturn(followed);
+
+//        Assert
+
+        try {
+            userService.getPurchaserFollowedList(purchaserId);
+            assertTrue(true);
+        }catch (NotFoundUserException e){
+            fail();
+        }
+
+    }
+
+
+    /**
+     * First the Descendant form (Seller -> Followers List)
+     */
+    @Test
+    void ShouldToSortByNameOfDescendantForm() {
+
+//        Arrange
+
+        Integer sellerId = 3;
+
+        List<Purchaser> followers = new ArrayList<>();
+
+        Purchaser purchaser1 = new Purchaser(1,"Juan");
+
+        Purchaser purchaser2 = new Purchaser(2,"Pedro");
+
+        Seller seller = new Seller(3, "Seller1");
+
+        followers.add(purchaser1);
+        followers.add(purchaser2);
+
+        List<Integer> followersSeller = new ArrayList<>();
+        followersSeller.add(1);
+        followersSeller.add(2);
+
+        seller.setFollowers(followersSeller);
+
+//        Act
+
+        Mockito.when(mockRepository.getSeller(sellerId))
+                .thenReturn(Optional.of(seller));
+        Mockito.when(mockRepository.getSellerFollowers(sellerId))
+                .thenReturn(followers);
+
+//        Assert
+
+        try {
+            userService.getSellerFollowersListSort(sellerId, "name_desc");
+            assertTrue(true);
+        }catch (BadSorterParamRequest e){
+            fail();
+        }
+
+    }
+
+    /**
+     * First the Ascendant form
+     */
+    @Test
+    void ShouldToSortByNameOfAscendantForm() {
+
+//        Arrange
+
+        Integer sellerId = 3;
+
+        List<Purchaser> followers = new ArrayList<>();
+
+        Purchaser purchaser1 = new Purchaser(1,"Juan");
+
+        Purchaser purchaser2 = new Purchaser(2,"Pedro");
+
+        Seller seller = new Seller(3, "Seller1");
+
+        followers.add(purchaser1);
+        followers.add(purchaser2);
+
+        List<Integer> followersSeller = new ArrayList<>();
+        followersSeller.add(1);
+        followersSeller.add(2);
+
+        seller.setFollowers(followersSeller);
+
+//        Act
+
+        Mockito.when(mockRepository.getSeller(sellerId))
+                .thenReturn(Optional.of(seller));
+        Mockito.when(mockRepository.getSellerFollowers(sellerId))
+                .thenReturn(followers);
+
+//        Assert
+
+        try {
+            userService.getSellerFollowersListSort(sellerId, "name_asc");
+            assertTrue(true);
+        }catch (BadSorterParamRequest e){
+            fail();
+        }
+
+    }
+
+
+    /**
+     * This test is Successful if throws a BadSorterParamRequest
+     * because sends a bad param. (name_deesssc)
+     */
+    @Test
+    void ShouldNotToSortFormBecauseIncorrectParagram() {
+
+//        Arrange
+
+        Integer sellerId = 3;
+
+        List<Purchaser> followers = new ArrayList<>();
+
+        Purchaser purchaser1 = new Purchaser(1,"Juan");
+
+        Purchaser purchaser2 = new Purchaser(2,"Pedro");
+
+        Seller seller = new Seller(3, "Seller1");
+
+        followers.add(purchaser1);
+        followers.add(purchaser2);
+
+        List<Integer> followersSeller = new ArrayList<>();
+        followersSeller.add(1);
+        followersSeller.add(2);
+
+        seller.setFollowers(followersSeller);
+
+//        Act
+
+        Mockito.when(mockRepository.getSeller(sellerId))
+                .thenReturn(Optional.of(seller));
+        Mockito.when(mockRepository.getSellerFollowers(sellerId))
+                .thenReturn(followers);
+
+//        Assert
+
+        try {
+            userService.getSellerFollowersListSort(sellerId, "name_deesc");
+            fail();
+        }catch (BadSorterParamRequest e){
+            assertTrue(true);
+        }
+
+    }
+
+
+    /***************************************************************************
+     *
+     * T-0003 : Verificar que el tipo de ordenamiento alfabético exista (US-0008)
+     *
+     **************************************************************************/
+
+    
+
 
 
 }

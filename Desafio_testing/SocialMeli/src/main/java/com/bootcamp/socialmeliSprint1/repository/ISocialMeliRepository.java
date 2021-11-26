@@ -19,7 +19,7 @@ public interface ISocialMeliRepository {
 
     List<Purchaser> getSellerFollowers(Integer sellerId);
 
-    List<Seller> gerPurchaserFollowed(Integer purchaserId);
+    List<Seller> getPurchaserFollowed(Integer purchaserId);
 
     void createNewPost (Integer sellerId, Post post);
 

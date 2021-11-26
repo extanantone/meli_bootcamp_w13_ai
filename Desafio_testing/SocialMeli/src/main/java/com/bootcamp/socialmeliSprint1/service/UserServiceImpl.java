@@ -69,7 +69,10 @@ public class UserServiceImpl implements IUserService {
 
         List<BasicUserInfoDTO> followers = new ArrayList<>();
 
-        socialMeliRepository.getSellerFollowers(sellerId).stream().forEach(follower ->{
+
+        var purchasers = socialMeliRepository.getSellerFollowers(sellerId);
+
+        purchasers.stream().forEach(follower ->{
             followers.add(new BasicUserInfoDTO(follower.getUserID(),follower.getUserName()));
         });
 
@@ -85,7 +88,7 @@ public class UserServiceImpl implements IUserService {
 
         List<BasicUserInfoDTO> followed = new ArrayList<>();
 
-        socialMeliRepository.gerPurchaserFollowed(purchaserId).stream().forEach(follow ->{
+        socialMeliRepository.getPurchaserFollowed(purchaserId).stream().forEach(follow ->{
             followed.add(new BasicUserInfoDTO(follow.getUserID(),follow.getUserName()));
         });
 

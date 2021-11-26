@@ -25,6 +25,11 @@ import java.util.Optional;
 @SpringBootTest
 class SocialMeliApplicationTests {
 
+    /**
+     * Test de practica
+     *
+     */
+
     @Autowired
     IUserService uservice;
 
