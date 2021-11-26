@@ -174,4 +174,5 @@ class UserServiceUnitTest {
 
         assertEquals(expectedCount, actualCount);
     }
+
 }

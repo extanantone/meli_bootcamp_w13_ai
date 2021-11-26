@@ -64,19 +64,24 @@ public class PostService implements IPostService {
     }
 
     @Override
+    public List<PostDTO> getLatestPosts(List<PostDTO> posts, int weeks) {
+        LocalDate now = LocalDate.now();
+        return posts.stream().filter(
+                post -> !post.getDate().plusWeeks(weeks).isBefore(now)
+        ).collect(Collectors.toList());
+    }
+
+    @Override
     public UserWithPostsDTO getLatestFollowedPosts(long userId, int weeks) {
         userService.checkUserExistence(userId);
         List<PostDTO> posts = new ArrayList<>();
         User user = userRepository.getUser(userId);
-        LocalDate now = LocalDate.now();
         for (User followedUser: user.getFollowed()) {
-            List<PostDTO> followedUserPosts = followedUser.getPosts().stream().filter(
-                    post -> !post.getDate().plusWeeks(weeks).isBefore(now)
-            ).map(
-                    mapper::postToPostDTO
-            ).collect(Collectors.toList());
-            posts.addAll(followedUserPosts);
+            posts.addAll(followedUser.getPosts().stream().map(
+                    mapper::postToPostDTO).collect(Collectors.toList())
+            );
         }
+        posts = getLatestPosts(posts, weeks);
         return new UserWithPostsDTO(userId, posts);
     }
 

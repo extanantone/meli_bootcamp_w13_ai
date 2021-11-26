@@ -8,6 +8,7 @@ public interface IPostService {
 
     public PostDTO getPost(long id);
     public PostDTO createPost(PostDTO postDTO);
+    public List<PostDTO> getLatestPosts(List<PostDTO> posts, int weeks);
     public UserWithPostsDTO getLatestFollowedPosts(long userId, int weeks);
     public List<PostDTO> orderPostsByDate(List<PostDTO> posts, String order);
     public PromoPostDTO getPromoPost(long id);

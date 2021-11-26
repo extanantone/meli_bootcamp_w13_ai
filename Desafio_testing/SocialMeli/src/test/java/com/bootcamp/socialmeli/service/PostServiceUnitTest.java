@@ -1,17 +1,14 @@
 package com.bootcamp.socialmeli.service;
 
 import com.bootcamp.socialmeli.dto.PostDTO;
-import com.bootcamp.socialmeli.mapper.IMapper;
 import com.bootcamp.socialmeli.mapper.Mapper;
-import com.bootcamp.socialmeli.repository.IPostRepository;
-import com.bootcamp.socialmeli.repository.IProductRepository;
+import com.bootcamp.socialmeli.repository.IUserRepository;
 import com.bootcamp.socialmeli.util.TestUtilsGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -78,5 +75,36 @@ class PostServiceUnitTest {
                 assertEquals(expectedSortedDates.get(i), actualSortedDates.get(i));
             }
         });
+    }
+
+    @Test
+    public void checkLast2WeekPosts() {
+        LocalDate now = LocalDate.now();
+        LocalDate[] dates = {
+                now.minusDays(5),
+                now.minusDays(10),
+                now.minusDays(30),
+                now.minusDays(500),
+        };
+        List<PostDTO> posts = new ArrayList<>();
+        for (int i=0; i<4; i++) {
+            posts.add(TestUtilsGenerator.getPostDTOWithCustomDate(i, dates[i]));
+        }
+        int weeks = 2;
+        LocalDate[] expectedDates = {dates[0], dates[1]};
+
+        List<LocalDate> actualDates = service.getLatestPosts(posts, weeks).stream().map(
+                PostDTO::getDate
+        ).collect(Collectors.toList());
+
+        assertAll(
+                () -> assertEquals(expectedDates.length, actualDates.size()),
+                () -> {
+                    for (LocalDate expectedDate : expectedDates) {
+                        assertTrue(actualDates.contains(expectedDate));
+                    }
+                }
+        );
+
     }
 }
