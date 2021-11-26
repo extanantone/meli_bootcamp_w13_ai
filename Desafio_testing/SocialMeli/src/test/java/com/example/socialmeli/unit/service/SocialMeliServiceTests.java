@@ -1,9 +1,13 @@
 package com.example.socialmeli.unit.service;
 
+import com.example.socialmeli.TestUtilsGenerator;
+import com.example.socialmeli.dto.PostDTO;
 import com.example.socialmeli.dto.response.CountFollowersResponseDTO;
 import com.example.socialmeli.dto.response.FollowersResponseDTO;
+import com.example.socialmeli.dto.response.PostsResponseDTO;
 import com.example.socialmeli.exceptions.InvalidSortingCriteriaException;
 import com.example.socialmeli.exceptions.UserNotFoundException;
+import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.repositories.PostRepository;
 import com.example.socialmeli.repositories.UsuarioRepository;
@@ -14,8 +18,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -24,6 +31,8 @@ import static org.mockito.Mockito.*;
 public class SocialMeliServiceTests {
     @Mock
     UsuarioRepository usuarioRepositoryMock;
+    @Mock
+    PostRepository postRepositoryMock;
 
     @InjectMocks
     SocialMeliService socialMeliService;
@@ -70,6 +79,28 @@ public class SocialMeliServiceTests {
         verify(usuarioRepositoryMock, atLeastOnce()).findById(3);
 
     }
+
+    //@Test
+    //public void oldPostsCheckAge() throws UserNotFoundException, InvalidSortingCriteriaException {
+
+        //User manuel = new User();
+        //manuel.setUserId(3);
+        //manuel.setUserName("Manuel Vendedor");
+
+        //List<Post> postList = TestUtilsGenerator.getOldPostList();
+
+        //when(usuarioRepositoryMock.findFollowed(4)).thenReturn(List.of(manuel));
+        //when(usuarioRepositoryMock.findById(anyInt())).thenReturn(Optional.of(new User()));
+        //when(postRepositoryMock.findByUserId(3)).thenReturn(Collections.singletonList(postList));
+
+        //PostsResponseDTO posts  = socialMeliService.getFollowedPostList(4, "date_asc");
+
+        //assertEquals(0, posts.getPosts().size());
+
+        //verify(usuarioRepositoryMock, atLeastOnce()).findFollowed(4);
+        //verify(postRepositoryMock, atLeastOnce()).findByUserId(3);
+
+    //}
 
     //@Test
 

@@ -90,6 +90,54 @@ public class TestUtilsGenerator {
         return List.of(zapatillas, silla, computadora).stream().map(u -> mapper.map(u, PostDTO.class)).collect(Collectors.toList());
     }
 
+    public static List<Post> getUnsortedPostList() {
+        ModelMapper mapper = new ModelMapper();
+
+        return getUnsortedPostDTOList().stream().map(u -> mapper.map(u, Post.class)).collect(Collectors.toList());
+    }
+
+    public static List<Post> getOldPostList() {
+        List<Post> postList = getUnsortedPostList();
+        for (Post p:postList) {
+            p.setDate(threeWeeksAgo());
+        }
+
+        return postList;
+    }
+
+    public static List<Post> getRecentPostList() {
+
+        Date now = new Date();
+
+        List<Post> postList = getUnsortedPostList();
+        for (Post p:postList) {
+            p.setDate(now);
+        }
+
+        return postList;
+    }
+
+    public static List<Post> getPostListWithOneRecentPost() {
+
+        Date now = new Date();
+
+        List<Post> postList = getUnsortedPostList();
+
+        postList.get(0).setDate(now);
+        postList.get(0).setDate(threeWeeksAgo());
+        postList.get(0).setDate(threeWeeksAgo());
+
+        return postList;
+    }
+
+    public static Date threeWeeksAgo() {
+
+        return java.sql.Date.from(LocalDate.now()
+                .minusDays(15)
+                .atStartOfDay(ZoneId.systemDefault())
+                .toInstant());
+    }
+
     public static void emptyUsersFile() {
 
         PrintWriter writer = null;
