@@ -6,6 +6,7 @@ import com.example.socialmeli.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 
 @Repository
-@Getter
+@Setter
 public class UserRepository implements IUserRepository{
 
     private List<User> users= new ArrayList<>();

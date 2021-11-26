@@ -2,6 +2,7 @@ package com.example.socialmeli.UnitTest.Service;
 
 import com.example.socialmeli.dto.FollowedDto;
 import com.example.socialmeli.dto.FollowersDto;
+import com.example.socialmeli.dto.PostCreateDto;
 import com.example.socialmeli.dto.UserDto;
 import com.example.socialmeli.exception.BadRequestException;
 import com.example.socialmeli.model.User;
@@ -125,7 +126,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Validar ordenamiento en followed (exception")
+    @DisplayName("Validar ordenamiento en followed (exception)")
     void test301() {
         String order = "name_novalid";
 
@@ -137,7 +138,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Validar ordenamiento en followers (exception")
+    @DisplayName("Validar ordenamiento en followers (exception)")
     void test302() {
         String order = "name_novalid";
 
@@ -243,6 +244,27 @@ public class UserServiceTest {
                 () -> Assertions.assertEquals(expected.get(1).getUserName(),current.getFollowed().get(1).getUserName())
         );
 
+
+    }
+
+
+    @Test
+    @DisplayName("Validar la cantidad de seguidores de un usuario")
+    void test701() {
+
+        users.get(0).addFollower(new UserDto(users.get(1)));
+        users.get(0).addFollower(new UserDto(users.get(2)));
+
+        Mockito.when(repository.findById(users.get(0).getUserId())).thenReturn(Optional.of(users.get(0)));
+
+
+        FollowersDto current = service.followersCount(users.get(0).getUserId());
+
+        Mockito.verify(repository,Mockito.atLeastOnce()).findById(Mockito.any(Integer.class));
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(2,current.getFollowersCount()),
+                () -> Assertions.assertEquals(users.get(0).getUserId(),current.getUserId())
+        );
 
     }
 
