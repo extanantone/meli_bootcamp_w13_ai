@@ -4,6 +4,7 @@ import com.desafio_testing.principal.enumerados.EnumErrs;
 import com.desafio_testing.principal.excepciones.NegocioException;
 import com.desafio_testing.principal.modelo.Publicacion;
 import com.desafio_testing.principal.modelo.Usuario;
+import lombok.Getter;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.util.*;
  * para acceso rapido de usuarios manteniendo un alamcenaje de los id y las refernicas de memoria
  * las posts se guardan alamcenadas por usuario id
  */
+@Getter
 @Repository
 public class Repositorio implements IRepositorios{
 
@@ -245,5 +247,7 @@ public class Repositorio implements IRepositorios{
     public List<Publicacion> obtenerPubsDeVendedor(Integer userId){
         return userPosts.get(userId)==null?new ArrayList<>():userPosts.get(userId);
     }
+
+
 
 }

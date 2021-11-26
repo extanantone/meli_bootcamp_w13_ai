@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
-public class ServicioPublicacionesTest {
+class ServicioPublicacionesTest {
 
     @Mock
     private IRepositorios mockRepo;
@@ -35,45 +35,48 @@ public class ServicioPublicacionesTest {
     private ServicioUsuarios servicioUsers;
 
     @Test
-    public void verifyNameOrderDomainSadT0003(){
+    void verifyNameOrderDomainSadT0003(){
 
         String order = "diferente";
         Usuario user = new Usuario(1,"Ricardo");
-        LocalDate fecha = LocalDate.now();
-        LocalDate fechaLimite =  LocalDate.now().minusDays(14);
+        Integer userID = user.getUserId();
 
         Mockito.when(mockRepo.findUserById(1)).thenReturn(user);
         Mockito.when(mockRepo.obtenerSeguidores(user.getUserId())).thenReturn(Mockito.anyList());
 
-        NegocioException salida = Assertions.assertThrows(NegocioException.class, () -> servicioUsers.listaSeguidores(user.getUserId(),order));
+        NegocioException salida = Assertions.assertThrows(NegocioException.class, () -> servicioUsers.listaSeguidores(userID,order));
         Assertions.assertEquals(EnumErrs.PARAMETER_NOT_FOUND.getCodigo(),salida.getCodigo());
 
 
     }
 
     @Test
-    public void verifyNameOrderDomainHappyT0003(){
+    void verifyNameOrderDomainHappyT0003(){
 
         String order = EnumOrdenes.name_asc.name();
         Usuario user = new Usuario(1,"Ricardo");
-        LocalDate fecha = LocalDate.now();
-        LocalDate fechaLimite =  LocalDate.now().minusDays(14);
+
+        List<Usuario> listaUsers = new ArrayList<>(List.of(
+                new Usuario(1,"Ricardo"),
+                new Usuario(1,"Alberto"),
+                new Usuario(1,"Zulma")
+        ));
 
         Mockito.when(mockRepo.findUserById(1)).thenReturn(user);
-        Mockito.when(mockRepo.obtenerSeguidores(user.getUserId())).thenReturn(Mockito.anyList());
+        Mockito.when(mockRepo.obtenerSeguidores(user.getUserId())).thenReturn(listaUsers);
 
-        servicioUsers.listaSeguidores(user.getUserId(),order);
+        ListaUsuariosDTO usersCurrent = servicioUsers.listaSeguidores(user.getUserId(),order);
+
+        Assertions.assertFalse(usersCurrent.getFollowers().isEmpty());
 
     }
 
     @Test
-    public void verifyOrderNameHappyT004(){
+     void verifyOrderNameHappyT004(){
 
         String orderAsc = EnumOrdenes.name_asc.name();
         String orderDes = EnumOrdenes.name_desc.name();
         Usuario user = new Usuario(1,"Ricardo");
-        LocalDate fecha = LocalDate.now();
-        LocalDate fechaLimite =  LocalDate.now().minusDays(14);
 
         List<Usuario> listaUsers = new ArrayList<>(List.of(
             new Usuario(1,"Ricardo"),
@@ -111,11 +114,10 @@ public class ServicioPublicacionesTest {
     }
 
     @Test
-    public void verifyOrderDomainSadT005(){
+     void verifyOrderDomainSadT005(){
 
         String order = "diferente";
         Usuario user = new Usuario(1,"Ricardo");
-        LocalDate fecha = LocalDate.now();
         LocalDate fechaLimite =  LocalDate.now().minusDays(14);
 
         Mockito.when(mockRepo.findUserById(1)).thenReturn(user);
@@ -127,21 +129,31 @@ public class ServicioPublicacionesTest {
     }
 
     @Test
-    public void verifyOrderDateDomainHappyT005(){
+     void verifyOrderDateDomainHappyT005(){
 
         String order = EnumOrdenes.date_asc.name();
         Usuario user = new Usuario(1,"Ricardo");
-        LocalDate fecha = LocalDate.now();
         LocalDate fechaLimite =  LocalDate.now().minusDays(14);
+        LocalDate fecha = LocalDate.now();
+
+        List<Publicacion> listaTest = new ArrayList<>(List.of(
+                new Publicacion(1,fecha, new Producto(1,"Silla Gamer5","Gamer","Racer","Red & Black","Special Edition"),100,1500.5,user,false,0.0),
+                new Publicacion(2,fecha.minusDays(1), new Producto(123,"Silla Gamer4","Gamer2","Racer2","Red & Black2","Special Edition2"),100,1500.5,user,false,0.0),
+                new Publicacion(3,fecha, new Producto(12,"Silla Gamer3","Gamer3","Racer3","Red & Black3","Special Edition3"),100,1500.5,user,false,0.0),
+                new Publicacion(4,fecha.minusDays(3), new Producto(3,"Silla Gamer2","Gamer4","Racer4","Red & Black4","Special Edition4"),100,1500.5,user,false,0.0)
+        ));
 
         Mockito.when(mockRepo.findUserById(1)).thenReturn(user);
-        Mockito.when(mockRepo.publicacionesParaSeguidor(user,fechaLimite)).thenReturn(Mockito.anyList());
+        Mockito.when(mockRepo.publicacionesParaSeguidor(user,fechaLimite)).thenReturn(listaTest);
 
-        servicioPubs.consultarPublicaciones(user.getUserId(),order);
+        List<PublicacionesDTO> listaCurrent = servicioPubs.consultarPublicaciones(user.getUserId(),order);
+
+        Assertions.assertEquals(4,listaCurrent.size());
+
     }
 
     @Test
-    public void verifyOrderHappyT006(){
+     void verifyOrderHappyT006(){
 
         String orderAsc = EnumOrdenes.date_asc.name();
         String orderDes = EnumOrdenes.date_desc.name();
@@ -186,7 +198,7 @@ public class ServicioPublicacionesTest {
     }
 
     @Test
-    public void verifyCountFollowers(){
+     void verifyCountFollowers(){
 
         List<Usuario> listaUsers = new ArrayList<>(List.of(
                 new Usuario(1,"Ricardo"),
@@ -206,7 +218,7 @@ public class ServicioPublicacionesTest {
     }
 
     @Test
-    public void verifyCorrectDatePublics(){
+     void verifyCorrectDatePublics(){
 
         String orderAsc = EnumOrdenes.date_asc.name();
         Usuario user = new Usuario(1,"Ricardo");

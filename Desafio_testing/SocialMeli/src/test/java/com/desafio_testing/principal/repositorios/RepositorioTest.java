@@ -21,14 +21,14 @@ public class RepositorioTest {
 
 
     @BeforeAll
-    private static void inicializar(){
+    public static void inicializar(){
         repo = new Repositorio();
         usuarioTest1 = repo.findUserById(1);
         usuarioTest2 = repo.findUserById(2);
     }
 
     @Test
-    public void findUserHappy(){
+    void findUserHappy(){
 
         //Arrange
         String nombreEsperado = "Roman";
@@ -39,7 +39,7 @@ public class RepositorioTest {
     }
 
     @Test
-    public void verifyRepoUserSadT0001(){
+    void verifyRepoUserSadT0001(){
         //Arrange
         Usuario user1 = new Usuario(6,"2");
         Usuario user2 = new Usuario(7,"11");
@@ -50,14 +50,20 @@ public class RepositorioTest {
     }
 
     @Test
-    public void verifyRepoUserHappyT0001(){
-        //Arrange
+    void verifyRepoUserHappyT0001(){
         //Act
         repo.registrarSeguidor(usuarioTest1,usuarioTest2);
+
+        Assertions.assertAll(
+                ()-> Assertions.assertTrue(repo.getUsuarioySeguidores().containsKey(usuarioTest1.getUserId())),
+                ()-> Assertions.assertFalse(repo.getUsuarioySeguidos().get(usuarioTest2.getUserId()).isEmpty()),
+                ()-> Assertions.assertFalse(repo.getUsuarioySeguidores().get(usuarioTest1.getUserId()).isEmpty())
+        );
+
     }
 
     @Test
-    public void verifyUnfollowUserExistSadT0002(){
+    void verifyUnfollowUserExistSadT0002(){
         //Arrange
         Usuario user1 = new Usuario(6,"2");
         Usuario user2 = new Usuario(7,"11");
@@ -71,23 +77,28 @@ public class RepositorioTest {
     class TestNestUnfollowUserHappyT0002{
 
         @BeforeEach
-        public void initTest(){
+        void initTest(){
             repo = new Repositorio();
             repo.registrarSeguidor(usuarioTest1,usuarioTest2);
         }
 
         @Test
-        public void verifyUnfollowUserExistHappyNestT0002(){
+        void verifyUnfollowUserExistHappyNestT0002(){
             //Arrange
             //Act
-            //Aseetions
             repo.quitarSeguidor(usuarioTest1,usuarioTest2);
+            //Assertions
+            Assertions.assertAll(
+                    ()-> Assertions.assertTrue(repo.getUsuarioySeguidores().get(usuarioTest1.getUserId()).isEmpty()),
+                    ()-> Assertions.assertFalse(repo.getUsuarioySeguidos().get(usuarioTest2.getUserId()).contains(usuarioTest1))
+            );
+
         }
 
     }
 
     @Test
-    public void verifyUnfollowUserExistHappyT0002(){
+    void verifyUnfollowUserExistHappyT0002(){
         //Arrange
         //Act
         //Aseetions
@@ -96,7 +107,7 @@ public class RepositorioTest {
     }
 
     @Test
-    public void verifyUnfollowUserNotFollowerHappyT00X1(){
+    void verifyUnfollowUserNotFollowerHappyT00X1(){
         //Arrange
         //Act
         //Aseetions
@@ -120,14 +131,14 @@ public class RepositorioTest {
         }
 
         @Test
-        public void verifyDateCorrectT0008(){
+        void verifyDateCorrectT0008(){
             //Arrange
-            //Act
-            //Aseetions
             LocalDate fechaActual = LocalDate.now();
 
+            //Act
             List<Publicacion> lista = repo.publicacionesParaSeguidor(usuarioTest2,fechaActual.minusDays(14));
 
+            //Aseetions
             Assertions.assertEquals(4,lista.size());
         }
 
