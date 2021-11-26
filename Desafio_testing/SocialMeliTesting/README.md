@@ -227,7 +227,7 @@ T-000
 
 ## Autor ✒️
 
-* **Andrés Felipe Morales Anaya** - *Todero del proyecto* - [GitHub An024Fel](https://github.com/an024fel)
+* **Andrés Felipe Morales Anaya** - *Todero del proyecto* - [GitHub AnFel024](https://github.com/anfel024)
 
 ## Licencia 📄
 
