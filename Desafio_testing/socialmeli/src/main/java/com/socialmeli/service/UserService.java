@@ -86,7 +86,7 @@ public class UserService implements IUserService{
         if(iUserRepository.getUserById(iduser)==null)
             throw new NotFoundUserException("Not exist user");
         List<Post> posts =  iUserRepository.getPostLastTwoWeeksOfFollowed(iduser);
-        List<PostDtoWithoutUser> pdtos = posts.stream().map(i->new PostDtoWithoutUser(i.getId(),i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),String.format("%,.2f", i.getPrice()))).collect(Collectors.toList());
+        List<PostDtoWithoutUser> pdtos = posts.stream().map(i->new PostDtoWithoutUser(i.getId(),i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),i.getPrice())).collect(Collectors.toList());
         return new ListPostDto(iduser,pdtos);
     }
 
@@ -163,7 +163,7 @@ public class UserService implements IUserService{
             throw new NotFoundUserException("Not exist user");
         List<Post> posts =  iUserRepository.getPostLastTwoWeeksOfFollowed(id);
         List<PostDtoWithoutUser> pdtos = posts.stream().sorted(Comparator.comparing(Post::getDate))
-                .map(i->new PostDtoWithoutUser(i.getId(),i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),String.format("%,.2f", i.getPrice()))).collect(Collectors.toList());
+                .map(i->new PostDtoWithoutUser(i.getId(),i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),i.getPrice())).collect(Collectors.toList());
         return new ListPostDto(id,pdtos);
     }
 
@@ -173,7 +173,7 @@ public class UserService implements IUserService{
             throw new NotFoundUserException("Not exist user");
         List<Post> posts =  iUserRepository.getPostLastTwoWeeksOfFollowed(id);
         List<PostDtoWithoutUser> pdtos = posts.stream().sorted(Comparator.comparing(Post::getDate).reversed())
-                .map(i->new PostDtoWithoutUser(i.getId(),i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),String.format("%,.2f", i.getPrice()))).collect(Collectors.toList());
+                .map(i->new PostDtoWithoutUser(i.getId(),i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),i.getPrice())).collect(Collectors.toList());
         return new ListPostDto(id,pdtos);
     }
 
@@ -208,7 +208,7 @@ public class UserService implements IUserService{
             throw new InvalidSellerException("Not is user seller");
         List<Post> posts = iUserRepository.getPromoPostByUserId(seller);
         List<DiscountDtoWithoutUser> dtos = posts.stream().map(i->
-                new DiscountDtoWithoutUser(i.getId(), i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),String.format("%,.2f", i.getPrice()),i.isHasDiscount(),i.getDiscount()))
+                new DiscountDtoWithoutUser(i.getId(), i.getDate().toString(),new DetailDto(i.getProductId(),i.getProductName(),i.getType(),i.getBrand(),i.getColor(),i.getNotes()),i.getCategory(),i.getPrice(),i.isHasDiscount(),i.getDiscount()))
                 .collect(Collectors.toList());
         return new ProductDiscountListDto(seller,user.getName(),dtos);
     }

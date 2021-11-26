@@ -22,5 +22,5 @@ public class PostDtoWithoutUser {
     private String date;
     private DetailDto detail;
     private int category;
-    private String price;
+    private double price;
 }
