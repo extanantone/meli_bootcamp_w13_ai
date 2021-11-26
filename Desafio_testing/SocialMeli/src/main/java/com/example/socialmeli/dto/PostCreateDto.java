@@ -47,4 +47,5 @@ public class PostCreateDto {
     private Boolean hasPromo = false;
     private Double discount = null;
 
+
 }

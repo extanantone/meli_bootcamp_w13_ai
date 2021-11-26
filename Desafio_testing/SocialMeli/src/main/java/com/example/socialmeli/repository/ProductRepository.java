@@ -18,7 +18,7 @@ public class ProductRepository implements IProductRepository{
     public void createPost(PostCreateDto postCreateDto) {
 
         postCreateDtos.add(postCreateDto);
-        new PostDto(postCreateDto);
+
     }
 
     @Override

@@ -41,33 +41,34 @@ public class ProductService implements IProductService {
     @Override
     public PostsDto listPosts(Integer userId,String order){
 
-        if(!order.equals("date_asc") || !order.equals("date_desc")) {
-            throw new BadRequestException("Ordenamiento no valido");
-        }
-        Map<Integer, UserDto> followed = userRepository
-                .findById(userId).orElseThrow(() -> new BadRequestException("Usuario no encontrado con id:" + userId))
-                .getFollowed();
+        if (order.equals("date_asc") || order.equals("date_desc")) {
+            Map<Integer, UserDto> followed = userRepository
+                    .findById(userId).orElseThrow(() -> new BadRequestException("Usuario no encontrado con id:" + userId))
+                    .getFollowed();
 
-        List<PostDto> posts = new ArrayList<>();
+            List<PostDto> posts = new ArrayList<>();
 
-        for (UserDto user:followed.values()) {
-            productRepository.listPosts(user.getUserId())
-                    .stream()
-                    .forEach(x -> posts.add(new PostDto(x)));
-        }
+            for (UserDto user : followed.values()) {
+                productRepository.listPosts(user.getUserId())
+                        .stream()
+                        .forEach(x -> posts.add(new PostDto(x)));
+            }
 
-        if(order.equals("date_asc")) {
-            return new PostsDto(userId,
-                    posts.stream()
-                            .sorted(Comparator.comparing(PostDto::getDate))
-                            .collect(Collectors.toList())
-            );
-        } else {
+            if (order.equals("date_asc")) {
+                return new PostsDto(userId,
+                        posts.stream()
+                                .sorted(Comparator.comparing(PostDto::getDate))
+                                .collect(Collectors.toList())
+                );
+            }
 
             return new PostsDto(userId,
                     posts.stream()
                             .sorted(Comparator.comparing(PostDto::getDate).reversed())
                             .collect(Collectors.toList()));
+
+        } else {
+            throw new BadRequestException("Ordenamiento no valido");
         }
 
     }
