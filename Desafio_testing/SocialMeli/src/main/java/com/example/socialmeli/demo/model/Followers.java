@@ -17,6 +17,7 @@ public class Followers {
     //En este hash almacenaremos a cada usuario que nuestro userId siga
     private Map<Integer, Usuarios> usuariosSeguidos;
 
+
     public Followers(int userID) {
         this.userID = userID;
         usuariosSeguidos = new HashMap<>();

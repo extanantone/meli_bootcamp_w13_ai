@@ -4,10 +4,12 @@ import com.example.socialmeli.demo.exception.VendorNotFoundException;
 import com.example.socialmeli.demo.model.Post;
 import com.example.socialmeli.demo.repository.IPostRepository;
 import com.example.socialmeli.demo.repository.PostRepository;
+import org.hamcrest.number.OrderingComparison;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -39,10 +41,6 @@ IPostRepository postRepository;
         postRepository.getPostsFromFollowedUsersSinceTwoWeeks(userId,order);
 
 
-
-
-
-
     }
 
     @Test
@@ -61,6 +59,87 @@ IPostRepository postRepository;
                 postRepository.getPostsFromFollowedUsersSinceTwoWeeks(userId,order);
             }
         });
+    }
+
+    //T 0006
+    @Test
+    void testThatPostsFromFollowedUsersAreInAscendingOrderByDate(){
+
+        //Arrange
+        List<Post> responsePosts = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        LocalDate dateFromOneWeek = LocalDate.now().minusWeeks(1);
+        LocalDate dateFromTwoWeeks = LocalDate.now().minusWeeks(3);
+
+        Post p1 = new Post();
+        Post p2 = new Post();
+        Post p3 = new Post();
+        p1.setUserId(3);
+        p2.setUserId(3);
+        p3.setUserId(3);
+        p1.setDate(today);
+        p2.setDate(dateFromOneWeek);
+        p3.setDate(dateFromTwoWeeks);
+
+        postRepository.createPost(p1);
+        postRepository.createPost(p2);
+        postRepository.createPost(p3);
+
+        //Act
+        responsePosts = postRepository.getPostsFromFollowedUsersSinceTwoWeeks(3,"date_asc");
+
+        //Check if list is ordered in an ascending order by date:
+
+        boolean sorted = true;
+        for (int i = 1; i < responsePosts.size(); i++) {
+            if (responsePosts.get(i-1).getDate().compareTo(responsePosts.get(i).getDate()) > 0)
+                sorted = false;
+        }
+
+
+        //Assert
+        Assertions.assertTrue(sorted);
+
+
+    }
+
+    @Test
+    void testThatPostsFromFollowedUsersAreInDescendingOrderedByDate(){
+
+        //Arrange
+        List<Post> responsePosts = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        LocalDate dateFromOneWeek = LocalDate.now().minusWeeks(1);
+        LocalDate dateFromTwoWeeks = LocalDate.now().minusWeeks(3);
+
+        Post p1 = new Post();
+        Post p2 = new Post();
+        Post p3 = new Post();
+        p1.setUserId(3);
+        p2.setUserId(3);
+        p3.setUserId(3);
+        p1.setDate(today);
+        p2.setDate(dateFromOneWeek);
+        p3.setDate(dateFromTwoWeeks);
+
+        postRepository.createPost(p1);
+        postRepository.createPost(p2);
+        postRepository.createPost(p3);
+
+        //Act
+        responsePosts = postRepository.getPostsFromFollowedUsersSinceTwoWeeks(3,"date_desc");
+
+        //Check if list is ordered in a descending order by date:
+
+        boolean sorted = true;
+        for (int i = 1; i < responsePosts.size(); i++) {
+            if (responsePosts.get(i-1).getDate().compareTo(responsePosts.get(i).getDate()) < 0)
+                sorted = false;
+        }
+
+
+        //Assert
+        Assertions.assertTrue(sorted);
 
 
     }

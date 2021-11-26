@@ -3,12 +3,15 @@ package com.example.socialmeli.demo.repository;
 
 import com.example.socialmeli.demo.comparator.AscendingUserName;
 import com.example.socialmeli.demo.comparator.DescendingUserName;
+import com.example.socialmeli.demo.dto.DTOUsuario;
 import com.example.socialmeli.demo.dto.controllerToService.DTOFollowUser;
 import com.example.socialmeli.demo.dto.controllerToService.DTOUnfollowUser;
 import com.example.socialmeli.demo.exception.UserAlreadyFollowingToUser;
 import com.example.socialmeli.demo.exception.UserNotFollowingToUserException;
+import com.example.socialmeli.demo.mapper.UsuarioMapper;
 import com.example.socialmeli.demo.model.Followers;
 import com.example.socialmeli.demo.model.Usuarios;
+import com.example.socialmeli.demo.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -51,13 +54,13 @@ public class FollowerRepository implements IFollowerRepository{
             //Nos fijamos si el usuario alguna vez ha seguido a alguien
             Followers userFollowedList = listaDeFollowers.get(followerUserId);
 
-
             if (userFollowedList == null) {
                 addUserToRepository(followerUserId);
                 userFollowedList = listaDeFollowers.get(followerUserId);
             }
 
             userToFollow = usuarioRepository.getUserByUserId(followedUserId);
+
 
             if(listaDeFollowers.get(followerUserId).getUsuariosSeguidos().get(followedUserId) == null){
                 listaDeFollowers.get(followerUserId).getUsuariosSeguidos().put(followedUserId, userToFollow);

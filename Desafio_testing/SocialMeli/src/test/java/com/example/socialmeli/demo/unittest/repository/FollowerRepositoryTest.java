@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -21,13 +22,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.mock;
+
 @ExtendWith(MockitoExtension.class)
 public class FollowerRepositoryTest {
 
-    IFollowerRepository followerRepository;
 
     @Mock
-    IUserRepository usuarioRepository = new UserRepository();
+    UserRepository usuarioRepository;
+
+    @InjectMocks
+    FollowerRepository followerRepository;
+
 
 
     @BeforeEach
@@ -57,18 +63,16 @@ public class FollowerRepositoryTest {
 
     //T 0004
     @Test
-    void testThatOrderInFollowedUsersExistsSendingAValidOrderString(){
+    void testThatFollowedUsersAreInDescendingOrderedByUserName(){
 
         //Arrange
         int userId = 1;
-        String order = "name_asc";
+        String order = "name_desc";
 
+        //Initialice users
         Usuarios user1 = new Usuarios();
         user1.setId(1);
         user1.setUserName("comprador1");
-
-        DTOFollowUser request = new DTOFollowUser();
-        request.setUserId(user1.getId());
 
         Usuarios vendor1 = new Usuarios();
         vendor1.setId(3);
@@ -77,8 +81,9 @@ public class FollowerRepositoryTest {
         vendor2.setId(4);
         vendor2.setUserName("vendedor4");
 
-        DTOUsuario vendor1Dto = UsuarioMapper.UsuarioTODtoUsuario(vendor1);
-        DTOUsuario vendor2Dto = UsuarioMapper.UsuarioTODtoUsuario(vendor2);
+        //Request to follow users
+        DTOFollowUser request = new DTOFollowUser();
+        request.setUserId(user1.getId());
 
         List<Usuarios> sortedFollowedUsersFromUserId = new ArrayList<>();
         sortedFollowedUsersFromUserId.add(vendor1);
@@ -89,8 +94,8 @@ public class FollowerRepositoryTest {
         //Act
         request.setUserIdToFollow(vendor1.getId());
         followerRepository.FollowUser(request);
-        request.setUserIdToFollow(vendor2.getId());
-        followerRepository.FollowUser(request);
+        /*request.setUserIdToFollow(vendor2.getId());
+        followerRepository.FollowUser(request);*/
 
         List<Usuarios> response = followerRepository.getUsersFollowedByUserId(userId,order);
 
