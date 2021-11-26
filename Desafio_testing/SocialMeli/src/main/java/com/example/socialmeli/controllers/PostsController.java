@@ -1,9 +1,6 @@
 package com.example.socialmeli.controllers;
 
-import com.example.socialmeli.exceptions.InvalidPromoException;
-import com.example.socialmeli.exceptions.PostAlreadyExistException;
-import com.example.socialmeli.exceptions.PostNotFoundException;
-import com.example.socialmeli.exceptions.UserNotFoundException;
+import com.example.socialmeli.exceptions.*;
 import com.example.socialmeli.dto.PostDTO;
 import com.example.socialmeli.dto.response.CountPromosResponseDTO;
 import com.example.socialmeli.dto.response.PostsResponseDTO;
@@ -34,7 +31,7 @@ public class PostsController {
 
     //US 0006
     @GetMapping("/followed/{userId}/list")
-    public PostsResponseDTO getFollowedPostList(@PathVariable Integer userId, @RequestParam @Nullable String order) throws UserNotFoundException {
+    public PostsResponseDTO getFollowedPostList(@PathVariable Integer userId, @RequestParam @Nullable String order) throws UserNotFoundException, InvalidSortingCriteriaException {
         return service.getFollowedPostList(userId, order);
     }
 

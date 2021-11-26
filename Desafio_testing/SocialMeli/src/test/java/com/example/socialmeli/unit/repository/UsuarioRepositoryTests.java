@@ -4,9 +4,12 @@ import com.example.socialmeli.model.User;
 import com.example.socialmeli.repositories.IRepository;
 import com.example.socialmeli.repositories.UsuarioRepository;
 import com.example.socialmeli.TestUtilsGenerator;
+import org.junit.After;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 
 import java.util.Optional;
 
@@ -15,9 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UsuarioRepositoryTests {
     IRepository usuarioRepository;
 
-    @BeforeEach
-    private void setUp() {
-        TestUtilsGenerator.emptyUsersFile();
+    public UsuarioRepositoryTests() {
+        //setUp, no va en método @BeforeAll por restricción de static
         this.usuarioRepository = new UsuarioRepository();
     }
 
@@ -26,9 +28,13 @@ public class UsuarioRepositoryTests {
         TestUtilsGenerator.restoreUsersFile();
     }
 
+    @BeforeEach
+    private void emptyRepository() {
+        TestUtilsGenerator.emptyUsersFile();
+    }
+
     @Test
     public void findByIdTestExistingUser() {
-        TestUtilsGenerator.restoreUsersFile();
 
         User manuel = (User) usuarioRepository.findById(3).get();
 
@@ -41,7 +47,6 @@ public class UsuarioRepositoryTests {
 
     @Test
     public void findByIdTestNonExistingUser() {
-        TestUtilsGenerator.restoreUsersFile();
 
         Optional<User> manuel = usuarioRepository.findById(123);
 

@@ -73,7 +73,7 @@ public class SocialMeliService implements IService {
         this.getUserById(userIdToUnfollow).getFollowersId().removeIf( id -> id.equals(userId));
     }
 
-    public FollowersResponseDTO getFollowers(Integer userId, String order) throws UserNotFoundException {
+    public FollowersResponseDTO getFollowers(Integer userId, String order) throws UserNotFoundException, InvalidSortingCriteriaException {
         FollowersResponseDTO followers = new FollowersResponseDTO();
 
         User user = this.getUserById(userId);
@@ -88,7 +88,7 @@ public class SocialMeliService implements IService {
         return followers;
     }
 
-    public FollowedResponseDTO getFollowed(Integer userId, String order) throws UserNotFoundException {
+    public FollowedResponseDTO getFollowed(Integer userId, String order) throws UserNotFoundException, InvalidSortingCriteriaException {
         FollowedResponseDTO followed = new FollowedResponseDTO();
         User user = this.getUserById(userId);
 
@@ -99,7 +99,7 @@ public class SocialMeliService implements IService {
         return followed;
     }
 
-    private List<UserDTO> getFollowersList(Integer userId, String order) throws UserNotFoundException {
+    private List<UserDTO> getFollowersList(Integer userId, String order) throws UserNotFoundException, InvalidSortingCriteriaException {
         User user = this.getUserById(userId);
 
         List<User> followersList = new ArrayList<>();
@@ -118,7 +118,7 @@ public class SocialMeliService implements IService {
                 .collect(Collectors.toList());
     }
 
-    public List<UserDTO> getFollowedList(Integer userId, String order) throws UserNotFoundException {
+    public List<UserDTO> getFollowedList(Integer userId, String order) throws UserNotFoundException, InvalidSortingCriteriaException {
 
         if( !userExists(userId) ){
             throw new UserNotFoundException(userId);
@@ -126,7 +126,7 @@ public class SocialMeliService implements IService {
 
         Sorter sorter = MiFactory.getInstance(order == null ? "name_desc" : order);
 
-        return userRepository.findFollowers(userId).stream()
+        return userRepository.findFollowed(userId).stream()
                 .map( u -> mapper.map(u, UserDTO.class))
                 .sorted( (u,b) -> sorter.sort(u,b))
                 .collect(Collectors.toList());
@@ -138,7 +138,7 @@ public class SocialMeliService implements IService {
         CountFollowersResponseDTO quantity = new CountFollowersResponseDTO();
         quantity.setUserId(user.getUserId());
         quantity.setUserName(user.getUserName());
-        quantity.setFollowersCount((int) user.getFollowersId().stream().count());
+        quantity.setFollowersCount(user.getFollowersId().size());
 
         return quantity;
     }
@@ -185,7 +185,7 @@ public class SocialMeliService implements IService {
                 .collect(Collectors.toList());
     }
 
-    public PostsResponseDTO getFollowedPostList(Integer id, String order) throws UserNotFoundException {
+    public PostsResponseDTO getFollowedPostList(Integer id, String order) throws UserNotFoundException, InvalidSortingCriteriaException {
             Sorter sorter = MiFactory.getInstance(order == null ? "date_desc" : order );
 
             PostsResponseDTO response = new PostsResponseDTO();

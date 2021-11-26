@@ -32,13 +32,13 @@ public class UsersController {
 
     //US 0003
     @GetMapping("/{userId}/followers/list")
-    public FollowersResponseDTO getFollowers(@PathVariable Integer userId, @RequestParam @Nullable String order) throws UserNotFoundException {
+    public FollowersResponseDTO getFollowers(@PathVariable Integer userId, @RequestParam @Nullable String order) throws UserNotFoundException, InvalidSortingCriteriaException {
         return this.service.getFollowers(userId, order);
     }
 
     //US 0004
     @GetMapping("/{userId}/followed/list")
-    public FollowedResponseDTO getFollowed(@PathVariable Integer userId, @RequestParam @Nullable String order) throws UserNotFoundException {
+    public FollowedResponseDTO getFollowed(@PathVariable Integer userId, @RequestParam @Nullable String order) throws UserNotFoundException, InvalidSortingCriteriaException {
         return this.service.getFollowed(userId, order);
     }
 

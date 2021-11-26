@@ -1,27 +1,96 @@
 package com.example.socialmeli;
 
+import com.example.socialmeli.dto.PostDTO;
+import com.example.socialmeli.dto.UserDTO;
+import com.example.socialmeli.model.Post;
+import com.example.socialmeli.model.Product;
+import com.example.socialmeli.model.User;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import org.modelmapper.ModelMapper;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Properties;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class TestUtilsGenerator {
 
-    private static String SCOPE;
-    private static ObjectWriter mapper;
+
+    public static List<UserDTO> getUnsortedUserDTOList() {
+        ModelMapper mapper = new ModelMapper();
+
+        User manuel = new User();
+        manuel.setUserId(1);
+        manuel.setUserName("Manuel");
+
+        User azul = new User();
+        azul.setUserId(2);
+        azul.setUserName("Azul");
+
+        User fede = new User();
+        fede.setUserId(3);
+        fede.setUserName("Fede");
+
+        return List.of(manuel, azul, fede).stream().map(u -> mapper.map(u, UserDTO.class)).collect(Collectors.toList());
+    }
+
+    public static List<PostDTO> getUnsortedPostDTOList() {
+        ModelMapper mapper = new ModelMapper();
+
+        Post zapatillas = new Post();
+        zapatillas.setUserId(1);
+        Date zapatillasDate = Date.from(LocalDate.of(2021, 11, 26).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        zapatillas.setDate(zapatillasDate);
+        zapatillas.setCategory(14);
+        zapatillas.setIdPost(1);
+        zapatillas.setPrice(100);
+        Product zapatillasDetail = new Product();
+        zapatillasDetail.setProductId(1);
+        zapatillasDetail.setProductName("zapatillas");
+        zapatillasDetail.setBrand("Nike");
+        zapatillasDetail.setColor("Azul");
+        zapatillasDetail.setType("Para correr");
+        zapatillas.setDetail(zapatillasDetail);
+
+
+        Post silla = new Post();
+        silla.setUserId(2);
+        Date sillaDate = Date.from(LocalDate.of(2021, 11, 25).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        silla.setDate(sillaDate);
+        silla.setCategory(15);
+        silla.setIdPost(2);
+        silla.setPrice(1000);
+        Product sillaDetail = new Product();
+        sillaDetail.setProductId(2);
+        sillaDetail.setProductName("silla");
+        sillaDetail.setBrand("genérica");
+        sillaDetail.setColor("negro");
+        sillaDetail.setType("de oficina");
+        silla.setDetail(sillaDetail);
+
+        Post computadora = new Post();
+        computadora.setUserId(3);
+        Date computadoraDate = Date.from(LocalDate.of(2021, 11, 27).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        computadora.setDate(computadoraDate);
+        computadora.setCategory(17);
+        computadora.setIdPost(3);
+        computadora.setPrice(10000);
+        Product computadoraDetail = new Product();
+        computadoraDetail.setProductId(3);
+        computadoraDetail.setProductName("computadora");
+        computadoraDetail.setBrand("genérica");
+        computadoraDetail.setColor("azul");
+        computadoraDetail.setType("gamer");
+        computadora.setDetail(computadoraDetail);
+
+        return List.of(zapatillas, silla, computadora).stream().map(u -> mapper.map(u, PostDTO.class)).collect(Collectors.toList());
+    }
 
     public static void emptyUsersFile() {
-        Properties properties = new Properties();
-
-        try {
-            properties.load(new ClassPathResource("application.properties").getInputStream());
-            SCOPE = properties.getProperty("api.scope");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         PrintWriter writer = null;
 
@@ -37,14 +106,6 @@ public class TestUtilsGenerator {
     }
 
     public static void restoreUsersFile() {
-        Properties properties = new Properties();
-
-        try {
-            properties.load(new ClassPathResource("application.properties").getInputStream());
-            SCOPE = properties.getProperty("api.scope");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         PrintWriter writer = null;
 
@@ -81,14 +142,6 @@ public class TestUtilsGenerator {
     }
 
     public static void emptyPostsFile() {
-        Properties properties = new Properties();
-
-        try {
-            properties.load(new ClassPathResource("application.properties").getInputStream());
-            SCOPE = properties.getProperty("api.scope");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         PrintWriter writer = null;
 
