@@ -1,6 +1,5 @@
 package com.bootcamp.socialmeliSprint1;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -44,7 +43,6 @@ class SocialMeliApplicationTests {
     @Test
     void shouldAutoFollow2(){
 
-
         Purchaser purchaser = new Purchaser();
 
         purchaser.addFollowed(11);
@@ -66,21 +64,6 @@ class SocialMeliApplicationTests {
 
 
     @Test
-    void shouldFailAutoFollow2(){
-
-        when(urepository.getSeller(10)).thenReturn(Optional.of(new Seller()));
-
-        when(urepository.getPurchaser(10)).thenReturn(Optional.empty());
-
-        urepository.follow(10,11);
-
-
-    }
-
-    /*Sin mock*/
-
-
-    @Test
     void shouldFailAutoFollow(){
        
         try {
@@ -96,20 +79,12 @@ class SocialMeliApplicationTests {
     void shouldFollow(){
        
         try {
-            
             uservice.addFollowed(1, 3);
-
         } catch (NotFoundUserException e) {
-            
-            assertNotNull(e);
             fail();
         }
         
     }
 
-
-    @Test
-    void contextLoads() {
-    }
 
 }
