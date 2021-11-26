@@ -6,8 +6,11 @@ import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
 import com.MeLi.SocialMeli.exception.NotPubException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.Objects;
 
 @ControllerAdvice
 public class ExceptionUsuarioHandler {
@@ -26,4 +29,10 @@ public class ExceptionUsuarioHandler {
     public ResponseEntity<ErrorNotFoundDTO> setPub(NotFoundVendedorException e){
         return new ResponseEntity<>(new ErrorNotFoundDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex){
+        return new ResponseEntity<>(Objects.requireNonNull(ex.getBindingResult().getFieldError()).getDefaultMessage() , HttpStatus.BAD_REQUEST);
+    }
+
 }

@@ -18,7 +18,7 @@ public class PublicacionMapper {
     }
 
 
-    public Publicacion PublicacionDTOToPublicacion(PublicacionDTO pubDTO){
+    public static Publicacion PublicacionDTOToPublicacion(PublicacionDTO pubDTO){
         Publicacion pub = new Publicacion();
         pub.setUser_id(pubDTO.getUser_id());
         pub.setId_post(pubDTO.getId_post());

@@ -7,7 +7,7 @@ import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
 import com.MeLi.SocialMeli.model.Comprador;
 
 public interface CompradorServiceImplement {
-    SeguimientoDTO seguir(int idSeguidor, int idSeguido) throws NotFoundCompradorException, NotFoundVendedorException;
+    void seguir(int idSeguidor, int idSeguido) throws NotFoundCompradorException, NotFoundVendedorException;
 
     InfoSeguidosDTO verSeguidos(int idComprador, String order) throws NotFoundCompradorException, NotFoundVendedorException;
 

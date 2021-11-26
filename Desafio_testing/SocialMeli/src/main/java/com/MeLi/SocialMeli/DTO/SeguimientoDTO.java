@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SeguimientoDTO {
+
     private int user_id_follower;
     private String user_name_follower;
     private int user_id_follow;

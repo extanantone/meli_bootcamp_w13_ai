@@ -5,23 +5,27 @@ import com.MeLi.SocialMeli.DTO.SeguimientoDTO;
 import com.MeLi.SocialMeli.exception.NotFoundCompradorException;
 import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
 import com.MeLi.SocialMeli.service.CompradorServiceImplement;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 
 @RestController
 public class CompradorController {
 
+    @Autowired
     private CompradorServiceImplement compradorServiceImplement;
 
-    public CompradorController(CompradorServiceImplement compradorServiceImplement){
-        this.compradorServiceImplement = compradorServiceImplement;
-    }
-
     @PostMapping("/users/{user_id}/follow/{user_id_to_follow}")
-    public ResponseEntity<SeguimientoDTO> seguirVendedor(@PathVariable int user_id, @PathVariable int user_id_to_follow) throws NotFoundVendedorException, NotFoundCompradorException {
-        return new ResponseEntity<>(compradorServiceImplement.seguir(user_id,user_id_to_follow), HttpStatus.OK);
+    public ResponseEntity<?> seguirVendedor(@PathVariable int user_id, @PathVariable int user_id_to_follow) throws NotFoundVendedorException, NotFoundCompradorException {
+        return ResponseEntity.ok(null);
     }
 
     @GetMapping("/users/{user_id}/followed/list")
