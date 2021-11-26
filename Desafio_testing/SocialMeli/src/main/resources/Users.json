@@ -1,0 +1,26 @@
+[
+  {
+    "user_id": "1",
+    "user_name": "Anibal",
+    "is_seller": false,
+    "followeds": []
+  },
+  {
+    "user_id": "2",
+    "user_name": "Marco",
+    "is_seller": false,
+    "followeds": []
+  },
+  {
+    "user_id": "3",
+    "user_name": "Gabi",
+    "is_seller": true,
+    "followeds": []
+  },
+  {
+    "user_id": "4",
+    "user_name": "Andrés",
+    "is_seller": true,
+    "followeds": []
+  }
+]

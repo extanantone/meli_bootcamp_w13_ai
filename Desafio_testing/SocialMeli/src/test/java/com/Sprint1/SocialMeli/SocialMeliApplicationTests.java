@@ -1,10 +1,10 @@
-package com.C1P2.CodigoMorse;
+package com.Sprint1.SocialMeli;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CodigoMorseApplicationTests {
+class SocialMeliApplicationTests {
 
 	@Test
 	void contextLoads() {
