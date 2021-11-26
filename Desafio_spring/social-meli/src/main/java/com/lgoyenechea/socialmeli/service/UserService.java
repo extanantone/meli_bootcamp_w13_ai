@@ -5,7 +5,6 @@ import com.lgoyenechea.socialmeli.dto.mapper.UserMapper;
 import com.lgoyenechea.socialmeli.exception.UserDoesNotExistsException;
 import com.lgoyenechea.socialmeli.exception.UserDoesNotFollowException;
 import com.lgoyenechea.socialmeli.model.User;
-import com.lgoyenechea.socialmeli.exception.UserArgumentNotValidException;
 import com.lgoyenechea.socialmeli.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -92,7 +91,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserUnfollowDTO unfollow(Long userId, Long userIdToUnfollow)
-            throws UserArgumentNotValidException, UserDoesNotFollowException {
+            throws UserDoesNotFollowException {
         User user = userRepository.getById(userId);
         User userToUnfollow = userRepository.getById(userIdToUnfollow);
 

@@ -2,7 +2,6 @@ package com.lgoyenechea.socialmeli.service;
 
 import com.lgoyenechea.socialmeli.dto.*;
 import com.lgoyenechea.socialmeli.dto.mapper.ProductMapper;
-import com.lgoyenechea.socialmeli.exception.UserArgumentNotValidException;
 import com.lgoyenechea.socialmeli.exception.UserDoesNotExistsException;
 import com.lgoyenechea.socialmeli.model.Post;
 import com.lgoyenechea.socialmeli.model.User;
@@ -42,7 +41,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public UserFollowedPostsListDTO followedPostsList(Long userId, String order) throws UserArgumentNotValidException {
+    public UserFollowedPostsListDTO followedPostsList(Long userId, String order) {
         UserFollowedListDTO userFollowedList = userService.followedList(userId, "name_asc");
 
         List<Post> posts = userFollowedList.getFollowed().stream()

@@ -1,14 +1,13 @@
 package com.lgoyenechea.socialmeli.service;
 
 import com.lgoyenechea.socialmeli.dto.*;
-import com.lgoyenechea.socialmeli.exception.UserArgumentNotValidException;
 import com.lgoyenechea.socialmeli.exception.UserDoesNotExistsException;
 
 public interface IProductService {
 
     PostDTO save(PostCreationDTO newPost) throws UserDoesNotExistsException;
 
-    UserFollowedPostsListDTO followedPostsList(Long userId, String order) throws UserArgumentNotValidException;
+    UserFollowedPostsListDTO followedPostsList(Long userId, String order);
 
     PostPromoDTO saveWithPromo(PostCreationPromoDTO newPost) throws UserDoesNotExistsException;
 
