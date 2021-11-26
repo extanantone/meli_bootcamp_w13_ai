@@ -19,6 +19,6 @@ public class UsuarioDTO {
 
     @NotBlank(message = "El campo user_name no puede estar vacío.")
     @Size(max = 15, message = "La longitud no puede superar los 15 caracteres.")
-    @Pattern(regexp = "[A-Za-z0-9]+", message = "El campo user_name no puede poseer caracteres especiales.")
+    @Pattern(regexp = "[A-Za-z0-9 ]+", message = "El campo user_name no puede poseer caracteres especiales.")
     private String userName;
 }

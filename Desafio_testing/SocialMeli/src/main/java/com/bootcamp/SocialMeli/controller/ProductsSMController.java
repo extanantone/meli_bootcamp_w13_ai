@@ -6,6 +6,7 @@ import com.bootcamp.SocialMeli.service.ISocialMeliService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,6 +19,7 @@ import javax.validation.constraints.Positive;
  */
 @RestController
 @RequestMapping("/products")
+@Validated
 public class ProductsSMController {
 
     @Autowired
@@ -29,11 +31,10 @@ public class ProductsSMController {
     }
 
     @GetMapping("/followed/{user_id}/list")
-    public ResponseEntity<?> getPublicacionesSeguidos(@Valid
-                                                      @Positive(message = "El ID debe ser mayor a cero.")
+    public ResponseEntity<?> getPublicacionesSeguidos(@Positive(message = "El ID debe ser mayor a cero.")
                                                       @NotNull(message = "El ID no puede estar vacío.")
                                                       @PathVariable("user_id") Integer userId,
-
+                                                      @Pattern(regexp = "date_asc|date_desc", message = "Los tipos validos de ordenamiento son date_asc y date_desc")
                                                       @RequestParam(value = "order", required = false) String order){
         if(order == null){
             return new ResponseEntity<>(this.socialMeliService.getPublicacionesSeguidos(userId), HttpStatus.OK);
@@ -47,18 +48,17 @@ public class ProductsSMController {
     }
 
     @GetMapping("/{user_id}/promo-post/count")
-    public ResponseEntity<?> getCantPromociones(@Valid
-                                                @Positive(message = "El ID debe ser mayor a cero.")
+    public ResponseEntity<?> getCantPromociones(@Positive(message = "El ID debe ser mayor a cero.")
                                                 @NotNull(message = "El ID no puede estar vacío.")
                                                 @PathVariable("user_id") Integer userId){
         return new ResponseEntity<>(this.socialMeliService.getCantPromociones(userId), HttpStatus.OK);
     }
 
     @GetMapping("/{user_id}/list")
-    public ResponseEntity<?> getProductosEnPromocion(@Valid
-                                                     @Positive(message = "El ID debe ser mayor a cero.")
+    public ResponseEntity<?> getProductosEnPromocion(@Positive(message = "El ID debe ser mayor a cero.")
                                                      @NotNull(message = "El ID no puede estar vacío.")
                                                      @PathVariable("user_id") Integer userId,
+                                                     @Pattern(regexp = "date_asc|date_desc", message = "Los tipos validos de ordenamiento son date_asc y date_desc")
                                                      @RequestParam(value = "order", required = false) String order){
         if(order == null){
             return new ResponseEntity<>(this.socialMeliService.getProductosEnPromocion(userId), HttpStatus.OK);

@@ -584,5 +584,4 @@ public class SocialMeliServiceTest {
         verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
     }
 
-    //TODO ver si falta el 3 o el 5
 }

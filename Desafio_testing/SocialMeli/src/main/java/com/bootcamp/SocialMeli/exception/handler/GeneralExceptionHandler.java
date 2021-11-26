@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,99 +21,58 @@ public class GeneralExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> illegalArgumentException(Exception e){
-        ErrorDTO error = new ErrorDTO();
-        error.setTipo(e.getClass().getSimpleName());
-        error.setMensaje(e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity(e.getClass().getSimpleName(), e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AlreadyFollowException.class)
     public ResponseEntity<?> alreadyFollowException(Exception e){
-        ErrorDTO error = new ErrorDTO();
-        error.setTipo(e.getClass().getSimpleName());
-        error.setMensaje(e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity(e.getClass().getSimpleName(), e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(EqualsUserSellerException.class)
     public ResponseEntity<?> equalsUserSellerException(Exception e){
-        ErrorDTO error = new ErrorDTO();
-        error.setTipo(e.getClass().getSimpleName());
-        error.setMensaje(e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity(e.getClass().getSimpleName(), e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NotFollowException.class)
     public ResponseEntity<?> notFollowException(Exception e){
-        ErrorDTO error = new ErrorDTO();
-        error.setTipo(e.getClass().getSimpleName());
-        error.setMensaje(e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity(e.getClass().getSimpleName(), e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> userNotFoundException(Exception e){
-        ErrorDTO error = new ErrorDTO();
-        error.setTipo(e.getClass().getSimpleName());
-        error.setMensaje(e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity(e.getClass().getSimpleName(), e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UserNotSellerException.class)
     public ResponseEntity<?> userNotSellerException(Exception e){
-        ErrorDTO error = new ErrorDTO();
-        error.setTipo(e.getClass().getSimpleName());
-        error.setMensaje(e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity(e.getClass().getSimpleName(), e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DuplicateIDException.class)
     public ResponseEntity<?> duplicateIDException(Exception e){
-        ErrorDTO error = new ErrorDTO();
-        error.setTipo(e.getClass().getSimpleName());
-        error.setMensaje(e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity(e.getClass().getSimpleName(), e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(FutureDateException.class)
     public ResponseEntity<?> futureDateException(Exception e){
-        ErrorDTO error = new ErrorDTO();
-        error.setTipo(e.getClass().getSimpleName());
-        error.setMensaje(e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity(e.getClass().getSimpleName(), e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidDiscountException.class)
     public ResponseEntity<?> invalidDiscountException(){
-        ErrorDTO error = new ErrorDTO();
-        error.setTipo("InvalidDiscountException");
-        error.setMensaje("El descuento a aplicar debe estar comprendido entre 0% y 100%");
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity("InvalidDiscountException", "El descuento a aplicar debe estar comprendido entre 0% y 100%", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidPriceException.class)
     public ResponseEntity<?> invalidPriceException(){
-        ErrorDTO error = new ErrorDTO();
-        error.setTipo("InvalidPriceException");
-        error.setMensaje("El precio del producto no puede ser negativo");
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity("InvalidPriceException", "El precio del producto no puede ser negativo", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<?> nullPointerException(){
-        ErrorDTO error = new ErrorDTO();
-        error.setTipo("NullPointerException");
-        error.setMensaje("Error en la request");
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity("NullPointerException", "Error en la request", HttpStatus.BAD_REQUEST);
     }
-
-    //@ExceptionHandler(MethodArgumentNotValidException.class)
-    //@ExceptionHandler(HttpMessageNotReadableException.class)
-
-   /* @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<?> httpMessageNotReadableException(){
-        return new ResponseEntity<>(new ErrorDTO("Error en la request"), HttpStatus.BAD_REQUEST);
-    }*/
 
     //TODO usar metodo
     private ResponseEntity<?> getErrorResponseEntity(String tipo, String msj, HttpStatus status){
@@ -147,6 +107,14 @@ public class GeneralExceptionHandler {
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setTipo(ex.getClass().getSimpleName());
         errorDTO.setMensaje("El JSON de la request tiene un formato invalido");
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorDTO> validarPathVariables(ConstraintViolationException ex){
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setTipo(ex.getClass().getSimpleName());
+        errorDTO.setMensaje(ex.getMessage());
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 

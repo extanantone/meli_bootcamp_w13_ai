@@ -5,10 +5,12 @@ import com.bootcamp.SocialMeli.service.ISocialMeliService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
 /**
@@ -16,17 +18,16 @@ import javax.validation.constraints.Positive;
  */
 @RestController
 @RequestMapping("/users")
+@Validated
 public class UsersSMController {
 
     @Autowired
     private ISocialMeliService socialMeliService;
 
     @PostMapping("/{user_id}/follow/{user_id_to_follow}")
-    public ResponseEntity<?> followVendedor(@Valid
-                                            @Positive(message = "El ID debe ser mayor a cero.")
+    public ResponseEntity<?> followVendedor(@Positive(message = "El ID debe ser mayor a cero.")
                                             @NotNull(message = "El ID no puede estar vacío.")
                                             @PathVariable("user_id") Integer userId,
-                                            @Valid
                                             @Positive(message = "El ID debe ser mayor a cero.")
                                             @NotNull(message = "El ID no puede estar vacío.")
                                             @PathVariable("user_id_to_follow") Integer userIdToFollow){
@@ -34,19 +35,17 @@ public class UsersSMController {
     }
 
     @GetMapping("/{user_id}/followers/count")
-    public ResponseEntity<?> getCantSeguidores(@Valid
-                                               @Positive(message = "El ID debe ser mayor a cero.")
+    public ResponseEntity<?> getCantSeguidores(@Positive(message = "El ID debe ser mayor a cero.")
                                                @NotNull(message = "El ID no puede estar vacío.")
                                                @PathVariable("user_id") Integer userId){
         return new ResponseEntity<>(this.socialMeliService.getCantSeguidores(userId), HttpStatus.OK);
     }
 
     @GetMapping("/{user_id}/followers/list")
-    public ResponseEntity<?> getSeguidores(@Valid
-                                           @Positive(message = "El ID debe ser mayor a cero.")
+    public ResponseEntity<?> getSeguidores(@Positive(message = "El ID debe ser mayor a cero.")
                                            @NotNull(message = "El ID no puede estar vacío.")
                                            @PathVariable("user_id") Integer userId,
-
+                                           @Pattern(regexp = "name_asc|name_desc", message = "Los tipos validos de ordenamiento son name_asc y name_desc")
                                            @RequestParam(value = "order", required = false) String order){
         if(order == null){
             return new ResponseEntity<>(this.socialMeliService.getSeguidores(userId), HttpStatus.OK);
@@ -55,11 +54,10 @@ public class UsersSMController {
     }
 
     @GetMapping("/{user_id}/followed/list")
-    public ResponseEntity<?> getVendedoresSeguidos(@Valid
-                                                   @Positive(message = "El ID debe ser mayor a cero.")
+    public ResponseEntity<?> getVendedoresSeguidos(@Positive(message = "El ID debe ser mayor a cero.")
                                                    @NotNull(message = "El ID no puede estar vacío.")
                                                    @PathVariable("user_id") Integer userId,
-
+                                                   @Pattern(regexp = "name_asc|name_desc", message = "Los tipos validos de ordenamiento son name_asc y name_desc")
                                                    @RequestParam(value = "order", required = false) String order){
         if(order == null){
             return new ResponseEntity<>(this.socialMeliService.getVendedoresSeguidos(userId), HttpStatus.OK);
@@ -68,11 +66,9 @@ public class UsersSMController {
     }
 
     @PostMapping("/{user_id}/unfollow/{user_id_to_unfollow}")
-    public ResponseEntity<?> unfollowVendedor(@Valid
-                                              @Positive(message = "El ID debe ser mayor a cero.")
+    public ResponseEntity<?> unfollowVendedor(@Positive(message = "El ID debe ser mayor a cero.")
                                               @NotNull(message = "El ID no puede estar vacío.")
                                               @PathVariable("user_id") Integer userId,
-                                              @Valid
                                               @Positive(message = "El ID debe ser mayor a cero.")
                                               @NotNull(message = "El ID no puede estar vacío.")
                                               @PathVariable("user_id_to_unfollow") Integer userIdToUnfollow){
