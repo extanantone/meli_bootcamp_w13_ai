@@ -3,6 +3,7 @@ package com.example.socialmeli.repository.user;
 import com.example.socialmeli.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
+@Getter
 public class UserRepository implements IUserRepository
 {
     private List<User> userList;
@@ -28,7 +30,7 @@ public class UserRepository implements IUserRepository
     public Map<Integer, User> usersMap()
     {
 
-        return userList.stream().collect(Collectors.toMap(User::getUserId, x -> x));
+        return userList.stream().collect(Collectors.toMap(User::getUserId, user -> user));
     }
 
     @Override

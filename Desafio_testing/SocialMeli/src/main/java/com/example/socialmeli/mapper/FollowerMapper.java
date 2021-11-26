@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public class FollowerMapper
 {
-    public List<FollowerDTO> UserToFollowerDTO(List<User> users)
+    public List<FollowerDTO> userToFollowerDTO(List<User> users)
     {
         List<FollowerDTO> followerDTOList = new LinkedList<>();
         for (User user: users)

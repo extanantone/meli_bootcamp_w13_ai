@@ -54,7 +54,7 @@ public class UserService implements IUserService
         }
         TypeMap<User, FollowedListDTO> typeMap = modelMapper.createTypeMap(User.class, FollowedListDTO.class);
         List<User> finalFollowedOrder = followedOrder;
-        typeMap.addMappings(mapper -> mapper.map(src -> followerMapper.UserToFollowerDTO(finalFollowedOrder),
+       typeMap.addMappings(mapper -> mapper.map(src -> followerMapper.userToFollowerDTO(finalFollowedOrder),
                 FollowedListDTO::setFollowed));
         return modelMapper.map(user, FollowedListDTO.class);
     }
@@ -76,7 +76,7 @@ public class UserService implements IUserService
         ModelMapper modelMapper = new ModelMapper();
         TypeMap<User, FollowerListDTO> typeMap = modelMapper.createTypeMap(User.class, FollowerListDTO.class);
         List<User> finalFollowerOrder = followersOrder;
-        typeMap.addMappings(mapper -> mapper.map(src -> followerMapper.UserToFollowerDTO(finalFollowerOrder),
+        typeMap.addMappings(mapper -> mapper.map(src -> followerMapper.userToFollowerDTO(finalFollowerOrder),
                 FollowerListDTO::setFollowers));
         return modelMapper.map(user, FollowerListDTO.class);
     }

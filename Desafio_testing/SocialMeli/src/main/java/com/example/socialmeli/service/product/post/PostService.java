@@ -9,8 +9,11 @@ import com.example.socialmeli.repository.user.IUserRepository;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -107,12 +110,15 @@ public class PostService implements IPostService
         User user = getUser(userId);
         List<Post> orderedPosts;
         ModelMapper modelMapper = new ModelMapper();
+        ModelMapper modelMapper2 = new ModelMapper();
         if (order == null || order.equals("date_desc"))
             orderedPosts = postRepository.findFollowedTwoWeeksBeforeOrderByDateDesc(userId);
         else
             orderedPosts = postRepository.findFollowedTwoWeeksBeforeOrderByDateAsc(userId);
+        Type listType = new TypeToken<List<PostDTO>>(){}.getType();
+        List<PostDTO> orderedPostDTO = modelMapper2.map(orderedPosts, listType);
         TypeMap<User, PostFollowedDTO> propertyMapper = modelMapper.createTypeMap(User.class, PostFollowedDTO.class);
-        propertyMapper.addMappings(mapper -> mapper.map(src -> orderedPosts, PostFollowedDTO::setPosts));
+        propertyMapper.addMappings(mapper -> mapper.map(src -> orderedPostDTO, PostFollowedDTO::setPosts));
         return modelMapper.map(user, PostFollowedDTO.class);
     }
 }
