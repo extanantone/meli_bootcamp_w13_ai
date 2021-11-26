@@ -2,7 +2,6 @@ package com.bootcamp.socialmeli.repository;
 
 
 import com.bootcamp.socialmeli.DTO.DTOPublishPost;
-import com.bootcamp.socialmeli.DTO.DTOUser;
 import com.bootcamp.socialmeli.model.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
