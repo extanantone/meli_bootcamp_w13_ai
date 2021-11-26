@@ -4,7 +4,7 @@ import com.mercadolibre.socialmeli.exception.FollowException;
 import com.mercadolibre.socialmeli.exception.NotFoundException;
 
 public interface ISocialService {
-    FollowDTO followToUser(FollowDTO follow) throws NotFoundException, FollowException;
+    FollowDTO followToUser(FollowDTO follow);
     FollowersCountDTO followersCount(Integer userId) throws NotFoundException;
     FollowersDTO allFollowers(Integer idUserFollow);
     FollowersDTO allFollowed(Integer idUser) throws NotFoundException;

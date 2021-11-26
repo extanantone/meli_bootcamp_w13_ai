@@ -21,12 +21,17 @@ public class SocialServiceImpl implements ISocialService{
         this.socialRepository = socialRepository;
     }
 
+    public UserDTO getUserById(Integer id) throws NotFoundException {
+        User userExist = socialRepository.findUserById(id);
+        if (userExist == null) throw new NotFoundException();
+        return mapper.map(userExist,UserDTO.class);
+    }
     @Override
-    public FollowDTO followToUser(FollowDTO follow)
-            throws NotFoundException, FollowException {
+    public FollowDTO followToUser(FollowDTO follow) throws NotFoundException {
+        UserDTO user = this.getUserById(follow.getUserId());
+        UserDTO userToFollow = this.getUserById(follow.getIdUserToFollow());
+        if(user.equals(userToFollow)) throw new FollowException();
         Follow followUser = socialRepository.followToUser(follow.getUserId(), follow.getIdUserToFollow());
-        if (followUser.getUserId() == followUser.getIdUserToFollow()) throw new NotFoundException();
-        else if(followUser.getUserId() == -1 || followUser.getIdUserToFollow() == -1) throw new FollowException();
         return mapper.map(followUser,FollowDTO.class);
     }
 
@@ -80,7 +85,10 @@ public class SocialServiceImpl implements ISocialService{
     }
 
     @Override
-    public Boolean unfollowUser(Integer userId, Integer userIdUnfollow) {
+    public Boolean unfollowUser(Integer userId, Integer userIdUnfollow) throws NotFoundException{
+        UserDTO user = this.getUserById(userId);
+        UserDTO userToFollow = this.getUserById(userIdUnfollow);
+        if(user.equals(userToFollow)) throw new FollowException();
         return socialRepository.unFollowUser(userId,userIdUnfollow);
     }
 

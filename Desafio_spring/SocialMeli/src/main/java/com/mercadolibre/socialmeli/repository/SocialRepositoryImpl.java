@@ -1,6 +1,5 @@
 package com.mercadolibre.socialmeli.repository;
 import com.mercadolibre.socialmeli.enumerator.OrderEnumerator;
-import com.mercadolibre.socialmeli.exception.FollowException;
 import com.mercadolibre.socialmeli.model.*;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
@@ -11,9 +10,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class SocialRepository implements ISocialRepository{
+public class SocialRepositoryImpl implements ISocialRepository{
 
-    public SocialRepository() {
+    public SocialRepositoryImpl() {
         usuariosDefault();
     }
 
@@ -26,33 +25,38 @@ public class SocialRepository implements ISocialRepository{
 
     @Override
     public Follow followToUser(int idUser, int idUserToFollow) {
+        if(users.isEmpty()) usuariosDefault();
         Follow follow = new Follow();
         User userFollowed = findUserById(idUserToFollow);
         User userFollower = findUserById(idUser);
-        if (userFollowed != null && userFollower != null){
-            if (userFollowed.getId()!=userFollower.getId()){
-                //Lista seguidores Quien me sigue
-                if (followers.containsKey(idUserToFollow)){
-                    if (!followers.get(idUserToFollow).contains(userFollower)) followers.get(idUserToFollow).add(userFollower);
-                } else{
-                    followersList = new ArrayList<>();
-                    followersList.add(userFollower);
-                    followers.put(idUserToFollow, followersList);
-                }
-                //Lista de seguidos A quien sigo
-                if(followed.containsKey(idUser)){
-                    if(!followed.get(idUser).contains(userFollowed)) followed.get(idUser).add(userFollowed);
-                }
-                else{
-                    followersList = new ArrayList<>();
-                    followersList.add(userFollowed);
-                    followed.put(idUser, followersList);
-                }
-                follow.setUserId(userFollower.getId());
-                follow.setIdUserToFollow(userFollowed.getId());
-            } else follow.setUserId(-1);
-        }
+        //Lista seguidores Quien me sigue
+        addUserFollower(idUser,idUserToFollow);
+        //Lista de seguidos A quien sigo
+        addUserFollowed(idUser,idUserToFollow);
+
+        follow.setUserId(userFollower.getId());
+        follow.setIdUserToFollow(userFollowed.getId());
         return follow;
+    }
+
+    public void addUserFollower(int idUser, int idUserToFollow){ //Agrego seguidor
+        addUserFollow(idUserToFollow, idUser, followers);
+    }
+
+    public void addUserFollowed(int idUser, int idUserToFollow){ //Agrego seguido
+        addUserFollow(idUser, idUserToFollow, followed);
+    }
+
+    private void addUserFollow(int idUser, int idUserToFollow, HashMap<Integer, List<User>> follow) {
+        User userFollowed = findUserById(idUserToFollow);
+        if(follow.containsKey(idUser)){
+            if(!follow.get(idUser).contains(userFollowed)) follow.get(idUser).add(userFollowed);
+        }
+        else{
+            followersList = new ArrayList<>();
+            followersList.add(userFollowed);
+            follow.put(idUser, followersList);
+        }
     }
 
     @Override
@@ -99,14 +103,6 @@ public class SocialRepository implements ISocialRepository{
         return true;
     }
 
-    /*
-    private Boolean saveUser(User user){
-        if(!users.containsKey(user.getId())){
-            users.put(cantUsers++,user);
-            return true;
-        }
-        return false;
-    }*/
 
     //Cuantos me siguen
     @Override
@@ -182,10 +178,15 @@ public class SocialRepository implements ISocialRepository{
         return publicationsFollowed;
     }
 
-    public void usuariosDefault(){
+    public void usuariosDefault(){  //TODO Deberia leerlos y cargarlos de un json
         users.put(1,new User(1,"Maggy"));
         users.put(2,new User(2,"Fede"));
         users.put(3,new User(3,"Otro"));
         users.put(4,new User(4,"Analia"));
     }
+
+    public void save(User user) {
+        users.put(user.getId(),user);
+    }
+
 }
