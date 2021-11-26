@@ -26,7 +26,9 @@ public class PublicacionDTO implements Serializable {
     @NotNull(message = "Debe introducir una fecha")
     @Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])[- \\.](0[1-9]|1[012])[- \\.](19|20)\\d\\d$", message = "La fecha debe tener formato dd-mm-yyyy")
     private String date;
+    @Valid
     private ProductoDTO detail;
+    @NotNull(message = "Debe introducir una categoría")
     private int category;
     @NotNull(message = "Debe introducir un precio")
     @Min(value = 0, message = "El precio no puede ser menor a 0")

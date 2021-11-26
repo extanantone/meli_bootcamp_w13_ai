@@ -18,7 +18,6 @@ import java.util.List;
 public class Publicacion {
     private int id_user;
     private int id_publicacion;
-    @PastOrPresent
     private LocalDate fecha;
     private Producto detalle;
     private int categoria;
