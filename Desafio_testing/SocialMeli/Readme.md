@@ -1,4 +1,4 @@
-# Desafio Sprint 1: Git, Java y Sprint.
+# Desafio Sprint 2: Git, Java, Sprint y Testing
 
 #### Pablo Guayta - Software developer.
 
@@ -48,7 +48,7 @@ Otra estrategia hubiera sido almacenar otro HashMap para los followers de cada u
 - Para las publicaciones, cree una clase Post y una clase PromoPost que hereda de Post. En mi repository, todas las publicaciones son almacenadas en el mismo Map, ya que esto es permitido por el polimorfismo. Por lo tanto, endpoints como "Obtener publicaciones de los usuarios que sigo de no mas de dos semanas de antiguedad" tambien incluye las publicaciones con promocion.
 
 -------------------------
-###Sprint 2:
+### Sprint 2:
 
 - Los siguientes tests fallan al momento de correr la ejecución:
 
