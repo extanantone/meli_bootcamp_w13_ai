@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class PostDTO {
+public class PostDTO extends Post {
     @NotNull(message = "El ID no puede estar vacío.")
     @Positive(message = "El ID debe ser mayor a cero.")
     private int user_id;
