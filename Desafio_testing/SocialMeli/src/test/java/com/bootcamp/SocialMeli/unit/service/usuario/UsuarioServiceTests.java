@@ -1,6 +1,7 @@
 package com.bootcamp.SocialMeli.unit.service.usuario;
 
 import com.bootcamp.SocialMeli.dto.usuario.FollowedListDTO;
+import com.bootcamp.SocialMeli.dto.usuario.FollowerCountDTO;
 import com.bootcamp.SocialMeli.dto.usuario.FollowerListDTO;
 import com.bootcamp.SocialMeli.dto.usuario.UsuarioDTO;
 import com.bootcamp.SocialMeli.exception.BadRequestException;
@@ -112,7 +113,7 @@ public class UsuarioServiceTests {
     }
 
     @Test
-    public void checkFollowersSort() {
+    public void checkFollowersListIsSorting() {
         Integer userIdFollowed = 20;
         String order = "name_asc";
 
@@ -142,7 +143,7 @@ public class UsuarioServiceTests {
     }
 
     @Test
-    public void checkFollowersNotSorting() {
+    public void checkFollowersListIsNotSorting() {
         Integer userIdFollowed = 20;
         String order = "NOT ORDER";
 
@@ -171,7 +172,7 @@ public class UsuarioServiceTests {
     }
 
     @Test
-    public void checkFollowedSort() {
+    public void checkFollowedListIsSorting() {
         Integer userIdFollower = 20;
         String order = "name_asc";
 
@@ -201,7 +202,7 @@ public class UsuarioServiceTests {
     }
 
     @Test
-    public void checkFollowedNotSorting() {
+    public void checkFollowedListIsNotSorting() {
         Integer userIdFollower = 20;
         String order = "name_asc";
 
@@ -230,7 +231,7 @@ public class UsuarioServiceTests {
     }
 
     @Test
-    public void checkFollowersSortByNameAsc() {
+    public void checkFollowersListIsSortByNameAsc() {
         Integer userIdFollowed = 20;
         String order = "name_asc";
 
@@ -267,7 +268,7 @@ public class UsuarioServiceTests {
     }
 
     @Test
-    public void checkFollowersSortByNameDesc() {
+    public void checkFollowersListIsSortByNameDesc() {
         Integer userIdFollowed = 20;
         String order = "name_desc";
 
@@ -304,7 +305,7 @@ public class UsuarioServiceTests {
     }
 
     @Test
-    public void checkFollowedSortByNameAsc() {
+    public void checkFollowedListIsSortByNameAsc() {
         Integer userIdFollower = 20;
         String order = "name_asc";
 
@@ -341,7 +342,7 @@ public class UsuarioServiceTests {
     }
 
     @Test
-    public void checkFollowedSortByNameDesc() {
+    public void checkFollowedListIsSortByNameDesc() {
         Integer userIdFollower = 20;
         String order = "name_desc";
 
@@ -377,4 +378,30 @@ public class UsuarioServiceTests {
         Assertions.assertEquals(expected, result);
     }
 
+    @Test
+    public void checkFollowersCountIsCounting(){
+        Integer userIdFollowed = 20;
+
+        ArrayList<Usuario> followers = new ArrayList<>();
+        Usuario follower = new Usuario();
+        follower.setUserId(10);
+        follower.setUserName("María");
+        followers.add(follower);
+
+        Usuario follower2 = new Usuario();
+        follower2.setUserId(11);
+        follower2.setUserName("Ana");
+        followers.add(follower2);
+
+        Usuario followed = new Usuario(userIdFollowed, "Juan", new ArrayList<>(), followers, new ArrayList<>());
+
+        FollowerCountDTO expected = new FollowerCountDTO(followed.getUserId(), followed.getUserName(), followers.size());
+
+        Mockito.when(repository.encontrarUsuario(userIdFollowed)).thenReturn(true);
+        Mockito.when(repository.devolverUsuario(userIdFollowed)).thenReturn(followed);
+
+        FollowerCountDTO result = service.cantidadFollowers(followed.getUserId());
+
+        Assertions.assertEquals(expected.getFollowersCount(), result.getFollowersCount());
+    }
 }

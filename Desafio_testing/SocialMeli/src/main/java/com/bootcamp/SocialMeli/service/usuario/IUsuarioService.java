@@ -15,5 +15,4 @@ public interface IUsuarioService {
 
     void realizarUnfollow(Integer userId, Integer userIdToFollow);
 
-
 }
