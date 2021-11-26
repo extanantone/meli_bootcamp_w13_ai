@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
 
 @Service
 public class UserService implements IUserService{
@@ -26,10 +24,10 @@ public class UserService implements IUserService{
         if (userId == userToFollowId) throw new NotPossibleOperationException();
 
         User user = iUserRepository.getUser(userId);
-        if (user == null)   throw new NotFoundUserException(userId);
+        //if (user == null)   throw new NotFoundUserException(userId);
 
         User userToFollow = iUserRepository.getUser(userToFollowId);
-        if (userToFollow == null) throw new NotFoundUserException(userToFollowId);
+        //if (userToFollow == null) throw new NotFoundUserException(userToFollowId);
 
         iUserRepository.followUser(user, userToFollow);
     }

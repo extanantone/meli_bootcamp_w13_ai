@@ -23,8 +23,8 @@ public class UserController{
     //@Override
     @PostMapping("/{user_id}/follow/{user_id_to_follow}")
     public void followUser(
-            @PathVariable("user_id") int userId,
-            @PathVariable("user_id_to_follow") int userIdToFollow) throws NotPossibleOperationException {
+            @PathVariable("user_id") Integer userId,
+            @PathVariable("user_id_to_follow") Integer userIdToFollow) throws NotPossibleOperationException {
         iUserService.followUser(userId, userIdToFollow);
     }
 

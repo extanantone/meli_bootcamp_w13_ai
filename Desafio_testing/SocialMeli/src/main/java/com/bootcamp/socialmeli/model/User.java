@@ -1,5 +1,6 @@
 package com.bootcamp.socialmeli.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,12 +10,13 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-
+@Data
 public class User {
     private int id;
     private String name;
     private List<Integer> followedUserId;
     private List<Integer> followersUserId;
+
 
     public User(int id, String name) {
         this.id = id;
@@ -37,10 +39,18 @@ public class User {
                 .collect(Collectors.toList());
     }
 
+    public void removeAllFollowed(){
+        followedUserId = new ArrayList<>();
+    }
+
     public void removeFollower(int id){
         followersUserId = followersUserId.stream()
                 .filter(u -> u != id)
                 .collect(Collectors.toList());
+    }
+
+    public void removeAllFollower(){
+        followersUserId = new ArrayList<>();
     }
 
 }

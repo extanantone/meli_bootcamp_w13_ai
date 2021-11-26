@@ -1,20 +1,23 @@
 package com.bootcamp.socialmeli.repository;
 
+import com.bootcamp.socialmeli.exception.NotPossibleOperationException;
 import com.bootcamp.socialmeli.model.User;
 
 import java.util.List;
 
 public interface IUserRepository {
 
-    User getUser(int id);
+    User createUser(String name);
 
-    void followUser(User user, User userToFollow);
+    User getUser(int id) throws NotPossibleOperationException;
 
-    int getTotalUserFollowers(User user);
+    void followUser(User user, User userToFollow) throws NotPossibleOperationException;
 
-    List<User> getUsersFollowed(User user);
+    int getTotalUserFollowers(User user) throws NotPossibleOperationException;
 
-    List <User> getUsersFollowers(int id);
+    List<User> getUsersFollowed(User user) throws NotPossibleOperationException;
 
-    void unfollowUser(User user, User userToUnfollow);
+    List <User> getUsersFollowers(int id) throws NotPossibleOperationException;
+
+    void unfollowUser(User user, User userToUnfollow) throws NotPossibleOperationException;
 }
