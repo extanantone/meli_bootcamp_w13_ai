@@ -64,7 +64,7 @@ public class UsuarioRepository implements IRepository<User> {
         throw new UnsupportedOperationException();
     }
 
-    public List<User> findFollowers(Integer id) {
+    public List<User> findFolloweds(Integer id) {
         return this.findAll().stream()
                 .filter(user -> user.getFollowersId().contains(id) )
                 .collect(Collectors.toList());

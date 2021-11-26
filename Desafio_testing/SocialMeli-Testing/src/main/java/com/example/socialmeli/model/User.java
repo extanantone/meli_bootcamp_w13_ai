@@ -1,7 +1,9 @@
 package com.example.socialmeli.model;
 
+import com.example.socialmeli.dto.UserDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Setter @Getter
+@NoArgsConstructor
 public class User {
 
     @Positive
@@ -22,4 +25,10 @@ public class User {
     private String userName;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Integer> followersId = new ArrayList<>();
+
+    public User(UserDTO x) {
+        this.userId = x.getUserId();
+        this.userName = x.getUserName();
+        this.followersId = x.getFollowersId();
+    }
 }

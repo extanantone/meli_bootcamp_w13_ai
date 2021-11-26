@@ -79,8 +79,7 @@ public class SocialMeliService implements IService {
         User user = this.getUserById(userId);
 
         followers.setFollowers(
-                getFollowersList(userId,order).stream()
-                        .collect(Collectors.toList()));
+                new ArrayList<>(getFollowersList(userId, order)));
 
         followers.setUserId(userId);
         followers.setUserName(user.getUserName());
@@ -126,7 +125,7 @@ public class SocialMeliService implements IService {
 
         Sorter sorter = MiFactory.getInstance(order == null ? "name_desc" : order);
 
-        return userRepository.findFollowers(userId).stream()
+        return userRepository.findFolloweds(userId).stream()
                 .map( u -> mapper.map(u, UserDTO.class))
                 .sorted( (u,b) -> sorter.sort(u,b))
                 .collect(Collectors.toList());
@@ -138,7 +137,7 @@ public class SocialMeliService implements IService {
         CountFollowersResponseDTO quantity = new CountFollowersResponseDTO();
         quantity.setUserId(user.getUserId());
         quantity.setUserName(user.getUserName());
-        quantity.setFollowersCount((int) user.getFollowersId().stream().count());
+        quantity.setFollowersCount(user.getFollowersId().size());
 
         return quantity;
     }

@@ -1,6 +1,7 @@
 package com.example.socialmeli.unit.services;
 
-import com.example.socialmeli.dto.ErrorDTO;
+import com.example.socialmeli.dto.UserDTO;
+import com.example.socialmeli.dto.response.FollowersResponseDTO;
 import com.example.socialmeli.exceptions.UserAlreadyInUseException;
 import com.example.socialmeli.exceptions.UserNotFoundException;
 import com.example.socialmeli.exceptions.UserSelfUseException;
@@ -8,8 +9,8 @@ import com.example.socialmeli.model.User;
 import com.example.socialmeli.repositories.PostRepository;
 import com.example.socialmeli.repositories.UsuarioRepository;
 import com.example.socialmeli.services.SocialMeliService;
+import com.google.common.collect.Comparators;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +19,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(MockitoExtension.class)
 class SocialMeliServiceTest {
@@ -27,7 +34,7 @@ class SocialMeliServiceTest {
     private PostRepository mockPostRepository;
 
     @Mock
-    private UsuarioRepository mockUsuarioRepository;
+    private UsuarioRepository mockUserRepository;
 
     @InjectMocks
     SocialMeliService service;
@@ -40,23 +47,20 @@ class SocialMeliServiceTest {
         user.setUserName("Sofia Menichelli");
 
         //Act
-        Mockito.when(mockUsuarioRepository.findById(1)).thenReturn(Optional.of(user));
+        Mockito.when(mockUserRepository.findById(1)).thenReturn(Optional.of(user));
         User userFound = service.getUserById(1);
 
         //Assert
-        Mockito.verify(mockUsuarioRepository, Mockito.atLeastOnce()).findById(Mockito.anyInt());
+        Mockito.verify(mockUserRepository, Mockito.atLeastOnce()).findById(Mockito.anyInt());
         Assertions.assertEquals(user, userFound);
     }
     @Test
     void notFoundUserById() {
         //Mock
-        Mockito.when(mockUsuarioRepository.findById(2)).thenReturn(Optional.empty());
+        Mockito.when(mockUserRepository.findById(2)).thenReturn(Optional.empty());
         //Act && Assert
         Assertions.assertThrows(UserNotFoundException.class, ()->service.getUserById(2));
     }
-
-
-
 
     @Test
     @DisplayName("Encontramos el usuario a seguir")
@@ -71,12 +75,12 @@ class SocialMeliServiceTest {
         user2.setUserName("Olivia Perez");
 
         //Act
-        Mockito.when(mockUsuarioRepository.findById(2)).thenReturn(Optional.of(user2));
-        Mockito.when(mockUsuarioRepository.findById(1)).thenReturn(Optional.of(user));
+        Mockito.when(mockUserRepository.findById(2)).thenReturn(Optional.of(user2));
+        Mockito.when(mockUserRepository.findById(1)).thenReturn(Optional.of(user));
         service.follow(1,2);
 
         //Act && Assert
-        Mockito.verify(mockUsuarioRepository, Mockito.atLeastOnce()).findById(2);
+        Mockito.verify(mockUserRepository, Mockito.atLeastOnce()).findById(2);
 
     }
     @Test
@@ -86,8 +90,8 @@ class SocialMeliServiceTest {
         user.setUserId(1);
         user.setUserName("Sofia Menichelli");
         //Act
-        Mockito.when(mockUsuarioRepository.findById(1)).thenReturn(Optional.of(user));
-        Mockito.when(mockUsuarioRepository.findById(2)).thenReturn(Optional.empty());
+        Mockito.when(mockUserRepository.findById(1)).thenReturn(Optional.of(user));
+        Mockito.when(mockUserRepository.findById(2)).thenReturn(Optional.empty());
         //Act && Assert
         Assertions.assertThrows(UserNotFoundException.class, ()->service.follow(1,2));
     }
@@ -105,12 +109,12 @@ class SocialMeliServiceTest {
         user2.setUserName("Olivia Perez");
 
         //Act
-        Mockito.when(mockUsuarioRepository.findById(2)).thenReturn(Optional.of(user2));
-        Mockito.when(mockUsuarioRepository.findById(1)).thenReturn(Optional.of(user));
+        Mockito.when(mockUserRepository.findById(2)).thenReturn(Optional.of(user2));
+        Mockito.when(mockUserRepository.findById(1)).thenReturn(Optional.of(user));
         service.follow(1,2);
 
         //Act && Assert
-        Mockito.verify(mockUsuarioRepository, Mockito.atLeastOnce()).findById(2);
+        Mockito.verify(mockUserRepository, Mockito.atLeastOnce()).findById(2);
 
     }
 
@@ -121,18 +125,55 @@ class SocialMeliServiceTest {
         user.setUserId(1);
         user.setUserName("Sofia Menichelli");
         //Act
-        Mockito.when(mockUsuarioRepository.findById(1)).thenReturn(Optional.of(user));
-        Mockito.when(mockUsuarioRepository.findById(2)).thenReturn(Optional.empty());
+        Mockito.when(mockUserRepository.findById(1)).thenReturn(Optional.of(user));
+        Mockito.when(mockUserRepository.findById(2)).thenReturn(Optional.empty());
+
         //Act && Assert
         Assertions.assertThrows(UserNotFoundException.class, ()->service.follow(1,2));
     }
 
     @Test
-    void getFollowers() {
+    void getFollowersWhithoutOrder() throws UserNotFoundException, UserSelfUseException, UserAlreadyInUseException {
         //Arrange
+        User user = new User();
+        user.setUserId(1);
+        user.setUserName("Sofia Menichelli");
+
+        User user2 = new User();
+        user2.setUserId(2);
+        user2.setUserName("Olivia Perez");
+
+        User user3 = new User();
+        user3.setUserId(3);
+        user3.setUserName("Santino Perez");
+
+        user.setFollowersId(Arrays.asList(2,3));
+
+        //List<UserDTO> followersList = service.getFollowersList(1,null);
+        //List<User> followers = followersList.stream().map(User::new).collect(Collectors.toList());
+        //Mock
+
         //Act
-        //Assert
+        FollowersResponseDTO followersListDto = service.getFollowers(1,null);
+
+
     }
+    @Test
+    void getFollowersByOrderAscCorrectly() throws UserNotFoundException {
+        User user2 = new User();
+        user2.setUserId(2);
+        user2.setUserName("Olivia Perez");
+
+        Mockito.when(mockUserRepository.findById(2)).thenReturn(Optional.of(user2));
+
+        FollowersResponseDTO followersListDto = service.getFollowers (2, "name_asc");
+        System.out.println(followersListDto.getFollowers());
+        Comparator<UserDTO> comparator = Comparator.comparing(UserDTO::getUserName);
+
+        Assertions.assertTrue(Comparators.isInOrder(followersListDto.getFollowers(), comparator));
+    }
+
+
 
     @Test
     void getFollowed() {
@@ -149,10 +190,17 @@ class SocialMeliServiceTest {
     }
 
     @Test
-    void countFollowers() {
+    void countFollowers() throws UserNotFoundException {
         //Arrange
+        User user = new User();
+        user.setUserId(1);
+        user.setUserName("Sofia Menichelli");
+        user.setFollowersId(Arrays.asList(2,3));
         //Act
+        Mockito.when(mockUserRepository.findById(1)).thenReturn(Optional.of(user));
+        Integer count = service.countFollowers(1).getFollowersCount();
         //Assert
+        Assertions.assertEquals(user.getFollowersId().size(), count);
     }
 
     @Test
