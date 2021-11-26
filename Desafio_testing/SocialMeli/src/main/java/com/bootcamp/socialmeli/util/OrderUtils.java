@@ -10,7 +10,6 @@ import java.util.Comparator;
 public class OrderUtils {
 
     public FollowerListResponseDTO order(FollowerListResponseDTO dto, String order){
-        if(order == null) return dto;
         String[] temp = order.split("_");
         String criteria = temp[0];
         String direction = "";
@@ -25,7 +24,6 @@ public class OrderUtils {
     }
 
     public FollowedListResponseDTO order(FollowedListResponseDTO dto, String order){
-        if(order == null) return dto;
         String[] temp = order.split("_");
         String criteria = temp[0];
         String direction = "";

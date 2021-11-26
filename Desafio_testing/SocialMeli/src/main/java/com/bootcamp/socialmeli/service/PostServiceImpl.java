@@ -3,6 +3,7 @@ package com.bootcamp.socialmeli.service;
 import com.bootcamp.socialmeli.dto.*;
 import com.bootcamp.socialmeli.entity.Post;
 import com.bootcamp.socialmeli.entity.User;
+import com.bootcamp.socialmeli.exception.IllegalRequestParamException;
 import com.bootcamp.socialmeli.exception.MissingBodyAttributeException;
 import com.bootcamp.socialmeli.exception.MissingBodyException;
 import com.bootcamp.socialmeli.exception.UserNotFoundException;
@@ -46,6 +47,7 @@ public class PostServiceImpl  implements IPostService{
     public Ordenable listFollowedPosts(Long userID, String order) {
         User user = userRepository.getUser(userID);
         if(user == null) throw new UserNotFoundException(userID);
+        if(order == null) throw new IllegalRequestParamException("Valor ilegal para el request param order.");
         List<ListedPostDTO> posts = new LinkedList<>();
         user.getFollowed()
                 .forEach(
@@ -75,6 +77,7 @@ public class PostServiceImpl  implements IPostService{
     public Ordenable listPromoPostsByUser(Long userID, String order) {
         User user = userRepository.getUser(userID);
         if(user == null) throw new UserNotFoundException(userID);
+        if(order == null) throw new IllegalRequestParamException("Valor ilegal para el request param order.");
         List<ListedPostDTO> posts = postMapper.postListToDTO(postRepository.getUserPosts(userID).stream().filter(Post::getHasPromo).collect(Collectors.toList()));
         return orderUtils.order(new ListedPromoPostsDTO(user.getUserId(), user.getUserName(), posts), order);
     }

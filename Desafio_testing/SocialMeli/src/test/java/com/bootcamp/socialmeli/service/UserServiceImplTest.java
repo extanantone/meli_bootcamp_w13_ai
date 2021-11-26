@@ -97,6 +97,14 @@ public class UserServiceImplTest {
     }
 
     @Test
+    void orderingParamIllegalValueNullTest(){
+        User user = new User(1L, "Juan", new ArrayList<>(), new ArrayList<>());
+        FollowerListResponseDTO followersList = new FollowerListResponseDTO(1L, "Juan", new ArrayList<>());
+        Mockito.when(userRepository.getUser(1L)).thenReturn(user);
+        Exception exception = Assertions.assertThrows(IllegalRequestParamException.class, () -> userService.followersList(user.getUserId(), null));
+    }
+
+    @Test
     void orderingParamFollowerListTest(){
         User user = new User(1L, "Juan", new ArrayList<>(), new ArrayList<>());
         FollowerListResponseDTO followersList = new FollowerListResponseDTO(1L, "Juan", new ArrayList<>());

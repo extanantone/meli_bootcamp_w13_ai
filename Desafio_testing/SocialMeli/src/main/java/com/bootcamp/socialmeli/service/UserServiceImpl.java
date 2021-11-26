@@ -5,6 +5,7 @@ import com.bootcamp.socialmeli.dto.FollowerCountResponseDTO;
 import com.bootcamp.socialmeli.dto.FollowerListResponseDTO;
 import com.bootcamp.socialmeli.entity.User;
 import com.bootcamp.socialmeli.exception.BadRequestException;
+import com.bootcamp.socialmeli.exception.IllegalRequestParamException;
 import com.bootcamp.socialmeli.exception.UserNotFoundException;
 import com.bootcamp.socialmeli.mapper.UserMapper;
 import com.bootcamp.socialmeli.repository.IUserRepository;
@@ -55,6 +56,7 @@ public class UserServiceImpl implements IUserService{
     public FollowerListResponseDTO followersList(Long userID, String order) {
         User user = userRepository.getUser(userID);
         if(user == null) throw new UserNotFoundException(userID);
+        if(order == null) throw new IllegalRequestParamException("Valor ilegal para el request param order.");
         return orderUtils.order(userMapper.userToFollowerList(userRepository.getUser(userID)),order);
     }
 
@@ -62,6 +64,7 @@ public class UserServiceImpl implements IUserService{
     public FollowedListResponseDTO followedList(Long userID, String order) {
         User user = userRepository.getUser(userID);
         if(user == null) throw new UserNotFoundException(userID);
+        if(order == null) throw new IllegalRequestParamException("Valor ilegal para el request param order.");
         return orderUtils.order(userMapper.userToFollowedList(userRepository.getUser(userID)),order);
     }
 }

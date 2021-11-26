@@ -24,10 +24,12 @@ public class User {
     }
 
     public boolean removeFollower(User follower){
+        if(!this.followers.contains(follower)) return true;
         return this.followers.remove(follower);
     }
 
     public boolean removeFollowed(User followed){
+        if(!this.followers.contains(followed)) return true;
         return this.followed.remove(followed);
     }
 }

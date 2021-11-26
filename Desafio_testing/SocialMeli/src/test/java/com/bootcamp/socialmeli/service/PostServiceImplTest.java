@@ -1,9 +1,6 @@
 package com.bootcamp.socialmeli.service;
 
-import com.bootcamp.socialmeli.dto.CreatePostDTO;
-import com.bootcamp.socialmeli.dto.ListedPostDTO;
-import com.bootcamp.socialmeli.dto.Ordenable;
-import com.bootcamp.socialmeli.dto.ProductDTO;
+import com.bootcamp.socialmeli.dto.*;
 import com.bootcamp.socialmeli.entity.Post;
 import com.bootcamp.socialmeli.entity.Product;
 import com.bootcamp.socialmeli.entity.User;
@@ -70,9 +67,6 @@ public class PostServiceImplTest {
         Mockito.when(postRepository.getUserPosts(1L)).thenReturn(list1);
         Mockito.when(postRepository.getUserPosts(2L)).thenReturn(list2);
         Mockito.when(postRepository.getUserPosts(3L)).thenReturn(List.of());
-        //Mockito.when(postMapper.postListToDTO(list1)).thenReturn(listOfListedPost1);
-        //Mockito.when(postMapper.postListToDTO(list2)).thenReturn(listOfListedPost2);
-        //Mockito.when(postMapper.postListToDTO(list3)).thenReturn(List.of());
         Mockito.when(orderUtils.order(Mockito.any(Ordenable.class), Mockito.anyString())).then(AdditionalAnswers.returnsFirstArg());
         Ordenable actual = postService.listFollowedPosts(4L, "date_asc");
         Set<ListedPostDTO> expected = Set.copyOf(expectedList);
@@ -99,4 +93,34 @@ public class PostServiceImplTest {
         Assertions.assertThrows(MissingBodyAttributeException.class, () -> postService.createPost(post1));
     }
 
+    @Test
+    void promoCountByUserTest(){
+        User user = new User(1L, "Juan", new ArrayList<>(), new ArrayList<>());
+        Post post1 = new Post(1L, LocalDate.of(2021,11,25),new Product(),null,null,true,null);
+        Post post2 = new Post(2L, LocalDate.of(2021,2,28),new Product(),null,null,true,null);
+        Post post3 = new Post(3L, LocalDate.of(2021,8,30),new Product(),null,null,false,null);
+        List<Post> list1 = List.of(post1,post2,post3);
+        Mockito.when(userRepository.getUser(Mockito.anyLong())).thenReturn(user);
+        Mockito.when(postRepository.getUserPosts(Mockito.anyLong())).thenReturn(list1);
+        PromoCountDTO actual = postService.promoCountByUser(Mockito.anyLong());
+        Assertions.assertEquals(2, actual.getPromoProductsCount());
+    }
+
+    @Test
+    void listPromoPostsByUserTest(){
+        User user = new User(1L, "Juan", new ArrayList<>(), new ArrayList<>());
+        Post post1 = new Post(1L, LocalDate.of(2021,11,25),new Product(),null,null,true,null);
+        Post post2 = new Post(2L, LocalDate.of(2021,2,28),new Product(),null,null,true,null);
+        Post post3 = new Post(3L, LocalDate.of(2021,8,30),new Product(),null,null,false,null);
+        Post post4 = new Post(4L, LocalDate.of(2021,11,25),new Product(),null,null,true,null);
+        Post post5 = new Post(5L, LocalDate.of(2021,2,28),new Product(),null,null,true,null);
+        Post post6 = new Post(6L, LocalDate.of(2021,8,30),new Product(),null,null,false,null);
+        List<Post> list1 = List.of(post1,post2,post3,post4,post5,post6);
+        Mockito.when(userRepository.getUser(Mockito.anyLong())).thenReturn(user);
+        Mockito.when(postRepository.getUserPosts(Mockito.anyLong())).thenReturn(list1);
+        Mockito.when(orderUtils.order(Mockito.any(Ordenable.class), Mockito.anyString())).then(AdditionalAnswers.returnsFirstArg());
+        Ordenable actual = postService.listPromoPostsByUser(4L, "date_asc");
+        Set<ListedPostDTO> expected = Set.copyOf(postMapper.postListToDTO(List.of(post1,post2,post4,post5)));
+        Assertions.assertTrue(expected.containsAll(actual.getPosts()));
+    }
 }
