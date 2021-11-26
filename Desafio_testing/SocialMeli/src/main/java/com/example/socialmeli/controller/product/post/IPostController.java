@@ -1,4 +1,4 @@
-package com.example.socialmeli.unit.controller.product.post;
+package com.example.socialmeli.controller.product.post;
 
 import com.example.socialmeli.dto.post.*;
 import org.springframework.web.bind.annotation.*;

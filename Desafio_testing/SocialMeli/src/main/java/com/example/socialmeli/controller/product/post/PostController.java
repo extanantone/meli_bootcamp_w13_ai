@@ -1,7 +1,7 @@
-package com.example.socialmeli.unit.controller.product.post;
+package com.example.socialmeli.controller.product.post;
 
 import com.example.socialmeli.dto.post.*;
-import com.example.socialmeli.unit.service.product.post.IPostService;
+import com.example.socialmeli.service.service.product.post.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 

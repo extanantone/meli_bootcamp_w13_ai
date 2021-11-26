@@ -1,8 +1,8 @@
-package com.example.socialmeli.unit.repository.product.post;
+package com.example.socialmeli.service.repository.product.post;
 
 import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.User;
-import com.example.socialmeli.unit.repository.user.IUserRepository;
+import com.example.socialmeli.service.repository.user.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;

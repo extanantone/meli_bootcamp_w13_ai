@@ -1,4 +1,4 @@
-package com.example.socialmeli.unit.service.user;
+package com.example.socialmeli.service.service.user;
 
 import com.example.socialmeli.dto.user.FollowedListDTO;
 import com.example.socialmeli.dto.user.FollowerCountDTO;

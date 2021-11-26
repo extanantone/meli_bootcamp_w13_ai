@@ -1,6 +1,7 @@
 package com.example.socialmeli.unit.repository.user;
 
 import com.example.socialmeli.model.User;
+import com.example.socialmeli.service.repository.user.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

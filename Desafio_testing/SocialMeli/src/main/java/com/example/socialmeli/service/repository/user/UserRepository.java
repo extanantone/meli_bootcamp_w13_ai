@@ -1,4 +1,4 @@
-package com.example.socialmeli.unit.repository.user;
+package com.example.socialmeli.service.repository.user;
 
 import com.example.socialmeli.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;

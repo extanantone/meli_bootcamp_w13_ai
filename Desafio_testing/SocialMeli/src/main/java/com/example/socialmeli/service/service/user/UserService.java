@@ -1,4 +1,4 @@
-package com.example.socialmeli.unit.service.user;
+package com.example.socialmeli.service.service.user;
 
 import com.example.socialmeli.mapper.FollowerMapper;
 import com.example.socialmeli.dto.user.FollowedListDTO;
@@ -6,7 +6,7 @@ import com.example.socialmeli.dto.user.FollowerCountDTO;
 import com.example.socialmeli.dto.user.FollowerListDTO;
 import com.example.socialmeli.exception.BadRequestException;
 import com.example.socialmeli.model.User;
-import com.example.socialmeli.unit.repository.user.IUserRepository;
+import com.example.socialmeli.service.repository.user.IUserRepository;
 import org.modelmapper.Converter;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;

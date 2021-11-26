@@ -1,4 +1,4 @@
-package com.example.socialmeli.unit.service.product.post;
+package com.example.socialmeli.service.service.product.post;
 
 import com.example.socialmeli.dto.post.*;
 

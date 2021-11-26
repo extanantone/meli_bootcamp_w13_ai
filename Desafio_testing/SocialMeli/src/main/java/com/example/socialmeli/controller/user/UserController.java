@@ -1,9 +1,9 @@
-package com.example.socialmeli.unit.controller.user;
+package com.example.socialmeli.controller.user;
 
 import com.example.socialmeli.dto.user.FollowedListDTO;
 import com.example.socialmeli.dto.user.FollowerCountDTO;
 import com.example.socialmeli.dto.user.FollowerListDTO;
-import com.example.socialmeli.unit.service.user.IUserService;
+import com.example.socialmeli.service.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
