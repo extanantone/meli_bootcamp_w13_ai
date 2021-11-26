@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Post {
 
-    private int idUser;
+    private int userId;
     private int idPost;
     private LocalDate date;
     private Detail detail;

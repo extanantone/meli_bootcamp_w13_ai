@@ -4,12 +4,10 @@ import com.bootcamp.SocialMeli.dto.*;
 import com.bootcamp.SocialMeli.exception.DuplicateIdException;
 import com.bootcamp.SocialMeli.exception.NotFoundExceptionUsers;
 import com.bootcamp.SocialMeli.mapper.PostMater;
-import com.bootcamp.SocialMeli.mapper.UserMapper;
 import com.bootcamp.SocialMeli.model.Post;
 import com.bootcamp.SocialMeli.model.User;
 import com.bootcamp.SocialMeli.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
@@ -27,12 +25,12 @@ public class PostService implements IPostService {
     public PostDTO setPost(PostDTO postDTO) {
         Post post = PostMater.PostDToToPost(postDTO);
 
-        if(iUserRepository.getUser(post.getIdUser()) ==null){throw new NotFoundExceptionUsers(post.getIdUser()); }
+        if(iUserRepository.getUser(post.getUserId()) ==null){throw new NotFoundExceptionUsers(post.getUserId()); }
         if(iUserRepository.getPost(post.getIdPost())!=null){
-            throw new DuplicateIdException(postDTO.getId_post(),Post.class.getSimpleName());
+            throw new DuplicateIdException(postDTO.getIdPost(),Post.class.getSimpleName());
         }
         iUserRepository.setPost(post);
-        iUserRepository.cambiarTipo(post.getIdUser());
+        iUserRepository.cambiarTipo(post.getUserId());
 
         return postDTO;
     }
@@ -44,7 +42,7 @@ public class PostService implements IPostService {
 
         iUserRepository.getSegidor().stream().filter(seguidor -> seguidor.getIdSeguidor()==id).forEach(
                 user ->{
-                    usersSeguidos.add( iUserRepository.getUser(user.getIdSeguido()).getId());
+                    usersSeguidos.add( iUserRepository.getUser(user.getIdSeguido()).getUserId());
                 }
         );
         List<PostsDTO> posts = new ArrayList<>();
@@ -79,9 +77,9 @@ public class PostService implements IPostService {
     @Override
     public PromopostDTO setPromopost(PromopostDTO promopostDTO) {
 
-        if(iUserRepository.getUser(promopostDTO.getUser_id()) ==null){throw new NotFoundExceptionUsers(promopostDTO.getUser_id()); }
-        if(iUserRepository.getPost(promopostDTO.getId_post())!=null){
-            throw new DuplicateIdException(promopostDTO.getId_post(),Post.class.getSimpleName());
+        if(iUserRepository.getUser(promopostDTO.getUserId()) ==null){throw new NotFoundExceptionUsers(promopostDTO.getUserId()); }
+        if(iUserRepository.getPost(promopostDTO.getIdPost())!=null){
+            throw new DuplicateIdException(promopostDTO.getIdPost(),Post.class.getSimpleName());
         }
         iUserRepository.setpromopost(PostMater.PromoPostDToToPromoPost(promopostDTO));
 
@@ -95,7 +93,7 @@ public class PostService implements IPostService {
         User user = iUserRepository.getUser(id);
         int count = (int) iUserRepository.getlistPromopost(id).stream().count();
 
-        return new PromoPostCoutDTO(user.getId(), user.getUserName(), count);
+        return new PromoPostCoutDTO(user.getUserId(), user.getUserName(), count);
     }
 
     @Override
@@ -106,6 +104,6 @@ public class PostService implements IPostService {
         List<PromopostDTO> promopostDTOS = iUserRepository.getlistPromopost(id)
                 .stream().map(promoPost -> PostMater.PromoposTopromoPostDTO(promoPost)).collect(Collectors.toList());
 
-        return new PublicacionesPromoDTO(user.getId(),user.getUserName(),promopostDTOS);
+        return new PublicacionesPromoDTO(user.getUserId(),user.getUserName(),promopostDTOS);
     }
 }

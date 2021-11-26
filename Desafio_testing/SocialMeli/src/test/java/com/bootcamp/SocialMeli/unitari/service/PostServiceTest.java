@@ -7,6 +7,8 @@ import com.bootcamp.SocialMeli.repository.IUserRepository;
 import com.bootcamp.SocialMeli.service.PostService;
 import com.bootcamp.SocialMeli.util.PostUtil;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,6 +28,11 @@ public class PostServiceTest {
     PostService service;
 
     UserServicieTest userTest = new UserServicieTest();
+
+    @BeforeEach
+    void init(){
+        Mockito.reset();
+    }
 
     //T-0006 -1
     @Test
@@ -57,13 +64,13 @@ public class PostServiceTest {
 
         //Arrange
         PublicacionesDTO expected = new PublicacionesDTO();
-        expected.setUser_id(3);
+        expected.setUser_id(2);
         expected.setPosts(PostUtil.postsDTOSOrderDesc());
 
         //Mocks
-        Mockito.when(repository.getPosts(3)).thenReturn(PostUtil.posts());
+        Mockito.when(repository.getPosts(2)).thenReturn(PostUtil.posts());
 
-        PublicacionesDTO current = service.getPublicaciones(3,"date_desc");
+        PublicacionesDTO current = service.getPublicaciones(2,"date_desc");
 
         //Assert
         Assertions.assertAll(

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -48,8 +47,8 @@ public class UserRepository implements  IUserRepository{
 
     @Override
     public User getUser(int id) {
-        if(users.stream().filter(user -> user.getId() == id).count() >0){
-          return users.stream().filter(user1 -> user1.getId()==id).findFirst().get();
+        if(users.stream().filter(user -> user.getUserId() == id).count() >0){
+          return users.stream().filter(user1 -> user1.getUserId()==id).findFirst().get();
         }
          return null;
     }
@@ -78,8 +77,8 @@ public class UserRepository implements  IUserRepository{
 
         for (int i=0 ; i < users.size();i++ ){
 
-            if(users.get(i).getId()==id){
-                User user = new User(users.get(i).getId(),users.get(i).getUserName());
+            if(users.get(i).getUserId()==id){
+                User user = new User(users.get(i).getUserId(),users.get(i).getUserName());
                 user.setTipo("Vendedor");
                 users.remove(i);
                 users.add(i,user);
@@ -102,8 +101,8 @@ public class UserRepository implements  IUserRepository{
 
     @Override
     public Post getPotsidUser(int id) {
-        if(posts.stream().filter(post -> post.getIdUser()==id).count()>0){
-            return posts.stream().filter(post -> post.getIdUser()==id).findFirst().get();
+        if(posts.stream().filter(post -> post.getUserId()==id).count()>0){
+            return posts.stream().filter(post -> post.getUserId()==id).findFirst().get();
         }
         return null;
     }
@@ -111,7 +110,7 @@ public class UserRepository implements  IUserRepository{
     @Override
     public List<Post> getPosts(int id) {
 
-        return posts.stream().filter(post -> post.getIdUser()==id).collect(Collectors.toList());
+        return posts.stream().filter(post -> post.getUserId()==id).collect(Collectors.toList());
     }
 
     @Override
@@ -126,6 +125,6 @@ public class UserRepository implements  IUserRepository{
 
     @Override
     public List<PromoPost> getlistPromopost(int id) {
-        return promoPosts.stream().filter(post -> post.getIdUser() == id).collect(Collectors.toList());
+        return promoPosts.stream().filter(post -> post.getUserId() == id).collect(Collectors.toList());
     }
 }

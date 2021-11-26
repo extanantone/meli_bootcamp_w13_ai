@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +43,8 @@ public class UserServicieTest {
         seguidors.add(new Seguidor(3,2));
     }
 
+
+    ModelMapper mapper = new ModelMapper();
     //T-0001 -1
     @Test
     void whenSetSeguidoridSeguidoThenidSeguidoOK(){
@@ -112,7 +115,7 @@ public class UserServicieTest {
     @Test
     void whengetOrdenadaname_ascOK(){
         MesiguenDTO mesiguenDTO = new MesiguenDTO();
-        mesiguenDTO.setUser_id(userSeguido.getId());
+        mesiguenDTO.setUser_id(userSeguido.getUserId());
         mesiguenDTO.setUser_name(userSeguido.getUserName());
         List<UserDTO> userDTOS = Arrays.asList(UserMapper.userToUserDTO(userSeguidor),UserMapper.userToUserDTO(userOrder1));
         mesiguenDTO.setFollowers(userDTOS);
@@ -123,12 +126,12 @@ public class UserServicieTest {
         Mockito.when(repository.getUser(1)).thenReturn(userSeguidor);
         Mockito.when(repository.getUser(3)).thenReturn(userOrder1);
 
-        MesiguenDTO expect = service.getOrdenadaMesiguen(userSeguido.getId(),"name_asc");
+        MesiguenDTO expect = service.getOrdenadaMesiguen(userSeguido.getUserId(),"name_asc");
 
         //Assert
         Assertions.assertAll(
-                ()-> Assertions.assertEquals(1, mesiguenDTO.getFollowers().get(0).getUser_id()),
-                ()-> Assertions.assertEquals(3, mesiguenDTO.getFollowers().get(1).getUser_id())
+                ()-> Assertions.assertEquals(1, mesiguenDTO.getFollowers().get(0).getUserId()),
+                ()-> Assertions.assertEquals(3, mesiguenDTO.getFollowers().get(1).getUserId())
         );
 
     }
@@ -137,10 +140,12 @@ public class UserServicieTest {
     @Test
     void whengetOrdenadaname_decOK(){
         MesiguenDTO mesiguenDTO = new MesiguenDTO();
-        mesiguenDTO.setUser_id(userSeguido.getId());
+        mesiguenDTO.setUser_id(userSeguido.getUserId());
         mesiguenDTO.setUser_name(userSeguido.getUserName());
         List<UserDTO> userDTOS = Arrays.asList(UserMapper.userToUserDTO(userOrder1),UserMapper.userToUserDTO(userSeguidor));
         mesiguenDTO.setFollowers(userDTOS);
+
+        List<UserDTO> pru = Arrays.asList(mapper.map(userOrder1,UserDTO.class),mapper.map(userSeguidor,UserDTO.class));
 
         //Mocks
         Mockito.when(repository.getSegidor()).thenReturn(seguidors);
@@ -148,12 +153,12 @@ public class UserServicieTest {
         Mockito.when(repository.getUser(1)).thenReturn(userSeguidor);
         Mockito.when(repository.getUser(3)).thenReturn(userOrder1);
 
-        MesiguenDTO expect = service.getOrdenadaMesiguen(userSeguido.getId(),"name_asc");
+        MesiguenDTO expect = service.getOrdenadaMesiguen(userSeguido.getUserId(),"name_asc");
 
         //Assert
         Assertions.assertAll(
-                ()-> Assertions.assertEquals(3, mesiguenDTO.getFollowers().get(0).getUser_id()),
-                ()-> Assertions.assertEquals(1, mesiguenDTO.getFollowers().get(1).getUser_id())
+                ()-> Assertions.assertEquals(3, mesiguenDTO.getFollowers().get(0).getUserId()),
+                ()-> Assertions.assertEquals(1, mesiguenDTO.getFollowers().get(1).getUserId())
         );
 
     }
@@ -163,7 +168,7 @@ public class UserServicieTest {
     void whengetSequidoresThenQuantitySeguidores(){
 
         //Arrange
-        MesiguenCabtidadDTO expected = new MesiguenCabtidadDTO(userSeguido.getId(),userSeguido.getUserName(),2);
+        MesiguenCabtidadDTO expected = new MesiguenCabtidadDTO(userSeguido.getUserId(),userSeguido.getUserName(),2);
         //Mocks
          Mockito.when(repository.getSegidor()).thenReturn(seguidors);
          Mockito.when(repository.getUser(2)).thenReturn(userSeguido);

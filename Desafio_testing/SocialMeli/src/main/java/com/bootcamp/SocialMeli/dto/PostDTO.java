@@ -2,6 +2,8 @@ package com.bootcamp.SocialMeli.dto;
 
 import com.bootcamp.SocialMeli.model.Detail;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,15 +17,15 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PostDTO {
 
     @Positive(message = "El id debe ser mayor a cero")
     @NotNull(message = "El campo no puede estar vacío")
-    private Integer user_id;
+    private Integer userId;
     @Positive(message = "El id debe ser mayor a cero")
     @NotNull(message = "El campo no puede estar vacío")
-    private Integer id_post;
+    private Integer idPost;
 
     @NotNull(message = "El campo no puede estar vacío")
     @JsonFormat(pattern = "dd-MM-yyyy")

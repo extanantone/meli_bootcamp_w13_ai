@@ -39,8 +39,8 @@ public class UserServicie implements IUserService{
 
         userDTOS.forEach(userDTO ->{
                     User user=  UserMapper.UserDTOToUser(userDTO);
-                    if(iUserRepository.getUser(user.getId()) !=null)
-                    {throw new DuplicateIdException(user.getId(),User.class.getSimpleName());}
+                    if(iUserRepository.getUser(user.getUserId()) !=null)
+                    {throw new DuplicateIdException(user.getUserId(),User.class.getSimpleName());}
                     iUserRepository.setUser(user);
                 });
         return userDTOS;
@@ -53,7 +53,7 @@ public class UserServicie implements IUserService{
         int cantidad = (int) iUserRepository.getSegidor().stream().filter(seguidor -> seguidor.getIdSeguido()==id).count();
         User user = iUserRepository.getUser(id);
 
-        return new MesiguenCabtidadDTO(user.getId(), user.getUserName(), cantidad);
+        return new MesiguenCabtidadDTO(user.getUserId(), user.getUserName(), cantidad);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UserServicie implements IUserService{
         );
         User user = iUserRepository.getUser(id);
 
-      return new MesiguenDTO(user.getId(),user.getUserName(),usersDTO);
+      return new MesiguenDTO(user.getUserId(),user.getUserName(),usersDTO);
 
     }
 
@@ -86,7 +86,7 @@ public class UserServicie implements IUserService{
         );
         UserDTO user = UserMapper.userToUserDTO( iUserRepository.getUser(id));
 
-        return new MesiguenDTO(user.getUser_id(),user.getUser_name(),usersDTO);
+        return new MesiguenDTO(user.getUserId(),user.getUserName(),usersDTO);
     }
 
     @Override
@@ -107,9 +107,9 @@ public class UserServicie implements IUserService{
 
         List<UserDTO> userDTOSorder;
         if(order.equals("name_asc")){
-            userDTOSorder= mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUser_name)).collect(Collectors.toList());
+            userDTOSorder= mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUserName)).collect(Collectors.toList());
         }else{
-            userDTOSorder= mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUser_name).reversed()).collect(Collectors.toList());
+            userDTOSorder= mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUserName).reversed()).collect(Collectors.toList());
         }
         mesiguenDTO.setFollowers(userDTOSorder);
 
@@ -124,9 +124,9 @@ public class UserServicie implements IUserService{
         List<UserDTO> userDTOSOrder;
 
         if(order.equals("name_asc")){
-            userDTOSOrder = mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUser_name)).collect(Collectors.toList());
+            userDTOSOrder = mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUserName)).collect(Collectors.toList());
         }else{
-            userDTOSOrder = mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUser_name).reversed()).collect(Collectors.toList());
+            userDTOSOrder = mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUserName).reversed()).collect(Collectors.toList());
         }
         mesiguenDTO.setFollowers(userDTOSOrder);
 

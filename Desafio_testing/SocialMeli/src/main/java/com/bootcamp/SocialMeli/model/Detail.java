@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Detail {
 
-    private int idproduct;
+    private int productId;
     private String producName;
     private String type;
     private String brand;

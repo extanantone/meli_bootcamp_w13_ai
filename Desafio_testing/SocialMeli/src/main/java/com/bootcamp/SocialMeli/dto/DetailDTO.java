@@ -1,5 +1,7 @@
 package com.bootcamp.SocialMeli.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +13,12 @@ import javax.validation.constraints.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DetailDTO {
 
     @Positive(message = "El id debe ser mayor a cero")
     @NotNull(message = "El campo no puede estar vacío.")
-    private Integer product_id;
+    private Integer productId;
 
     @NotEmpty(message = "El campo no puede estar vacío.")
     @Size(min =4 ,max = 40 ,message = "product name debe tener entre 4 y 40 caracteres")

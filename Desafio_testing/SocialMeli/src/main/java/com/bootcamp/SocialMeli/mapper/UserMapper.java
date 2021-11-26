@@ -7,12 +7,12 @@ public class UserMapper {
 
     public static User  UserDTOToUser (UserDTO userDTO){
 
-        return new User(userDTO.getUser_id(), userDTO.getUser_name());
+        return new User(userDTO.getUserId(), userDTO.getUserName());
     }
 
     public static UserDTO userToUserDTO(User user){
 
-        return new UserDTO(user.getId(), user.getTipo()+":"+ user.getUserName());
+        return new UserDTO(user.getUserId(), user.getTipo()+":"+ user.getUserName());
     }
 
 }

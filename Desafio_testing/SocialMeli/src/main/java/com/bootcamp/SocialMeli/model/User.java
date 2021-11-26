@@ -1,18 +1,16 @@
 package com.bootcamp.SocialMeli.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 //@Getter @Setter
 @Data
 public class User {
-    private int id;
+    private int userId;
     private String userName;
     private String tipo;
 
-    public User(int id, String userName) {
-        this.id = id;
+    public User(int userId, String userName) {
+        this.userId = userId;
         this.userName = userName;
         this.tipo = "Usuario";
     }
