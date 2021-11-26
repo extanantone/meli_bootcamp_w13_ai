@@ -8,6 +8,7 @@ import com.socialMeli.SocialMeli.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,6 +116,11 @@ public class UserServiceImp implements UserService{
 
     public UserRepository getUserRepository() {
         return userRepository;
+    }
+
+    @Override
+    public HashMap<Integer,User> getList_users(){
+        return userRepository.getList_users();
     }
 
     @Override

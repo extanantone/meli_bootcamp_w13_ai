@@ -4,6 +4,8 @@ import com.socialMeli.SocialMeli.model.Post;
 import com.socialMeli.SocialMeli.postDTO.PromoPostInDTO;
 import com.socialMeli.SocialMeli.service.PostService;
 import com.socialMeli.SocialMeli.service.UserService;
+import com.socialMeli.SocialMeli.userDto.FollowedListDTO;
+import com.socialMeli.SocialMeli.userDto.FollowersListDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,33 +35,33 @@ public class ApplicationController {
     }
 
     @GetMapping("/users/{user_id}/followers/list")
-    public ResponseEntity<Optional> followersList(@PathVariable Integer user_id, @RequestParam(required = false) String order ){
+    public ResponseEntity<FollowersListDTO> followersList(@PathVariable Integer user_id, @RequestParam(required = false) String order ){
             if(order==null){
-                return new ResponseEntity<Optional>(Optional.of(userService.listFollowers(user_id)), HttpStatus.OK);
+                return new ResponseEntity<FollowersListDTO>(userService.listFollowers(user_id), HttpStatus.OK);
             }else{
                 switch (order){
                     case "name_asc":
-                        return new ResponseEntity<Optional>(Optional.of(userService.listFollowers(user_id,"name_asc")), HttpStatus.OK);
+                        return new ResponseEntity<FollowersListDTO>(userService.listFollowers(user_id,"name_asc"), HttpStatus.OK);
                     case "name_desc":
-                        return new ResponseEntity<Optional>(Optional.of(userService.listFollowers(user_id, "name_desc")), HttpStatus.OK);
+                        return new ResponseEntity<FollowersListDTO>(userService.listFollowers(user_id, "name_desc"), HttpStatus.OK);
                     default:
-                        return new ResponseEntity<Optional>(Optional.of(userService.listFollowers(user_id)), HttpStatus.OK);
+                        return new ResponseEntity<FollowersListDTO>(userService.listFollowers(user_id), HttpStatus.OK);
                 }
             }
     }
 
     @GetMapping("/users/{user_id}/followed/list")
-    public ResponseEntity<Optional> followedList(@PathVariable Integer user_id, @RequestParam(required = false) String order ){
+    public ResponseEntity<FollowedListDTO> followedList(@PathVariable Integer user_id, @RequestParam(required = false) String order ){
             if(order==null){
-                return new ResponseEntity<Optional>(Optional.of(userService.listFollowed(user_id)), HttpStatus.OK);
+                return new ResponseEntity<FollowedListDTO>(userService.listFollowed(user_id), HttpStatus.OK);
             }else{
                 switch (order){
                     case "name_asc":
-                        return new ResponseEntity<Optional>(Optional.of(userService.listFollowed(user_id,"name_asc")), HttpStatus.OK);
+                        return new ResponseEntity<FollowedListDTO>(userService.listFollowed(user_id,"name_asc"), HttpStatus.OK);
                     case "name_desc":
-                        return new ResponseEntity<Optional>(Optional.of(userService.listFollowed(user_id, "name_desc")), HttpStatus.OK);
+                        return new ResponseEntity<FollowedListDTO>(userService.listFollowed(user_id, "name_desc"), HttpStatus.OK);
                     default:
-                        return new ResponseEntity<Optional>(Optional.of(userService.listFollowed(user_id)), HttpStatus.OK);
+                        return new ResponseEntity<FollowedListDTO>(userService.listFollowed(user_id), HttpStatus.OK);
                 }
             }
     }
@@ -73,35 +75,35 @@ public class ApplicationController {
 
     @PostMapping("/products/post")
     public ResponseEntity<Optional> createPost(@Valid @RequestBody Post post){
-        return new ResponseEntity<Optional>(Optional.of(postService.create(post,userService.getUserRepository().getList_users())), HttpStatus.OK);
+        return new ResponseEntity<Optional>(Optional.of(postService.create(post,userService.getList_users())), HttpStatus.OK);
     }
 
     @GetMapping("/products/followed/{user_id}/list")
     public ResponseEntity<Optional> productListFollowed(@PathVariable Integer user_id, @RequestParam(required = false) String order){
         if(order==null){
-            return new ResponseEntity<Optional>(Optional.of(postService.productListFollowed(userService.getUserRepository().getList_users(),user_id)),HttpStatus.OK);
+            return new ResponseEntity<Optional>(Optional.of(postService.productListFollowed(userService.getList_users(),user_id)),HttpStatus.OK);
         }else{
             if(order.equals("date_desc")){
-                return new ResponseEntity<Optional>(Optional.of(postService.productListFollowed(userService.getUserRepository().getList_users(),user_id,"date_desc")),HttpStatus.OK);
+                return new ResponseEntity<Optional>(Optional.of(postService.productListFollowed(userService.getList_users(),user_id,"date_desc")),HttpStatus.OK);
             }else{
-                return new ResponseEntity<Optional>(Optional.of(postService.productListFollowed(userService.getUserRepository().getList_users(),user_id)),HttpStatus.OK);
+                return new ResponseEntity<Optional>(Optional.of(postService.productListFollowed(userService.getList_users(),user_id)),HttpStatus.OK);
             }
         }
     }
 
     @PostMapping("/products/promo-post")
     public ResponseEntity<Optional> createPromoPost(@RequestBody PromoPostInDTO post){
-        return new ResponseEntity<Optional>(Optional.of(postService.create(post,userService.getUserRepository().getList_users())), HttpStatus.OK);
+        return new ResponseEntity<Optional>(Optional.of(postService.create(post,userService.getList_users())), HttpStatus.OK);
     }
 
     @GetMapping("/products/{user_id}/promo-post/count")
     public ResponseEntity<Optional> promoProductsCount(@PathVariable Integer user_id){
-        return new ResponseEntity<Optional>(Optional.of(postService.promoProductsCount(user_id,userService.getUserRepository().getList_users())), HttpStatus.OK);
+        return new ResponseEntity<Optional>(Optional.of(postService.promoProductsCount(user_id,userService.getList_users())), HttpStatus.OK);
     }
 
     @GetMapping("/products/{user_id}/list")
     public ResponseEntity<Optional> promoProductsList(@PathVariable Integer user_id){
-        return new ResponseEntity<Optional>(Optional.of(postService.promoProductsList(user_id,userService.getUserRepository().getList_users())), HttpStatus.OK);
+        return new ResponseEntity<Optional>(Optional.of(postService.promoProductsList(user_id,userService.getList_users())), HttpStatus.OK);
     }
 
 }

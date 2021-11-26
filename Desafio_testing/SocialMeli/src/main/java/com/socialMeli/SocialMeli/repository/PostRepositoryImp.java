@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @Repository
 public class PostRepositoryImp implements PostRepository{
     private Map<Integer,Post> postList=new HashMap<>();
+
     @Override
     public Post create(Post post) {
         if(post.getId_post()==null){
@@ -73,5 +74,13 @@ public class PostRepositoryImp implements PostRepository{
         List<Post> list1=postList.values().stream().filter(posts-> posts.getUser_id()==user.getId() && posts.getHas_promo()==true).collect(Collectors.toList());
         PromoPostListDTO promoPostListDTO=new PromoPostListDTO(user.getId(),user.getUsername(),list1);
         return promoPostListDTO;
+    }
+
+    public Map<Integer, Post> getPostList() {
+        return postList;
+    }
+
+    public void setPostList(Map<Integer, Post> postList) {
+        this.postList = postList;
     }
 }
