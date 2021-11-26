@@ -10,4 +10,5 @@ public interface IUserRepository {
     List<User> getAllUsers();
     boolean follow(User followerID, User followedID);
     boolean unfollow(User followerID, User followedID);
+    void reloadDataBase();
 }

@@ -13,7 +13,8 @@ public class OrderUtils {
         if(order == null) return dto;
         String[] temp = order.split("_");
         String criteria = temp[0];
-        String direction = temp[1];
+        String direction = "";
+        if(temp.length > 1) direction = temp[1];
         validateOrderDirection(criteria, direction);
         Comparator<UserDTO> comparator = Comparator.comparing(UserDTO::getUserName);
         if(direction.equals("desc")){
@@ -27,7 +28,8 @@ public class OrderUtils {
         if(order == null) return dto;
         String[] temp = order.split("_");
         String criteria = temp[0];
-        String direction = temp[1];
+        String direction = "";
+        if(temp.length > 1) direction = temp[1];
         validateOrderDirection(criteria, direction);
         Comparator<UserDTO> comparator = Comparator.comparing(UserDTO::getUserName);
         if(direction.equals("desc")){
@@ -41,7 +43,8 @@ public class OrderUtils {
         if(order == null) return dto;
         String[] temp = order.split("_");
         String criteria = temp[0];
-        String direction = temp[1];
+        String direction = "";
+        if(temp.length > 1) direction = temp[1];
         validateOrderDirection(criteria, direction);
         Comparator<ListedPostDTO> comparator = Comparator.comparing(ListedPostDTO::getDate);
         if(direction.equals("desc")){

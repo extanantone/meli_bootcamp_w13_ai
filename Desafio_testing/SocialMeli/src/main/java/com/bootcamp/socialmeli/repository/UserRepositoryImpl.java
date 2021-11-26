@@ -92,4 +92,9 @@ public class UserRepositoryImpl implements IUserRepository{
         }
         return usersMap;
     }
+
+    public void reloadDataBase(){
+        this.users = loadDataBase();
+        this.counter = this.users.size()+1L;
+    }
 }
