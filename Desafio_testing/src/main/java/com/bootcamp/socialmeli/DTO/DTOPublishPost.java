@@ -23,4 +23,5 @@ public class DTOPublishPost {
     private Product product;
     private int category;
     private double price;
+
 }
