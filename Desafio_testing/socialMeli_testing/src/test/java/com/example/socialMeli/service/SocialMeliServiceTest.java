@@ -4,7 +4,6 @@ import com.example.socialMeli.dto.*;
 import com.example.socialMeli.exceptions.UsuarioNoEncontradoError;
 import com.example.socialMeli.model.Comprador;
 import com.example.socialMeli.model.Producto;
-import com.example.socialMeli.model.Publicacion;
 import com.example.socialMeli.model.Vendedor;
 import com.example.socialMeli.repository.ISocialMeliRepository;
 import com.example.socialMeli.utils.SocialMeliUtils;
@@ -13,8 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
+
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
