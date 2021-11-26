@@ -24,17 +24,17 @@ public class PostDTO {
     private Integer idPost;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
-    @NotEmpty(message = "La fecha no puede estar vacía.")
+    @NotNull(message = "La fecha no puede estar vacía.")
     //@Pattern(regexp="^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$", message = "La fecha debe cumplir con el formato: dd-mm-yyyy")
     private Date date;
 
     @Valid
     private ProductDTO detail;
 
-    @NotEmpty(message = "El campo no puede estar vacío")
+    @NotNull(message = "El campo no puede estar vacío")
     private int category;
 
-    @NotEmpty(message = "El campo no puede estar vacío")
+    @NotNull(message = "El campo no puede estar vacío")
     @Max(value = 10000000, message = "El precio máximo por producto es de 10.000.000")
     private double price;
 

@@ -1,2 +1,4 @@
-package com.example.socialmeli.unit.controller;public class PostsControllerTests {
+package com.example.socialmeli.unit.controller;
+
+public class PostsControllerTests {
 }

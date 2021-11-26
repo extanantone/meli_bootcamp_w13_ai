@@ -9,6 +9,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+
 @ControllerAdvice
 public class SocialMeliExceptionHandler {
 
@@ -25,14 +30,34 @@ public class SocialMeliExceptionHandler {
         return new ResponseEntity<>(errorDTO, HttpStatus.INTERNAL_SERVER_ERROR );
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<ErrorDTO> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        ErrorDTO errorDTO = new ErrorDTO("Error de validación", ex.getMessage());
-        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
-    }
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ResponseEntity<ErrorDTO> handleValidationExceptions(HttpMessageNotReadableException ex) {
-        ErrorDTO errorDTO = new ErrorDTO("Error de validación", ex.getMessage());
+        ErrorDTO errorDTO = new ErrorDTO("HttpMessageNotReadableException", ex.getMessage());
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    ResponseEntity<ErrorDTO> validatingDataTypes(MethodArgumentNotValidException exception){
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setName("MethodArgumentNotValidException");
+        errorDTO.setDescription("There are some fields that don't respect validations");
+
+        HashMap<String, List<String>> errors = new HashMap<>();
+
+        exception.getFieldErrors().forEach( e -> {
+            String field = e.getField();
+            String msg = e.getDefaultMessage();
+
+            errors.compute(field, ($, l) ->
+                    new ArrayList<>(){
+                        {
+                            addAll(!Objects.isNull(l) ? l : new ArrayList<>());
+                            add(msg);
+                        }
+                    }
+            );
+        });
+        errorDTO.setErrorFields(errors);
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 

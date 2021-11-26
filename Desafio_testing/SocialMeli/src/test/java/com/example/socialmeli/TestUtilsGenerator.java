@@ -26,7 +26,7 @@ public class TestUtilsGenerator {
         PrintWriter writer = null;
 
         try {
-            writer = new PrintWriter(ResourceUtils.getFile("./src/" + SCOPE + "/resources/usersSocialMeli.json"));
+            writer = new PrintWriter(ResourceUtils.getFile("./src/main/resources/usersSocialMeli.json"));
         } catch (
                 IOException e) {
             e.printStackTrace();
@@ -49,7 +49,7 @@ public class TestUtilsGenerator {
         PrintWriter writer = null;
 
         try {
-            writer = new PrintWriter(ResourceUtils.getFile("./src/" + SCOPE + "/resources/usersSocialMeli.json"));
+            writer = new PrintWriter(ResourceUtils.getFile("./src/main/resources/usersSocialMeli.json"));
         } catch (
                 IOException e) {
             e.printStackTrace();
@@ -77,6 +77,29 @@ public class TestUtilsGenerator {
                 "    \"followersId\": []\n" +
                 "  }\n" +
                 "]");
+        writer.close();
+    }
+
+    public static void emptyPostsFile() {
+        Properties properties = new Properties();
+
+        try {
+            properties.load(new ClassPathResource("application.properties").getInputStream());
+            SCOPE = properties.getProperty("api.scope");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        PrintWriter writer = null;
+
+        try {
+            writer = new PrintWriter(ResourceUtils.getFile("./src/main/resources/postsSocialMeli.json"));
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
+
+        writer.print("[]");
         writer.close();
     }
 
