@@ -1,9 +1,9 @@
 package com.lgoyenechea.socialmeli.controller;
 
 import com.lgoyenechea.socialmeli.dto.*;
-import com.lgoyenechea.socialmeli.exception.UserDoesNotExistsException;
-import com.lgoyenechea.socialmeli.exception.UserDoesNotFollowException;
-import com.lgoyenechea.socialmeli.service.IUserService;
+import com.lgoyenechea.socialmeli.exception.UserNotFoundException;
+import com.lgoyenechea.socialmeli.exception.UserNotFollowException;
+import com.lgoyenechea.socialmeli.service.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +15,9 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 public class UserController {
 
-    private final IUserService userService;
+    private final UserService userService;
 
-    UserController(IUserService userService) {
+    UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -30,7 +30,7 @@ public class UserController {
     @PostMapping("/{userId}/follow/{userIdToFollow}")
     ResponseEntity<UserFollowDTO> follow(@PathVariable @NotNull Long userId,
                                          @PathVariable @NotNull Long userIdToFollow)
-            throws UserDoesNotExistsException {
+            throws UserNotFoundException {
 
         UserFollowDTO follow = userService.follow(userId, userIdToFollow);
         return new ResponseEntity<>(follow, HttpStatus.OK);
@@ -38,7 +38,7 @@ public class UserController {
 
     @GetMapping("/{userId}/followers/count")
     ResponseEntity<UserFollowersCountDTO> followersCount(@PathVariable @NotNull Long userId)
-            throws UserDoesNotExistsException {
+            throws UserNotFoundException {
 
         UserFollowersCountDTO userFollowersCount = userService.followersCount(userId);
         return new ResponseEntity<>(userFollowersCount, HttpStatus.OK);
@@ -47,7 +47,7 @@ public class UserController {
     @GetMapping("/{userId}/followers/list")
     ResponseEntity<UserFollowersListDTO> followersList(@PathVariable @NotNull Long userId,
                                                        @RequestParam(defaultValue = "name_asc") String order)
-            throws UserDoesNotExistsException {
+            throws UserNotFoundException {
 
         UserFollowersListDTO userFollowersList = userService.followersList(userId, order);
         return new ResponseEntity<>(userFollowersList, HttpStatus.OK);
@@ -56,7 +56,7 @@ public class UserController {
     @GetMapping("/{userId}/followed/list")
     ResponseEntity<UserFollowedListDTO> followedList(@PathVariable @NotNull Long userId,
                                                      @RequestParam(defaultValue = "name_asc") String order)
-            throws UserDoesNotExistsException {
+            throws UserNotFoundException {
 
         UserFollowedListDTO userFollowedList = userService.followedList(userId, order);
         return new ResponseEntity<>(userFollowedList, HttpStatus.OK);
@@ -65,7 +65,7 @@ public class UserController {
     @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
     ResponseEntity<UserUnfollowDTO> unfollow(@PathVariable @NotNull Long userId,
                                              @PathVariable @NotNull Long userIdToUnfollow)
-            throws UserDoesNotFollowException {
+            throws UserNotFollowException {
 
         UserUnfollowDTO unfollowDto = userService.unfollow(userId, userIdToUnfollow);
         return new ResponseEntity<>(unfollowDto, HttpStatus.OK);

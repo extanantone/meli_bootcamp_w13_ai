@@ -2,7 +2,7 @@ package com.lgoyenechea.socialmeli.service;
 
 import com.lgoyenechea.socialmeli.dto.*;
 import com.lgoyenechea.socialmeli.dto.mapper.ProductMapper;
-import com.lgoyenechea.socialmeli.exception.UserDoesNotExistsException;
+import com.lgoyenechea.socialmeli.exception.UserNotFoundException;
 import com.lgoyenechea.socialmeli.model.Post;
 import com.lgoyenechea.socialmeli.model.User;
 import com.lgoyenechea.socialmeli.repository.ProductRepository;
@@ -31,9 +31,9 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public PostDTO save(PostCreationDTO newPost) throws UserDoesNotExistsException {
+    public PostDTO save(PostCreationDTO newPost) throws UserNotFoundException {
         if (!userRepository.existsById(newPost.getUserId()))
-            throw new UserDoesNotExistsException(
+            throw new UserNotFoundException(
                     String.format(USER_ID_ERROR, newPost.getUserId()));
 
         Post post = productRepository.save(ProductMapper.postCreationDtoToPost(newPost));
@@ -60,9 +60,9 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public PostPromoDTO saveWithPromo(PostCreationPromoDTO newPost) throws UserDoesNotExistsException {
+    public PostPromoDTO saveWithPromo(PostCreationPromoDTO newPost) throws UserNotFoundException {
         if (!userRepository.existsById(newPost.getUserId()))
-            throw new UserDoesNotExistsException(
+            throw new UserNotFoundException(
                     String.format(USER_ID_ERROR, newPost.getUserId()));
 
         Post post = productRepository.save(ProductMapper.postCreationWithPromoDtoToPost(newPost));
@@ -70,9 +70,9 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public UserPromoPostCountDTO postsPromoCount(Long userId) throws UserDoesNotExistsException {
+    public UserPromoPostCountDTO postsPromoCount(Long userId) throws UserNotFoundException {
         User user = userRepository.getById(userId);
-        if (user == null) throw new UserDoesNotExistsException(
+        if (user == null) throw new UserNotFoundException(
                 String.format(USER_ID_ERROR, userId));
 
         int count = (int) productRepository.getByUserId(userId)
@@ -84,9 +84,9 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public UserPostsPromoListDTO postsPromoList(Long userId) throws UserDoesNotExistsException {
+    public UserPostsPromoListDTO postsPromoList(Long userId) throws UserNotFoundException {
         User user = userRepository.getById(userId);
-        if (user == null) throw new UserDoesNotExistsException(
+        if (user == null) throw new UserNotFoundException(
                 String.format(USER_ID_ERROR, userId));
 
         List<PostDTO> posts = productRepository.getByUserId(userId)

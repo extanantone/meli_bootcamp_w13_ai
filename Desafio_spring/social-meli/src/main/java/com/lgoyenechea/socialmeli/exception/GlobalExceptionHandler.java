@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = UserDoesNotFollowException.class)
-    public ResponseEntity<Object> userDoesNotFollowException(UserDoesNotFollowException userDoesNotFollowException) {
+    @ExceptionHandler(value = UserNotFollowException.class)
+    public ResponseEntity<Object> userDoesNotFollowException(UserNotFollowException userDoesNotFollowException) {
         Error error = new Error();
         error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         error.setMessage(userDoesNotFollowException.getMessage());
         return buildResponseEntity(error);
     }
 
-    @ExceptionHandler(value = UserDoesNotExistsException.class)
-    public ResponseEntity<Object> userDoesNotExistsException(UserDoesNotExistsException userDoesNotExistsException) {
+    @ExceptionHandler(value = UserNotFoundException.class)
+    public ResponseEntity<Object> userDoesNotExistsException(UserNotFoundException userNotFoundException) {
         Error error = new Error();
         error.setStatus(HttpStatus.BAD_REQUEST);
-        error.setMessage(userDoesNotExistsException.getMessage());
+        error.setMessage(userNotFoundException.getMessage());
         return buildResponseEntity(error);
     }
 

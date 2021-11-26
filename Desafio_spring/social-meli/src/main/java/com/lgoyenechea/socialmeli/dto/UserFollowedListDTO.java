@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,4 +15,8 @@ public class UserFollowedListDTO {
     private Long userId;
     private String userName;
     private List<UserDTO> followed;
+
+    public UserFollowedListDTO() {
+        followed = new ArrayList<>();
+    }
 }

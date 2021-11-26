@@ -2,8 +2,8 @@ package com.lgoyenechea.socialmeli.service;
 
 import com.lgoyenechea.socialmeli.dto.*;
 import com.lgoyenechea.socialmeli.dto.mapper.UserMapper;
-import com.lgoyenechea.socialmeli.exception.UserDoesNotExistsException;
-import com.lgoyenechea.socialmeli.exception.UserDoesNotFollowException;
+import com.lgoyenechea.socialmeli.exception.UserNotFoundException;
+import com.lgoyenechea.socialmeli.exception.UserNotFollowException;
 import com.lgoyenechea.socialmeli.model.User;
 import com.lgoyenechea.socialmeli.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -32,12 +32,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserFollowDTO follow(Long userId, Long userIdToFollow) throws UserDoesNotExistsException {
+    public UserFollowDTO follow(Long userId, Long userIdToFollow) throws UserNotFoundException {
         User user = userRepository.getById(userId);
         User followed = userRepository.getById(userIdToFollow);
 
         if (user == null || followed == null)
-            throw new UserDoesNotExistsException(
+            throw new UserNotFoundException(
                     String.format(TWO_USER_ID_ERROR, userId, userIdToFollow));
 
         if (!user.getFollowed().contains(followed.getId())) {
@@ -48,18 +48,18 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserFollowersCountDTO followersCount(Long userId) throws UserDoesNotExistsException {
+    public UserFollowersCountDTO followersCount(Long userId) throws UserNotFoundException {
         User user = userRepository.getById(userId);
         if (user == null)
-            throw new UserDoesNotExistsException(String.format(USER_ID_ERROR, userId));
+            throw new UserNotFoundException(String.format(USER_ID_ERROR, userId));
         return UserMapper.userToFollowersCount(user);
     }
 
     @Override
-    public UserFollowersListDTO followersList(Long userId, String order) throws UserDoesNotExistsException {
+    public UserFollowersListDTO followersList(Long userId, String order) throws UserNotFoundException {
         User user = userRepository.getById(userId);
         if (user == null)
-            throw new UserDoesNotExistsException(String.format(USER_ID_ERROR, userId));
+            throw new UserNotFoundException(String.format(USER_ID_ERROR, userId));
 
         List<User> followers = user.getFollowers().stream()
                 .map(userRepository::getById)
@@ -73,10 +73,10 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserFollowedListDTO followedList(Long userId, String order) throws UserDoesNotExistsException {
+    public UserFollowedListDTO followedList(Long userId, String order) throws UserNotFoundException {
         User user = userRepository.getById(userId);
         if (user == null)
-            throw new UserDoesNotExistsException(String.format(USER_ID_ERROR, userId));
+            throw new UserNotFoundException(String.format(USER_ID_ERROR, userId));
 
         List<User> followed = user.getFollowed().stream()
                 .map(userRepository::getById)
@@ -91,12 +91,12 @@ public class UserService implements IUserService {
 
     @Override
     public UserUnfollowDTO unfollow(Long userId, Long userIdToUnfollow)
-            throws UserDoesNotFollowException {
+            throws UserNotFollowException {
         User user = userRepository.getById(userId);
         User userToUnfollow = userRepository.getById(userIdToUnfollow);
 
         if (user == null || userToUnfollow == null)
-            throw new UserDoesNotExistsException(
+            throw new UserNotFoundException(
                     String.format(TWO_USER_ID_ERROR, userId, userIdToUnfollow));
 
         if (user.getFollowed().contains(userToUnfollow.getId())) {
@@ -105,7 +105,7 @@ public class UserService implements IUserService {
             return UserMapper.unfollowToDto(user, userToUnfollow);
         }
 
-        throw  new UserDoesNotFollowException(
+        throw  new UserNotFollowException(
                 String.format("User with id %s does not follow user with id %s",
                         userId, userIdToUnfollow)
         );

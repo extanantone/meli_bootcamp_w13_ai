@@ -28,8 +28,12 @@ public class ProductRepository implements IRepository<Long, Post>, IProductRepos
     }
 
     @Override
-    public Post getById(Long aLong) {
-        return null;
+    public Post getById(Long id) {
+        return posts
+                .stream()
+                .filter(post -> post.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     private void setPostId(Post post) {
