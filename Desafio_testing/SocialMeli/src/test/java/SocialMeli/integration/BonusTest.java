@@ -20,6 +20,7 @@ public class BonusTest {
     @Autowired
     private MockMvc mockMvc;
 
+    //DATA
     String requestSeller1 = "{\"user_id\": 50,\"user_name\": \"testSellera\",\"seller\": true}";
     String requestSeller2 = "{\"user_id\": 60,\"user_name\": \"testSellerb\",\"seller\": true}";
 

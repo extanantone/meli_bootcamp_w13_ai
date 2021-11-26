@@ -1,6 +1,8 @@
 package SocialMeli.unit.service;
 
 import SocialMeli.dto.response.count.FollowersCountDTO;
+import SocialMeli.exception.AlredyFollowedException;
+import SocialMeli.exception.NotFollowedException;
 import SocialMeli.exception.OrderMethodInexistentException;
 import SocialMeli.mapper.SocialMapper;
 import SocialMeli.model.Customer;
@@ -20,6 +22,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+/**   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+ Buenas! Se recuerda que el readme se encuentra dentro de la carpeta Desafio_Sprint junto con el archivo
+ de Postman.
+ *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   **/
 
 @ExtendWith(MockitoExtension.class)
 public class SocialServiceTest {
@@ -124,4 +131,41 @@ public class SocialServiceTest {
                 () -> Assertions.assertEquals(expect, result)
         );
     }
+
+    // + exceptions coverage
+    @Test
+    public void alreadyfollowed() {
+        //arrange
+        Seller seller = new Seller(50, "seller");
+        Customer customer = new Customer(51, "customer");
+        Mockito.when(repo.getSeller(seller.getUserId())).thenReturn(seller);
+        Mockito.when(repo.getCustomer(customer.getUserId())).thenReturn(customer);
+        //act
+        service.followSeller(customer.getUserId(), seller.getUserId());
+        //assert
+        Assertions.assertAll(
+                () -> Assertions.assertThrows(AlredyFollowedException.class,
+                        () -> service.followSeller(customer.getUserId(), seller.getUserId())),
+                () -> Mockito.verify(repo, Mockito.atLeastOnce()).getSeller(seller.getUserId()),
+                () -> Mockito.verify(repo, Mockito.atLeastOnce()).getCustomer(customer.getUserId())
+                );
+    }
+
+    @Test
+    public void notfollowed() {
+        //arrange
+        Seller seller = new Seller(50, "seller");
+        Customer customer = new Customer(51, "customer");
+        Mockito.when(repo.getSeller(seller.getUserId())).thenReturn(seller);
+        Mockito.when(repo.getCustomer(customer.getUserId())).thenReturn(customer);
+        //act
+        //assert
+        Assertions.assertAll(
+                () -> Assertions.assertThrows(NotFollowedException.class,
+                        () -> service.unfollowSeller(customer.getUserId(), seller.getUserId())),
+                () -> Mockito.verify(repo, Mockito.atLeastOnce()).getSeller(seller.getUserId()),
+                () -> Mockito.verify(repo, Mockito.atLeastOnce()).getCustomer(customer.getUserId())
+        );
+    }
+
 }

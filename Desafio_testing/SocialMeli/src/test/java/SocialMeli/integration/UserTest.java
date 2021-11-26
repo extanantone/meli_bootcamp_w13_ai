@@ -20,6 +20,7 @@ public class UserTest {
     @Autowired
     private MockMvc mockMvc;
 
+    //DATA
     String requestSeller = "{\"user_id\": 50,\"user_name\": \"testSeller\",\"seller\": true}";
     String requestSeller2 = "{\"user_id\": 60,\"user_name\": \"testSellerb\",\"seller\": true}";
     String requestCustomer = "{\"user_id\": 51,\"user_name\": \"testCustomera\",\"seller\": false}";
