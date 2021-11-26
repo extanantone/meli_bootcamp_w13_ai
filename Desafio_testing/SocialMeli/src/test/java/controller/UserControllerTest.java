@@ -28,6 +28,7 @@ public class UserControllerTest {
 
 
     @Test
+    @DisplayName("Comprobando la llamada a seguir un vendedor")
     void userFollowedCalled(){
         // Arrange
         Integer user_id = 1;
@@ -42,6 +43,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @DisplayName("Comprobando la llamada para dejar de seguir a un vendedor")
     void userUnfollowedCalled(){
         // Arrange
         Integer user_id = 1;
@@ -88,7 +90,7 @@ public class UserControllerTest {
 
 
     @Test
-    @DisplayName("Con parámetro de order")
+    @DisplayName("Ordenamiento de fecha con parámetro de order")
     void checkingSortedDateTypeSellers(){
         // Arrange
         String order = "name_asc";
@@ -103,7 +105,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Sin parámetro de order")
+    @DisplayName("Ordenamiento de fecha sin parámetro de order")
     void checkingSortedDateTypeSellersWithoutOrder(){
         // Arrange
         Integer user_id = 1;

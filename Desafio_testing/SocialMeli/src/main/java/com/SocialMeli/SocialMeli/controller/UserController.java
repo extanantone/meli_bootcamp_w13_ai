@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping("users/{user_id}/follow/{user_id_to_follow}")
-    public ResponseEntity<String> followUser(@Valid @PathVariable Integer user_id, @PathVariable Integer user_id_to_follow) {
+    public ResponseEntity<String> followUser(@PathVariable Integer user_id, @PathVariable Integer user_id_to_follow) {
         Boolean statusFollow = userService.followUser(user_id,user_id_to_follow);
         if( statusFollow )
             return new ResponseEntity<>("Usuarios seguidos.", HttpStatus.OK);
@@ -38,17 +38,17 @@ public class UserController {
     }
 
     @GetMapping("users/{user_id}/followers/count")
-    public FollowersCountDTO followersCount(@Valid @PathVariable Integer user_id){
+    public FollowersCountDTO followersCount(@PathVariable Integer user_id){
         return userService.followersCount(user_id);
     }
 
     @GetMapping("/users/{user_id}/followers/list")
-    public SellersDTO followersList(@Valid @PathVariable Integer user_id){
+    public SellersDTO followersList(@PathVariable Integer user_id){
         return userService.followersList(user_id);
     }
 
     @GetMapping("/users/{user_id}/followed/list")
-    public BuyersDTO followedList(@Valid @PathVariable Integer user_id){
+    public BuyersDTO followedList(@PathVariable Integer user_id){
         return userService.followedList(user_id);
     }
 
@@ -64,13 +64,13 @@ public class UserController {
     }
 
     @GetMapping("/products/followed/{user_id}/list")
-    public PostListDTO postList(@Valid @PathVariable Integer user_id){
+    public PostListDTO postList(@PathVariable Integer user_id){
         String order = "date_desc";
         return userService.postList(user_id, order);
     }
 
     @PostMapping("users/{user_id}/unfollow/{user_id_to_unfollow}")
-    public ResponseEntity<String> unfollowUser(@Valid @PathVariable Integer user_id, @PathVariable Integer user_id_to_unfollow) {
+    public ResponseEntity<String> unfollowUser(@PathVariable Integer user_id, @PathVariable Integer user_id_to_unfollow) {
         Boolean statusUnfollow = userService.unfollowUser(user_id,user_id_to_unfollow);
         if( statusUnfollow )
             return new ResponseEntity<>("Los usuarios se han dejado de seguir.", HttpStatus.OK);
@@ -79,17 +79,17 @@ public class UserController {
     }
 
     @GetMapping(value ="/users/{userId}/followed/list", params = {"order"})
-    public BuyersDTO followedListSorted(@Valid @PathVariable Integer userId, @RequestParam("order") String order){
+    public BuyersDTO followedListSorted(@PathVariable Integer userId, @RequestParam("order") String order){
         return userService.followedListSorted(userId, order);
     }
 
     @GetMapping(value ="/users/{userId}/followers/list", params = {"order"})
-    public SellersDTO followersListSorted(@Valid @PathVariable Integer userId, @RequestParam("order") String order){
+    public SellersDTO followersListSorted(@PathVariable Integer userId, @RequestParam("order") String order){
         return userService.followersListSorted(userId, order);
     }
 
     @GetMapping(value = "/products/followed/{user_id}/list", params = {"order"})
-    public PostListDTO postListParam(@Valid @PathVariable Integer user_id, @RequestParam("order") String order){
+    public PostListDTO postListParam(@PathVariable Integer user_id, @RequestParam("order") String order){
         return userService.postList(user_id, order);
     }
 
@@ -106,12 +106,12 @@ public class UserController {
     }
 
     @GetMapping("products/{userId}/promo-post/count")
-    public PostPromoCountDTO postPromoCount(@Valid @PathVariable Integer userId){
+    public PostPromoCountDTO postPromoCount(@PathVariable Integer userId){
         return userService.postPromoCount(userId);
     }
 
     @GetMapping("products/{userId}/list")
-    public PostPromoListDTO postPromoList(@Valid @PathVariable Integer userId){
+    public PostPromoListDTO postPromoList(@PathVariable Integer userId){
         return userService.postPromoList(userId);
     }
 }
