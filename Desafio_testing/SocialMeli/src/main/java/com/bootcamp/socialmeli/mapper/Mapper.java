@@ -7,7 +7,6 @@ import com.bootcamp.socialmeli.model.User;
 import com.bootcamp.socialmeli.repository.IProductRepository;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
@@ -79,7 +78,7 @@ public class Mapper implements IMapper {
     public PostDTO postToPostDTO(Post post) {
         return new PostDTO(
                 post.getId(),
-                post.getDate().format(dateFormatter),
+                post.getDate(),
                 post.getCategory(),
                 post.getPrice(),
                 post.getUserId(),
@@ -91,7 +90,7 @@ public class Mapper implements IMapper {
     public Post postDTOToPost(PostDTO postDTO) {
         return new Post(
                 postDTO.getPostId(),
-                LocalDate.parse(postDTO.getDate(), dateFormatter),
+                postDTO.getDate(),
                 postDTO.getCategory(),
                 postDTO.getPrice(),
                 false,
@@ -105,7 +104,7 @@ public class Mapper implements IMapper {
     public PromoPostDTO postToPromoPostDTO(Post post) {
         return new PromoPostDTO(
                 post.getId(),
-                post.getDate().format(dateFormatter),
+                post.getDate(),
                 post.getCategory(),
                 post.getPrice(),
                 post.hasPromo(),
@@ -119,7 +118,7 @@ public class Mapper implements IMapper {
     public Post promoPostDTOToPost(PromoPostDTO promoPostDTO) {
         return new Post(
                 promoPostDTO.getPostId(),
-                LocalDate.parse(promoPostDTO.getDate(), dateFormatter),
+                promoPostDTO.getDate(),
                 promoPostDTO.getCategory(),
                 promoPostDTO.getPrice(),
                 promoPostDTO.hasPromo(),

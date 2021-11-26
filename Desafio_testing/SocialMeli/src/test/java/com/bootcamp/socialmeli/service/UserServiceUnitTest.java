@@ -5,7 +5,6 @@ import com.bootcamp.socialmeli.exceptions.NotFoundException;
 import com.bootcamp.socialmeli.mapper.IMapper;
 import com.bootcamp.socialmeli.mapper.Mapper;
 import com.bootcamp.socialmeli.model.User;
-import com.bootcamp.socialmeli.repository.IProductRepository;
 import com.bootcamp.socialmeli.repository.IUserRepository;
 import com.bootcamp.socialmeli.util.TestUtilsGenerator;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -133,5 +133,45 @@ class UserServiceUnitTest {
                 assertEquals(expectedSortedUsernames.get(i), actualSortedUsernames.get(i));
             }
         });
+    }
+
+    @Test
+    public void whenValidDescOrderSortUsers() {
+        String[] names = {"Beto", "Charlie", "Ana", "Daniela"};
+        List<UserDTO> users = new ArrayList<>();
+        for (int i=0; i<names.length; i++) {
+            users.add(mapper.userToUserDTO(TestUtilsGenerator.getVanillaUser(i, names[i])));
+        }
+        List<String> expectedSortedUsernames = Arrays.stream(names).sorted().collect(Collectors.toList());
+        Collections.reverse(expectedSortedUsernames);
+        String order = "desc";
+
+        List<String> actualSortedUsernames = service.orderUsersByName(users, order).stream()
+                .map(u -> u.getUsername()).collect(Collectors.toList());
+
+        assertAll(() -> {
+            for (int i=0; i<names.length; i++) {
+                assertEquals(expectedSortedUsernames.get(i), actualSortedUsernames.get(i));
+            }
+        });
+    }
+
+    @Test
+    public void whenAskedFollowerCountGiveCorrectCount() {
+        String[] names = {"Beto", "Charlie", "Ana", "Daniela"};
+        List<User> users = new ArrayList<>();
+        int expectedCount = 0;
+        for (int i=0; i<names.length; i++) {
+            users.add(TestUtilsGenerator.getVanillaUser(i, names[i]));
+            Mockito.when(repository.getUser(i)).thenReturn(users.get(i));
+            if (i != 0) {
+                expectedCount ++;
+                service.followUser(i, 0);
+            }
+        }
+
+        int actualCount = service.getFollowerCount(0).getCount();
+
+        assertEquals(expectedCount, actualCount);
     }
 }

@@ -84,8 +84,8 @@ public class PostService implements IPostService {
     public List<PostDTO> orderPostsByDate(List<PostDTO> posts, String order) {
         posts.sort((p1, p2) -> {
             int ans = 0;
-            LocalDate d1 = mapper.postDTOToPost(p1).getDate();
-            LocalDate d2 = mapper.postDTOToPost(p2).getDate();
+            LocalDate d1 = p1.getDate();
+            LocalDate d2 = p2.getDate();
             if (d1.isBefore(d2)) {
                 ans = -1;
             } else if (d2.isBefore(d1)) {

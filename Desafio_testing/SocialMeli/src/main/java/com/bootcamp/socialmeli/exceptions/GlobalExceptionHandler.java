@@ -41,9 +41,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorDTO> MethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        String message = "Method argument not valid\n";
+        String message = "Method argument not valid.";
         message += e.getFieldErrors().stream()
-                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage() + "\n")
+                .map(fieldError -> " " + fieldError.getField() + ": " + fieldError.getDefaultMessage() + ".")
                 .collect(Collectors.joining());
         return new ResponseEntity<>(
                 new ErrorDTO(400, message),

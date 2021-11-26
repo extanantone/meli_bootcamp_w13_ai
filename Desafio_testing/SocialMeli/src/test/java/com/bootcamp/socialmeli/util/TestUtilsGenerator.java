@@ -1,5 +1,7 @@
 package com.bootcamp.socialmeli.util;
 
+import com.bootcamp.socialmeli.dto.PostDTO;
+import com.bootcamp.socialmeli.dto.ProductDTO;
 import com.bootcamp.socialmeli.model.Post;
 import com.bootcamp.socialmeli.model.Product;
 import com.bootcamp.socialmeli.model.User;
@@ -19,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class TestUtilsGenerator {
@@ -90,5 +93,17 @@ public class TestUtilsGenerator {
                 "notes"
         ));
         return postProduct;
+    }
+
+    public static PostDTO getPostDTOWithCustomDate(long id, LocalDate date) {
+        ProductDTO detail = new ProductDTO(
+                id,
+                "productName",
+                "type",
+                "brand",
+                "color",
+                "notes"
+        );
+        return new PostDTO(id, date, 1, 100.0, 1L, detail);
     }
 }

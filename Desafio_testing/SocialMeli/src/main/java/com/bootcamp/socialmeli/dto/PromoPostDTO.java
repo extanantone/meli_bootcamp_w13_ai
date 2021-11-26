@@ -1,7 +1,10 @@
 package com.bootcamp.socialmeli.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +12,7 @@ import lombok.Setter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -21,9 +25,9 @@ public class PromoPostDTO {
     private Long postId;
 
     @NotNull(message = "Can't be empty")
-    @NotBlank(message = "Can't be empty")
-    @Pattern(regexp = "(\\d{2}-\\d{2}-\\d{4})")
-    private String date;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private LocalDate date;
 
     @NotNull
     private Integer category;
