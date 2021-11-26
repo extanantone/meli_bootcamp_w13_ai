@@ -29,7 +29,6 @@ public class PublicacionDTO {
     private Integer idPost;
 
     @NotNull(message = "La fecha no puede estar vacía.")
-    //@Pattern(regexp = "(0[1-9]|1[0-9]|2[0-9]|3[0-1])-(0[1-9]|1[0-2])-([0-9]{4})", message = "La fecha debe cumplir el formato 'dd-MM-yyyy'")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;
 

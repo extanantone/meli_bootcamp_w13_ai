@@ -106,8 +106,9 @@ public class GeneralExceptionHandler {
     public ResponseEntity<ErrorDTO> mensajeHttpNoLegible(HttpMessageNotReadableException ex){
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setTipo(ex.getClass().getSimpleName());
-        //errorDTO.setMensaje("El JSON de la request tiene un formato invalido");
-        errorDTO.setMensaje(ex.getMessage());
+        errorDTO.setMensaje("El JSON de la request tiene un formato invalido");
+        //errorDTO.setMensaje(ex.getMessage());
+
         if(ex.getMostSpecificCause().getClass() == DateTimeParseException.class){
             errorDTO.setMensaje("Fecha de publicación con formato inválido. El formato permitido es 'dd-MM-yyyy'.");
         }
@@ -115,6 +116,7 @@ public class GeneralExceptionHandler {
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 
+    //Excepcion que se genera cuando el RequestParam 'order' no es correcto
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorDTO> validarPathVariables(ConstraintViolationException ex){
         return getErrorResponseEntity(ex.getClass().getSimpleName(), ex.getMessage(), HttpStatus.BAD_REQUEST);
