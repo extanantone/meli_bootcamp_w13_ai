@@ -1,6 +1,7 @@
 package com.bootcamp.socialmeliSprint1.serviceTest;
 
 import com.bootcamp.socialmeliSprint1.dto.response.post.PostOutDTO;
+import com.bootcamp.socialmeliSprint1.dto.response.post.SellersPostsDTO;
 import com.bootcamp.socialmeliSprint1.entitiy.Post;
 import com.bootcamp.socialmeliSprint1.entitiy.Purchaser;
 import com.bootcamp.socialmeliSprint1.exception.sortException.BadSorterParamRequest;
@@ -204,8 +205,6 @@ public class ProductServiceTest {
 
         List<Post> postList = postFactory.getListOfTwoValidPosts();
 
-        List<PostOutDTO> expectedList = postFactory.getCastListPostToPostOutDTO(postList);
-
 //        Act
         Mockito.when(mockRepository.getPurchaser(idPurchaser))
                 .thenReturn(Optional.of(purchaser));
@@ -256,12 +255,117 @@ public class ProductServiceTest {
         }
     }
 
+    /**
+     * Now, This is the test by *Full Incorrect* sortParam
+     * This is successful if the method getSellersPostsSort
+     * returns an exception with "FullIncorrect" param.
+     */
+    @Test
+    void ShouldToSortPostListByIncorrectFullParam() {
+        //        Arrange
+        Integer idPurchaser = 1;
+
+        Purchaser purchaser = new Purchaser(1,"Juan");
+
+        List<Post> postList = postFactory.getListOfTwoValidPosts();
+
+        List<PostOutDTO> expectedList = postFactory.getCastListPostToPostOutDTO(postList);
+
+//        Act
+        Mockito.when(mockRepository.getPurchaser(idPurchaser))
+                .thenReturn(Optional.of(purchaser));
+
+        Mockito.when(mockRepository.getSellersPosts(idPurchaser))
+                .thenReturn(postList);
+
+//        Assert
+
+        try {
+            productService.getSellersPostsSort(idPurchaser, "FailParam");
+            Assertions.fail();
+        }catch (BadSorterParamRequest e){
+            Assertions.assertTrue(true);
+        }
+    }
+
     /***************************************************************************
      *
      * T-0006: Verificar el correcto ordenamiento ascendente y descendente por fecha. (US-0009)
      *
      **************************************************************************/
 
-    
+    /**
+     * Now, This is the test by correct sortParam
+     * This is successful if the method getSellersPostsSort
+     * and sorting of correct form, then never return an
+     * exception with "date_desc" param.
+     */
+    @Test
+    void ShouldToSortPostListByParamDateDescAndThisIsCorrect() {
+        //        Arrange
+        Integer idPurchaser = 1;
+
+        Purchaser purchaser = new Purchaser(1,"Juan");
+
+        List<Post> postList = postFactory.getListOfTwoValidPosts();
+
+        List<PostOutDTO> expectedList = postFactory.getCastListPostToPostOutDTO(postList);
+
+//        Act
+        Mockito.when(mockRepository.getPurchaser(idPurchaser))
+                .thenReturn(Optional.of(purchaser));
+
+        Mockito.when(mockRepository.getSellersPosts(idPurchaser))
+                .thenReturn(postList);
+
+//        Assert
+
+        SellersPostsDTO currentListTest = productService.getSellersPostsSort(idPurchaser, "date_desc");
+
+        Assertions.assertAll(
+                ()-> Assertions.assertEquals(expectedList.get(0).getPostId(),
+                        currentListTest.getPosts().get(0).getPostId()),
+
+                () -> Assertions.assertEquals(expectedList.get(1).getPostId(),
+                        currentListTest.getPosts().get(1).getPostId())
+                );
+    }
+
+    /**
+     * Now, This is the test by correct sortParam
+     * This is successful if the method getSellersPostsSort
+     * and sorting of correct form, then never return an
+     * exception with "date_asc" param.
+     */
+    @Test
+    void ShouldToSortPostListByParamDateAscAndThisIsCorrect() {
+        //        Arrange
+        Integer idPurchaser = 1;
+
+        Purchaser purchaser = new Purchaser(1,"Juan");
+
+        List<Post> postList = postFactory.getListOfTwoValidPostsReverse();
+
+        List<PostOutDTO> expectedList = postFactory.getCastListPostToPostOutDTO(postList);
+
+//        Act
+        Mockito.when(mockRepository.getPurchaser(idPurchaser))
+                .thenReturn(Optional.of(purchaser));
+
+        Mockito.when(mockRepository.getSellersPosts(idPurchaser))
+                .thenReturn(postList);
+
+//        Assert
+
+        SellersPostsDTO currentListTest = productService.getSellersPostsSort(idPurchaser, "date_asc");
+
+        Assertions.assertAll(
+                ()-> Assertions.assertEquals(expectedList.get(0).getPostId(),
+                        currentListTest.getPosts().get(0).getPostId()),
+
+                () -> Assertions.assertEquals(expectedList.get(1).getPostId(),
+                        currentListTest.getPosts().get(1).getPostId())
+        );
+    }
 
 }

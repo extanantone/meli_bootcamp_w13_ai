@@ -20,13 +20,6 @@ public class PostFactory {
 
         List<Post> posts = new ArrayList<>();
 
-
-//        public Post(int postId, LocalDate date, Product detail, int category, double price) {
-
-
-       /* private int productId;
-        private String productName, type, brand, color, notes;*/
-
         Product product = new Product(1,"Aproducto", "type1"
                 ,"brand1","blue","nothing");
 
@@ -38,6 +31,25 @@ public class PostFactory {
 
         posts.add(post);
         posts.add(post2);
+        return posts;
+    }
+
+    public List<Post> getListOfTwoValidPostsReverse(){
+
+        List<Post> posts = new ArrayList<>();
+
+        Product product = new Product(1,"Aproducto", "type1"
+                ,"brand1","blue","nothing");
+
+        Product product2 = new Product(1,"Aproducto", "type1",
+                "brand1","blue","nothing");
+
+        Post post = new Post(1,LocalDate.now().minusDays(4),product,1,100);
+        Post post2 = new Post(2,LocalDate.now().minusDays(4),product,1,100);
+
+        posts.add(post2);
+        posts.add(post);
+
         return posts;
     }
 
