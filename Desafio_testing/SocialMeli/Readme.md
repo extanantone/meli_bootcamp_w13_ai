@@ -2,6 +2,8 @@
 
 #### Pablo Guayta - Software developer.
 
+####26/11/2021: se agregan consideraciones para Sprint 2 en el sector "Consideraciones"
+
 ## Introduccion
 
 Este repositorio cuenta con la resolución del desafío 1 del Bootcamp.
@@ -44,6 +46,31 @@ Otra estrategia hubiera sido almacenar otro HashMap para los followers de cada u
   - serviceToController: todos los DTO que son enviados desde el service al controlador para responder.
   
 - Para las publicaciones, cree una clase Post y una clase PromoPost que hereda de Post. En mi repository, todas las publicaciones son almacenadas en el mismo Map, ya que esto es permitido por el polimorfismo. Por lo tanto, endpoints como "Obtener publicaciones de los usuarios que sigo de no mas de dos semanas de antiguedad" tambien incluye las publicaciones con promocion.
+
+-------------------------
+###Sprint 2:
+
+- Los siguientes tests fallan al momento de correr la ejecución:
+
+- testThatPassingANullAlphabetOrderThrowsARunTimeException() (En FollowerRepositoryTest)
+
+- testToThrowARunTimeExceptionByPassingANullOrderForPosts()  (En PostRepositoryTest)
+
+Esto se debe a que se valida que si, el parametro "order" es ingresado con un "Null" el sistema debería arrojar una excepcion. Sin embargo, por como arme el sistema, valida que sea null y tiene un ordenamiento por defecto (en el caso de las fechas de los post.). Para el caso de los username, si no se ingresa un "order", se deja el valor de ordenamiento por defecto (sin ordenar).
+
+
+En cuanto a los siguientes test de integración: 
+
+- testToBringPromoPostsListFromUserWithAtLeastOneProduct() (En IntegrationTestPromoPostController)
+
+- testFollowUsersGivenAValidFollowerIdAndFollowedId()      (En IntegrationTestFollowerController)
+
+Estos test de integracion pasan las pruebas, siempre y cuando se ejecuten individualmente. Si se ejecutan corriendo todos los tests en la carpeta "java" (para ver el coverage o no), al ejecutarse otros test de integracion detectan alguna excepcion. Esto es porque, para el primer caso, se suman mas promo posts del usuario, afectando el unit test. En el segundo caso, detecta una excepción porque en otro test de integracion se realiza un follow entre esos mismos usuarios.
+
+Para esta entrega cambié los valores, para que los tests den bien, pero me gustaria una revision para saber si existe un metodo como @BeforeEach para integración, para poder validar estos casos.
+
+
+
 
 
 ## Estructura del proyecto

@@ -40,7 +40,7 @@ public class IntegrationTestFollowerController {
 //US 0001
     @Test
     public void testFollowUsersGivenAValidFollowerIdAndFollowedId() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{user_id}/follow/{user_id_to_follow}",1,3))
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{user_id}/follow/{user_id_to_follow}",2,4))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
