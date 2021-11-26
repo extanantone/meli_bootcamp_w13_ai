@@ -19,13 +19,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PublicacionDTO {
-    @NotNull(message = "El ID no puede estar vacío.")
-    @Positive(message = "El ID debe ser mayor a cero.")
+    @NotNull(message = "El user_id no puede estar vacío.")
+    @Positive(message = "El user_id debe ser mayor a cero.")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer userId;
 
-    @NotNull(message = "El ID no puede estar vacío.")
-    @Positive(message = "El ID debe ser mayor a cero.")
+    @NotNull(message = "El id_post no puede estar vacío.")
+    @Positive(message = "El id_post debe ser mayor a cero.")
     private Integer idPost;
 
     @NotNull(message = "La fecha no puede estar vacía.")

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.ConstraintViolationException;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,8 +75,7 @@ public class GeneralExceptionHandler {
         return getErrorResponseEntity("NullPointerException", "Error en la request", HttpStatus.BAD_REQUEST);
     }
 
-    //TODO usar metodo
-    private ResponseEntity<?> getErrorResponseEntity(String tipo, String msj, HttpStatus status){
+    private ResponseEntity<ErrorDTO> getErrorResponseEntity(String tipo, String msj, HttpStatus status){
         ErrorDTO error = new ErrorDTO();
         error.setTipo(tipo);
         error.setMensaje(msj);
@@ -106,16 +106,18 @@ public class GeneralExceptionHandler {
     public ResponseEntity<ErrorDTO> mensajeHttpNoLegible(HttpMessageNotReadableException ex){
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setTipo(ex.getClass().getSimpleName());
-        errorDTO.setMensaje("El JSON de la request tiene un formato invalido");
+        //errorDTO.setMensaje("El JSON de la request tiene un formato invalido");
+        errorDTO.setMensaje(ex.getMessage());
+        if(ex.getMostSpecificCause().getClass() == DateTimeParseException.class){
+            errorDTO.setMensaje("Fecha de publicación con formato inválido. El formato permitido es 'dd-MM-yyyy'.");
+        }
+
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorDTO> validarPathVariables(ConstraintViolationException ex){
-        ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setTipo(ex.getClass().getSimpleName());
-        errorDTO.setMensaje(ex.getMessage());
-        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+        return getErrorResponseEntity(ex.getClass().getSimpleName(), ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }
