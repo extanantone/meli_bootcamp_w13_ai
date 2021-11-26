@@ -53,13 +53,13 @@ public class SocialMeliServiceTest {
         samsungFit2 = new Producto(4, "Samsung Galaxy Fit 2", "Smartbands and Smartwatches", "Samsung", "Black or Grey", "con Bluetooth, pantalla AMOLED, bateria 15 dias de duracion");
         pubSamsungFit2 = new Publicacion(7, LocalDate.of(2021, 11,20), 444.0, samsungFit2, 132);
         noteDell = new Producto(7, "Notebook Dell", "Notebook", "Dell Inspiron 3505","Grey","AMD Ryzen 5, pantalla 15.6, 8GB de RAM, 256GB SSD, W10 Home");
-        pubNoteDell = new Publicacion(9, LocalDate.of(2010, 11, 15), 599.5, noteDell, 101);
+        pubNoteDell = new Publicacion(9, LocalDate.of(2021, 11, 15), 599.5, noteDell, 101);
         zapasNike = new Producto(11,"Zapatillas deportivas","Running", "Nike", "Black and White","Ideales para salir a correr");
         pubZapasNike = new Publicacion(11, LocalDate.of(2021,11,12), 255.5, zapasNike, 112);
         noteLenovo = new Producto(4, "Notebook Lenovo","Notebook","Lenovo IdeaPad","Blue and Grey","Intel Core I3, pantalla táctil 15.6, 8GB de RAM, 256GB SSD");
         pubNoteLenovo = new Publicacion(15, LocalDate.of(2021,11,13),780.2, noteLenovo,101);
         pendriveSanDisk = new Producto(10, "Pendrive SanDisk", "Pendrives", "SanDisk Ultra Flair", "Grey","capacidad 16GB, 3.0");
-        pubSanDisk = new Publicacion(6, LocalDate.of(2021, 12, 25), 100.2, pendriveSanDisk, 99);
+        pubSanDisk = new Publicacion(6, LocalDate.of(2021, 10, 5), 100.2, pendriveSanDisk, 99);
 
         //vinculos vendedores - publicaciones
         sellerEdwin.getPublicaciones().add(pubCamisetaBoca);
@@ -92,7 +92,7 @@ public class SocialMeliServiceTest {
                 () -> Assertions.assertEquals(msjExpected.getMensaje(), msjCurrent.getMensaje())
         );
 
-        verify(mockRepository, atLeast(2)).buscarUsuario(any());
+        verify(mockRepository, times(2)).buscarUsuario(anyInt());
     }
 
     @Test
@@ -106,7 +106,7 @@ public class SocialMeliServiceTest {
         when(mockRepository.buscarUsuario(idVendedor)).thenReturn(sellerEdwin);
         Assertions.assertThrows(UserNotFoundException.class, () -> this.service.followVendedor(idSeguidor,idVendedor));
 
-        verify(mockRepository, atLeast(2)).buscarUsuario(any());
+        verify(mockRepository, atLeast(2)).buscarUsuario(anyInt());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class SocialMeliServiceTest {
         when(mockRepository.buscarUsuario(idVendedor)).thenReturn(null);
         Assertions.assertThrows(UserNotFoundException.class, () -> this.service.followVendedor(idSeguidor,idVendedor));
 
-        verify(mockRepository, atLeast(2)).buscarUsuario(any());
+        verify(mockRepository, atLeast(2)).buscarUsuario(anyInt());
     }
 
     @Test
@@ -136,7 +136,7 @@ public class SocialMeliServiceTest {
         when(mockRepository.buscarUsuario(idVendedor)).thenReturn(sellerEdwin);
         Assertions.assertThrows(AlreadyFollowException.class, () -> this.service.followVendedor(idSeguidor, idVendedor));
 
-        verify(mockRepository, atLeast(2)).buscarUsuario(any());
+        verify(mockRepository, atLeast(2)).buscarUsuario(anyInt());
     }
 
     @Test
@@ -150,7 +150,7 @@ public class SocialMeliServiceTest {
         when(mockRepository.buscarUsuario(idSeguidor2)).thenReturn(userNico);
         Assertions.assertThrows(UserNotSellerException.class, () -> this.service.followVendedor(idSeguidor1, idSeguidor2));
 
-        verify(mockRepository, atLeast(2)).buscarUsuario(any());
+        verify(mockRepository, atLeast(2)).buscarUsuario(anyInt());
     }
 
     @Test
@@ -187,7 +187,7 @@ public class SocialMeliServiceTest {
                 () -> Assertions.assertEquals(msjExpected.getMensaje(), msjCurrent.getMensaje())
         );
 
-        verify(mockRepository, atLeast(2)).buscarUsuario(any());
+        verify(mockRepository, atLeast(2)).buscarUsuario(anyInt());
     }
 
     @Test
@@ -201,7 +201,7 @@ public class SocialMeliServiceTest {
         when(mockRepository.buscarUsuario(idVendedor)).thenReturn(sellerEdwin);
         Assertions.assertThrows(UserNotFoundException.class, () -> this.service.unfollowVendedor(idSeguidor,idVendedor));
 
-        verify(mockRepository, atLeast(2)).buscarUsuario(any());
+        verify(mockRepository, atLeast(2)).buscarUsuario(anyInt());
     }
 
     @Test
@@ -215,7 +215,7 @@ public class SocialMeliServiceTest {
         when(mockRepository.buscarUsuario(idVendedor)).thenReturn(null);
         Assertions.assertThrows(UserNotFoundException.class, () -> this.service.unfollowVendedor(idSeguidor,idVendedor));
 
-        verify(mockRepository, atLeast(2)).buscarUsuario(any());
+        verify(mockRepository, atLeast(2)).buscarUsuario(anyInt());
     }
 
     @Test
@@ -229,7 +229,7 @@ public class SocialMeliServiceTest {
         when(mockRepository.buscarUsuario(idVendedor)).thenReturn(sellerEdwin);
         Assertions.assertThrows(NotFollowException.class, () -> this.service.unfollowVendedor(idSeguidor, idVendedor));
 
-        verify(mockRepository, atLeast(2)).buscarUsuario(any());
+        verify(mockRepository, atLeast(2)).buscarUsuario(anyInt());
     }
 
     @Test
@@ -243,8 +243,6 @@ public class SocialMeliServiceTest {
 
         verify(mockRepository, atLeast(2)).buscarUsuario(idSeguidor);
     }
-
-    //------------------------
 
     @Test
     @DisplayName("Test seguidores ordenados por nombre ascendente")
@@ -269,6 +267,7 @@ public class SocialMeliServiceTest {
                             Assertions.assertTrue(nameMenor.compareTo(nameMayor) <= 0);
                 }}
         );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idVendedor);
     }
 
     @Test
@@ -294,6 +293,7 @@ public class SocialMeliServiceTest {
                     Assertions.assertTrue(nameMenor.compareTo(nameMayor) >= 0);
                 }}
         );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idVendedor);
     }
 
     @Test
@@ -309,6 +309,7 @@ public class SocialMeliServiceTest {
 
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> service.getSeguidores(idVendedor, orderInvalid));
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idVendedor);
     }
 
     @Test
@@ -324,6 +325,29 @@ public class SocialMeliServiceTest {
 
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> service.getSeguidores(idVendedor, orderNull));
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idVendedor);
+    }
+
+    @Test
+    @DisplayName("Test seguidores ordenados con order valido")
+    void getFollowersFromExistingSellerWithOrderValid(){
+        //Arrange
+        Integer idVendedor = sellerLiso.getUserId();
+        String order = "name_desc";
+
+        sellerLiso.getSeguidores().addAll(List.of(userFrank, userAlan, userChelo, userCali, userFrank));
+
+        //Act
+        when(mockRepository.buscarUsuario(idVendedor)).thenReturn(sellerLiso);
+        SeguidoresDTO seguidoresCurrent = service.getSeguidores(idVendedor, order);
+
+        //Assert
+        //se testea que no se lance una excepcion y que el tipo devuelto sea el correcto
+        Assertions.assertAll(
+                () -> Assertions.assertNotNull(seguidoresCurrent),
+                () -> Assertions.assertEquals(SeguidoresDTO.class, seguidoresCurrent.getClass())
+        );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idVendedor);
     }
 
     @Test
@@ -348,6 +372,7 @@ public class SocialMeliServiceTest {
                     Assertions.assertTrue(nameMenor.compareTo(nameMayor) <= 0);
                 }}
         );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
     }
 
     @Test
@@ -372,6 +397,7 @@ public class SocialMeliServiceTest {
                     Assertions.assertTrue(nameMenor.compareTo(nameMayor) >= 0);
                 }}
         );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
     }
 
     @Test
@@ -387,6 +413,7 @@ public class SocialMeliServiceTest {
 
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> service.getVendedoresSeguidos(idSeguidor, orderInvalid));
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
     }
 
     @Test
@@ -402,6 +429,28 @@ public class SocialMeliServiceTest {
 
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> service.getVendedoresSeguidos(idSeguidor, orderNull));
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
+    }
+
+    @Test
+    @DisplayName("Test vendedores seguidos con order valido")
+    void getFollowedFromExistingUserWithOrderValid(){
+        //Arrange
+        Integer idSeguidor = userAlan.getUserId();
+        String order = "name_asc";
+        userAlan.getVendedoresSeguidos().addAll(List.of(sellerEdwin, sellerToto, sellerLiso, sellerToto));
+
+        //Act
+        when(mockRepository.buscarUsuario(idSeguidor)).thenReturn(userAlan);
+        SeguidosDTO seguidosCurrent = service.getVendedoresSeguidos(idSeguidor, order);
+
+        //Assert
+        //se testea que no se lance una excepcion y que el tipo devuelto sea el correcto
+        Assertions.assertAll(
+                () -> Assertions.assertNotNull(seguidosCurrent),
+                () -> Assertions.assertSame(SeguidosDTO.class, seguidosCurrent.getClass())
+        );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
     }
 
     @Test
@@ -420,6 +469,7 @@ public class SocialMeliServiceTest {
             () -> Assertions.assertEquals(sellerLiso.getUserName(), cantSeguidoresCurrent.getUserName()),
             () -> Assertions.assertEquals(4, cantSeguidoresCurrent.getFollowersCount())
         );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idVendedor);
     }
 
     @Test
@@ -443,6 +493,7 @@ public class SocialMeliServiceTest {
                         Assertions.assertTrue(fechaMenor.compareTo(fechaMayor) <= 0);
                 }}
         );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
     }
 
     @Test
@@ -466,6 +517,7 @@ public class SocialMeliServiceTest {
                     Assertions.assertTrue(fechaMenor.compareTo(fechaMayor) >= 0);
                 }}
         );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
     }
 
     @Test
@@ -480,6 +532,7 @@ public class SocialMeliServiceTest {
 
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> service.getPublicacionesSeguidos(idSeguidor, orderInvalid));
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
     }
 
     @Test
@@ -494,6 +547,7 @@ public class SocialMeliServiceTest {
 
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> service.getPublicacionesSeguidos(idSeguidor, orderNull));
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
     }
 
     //Verifica que la consulta de publicaciones sean de las últimas dos semanas.
@@ -502,6 +556,12 @@ public class SocialMeliServiceTest {
         //Arrange
         Integer idSeguidor = userFrank.getUserId();
 
+        sellerEdwin.getPublicaciones().get(0).setDate(LocalDate.now());
+        sellerLiso.getPublicaciones().get(0).setDate(LocalDate.of(2010, 11, 15));
+        sellerLiso.getPublicaciones().get(1).setDate(LocalDate.of(2021,11,12));
+        sellerToto.getPublicaciones().get(0).setDate(LocalDate.of(2021,11,13));
+        sellerToto.getPublicaciones().get(1).setDate(LocalDate.of(2021, 11,20));
+        sellerToto.getPublicaciones().get(2).setDate(LocalDate.of(2021, 12, 25));
         userFrank.getVendedoresSeguidos().addAll(List.of(sellerLiso, sellerEdwin, sellerToto));
 
         //Act
@@ -519,11 +579,10 @@ public class SocialMeliServiceTest {
                     Assertions.assertTrue(fecha.isAfter(fechaLimite));
                     //la fecha no puede ser del futuro
                     Assertions.assertTrue(fecha.compareTo(LocalDate.now()) <= 0);
-                }},
-                () -> Assertions.assertEquals(3, publicacionesCurrent.getPosts().size())
+                }}
         );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
     }
 
-
-
+    //TODO ver si falta el 3 o el 5
 }

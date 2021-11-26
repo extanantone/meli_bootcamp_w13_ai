@@ -59,7 +59,7 @@ public class Mapper {
         return publicacionesDTO;
     }
 
-    public PublicacionDTO publicacionToPublicacionDTO(Publicacion publicacion){
+    private PublicacionDTO publicacionToPublicacionDTO(Publicacion publicacion){
         PublicacionDTO publicacionDTO = new PublicacionDTO();
 
         publicacionDTO.setIdPost(publicacion.getIdPost());

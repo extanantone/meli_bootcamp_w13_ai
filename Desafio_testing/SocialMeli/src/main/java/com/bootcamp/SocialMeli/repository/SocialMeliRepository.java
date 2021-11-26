@@ -10,6 +10,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -22,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 @Repository
 public class SocialMeliRepository implements ISocialMeliRepository{
@@ -30,8 +32,17 @@ public class SocialMeliRepository implements ISocialMeliRepository{
     private Map<Integer, Publicacion> publicaciones;
 
     private final String jsonSource = ""; // develop/
+    private String SCOPE;
 
     public SocialMeliRepository() {
+        Properties properties =  new Properties();
+        try {
+            properties.load(new ClassPathResource("application.properties").getInputStream());
+            this.SCOPE = properties.getProperty("api.scope");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         this.usuarios = new HashMap<>();
         List<Usuario> listaUsuarios = cargarUsuarios();
         //se cargan los usuarios del json al Map
