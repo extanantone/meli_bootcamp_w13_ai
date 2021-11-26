@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -22,9 +24,8 @@ public class UserController {
     //TODO modificar para que no quede la variable fea
 
     @PostMapping("/{user_id}/follow/{user_id_to_follow}")
-    public ResponseEntity<FollowDTO> followToUser(@PathVariable int user_id,
-                                                  @PathVariable int user_id_to_follow)
-            throws NotFoundException, FollowException {
+    public ResponseEntity<FollowDTO> followToUser(@PathVariable @Valid int user_id,
+                                                  @PathVariable @Valid int user_id_to_follow) {
         FollowDTO follow = socialService.followToUser(new FollowDTO(user_id,user_id_to_follow));
         if(follow!=null) return new ResponseEntity<>(follow,HttpStatus.OK);
         return new ResponseEntity<>(follow,HttpStatus.BAD_REQUEST);
@@ -60,4 +61,5 @@ public class UserController {
     public FollowersDTO sortUsersFolloweds(@PathVariable Integer user_id, @RequestParam(defaultValue = "name_asc") String order){
         return socialService.orderingUsersFolloweds(user_id,order);
     }
+
 }
