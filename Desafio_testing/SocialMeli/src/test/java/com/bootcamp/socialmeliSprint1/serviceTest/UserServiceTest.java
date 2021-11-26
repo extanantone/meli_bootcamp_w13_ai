@@ -1,6 +1,7 @@
 package com.bootcamp.socialmeliSprint1.serviceTest;
 
 import com.bootcamp.socialmeliSprint1.dto.response.user.BasicUserInfoDTO;
+import com.bootcamp.socialmeliSprint1.dto.response.user.SellerFollowersInfoDTO;
 import com.bootcamp.socialmeliSprint1.dto.response.user.SellerFollowersListDTO;
 import com.bootcamp.socialmeliSprint1.entitiy.Purchaser;
 import com.bootcamp.socialmeliSprint1.entitiy.Seller;
@@ -789,4 +790,74 @@ public class UserServiceTest {
 
     }
 
+
+    /***************************************************************************
+     *
+     * T-0007: Verificar que la cantidad de seguidores
+     * de un determinado usuario sea correcta. (US-0002)
+     *
+     **************************************************************************/
+
+    /**
+     * This test is successfull if the number os followers
+     * after of to call the getSellerFollowersCount method
+     * is equals to expected list with 2 followers.
+     */
+    @Test
+    void ShouldGetToListOfFollowersCorrectInfo() {
+
+//        Arrange
+        Integer sellerId = 1;
+
+        Integer expectedFollowers = 2;
+
+        List<Integer> followers = new ArrayList<>();
+        followers.add(2);
+        followers.add(3);
+
+        //seller with two followers
+        Seller seller = new Seller(1,"seller");
+        seller.setFollowers(followers);
+
+//        Act
+
+        Mockito.when(mockRepository.getSeller(sellerId))
+                .thenReturn(Optional.of(seller));
+
+//        Assert
+
+        SellerFollowersInfoDTO current = userService.getSellerFollowersCount(sellerId);
+
+        Assertions.assertEquals(2,current.getFollowersCount());
+
+    }
+
+
+    /**
+     * In this test, the seller user dont exist.
+     * the test is successful if the getSellerFollowersCount
+     * throws an NotFoundUserException
+     */
+    @Test
+    void ShouldGetToListOfFollowersInCorrectInfo() {
+
+//        Arrange
+        Integer sellerId = 1;
+
+//        Act
+
+        Mockito.when(mockRepository.getSeller(sellerId))
+                .thenReturn(Optional.empty());
+
+//        Assert
+
+        try {
+            userService.getSellerFollowersCount(sellerId);
+            Assertions.fail();
+        }catch (NotFoundUserException e){
+            Assertions.assertTrue(true);
+        }
+
+    }
+    
 }
