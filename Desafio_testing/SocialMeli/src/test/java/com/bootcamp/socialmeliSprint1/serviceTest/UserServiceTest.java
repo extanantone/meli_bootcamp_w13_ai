@@ -563,6 +563,99 @@ public class UserServiceTest {
     }
 
 
+    /**
+     * This test is Successful if throws a BadSorterParamRequest
+     * because sends a bad param. (naame_desc)
+     */
+    @Test
+    void ShouldNotToSortFormBecauseIncorrectParagramName() {
+
+//        Arrange
+
+        Integer sellerId = 3;
+
+        List<Purchaser> followers = new ArrayList<>();
+
+        Purchaser purchaser1 = new Purchaser(1,"Juan");
+
+        Purchaser purchaser2 = new Purchaser(2,"Pedro");
+
+        Seller seller = new Seller(3, "Seller1");
+
+        followers.add(purchaser1);
+        followers.add(purchaser2);
+
+        List<Integer> followersSeller = new ArrayList<>();
+        followersSeller.add(1);
+        followersSeller.add(2);
+
+        seller.setFollowers(followersSeller);
+
+//        Act
+
+        Mockito.when(mockRepository.getSeller(sellerId))
+                .thenReturn(Optional.of(seller));
+        Mockito.when(mockRepository.getSellerFollowers(sellerId))
+                .thenReturn(followers);
+
+//        Assert
+
+        try {
+            userService.getSellerFollowersListSort(sellerId, "naame_desc");
+            fail();
+        }catch (BadSorterParamRequest e){
+            assertTrue(true);
+        }
+
+    }
+
+    /**
+     * This test is Successful if throws a BadSorterParamRequest
+     * because sends a bad param. (ErrorParam)
+     */
+    @Test
+    void ShouldNotToSortFormBecauseIncorrectFullParagram() {
+
+//        Arrange
+
+        Integer sellerId = 3;
+
+        List<Purchaser> followers = new ArrayList<>();
+
+        Purchaser purchaser1 = new Purchaser(1,"Juan");
+
+        Purchaser purchaser2 = new Purchaser(2,"Pedro");
+
+        Seller seller = new Seller(3, "Seller1");
+
+        followers.add(purchaser1);
+        followers.add(purchaser2);
+
+        List<Integer> followersSeller = new ArrayList<>();
+        followersSeller.add(1);
+        followersSeller.add(2);
+
+        seller.setFollowers(followersSeller);
+
+//        Act
+
+        Mockito.when(mockRepository.getSeller(sellerId))
+                .thenReturn(Optional.of(seller));
+        Mockito.when(mockRepository.getSellerFollowers(sellerId))
+                .thenReturn(followers);
+
+//        Assert
+
+        try {
+            userService.getSellerFollowersListSort(sellerId, "errorParam");
+            fail();
+        }catch (BadSorterParamRequest e){
+            assertTrue(true);
+        }
+
+    }
+
+
     /***************************************************************************
      *
      * T-0004: Verificar el correcto ordenamiento ascendente y descendente por nombre. (US-0008)
