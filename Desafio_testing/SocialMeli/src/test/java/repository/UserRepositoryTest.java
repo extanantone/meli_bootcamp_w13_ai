@@ -1,9 +1,6 @@
 package repository;
 
-import com.SocialMeli.SocialMeli.dto.FollowersCountDTO;
-import com.SocialMeli.SocialMeli.dto.PostListDTO;
-import com.SocialMeli.SocialMeli.dto.SellersDTO;
-import com.SocialMeli.SocialMeli.dto.UserDTO;
+import com.SocialMeli.SocialMeli.dto.*;
 import com.SocialMeli.SocialMeli.repository.UserRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.Assertions;
@@ -16,6 +13,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.hasProperty;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -226,6 +225,49 @@ public class UserRepositoryTest {
 
         // Assert
         Assertions.assertEquals(3, sellersDTO.getFollowers_count());
+
+    }
+
+    @Test
+    @DisplayName("Verificando los últimos posts de un vendedor de las últimas 2 semanas")
+    void checkingLastDatePostsByUser(){
+        // Arrange
+        String order = "date_asc";
+        Integer user_id = 1;
+        UserDTO userDTO = new UserDTO(null, "Camilo");
+        repo.createSellers(userDTO);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+        PostUserDTO postUserDTO = new PostUserDTO();
+        postUserDTO.setUser_id(user_id);
+        postUserDTO.setDate(LocalDate.parse("15/11/2021",formatter));
+        postUserDTO.setId_post(1);
+        postUserDTO.setCategory(1);
+        postUserDTO.setPrice(123.89);
+        repo.createPost(postUserDTO);
+
+        PostUserDTO postUserDTO2 = new PostUserDTO();
+        postUserDTO2.setUser_id(user_id);
+        postUserDTO2.setDate(LocalDate.parse("25/11/2021",formatter));
+        postUserDTO2.setId_post(1);
+        postUserDTO2.setCategory(1);
+        postUserDTO2.setPrice(123.89);
+        repo.createPost(postUserDTO2);
+
+        PostUserDTO postUserDTO3 = new PostUserDTO();
+        postUserDTO3.setUser_id(user_id);
+        postUserDTO3.setDate(LocalDate.parse("25/10/2021",formatter));
+        postUserDTO3.setId_post(1);
+        postUserDTO3.setCategory(1);
+        postUserDTO3.setPrice(123.89);
+        repo.createPost(postUserDTO3);
+
+        // Act
+        PostListDTO postListDTO = repo.postList(user_id, order);
+
+        // Assert
+        //Assertions.assertNotNull(postListDTO);
+        Assertions.assertEquals(2,postListDTO.getPosts().size());
 
     }
 

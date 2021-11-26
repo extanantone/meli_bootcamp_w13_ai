@@ -129,4 +129,19 @@ public class UserControllerTest {
         verify(serviceMock, atLeastOnce()).followersCount(user_id);
 
     }
+
+    @Test
+    @DisplayName("Verificando los últimos posts de un vendedor de las últimas 2 semanas")
+    void checkingLastDatePostsByUser(){
+        // Arrange
+        Integer user_id = 1;
+        String order = "date_desc";
+
+        // Act
+        controller.postList(user_id);
+
+        // Assert
+        verify(serviceMock, atLeastOnce()).postList(user_id,order);
+
+    }
 }
