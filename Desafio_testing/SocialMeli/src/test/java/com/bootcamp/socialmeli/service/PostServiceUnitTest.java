@@ -2,13 +2,11 @@ package com.bootcamp.socialmeli.service;
 
 import com.bootcamp.socialmeli.dto.PostDTO;
 import com.bootcamp.socialmeli.mapper.Mapper;
-import com.bootcamp.socialmeli.repository.IUserRepository;
 import com.bootcamp.socialmeli.util.TestUtilsGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -21,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class PostServiceUnitTest {
+
 
     Mapper mapper;
 
@@ -35,7 +34,7 @@ class PostServiceUnitTest {
     @Test
     public void whenInvalidOrderThrowException() {
         LocalDate[] dates = {
-                LocalDate.of(2020, 2,1 ),
+                LocalDate.of(2020, 2, 1),
                 LocalDate.of(2020, 3, 1),
                 LocalDate.of(2020, 1, 1),
                 LocalDate.of(2020, 4, 1)
@@ -55,7 +54,7 @@ class PostServiceUnitTest {
     @Test
     public void whenValidAscOrderSortPosts() {
         LocalDate[] dates = {
-                LocalDate.of(2020, 2,1 ),
+                LocalDate.of(2020, 2, 1),
                 LocalDate.of(2020, 3, 1),
                 LocalDate.of(2020, 1, 1),
                 LocalDate.of(2020, 4, 1)

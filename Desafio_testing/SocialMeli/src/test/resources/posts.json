@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": 1,
+    "date": "05-01-2021",
+    "productId": 1,
+    "category": 1,
+    "price": 1800.5,
+    "userId": 2,
+    "hasPromo": true,
+    "discount": 0.2
+  },
+  {
+    "id": 2,
+    "date": "10-11-2021",
+    "productId": 2,
+    "category": 1,
+    "price": 2800.0,
+    "userId": 2,
+    "hasPromo": true,
+    "discount": 0.1
+  },
+  {
+    "id": 3,
+    "date": "11-11-2021",
+    "productId": 3,
+    "category": 2,
+    "price": 3550.0,
+    "userId": 2,
+    "hasPromo": false,
+    "discount": 0.0
+  }
+]

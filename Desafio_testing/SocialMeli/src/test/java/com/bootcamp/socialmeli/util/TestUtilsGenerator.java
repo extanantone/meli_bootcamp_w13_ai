@@ -5,24 +5,16 @@ import com.bootcamp.socialmeli.dto.ProductDTO;
 import com.bootcamp.socialmeli.model.Post;
 import com.bootcamp.socialmeli.model.Product;
 import com.bootcamp.socialmeli.model.User;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 public class TestUtilsGenerator {
 

@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "id": 1,
+    "name": "Silla Gamer",
+    "type": "Gamer",
+    "brand": "Racer",
+    "color": "Red & Black",
+    "notes": "Special Edition"
+  },
+  {
+    "id": 2,
+    "name": "Bicicleta montana",
+    "type": "Profesional",
+    "brand": "Ducati",
+    "color": "Azul",
+    "notes": ""
+  },
+  {
+    "id": 3,
+    "name": "Escritorio trabajo",
+    "type": "Madera",
+    "brand": "Escritorios Lozano",
+    "color": "Negro",
+    "notes": "Para ensamblar"
+  }
+]
