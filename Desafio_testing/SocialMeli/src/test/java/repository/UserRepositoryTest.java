@@ -132,7 +132,7 @@ public class UserRepositoryTest {
 
 
     @Test
-    @DisplayName("Verificar ordenamiento alfabetico de los followers")
+    @DisplayName("Verificar ordenamiento alfabetico de los followers ascendentemente")
     void checkingSortedAlphaAscSellers(){
         // Arrange
         String order = "name_asc";
@@ -142,7 +142,6 @@ public class UserRepositoryTest {
         UserDTO follower1 = new UserDTO(null, "Vanesa");
         repo.createBuyers(follower1);
         follower1.setUser_id(1);
-        UserDTO followerTest = new UserDTO(1, "Vanesa");
         UserDTO follower2 = new UserDTO(null, "Ana");
         repo.createBuyers(follower2);
         follower2.setUser_id(2);
@@ -171,6 +170,43 @@ public class UserRepositoryTest {
         //Assertions.assertTrue(userDTOList.containsAll(userDTOList));
         //assertThat(userDTOList, hasItems(followerTest));
 
+
+    }
+
+
+    @Test
+    @DisplayName("Verificar ordenamiento alfabetico de los followers descendentemente")
+    void checkingSortedAlphaDescSellers(){
+        // Arrange
+        String order = "name_desc";
+        Integer user_id = 1;
+        UserDTO userDTO = new UserDTO(null, "Camilo");
+        repo.createSellers(userDTO);
+        UserDTO follower1 = new UserDTO(null, "Vanesa");
+        repo.createBuyers(follower1);
+        follower1.setUser_id(1);
+        UserDTO follower2 = new UserDTO(null, "Ana");
+        repo.createBuyers(follower2);
+        follower2.setUser_id(2);
+        UserDTO follower3 = new UserDTO(null, "Martín");
+        repo.createBuyers(follower3);
+        follower3.setUser_id(3);
+
+        repo.follow(1,1);
+        repo.follow(2,1);
+        repo.follow(3,1);
+
+        List<UserDTO> userDTOList = new ArrayList<>();
+        userDTOList.add(follower1);
+        userDTOList.add(follower3);
+        userDTOList.add(follower2);
+
+
+        // Act
+        SellersDTO sellersDTO = repo.followersListSorted(user_id, order);
+
+        // Assert
+        Assertions.assertEquals(userDTOList, sellersDTO.getFollowers());
 
     }
 
