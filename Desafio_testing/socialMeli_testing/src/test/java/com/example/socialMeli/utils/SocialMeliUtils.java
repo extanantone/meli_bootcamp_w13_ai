@@ -74,4 +74,12 @@ public class SocialMeliUtils {
         fechas.add(date1);
         return fechas;
     }
+    public  Publicacion postQuemado(){
+        String date2= "20-11-2021";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+        LocalDate fecha2 = LocalDate.parse(date2, formatter);
+        Producto prod = new Producto(1,"silla","gamer", "pollito","negro","nada");
+        Publicacion pub = new Publicacion(23,1, fecha2,prod,100,10000,false,0);
+        return  pub;
+    }
 }
