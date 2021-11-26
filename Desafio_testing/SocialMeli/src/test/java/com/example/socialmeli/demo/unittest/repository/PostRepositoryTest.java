@@ -44,6 +44,7 @@ IPostRepository postRepository;
     }
 
     @Test
+        //Este test va a fallar, ya que en mi sistema, que el order sea null no provoca que arroje una excepcion
     void testToThrowARunTimeExceptionByPassingANullOrderForPosts(){
 
         int userId = 3;
@@ -69,7 +70,7 @@ IPostRepository postRepository;
         List<Post> responsePosts = new ArrayList<>();
         LocalDate today = LocalDate.now();
         LocalDate dateFromOneWeek = LocalDate.now().minusWeeks(1);
-        LocalDate dateFromTwoWeeks = LocalDate.now().minusWeeks(3);
+        LocalDate dateFromTwoWeeks = LocalDate.now().minusWeeks(2);
 
         Post p1 = new Post();
         Post p2 = new Post();
@@ -77,8 +78,8 @@ IPostRepository postRepository;
         p1.setUserId(3);
         p2.setUserId(3);
         p3.setUserId(3);
-        p1.setDate(today);
         p2.setDate(dateFromOneWeek);
+        p1.setDate(today);
         p3.setDate(dateFromTwoWeeks);
 
         postRepository.createPost(p1);
@@ -96,7 +97,6 @@ IPostRepository postRepository;
                 sorted = false;
         }
 
-
         //Assert
         Assertions.assertTrue(sorted);
 
@@ -110,7 +110,7 @@ IPostRepository postRepository;
         List<Post> responsePosts = new ArrayList<>();
         LocalDate today = LocalDate.now();
         LocalDate dateFromOneWeek = LocalDate.now().minusWeeks(1);
-        LocalDate dateFromTwoWeeks = LocalDate.now().minusWeeks(3);
+        LocalDate dateFromTwoWeeks = LocalDate.now().minusWeeks(2);
 
         Post p1 = new Post();
         Post p2 = new Post();
@@ -119,8 +119,8 @@ IPostRepository postRepository;
         p2.setUserId(3);
         p3.setUserId(3);
         p1.setDate(today);
-        p2.setDate(dateFromOneWeek);
         p3.setDate(dateFromTwoWeeks);
+        p2.setDate(dateFromOneWeek);
 
         postRepository.createPost(p1);
         postRepository.createPost(p2);

@@ -31,6 +31,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
+
 @ExtendWith(MockitoExtension.class)
 public class FollowerServiceTest {
 
@@ -46,7 +49,7 @@ public class FollowerServiceTest {
 
     //T 0001:
     @Test
-    void testFollowToDeterminatedUserWithValidUserId(){
+    void testFollowToDeterminatedUserWithAnExistentUserId(){
 
         //Arrange
         int userId = 1;
@@ -68,19 +71,21 @@ public class FollowerServiceTest {
         ResponseEntity response = followerService.followUser(followUserRequest);
 
         //Assert
+        verify(usuarioService, atLeastOnce()).getUserByUserId(userToFollowId);
+        verify(usuarioService, atLeastOnce()).getUserByUserId(userId);
         Assertions.assertEquals(expectedResponse, response);
 
 
     }
 
     @Test
-    void testFollowUnexistentUserCausingUserNotFoundException(){
+    void testFollowToDeterminatedUserWithAnUnexistentUserIdCausingVendorNotFoundException(){
 
         //Arrange
         int userId = 1;
         int userToFollowId = 10; //Este userId no existe
-        DTOUsuario userFollower = new DTOUsuario();
-        userFollower.setUserId(userId);
+        DTOUsuario followerUser = new DTOUsuario();
+        followerUser.setUserId(userId);
         DTOUsuario userToFollow = new DTOUsuario();
         userToFollow.setUserId(userToFollowId);
         DTOFollowUser followUserRequest = new DTOFollowUser();
@@ -90,7 +95,8 @@ public class FollowerServiceTest {
 
         //Mock
         Mockito.when(usuarioService.getUserByUserId(userToFollowId)).thenThrow(VendorNotFoundException.class);
-        Mockito.when(usuarioService.getUserByUserId(userId)).thenReturn(userFollower);
+        Mockito.when(usuarioService.getUserByUserId(userId)).thenReturn(followerUser);
+
 
         //Act and Assert
         Assertions.assertThrows(VendorNotFoundException.class, new Executable() {
@@ -107,7 +113,7 @@ public class FollowerServiceTest {
 
     //T 0002:
     @Test
-    void testToUnfollowToDeterminatedUserWithValidUserId(){
+    void testToUnfollowToUserWithExistentUserId(){
 
         //Arrange
         int userId = 1; //Id Existente
@@ -125,8 +131,12 @@ public class FollowerServiceTest {
         Mockito.when(usuarioService.getUserByUserId(userToFollowId)).thenReturn(userToUnfollow);
         Mockito.when(usuarioService.getUserByUserId(userId)).thenReturn(userFollower);
 
+
         //Act
         ResponseEntity response = followerService.unFollowUser(unfollowRequest);
+
+        verify(usuarioService, atLeastOnce()).getUserByUserId(userToFollowId);
+        verify(usuarioService, atLeastOnce()).getUserByUserId(userId);
 
         //Assert
         Assertions.assertEquals(expectedResponse, response);
@@ -150,8 +160,11 @@ public class FollowerServiceTest {
         VendorNotFoundException expectedResponse = new VendorNotFoundException();
 
         //Mock
-        Mockito.when(usuarioService.getUserByUserId(userToUnfollowId)).thenThrow(VendorNotFoundException.class);
+       // Mockito.when(usuarioService.getUserByUserId(userToUnfollowId)).thenThrow(VendorNotFoundException.class);
+        Mockito.when(usuarioService.getUserByUserId(userToUnfollowId)).thenReturn(null); //Ambos metodos son validos
         Mockito.when(usuarioService.getUserByUserId(userId)).thenReturn(userFollower);
+
+
 
         //Act and Assert
         Assertions.assertThrows(VendorNotFoundException.class, new Executable() {
@@ -161,6 +174,9 @@ public class FollowerServiceTest {
                 followerService.unFollowUser(followUserRequest);
             }
         });
+
+        verify(usuarioService, atLeastOnce()).getUserByUserId(userToUnfollowId);
+        verify(usuarioService, atLeastOnce()).getUserByUserId(userId);
 
 
     }
@@ -199,6 +215,8 @@ public class FollowerServiceTest {
         //Act
         response = followerService.getFollowersCountByUserID(request);
 
+        verify(usuarioService, atLeastOnce()).getUserByUserId(userId);
+        verify(followerRepository, atLeastOnce()).getUsersWhoFollowsToUserId(userId,null);
 
         //Assert
         Assertions.assertEquals(3, response.getFollowersCount());
