@@ -16,8 +16,8 @@ import javax.validation.constraints.*;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DetailDto {
 
-    @Positive
-    @NotNull
+    @Positive(message = "La id debe ser un numero positivo")
+    @NotNull(message = "El product id no puede estar vacio.")
     private Integer productId;
 
     @NotNull(message = "el nombre no puede ser vacio")
@@ -31,13 +31,13 @@ public class DetailDto {
     private String type;
 
 
-    @NotEmpty
-    @Size(max = 25)
+    @NotEmpty(message = "Brand no puede estar vacio.")
+    @Size(message = "El campo admite maximo 25 caracteres")
     @Pattern(regexp = "^([a-z]|[A-Z ]|[ñ]|[Ñ])+$",message = "no puede contener caracteres especiales")
     private String brand;
 
-    @NotEmpty
-    @Size(max = 15)
+    @NotEmpty(message = "El color no puede estar vacio.")
+    @Size(max = 15,message = "Debe tener maximo 15 caracteres")
     @Pattern(regexp = "^([a-z]|[A-Z ]|[ñ]|[Ñ])+$",message = "no puede contener caracteres especiales")
     private String color;
 
