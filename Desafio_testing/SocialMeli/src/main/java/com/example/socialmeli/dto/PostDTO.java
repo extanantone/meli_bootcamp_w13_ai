@@ -23,17 +23,17 @@ public class PostDTO {
     @Positive(message = "El id debe ser mayor a cero")
     private Integer idPost;
 
-    @NotEmpty(message = "La fecha no puede estar vacía.")
+    @NotNull(message = "La fecha no puede estar vacía.")
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date date;
 
     @Valid
     private ProductDTO detail;
 
-    @NotEmpty (message = "El campo no puede estar vacío")
+    @NotNull (message = "El campo no puede estar vacío")
     private int category;
 
-    @NotEmpty (message = "El campo no puede estar vacío")
+    @NotNull (message = "El campo no puede estar vacío")
     @Max(value = 10000000, message = "El precio máximo por producto es de 10.000.000")
     private double price;
 

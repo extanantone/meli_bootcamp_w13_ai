@@ -25,7 +25,7 @@ public class UserDTO {
 
     @NotEmpty(message = "El campo no puede estar vacío.")
     @Max(value = 15, message = "La longitud no puede superar los 15 caracteres.")
-    @Pattern(regexp="\\A[A-Z|À-Ù|\\u00f1|Á-Ú|Ä-Ü][A-Z|À-Ù|\\u00f1|\\u00d1|Á-Ú|Ä-Ü||á-ú|ä-ü|a-z|0-9]*[,|.]?(\\s[A-Z|À-Ù|\\u00f1|\\u00d1|Á-Ú|Ä-Ü|á-ú|ä-ü|a-z|0-9]*[,|.]?)*\\z", message = "El campo no puede poseer caracteres especiales")
+    @Pattern(regexp="^[A-Z|À-Ù|Á-Ú|Ä-Ü|á-ú|ä-ü|a-z|à-ù|0-9|,|.|\\s ]*$", message = "El campo no puede poseer caracteres especiales")
     private String userName;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
