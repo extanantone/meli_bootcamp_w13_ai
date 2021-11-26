@@ -8,7 +8,7 @@
       "product_name": "Pelota Nike Futbol Airlock Street X",
       "type": "Pelota Futbol",
       "brand": "Nike",
-      "color": "White & Black",
+      "color": "White and Black",
       "notes": "modelo Nike Airlock Street X, tamaño 5"
     },
     "category": 110,
@@ -23,7 +23,7 @@
       "product_name": "Camiseta Boca Juniors",
       "type": "Camiseta deportiva",
       "brand": "Adidas",
-      "color": "Blue & Yellow",
+      "color": "Blue and Yellow",
       "notes": "Camiseta jugador oficial, talle XL"
     },
     "category": 115,
@@ -36,7 +36,7 @@
     "detail": {
       "product_id": 3,
       "product_name": "Xiaomi Mi Smart Band 5",
-      "type": "Smartbands & Smartwatches",
+      "type": "Smartbands and Smartwatches",
       "brand": "Xiaomi",
       "color": "Black",
       "notes": "resiste hasta 50m bajo agua, batería 14 dias de duracion, malla intercambiable"
@@ -51,7 +51,7 @@
     "detail": {
       "product_id": 4,
       "product_name": "Samsung Galaxy Fit 2",
-      "type": "Smartbands & Smartwatches",
+      "type": "Smartbands and Smartwatches",
       "brand": "Samsung",
       "color": "Black or Grey",
       "notes": "con Bluetooth, pantalla AMOLED, bateria 15 dias de duracion"

@@ -123,7 +123,7 @@ public class GeneralExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorDTO> validarArgumentos(MethodArgumentNotValidException ex){
+    public ResponseEntity<ErrorDTO> validarArgumentosDeEntrada(MethodArgumentNotValidException ex){
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setTipo(ex.getClass().getSimpleName());
         errorDTO.setMensaje("Hay algunos campos que no respetan las validaciones.");

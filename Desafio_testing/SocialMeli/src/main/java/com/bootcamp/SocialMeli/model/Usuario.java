@@ -31,6 +31,14 @@ public class Usuario {
         this.publicaciones = new ArrayList<>();
     }
 
+    public Usuario(Integer userId, String userName) {
+        this.userId = userId;
+        this.userName = userName;
+        this.vendedoresSeguidos = new ArrayList<>();
+        this.seguidores = new ArrayList<>();
+        this.publicaciones = new ArrayList<>();
+    }
+
     public Usuario(Integer userId, String userName, List<Usuario> vendedoresSeguidos, List<Usuario> seguidores, List<Publicacion> publicaciones) {
         this.userId = userId;
         this.userName = userName;
