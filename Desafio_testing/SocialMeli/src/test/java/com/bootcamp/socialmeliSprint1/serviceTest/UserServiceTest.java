@@ -1,5 +1,7 @@
 package com.bootcamp.socialmeliSprint1.serviceTest;
 
+import com.bootcamp.socialmeliSprint1.dto.response.user.BasicUserInfoDTO;
+import com.bootcamp.socialmeliSprint1.dto.response.user.SellerFollowersListDTO;
 import com.bootcamp.socialmeliSprint1.entitiy.Purchaser;
 import com.bootcamp.socialmeliSprint1.entitiy.Seller;
 import com.bootcamp.socialmeliSprint1.exception.sortException.BadSorterParamRequest;
@@ -8,6 +10,7 @@ import com.bootcamp.socialmeliSprint1.exception.userException.NotFoundUserExcept
 import com.bootcamp.socialmeliSprint1.exception.userException.PurchaserAlreadyFollowSeller;
 import com.bootcamp.socialmeliSprint1.repository.ISocialMeliRepository;
 import com.bootcamp.socialmeliSprint1.service.UserServiceImpl;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -562,12 +565,135 @@ public class UserServiceTest {
 
     /***************************************************************************
      *
-     * T-0003 : Verificar que el tipo de ordenamiento alfabético exista (US-0008)
+     * T-0004: Verificar el correcto ordenamiento ascendente y descendente por nombre. (US-0008)
      *
      **************************************************************************/
 
-    
+    /**
+     * First the Descendant form
+     *
+     * This test is successful if the list is sort of descendant form by name
+     */
+    @Test
+    void ShouldToSortByNameOfAscendantFormAndBeEqualsTestList() {
+
+//        Arrange
+
+        Integer sellerId = 3;
+
+        List<Purchaser> followers = new ArrayList<>();
+
+        Purchaser purchaser1 = new Purchaser(1,"Juan");
+
+        Purchaser purchaser2 = new Purchaser(2,"Pedro");
+
+        Seller seller = new Seller(3, "Seller1");
+
+        followers.add(purchaser1);
+        followers.add(purchaser2);
+
+        List<Integer> followersSeller = new ArrayList<>();
+        followersSeller.add(1);
+        followersSeller.add(2);
+
+        seller.setFollowers(followersSeller);
+
+        List<BasicUserInfoDTO> expected = new ArrayList<>();
+
+        /**
+         * Here, in expected list is add the purchasers in desc order.
+         */
+        expected.add(new BasicUserInfoDTO(purchaser2.getUserID(), purchaser2.getUserName()));
+        expected.add(new BasicUserInfoDTO(purchaser1.getUserID(), purchaser1.getUserName()));
+
+        SellerFollowersListDTO expectedSorted= new SellerFollowersListDTO(sellerId,seller.getUserName(),expected);
+
+//        Act
+
+        Mockito.when(mockRepository.getSeller(sellerId))
+                .thenReturn(Optional.of(seller));
+        Mockito.when(mockRepository.getSellerFollowers(sellerId))
+                .thenReturn(followers);
 
 
+        //list obtain of test method.
+        SellerFollowersListDTO currentSorted = userService.getSellerFollowersListSort(sellerId, "name_desc");
+//        Assert
+
+        /**
+         * validate to correct order
+         */
+        Assertions.assertAll(
+                ()-> Assertions.assertEquals(expectedSorted.getFollowers().get(0).getUserName()
+                        ,currentSorted.getFollowers().get(0).getUserName()),
+                ()-> Assertions.assertEquals(expectedSorted.getFollowers().get(1).getUserName()
+                        ,currentSorted.getFollowers().get(1).getUserName())
+        );
+
+    }
+
+    /**
+     * Now the Ascendant form
+     *
+     * This test is successful if the list is sort of descendant form by name
+     */
+    @Test
+    void ShouldToSortByNameOfDescendantFormAndBeEqualsTestList() {
+
+//        Arrange
+
+        Integer sellerId = 3;
+
+        List<Purchaser> followers = new ArrayList<>();
+
+        Purchaser purchaser1 = new Purchaser(1,"Juan");
+
+        Purchaser purchaser2 = new Purchaser(2,"Pedro");
+
+        Seller seller = new Seller(3, "Seller1");
+
+        followers.add(purchaser1);
+        followers.add(purchaser2);
+
+        List<Integer> followersSeller = new ArrayList<>();
+        followersSeller.add(1);
+        followersSeller.add(2);
+
+        seller.setFollowers(followersSeller);
+
+        List<BasicUserInfoDTO> expected = new ArrayList<>();
+
+        /**
+         * Here, in expected list is add the purchasers in ASC order.
+         */
+        expected.add(new BasicUserInfoDTO(purchaser1.getUserID(), purchaser1.getUserName()));
+        expected.add(new BasicUserInfoDTO(purchaser2.getUserID(), purchaser2.getUserName()));
+
+
+        SellerFollowersListDTO expectedSorted= new SellerFollowersListDTO(sellerId,seller.getUserName(),expected);
+
+//        Act
+
+        Mockito.when(mockRepository.getSeller(sellerId))
+                .thenReturn(Optional.of(seller));
+        Mockito.when(mockRepository.getSellerFollowers(sellerId))
+                .thenReturn(followers);
+
+
+        //list obtain of test method.
+        SellerFollowersListDTO currentSorted = userService.getSellerFollowersListSort(sellerId, "name_asc");
+//        Assert
+
+        /**
+         * validate to correct order
+         */
+        Assertions.assertAll(
+                ()-> Assertions.assertEquals(expectedSorted.getFollowers().get(0).getUserName()
+                        ,currentSorted.getFollowers().get(0).getUserName()),
+                ()-> Assertions.assertEquals(expectedSorted.getFollowers().get(1).getUserName()
+                        ,currentSorted.getFollowers().get(1).getUserName())
+        );
+
+    }
 
 }
