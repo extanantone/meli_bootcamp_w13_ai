@@ -1,23 +1,16 @@
 package com.socialmeli.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
-
+import org.hibernate.validator.constraints.Range;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -48,5 +41,6 @@ public class PostDto {
     private Integer category;
 
     @NotNull(message = "El precio no puede estar vacio")
+    @Range(min = 0,max = 10000000)
     private Double price;
 }

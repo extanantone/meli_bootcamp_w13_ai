@@ -1,6 +1,12 @@
 # Documentacion
 
 
+## Sprint ||
+
+Las validaciones se encuentran en las clases UserController,  DetailDto, PostDto
+
+
+
 ### Dragramas
 
 **Modelo**
