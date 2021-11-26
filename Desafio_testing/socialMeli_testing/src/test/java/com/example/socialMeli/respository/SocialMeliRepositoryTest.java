@@ -35,6 +35,23 @@ public class SocialMeliRepositoryTest {
     void UsuarioASeguirYADejarDeSeguirNoValido(){
         Vendedor actual=repo.buscarVendedor(60);
         assertEquals(null,actual);
-
     }
+    @Test
+    void UsuarioCompradorValido(){
+        Comprador expected = new Comprador("comprador 1", 1);
+        Comprador actual=repo.buscarComprador(expected.getUser_id());
+        assertAll("comprador", () -> assertEquals(expected.getName(), actual.getName()),
+                () -> assertEquals(expected.getUser_id(), actual.getUser_id()));
+    }
+    @Test
+    void UsuarioCompradorNoValido(){
+        Comprador actual=repo.buscarComprador(60);
+        assertEquals(null,actual);
+    }
+    @Test
+    void buscarSeguidor(){
+        Vendedor actual=repo.buscarVendedor(60);
+        assertEquals(null,actual);
+    }
+
 }
