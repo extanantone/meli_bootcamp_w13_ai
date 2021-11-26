@@ -17,9 +17,10 @@ public class PostRepositoryTest {
 
     @BeforeAll
     static void createPost(){
+        //Publicacion actual
         Post postCreate = new Post();
         postCreate.setId(1);
-        postCreate.setDate(LocalDate.of(2021, 11, 25));
+        postCreate.setDate(LocalDate.now());
         postCreate.setSellerId(3);
         postCreate.setPrice(1000);
         postCreate.setCategory(1);
@@ -33,21 +34,43 @@ public class PostRepositoryTest {
         postCreate.setDetail(product);
 
         postRepository.create(postCreate);
+
+        //Publicacion de mas de 2 semanas
+        LocalDate twentyDaysAgo = LocalDate.now().minus(Period.ofDays(20));
+
+        Post postCreate2 = new Post();
+        postCreate2.setId(2);
+        postCreate2.setDate(twentyDaysAgo);
+        postCreate2.setSellerId(3);
+        postCreate2.setPrice(1000);
+        postCreate2.setCategory(1);
+        Product product2 = new Product();
+        product2.setId(2);
+        product2.setName("Producto 2");
+        product2.setBrand("Brand 2");
+        product2.setColor("Negro");
+        product2.setType("Tipo");
+        product2.setNotes("");
+        postCreate.setDetail(product2);
+
+        postRepository.create(postCreate2);
     }
 
     @Test
     void createSuccess(){
         //Arrange
+        LocalDate oneWeekAgo = LocalDate.now().minus(Period.ofDays(7));
+
         Post postCreate = new Post();
-        postCreate.setId(2);
-        postCreate.setDate(LocalDate.of(2021, 11, 25));
+        postCreate.setId(3);
+        postCreate.setDate(oneWeekAgo);
         postCreate.setSellerId(3);
         postCreate.setPrice(1000);
         postCreate.setCategory(1);
         Product product = new Product();
-        product.setId(2);
-        product.setName("Producto 1");
-        product.setBrand("Brand 1");
+        product.setId(3);
+        product.setName("Producto 3");
+        product.setBrand("Brand 3");
         product.setColor("Negro");
         product.setType("Tipo");
         product.setNotes("");
@@ -80,7 +103,7 @@ public class PostRepositoryTest {
     @Test
     void getByIdNotFound(){
         // Arrange
-        int id = 2;
+        int id = 99;
 
         // Act
         Post result = this.postRepository.getById(id);
@@ -90,7 +113,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    void getByUserIdSuccess(){
+    void getByUserIdTwoWeeksAgoSuccess(){
         //Arrange
         int userId = 3;
         LocalDate date = LocalDate.now().minus(Period.ofDays(14));
