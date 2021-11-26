@@ -56,7 +56,7 @@ public class SocialMeliService implements IService {
             throw new UserAlreadyInUseException(userToFollowId);
         }
 
-        this.getUserById(userToFollowId).getFollowersId().add(userId);
+        userToFollow.getFollowersId().add(userId);
     }
 
     public void unfollow(Integer userId , Integer userIdToUnfollow) throws UserNotFoundException, UserSelfUseException, UserAlreadyInUseException {
@@ -126,10 +126,9 @@ public class SocialMeliService implements IService {
 
         Sorter sorter = MiFactory.getInstance(order == null ? "name_desc" : order);
 
-        return userRepository.findFollowers(userId).stream()
+        return userRepository.findAll().stream().filter(u -> u.getFollowersId().contains(userId))
                 .map( u -> mapper.map(u, UserDTO.class))
-                .sorted( (u,b) -> sorter.sort(u,b))
-                .collect(Collectors.toList());
+                .sorted(sorter::sort).collect(Collectors.toList());
 
     }
 

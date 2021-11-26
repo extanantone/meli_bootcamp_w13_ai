@@ -47,12 +47,9 @@ public class PostRepository implements IRepository<Post> {
 
     }
 
-
     @Override
     public void push(Post newElement) {
-
         this.posts.add(newElement);
-
     }
 
     @Override
