@@ -1,16 +1,12 @@
 package com.SocialMeli.SocialMeli.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class UserDTO {
     @NotNull( message = "La id no puede estar vacía.")
     @Positive( message = "La id debe ser numérica.")

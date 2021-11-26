@@ -143,24 +143,25 @@ public class UserRepositoryTest {
         repo.createBuyers(follower1);
         follower1.setUser_id(1);
         UserDTO followerTest = new UserDTO(1, "Vanesa");
-        /*UserDTO follower2 = new UserDTO(null, "Ana");
+        UserDTO follower2 = new UserDTO(null, "Ana");
         repo.createBuyers(follower2);
+        follower2.setUser_id(2);
         UserDTO follower3 = new UserDTO(null, "Martín");
-        repo.createBuyers(follower3);*/
+        repo.createBuyers(follower3);
+        follower3.setUser_id(3);
         
         repo.follow(1,1);
-        /*repo.follow(2,1);
-        repo.follow(3,1);*/
+        repo.follow(2,1);
+        repo.follow(3,1);
 
         List<UserDTO> userDTOList = new ArrayList<>();
-        /*userDTOList.add(follower2);
-        userDTOList.add(follower3);*/
+        userDTOList.add(follower2);
+        userDTOList.add(follower3);
         userDTOList.add(follower1);
         
         
         // Act
         SellersDTO sellersDTO = repo.followersListSorted(user_id, order);
-        List<UserDTO> followersList = sellersDTO.getFollowers();
 
         // Assert
         //Assertions.assertTrue(CollectionUtils.isEqualCollection(userDTOList, followersList));

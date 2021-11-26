@@ -1,6 +1,7 @@
 package com.SocialMeli.SocialMeli.repository;
 
 import com.SocialMeli.SocialMeli.dto.*;
+import com.SocialMeli.SocialMeli.exception.UserNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -53,9 +54,9 @@ public class UserRepository implements IUserRepository{
             buyersDTO = buyersDTOList.get(user_id-1);
 
             if ( buyersDTO == null)
-                throw new IndexOutOfBoundsException("El usuario no existe con id -> " + user_id );
+                throw new UserNotFoundException( user_id );
 
-        }catch (IndexOutOfBoundsException e){
+        }catch (UserNotFoundException e){
             System.out.println(e.getMessage());
         }
 
@@ -70,9 +71,9 @@ public class UserRepository implements IUserRepository{
             sellersDTO = sellersDTOList.get(user_id-1);
 
             if ( sellersDTO == null)
-                throw new IndexOutOfBoundsException("El usuario no existe con id -> " + user_id );
+                throw new UserNotFoundException( user_id );
 
-        }catch (IndexOutOfBoundsException e){
+        }catch (UserNotFoundException e){
             System.out.println(e.getMessage());
         }
 
