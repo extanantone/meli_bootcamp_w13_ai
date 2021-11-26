@@ -1,4 +1,4 @@
-package com.bootcamp.SocialMeli.unit.repository.publicacion;
+package com.bootcamp.SocialMeli.unit.service.publicacion;
 
 import com.bootcamp.SocialMeli.dto.producto.ProductoDTO;
 import com.bootcamp.SocialMeli.dto.publicacion.PublicacionDTO;
@@ -10,7 +10,6 @@ import com.bootcamp.SocialMeli.mapper.ProductoMapper;
 import com.bootcamp.SocialMeli.mapper.PublicacionMapper;
 import com.bootcamp.SocialMeli.model.Producto;
 import com.bootcamp.SocialMeli.model.Publicacion;
-import com.bootcamp.SocialMeli.model.Usuario;
 import com.bootcamp.SocialMeli.repository.publicacion.IPublicacionRepository;
 import com.bootcamp.SocialMeli.repository.usuario.IUsuarioRepository;
 import com.bootcamp.SocialMeli.service.publicacion.PublicacionService;
