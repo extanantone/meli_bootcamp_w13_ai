@@ -3,6 +3,7 @@ package meli.bootcamp.socialmeli.service;
 import meli.bootcamp.socialmeli.dto.*;
 import meli.bootcamp.socialmeli.model.Post;
 import meli.bootcamp.socialmeli.model.PromoPost;
+import meli.bootcamp.socialmeli.model.User;
 import meli.bootcamp.socialmeli.model.UserFollow;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface ISocialMeliService {
      * @param userID Usuario seguidor.
      * @param userIDToFollow usuario a seguir.
      */
-    void followUser(int userID, int userIDToFollow);
+    UserFollow followUser(int userID, int userIDToFollow);
 
     /**
      * @param userID Usuario a consultar
@@ -24,7 +25,13 @@ public interface ISocialMeliService {
      * @param userID Usuario seguidor.
      * @param userIDToUnfollow Usuario a dejar de seguir.
      */
-    void unfollowUser(int userID, int userIDToUnfollow);
+    boolean unfollowUser(int userID, int userIDToUnfollow);
+
+    /**
+     * @param userID Usuario seguidor.
+     * @param userIDToUnfollow Usuario a dejar de seguir.
+     */
+    boolean checkUserFollow(int userID, int userIDToUnfollow);
 
     /**
      *
@@ -75,4 +82,18 @@ public interface ISocialMeliService {
     List<UserFollow> lista();
     List<Post> listaPost();
     List<PromoPost> listaPromoPost();
+
+    /**
+     * @param newUserDTO usuario a agregar
+     * @implNote Método para agregar un usuario al sistema
+     * @return
+     */
+    void addUser(NewUserDTO newUserDTO);
+
+    /**
+     * @param userId usuario a agregar
+     * @implNote Método para agregar un usuario al sistema
+     * @return
+     */
+    NewUserDTO findUserById(int userId);
 }

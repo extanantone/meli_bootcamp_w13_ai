@@ -1,13 +1,21 @@
-package meli.bootcamp.socialmeli.model;
+package meli.bootcamp.socialmeli.dto;
 
-public class User {
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class NewUserDTO {
     private int userId;
-    public String userName;
+    private String userName;
     private String firstName;
     private String lastName;
     private int age;
 
-    public User(int userId, String userName, String firstName, String lastName, int age) {
+    public NewUserDTO(int userId, String userName, String firstName, String lastName, int age) {
         this.userId = userId;
         this.userName = userName;
         this.firstName = firstName;
@@ -15,7 +23,7 @@ public class User {
         this.age = age;
     }
 
-    public User() {
+    public NewUserDTO() {
     }
 
     public int getUserId() {
@@ -60,7 +68,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "NewUserDTO{" +
                 "userId=" + userId +
                 ", userName='" + userName + '\'' +
                 ", firstName='" + firstName + '\'' +

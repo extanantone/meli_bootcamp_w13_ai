@@ -1,9 +1,9 @@
 package meli.bootcamp.socialmeli.repository;
 
 import meli.bootcamp.socialmeli.model.Post;
-import meli.bootcamp.socialmeli.model.UserFollow;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Interface para manipular los datos de los post dentro del sistema.
@@ -19,14 +19,23 @@ public interface IPostRepository {
     /**
      * @param postID ID post a consultar.
      *                Consulta un post dentro del sistema.
+     * @return
      */
-    Post findPostById(int postID);
+    Optional<Post> findPostById(int postID);
 
     /**
      * @param updatePost Post a actualizar.
      *                Recibe un post para actualizarlo en el sistema.
      */
     Post updatePostById(Post updatePost);
+
+    /**
+     * @param postID
+     * @return Boolean
+     * @implNote Busca si un post existe dentro del sistema.
+     */
+
+    boolean existPost(int postID);
 
     /**
      * @param postID ID post a eliminar.

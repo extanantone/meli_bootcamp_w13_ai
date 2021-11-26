@@ -1,18 +1,18 @@
 package meli.bootcamp.socialmeli.service;
 
 import meli.bootcamp.socialmeli.dto.*;
+import meli.bootcamp.socialmeli.exceptions.OrderTypeNotValidException;
 import meli.bootcamp.socialmeli.exceptions.PostAlreadyExistException;
+import meli.bootcamp.socialmeli.exceptions.UserExistException;
 import meli.bootcamp.socialmeli.exceptions.UserFollowHimselfException;
 import meli.bootcamp.socialmeli.mapper.PostMapper;
 import meli.bootcamp.socialmeli.mapper.PromoProductMapper;
+import meli.bootcamp.socialmeli.mapper.UserMapper;
 import meli.bootcamp.socialmeli.model.Post;
 import meli.bootcamp.socialmeli.model.PromoPost;
 import meli.bootcamp.socialmeli.model.User;
 import meli.bootcamp.socialmeli.model.UserFollow;
-import meli.bootcamp.socialmeli.repository.PostRepository;
-import meli.bootcamp.socialmeli.repository.PromoPostRepository;
-import meli.bootcamp.socialmeli.repository.UserFollowRepository;
-import meli.bootcamp.socialmeli.repository.UserRepository;
+import meli.bootcamp.socialmeli.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +24,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class SocialMeliService implements ISocialMeliService{
-    @Autowired
-    private UserRepository userRepository;
+    private final IUserRepository userRepository;
 
-    @Autowired
-    private UserFollowRepository userFollowRepository;
+    private final IUSerFollowRepository userFollowRepository;
 
     @Autowired
     private PostRepository postRepository;
@@ -42,6 +40,14 @@ public class SocialMeliService implements ISocialMeliService{
     @Autowired
     private PromoProductMapper promoPostMapper;
 
+    UserMapper userMapper;
+
+    public SocialMeliService(UserMapper userMapper, IUserRepository userRepository, IUSerFollowRepository userFollowRepository) {
+        this.userMapper = userMapper;
+        this.userRepository = userRepository;
+        this.userFollowRepository = userFollowRepository;
+    }
+
     /**
      * @param userID Usuario seguidor.
      * @param userIDToFollow usuario a seguir.
@@ -49,12 +55,12 @@ public class SocialMeliService implements ISocialMeliService{
      * a quien va a seguir
      */
     @Override
-    public void followUser(int userID, int userIDToFollow) {
+    public UserFollow followUser(int userID, int userIDToFollow) {
         if (userID == userIDToFollow)
             throw new UserFollowHimselfException();
         User followerUser= userRepository.findUserById(userID);
         User userToFollow= userRepository.findUserById(userIDToFollow);
-        userFollowRepository.newUserFollow(followerUser.getUserId(), userToFollow.getUserId());
+        return userFollowRepository.newUserFollow(followerUser.getUserId(), userToFollow.getUserId());
     }
 
     /**
@@ -78,7 +84,7 @@ public class SocialMeliService implements ISocialMeliService{
     @Override
     public void addPost(ProductsPostDTO newPost) {
         userRepository.findUserById(newPost.getUserId());
-        if (postRepository.findPostById(newPost.getIdPost()) == null)
+        if (postRepository.findPostById(newPost.getIdPost()).isEmpty())
             postRepository.addPost(postMapper.productoPostDTOtoPost(newPost));
         else
             throw new PostAlreadyExistException();
@@ -108,11 +114,24 @@ public class SocialMeliService implements ISocialMeliService{
      * seguimiento del sistema.
      */
     @Override
-    public void unfollowUser(int userID, int userIDToFollow) {
+    public boolean unfollowUser(int userID, int userIDToFollow) {
         User followerUser= userRepository.findUserById(userID);
         User userToFollow= userRepository.findUserById(userIDToFollow);
-        userFollowRepository.checkUserFollow(followerUser.getUserId(), userToFollow.getUserId());
-        userFollowRepository.unfollowUser(followerUser.getUserId(), userToFollow.getUserId());
+        if (userFollowRepository.checkUserFollow(followerUser.getUserId(), userToFollow.getUserId())) {
+            userFollowRepository.unfollowUser(followerUser.getUserId(), userToFollow.getUserId());
+            return true;
+        }
+        else
+            return false;
+    }
+
+    /**
+     * @param userID Id de usuario seguidor
+     * @param userIDFollowed ID de usuario seguido
+     */
+    @Override
+    public boolean checkUserFollow(int userID, int userIDFollowed) {
+        return userFollowRepository.checkUserFollow(userID, userIDFollowed);
     }
 
     /**
@@ -130,31 +149,36 @@ public class SocialMeliService implements ISocialMeliService{
      */
     @Override
     public Object getOrderedFollowersList(int userID, boolean searchFollowers, String order, boolean sortedResponse) {
-        User queryUser= userRepository.findUserById(userID);
-        if (searchFollowers)
-            return new FollowersListDTO(
-                    queryUser.getUserId(),
-                    userRepository.getUserNameById(queryUser.getUserId()),
-                    (sortedResponse)
-                    ?this.getSpecificUserNameList(searchFollowers, queryUser.getUserId()).stream()
-                            .sorted((order.equals("name_desc"))
-                                ?Comparator.comparing(UserDTO::getUserName).reversed()
-                                :Comparator.comparing(UserDTO::getUserName)) //Preguntar si es username o nombre_apellido
-                        .collect(Collectors.toList())
-                    :this.getSpecificUserNameList(searchFollowers, queryUser.getUserId())
-            );
-        else
-            return new FollowedListDTO(
-                    queryUser.getUserId(),
-                    userRepository.getUserNameById(queryUser.getUserId()),
-                    (sortedResponse)
-                            ?this.getSpecificUserNameList(searchFollowers, queryUser.getUserId()).stream()
-                            .sorted((order.equals("name_desc"))
-                                    ?Comparator.comparing(UserDTO::getUserName).reversed()
-                                    :Comparator.comparing(UserDTO::getUserName)) //Preguntar si es username o nombre_apellido
-                            .collect(Collectors.toList())
-                            :this.getSpecificUserNameList(searchFollowers, queryUser.getUserId())
-            );
+        if (sortedResponse && ((!order.equals("name_asc")) && (!order.equals("name_desc"))))
+            throw new OrderTypeNotValidException();
+
+        else {
+            User queryUser = userRepository.findUserById(userID);
+            if (searchFollowers)
+                return new FollowersListDTO(
+                        queryUser.getUserId(),
+                        userRepository.getUserNameById(queryUser.getUserId()),
+                        (sortedResponse)
+                                ? this.getSpecificUserNameList(searchFollowers, queryUser.getUserId()).stream()
+                                .sorted((order.equals("name_desc"))
+                                        ? Comparator.comparing(UserDTO::getUserName).reversed()
+                                        : Comparator.comparing(UserDTO::getUserName)) //Preguntar si es username o nombre_apellido
+                                .collect(Collectors.toList())
+                                : this.getSpecificUserNameList(searchFollowers, queryUser.getUserId())
+                );
+            else
+                return new FollowedListDTO(
+                        queryUser.getUserId(),
+                        userRepository.getUserNameById(queryUser.getUserId()),
+                        (sortedResponse)
+                                ? this.getSpecificUserNameList(searchFollowers, queryUser.getUserId()).stream()
+                                .sorted((order.equals("name_desc"))
+                                        ? Comparator.comparing(UserDTO::getUserName).reversed()
+                                        : Comparator.comparing(UserDTO::getUserName)) //Preguntar si es username o nombre_apellido
+                                .collect(Collectors.toList())
+                                : this.getSpecificUserNameList(searchFollowers, queryUser.getUserId())
+                );
+        }
     }
 
     /**
@@ -165,7 +189,7 @@ public class SocialMeliService implements ISocialMeliService{
     @Override
     public void newPromoPost(ProductsPromoPostDTO productsPromoPostDTO) {
         userRepository.findUserById(productsPromoPostDTO.getUserId());
-        if (promoPostRepository.findPromoPostById(productsPromoPostDTO.getIdPost()) == null)
+        if (promoPostRepository.findPromoPostById(productsPromoPostDTO.getIdPost()).isEmpty())
             promoPostRepository.addPromoPost(promoPostMapper.productoPromoPostDTOtoPromoPost(productsPromoPostDTO));
         else
             throw new PostAlreadyExistException();
@@ -228,9 +252,9 @@ public class SocialMeliService implements ISocialMeliService{
      * y luego obtener sus datos. Si no, busca los usuarios a quein sigo y obtiene sus datos para mostrarlos
      * en el response DTO.
      */
-    private List<UserDTO> getSpecificUserNameList(boolean searchFollowers, int userID){
+    public List<UserDTO> getSpecificUserNameList(boolean searchFollowers, int userID){
         User queryUser= userRepository.findUserById(userID);
-        return userFollowRepository.getAllList().stream()
+        List<UserDTO> newList= userFollowRepository.getAllList().stream()
                 .filter(userFollow ->
                         (searchFollowers)
                                 ?userFollow.getFollowedUser() == queryUser.getUserId()
@@ -239,11 +263,13 @@ public class SocialMeliService implements ISocialMeliService{
                         (searchFollowers)
                                 ?nUserDTO.getUserFollower()
                                 :nUserDTO.getFollowedUser(),
-                        userRepository.getUserNameById(
-                                (searchFollowers)
-                                        ?nUserDTO.getUserFollower()
-                                        :nUserDTO.getFollowedUser())))
+                        (searchFollowers)
+                                ?userRepository.getUserNameById(nUserDTO.getUserFollower())
+                                :userRepository.getUserNameById(nUserDTO.getFollowedUser())
+                                        ))
                 .collect(Collectors.toList());
+
+        return newList;
     }
 
     /**
@@ -257,7 +283,7 @@ public class SocialMeliService implements ISocialMeliService{
      * y descendente -mas antigua primero-. En caso tal de que no se quiera ordenar, organiza los post por el id.
      * Por ultimo mapea los post para el DTO de respuesta.
      */
-    private List<ProductsPostByUserDTO> getSpecificDateList(String order, int userID, boolean isOrder){
+    public List<ProductsPostByUserDTO> getSpecificDateList(String order, int userID, boolean isOrder){
         User queryUser= userRepository.findUserById(userID);
         return postRepository.getAllList().stream()
                 .filter(post ->
@@ -276,4 +302,19 @@ public class SocialMeliService implements ISocialMeliService{
                 );
     }
 
+    @Override
+    public void addUser(NewUserDTO newUserDTO) {
+        if (userRepository.userExist(newUserDTO.getUserId()))
+            throw new UserExistException();
+        else
+            userRepository.addUser(userMapper.newUserDTOtoUser(newUserDTO));
+            //userRepository.addUser(newUserDTO);
+    }
+
+    @Override
+    public NewUserDTO findUserById(int userId) {
+        return userMapper.userToNewUserDTO(
+                userRepository.findUserById(userId)
+        );
+    }
 }

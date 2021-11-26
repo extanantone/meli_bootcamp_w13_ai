@@ -35,4 +35,12 @@ public class PromoPost extends Post{
     public void setDiscount(double discount) {
         this.discount = discount;
     }
+
+    @Override
+    public String toString() {
+        return "PromoPost{" + super.toString() +
+                "hasPromo=" + hasPromo +
+                ", discount=" + discount +
+                '}';
+    }
 }

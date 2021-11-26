@@ -1,14 +1,11 @@
 package meli.bootcamp.socialmeli.repository;
 
 import meli.bootcamp.socialmeli.model.Post;
-import meli.bootcamp.socialmeli.model.UserFollow;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Repository
 public class PostRepository implements IPostRepository{
@@ -20,11 +17,10 @@ public class PostRepository implements IPostRepository{
     }
 
     @Override
-    public Post findPostById(int postID) {
+    public Optional<Post> findPostById(int postID) {
         return  mListPosts.stream()
                 .filter(post -> post.getPostId() == postID)
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
     @Override
@@ -33,8 +29,18 @@ public class PostRepository implements IPostRepository{
     }
 
     @Override
-    public void deletePost(int postID) {
+    public boolean existPost(int postID) {
+        return mListPosts.stream()
+                .anyMatch(post -> post.getPostId() == postID);
+    }
 
+    @Override
+    public void deletePost(int postID) {
+        mListPosts.remove(mListPosts
+                .stream()
+                .filter(post -> post.getPostId()==postID)
+                .findFirst().get()
+        );
     }
     @Override
     public List<Post> getAllList() {

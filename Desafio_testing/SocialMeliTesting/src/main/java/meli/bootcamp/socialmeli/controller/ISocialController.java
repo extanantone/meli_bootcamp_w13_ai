@@ -25,7 +25,7 @@ public interface ISocialController {
             @PathVariable
                 @Positive(
                         message = "El id debe ser mayor a cero.")
-            @Range(min = 1, message = "La id no puede estar vacía.") int user_id,
+                @Range(min = 1, message = "La id no puede estar vacía.") int user_id,
             @PathVariable @Min(1) int user_id_to_follow);
 
     /**
@@ -57,11 +57,13 @@ public interface ISocialController {
                 @Positive(
                         message = "El id debe ser mayor a cero.")
                 @Range(min = 1, message = "La id no puede estar vacía.") int user_id,
-            @RequestParam(defaultValue = "noOrder")
-                @Pattern(
+            @RequestParam(defaultValue = "noOrder") String order,
+            /*
+            *  @Pattern(
                         regexp = "name_asc|name_desc",
                         flags = Pattern.Flag.CASE_INSENSITIVE,
-                        message = "El tipo de orden debe ser name_asc o name_desc") String order,
+                        message = "El tipo de orden debe ser name_asc o name_desc")
+            */
             @PathVariable
                 @Pattern(
                         regexp = "followers|followed",

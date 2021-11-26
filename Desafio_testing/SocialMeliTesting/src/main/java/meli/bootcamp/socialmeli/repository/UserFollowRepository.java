@@ -1,5 +1,6 @@
 package meli.bootcamp.socialmeli.repository;
 
+import meli.bootcamp.socialmeli.dto.UserDTO;
 import meli.bootcamp.socialmeli.exceptions.UserAlreadyFollowsException;
 import meli.bootcamp.socialmeli.exceptions.UserNotFollowsException;
 import meli.bootcamp.socialmeli.model.User;
@@ -31,11 +32,13 @@ public class UserFollowRepository implements IUSerFollowRepository{
     }
 
     @Override
-    public UserFollow checkUserFollow(int userID1, int userID2) {
-        return mListUserFollow.stream()
-                .filter(userFollow -> userFollow.getUserFollower() == userID1 && userFollow.getFollowedUser() == userID2)
-                .findFirst()
-                .orElseThrow(UserNotFollowsException::new);
+    public boolean checkUserFollow(int userID1, int userID2) {
+        boolean exist= mListUserFollow.stream()
+                .anyMatch(userFollow -> userFollow.getUserFollower() == userID1 && userFollow.getFollowedUser() == userID2);
+        if (!exist)
+                throw new UserNotFollowsException();
+        else
+            return true;
     }
 
     @Override
@@ -56,11 +59,14 @@ public class UserFollowRepository implements IUSerFollowRepository{
     public void unfollowUser(int userID1, int userID2) {
         mListUserFollow.remove(new UserFollow(userID1, userID2));
         Predicate<UserFollow> predicate= userFollow -> userFollow.getUserFollower() == userID1 && userFollow.getFollowedUser() == userID2;
-        mListUserFollow.removeIf(predicate);
+        if (!mListUserFollow.removeIf(predicate)) {
+            throw new UserNotFollowsException();
+        }
     }
 
     @Override
     public List<UserFollow> getAllList() {
         return mListUserFollow;
     }
+
 }

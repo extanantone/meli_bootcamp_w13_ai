@@ -96,6 +96,34 @@ public class ControllerAdviceExceptions extends ResponseEntityExceptionHandler {
 
     /**
      * @return handleExceptionInternal
+     *              Método que informa al cliente sobre la inexistencia del usuario en el sistema.
+     * */
+    @ExceptionHandler(value= {UserExistException.class})
+    protected ResponseEntity<Object> handleUserExist(
+            RuntimeException ex, WebRequest request) {
+        Map<String, String> bodyOfResponse = new HashMap<>();
+        bodyOfResponse.put("message", "El usuario ya existe dentro del sistema.");
+        bodyOfResponse.put("response_code", "400");
+        return handleExceptionInternal(ex, bodyOfResponse,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    /**
+     * @return handleExceptionInternal
+     *              Método que informa al cliente sobre la inexistencia del usuario en el sistema.
+     * */
+    @ExceptionHandler(value= {OrderTypeNotValidException.class})
+    protected ResponseEntity<Object> handleOrderTypeNotValid(
+            RuntimeException ex, WebRequest request) {
+        Map<String, String> bodyOfResponse = new HashMap<>();
+        bodyOfResponse.put("message", "El tipo de ordenamiento no es valido.");
+        bodyOfResponse.put("exception", "OrderTypeNotValidException");
+        return handleExceptionInternal(ex, bodyOfResponse,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    /**
+     * @return handleExceptionInternal
      *              Método que informa al cliente sobre la existencia del post en el sistema.
      * */
     @ExceptionHandler(value= {PostAlreadyExistException.class})

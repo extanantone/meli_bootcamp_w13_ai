@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import meli.bootcamp.socialmeli.exceptions.ControllerAdviceExceptions;
 import meli.bootcamp.socialmeli.exceptions.UserNotExistException;
 import meli.bootcamp.socialmeli.model.User;
-import meli.bootcamp.socialmeli.model.UserFollow;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -20,6 +19,12 @@ public class UserRepository implements IUserRepository{
 
     public UserRepository(){
         this.mListUsers= loadJSON();
+    }
+
+    @Override
+    public User addUser(User user) {
+        mListUsers.add(user);
+        return user;
     }
 
     @Override
@@ -57,6 +62,12 @@ public class UserRepository implements IUserRepository{
                 .findFirst()
                 .orElseThrow(UserNotExistException::new)
                 .getUserName();
+    }
+
+    @Override
+    public boolean userExist(int userId) {
+        return mListUsers.stream()
+                .anyMatch(user -> user.getUserId()==userId);
     }
 
     @Override

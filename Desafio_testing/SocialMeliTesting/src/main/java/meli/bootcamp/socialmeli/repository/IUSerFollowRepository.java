@@ -21,7 +21,7 @@ public interface IUSerFollowRepository {
      * @param userID2 Usuario a seguir.
      *                Consulta si un usuario sigue a otro.
      */
-    UserFollow checkUserFollow(int userID1, int userID2);
+    boolean checkUserFollow(int userID1, int userID2);
 
     /**
      * @param userID1 usuario a consultar.
@@ -46,4 +46,5 @@ public interface IUSerFollowRepository {
      *                Devuelve todos los promo post dentro del sistema.
      */
     List<UserFollow> getAllList();
+
 }

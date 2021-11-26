@@ -10,7 +10,20 @@ import java.util.List;
  */
 public interface IUserRepository {
     /**
-     * @param userID usuario a cosultar.
+     * @param user
+     * @implNote Se agrega un usuario al sistema
+     * @return
+     */
+    User addUser(User user);
+
+    /**
+     * @param userId UsuarioID a consultar
+     * @implNote Metodo que busca si un usuario existe en el sistema
+     */
+    boolean userExist(int userId);
+
+    /**
+     * @param userID usuario a consultar.
      *               Consulta si un usuario existe en el sistema.
      */
     User findUserById(int userID);
