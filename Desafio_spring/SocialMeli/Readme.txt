@@ -175,7 +175,7 @@ Consideraciones Generales:
           - Si el usuario existe retorna Json con la lista y Status Code 200.
 
 
-MEJORA PLANTEADA 
+MEJORA PLANTEADA
 
 *US 0013: Obtener un listado de todos los productos en promoción de un determinado vendedor ordenados por fecha de
 publicación
