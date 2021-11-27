@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Getter
@@ -16,8 +18,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostDTO implements Comparable<PostDTO> {
+    @Min(value=0, message = "El id de usuario debe ser mayor a cero")
     int user_id;
+    @Min(value=0, message = "El id de post debe ser mayor a cero")
     int id_post;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
     LocalDate date;
     ProductDTO detail;

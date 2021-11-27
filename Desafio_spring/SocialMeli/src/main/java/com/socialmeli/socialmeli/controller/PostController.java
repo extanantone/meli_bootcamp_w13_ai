@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class PostController {
     ResponseSuccessfullyDTO responseSuccessfullyDTO;
 
     @PostMapping("/post")
-    public ResponseEntity<?> newPost(@RequestBody PostDTO postDTO){
+    public ResponseEntity<?> newPost(@Valid @RequestBody PostDTO postDTO){
         return new ResponseEntity(userAndPostService.newPost(postDTO), HttpStatus.OK);
     }
 
