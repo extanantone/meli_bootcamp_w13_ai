@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -86,7 +87,6 @@ public class SocialMeliServiceTest {
         @DisplayName("El usuario existe y sigue a otro usuario")
         public void checkIfTheUserToFollowExist(){
             //arrange
-            String order = null;
             Integer userId = 1;
             Integer followerId = 2;
 
@@ -131,7 +131,6 @@ public class SocialMeliServiceTest {
                     , "Se espera que lance la exception"
             );
 
-            System.out.println(thrown.getError().getDescription());
 
             Assertions.assertTrue(thrown.getError().getDescription().contains("no puede ser encontrado"));
 
@@ -141,4 +140,73 @@ public class SocialMeliServiceTest {
         }
     }
 
+    @Nested
+    @DisplayName("Verificar que el usuario a dejar de seguir exista. (US-0007)")
+    class TestCheckThatTheUserToUnfollowExist
+    {
+        @Test
+        @DisplayName("Permite continuar con normalidad.")
+        public void checkIfThatUserToUnfollowExist()
+        {
+            //arrange
+            Integer userId = 1;
+            Integer followerId = 2;
+
+
+            // Mock
+
+            User mockUser = new User();
+            mockUser.setUserId(userId);
+            User mockFollower = new User();
+            mockFollower.setUserId(followerId);
+
+            List<Integer> followerList = new ArrayList<>();
+            followerList.add(followerId);
+            mockUser.setFollowersId(followerList);
+
+            // When
+            when(userRepository.findById(mockFollower.getUserId())).thenReturn(Optional.of(mockFollower));
+
+
+            //Act
+            try {
+                socialMeliService.unfollow(mockUser.getUserId(),followerId);
+                Mockito.verify(userRepository, times( 2)).findById(Mockito.anyInt());
+                //Assert
+                Assertions.assertTrue(true);
+            } catch (UserNotFoundException | UserSelfUseException | UserAlreadyInUseException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        @Test
+        @DisplayName("Notifica la no existencia mediante una excepción.")
+        public void checkIfThatUserToUnfollowExistButThrowException() {
+            //arrange
+            Integer userId = 1;
+            Integer followUser = 2;
+
+
+            // Mock
+            User userMock = new User(userId ,"user", new ArrayList<>());
+            // When
+            when(userRepository.findById(followUser)).thenReturn(Optional.empty());
+
+            //Act
+            UserNotFoundException thrown = Assertions.assertThrows(
+                    UserNotFoundException.class,
+                    () -> socialMeliService.unfollow(userMock.getUserId(),followUser)
+                    , "Se espera que lance la exception"
+            );
+
+
+            Assertions.assertTrue(thrown.getError().getDescription().contains("no puede ser encontrado"));
+
+
+
+
+
+        }
+    }
 }

@@ -66,7 +66,7 @@ public class SocialMeliService implements IService {
 
         User user = this.getUserById(userIdToUnfollow);
 
-        if( !user.getFollowersId().stream().anyMatch( u -> u.equals(userId) ) ){
+        if( user.getFollowersId().stream().anyMatch( u -> u.equals(userId) ) ){
             throw new UserAlreadyInUseException(userIdToUnfollow);
         }
 
