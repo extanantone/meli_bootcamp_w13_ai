@@ -1,6 +1,6 @@
 package com.example.socialmeli.unit.util;
 
-import com.example.socialmeli.TestUtilsGenerator;
+import com.example.socialmeli.TestUtilsGet;
 import com.example.socialmeli.dto.PostDTO;
 import com.example.socialmeli.dto.UserDTO;
 import com.example.socialmeli.utils.*;
@@ -18,7 +18,7 @@ public class SortersTests {
     public void sortAlphaAsc(){
         Sorter alphaAsc = new AlphaAscSorter();
 
-        List<UserDTO> unsortedList = TestUtilsGenerator.getUnsortedUserDTOList();
+        List<UserDTO> unsortedList = TestUtilsGet.getUnsortedUserDTOList();
         //manuel, azul y fede
 
         List<UserDTO> sortedList = unsortedList.stream().sorted( (u, b) -> alphaAsc.sort(u,b) ).collect(Collectors.toList());
@@ -34,7 +34,7 @@ public class SortersTests {
     public void sortAlphaDesc(){
         Sorter alphaDesc = new AlphaDescSorter();
 
-        List<UserDTO> unsortedList = TestUtilsGenerator.getUnsortedUserDTOList();
+        List<UserDTO> unsortedList = TestUtilsGet.getUnsortedUserDTOList();
         //manuel, azul y fede
 
         List<UserDTO> sortedList = unsortedList.stream().sorted( (u, b) -> alphaDesc.sort(u,b) ).collect(Collectors.toList());
@@ -50,7 +50,7 @@ public class SortersTests {
     public void sortDateAsc(){
         Sorter dateAsc = new DateAscSorter();
 
-        List<PostDTO> unsortedList = TestUtilsGenerator.getUnsortedPostDTOList();
+        List<PostDTO> unsortedList = TestUtilsGet.getUnsortedPostDTOList();
 
         List<PostDTO> sortedList = unsortedList.stream().sorted( (u, b) -> dateAsc.sort(u,b) ).collect(Collectors.toList());
 
@@ -67,7 +67,7 @@ public class SortersTests {
     public void sortDateDesc(){
         Sorter dateDesc = new DateDescSorter();
 
-        List<PostDTO> unsortedList = TestUtilsGenerator.getUnsortedPostDTOList();
+        List<PostDTO> unsortedList = TestUtilsGet.getUnsortedPostDTOList();
 
         List<PostDTO> sortedList = unsortedList.stream().sorted( (u, b) -> dateDesc.sort(u,b) ).collect(Collectors.toList());
 

@@ -5,43 +5,42 @@ import com.example.socialmeli.dto.UserDTO;
 import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.Product;
 import com.example.socialmeli.model.User;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.modelmapper.ModelMapper;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.ResourceUtils;
-
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TestUtilsGenerator {
+public class TestUtilsGet {
+
+    private static ModelMapper mapper = new ModelMapper();
 
     public static User getManuel() {
         User manuel = new User();
         manuel.setUserId(1);
         manuel.setUserName("Manuel");
+        manuel.setFollowersId(Collections.emptyList());
         return manuel;
     }
+
     public static User getAzul() {
         User azul = new User();
         azul.setUserId(2);
         azul.setUserName("Azul");
+        azul.setFollowersId(Collections.emptyList());
         return azul;
     }
 
     public static User getFede() {
         User fede = new User();
-        fede.setUserId(2);
+        fede.setUserId(3);
         fede.setUserName("Fede");
+        fede.setFollowersId(Collections.emptyList());
         return fede;
     }
 
 
     public static List<UserDTO> getUnsortedUserDTOList() {
-        ModelMapper mapper = new ModelMapper();
         List<User> users = List.of(getManuel(), getAzul(), getFede());
         return users.stream().map(u -> mapper.map(u, UserDTO.class)).collect(Collectors.toList());
     }
@@ -66,6 +65,7 @@ public class TestUtilsGenerator {
 
         return zapatillas;
     }
+
     public static Post getSilla() {
         Post silla = new Post();
 
@@ -109,9 +109,7 @@ public class TestUtilsGenerator {
     }
 
 
-
     public static List<PostDTO> getUnsortedPostDTOList() {
-        ModelMapper mapper = new ModelMapper();
 
         List<Post> posts = List.of(getZapatillas(), getSilla(), getComputadora());
 
@@ -119,14 +117,13 @@ public class TestUtilsGenerator {
     }
 
     public static List<Post> getUnsortedPostList() {
-        ModelMapper mapper = new ModelMapper();
 
         return getUnsortedPostDTOList().stream().map(u -> mapper.map(u, Post.class)).collect(Collectors.toList());
     }
 
     public static List<Post> getOldPostList() {
         List<Post> postList = getUnsortedPostList();
-        for (Post p:postList) {
+        for (Post p : postList) {
             p.setDate(threeWeeksAgo());
         }
 
@@ -138,7 +135,7 @@ public class TestUtilsGenerator {
         Date now = new Date();
 
         List<Post> postList = getUnsortedPostList();
-        for (Post p:postList) {
+        for (Post p : postList) {
             p.setDate(now);
         }
 
@@ -165,72 +162,5 @@ public class TestUtilsGenerator {
                 .atStartOfDay(ZoneId.systemDefault())
                 .toInstant());
     }
-
-    public static void emptyUsersFile() {
-
-        PrintWriter writer = null;
-
-        try {
-            writer = new PrintWriter(ResourceUtils.getFile("./src/main/resources/usersSocialMeli.json"));
-        } catch (
-                IOException e) {
-            e.printStackTrace();
-        }
-
-        writer.print("[]");
-        writer.close();
-    }
-
-    public static void restoreUsersFile() {
-
-        PrintWriter writer = null;
-
-        try {
-            writer = new PrintWriter(ResourceUtils.getFile("./src/main/resources/usersSocialMeli.json"));
-        } catch (
-                IOException e) {
-            e.printStackTrace();
-        }
-
-        writer.print("[\n" +
-                "  {\n" +
-                "    \"userName\": \"Leon Comprador\",\n" +
-                "    \"userId\": 1,\n" +
-                "    \"followersId\": []\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"userName\": \"Juan Comprador\",\n" +
-                "    \"userId\": 2,\n" +
-                "    \"followersId\": []\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"userName\": \"Manuel Vendedor\",\n" +
-                "    \"userId\": 3,\n" +
-                "    \"followersId\": []\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"userName\": \"Pedro Vendedor\",\n" +
-                "    \"userId\": 4,\n" +
-                "    \"followersId\": []\n" +
-                "  }\n" +
-                "]");
-        writer.close();
-    }
-
-    public static void emptyPostsFile() {
-
-        PrintWriter writer = null;
-
-        try {
-            writer = new PrintWriter(ResourceUtils.getFile("./src/main/resources/postsSocialMeli.json"));
-        } catch (
-                IOException e) {
-            e.printStackTrace();
-        }
-
-        writer.print("[]");
-        writer.close();
-    }
-
 }
 

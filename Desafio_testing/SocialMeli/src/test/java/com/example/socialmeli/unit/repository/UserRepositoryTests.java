@@ -1,36 +1,35 @@
 package com.example.socialmeli.unit.repository;
 
+import com.example.socialmeli.TestUtilsFileHandling;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.repositories.IRepository;
 import com.example.socialmeli.repositories.UsuarioRepository;
-import com.example.socialmeli.TestUtilsGenerator;
-import org.junit.After;
+import com.example.socialmeli.TestUtilsGet;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UsuarioRepositoryTests {
+public class UserRepositoryTests {
     IRepository usuarioRepository;
 
-    public UsuarioRepositoryTests() {
+    public UserRepositoryTests() {
         //setUp, no va en método @BeforeAll por restricción de static
         this.usuarioRepository = new UsuarioRepository();
     }
 
-    @AfterAll
-    private static void cleanUp() {
-        TestUtilsGenerator.restoreUsersFile();
+    @BeforeEach
+    private void cleanUp() throws JsonProcessingException {
+        TestUtilsFileHandling.restoreUsersFile();
     }
 
-    @BeforeEach
-    private void emptyRepository() {
-        TestUtilsGenerator.emptyUsersFile();
+    @AfterAll
+    private static void emptyRepository() {
+        TestUtilsFileHandling.emptyUsersFile();
     }
 
     @Test
@@ -40,7 +39,7 @@ public class UsuarioRepositoryTests {
 
         assertAll(
                 () -> assertEquals(manuel.getUserId(), 3),
-                () -> assertEquals(manuel.getUserName(), "Manuel Vendedor"),
+                () -> assertEquals(manuel.getUserName(), "Fede"),
                 () -> assertTrue(manuel.getFollowersId().isEmpty())
         );
     }

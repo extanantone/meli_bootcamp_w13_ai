@@ -4,14 +4,14 @@ import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository("UserRepository")
@@ -20,26 +20,32 @@ public class UsuarioRepository implements IRepository<User> {
     List<User> users;
 
     public UsuarioRepository(){
-        this.users = loadFromFile("classpath:usersSocialMeli.json");
+
+        Properties properties =  new Properties();
+
+        try {
+            properties.load(new ClassPathResource("application.properties").getInputStream());
+            String SCOPE = properties.getProperty("api.scope");
+            this.users = loadFromFile(SCOPE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    public static List<User>  loadFromFile(String path) {
+    public static List<User>  loadFromFile(String SCOPE) {
 
         List<User> loadedData = null;
 
-        File file = null;
+        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            file = ResourceUtils.getFile(path);
+            File file = ResourceUtils.getFile("./src/" + SCOPE + "/resources/usersSocialMeli.json");
+            loadedData = objectMapper.readValue(file, new TypeReference<>() {
+            });
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        TypeReference<List<User>> typeRef = new TypeReference<>() {};
-
-        try {
-            loadedData = objectMapper.readValue(file, typeRef);
+            System.out.println("Failed while initializing DB, check your resources files");
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Failed while initializing DB, check your JSON formatting.");
         }
 
         return loadedData;

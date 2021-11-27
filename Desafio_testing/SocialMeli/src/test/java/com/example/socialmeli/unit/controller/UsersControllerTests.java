@@ -1,6 +1,6 @@
 package com.example.socialmeli.unit.controller;
 
-import com.example.socialmeli.TestUtilsGenerator;
+import com.example.socialmeli.TestUtilsGet;
 import com.example.socialmeli.controllers.UsersController;
 import com.example.socialmeli.dto.response.CountFollowersResponseDTO;
 import com.example.socialmeli.exceptions.UserAlreadyInUseException;
@@ -8,6 +8,7 @@ import com.example.socialmeli.exceptions.UserNotFoundException;
 import com.example.socialmeli.exceptions.UserSelfUseException;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.services.SocialMeliService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,11 +25,16 @@ public class UsersControllerTests {
     @InjectMocks
     UsersController usersController;
 
+    @AfterEach
+    public void resetMocks() {
+        reset(socialMeliServiceMock);
+    }
+
     @Test
     public void findsIdOfUserToFollow() throws UserNotFoundException, UserSelfUseException, UserAlreadyInUseException {
 
-        User azul = TestUtilsGenerator.getAzul();
-        User fede = TestUtilsGenerator.getFede();
+        User azul = TestUtilsGet.getAzul();
+        User fede = TestUtilsGet.getFede();
 
         when(socialMeliServiceMock.getUserById(2)).thenReturn(azul);
         when(socialMeliServiceMock.getUserById(3)).thenReturn(fede);
@@ -36,15 +42,14 @@ public class UsersControllerTests {
         usersController.followUser(2, 3);
 
         verify(socialMeliServiceMock, atLeastOnce()).follow(2, 3);
-        reset(socialMeliServiceMock);
 
     }
 
     @Test
     public void findsIdOfUserToUnFollow() throws UserNotFoundException, UserSelfUseException, UserAlreadyInUseException {
 
-        User azul = TestUtilsGenerator.getAzul();
-        User fede = TestUtilsGenerator.getFede();
+        User azul = TestUtilsGet.getAzul();
+        User fede = TestUtilsGet.getFede();
 
         when(socialMeliServiceMock.getUserById(2)).thenReturn(azul);
         when(socialMeliServiceMock.getUserById(3)).thenReturn(fede);
@@ -52,7 +57,6 @@ public class UsersControllerTests {
         usersController.unfollowUser(2, 3);
 
         verify(socialMeliServiceMock, atLeastOnce()).unfollow(2, 3);
-        reset(socialMeliServiceMock);
 
     }
 
@@ -64,7 +68,6 @@ public class UsersControllerTests {
         usersController.countFollowers(3);
 
         verify(socialMeliServiceMock, atLeastOnce()).countFollowers(3);
-        reset(socialMeliServiceMock);
 
     }
 }
