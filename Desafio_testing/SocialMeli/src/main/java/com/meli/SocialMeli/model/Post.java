@@ -1,16 +1,12 @@
 package com.meli.SocialMeli.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
+@Data
 public class Post {
     private int userId;
     private int idPost;

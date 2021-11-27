@@ -1,10 +1,12 @@
 package com.meli.SocialMeli.unit.service;
 
+import com.meli.SocialMeli.dto.CountDTO;
 import com.meli.SocialMeli.dto.FollowedDTO;
 import com.meli.SocialMeli.dto.FollowersDTO;
 import com.meli.SocialMeli.dto.MensajeDTO;
 import com.meli.SocialMeli.exception.BadRequestException;
 import com.meli.SocialMeli.helper.Helper;
+import com.meli.SocialMeli.model.Post;
 import com.meli.SocialMeli.model.User;
 import com.meli.SocialMeli.reposity.IRepository;
 import com.meli.SocialMeli.service.SocialMeliService;
@@ -65,7 +67,6 @@ public class SocialMeliServiceTest {
         BadRequestException userIdToFollowBadExpected = Assertions.assertThrows(BadRequestException.class, ()->service.addFollow(userId, userIdToFollow));
         Assertions.assertEquals(userIdToFollowBadExpected.getMensaje(), userIdToFollowBadCurrent.getMensaje());
     }
-
 
     @DisplayName("T-0002: Verificar que el usuario a dejar de seguir exista (Comportamiento: Permite continuar con normalidad).")
     @Test
@@ -150,25 +151,13 @@ public class SocialMeliServiceTest {
         );
     }
 
-    @DisplayName("T-0003 Verificar que el tipo de ordenamiento alfabético exista (Comportamiento: Permite continuar con normalidad)")
+    @DisplayName("T-0003 Verificar que el tipo de ordenamiento alfabético exista (Comportamiento: Notificar la no existencia Mediante una Excepción)")
     @Test
     public void verifyThatNotExistTypeOfOrder(){
         //Arrange
         String orderAsc = null;
         String orderDesc = null;
         User userId1 = new User(1, "Gabriela", new LinkedList<User>(), new LinkedList<User>());
-        User userId2 = new User(2, "Anibal", new LinkedList<User>(), new LinkedList<User>());
-        User userId3 = new User(3, "Magali", new LinkedList<User>(), new LinkedList<User>());
-        //Seguidos por User1
-        LinkedList<User> listCurrentOrdered = new LinkedList<>();
-        listCurrentOrdered.add(userId2);
-        listCurrentOrdered.add(userId3);
-        userId1.setFollowed(listCurrentOrdered);
-        //Siguen a User1
-        LinkedList<User> listCurrentOrdered2 = new LinkedList<>();
-        listCurrentOrdered2.add(userId2);
-        listCurrentOrdered2.add(userId3);
-        userId1.setFollowers(listCurrentOrdered2);
 
         //Mock
         Mockito.when(mockRepository.findUser(userId1.getUserId())).thenReturn(userId1);
@@ -176,10 +165,8 @@ public class SocialMeliServiceTest {
 
         // Act & Assert
         Assertions.assertAll(
-                ()->Assertions.assertDoesNotThrow(()->service.listFollowers(userId1.getUserId(), orderAsc)),
-                ()->Assertions.assertDoesNotThrow(()->service.listFollowed(userId1.getUserId(), orderAsc)),
-                ()->Assertions.assertDoesNotThrow(()->service.listFollowers(userId1.getUserId(), orderDesc)),
-                ()->Assertions.assertDoesNotThrow(()->service.listFollowed(userId1.getUserId(), orderDesc))
+                ()->Assertions.assertThrows(BadRequestException.class, ()->service.listFollowers(userId1.getUserId(), orderAsc)),
+                ()->Assertions.assertThrows(BadRequestException.class, ()->service.listFollowers(userId1.getUserId(), orderDesc))
         );
     }
 
@@ -248,5 +235,48 @@ public class SocialMeliServiceTest {
         );
 
     }
+
+    @DisplayName("T-0005 Verificar que el tipo de ordenamiento por fecha exista (Comportamiento: Permite continuar con normalidad)")
+    @Test
+    public void verifyThatExistTypeOfOrderDate(){
+        //Arrange
+        String orderAsc = "date_asc";
+        String orderDesc = "date_desc";
+        User userId1 = new User(1, "Gabriela", new LinkedList<User>(), new LinkedList<User>());
+
+        //Mock
+        Mockito.when(mockRepository.findUser(userId1.getUserId())).thenReturn(userId1);
+
+
+        // Act & Assert
+        Assertions.assertAll(
+                ()->Assertions.assertNotNull(orderAsc),
+                ()->Assertions.assertNotNull(orderDesc),
+                ()->Assertions.assertDoesNotThrow(()->service.listPostFollowed(userId1.getUserId(), orderAsc)),
+                ()->Assertions.assertDoesNotThrow(()->service.listPostFollowed(userId1.getUserId(), orderDesc))
+        );
+    }
+
+    @DisplayName("T-0005 Verificar que el tipo de ordenamiento alfabético exista (Comportamiento: Notifica la no existencia mediante una excepción)")
+    @Test
+    public void verifyThatNotExistTypeOfOrderDate(){
+        //Arrange
+        String orderAsc = null;
+        String orderDesc = null;
+        User userId1 = new User(1, "Gabriela", new LinkedList<User>(), new LinkedList<User>());
+
+        //Mock
+        Mockito.when(mockRepository.findUser(userId1.getUserId())).thenReturn(userId1);
+
+        // Act & Assert
+        Assertions.assertAll(
+                ()->Assertions.assertThrows(BadRequestException.class, ()->service.listPostFollowed(userId1.getUserId(), orderAsc)),
+                ()->Assertions.assertThrows(BadRequestException.class, ()->service.listPostFollowed(userId1.getUserId(), orderDesc))
+        );
+    }
+
+
+
+    
 
 }
