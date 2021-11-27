@@ -119,7 +119,8 @@ public class SocialMeliServiceTest {
     @Test
     public void verifyThatExistTypeOfOrder(){
         //Arrange
-        String order = "name_asc";
+        String orderAsc = "name_asc";
+        String orderDesc = "name_desc";
         User userId1 = new User(1, "Gabriela", new LinkedList<User>(), new LinkedList<User>());
         User userId2 = new User(2, "Anibal", new LinkedList<User>(), new LinkedList<User>());
         User userId3 = new User(3, "Magali", new LinkedList<User>(), new LinkedList<User>());
@@ -137,14 +138,48 @@ public class SocialMeliServiceTest {
         //Mock
         Mockito.when(mockRepository.findUser(userId1.getUserId())).thenReturn(userId1);
 
-        //Act
-        FollowersDTO followerOrder = service.listFollowers(userId1.getUserId(), order);
-        FollowedDTO followedOrder = service.listFollowed(userId1.getUserId(), order);
 
-        // Assert
+        // Act & Assert
         Assertions.assertAll(
-                ()->Assertions.assertEquals(Helper.listFollowersToFollowers(userId1).getFollowers(), followerOrder.getFollowers()),
-                ()->Assertions.assertEquals(Helper.listFollowedToFollowed(userId1).getFollowed(), followedOrder.getFollowed())
+                ()->Assertions.assertNotNull(orderAsc),
+                ()->Assertions.assertNotNull(orderDesc),
+                ()->Assertions.assertDoesNotThrow(()->service.listFollowers(userId1.getUserId(), orderAsc)),
+                ()->Assertions.assertDoesNotThrow(()->service.listFollowed(userId1.getUserId(), orderAsc)),
+                ()->Assertions.assertDoesNotThrow(()->service.listFollowers(userId1.getUserId(), orderDesc)),
+                ()->Assertions.assertDoesNotThrow(()->service.listFollowed(userId1.getUserId(), orderDesc))
+        );
+    }
+
+    @DisplayName("T-0003 Verificar que el tipo de ordenamiento alfabético exista (Comportamiento: Permite continuar con normalidad)")
+    @Test
+    public void verifyThatNotExistTypeOfOrder(){
+        //Arrange
+        String orderAsc = null;
+        String orderDesc = null;
+        User userId1 = new User(1, "Gabriela", new LinkedList<User>(), new LinkedList<User>());
+        User userId2 = new User(2, "Anibal", new LinkedList<User>(), new LinkedList<User>());
+        User userId3 = new User(3, "Magali", new LinkedList<User>(), new LinkedList<User>());
+        //Seguidos por User1
+        LinkedList<User> listCurrentOrdered = new LinkedList<>();
+        listCurrentOrdered.add(userId2);
+        listCurrentOrdered.add(userId3);
+        userId1.setFollowed(listCurrentOrdered);
+        //Siguen a User1
+        LinkedList<User> listCurrentOrdered2 = new LinkedList<>();
+        listCurrentOrdered2.add(userId2);
+        listCurrentOrdered2.add(userId3);
+        userId1.setFollowers(listCurrentOrdered2);
+
+        //Mock
+        Mockito.when(mockRepository.findUser(userId1.getUserId())).thenReturn(userId1);
+
+
+        // Act & Assert
+        Assertions.assertAll(
+                ()->Assertions.assertDoesNotThrow(()->service.listFollowers(userId1.getUserId(), orderAsc)),
+                ()->Assertions.assertDoesNotThrow(()->service.listFollowed(userId1.getUserId(), orderAsc)),
+                ()->Assertions.assertDoesNotThrow(()->service.listFollowers(userId1.getUserId(), orderDesc)),
+                ()->Assertions.assertDoesNotThrow(()->service.listFollowed(userId1.getUserId(), orderDesc))
         );
     }
 
