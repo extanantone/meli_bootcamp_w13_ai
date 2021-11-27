@@ -2,12 +2,11 @@ package com.example.socialmeli.unit.service;
 
 import com.example.socialmeli.TestUtilsGenerator;
 import com.example.socialmeli.dto.PostDTO;
+import com.example.socialmeli.dto.UserDTO;
 import com.example.socialmeli.dto.response.CountFollowersResponseDTO;
-import com.example.socialmeli.dto.response.FollowersResponseDTO;
 import com.example.socialmeli.dto.response.PostsResponseDTO;
 import com.example.socialmeli.exceptions.InvalidSortingCriteriaException;
 import com.example.socialmeli.exceptions.UserNotFoundException;
-import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.repositories.PostRepository;
 import com.example.socialmeli.repositories.UsuarioRepository;
@@ -17,12 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -36,19 +31,22 @@ public class SocialMeliServiceTests {
 
     @InjectMocks
     SocialMeliService socialMeliService;
+    private List<PostDTO> userPosts;
+    private List<UserDTO> followedList;
 
     @Test
     public void findByIdTestExistingUser() throws UserNotFoundException {
 
-        User manuel = new User();
-        manuel.setUserId(3);
-        manuel.setUserName("Manuel Vendedor");
-        when(usuarioRepositoryMock.findById(3)).thenReturn(Optional.of(manuel));
+        User manuel = TestUtilsGenerator.getManuel();
+        when(usuarioRepositoryMock.findById(1)).thenReturn(Optional.of(manuel));
 
-        User response = socialMeliService.getUserById(3);
+        User response = socialMeliService.getUserById(1);
 
-        verify(usuarioRepositoryMock, atLeastOnce()).findById(3);
         assertEquals(response, manuel);
+        verify(usuarioRepositoryMock, atLeastOnce()).findById(1);
+        reset(usuarioRepositoryMock);
+
+
 
     }
 
@@ -59,48 +57,92 @@ public class SocialMeliServiceTests {
         Throwable exception = assertThrows(UserNotFoundException.class, () -> socialMeliService.getUserById(123));
 
         verify(usuarioRepositoryMock, atLeastOnce()).findById(123);
+        reset(usuarioRepositoryMock);
 
     }
 
     @Test
     public void getFollowersCount() throws UserNotFoundException {
 
-        User manuel = new User();
-        manuel.setUserId(3);
-        manuel.setUserName("Manuel Vendedor");
+        User manuel = TestUtilsGenerator.getManuel();
         manuel.setFollowersId(List.of(4, 2, 6, 1, 5));
 
-        when(usuarioRepositoryMock.findById(3)).thenReturn(Optional.of(manuel));
+        when(usuarioRepositoryMock.findById(1)).thenReturn(Optional.of(manuel));
 
-        CountFollowersResponseDTO followersCountDTO  = socialMeliService.countFollowers(3);
+        CountFollowersResponseDTO followersCountDTO  = socialMeliService.countFollowers(1);
 
         assertEquals(5, followersCountDTO.getFollowersCount());
-
-        verify(usuarioRepositoryMock, atLeastOnce()).findById(3);
+        verify(usuarioRepositoryMock, atLeastOnce()).findById(1);
+        reset(usuarioRepositoryMock);
 
     }
 
-    //@Test
-    //public void oldPostsCheckAge() throws UserNotFoundException, InvalidSortingCriteriaException {
+    @Test
+    public void oldPostsCheckAge() throws UserNotFoundException, InvalidSortingCriteriaException {
 
-        //User manuel = new User();
-        //manuel.setUserId(3);
-        //manuel.setUserName("Manuel Vendedor");
+        User manuel = TestUtilsGenerator.getManuel();
+        User azul = TestUtilsGenerator.getAzul();
 
-        //List<Post> postList = TestUtilsGenerator.getOldPostList();
+        List postList = TestUtilsGenerator.getOldPostList();
 
-        //when(usuarioRepositoryMock.findFollowed(4)).thenReturn(List.of(manuel));
-        //when(usuarioRepositoryMock.findById(anyInt())).thenReturn(Optional.of(new User()));
-        //when(postRepositoryMock.findByUserId(3)).thenReturn(Collections.singletonList(postList));
+        when(usuarioRepositoryMock.findFollowed(2)).thenReturn(List.of(manuel));
+        when(usuarioRepositoryMock.findById(anyInt())).thenReturn(Optional.of(azul));
+        when(postRepositoryMock.findByUserId(1)).thenReturn(postList);
 
-        //PostsResponseDTO posts  = socialMeliService.getFollowedPostList(4, "date_asc");
+        PostsResponseDTO posts  = socialMeliService.getFollowedPostList(2, null);
 
-        //assertEquals(0, posts.getPosts().size());
+        assertEquals(0, posts.getPosts().size());
+        verify(usuarioRepositoryMock, atLeastOnce()).findFollowed(2);
+        verify(postRepositoryMock, atLeastOnce()).findByUserId(1);
+        reset(usuarioRepositoryMock);
+        reset(postRepositoryMock);
 
-        //verify(usuarioRepositoryMock, atLeastOnce()).findFollowed(4);
-        //verify(postRepositoryMock, atLeastOnce()).findByUserId(3);
 
-    //}
+    }
+
+    @Test
+    public void recentPostsCheckAge() throws UserNotFoundException, InvalidSortingCriteriaException {
+
+        User manuel = TestUtilsGenerator.getManuel();
+        User azul = TestUtilsGenerator.getAzul();
+
+        List postList = TestUtilsGenerator.getRecentPostList();
+
+        when(usuarioRepositoryMock.findFollowed(2)).thenReturn(List.of(manuel));
+        when(usuarioRepositoryMock.findById(anyInt())).thenReturn(Optional.of(azul));
+        when(postRepositoryMock.findByUserId(1)).thenReturn(postList);
+
+        PostsResponseDTO posts  = socialMeliService.getFollowedPostList(2, null);
+
+        assertEquals(3, posts.getPosts().size());
+        verify(usuarioRepositoryMock, atLeastOnce()).findFollowed(2);
+        verify(postRepositoryMock, atLeastOnce()).findByUserId(1);
+        reset(usuarioRepositoryMock);
+        reset(postRepositoryMock);
+
+    }
+
+    @Test
+    public void mixedAgePostsCheckAge() throws UserNotFoundException, InvalidSortingCriteriaException {
+
+        User manuel = TestUtilsGenerator.getManuel();
+        User azul = TestUtilsGenerator.getAzul();
+
+        List postList = TestUtilsGenerator.getPostListWithOneRecentPost();
+
+        when(usuarioRepositoryMock.findFollowed(2)).thenReturn(List.of(manuel));
+        when(usuarioRepositoryMock.findById(anyInt())).thenReturn(Optional.of(azul));
+        when(postRepositoryMock.findByUserId(1)).thenReturn(postList);
+
+        PostsResponseDTO posts  = socialMeliService.getFollowedPostList(2, null);
+
+        assertEquals(1, posts.getPosts().size());
+        verify(usuarioRepositoryMock, atLeastOnce()).findFollowed(2);
+        verify(postRepositoryMock, atLeastOnce()).findByUserId(1);
+        reset(usuarioRepositoryMock);
+        reset(postRepositoryMock);
+
+    }
 
     //@Test
 

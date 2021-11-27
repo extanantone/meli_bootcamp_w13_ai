@@ -19,35 +19,43 @@ import java.util.stream.Collectors;
 
 public class TestUtilsGenerator {
 
-
-    public static List<UserDTO> getUnsortedUserDTOList() {
-        ModelMapper mapper = new ModelMapper();
-
+    public static User getManuel() {
         User manuel = new User();
         manuel.setUserId(1);
         manuel.setUserName("Manuel");
-
+        return manuel;
+    }
+    public static User getAzul() {
         User azul = new User();
         azul.setUserId(2);
         azul.setUserName("Azul");
-
-        User fede = new User();
-        fede.setUserId(3);
-        fede.setUserName("Fede");
-
-        return List.of(manuel, azul, fede).stream().map(u -> mapper.map(u, UserDTO.class)).collect(Collectors.toList());
+        return azul;
     }
 
-    public static List<PostDTO> getUnsortedPostDTOList() {
-        ModelMapper mapper = new ModelMapper();
+    public static User getFede() {
+        User fede = new User();
+        fede.setUserId(2);
+        fede.setUserName("Fede");
+        return fede;
+    }
 
+
+    public static List<UserDTO> getUnsortedUserDTOList() {
+        ModelMapper mapper = new ModelMapper();
+        List<User> users = List.of(getManuel(), getAzul(), getFede());
+        return users.stream().map(u -> mapper.map(u, UserDTO.class)).collect(Collectors.toList());
+    }
+
+    public static Post getZapatillas() {
         Post zapatillas = new Post();
+
         zapatillas.setUserId(1);
         Date zapatillasDate = Date.from(LocalDate.of(2021, 11, 26).atStartOfDay(ZoneId.systemDefault()).toInstant());
         zapatillas.setDate(zapatillasDate);
         zapatillas.setCategory(14);
         zapatillas.setIdPost(1);
         zapatillas.setPrice(100);
+
         Product zapatillasDetail = new Product();
         zapatillasDetail.setProductId(1);
         zapatillasDetail.setProductName("zapatillas");
@@ -56,14 +64,18 @@ public class TestUtilsGenerator {
         zapatillasDetail.setType("Para correr");
         zapatillas.setDetail(zapatillasDetail);
 
-
+        return zapatillas;
+    }
+    public static Post getSilla() {
         Post silla = new Post();
+
         silla.setUserId(2);
         Date sillaDate = Date.from(LocalDate.of(2021, 11, 25).atStartOfDay(ZoneId.systemDefault()).toInstant());
         silla.setDate(sillaDate);
         silla.setCategory(15);
         silla.setIdPost(2);
         silla.setPrice(1000);
+
         Product sillaDetail = new Product();
         sillaDetail.setProductId(2);
         sillaDetail.setProductName("silla");
@@ -72,13 +84,19 @@ public class TestUtilsGenerator {
         sillaDetail.setType("de oficina");
         silla.setDetail(sillaDetail);
 
+        return silla;
+    }
+
+    public static Post getComputadora() {
         Post computadora = new Post();
+
         computadora.setUserId(3);
         Date computadoraDate = Date.from(LocalDate.of(2021, 11, 27).atStartOfDay(ZoneId.systemDefault()).toInstant());
         computadora.setDate(computadoraDate);
         computadora.setCategory(17);
         computadora.setIdPost(3);
         computadora.setPrice(10000);
+
         Product computadoraDetail = new Product();
         computadoraDetail.setProductId(3);
         computadoraDetail.setProductName("computadora");
@@ -87,7 +105,17 @@ public class TestUtilsGenerator {
         computadoraDetail.setType("gamer");
         computadora.setDetail(computadoraDetail);
 
-        return List.of(zapatillas, silla, computadora).stream().map(u -> mapper.map(u, PostDTO.class)).collect(Collectors.toList());
+        return computadora;
+    }
+
+
+
+    public static List<PostDTO> getUnsortedPostDTOList() {
+        ModelMapper mapper = new ModelMapper();
+
+        List<Post> posts = List.of(getZapatillas(), getSilla(), getComputadora());
+
+        return posts.stream().map(u -> mapper.map(u, PostDTO.class)).collect(Collectors.toList());
     }
 
     public static List<Post> getUnsortedPostList() {
@@ -124,8 +152,8 @@ public class TestUtilsGenerator {
         List<Post> postList = getUnsortedPostList();
 
         postList.get(0).setDate(now);
-        postList.get(0).setDate(threeWeeksAgo());
-        postList.get(0).setDate(threeWeeksAgo());
+        postList.get(1).setDate(threeWeeksAgo());
+        postList.get(2).setDate(threeWeeksAgo());
 
         return postList;
     }
