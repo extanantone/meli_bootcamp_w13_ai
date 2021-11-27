@@ -24,8 +24,8 @@ public class CompradorController {
     private CompradorServiceImplement compradorServiceImplement;
 
     @PostMapping("/users/{user_id}/follow/{user_id_to_follow}")
-    public ResponseEntity<?> seguirVendedor(@PathVariable int user_id, @PathVariable int user_id_to_follow) throws NotFoundVendedorException, NotFoundCompradorException {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<SeguimientoDTO> seguirVendedor(@PathVariable int user_id, @PathVariable int user_id_to_follow) throws NotFoundVendedorException, NotFoundCompradorException {
+        return new ResponseEntity<>(compradorServiceImplement.seguir(user_id, user_id_to_follow), HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}/followed/list")

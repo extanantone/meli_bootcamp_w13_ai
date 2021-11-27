@@ -12,8 +12,6 @@ import com.MeLi.SocialMeli.repository.VendedorRepositoryImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,11 +24,12 @@ public class CompradorService implements CompradorServiceImplement {
     private VendedorRepositoryImplement vendedorRepositoryImplement;
 
     @Override
-    public void seguir(int idSeguidor, int idSeguido) throws NotFoundCompradorException, NotFoundVendedorException {
+    public SeguimientoDTO seguir(int idSeguidor, int idSeguido) throws NotFoundCompradorException, NotFoundVendedorException {
         Comprador comprador = compradorRepositoryImplement.find(idSeguidor).orElseThrow(() -> new NotFoundCompradorException(idSeguidor));
         Vendedor vendedor = vendedorRepositoryImplement.find(idSeguido).orElseThrow(()->new NotFoundVendedorException(idSeguido));
         comprador.setSeguido(vendedor);
         vendedor.setSeguidor(comprador);
+        return new SeguimientoDTO(comprador.getId(),comprador.getNombre(),vendedor.getId(),vendedor.getNombre(),"Seguimiento exitoso");
     }
 
     @Override
