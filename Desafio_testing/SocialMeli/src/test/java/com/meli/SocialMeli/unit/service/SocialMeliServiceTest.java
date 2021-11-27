@@ -277,6 +277,29 @@ public class SocialMeliServiceTest {
 
 
 
-    
+    @DisplayName("T-0007: Verificar que la cantidad de seguidores de un determinado usuario sea correcta (Comportamiento: Devuelve el calculo correcto del total de la cantidad de seguidores que posee un usuario)")
+    @Test
+    public void verifyCorrectSizeListFollowers(){
+        //Arrange
+        String order = "name_asc";
+        User userId1 = new User(1, "Gabriela", new LinkedList<User>(), new LinkedList<User>());
+        User userId2 = new User(2, "Anibal", new LinkedList<User>(), new LinkedList<User>());
+        User userId3 = new User(3, "Magali", new LinkedList<User>(), new LinkedList<User>());
+
+        //Siguen a User1
+        LinkedList<User> listCurrentOrdered2 = new LinkedList<>();
+        listCurrentOrdered2.add(userId2);
+        listCurrentOrdered2.add(userId3);
+        userId1.setFollowers(listCurrentOrdered2);
+
+        //Mock
+        Mockito.when(mockRepository.findUser(userId1.getUserId())).thenReturn(userId1);
+
+        //Act
+        CountDTO followersCount = service.countFollowers(userId1.getUserId());
+
+        // Assert
+        Assertions.assertEquals(followersCount.getFollowersCount(), userId1.getFollowed().size());
+    }
 
 }
