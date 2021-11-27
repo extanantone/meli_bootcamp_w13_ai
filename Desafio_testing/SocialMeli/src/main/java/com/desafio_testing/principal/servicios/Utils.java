@@ -14,14 +14,12 @@ public class Utils {
      * @return
      */
     public static Double cleanNumeric(String dato){
-        String salida = dato.replaceAll("\\.","");
-        salida = salida.replaceAll(",","\\.");
-        try{
-            return Double.valueOf(salida);
-        } catch(Exception e)
-        {
+        if(!dato.matches("-?\\d{1,3}(\\.\\d{3})*(,\\d{1,2})?"))
             throw new NegocioException(EnumErrs.ERROR_PARSER.repMensaje(dato), EnumErrs.ERROR_PARSER.getCodigo());
-        }
+
+            String salida = dato.replaceAll("\\.","");
+            salida = salida.replaceAll(",","\\.");
+            return Double.valueOf(salida);
     }
 
     public static Double valValorString(String numeroFormato,String maxValor, String minValor){

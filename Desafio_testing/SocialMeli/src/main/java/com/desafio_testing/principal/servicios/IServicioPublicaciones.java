@@ -11,7 +11,6 @@ public interface IServicioPublicaciones<T> {
     public void crearPublicacionPromo(PublicacionesDTO nuevo);
     public List<T> consultarPublicaciones(Integer userId, String order);
     public ConteosDTO contarPublicacionesPromo(Integer userId);
-    public ConteosDTO contarPublicaciones(Integer userId);
     public ListaPublicacionesDTO obtenerPubsPromocion(Integer userId,String order);
 
 

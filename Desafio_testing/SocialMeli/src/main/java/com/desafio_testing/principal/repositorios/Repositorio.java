@@ -43,6 +43,11 @@ public class Repositorio implements IRepositorios{
         users.put(3,new Usuario(3,"Rolando"));
         users.put(4,new Usuario(4,"Rebeca"));
 
+        ajustarDatosUsers(users.get(1));
+        ajustarDatosUsers(users.get(2));
+        ajustarDatosUsers(users.get(3));
+        ajustarDatosUsers(users.get(4));
+
         /*
         posts.put(1, new Publicacion(1,LocalDate.now(), new Producto(1,"Silla Gamer","Gamer","Racer","Red & Black","Special Edition"),"100",1500.5,users.get(1),false,0.0));
         posts.put(2, new Publicacion(2,LocalDate.now(), new Producto(123,"Silla Gamer2","Gamer2","Racer2","Red & Black2","Special Edition2"),"100",1500.5,users.get(2),false,0.0));
@@ -95,11 +100,6 @@ public class Repositorio implements IRepositorios{
 
         List<Publicacion> publicacionesUser = userPosts.get(nuevo.getUserDueno().getUserId());
 
-        if(publicacionesUser== null)
-        {
-            userPosts.put(nuevo.getUserDueno().getUserId(),new ArrayList<>());
-            publicacionesUser = userPosts.get(nuevo.getUserDueno().getUserId());
-        }
         publicacionesUser.add(nuevo);
     }
 
@@ -118,24 +118,12 @@ public class Repositorio implements IRepositorios{
         {
             List<Usuario> losQueSigues = usuarioySeguidos.get(seguidor.getUserId());
 
-            if(losQueSigues== null)
-            {
-                usuarioySeguidos.put(seguidor.getUserId(),new ArrayList<>());
-                losQueSigues = usuarioySeguidos.get(seguidor.getUserId());
-            }
-
             if(!losQueSigues.contains(aSeguir))
                 losQueSigues.add(aSeguir);
             else
                 throw new NegocioException(EnumErrs.ALREADY_FOLLOWED.repMensaje(aSeguir.getUserId()), EnumErrs.ALREADY_FOLLOWED.getCodigo());
 
             List<Usuario> losQueTeSiguen = usuarioySeguidores.get(aSeguir.getUserId());
-
-            if(losQueTeSiguen == null)
-            {
-                usuarioySeguidores.put(aSeguir.getUserId(),new ArrayList<>());
-                losQueTeSiguen = usuarioySeguidores.get(aSeguir.getUserId());
-            }
 
             if(!losQueSigues.contains(seguidor))
                 losQueTeSiguen.add(seguidor);
@@ -158,13 +146,11 @@ public class Repositorio implements IRepositorios{
             List<Usuario> losQueSigues = usuarioySeguidos.get(seguidor.getUserId());
             List<Usuario> losQueTeSiguen = usuarioySeguidores.get(aSeguir.getUserId());
 
-            try{
-                losQueSigues.remove(aSeguir);
-                losQueTeSiguen.remove(seguidor);
-            } catch (NullPointerException e)
-            {
-                throw new NegocioException(EnumErrs.NOT_FOLLOWED.repMensaje(aSeguir.getUserId()), EnumErrs.NOT_FOLLOWED.getCodigo());
-            }
+            if(!losQueSigues.contains(aSeguir) || !losQueTeSiguen.contains(seguidor))
+                throw new NegocioException(EnumErrs.NOT_FOLLOWED.repMensaje(aSeguir.getUserId()),EnumErrs.NOT_FOLLOWED.getCodigo());
+
+            losQueSigues.remove(aSeguir);
+            losQueTeSiguen.remove(seguidor);
 
         }
     }
@@ -248,6 +234,18 @@ public class Repositorio implements IRepositorios{
         return userPosts.get(userId)==null?new ArrayList<>():userPosts.get(userId);
     }
 
+
+    /**
+     * Metodo que se utiliza para setear los datos de las colleciones en caso de no estar configurados correctamente,
+     * esto es requerido dado uqe no existen endpoints para crear usuarios de manera segura a la logica
+     * @param user1 :usuario a verificar estado en colleciones
+     */
+    private void ajustarDatosUsers(Usuario user1){
+
+        userPosts.computeIfAbsent(user1.getUserId(), x->new ArrayList<>());
+        usuarioySeguidores.computeIfAbsent(user1.getUserId(),x-> new ArrayList<>());
+        usuarioySeguidos.computeIfAbsent(user1.getUserId(),x-> new ArrayList<>());
+    }
 
 
 }

@@ -8,6 +8,7 @@ import com.desafio_testing.principal.enumerados.EnumOrdenes;
 import com.desafio_testing.principal.excepciones.NegocioException;
 import com.desafio_testing.principal.modelo.Usuario;
 import com.desafio_testing.principal.repositorios.IRepositorios;
+import com.desafio_testing.principal.repositorios.Repositorio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,14 @@ import java.util.List;
 @Service
 public class ServicioUsuarios {
 
-    @Autowired
     private IRepositorios repos;
 
-    @Autowired
     private ModelMapper mapper;
 
+    public ServicioUsuarios(IRepositorios repos) {
+        this.repos = repos;
+        this.mapper = new ModelMapper();
+    }
 
     /**
      * agregar un seguidos a las colecciones

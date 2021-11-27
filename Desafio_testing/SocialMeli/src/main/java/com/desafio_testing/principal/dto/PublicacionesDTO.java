@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
@@ -19,7 +20,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PublicacionesDTO {
+public class PublicacionesDTO implements Serializable {
 
     @Min(value=1 , message = "El id debe ser mayor a cero")
     @NotNull(message = "La id no puede estar vacía.")
@@ -29,7 +30,8 @@ public class PublicacionesDTO {
     @NotNull(message = "La id no puede estar vacía.")
     private Integer userId;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
+
     @NotNull(message = "La fecha no puede estar vacía.")
     private LocalDate date;
 

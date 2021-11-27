@@ -10,6 +10,7 @@ import com.desafio_testing.principal.modelo.Producto;
 import com.desafio_testing.principal.modelo.Publicacion;
 import com.desafio_testing.principal.modelo.Usuario;
 import com.desafio_testing.principal.repositorios.IRepositorios;
+import com.desafio_testing.principal.repositorios.Repositorio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,14 +26,13 @@ import java.util.stream.Collectors;
 @Qualifier("ServicioPublicaciones")
 public class ServicioPublicaciones implements IServicioPublicaciones<PublicacionesDTO>{
 
-    @Autowired
     private IRepositorios repos;
 
     private ModelMapper mapper;
 
     private static final Integer NUMERO_DIAS = 14;
 
-    public ServicioPublicaciones(IRepositorios repos, ModelMapper mapper) {
+    public ServicioPublicaciones(IRepositorios repos) {
         this.repos = repos;
         this.mapper = new ModelMapper();
     }
@@ -88,17 +88,6 @@ public class ServicioPublicaciones implements IServicioPublicaciones<Publicacion
         });
 
         return salida;
-    }
-
-    /**
-     * Consultar las publicaciones d eun id especifico
-     * @param userId : id ingresado para consultar las publicaciones del vendedor
-     * @return ConteosDTO
-     */
-    @Override
-    public ConteosDTO contarPublicaciones(Integer userId) {
-        Usuario user = repos.findUserById(userId);
-        return new ConteosDTO(user.getUserId(),user.getUserName(),null,null,repos.obtenerPubsDeVendedor(userId).size());
     }
 
     /**

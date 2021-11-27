@@ -20,11 +20,6 @@ public class ProductosController {
     @Qualifier("ServicioPublicaciones")
     private ServicioPublicaciones serv;
 
-    @GetMapping("")
-    public ResponseEntity<String> saludo(){
-        return new ResponseEntity<>("hola mundo", HttpStatus.OK);
-    }
-
     @PostMapping("/post")
     public ResponseEntity<Object> crearPost(@Valid @RequestBody PublicacionesDTO entrada){
         serv.crearPublicacion(entrada);

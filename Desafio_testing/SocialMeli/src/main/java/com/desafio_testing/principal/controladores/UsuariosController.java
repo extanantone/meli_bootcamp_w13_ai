@@ -15,12 +15,6 @@ public class UsuariosController {
     @Autowired
     private ServicioUsuarios serv;
 
-    @GetMapping("")
-    public ResponseEntity<String> saludo(){
-        return new ResponseEntity<>("hola mundo", HttpStatus.OK);
-    }
-
-
     @PostMapping("/{user_id}/follow/{user_id_to_follow}")
     public ResponseEntity<Object> seguir(@PathVariable("user_id") Integer userId,
                                          @PathVariable("user_id_to_follow") Integer userIdToFolow){
