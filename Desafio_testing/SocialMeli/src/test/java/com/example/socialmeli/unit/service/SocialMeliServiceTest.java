@@ -18,12 +18,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import com.google.common.collect.Comparators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+
 import javax.swing.text.html.Option;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -209,4 +212,44 @@ public class SocialMeliServiceTest {
 
         }
     }
+
+    @Nested
+    @DisplayName("Verificar que el tipo de ordenamiento alfabético exista (US-0008)")
+    class TestCheckThatTheOrderExist{
+        @Test
+        @DisplayName("Permite continuar con normalidad.")
+        public void TestCheckThatTheOrderWorksCorrectly() throws UserNotFoundException {
+            //arrange
+            Integer userId = 1;
+
+            User userMockOne = new User(userId, "Follower1", new ArrayList<>());
+
+
+
+            Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(userMockOne));
+
+
+            FollowersResponseDTO followersListDto = socialMeliService.getFollowers (userId, "name_asc");
+
+            Mockito.verify(userRepository, times( 2)).findById(Mockito.anyInt());
+
+            Comparator<UserDTO> comparator = Comparator.comparing(UserDTO::getUserName);
+
+            Assertions.assertTrue(Comparators.isInOrder(followersListDto.getFollowers(), comparator));
+        }
+
+        @Test
+        @DisplayName("Lanzamos un error, cuando el order esta en null, aunque no falle")
+        void getFollowersWhithoutOrder() {
+            //arrange
+            Integer userId = 1;
+
+            Assertions.assertThrows(UserNotFoundException.class, () -> socialMeliService.getFollowers(userId,null));
+        }
+    }
+
+
+
+
 }
+
