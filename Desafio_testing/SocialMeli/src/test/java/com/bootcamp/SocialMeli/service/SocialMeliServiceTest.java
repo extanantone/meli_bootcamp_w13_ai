@@ -90,6 +90,52 @@ public class SocialMeliServiceTest {
         }
     }
 
+    @Nested
+    @DisplayName("T-0002")
+    class T0002 {
+        @DisplayName("T-0002 Usuario a dejar de seguir existe")
+        @Test
+        public void userToUnFollowExistTest() {
+            //Arrange
+            int userId = 1;
+            int userToUnFollowId = 3;
+            user1.getFollowed().add(user3);
+            user3.getFollowers().add(user1);
+
+            when(mockUserRepository.findBuyerById(userId)).thenReturn(user1);
+            when(mockUserRepository.findSellerById(userToUnFollowId)).thenReturn(user3);
+            when(mockUserRepository.unFollow(user1, user3)).thenReturn(true);
+            //Act
+            assertDoesNotThrow(() -> userService.unFollow(userId, userToUnFollowId));
+            //Assert
+
+            verify(mockUserRepository, atLeastOnce()).findBuyerById(userId);
+            verify(mockUserRepository, atLeastOnce()).findSellerById(userToUnFollowId);
+            verify(mockUserRepository, (times(1))).unFollow(user1, user3);
+
+        }
+
+        @DisplayName("T-0002 Usuario a dejar de seguir no existe")
+        @Test
+        public void userToUnFollowNotExistTest() {
+            //Arrange
+            int userId = 1;
+            int userToFollowId = 5;
+
+            //Act
+            when(mockUserRepository.findBuyerById(userId)).thenReturn(user1);
+            when(mockUserRepository.findSellerById(userToFollowId)).thenThrow(ExceptionSellerNotExist.class);
+
+            //Assert
+            assertThrows(ExceptionSellerNotExist.class,
+                    () -> userService.unFollow(userId, userToFollowId), "Usuario no existe");
+
+            verify(mockUserRepository, atLeastOnce()).findBuyerById(userId);
+            verify(mockUserRepository, atLeastOnce()).findSellerById(userToFollowId);
+        }
+    }
+
+
 
 }
 
