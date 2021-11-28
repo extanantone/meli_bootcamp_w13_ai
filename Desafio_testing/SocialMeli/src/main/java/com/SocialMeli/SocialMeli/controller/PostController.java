@@ -27,7 +27,7 @@ public class PostController {
     }
 
     @PostMapping("/products/promo-post")
-    public ResponseEntity<?> createPromo(@RequestBody PostPromoDTORequest postPromoDTORequest) {
+    public ResponseEntity<?> createPromo(@Valid @RequestBody PostPromoDTORequest postPromoDTORequest) {
         return new ResponseEntity<>(postService.createPromo(postPromoDTORequest), HttpStatus.OK);
     }
 

@@ -54,6 +54,26 @@ public class PostRepositoryTest {
         postCreate.setDetail(product2);
 
         postRepository.create(postCreate2);
+
+        //Publicacion promo
+        LocalDate today = LocalDate.now();
+
+        Post promoCreate = new Post();
+        promoCreate.setId(90);
+        promoCreate.setDate(twentyDaysAgo);
+        promoCreate.setSellerId(3);
+        promoCreate.setPrice(1000);
+        promoCreate.setCategory(1);
+        Product productPromo = new Product();
+        productPromo.setId(90);
+        productPromo.setName("ProductoPromo");
+        productPromo.setBrand("Brand");
+        productPromo.setColor("Negro");
+        productPromo.setType("Tipo");
+        productPromo.setNotes("");
+        promoCreate.setDetail(productPromo);
+
+        postRepository.create(promoCreate);
     }
 
     @Test
@@ -112,6 +132,7 @@ public class PostRepositoryTest {
         Assertions.assertNull(result);
     }
 
+    //-----------------T-0008-----------------
     @Test
     void getByUserIdTwoWeeksAgoSuccess(){
         //Arrange
@@ -124,6 +145,7 @@ public class PostRepositoryTest {
         //Assert
         Assertions.assertEquals(1, postsByUser.size());
     }
+    //---------------------------------------
 
     @Test
     void getByUserIdNotFound(){
@@ -136,5 +158,17 @@ public class PostRepositoryTest {
 
         //Assert
         Assertions.assertEquals(0, postsByUser.size());
+    }
+
+    @Test
+    void getPromosByUserSuccess(){
+        //Arrange
+        int id = 3;
+
+        //Act
+        List<Post> postFind = postRepository.getPromosByUser(id);
+
+        //Assert
+        Assertions.assertNotNull(postFind);
     }
 }

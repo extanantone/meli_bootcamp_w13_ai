@@ -67,7 +67,7 @@ public class PostMapper {
         post.setCategory(postPromoCreateDTO.getCategory());
         post.setPrice(postPromoCreateDTO.getPrice());
         post.setDetail(PostMapper.productDTOToProduct(postPromoCreateDTO.getDetail()));
-        post.setHas_promo(postPromoCreateDTO.isHas_promo());
+        post.setHas_promo(postPromoCreateDTO.getHas_promo());
         post.setDiscount(postPromoCreateDTO.getDiscount());
         return post;
     }

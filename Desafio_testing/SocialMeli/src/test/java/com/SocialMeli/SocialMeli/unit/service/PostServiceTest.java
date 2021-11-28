@@ -1,9 +1,6 @@
 package com.SocialMeli.SocialMeli.unit.service;
 
-import com.SocialMeli.SocialMeli.dto.MessageDTOResponse;
-import com.SocialMeli.SocialMeli.dto.PostDTORequest;
-import com.SocialMeli.SocialMeli.dto.PostsByUserDTOResponse;
-import com.SocialMeli.SocialMeli.dto.ProductDTO;
+import com.SocialMeli.SocialMeli.dto.*;
 import com.SocialMeli.SocialMeli.entity.Buyer;
 import com.SocialMeli.SocialMeli.entity.Post;
 import com.SocialMeli.SocialMeli.entity.Product;
@@ -48,6 +45,8 @@ public class PostServiceTest {
 
     private static Post postCreate2 = new Post();
 
+    private static Post promoCreate = new Post();
+
     private static Buyer buyer1 = new Buyer(1, "Buyer1", new HashMap<>());
     private static Buyer buyer2 = new Buyer(2, "Buyer2", new HashMap<>());
     private static Seller seller1 = new Seller(3, "Seller1", new HashMap<>(), new HashMap<>());
@@ -88,7 +87,87 @@ public class PostServiceTest {
         product2.setType("Tipo");
         product2.setNotes("");
         postCreate2.setDetail(product2);
+
+        promoCreate.setId(3);
+        promoCreate.setDate(LocalDate.now());
+        promoCreate.setSellerId(3);
+        promoCreate.setPrice(1000);
+        promoCreate.setCategory(1);
+        Product productPromo = new Product();
+        productPromo.setId(1);
+        productPromo.setName("Producto 1");
+        productPromo.setBrand("Brand 1");
+        productPromo.setColor("Negro");
+        productPromo.setType("Tipo");
+        productPromo.setNotes("");
+        promoCreate.setDetail(productPromo);
+
+        postRepository.create(promoCreate);
     }
+
+    //---------------T-0005----------------------
+    @Test
+    void getByUserAndOrderFormatException(){
+        //Arrange
+        int userId = 1;
+        int sellerId = 3;
+        String order = "date_NONE";
+
+        LocalDate date = LocalDate.now().minus(Period.ofDays(14));
+
+        when(userRepository.getUser(userId)).thenReturn(buyer1);
+        when(postRepository.getByUserId(sellerId, date)).thenReturn(Arrays.asList(postCreate2, postCreate));
+
+        //Act & Assert
+        Assertions.assertThrows(
+                BadRequestException.class, ()->postService.getByUser(userId, order)
+        );
+    }
+    //-------------------------------------------
+
+    //---------------T-0006----------------------
+    @Test
+    void getByUserAndOrderAscSuccess(){
+        //Arrange
+        int userId = 1;
+        int sellerId = 3;
+        String order = "date_asc";
+
+        LocalDate date = LocalDate.now().minus(Period.ofDays(14));
+
+        when(userRepository.getUser(userId)).thenReturn(buyer1);
+        when(postRepository.getByUserId(sellerId, date)).thenReturn(Arrays.asList(postCreate2, postCreate));
+
+        //Act
+        PostsByUserDTOResponse postsByUserDTOResponse = postService.getByUser(userId, order);
+
+        //Assert
+        Assertions.assertTrue(
+                postsByUserDTOResponse.getPosts().get(0).getDate().isBefore(postsByUserDTOResponse.getPosts().get(1).getDate())
+        );
+    }
+
+    @Test
+    void getByUserAndOrderDescSuccess(){
+        //Arrange
+        int userId = 1;
+        int sellerId = 3;
+        String order = "date_desc";
+
+        LocalDate date = LocalDate.now().minus(Period.ofDays(14));
+
+        when(userRepository.getUser(userId)).thenReturn(buyer1);
+        when(postRepository.getByUserId(sellerId, date)).thenReturn(Arrays.asList(postCreate2, postCreate));
+
+        //Act
+        PostsByUserDTOResponse postsByUserDTOResponse = postService.getByUser(userId, order);
+
+        //Assert
+        Assertions.assertTrue(
+                postsByUserDTOResponse.getPosts().get(0).getDate().isAfter(postsByUserDTOResponse.getPosts().get(1).getDate())
+        );
+    }
+    //-------------------------------------------
 
     @Test
     void getPostByIdSuccess(){
@@ -198,63 +277,138 @@ public class PostServiceTest {
         );
     }
 
+
     @Test
-    void getByUserAndOrderAscSuccess(){
+    void createPromoSuccess(){
         //Arrange
-        int userId = 1;
-        int sellerId = 3;
-        String order = "date_asc";
+        PostPromoDTORequest postPromoDTORequest = new PostPromoDTORequest();
+        postPromoDTORequest.setId_post(90);
+        postPromoDTORequest.setUser_id(3);
+        postPromoDTORequest.setDate(LocalDate.now());
+        postPromoDTORequest.setCategory(1);
+        postPromoDTORequest.setPrice(1000.0);
+        postPromoDTORequest.setHas_promo(true);
+        postPromoDTORequest.setDiscount(5.0);
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setProduct_id(2);
+        productDTO.setProduct_name("Producto 2");
+        productDTO.setColor("Blanco");
+        productDTO.setBrand("Marca 2");
+        productDTO.setType("Tipo");
+        productDTO.setNotes("");
+        postPromoDTORequest.setDetail(productDTO);
 
-        LocalDate date = LocalDate.now().minus(Period.ofDays(14));
-
-        when(userRepository.getUser(userId)).thenReturn(buyer1);
-        when(postRepository.getByUserId(sellerId, date)).thenReturn(Arrays.asList(postCreate2, postCreate));
+        //when(postRepository.create(postToCreate)).thenReturn(true);
+        when(userRepository.getUser(3)).thenReturn(new Seller());
 
         //Act
-        PostsByUserDTOResponse postsByUserDTOResponse = postService.getByUser(userId, order);
+        MessageDTOResponse messageDTOResponse = postService.createPromo(postPromoDTORequest);
 
         //Assert
-        Assertions.assertTrue(
-                postsByUserDTOResponse.getPosts().get(0).getDate().isBefore(postsByUserDTOResponse.getPosts().get(1).getDate())
-        );
+        Assertions.assertNotNull(messageDTOResponse);
     }
 
     @Test
-    void getByUserAndOrderDescSuccess(){
+    void createPromoThenSellerNotFoundException(){
         //Arrange
-        int userId = 1;
-        int sellerId = 3;
-        String order = "date_desc";
+        PostPromoDTORequest postPromoDTORequest = new PostPromoDTORequest();
+        postPromoDTORequest.setId_post(90);
+        postPromoDTORequest.setUser_id(3);
+        postPromoDTORequest.setDate(LocalDate.now());
+        postPromoDTORequest.setCategory(1);
+        postPromoDTORequest.setPrice(1000.0);
+        postPromoDTORequest.setHas_promo(true);
+        postPromoDTORequest.setDiscount(5.0);
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setProduct_id(2);
+        productDTO.setProduct_name("Producto 2");
+        productDTO.setColor("Blanco");
+        productDTO.setBrand("Marca 2");
+        productDTO.setType("Tipo");
+        productDTO.setNotes("");
+        postPromoDTORequest.setDetail(productDTO);
 
-        LocalDate date = LocalDate.now().minus(Period.ofDays(14));
-
-        when(userRepository.getUser(userId)).thenReturn(buyer1);
-        when(postRepository.getByUserId(sellerId, date)).thenReturn(Arrays.asList(postCreate2, postCreate));
-
-        //Act
-        PostsByUserDTOResponse postsByUserDTOResponse = postService.getByUser(userId, order);
-
-        //Assert
-        Assertions.assertTrue(
-                postsByUserDTOResponse.getPosts().get(0).getDate().isAfter(postsByUserDTOResponse.getPosts().get(1).getDate())
-        );
-    }
-
-    @Test
-    void getByUserAndOrderFormatException(){
-        //Arrange
-        int userId = 1;
-        int sellerId = 3;
-        String order = "NULL";
-
-        LocalDate date = LocalDate.now().minus(Period.ofDays(14));
-
-        when(userRepository.getUser(userId)).thenReturn(buyer1);
-        when(postRepository.getByUserId(sellerId, date)).thenReturn(Arrays.asList(postCreate2, postCreate));
+        //when(postRepository.create(postToCreate)).thenReturn(true);
+        when(userRepository.getUser(3)).thenReturn(null);
 
         //Act & Assert
         Assertions.assertThrows(
-                BadRequestException.class, ()->postService.getByUser(userId, order)
+                NotFoundException.class, ()->postService.createPromo(postPromoDTORequest)
+        );
+    }
+
+    @Test
+    void createPromoThenPostAlreadyExists(){
+        //Arrange
+        PostPromoDTORequest postPromoDTORequest = new PostPromoDTORequest();
+        postPromoDTORequest.setId_post(1);
+        postPromoDTORequest.setUser_id(3);
+        postPromoDTORequest.setDate(LocalDate.now());
+        postPromoDTORequest.setCategory(1);
+        postPromoDTORequest.setPrice(1000.0);
+        postPromoDTORequest.setHas_promo(true);
+        postPromoDTORequest.setDiscount(5.0);
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setProduct_id(2);
+        productDTO.setProduct_name("Producto 2");
+        productDTO.setColor("Blanco");
+        productDTO.setBrand("Marca 2");
+        productDTO.setType("Tipo");
+        productDTO.setNotes("");
+        postPromoDTORequest.setDetail(productDTO);
+
+        when(userRepository.getUser(3)).thenReturn(new Seller());
+        when(postRepository.getById(1)).thenReturn(new Post());
+
+        //Act & Assert
+        Assertions.assertThrows(
+                AlreadyExistsException.class, ()->postService.createPromo(postPromoDTORequest)
+        );
+    }
+
+    @Test
+    void getPromosByUserSuccess(){
+        //Arrange
+        int userId = 1;
+
+        when(userRepository.getUser(1)).thenReturn(new Buyer());
+        when(postRepository.getPromosByUser(1)).thenReturn(new ArrayList<>());
+
+        //Act
+        PostPromoByUserDTOResponse postPromoByUserDTOResponse = postService.getPromosByUser(userId);
+
+        //Assert
+        Assertions.assertNotNull(postPromoByUserDTOResponse);
+    }
+
+    @Test
+    void getPromosByUserThenUserNotFoundException(){
+        //Arrange
+        int userId = 99;
+
+        when(userRepository.getUser(99)).thenReturn(null);
+
+        //Act & Assert
+        Assertions.assertThrows(
+                NotFoundException.class, ()->postService.getPromosByUser(userId)
+        );
+    }
+
+    @Test
+    void getSellerPromosCountSuccess(){
+        //Arrange
+        int sellerId = 3;
+
+        when(userRepository.getUser(sellerId)).thenReturn(new Seller());
+        when(postRepository.getPromosByUser(sellerId)).thenReturn(Arrays.asList(promoCreate));
+
+        //Act
+        SellerCountPromosDTOResponse sellerCountPromosDTOResponse = postService.getSellerPromosCount(sellerId);
+
+        //Assert
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(1, sellerCountPromosDTOResponse.getPromo_products_count()),
+                ()->Assertions.assertNotNull(sellerCountPromosDTOResponse)
         );
     }
 }

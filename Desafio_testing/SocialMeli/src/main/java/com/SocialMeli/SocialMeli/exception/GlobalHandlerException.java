@@ -1,13 +1,18 @@
 package com.SocialMeli.SocialMeli.exception;
 
 import com.SocialMeli.SocialMeli.dto.MessageDTOResponse;
+import com.SocialMeli.SocialMeli.dto.ValidationErrorDTOResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ControllerAdvice(annotations = RestController.class)
 public class GlobalHandlerException {
@@ -34,10 +39,13 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<MessageDTOResponse> handleValidationExceptions(MethodArgumentNotValidException e) {
-        MessageDTOResponse messageDTOResponse = new MessageDTOResponse();
-        messageDTOResponse.setMessage(e.getBindingResult().getFieldError().getDefaultMessage());
-        return new ResponseEntity<>(messageDTOResponse, HttpStatus.BAD_REQUEST);
+    protected ResponseEntity<ValidationErrorDTOResponse> handleValidationExceptions(MethodArgumentNotValidException e) {
+        List<String> details = new ArrayList<>();
+        for(ObjectError error : e.getBindingResult().getAllErrors()) {
+            details.add(error.getDefaultMessage());
+        }
+        ValidationErrorDTOResponse error = new ValidationErrorDTOResponse("Validation Failed", details);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
