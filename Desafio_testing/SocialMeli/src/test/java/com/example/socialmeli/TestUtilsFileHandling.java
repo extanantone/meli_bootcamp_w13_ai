@@ -1,6 +1,7 @@
 package com.example.socialmeli;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -9,13 +10,14 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.Properties;
 
 public class TestUtilsFileHandling {
     private static ObjectWriter objectWriter = new ObjectMapper()
             .configure(SerializationFeature.WRAP_ROOT_VALUE, false)
+            .disable(MapperFeature.USE_ANNOTATIONS)
             .writer().withDefaultPrettyPrinter();
+
 
     public static String getScope() {
         //TODO: aplicar singleton para scope y writer?
@@ -54,15 +56,6 @@ public class TestUtilsFileHandling {
 
         writer.print("[]");
         writer.close();
-    }
-
-    public static void restoreUsersFile() throws JsonProcessingException {
-        writeToUsersFile(
-                List.of(
-                        TestUtilsGet.getManuel(),
-                        TestUtilsGet.getAzul(),
-                        TestUtilsGet.getFede()
-                ));
     }
 
     public static void writeToUsersFile(Object valueToWrite) throws JsonProcessingException {
