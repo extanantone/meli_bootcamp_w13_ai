@@ -3,12 +3,10 @@ package com.bootcamp.SocialMeli.service;
 import com.bootcamp.SocialMeli.entity.Buyer;
 import com.bootcamp.SocialMeli.entity.Post;
 import com.bootcamp.SocialMeli.entity.Seller;
+import com.bootcamp.SocialMeli.exception.BadRequestException;
 import com.bootcamp.SocialMeli.exception.ExceptionSellerNotExist;
 import com.bootcamp.SocialMeli.repository.UserRepositoryImpl;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -133,6 +131,72 @@ public class SocialMeliServiceTest {
             verify(mockUserRepository, atLeastOnce()).findBuyerById(userId);
             verify(mockUserRepository, atLeastOnce()).findSellerById(userToFollowId);
         }
+    }
+
+    @Nested
+    @DisplayName("T-0003")
+    class T0003{
+        @DisplayName("T-0003 el tipo de ordenamiento alfabético ascendente existe US-0008")
+        @Test
+        public void orderAscByNameFollowersExistTest(){
+            int userId = 4;
+            String order = "name_asc";
+
+            user4.getFollowers().add(user1);
+            user4.getFollowers().add(user2);
+
+            when(mockUserRepository.findSellerById(userId)).thenReturn(user4);
+
+            //Act
+            assertDoesNotThrow(
+                    () -> userService.followers(userId, order));
+
+            //Assert
+            verify(mockUserRepository, atLeastOnce()).findSellerById(userId);
+            verify(mockUserRepository, never()).findBuyerById(userId);
+
+        }
+
+        @DisplayName("T-0003 el tipo de ordenamiento alfabético descendente existe US-0008")
+        @Test
+        public void orderDescByNameFollowersExistTest(){
+            int userId = 4;
+            String order = "name_desc";
+
+            user4.getFollowers().add(user1);
+            user4.getFollowers().add(user2);
+
+            when(mockUserRepository.findSellerById(userId)).thenReturn(user4);
+
+            //Act
+            assertDoesNotThrow(
+                    () -> userService.followers(userId, order));
+            //Assert
+            verify(mockUserRepository, atLeastOnce()).findSellerById(userId);
+            verify(mockUserRepository, never()).findBuyerById(userId);
+        }
+
+        @Disabled("No se implementó en el proyecto inicial de SocialMeli US-0008")
+        @DisplayName("T-0003 el tipo de ordenamiento alfabético No existe US-0008 ")
+        @Test
+        public void orderByNameFollowersNotExistTest(){
+            int userId = 4;
+
+            user4.getFollowers().add(user1);
+            user4.getFollowers().add(user2);
+
+            when(mockUserRepository.findSellerById(userId)).thenReturn(user4);
+
+            //Act
+            assertThrows(BadRequestException.class,
+                    ()->userService.followers(userId,null));
+
+            //Assert
+
+            verify(mockUserRepository, atLeastOnce()).findSellerById(userId);
+
+        }
+
     }
 
 
