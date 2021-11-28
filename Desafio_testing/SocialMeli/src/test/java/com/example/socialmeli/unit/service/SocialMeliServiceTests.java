@@ -1,8 +1,6 @@
 package com.example.socialmeli.unit.service;
 
-import com.example.socialmeli.TestUtilsGet;
-import com.example.socialmeli.dto.PostDTO;
-import com.example.socialmeli.dto.UserDTO;
+import static com.example.socialmeli.TestUtilsGet.*;
 import com.example.socialmeli.dto.response.CountFollowersResponseDTO;
 import com.example.socialmeli.dto.response.PostsResponseDTO;
 import com.example.socialmeli.exceptions.InvalidSortingCriteriaException;
@@ -32,8 +30,6 @@ public class SocialMeliServiceTests {
 
     @InjectMocks
     SocialMeliService socialMeliService;
-    private List<PostDTO> userPosts;
-    private List<UserDTO> followedList;
 
     @AfterEach
     public void resetMocks() {
@@ -44,7 +40,7 @@ public class SocialMeliServiceTests {
     @Test
     public void findByIdTestExistingUser() throws UserNotFoundException {
 
-        User manuel = TestUtilsGet.getManuel();
+        User manuel = getManuel();
         when(userRepositoryMock.findById(1)).thenReturn(Optional.of(manuel));
 
         User response = socialMeliService.getUserById(1);
@@ -57,7 +53,7 @@ public class SocialMeliServiceTests {
     public void findByIdTestNonExistingUser() {
         when(userRepositoryMock.findById(any())).thenReturn(Optional.empty());
 
-        Throwable exception = assertThrows(UserNotFoundException.class, () -> socialMeliService.getUserById(123));
+        assertThrows(UserNotFoundException.class, () -> socialMeliService.getUserById(123));
 
         verify(userRepositoryMock, atLeastOnce()).findById(123);
     }
@@ -65,7 +61,7 @@ public class SocialMeliServiceTests {
     @Test
     public void getFollowersCount() throws UserNotFoundException {
 
-        User manuel = TestUtilsGet.getManuel();
+        User manuel = getManuel();
         manuel.setFollowersId(List.of(4, 2, 6, 1, 5));
 
         when(userRepositoryMock.findById(1)).thenReturn(Optional.of(manuel));
@@ -79,10 +75,10 @@ public class SocialMeliServiceTests {
     @Test
     public void oldPostsCheckAge() throws UserNotFoundException, InvalidSortingCriteriaException {
 
-        User manuel = TestUtilsGet.getManuel();
-        User azul = TestUtilsGet.getAzul();
+        User manuel = getManuel();
+        User azul = getAzul();
 
-        List postList = TestUtilsGet.getOldPostList();
+        List postList = getOldPostList();
 
         when(userRepositoryMock.findFollowed(2)).thenReturn(List.of(manuel));
         when(userRepositoryMock.findById(anyInt())).thenReturn(Optional.of(azul));
@@ -99,10 +95,10 @@ public class SocialMeliServiceTests {
     @Test
     public void recentPostsCheckAge() throws UserNotFoundException, InvalidSortingCriteriaException {
 
-        User manuel = TestUtilsGet.getManuel();
-        User azul = TestUtilsGet.getAzul();
+        User manuel = getManuel();
+        User azul = getAzul();
 
-        List postList = TestUtilsGet.getRecentPostList();
+        List postList = getRecentPostList();
 
         when(userRepositoryMock.findFollowed(2)).thenReturn(List.of(manuel));
         when(userRepositoryMock.findById(anyInt())).thenReturn(Optional.of(azul));
@@ -118,10 +114,10 @@ public class SocialMeliServiceTests {
     @Test
     public void mixedAgePostsCheckAge() throws UserNotFoundException, InvalidSortingCriteriaException {
 
-        User manuel = TestUtilsGet.getManuel();
-        User azul = TestUtilsGet.getAzul();
+        User manuel = getManuel();
+        User azul = getAzul();
 
-        List postList = TestUtilsGet.getPostListWithOneRecentPost();
+        List postList = getPostListWithOneRecentPost();
 
         when(userRepositoryMock.findFollowed(2)).thenReturn(List.of(manuel));
         when(userRepositoryMock.findById(anyInt())).thenReturn(Optional.of(azul));

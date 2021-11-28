@@ -1,6 +1,7 @@
 package com.example.socialmeli.unit.util;
 
-import com.example.socialmeli.TestUtilsGet;
+import static com.example.socialmeli.TestUtilsGet.getUnsortedUserDTOList;
+import static com.example.socialmeli.TestUtilsGet.getUnsortedPostDTOList;
 import com.example.socialmeli.dto.PostDTO;
 import com.example.socialmeli.dto.UserDTO;
 import com.example.socialmeli.utils.*;
@@ -18,7 +19,7 @@ public class SortersTests {
     public void sortAlphaAsc(){
         Sorter alphaAsc = new AlphaAscSorter();
 
-        List<UserDTO> unsortedList = TestUtilsGet.getUnsortedUserDTOList();
+        List<UserDTO> unsortedList = getUnsortedUserDTOList();
         //manuel, azul y fede
 
         List<UserDTO> sortedList = unsortedList.stream().sorted( (u, b) -> alphaAsc.sort(u,b) ).collect(Collectors.toList());
@@ -34,7 +35,7 @@ public class SortersTests {
     public void sortAlphaDesc(){
         Sorter alphaDesc = new AlphaDescSorter();
 
-        List<UserDTO> unsortedList = TestUtilsGet.getUnsortedUserDTOList();
+        List<UserDTO> unsortedList = getUnsortedUserDTOList();
         //manuel, azul y fede
 
         List<UserDTO> sortedList = unsortedList.stream().sorted( (u, b) -> alphaDesc.sort(u,b) ).collect(Collectors.toList());
@@ -50,7 +51,7 @@ public class SortersTests {
     public void sortDateAsc(){
         Sorter dateAsc = new DateAscSorter();
 
-        List<PostDTO> unsortedList = TestUtilsGet.getUnsortedPostDTOList();
+        List<PostDTO> unsortedList = getUnsortedPostDTOList();
 
         List<PostDTO> sortedList = unsortedList.stream().sorted( (u, b) -> dateAsc.sort(u,b) ).collect(Collectors.toList());
 
@@ -67,7 +68,7 @@ public class SortersTests {
     public void sortDateDesc(){
         Sorter dateDesc = new DateDescSorter();
 
-        List<PostDTO> unsortedList = TestUtilsGet.getUnsortedPostDTOList();
+        List<PostDTO> unsortedList = getUnsortedPostDTOList();
 
         List<PostDTO> sortedList = unsortedList.stream().sorted( (u, b) -> dateDesc.sort(u,b) ).collect(Collectors.toList());
 

@@ -1,10 +1,13 @@
 [ {
   "userId" : 1,
-  "userName" : "Manuel"
+  "userName" : "Manuel",
+  "followersId" : [ ]
 }, {
   "userId" : 2,
-  "userName" : "Azul"
+  "userName" : "Azul",
+  "followersId" : [ ]
 }, {
   "userId" : 3,
-  "userName" : "Fede"
+  "userName" : "Fede",
+  "followersId" : [ ]
 } ]

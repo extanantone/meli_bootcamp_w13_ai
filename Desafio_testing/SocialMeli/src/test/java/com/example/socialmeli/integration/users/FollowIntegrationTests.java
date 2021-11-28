@@ -1,4 +1,4 @@
-package com.example.socialmeli.integration;
+package com.example.socialmeli.integration.users;
 
 import static com.example.socialmeli.TestUtilsPreload.*;
 import static com.example.socialmeli.integration.MockMvcUtils.*;
@@ -17,11 +17,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UsersControllerTests {
+public class FollowIntegrationTests {
     @Autowired
     private MockMvc mockMvc;
 
-    public UsersControllerTests() throws JsonProcessingException {
+    public FollowIntegrationTests() throws JsonProcessingException {
         restoreUsersFile();
         //para que se ejecute antes que se instancie el mockMvc, para que no se cargue vacío el .json
     }
