@@ -1,9 +1,5 @@
 package com.example.socialmeli.integration.users;
 
-import static com.example.socialmeli.TestUtilsGet.getUnsortedUserList;
-import static com.example.socialmeli.TestUtilsPreload.*;
-import static com.example.socialmeli.integration.MockMvcUtils.*;
-
 import com.example.socialmeli.repositories.UsuarioRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,18 +11,22 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static com.example.socialmeli.TestUtilsGet.getUnsortedUserList;
+import static com.example.socialmeli.TestUtilsPreload.restoreUsersFile;
+import static com.example.socialmeli.integration.MockMvcUtils.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class FollowIntegrationTests {
+public class UnfollowIntegrationTests {
     @Autowired
     private MockMvc mockMvc;
     private UsuarioRepository userRepository = new UsuarioRepository();
 
-    public FollowIntegrationTests() throws JsonProcessingException {
+    public UnfollowIntegrationTests() throws JsonProcessingException {
         restoreUsersFile();
         //para que se ejecute antes de que se instancie el mockMvc así no carga vacío el .json
     }
@@ -37,44 +37,32 @@ public class FollowIntegrationTests {
     }
 
     @Test
-    public void followUserGivenValidUserIds() throws Exception {
+    public void unfollowUserGivenValidUserIds() throws Exception {
 
         String manuelJsonMatcher = "$.followers[?(@.user_id == \"1\")][?(@.user_name == \"Manuel\")]";
 
-        ResultMatcher manuelIsFollowingAzul = jsonPath(manuelJsonMatcher).exists();
+        ResultMatcher manuelIsNotFollowingAzul = jsonPath(manuelJsonMatcher).doesNotExist();
 
         MockHttpServletRequestBuilder getAzulFollowersRequest = MockMvcRequestBuilders
                 .get("/users/{userId}/followers/list", 2);
 
-        this.mockMvc.perform(makeManuelFollowAzul)
+        this.mockMvc.perform(makeManuelFollowAzul);
+        this.mockMvc.perform(makeManuelUnfollowAzul)
                 .andDo(print())
                 .andExpect(statusIsOk);
 
         this.mockMvc.perform(getAzulFollowersRequest)
                 .andDo(print())
                 .andExpect(contentIsJson)
-                .andExpect(manuelIsFollowingAzul);
+                .andExpect(manuelIsNotFollowingAzul);
     }
 
     @Test
-    public void followUserGivenInvalidUserIdsAndThrow() throws Exception {
+    public void unfollowUserGivenSameUserIdAndThrow() throws Exception {
 
-        MockHttpServletRequestBuilder followInvalidUserId = MockMvcRequestBuilders
-                .post("/users/{userId}/follow/{userIdToFollow}", 123, 2);
-
-        this.mockMvc.perform(followInvalidUserId)
-                .andDo(print())
-                .andExpect(statusIsNotFound)
-                .andExpect(contentIsJson)
-                .andExpect(userNotFoundExceptionWasThrown);
-
-    }
-
-    @Test
-    public void followUserGivenSameUserIdAndThrow() throws Exception {
 
         MockHttpServletRequestBuilder followSameUserId = MockMvcRequestBuilders
-                .post("/users/{userId}/follow/{userIdToFollow}", 1, 1);
+                .post("/users/{userId}/unfollow/{userIdToUnfollow}", 1, 1);
 
         this.mockMvc.perform(followSameUserId)
                 .andDo(print())
@@ -86,15 +74,9 @@ public class FollowIntegrationTests {
     }
 
     @Test
-    public void followUserGivenAlreadyFollowedUserAndThrow() throws Exception {
+    public void unfollowUserGivenUserNotBeingFollowedAndThrow() throws Exception {
 
-
-        MockHttpServletRequestBuilder redundantFollowRequest = MockMvcRequestBuilders
-                .post("/users/{userId}/follow/{userIdToFollow}", 1, 2);
-
-        this.mockMvc.perform(makeManuelFollowAzul);
-
-        this.mockMvc.perform(makeManuelFollowAzul)
+        this.mockMvc.perform(makeManuelUnfollowAzul)
                 .andDo(print())
                 .andExpect(statusIsBadRequest)
                 .andExpect(contentIsJson)

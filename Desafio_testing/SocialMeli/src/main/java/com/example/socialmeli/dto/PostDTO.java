@@ -28,6 +28,7 @@ public class PostDTO {
     //@Pattern(regexp="^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$", message = "La fecha debe cumplir con el formato: dd-mm-yyyy")
     private Date date;
 
+    @NotNull
     @Valid
     private ProductDTO detail;
 

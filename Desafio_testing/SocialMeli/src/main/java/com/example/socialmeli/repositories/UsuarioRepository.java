@@ -70,6 +70,23 @@ public class UsuarioRepository implements IRepository<User> {
         throw new UnsupportedOperationException();
     }
 
+    public void pushAll(List<User> users) {
+        for (User u: users){
+            this.users.add(u);
+        }
+    }
+
+    public void push(User newElement) {
+        this.users.add(newElement);
+    }
+
+    public void reset() { this.users = Collections.emptyList();}
+
+    public void overwriteWith(List<User> users) {
+        this.users = users;
+    }
+
+
     public List<User> findFollowed(Integer id) {
         return this.users.stream()
                 .filter(user -> user.getFollowersId().contains(id) )

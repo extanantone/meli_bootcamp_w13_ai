@@ -49,6 +49,20 @@ public class TestUtilsFileHandling {
         return writer;
     }
 
+    public static PrintWriter getPostsFileWriter() {
+
+        PrintWriter writer = null;
+
+        try {
+            writer = new PrintWriter(ResourceUtils.getFile("./src/" + getScope() + "/resources/postsSocialMeli.json"));
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
+
+        return writer;
+    }
+
 
     public static void emptyUsersFile() {
 
@@ -58,12 +72,24 @@ public class TestUtilsFileHandling {
         writer.close();
     }
 
+    public static void emptyPostsFile() {
+
+        PrintWriter writer = getPostsFileWriter();
+
+        writer.print("[]");
+        writer.close();
+    }
+
+    public static String valueToJson(Object valueToWrite) throws JsonProcessingException {
+        return objectWriter.writeValueAsString(valueToWrite);
+    }
+
     public static void writeToUsersFile(Object valueToWrite) throws JsonProcessingException {
 
         PrintWriter writer = getUsersFileWriter();
 
         try {
-            String valueAsString = objectWriter.writeValueAsString(valueToWrite);
+            String valueAsString = valueToJson(valueToWrite);
             writer.print(valueAsString);
             writer.close();
 

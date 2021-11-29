@@ -11,10 +11,7 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository("PostRepository")
@@ -81,6 +78,8 @@ public class PostRepository implements IRepository<Post> {
                 .filter(post -> post.getUserId().equals(userId))
                 .collect(Collectors.toList());
     }
+
+    public void reset() { this.posts = Collections.emptyList();}
 
     public List<Object> findByUserIdAndHasPromo(Integer userId, boolean hasPromo) {
         return this.posts.stream()

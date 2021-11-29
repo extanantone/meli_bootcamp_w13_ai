@@ -153,14 +153,6 @@ public class SocialMeliService implements IService {
 
     //  >>>> POSTS METHODS
 
-    public PostDTO getPostById(Integer postId) throws PostNotFoundException {
-
-        return mapper.map(
-                this.postRepository.findById(postId),
-                PostDTO.class
-        );
-    }
-
     public void pushPost(PostDTO newPost) throws PostAlreadyExistException, InvalidPromoException, UserNotFoundException {
 
         if( postExists(newPost.getIdPost()) ){

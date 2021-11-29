@@ -44,9 +44,13 @@ public class TestUtilsGet {
         return fede;
     }
 
+    public static List<User> getUnsortedUserList() {
+        return List.of(getManuel(), getAzul(), getFede());
+    }
+
 
     public static List<UserDTO> getUnsortedUserDTOList() {
-        List<User> users = List.of(getManuel(), getAzul(), getFede());
+        List<User> users = getUnsortedUserList();
         return users.stream().map(u -> mapper.map(u, UserDTO.class)).collect(Collectors.toList());
     }
 
@@ -69,6 +73,11 @@ public class TestUtilsGet {
         zapatillas.setDetail(zapatillasDetail);
 
         return zapatillas;
+    }
+
+    public static PostDTO getZapatillasDTO() {
+        Post zapatillas = getZapatillas();
+        return mapper.map(zapatillas, PostDTO.class);
     }
 
     public static Post getSilla() {
