@@ -13,7 +13,6 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     List<Post> posts = new ArrayList<>();
 
-
     @Override
     public Boolean saveProduct(Post post) {
         return this.posts.add(post);

@@ -28,4 +28,11 @@ public class User {
         this.products = new ArrayList<>();
     }
 
+    public User(long userId, String name, List<Long> products) {
+        this.user_id = userId;
+        this.user_name = name;
+        this.seguidores = new ArrayList<>();
+        this.seguidos = new ArrayList<>();
+        this.products = products;
+    }
 }

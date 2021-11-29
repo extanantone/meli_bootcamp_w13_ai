@@ -3,7 +3,6 @@ package com.example.SocialMeli.repository;
 import com.example.SocialMeli.entities.User;
 import org.springframework.stereotype.Repository;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class UserRepositoryImpl implements UserRepository{
     List<User> usuarios = new ArrayList<>();
 
     public UserRepositoryImpl() {
-        usuarios.add(new User(1L, "ftalgiero") );
+        usuarios.add(new User(1L, "ftagliero") );
         usuarios.add(new User(2L, "juangomez") );
         usuarios.add(new User(3L, "marianop") );
         usuarios.add(new User(4L, "carlitosauzqui") );

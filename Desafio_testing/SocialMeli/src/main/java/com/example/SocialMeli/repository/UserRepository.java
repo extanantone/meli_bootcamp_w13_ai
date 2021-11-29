@@ -1,9 +1,7 @@
 package com.example.SocialMeli.repository;
 
 import com.example.SocialMeli.entities.User;
-import com.example.SocialMeli.exception.UserNotFoundException;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface UserRepository {

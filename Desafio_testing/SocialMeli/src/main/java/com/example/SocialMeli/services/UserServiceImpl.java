@@ -9,7 +9,6 @@ import com.example.SocialMeli.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.*;
 
 import static java.util.Collections.reverse;
@@ -35,7 +34,8 @@ public class UserServiceImpl implements UserService {
         User toUnfollow = userRepository.getById(id_to_unfollow);
         if(usr == null) throw new UserNotFoundException(user_id);
         if(toUnfollow == null) throw new UserNotFoundException(id_to_unfollow);
-        return this.userRepository.unfollow(user_id, id_to_unfollow);
+        usr.getSeguidos().removeIf(us -> us == id_to_unfollow);
+        return toUnfollow.getSeguidores().removeIf(us -> us == user_id);
     }
 
     @Override
@@ -49,7 +49,8 @@ public class UserServiceImpl implements UserService {
     public UserFollowersDTO listFollowers(int user_id, String order) {
         List<UserDTO> followersDTO = new ArrayList<>();
         this.userRepository.getFollowers(user_id).forEach(user -> followersDTO.add(new UserDTO(Math.toIntExact(user.getUser_id()), user.getUser_name())));
-        return new UserFollowersDTO(user_id, this.userRepository.getById(user_id).getUser_name(), this.listOrder(followersDTO, order) );
+        User usr = this.userRepository.getById(user_id);
+        return new UserFollowersDTO(user_id, usr.getUser_name(), this.listOrder(followersDTO, order) );
         }
 
     @Override
