@@ -137,6 +137,7 @@ class SocialMeliServiceTest {
     void getFollowersWhithoutOrder() {
         Assertions.assertThrows(NullPointerException.class, () -> service.getFollowers(1,null));
     }
+
     @Test
     void getFollowersByOrderAscCorrectly() throws UserNotFoundException {
         User user2 = new User();
@@ -152,7 +153,11 @@ class SocialMeliServiceTest {
         Assertions.assertTrue(Comparators.isInOrder(followersListDto.getFollowers(), comparator));
     }
 
-
+    @Test
+    @DisplayName("Lanzamos un error, cuando el order esta en null, aunque no falle")
+    void getPostWhithoutOrder() {
+        Assertions.assertThrows(NullPointerException.class, () -> service.getFollowedPostList(1, null));
+    }
 
     @Test
     void getFollowed() {
