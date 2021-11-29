@@ -1,12 +1,10 @@
 package com.meli.SocialMeli.unit.service;
 
-import com.meli.SocialMeli.dto.CountDTO;
-import com.meli.SocialMeli.dto.FollowedDTO;
-import com.meli.SocialMeli.dto.FollowersDTO;
-import com.meli.SocialMeli.dto.MensajeDTO;
+import com.meli.SocialMeli.dto.*;
 import com.meli.SocialMeli.exception.BadRequestException;
 import com.meli.SocialMeli.helper.Helper;
 import com.meli.SocialMeli.model.Post;
+import com.meli.SocialMeli.model.Product;
 import com.meli.SocialMeli.model.User;
 import com.meli.SocialMeli.reposity.IRepository;
 import com.meli.SocialMeli.service.SocialMeliService;
@@ -19,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -257,7 +256,8 @@ public class SocialMeliServiceTest {
         );
     }
 
-    @DisplayName("T-0005 Verificar que el tipo de ordenamiento alfabético exista (Comportamiento: Notifica la no existencia mediante una excepción)")
+    @DisplayName("T-0005 Verificar que el tipo de ordenamiento alfabético exista " +
+            "(Comportamiento: Notifica la no existencia mediante una excepción)")
     @Test
     public void verifyThatNotExistTypeOfOrderDate(){
         //Arrange
@@ -275,9 +275,69 @@ public class SocialMeliServiceTest {
         );
     }
 
+    @DisplayName("T-0006: Verificar el correcto ordenamiento ascendente por fecha " +
+            "(Comportamiento: devuelve la lista ordenada segun el criterio solicitado)")
+    @Test
+    public void verifyCorrectOrderListPost(){
+        //Arrange
+        String orderAsc = "date_asc";
+        String orderDesc = "date_desc";
+        User userId1 = new User(1, "Gabriela", new LinkedList<User>(), new LinkedList<User>());
+        User userId2 = new User(2, "Anibal", new LinkedList<User>(), new LinkedList<User>());
+        //Seguidos por User1
+        LinkedList<User> listCurrentOrdered = new LinkedList<>();
+        listCurrentOrdered.add(userId2);
+        userId1.setFollowed(listCurrentOrdered);
+        //Siguen a User1
+        LinkedList<User> listCurrentOrdered2 = new LinkedList<>();
+        listCurrentOrdered2.add(userId2);
+        userId1.setFollowers(listCurrentOrdered2);
+        Product prod1 = new Product(1, "Silla Gamer","Silla", "Chip", "Negro","");
+        Post post1 = new Post(2,1, LocalDate.of(2021, 11, 26),3,1540.0, prod1);
 
+        Product prod2 = new Product(2, "Silla Gamer 2","Silla", "Chip", "Negro","");
+        Post post2 = new Post(2,2, LocalDate.of(2021, 11, 28),2,2450.67, prod2);
 
-    @DisplayName("T-0007: Verificar que la cantidad de seguidores de un determinado usuario sea correcta (Comportamiento: Devuelve el calculo correcto del total de la cantidad de seguidores que posee un usuario)")
+        Product prod3 = new Product(3, "Silla Gamer 3","Silla", "Chip", "Negro","");
+        Post post3 = new Post(2,3, LocalDate.of(2021, 10, 29),100,2345.0, prod3);
+        List<Post> postsAsc = new LinkedList<>();
+        postsAsc.add(post1);
+        postsAsc.add(post2);
+        postsAsc.add(post3);
+
+        List<Post> postsDesc = new LinkedList<>();
+        postsDesc.add(post2);
+        postsDesc.add(post3);
+        postsDesc.add(post1);
+
+        List<Post> postsAscCurrent = new LinkedList<>();
+        postsAscCurrent.add(post1);
+        postsAscCurrent.add(post2);
+
+        List<Post> postsDescCurrent = new LinkedList<>();
+        postsDescCurrent.add(post2);
+        postsDescCurrent.add(post1);
+
+        //Mock
+        Mockito.when(mockRepository.findUser(userId1.getUserId())).thenReturn(userId1);
+        Mockito.when(mockRepository.listPostUsr(userId2.getUserId())).thenReturn(postsAsc);
+        Mockito.when(mockRepository.listPostUsr(userId2.getUserId())).thenReturn(postsDesc);
+
+        //Act
+        ListPostsDTO listPostAsc = service.listPostFollowed(userId1.getUserId(), orderAsc);
+        ListPostsDTO listPostDesc = service.listPostFollowed(userId1.getUserId(), orderDesc);
+
+        // Assert
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(listPostAsc, Helper.listPostToListPostDTO(postsAscCurrent,userId1.getUserId())),
+                ()->Assertions.assertEquals(listPostDesc, Helper.listPostToListPostDTO(postsDescCurrent,userId1.getUserId())),
+                ()->Assertions.assertTrue(listPostAsc.getPosts().size()==Helper.listPostToListPostDTO(postsAscCurrent,userId1.getUserId()).getPosts().size()),
+                ()->Assertions.assertTrue(listPostDesc.getPosts().size()==Helper.listPostToListPostDTO(postsDescCurrent,userId1.getUserId()).getPosts().size())
+        );
+    }
+
+    @DisplayName("T-0007: Verificar que la cantidad de seguidores de un determinado usuario sea correcta " +
+            "(Comportamiento: Devuelve el calculo correcto del total de la cantidad de seguidores que posee un usuario)")
     @Test
     public void verifyCorrectSizeListFollowers(){
         //Arrange
@@ -300,6 +360,67 @@ public class SocialMeliServiceTest {
 
         // Assert
         Assertions.assertEquals(followersCount.getFollowersCount(), userId1.getFollowed().size());
+    }
+
+    @DisplayName("T-0008: Verificar que la consulta de publicaciones realizadas en las ultimas dos semanas " +
+            "de un determinadovendedor sean efectivamente de las ultimas dos semanas " +
+            "(Comportamiento: Devuelveúnicamente los datos de las publicaciones que tengan decha de " +
+            "publicaciones dentro de las ultimas dos semanas a partir del dia de la fecha.)")
+    @Test
+    public void verifyReturnPostOfLastTwoWeeks(){
+        //Arrange
+        String orderAsc = null;
+        String orderDesc = null;
+        User userId1 = new User(1, "Gabriela", new LinkedList<User>(), new LinkedList<User>());
+        User userId2 = new User(2, "Anibal", new LinkedList<User>(), new LinkedList<User>());
+        //Seguidos por User1
+        LinkedList<User> listCurrentOrdered = new LinkedList<>();
+        listCurrentOrdered.add(userId2);
+        userId1.setFollowed(listCurrentOrdered);
+        //Siguen a User1
+        LinkedList<User> listCurrentOrdered2 = new LinkedList<>();
+        listCurrentOrdered2.add(userId2);
+        userId1.setFollowers(listCurrentOrdered2);
+        Product prod1 = new Product(1, "Silla Gamer","Silla", "Chip", "Negro","");
+        Post post1 = new Post(2,1, LocalDate.of(2021, 11, 26),3,1540.0, prod1);
+
+        Product prod2 = new Product(2, "Silla Gamer 2","Silla", "Chip", "Negro","");
+        Post post2 = new Post(2,2, LocalDate.of(2021, 11, 28),2,2450.67, prod2);
+
+        Product prod3 = new Product(3, "Silla Gamer 3","Silla", "Chip", "Negro","");
+        Post post3 = new Post(2,3, LocalDate.of(2021, 10, 29),100,2345.0, prod3);
+        List<Post> postsAsc = new LinkedList<>();
+        postsAsc.add(post1);
+        postsAsc.add(post2);
+        postsAsc.add(post3);
+
+        List<Post> postsDesc = new LinkedList<>();
+        postsDesc.add(post2);
+        postsDesc.add(post3);
+        postsDesc.add(post1);
+
+        List<Post> postsAscCurrent = new LinkedList<>();
+        postsAscCurrent.add(post1);
+        postsAscCurrent.add(post2);
+
+        List<Post> postsDescCurrent = new LinkedList<>();
+        postsDescCurrent.add(post2);
+        postsDescCurrent.add(post1);
+
+        //Mock
+        Mockito.when(mockRepository.findUser(userId1.getUserId())).thenReturn(userId1);
+        Mockito.when(mockRepository.listPostUsr(userId2.getUserId())).thenReturn(postsAsc);
+        Mockito.when(mockRepository.listPostUsr(userId2.getUserId())).thenReturn(postsDesc);
+
+        //Act
+        ListPostsDTO listPostAsc = service.listPostFollowed(userId1.getUserId(), orderAsc);
+        ListPostsDTO listPostDesc = service.listPostFollowed(userId1.getUserId(), orderDesc);
+
+        // Assert
+        Assertions.assertAll(
+                ()->Assertions.assertTrue(listPostAsc.getPosts().size()==2),
+                ()->Assertions.assertTrue(listPostDesc.getPosts().size()==2)
+        );
     }
 
 }
