@@ -75,7 +75,7 @@ public class SocialMeliServiceTest {
     }
 
     @Test
-    public void getFollowedLidtFromNotFoundUser() {
+    public void getFollowedListFromNotFoundUser() {
         //Arrange
         Integer notFoundUserId = 99999999;
         String order = "name_asc";
@@ -169,6 +169,7 @@ public class SocialMeliServiceTest {
         //Assert
         Mockito.verify(usuarioRepository, Mockito.atLeastOnce()).findById(user_id);
         Mockito.verify(usuarioRepository, Mockito.atLeastOnce()).findById(user_id2);
+        Assertions.assertTrue(usuario2.getFollowersId().contains(user_id));
 
     }
     @Test
