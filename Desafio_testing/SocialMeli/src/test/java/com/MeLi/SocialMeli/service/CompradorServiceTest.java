@@ -1,9 +1,12 @@
 package com.MeLi.SocialMeli.service;
 
+import com.MeLi.SocialMeli.DTO.InfoSeguidosDTO;
 import com.MeLi.SocialMeli.DTO.SeguimientoDTO;
+import com.MeLi.SocialMeli.DTO.VendedorDTO;
 import com.MeLi.SocialMeli.controller.CompradorController;
 import com.MeLi.SocialMeli.exception.NotFoundCompradorException;
 import com.MeLi.SocialMeli.exception.NotFoundVendedorException;
+import com.MeLi.SocialMeli.mapper.VendedorMapper;
 import com.MeLi.SocialMeli.model.Comprador;
 import com.MeLi.SocialMeli.model.Vendedor;
 import com.MeLi.SocialMeli.repository.CompradorRepositoryImplement;
@@ -17,6 +20,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -113,6 +118,25 @@ public class CompradorServiceTest {
         Assertions.assertThrows(NotFoundVendedorException.class, ()->compradorService.dejarSeguir(1,1));
     }
 
-    
+    @Test
+    void ordenamiento() throws NotFoundVendedorException, NotFoundCompradorException {
+        //arrange
+        Comprador comprador = new Comprador(1,"Pedro");
+        Vendedor vendedor = new Vendedor(3,"Juan");
+        comprador.setSeguido(vendedor);
+
+        //mock
+        Mockito.when(mockCompradorRepository.find(1)).thenReturn(Optional.of(comprador));
+        Mockito.when(mockVendedorRepository.find(3)).thenReturn(Optional.of(vendedor));
+
+        //act
+        InfoSeguidosDTO seguidos = compradorService.verSeguidos(1,"");
+        List<VendedorDTO> listaEsperada = new ArrayList<>();
+        listaEsperada.add(VendedorMapper.vendedorToVendedorDTO(vendedor));
+        InfoSeguidosDTO dtoEsperado = new InfoSeguidosDTO(comprador.getId(),comprador.getNombre(),listaEsperada);
+
+        //assert
+        assertEquals(dtoEsperado,seguidos);
+    }
 
 }
