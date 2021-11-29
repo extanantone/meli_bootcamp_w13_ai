@@ -11,8 +11,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Data
@@ -24,7 +26,7 @@ public class PostDTO {
     @Positive(message = "The user_id cannot be zero")
     private Integer userId;
 
-    @NotNull(message = "The post_id heheheeh be empty")
+    @NotNull(message = "The post_id cannot be empty")
     @Positive(message = "The post_id cannot be zero")
     private Integer postId;
 
@@ -38,6 +40,11 @@ public class PostDTO {
 
     @Valid
     private Product detail;
-    private int category;
-    private double price;
+
+    @NotNull(message = "The category cannot be empty")
+    private Integer category;
+
+    @NotNull(message = "The price cannot be empty")
+    @Max(value = 10000000, message = "The max price is 10.000.000")
+    private Double price;
 }
