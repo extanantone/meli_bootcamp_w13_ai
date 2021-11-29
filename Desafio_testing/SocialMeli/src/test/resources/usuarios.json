@@ -1,0 +1,66 @@
+[
+  {
+    "user_id": 5,
+    "user_name": "Meli",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  },
+  {
+    "user_id": 6,
+    "user_name": "Carlos",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  },
+  {
+    "user_id": 7,
+    "user_name": "Didi",
+    "followed": [
+    ],
+    "followers": [
+      {
+        "user_id": 5,
+        "user_name": "Meli",
+        "followed": [
+        ],
+        "followers": [
+        ]
+      },
+      {
+        "user_id": 6,
+        "user_name": "Carlos",
+        "followed": [
+        ],
+        "followers": [
+        ]
+      }
+    ]
+  },
+  {
+    "user_id": 8,
+    "user_name": "Nikita",
+    "followed": [
+    ],
+    "followers": [
+    ]
+  },
+  {
+    "user_id": 9,
+    "user_name": "Bunyta",
+    "followed": [
+      {
+        "user_id": 8,
+        "user_name": "Nikita",
+        "followed": [
+        ],
+        "followers": [
+        ]
+      }
+    ],
+    "followers": [
+    ]
+  }
+]

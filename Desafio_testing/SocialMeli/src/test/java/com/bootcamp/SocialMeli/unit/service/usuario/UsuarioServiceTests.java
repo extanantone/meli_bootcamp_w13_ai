@@ -16,6 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class UsuarioServiceTests {
     @Mock
     IUsuarioRepository repository;
@@ -31,6 +34,7 @@ public class UsuarioServiceTests {
     @InjectMocks
     UsuarioService service = new UsuarioService(repository, new UsuarioMapper());
 
+    //T-0001
     @Test
     public void followWithExistentUserToExistentUser() {
         Integer userIdFollower = 10;
@@ -71,6 +75,7 @@ public class UsuarioServiceTests {
         Assertions.assertThrows(BadRequestException.class, () -> service.realizarFollow(userIdFollower, userIdFollowed));
     }
 
+    //T-0002
     @Test
     public void unfollowWithExistentUserToExistentUser() {
         Integer userIdFollower = 10;
@@ -112,6 +117,7 @@ public class UsuarioServiceTests {
         Assertions.assertThrows(BadRequestException.class, () -> service.realizarUnfollow(userIdFollower, userIdFollowed));
     }
 
+    //T-0003
     @Test
     public void checkFollowersListIsSorting() {
         Integer userIdFollowed = 20;
@@ -230,6 +236,7 @@ public class UsuarioServiceTests {
         //EL TEST ESTÁ BIEN, PERO EL CÓDIGO NO MANEJA ESTE ERROR, POR ENDE NUNCA TIRA EL THROW
     }
 
+    //T-0004
     @Test
     public void checkFollowersListIsSortByNameAsc() {
         Integer userIdFollowed = 20;
@@ -378,8 +385,9 @@ public class UsuarioServiceTests {
         Assertions.assertEquals(expected, result);
     }
 
+    //T-0007
     @Test
-    public void checkFollowersCountIsCounting(){
+    public void checkFollowersCountIsCounting() {
         Integer userIdFollowed = 20;
 
         ArrayList<Usuario> followers = new ArrayList<>();
@@ -403,5 +411,98 @@ public class UsuarioServiceTests {
         FollowerCountDTO result = service.cantidadFollowers(followed.getUserId());
 
         Assertions.assertEquals(expected.getFollowersCount(), result.getFollowersCount());
+    }
+
+    //BONUS
+    @Test
+    public void testGivenTwoEqualsUserIdsWhenFollowGetException() throws BadRequestException {
+        Integer userIdFollower = 10;
+        Integer userIdFollowed = 10;
+
+        Usuario follower = new Usuario();
+        follower.setUserId(userIdFollower);
+        follower.setFollowed(new ArrayList<>());
+
+        Usuario followed = new Usuario();
+        followed.setUserId(userIdFollowed);
+        followed.setFollowers(new ArrayList<>());
+
+        Mockito.when(repository.encontrarUsuario(userIdFollower)).thenReturn(true);
+        Mockito.when(repository.encontrarUsuario(userIdFollowed)).thenReturn(true);
+
+        Mockito.when(repository.devolverUsuario(userIdFollower)).thenReturn(follower);
+        Mockito.when(repository.devolverUsuario(userIdFollowed)).thenReturn(followed);
+
+        Assertions.assertThrows(BadRequestException.class, () -> service.realizarFollow(userIdFollower, userIdFollowed));
+    }
+
+    @Test
+    public void testGivenTwoEqualsUserIdsWhenUnfollowGetException() throws BadRequestException {
+        Integer userIdFollower = 10;
+        Integer userIdFollowed = 10;
+
+        Usuario follower = new Usuario();
+        follower.setUserId(userIdFollower);
+        follower.setFollowed(new ArrayList<>());
+
+        Usuario followed = new Usuario();
+        followed.setUserId(userIdFollowed);
+        followed.setFollowers(new ArrayList<>());
+
+        Mockito.when(repository.encontrarUsuario(userIdFollower)).thenReturn(true);
+        Mockito.when(repository.encontrarUsuario(userIdFollowed)).thenReturn(true);
+
+        Mockito.when(repository.devolverUsuario(userIdFollower)).thenReturn(follower);
+        Mockito.when(repository.devolverUsuario(userIdFollowed)).thenReturn(followed);
+
+        Assertions.assertThrows(BadRequestException.class, () -> service.realizarUnfollow(userIdFollower, userIdFollowed));
+    }
+
+    @Test
+    public void testGivenUserIdWithNoFollowersWhenGetFollowersCountGetException() throws BadRequestException {
+        Integer userIdFollowed = 20;
+
+        List<Usuario> followers = new ArrayList<>();
+
+        Usuario followed = new Usuario(userIdFollowed, "Juan", new ArrayList<>(), followers, new ArrayList<>());
+
+        Mockito.when(repository.encontrarUsuario(userIdFollowed)).thenReturn(true);
+        Mockito.when(repository.devolverUsuario(userIdFollowed)).thenReturn(followed);
+
+        Assertions.assertThrows(BadRequestException.class, () -> service.cantidadFollowers(userIdFollowed));
+    }
+
+    @Test
+    public void testGivenUserIdWithNoFollowedWhenGetFollowedListGetException() {
+        Integer userIdFollower = 20;
+        String order = "name_asc";
+
+        ArrayList<Usuario> followeds = new ArrayList<>();
+
+        Usuario follower = new Usuario();
+        follower.setUserId(userIdFollower);
+        follower.setFollowed(followeds);
+
+        Mockito.when(repository.encontrarUsuario(userIdFollower)).thenReturn(true);
+        Mockito.when(repository.devolverUsuario(userIdFollower)).thenReturn(follower);
+
+        Assertions.assertThrows(BadRequestException.class, () -> service.listaFollowed(userIdFollower, order));
+    }
+
+    @Test
+    public void testGivenUserIdWithNoFollowersWhenGetFollowersListGetException() {
+        Integer userIdFollowed = 10;
+        String order = "name_asc";
+
+        ArrayList<Usuario> followers = new ArrayList<>();
+
+        Usuario followed = new Usuario();
+        followed.setUserId(userIdFollowed);
+        followed.setFollowers(followers);
+
+        Mockito.when(repository.encontrarUsuario(userIdFollowed)).thenReturn(true);
+        Mockito.when(repository.devolverUsuario(userIdFollowed)).thenReturn(followed);
+
+        Assertions.assertThrows(BadRequestException.class, () -> service.listaFollowers(userIdFollowed, order));
     }
 }
