@@ -383,6 +383,67 @@ public class SocialMeliServiceTest {
         }
     }
 
+    @Nested
+    @DisplayName("T-0005")
+    class T0005{
+        @DisplayName("T-0005 el tipo de ordenamiento alfabético ascendente existe US-0009")
+        @Test
+        public void orderAscByNameFollowedExistTest(){
+            int userId = 1;
+            String order = "name_asc";
+
+            user1.getFollowed().add(user3);
+            user1.getFollowed().add(user4);
+
+            when(mockUserRepository.findBuyerById(userId)).thenReturn(user1);
+
+            //Act and Assert
+            assertDoesNotThrow(
+                    () -> userService.followed(userId, order));
+            verify(mockUserRepository, atLeastOnce()).findBuyerById(userId);
+            verify(mockUserRepository, never()).findSellerById(userId);
+
+        }
+
+        @DisplayName("T-0005 el tipo de ordenamiento alfabético descendente existe US-0009")
+        @Test
+        public void orderDescByNameFollowedExistTest(){
+            int userId = 1;
+            String order = "name_desc";
+
+            user1.getFollowed().add(user3);
+            user1.getFollowed().add(user4);
+
+            when(mockUserRepository.findBuyerById(userId)).thenReturn(user1);
+
+            //Act and Assert
+            assertDoesNotThrow(
+                    () -> userService.followed(userId, order));
+
+            verify(mockUserRepository, atLeastOnce()).findBuyerById(userId);
+            verify(mockUserRepository, never()).findSellerById(userId);
+
+        }
+
+        @Disabled("No se implementó en el proyecto inicial de SocialMeli US-0009")
+        @DisplayName("T-0005 el tipo de ordenamiento alfabético No existe US-0009 ")
+        @Test
+        public void orderByNameFollowedNotExistTest(){
+            int userId = 1;
+
+            user1.getFollowed().add(user3);
+            user1.getFollowed().add(user4);
+
+            when(mockUserRepository.findBuyerById(userId)).thenReturn(user1);
+
+            //Act and Assert
+            assertThrows(BadRequestException.class,
+                    ()->userService.followed(userId,null));
+            verify(mockUserRepository, atLeastOnce()).findBuyerById(userId);
+        }
+
+    }
+
 
 
 }
