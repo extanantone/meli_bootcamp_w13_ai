@@ -108,9 +108,7 @@ public class SocialMeliService implements IService {
             followersList.add( this.getUserById(idFollower) );
 
         }
-
         Sorter sorter = MiFactory.getInstance(order == null ? "name_desc" : order);
-
         return followersList.stream()
                 .map( u -> mapper.map(u, UserDTO.class))
                 .sorted( (u,b) -> sorter.sort(u,b) )
