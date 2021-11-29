@@ -26,6 +26,9 @@ public class UserExceptionController {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ResponseEntity<ErrorDTO> handleValidationExceptions(HttpMessageNotReadableException e){
         ErrorDTO error = new ErrorDTO("HttpMessageNotReadableException", e.getMessage());
+        if (e.getMessage().contains("DateTimeParseException")) {
+            error.setDescription("El formato de fecha ingresado es inválido. Debe respetarse dd-MM-yyyy.");
+        }
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

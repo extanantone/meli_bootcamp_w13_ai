@@ -51,13 +51,16 @@ public class UserRepository implements IUserRepository{
     public BuyersDTO findBuyerByUserId(Integer user_id) {
         BuyersDTO buyersDTO = null;
         try{
-            buyersDTO = buyersDTOList.get(user_id-1);
+
+            if( buyersDTOList.size() >= user_id ) {
+                buyersDTO = buyersDTOList.get(user_id - 1);
+            }
 
             if ( buyersDTO == null)
                 throw new UserNotFoundException( user_id );
 
         }catch (UserNotFoundException e){
-            System.out.println(e.getMessage());
+            //System.out.println(e.getErrorDTO().getDescription());
         }
 
 
@@ -68,14 +71,15 @@ public class UserRepository implements IUserRepository{
     public SellersDTO findSellerByUserId(Integer user_id) {
         SellersDTO sellersDTO = null;
         try{
-            sellersDTO = sellersDTOList.get(user_id-1);
+
+            if( sellersDTOList.size() >= user_id ) {
+                sellersDTO = sellersDTOList.get(user_id - 1);
+            }
 
             if ( sellersDTO == null)
                 throw new UserNotFoundException( user_id );
 
-        }catch (UserNotFoundException e){
-            System.out.println(e.getMessage());
-        }
+        }catch (UserNotFoundException e){}
 
 
         return sellersDTO;

@@ -1,18 +1,13 @@
 package controller;
 
 import com.SocialMeli.SocialMeli.controller.UserController;
-import com.SocialMeli.SocialMeli.dto.SellersDTO;
-import com.SocialMeli.SocialMeli.dto.UserDTO;
-import com.SocialMeli.SocialMeli.repository.UserRepository;
 import com.SocialMeli.SocialMeli.service.UserService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import util.TestUtilGenerator;
 
 import static org.mockito.Mockito.*;
 
@@ -28,7 +23,7 @@ public class UserControllerTest {
 
 
     @Test
-    @DisplayName("Comprobando la llamada a seguir un vendedor")
+    @DisplayName("T-0001 Comprobando la llamada a seguir un vendedor")
     void userFollowedCalled(){
         // Arrange
         Integer user_id = 1;
@@ -43,7 +38,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Comprobando la llamada para dejar de seguir a un vendedor")
+    @DisplayName("T-0002 Comprobando la llamada para dejar de seguir a un vendedor")
     void userUnfollowedCalled(){
         // Arrange
         Integer user_id = 1;
@@ -60,7 +55,7 @@ public class UserControllerTest {
     // Siempre va a retornar el usuario sin importar si le envìa o no el order
     // al igual si el usuario escribe mal el order
     @Test
-    @DisplayName("Con parámetro de order")
+    @DisplayName("T-0003 Con parámetro de order")
     void checkingSortedAlphaTypeSellers(){
         // Arrange
         String order = "name_asc";
@@ -75,7 +70,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Sin parámetro de order")
+    @DisplayName("T-0003 Sin parámetro de order")
     void checkingSortedAlphaTypeSellersWithoutOrder(){
         // Arrange
         Integer user_id = 1;
@@ -90,10 +85,10 @@ public class UserControllerTest {
 
 
     @Test
-    @DisplayName("Ordenamiento de fecha con parámetro de order")
+    @DisplayName("T-0005 Ordenamiento de fecha con parámetro de order")
     void checkingSortedDateTypeSellers(){
         // Arrange
-        String order = "name_asc";
+        String order = "date_asc";
         Integer user_id = 1;
 
         // Act
@@ -105,7 +100,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Ordenamiento de fecha sin parámetro de order")
+    @DisplayName("T-0005 Ordenamiento de fecha sin parámetro de order")
     void checkingSortedDateTypeSellersWithoutOrder(){
         // Arrange
         Integer user_id = 1;
@@ -119,7 +114,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Verificando que la cantidad de seguidores sea la correcta")
+    @DisplayName("T-0007 Verificando que la cantidad de seguidores sea la correcta")
     void checkingAmountFollowersFromSellers(){
         // Arrange
         Integer user_id = 0;
@@ -133,7 +128,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Verificando los últimos posts de un vendedor de las últimas 2 semanas")
+    @DisplayName("T-0008 Verificando los últimos posts de un vendedor de las últimas 2 semanas")
     void checkingLastDatePostsByUser(){
         // Arrange
         Integer user_id = 1;
