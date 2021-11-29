@@ -541,9 +541,9 @@ public class SocialMeliServiceTest {
             verify(mockUserRepository, times(1)).getPostsList();
         }
 
-        @DisplayName("T-0008")
+        @DisplayName("T-0008 Publicaciones realizadas las últimas dos semanas")
         @Test
-        void test() {
+        void postsLastTwoWeeksTest() {
             int userId = 1;
 
             when(mockUserRepository.findBuyerById(userId)).thenReturn(user1);
