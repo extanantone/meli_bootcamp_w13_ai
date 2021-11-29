@@ -1,0 +1,13 @@
+Ejercicio 2 
+Una vez modelada y planteada la base de datos, responder a las siguientes preguntas:
+
+a. ¿Cuál es la primary key para la tabla de clientes? Justificar respuesta.
+
+La primary key de la tabla cliente es id_cliente, cree una columna id para relacionarla con otras tablas, ya que dni puede ser no unico.
+
+b. ¿Cuál es la primary key para la tabla de planes de internet? Justificar respuesta.
+Como primary key creo una columna id_plan para poder relacionarla con otras tablas como la compra de un plan o la factura.
+
+c. ¿Cómo serían las relaciones entre tablas? ¿En qué tabla debería haber foreign key? ¿A qué campo de qué tabla hace referencia dicha foreign key? Justificar respuesta.
+Cree una tabla contrata_plan la cual tiene dos foreing key uno del cliente y otro del plan y le cree una clave unica para ser usada a la hora de facturar por ejemplo.
+

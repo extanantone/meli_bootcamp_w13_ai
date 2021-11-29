@@ -5,7 +5,7 @@ SELECT * FROM movies;
 SELECT first_name, last_name, rating FROM actors;
 
 --3) Mostrar el título de todas las series y usar alias para que tanto el nombre de la tabla como el campo estén en español.
-SELECT title as titulo FROM series serie;
+SELECT title as titulo FROM series;
 
 --4) Mostrar el nombre y apellido de los actores cuyo rating sea mayor a 7.5.
 SELECT first_name, last_name FROM actors WHERE rating>7.5;
@@ -32,7 +32,7 @@ SELECT title, rating FROM movies WHERE title = 'Toy Story';
 SELECT * FROM actors WHERE first_name LIKE 'Sam%';
 
 -- 12) Mostrar el título de las películas que salieron entre el 2004 y 2008.
-SELECT title FROM movies WHERE YEAR(release_date)>=2004 AND YEAR(release_date)<=2008;
+SELECT title, release_date FROM movies WHERE YEAR(release_date) BETWEEN 2004 AND 2008;
 
 -- 13) Traer el título de las películas con el rating mayor a 3, con más de 1 premio y con fecha de lanzamiento entre el año 1988 al 2009. Ordenar los resultados por rating.
 SELECT title FROM movies WHERE rating>3 AND awards>1 and YEAR(release_date)>=1988 AND YEAR(release_date)<=2009 ORDER BY rating;
