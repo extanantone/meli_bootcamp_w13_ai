@@ -178,8 +178,6 @@ public class PostServiceTest {
         );
     }
 
-
-
     @Test
         //Verifico que de las 5 publicaciones mockeadas (todas dentro de las últimas 2 semanas),
         //el servicio devuelva las 5

@@ -66,7 +66,7 @@ public class UserServiceTest {
         when(mockUserRepository.existeUsuario(userIdToFollow)).thenReturn(true);
         when(mockUserRepository.obtenerUsuario(userIdToFollow)).thenReturn(usuario);
 
-        //Act Assert
+        //Act & Assert
         assertThrows(BadRequestExcepcion.class, () -> userService.agregarFollowed(userId, userIdToFollow));
     }
 
@@ -79,13 +79,7 @@ public class UserServiceTest {
         when(mockUserRepository.existeUsuario(userId)).thenReturn(true);
         when(mockUserRepository.existeUsuario(userIdToFollow)).thenReturn(false);
 
-        //Act Assert
-        //TODO: BORRAR:
-        //assertAll(
-        //        ()->assertThrows(UserNotFoundException.class, () -> userService.agregarFollowed(userId, userIdToFollow)),
-        //        ()->verify(mockUserRepository, atLeastOnce()).agregarFollowed(userId, userIdToFollow)
-        //);
-
+        //Act & Assert
         assertThrows(UserNotFoundException.class, () -> userService.agregarFollowed(userId, userIdToFollow));
     }
 
@@ -119,7 +113,7 @@ public class UserServiceTest {
         when(mockUserRepository.existeUsuario(userId)).thenReturn(true);
         when(mockUserRepository.existeUsuario(userIdToFollow)).thenReturn(false);
 
-        //Act Assert
+        //Act & Assert
         assertThrows(UserNotFoundException.class, () -> userService.quitarFollowed(userId, userIdToFollow));
     }
 

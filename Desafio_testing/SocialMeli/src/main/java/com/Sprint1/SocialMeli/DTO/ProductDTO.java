@@ -39,7 +39,7 @@ public class ProductDTO {
     @Size(max = 15, message = "La longitud de 'color' no puede superar los 15 caracteres.")
     @Pattern(regexp = "[a-z|A-Z|á|é|í|ó|ú|ñ|Á|É|Í|Ó|Ú|Ñ|0-9]+", message = "'color' no puede poseer caracteres especiales ni espacios.")
     private String color;
-    
+
     @Size(max = 80, message = "La longitud de 'notes' no puede superar los 80 caracteres.")
     @Pattern(regexp = "[a-z|A-Z|á|é|í|ó|ú|ñ|Á|É|Í|Ó|Ú|Ñ|0-9| ]+", message = "'notes' no puede poseer caracteres especiales.")
     private String notes;
