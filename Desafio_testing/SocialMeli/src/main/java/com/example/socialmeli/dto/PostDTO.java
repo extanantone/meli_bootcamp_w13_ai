@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.Date;
 
@@ -14,30 +16,30 @@ import java.util.Date;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PostDTO {
 
-    //TODO revisar patterns ids y precio  regexp="([A-Z]|[0-9])[\\s|[0-9]|A-Z|a-z|ñ|ó|í|á|é|ú|Á|Ó|É|Í|Ú]*$"
 
-    @NotNull(message = "userId must be numeric and can not be null or empty or negative")
-    @Min(value = 0, message = "userId must be numeric and can not be null, empty, zero or negative")
+    @NotNull(message = "el user_id no puede ser nulo,negativo o 0")
+    @Positive( message = "el user_id no puede ser nulo,negativo o 0")
     private Integer userId;
 
-    @NotNull(message = "idPost must be numeric and can not be null or empty or negative")
-    @Positive(message = "idPost must be numeric and can not be null or empty or negative")
+    @NotNull(message = "el post_id no puede ser nulo,negativo o 0")
+    @Positive(message = "el post_id no puede ser nulo,negativo o 0")
     private Integer idPost;
 
     // date can not be null
-    @NotNull(message = "date can not be null")
-    @Past(message = "date can not be in the future")
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @NotNull(message = "date no puede ser nulo")
+    @Past(message = "date no puede ser una fecha futura")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date date;
 
-    @NotNull(message = "detail must not be null or empty")
-    private ProductDTO detail;
+    @NotNull(message = "detail no puede ser nulo")
+    private @Valid ProductDTO detail;
 
-    @NotNull(message = "productName can not be null or empty")
+    @NotNull(message = "product_name no puede ser nulo o vacio")
     private int category;
 
-    @NotNull(message = "price can not be null or empty")
-    @DecimalMax(value = "10000000.00", message = "price can not be greater than 10.000.000,00")
+    @NotNull(message = "el precio no puede ser nulo o vacio")
+    @DecimalMax(value = "10000000.00", message = "el precio no puede ser mayor a 10000000.00")
+    @Positive(message = "el precio no puede ser 0 o negativo")
     private double price;
 
     private boolean hasPromo = false;

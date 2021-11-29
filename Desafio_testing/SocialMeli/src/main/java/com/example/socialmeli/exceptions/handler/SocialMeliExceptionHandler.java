@@ -4,6 +4,7 @@ import com.example.socialmeli.exceptions.SocialMeliException;
 import com.example.socialmeli.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,7 +31,15 @@ public class SocialMeliExceptionHandler {
         ex.printStackTrace();
         return new ResponseEntity<>(
                 new ErrorDTO("Error de validacion", ex.getBindingResult().getFieldError().getDefaultMessage()),
-                HttpStatus.INTERNAL_SERVER_ERROR );
+                HttpStatus.BAD_REQUEST );
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    protected ResponseEntity<ErrorDTO> badDateRequestExceptionHandler(HttpMessageNotReadableException ex){
+        ex.printStackTrace();
+        return new ResponseEntity<>(
+                new ErrorDTO("El formato de la fecha no es validos", "El formato de la fecha no es valido, tiene que ser dd-MM-yyyy"),
+                HttpStatus.BAD_REQUEST );
     }
 
 }

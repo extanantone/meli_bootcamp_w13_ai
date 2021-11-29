@@ -65,12 +65,85 @@ public class SocialMeliServiceTest {
     }
 
     @Test
-    public void testNotFoundUserById() throws UserNotFoundException {
+    public void testNotFoundUserById()  {
         //Arrange
         Integer notFoundUserId = 99999999;
         //Assert & Act
         Assertions.assertThrows(UserNotFoundException.class, () -> {
             socialMeliService.getUserById(notFoundUserId);
+        });
+    }
+
+    @Test
+    public void getFollowedLidtFromNotFoundUser() {
+        //Arrange
+        Integer notFoundUserId = 99999999;
+        String order = "name_asc";
+        //Assert & Act
+        Assertions.assertThrows(UserNotFoundException.class, () -> {
+            socialMeliService.getFollowed(notFoundUserId,order);
+        });
+    }
+
+    @Test
+    public void testUserAlreadyFollow() {
+        //Arrange
+        Integer userId = 1;
+        Integer userId2 = 2;
+        User usuario = new User();
+        usuario.setUserId(userId);
+        usuario.setUserName("Santiago");
+        User usuario2 = new User();
+        usuario2.setUserId(userId2);
+        usuario2.setUserName("Gabriel");
+        usuario.getFollowersId().add(userId2);
+        //Assert
+        Mockito.when(usuarioRepository.findById(userId)).thenReturn(Optional.of(usuario));
+        Mockito.when(usuarioRepository.findById(userId2)).thenReturn(Optional.of(usuario2));
+        //Act
+        Assertions.assertThrows(UserAlreadyInUseException.class, () -> {
+            socialMeliService.follow(userId2,userId);
+        });
+    }
+
+    @Test
+    public void testUserUnfollowNotFollow()  {
+        //Arrange
+        Integer userId = 1;
+        Integer userId2 = 2;
+        User usuario = new User();
+        usuario.setUserId(userId);
+        usuario.setUserName("Santiago");
+        User usuario2 = new User();
+        usuario2.setUserId(userId2);
+        usuario2.setUserName("Gabriel");
+        //Assert
+        Mockito.when(usuarioRepository.findById(userId)).thenReturn(Optional.of(usuario));
+        //Act
+        Assertions.assertThrows(UserAlreadyInUseException.class, () -> {
+            socialMeliService.unfollow(userId2,userId);
+        });
+    }
+
+    @Test
+    public void testUserSameId() throws UserNotFoundException {
+        //Arrange
+        Integer notFoundUserId = 1;
+        Integer userId = 1;
+        //Assert & Act
+        Assertions.assertThrows(UserSelfUseException.class, () -> {
+            socialMeliService.follow(userId,notFoundUserId);
+        });
+    }
+
+    @Test
+    public void testUnFollowUserSameId() throws UserNotFoundException {
+        //Arrange
+        Integer notFoundUserId = 1;
+        Integer userId = 1;
+        //Assert & Act
+        Assertions.assertThrows(UserSelfUseException.class, () -> {
+            socialMeliService.unfollow(userId,notFoundUserId);
         });
     }
 
@@ -396,8 +469,3 @@ public class SocialMeliServiceTest {
 
 
 }
-
-
-
-//TODO verificar parametros de order con excepciones o lo que me permita el codigo dar vuelta params asserequals
-//TODO CAMBIAR los equals por las respuestas solamente

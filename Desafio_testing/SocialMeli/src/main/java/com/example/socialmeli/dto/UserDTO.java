@@ -17,13 +17,13 @@ import java.util.List;
 
 public class UserDTO {
 
-    @NotNull(message = "userId must be numeric and can not be null or empty or negative")
-    @Positive(message = "userId must be numeric and can not be null or empty or negative")
+    @NotNull(message = "user_id no puede ser nula")
+    @Positive(message = "user_id debe ser positivo")
     private Integer userId;
 
-    @NotBlank(message = "userName can not be null or empty")
-    @Size(max = 15, message = "userName can not be longer than 15 characters")
-    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "userName can not have special characters")
+    @NotBlank(message = "user_name no puede ser nulo")
+    @Size(max = 15, message = "user_name debe tener como maximo 15 caracteres")
+    @Pattern(regexp = "^[a-zA-Z0-9 ]*$", message = "user_name solo puede contener letras y numeros")
     private String userName;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

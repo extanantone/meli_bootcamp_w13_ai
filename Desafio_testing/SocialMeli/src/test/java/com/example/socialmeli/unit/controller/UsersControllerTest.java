@@ -78,5 +78,3 @@ public class UsersControllerTest {
     }
 }
 
-
-//TODO AGREGAR VERIFICACION DEL FOLLOW/UNFOLLOW
