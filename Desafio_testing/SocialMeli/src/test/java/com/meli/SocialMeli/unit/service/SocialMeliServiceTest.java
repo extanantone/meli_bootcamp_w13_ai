@@ -5,6 +5,7 @@ import com.meli.SocialMeli.exception.BadRequestException;
 import com.meli.SocialMeli.helper.Helper;
 import com.meli.SocialMeli.model.Post;
 import com.meli.SocialMeli.model.Product;
+import com.meli.SocialMeli.model.Promo;
 import com.meli.SocialMeli.model.User;
 import com.meli.SocialMeli.reposity.IRepository;
 import com.meli.SocialMeli.service.SocialMeliService;
@@ -275,7 +276,7 @@ public class SocialMeliServiceTest {
         );
     }
 
-    @DisplayName("T-0006: Verificar el correcto ordenamiento ascendente por fecha " +
+    @DisplayName("T-0006: Verificar el correcto ordenamiento ascendente y descendente por fecha " +
             "(Comportamiento: devuelve la lista ordenada segun el criterio solicitado)")
     @Test
     public void verifyCorrectOrderListPost(){
@@ -422,5 +423,330 @@ public class SocialMeliServiceTest {
                 ()->Assertions.assertTrue(listPostDesc.getPosts().size()==2)
         );
     }
+
+    @DisplayName("Verificar que al agregar un post no se genera una excepción")
+    @Test
+    public void verifyAddPost(){
+        //Arrange
+        User userId = new User(1, "Gabriela", new LinkedList<User>(), new LinkedList<User>());
+
+        Product prod = new Product(1, "Silla Gamer","Silla", "Chip", "Negro","");
+        Post post = new Post(userId.getUserId(),1, LocalDate.of(2021, 11, 26),3,1540.0, prod);
+
+        //Mock
+        Mockito.when(mockRepository.containPost(post.getIdPost())).thenReturn(false);
+        Mockito.when(mockRepository.containProduct(userId.getUserId(), post.getDetail().getProductId())).thenReturn(false);
+
+        //Act & Assert
+        Assertions.assertDoesNotThrow(()->service.addPost(Helper.postToPostDTO(post)));
+    }
+
+    @DisplayName("Verificar que al agregar una promo no se genera una excepción")
+    @Test
+    public void verifyAddPromo(){
+        //Arrange
+        User userId = new User(1, "Gabriela", new LinkedList<User>(), new LinkedList<User>());
+
+        ProductDTO prod = new ProductDTO(1, "Silla Gamer","Silla", "Chip", "Negro","");
+        PromoDTO promoDTO = new PromoDTO(userId.getUserId(),1, LocalDate.of(2021, 11, 26),3,1540.0, prod, true, 10.0);
+        Promo promo = Helper.promoDTOToPromo(promoDTO);
+        //Mock
+        Mockito.when(mockRepository.containPromo(promo.getIdPost())).thenReturn(false);
+        Mockito.when(mockRepository.containProductPromo(userId.getUserId(), promo.getDetail().getProductId())).thenReturn(false);
+
+        //Act & Assert
+        Assertions.assertDoesNotThrow(()->service.addPromo(promoDTO));
+    }
+
+    @DisplayName("Verificar excepcion al agregar una promo con usuario inexistente")
+    @Test
+    public void verifyExceptionsUserAddPromo(){
+        //Arrange
+        User user = new User(10, "Vanesa", new LinkedList<User>(), new LinkedList<User>());
+
+        ProductDTO prod = new ProductDTO(1, "Silla Gamer","Silla", "Chip", "Negro","");
+        PromoDTO promoDTO = new PromoDTO(user.getUserId(),1, LocalDate.of(2021, 11, 26),3,13900.0, prod, true, 10.0);
+        Promo promo = Helper.promoDTOToPromo(promoDTO);
+
+        BadRequestException exceptionUserCurrent = new BadRequestException("Usuario "+user.getUserId()+" invalido");
+
+        //Act
+        BadRequestException exceptionUserExpected =  Assertions.assertThrows(BadRequestException.class, ()->service.addPromo(promoDTO));
+
+        //Act & Assert
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(exceptionUserExpected, exceptionUserCurrent)
+        );
+    }
+
+    @DisplayName("Verificar excepcion al agregar una promo con id_promo negativo")
+    @Test
+    public void verifyExceptionsNegativeIdPostAddPromo(){
+        //Arrange
+        User user = new User(1, "Vanesa", new LinkedList<User>(), new LinkedList<User>());
+
+        ProductDTO prod = new ProductDTO(1, "Silla Gamer","Silla", "Chip", "Negro","");
+        PromoDTO promoDTO = new PromoDTO(user.getUserId(),-1, LocalDate.of(2021, 11, 26),3,13900.0, prod, true, 10.0);
+        Promo promo = Helper.promoDTOToPromo(promoDTO);
+
+        BadRequestException exceptionUserCurrent = new BadRequestException("id_post debe ser un número mayor que cero.");
+        //Mock
+        Mockito.when(mockRepository.findUser(user.getUserId())).thenReturn(user);
+
+        //Act
+        BadRequestException exceptionUserExpected =  Assertions.assertThrows(BadRequestException.class, ()->service.addPromo(promoDTO));
+
+        //Act & Assert
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(exceptionUserExpected, exceptionUserCurrent)
+        );
+    }
+
+    @DisplayName("Verificar excepcion al agregar una promo con precio menor que cero")
+    @Test
+    public void verifyExceptionsNegativePriceAddPromo(){
+        //Arrange
+        User user = new User(1, "Vanesa", new LinkedList<User>(), new LinkedList<User>());
+
+        ProductDTO prod = new ProductDTO(1, "Silla Gamer","Silla", "Chip", "Negro","");
+        PromoDTO promoDTO = new PromoDTO(user.getUserId(),1, LocalDate.of(2021, 11, 26),3,-13900.0, prod, true, 10.0);
+        Promo promo = Helper.promoDTOToPromo(promoDTO);
+
+        BadRequestException exceptionUserCurrent = new BadRequestException("price debe ser mayor que cero.");
+        //Mock
+        Mockito.when(mockRepository.findUser(user.getUserId())).thenReturn(user);
+
+        //Act
+        BadRequestException exceptionUserExpected =  Assertions.assertThrows(BadRequestException.class, ()->service.addPromo(promoDTO));
+
+        //Act & Assert
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(exceptionUserExpected, exceptionUserCurrent)
+        );
+    }
+
+    @DisplayName("Verificar excepcion al agregar una promo con descuenta fuera de rango")
+    @Test
+    public void verifyExceptionsDiscountOutRangeAddPromo(){
+        //Arrange
+        User user = new User(1, "Vanesa", new LinkedList<User>(), new LinkedList<User>());
+
+        ProductDTO prod = new ProductDTO(1, "Silla Gamer","Silla", "Chip", "Negro","");
+        PromoDTO promoDTO = new PromoDTO(user.getUserId(),1, LocalDate.of(2021, 11, 26),3,13900.0, prod, true, 120.0);
+        Promo promo = Helper.promoDTOToPromo(promoDTO);
+
+        BadRequestException exceptionUserCurrent = new BadRequestException("Discount debe ser mayor que cero y menor que 100 para considerarse en promoción.");
+        //Mock
+        Mockito.when(mockRepository.findUser(user.getUserId())).thenReturn(user);
+
+        //Act
+        BadRequestException exceptionUserExpected =  Assertions.assertThrows(BadRequestException.class, ()->service.addPromo(promoDTO));
+
+        //Act & Assert
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(exceptionUserExpected, exceptionUserCurrent)
+        );
+    }
+
+    @DisplayName("Verificar excepcion al agregar una promo con has_promo false")
+    @Test
+    public void verifyExceptionsHasPromoFalseAddPromo(){
+        //Arrange
+        User user = new User(1, "Vanesa", new LinkedList<User>(), new LinkedList<User>());
+
+        ProductDTO prod = new ProductDTO(1, "Silla Gamer","Silla", "Chip", "Negro","");
+        PromoDTO promoDTO = new PromoDTO(user.getUserId(),1, LocalDate.of(2021, 11, 26),3,13900.0, prod, false, 10.0);
+        Promo promo = Helper.promoDTOToPromo(promoDTO);
+
+        BadRequestException exceptionUserCurrent = new BadRequestException("has_promo es false, por lo cual no se considera promo y no se almacenará.");
+        //Mock
+        Mockito.when(mockRepository.findUser(user.getUserId())).thenReturn(user);
+
+        //Act
+        BadRequestException exceptionUserExpected =  Assertions.assertThrows(BadRequestException.class, ()->service.addPromo(promoDTO));
+
+        //Act & Assert
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(exceptionUserExpected, exceptionUserCurrent)
+        );
+    }
+
+    @DisplayName("Verificar el listado de Promos de un usuario.")
+    @Test
+    public void verifyCorrectReturnListPromoOfAUser(){
+        //Arrange
+        String order = null;
+        User userId1 = new User(1, "Gabriela", new LinkedList<User>(), new LinkedList<User>());
+        User userId2 = new User(2, "Anibal", new LinkedList<User>(), new LinkedList<User>());
+
+        Product prod1 = new Product(1, "Silla Gamer","Silla", "Chip", "Negro","");
+        Promo post1 = new Promo(userId2.getUserId(),1, LocalDate.of(2021, 11, 26),3,1540.0, prod1, true, 10.0);
+
+        Product prod2 = new Product(2, "Silla Gamer 2","Silla", "Chip", "Negro","");
+        Promo post2 = new Promo(userId2.getUserId(),2, LocalDate.of(2021, 11, 28),2,2450.67, prod2, true, 10.0);
+
+        Product prod3 = new Product(1, "Silla Gamer 3","Silla", "Chip", "Negro","");
+        Promo post3 = new Promo(userId1.getUserId(),3, LocalDate.of(2021, 10, 29),100,2345.0, prod3, true, 10.0);
+
+        List<Promo> promoUser1 = new LinkedList<>();
+        promoUser1.add(post3);
+
+        List<Promo> promoUser2 = new LinkedList<>();
+        promoUser2.add(post1);
+        promoUser2.add(post2);
+
+        ListPromoDTO promoUser1Current = Helper.listPromoToListPromoDTO(promoUser1, userId1);
+
+        ListPromoDTO promoUser2Current= Helper.listPromoToListPromoDTO(promoUser2, userId2);
+
+        //Mock
+        Mockito.when(mockRepository.findUser(userId1.getUserId())).thenReturn(userId1);
+        Mockito.when(mockRepository.findUser(userId2.getUserId())).thenReturn(userId2);
+        Mockito.when(mockRepository.listPromoUsr(userId1.getUserId())).thenReturn(promoUser1);
+        Mockito.when(mockRepository.listPromoUsr(userId2.getUserId())).thenReturn(promoUser2);
+
+        //Act
+        ListPromoDTO listPromoExpectedUser1 = service.listPromo(userId1.getUserId(),order);
+        ListPromoDTO listPromoExpectedUser2 = service.listPromo(userId2.getUserId(),order);
+
+        // Assert
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(listPromoExpectedUser1, promoUser1Current),
+                ()->Assertions.assertEquals(listPromoExpectedUser2, promoUser2Current)
+        );
+    }
+
+    @DisplayName("Verificar el correcto orden ascendente, descendente, null del listado de Promos de un usuario.")
+    @Test
+    public void verifyCorrectOrderListPromoOfAUser(){
+        //Arrange
+        String orderAsc = "date_asc";
+        String orderDesc = "date_desc";
+        String orderNull = null;
+        User user = new User(1, "Gabriela", new LinkedList<User>(), new LinkedList<User>());
+
+        Product prod1 = new Product(1, "Silla Gamer","Silla", "Chip", "Negro","");
+        Promo post1 = new Promo(user.getUserId(),1, LocalDate.of(2021, 11, 26),3,1540.0, prod1, true, 10.0);
+
+        Product prod2 = new Product(2, "Silla Gamer 2","Silla", "Chip", "Negro","");
+        Promo post2 = new Promo(user.getUserId(),2, LocalDate.of(2021, 11, 28),2,2450.67, prod2, true, 10.0);
+
+        Product prod3 = new Product(3, "Silla Gamer 3","Silla", "Chip", "Negro","");
+        Promo post3 = new Promo(user.getUserId(),3, LocalDate.of(2021, 10, 29),100,2345.0, prod3, true, 10.0);
+
+        List<Promo> promoUser = new LinkedList<>();
+        promoUser.add(post1);
+        promoUser.add(post2);
+        promoUser.add(post3);
+
+        List<Promo> promoUserCurrentAsc = new LinkedList<>();
+        promoUserCurrentAsc.add(post3);
+        promoUserCurrentAsc.add(post1);
+        promoUserCurrentAsc.add(post2);
+        ListPromoDTO promoDTOUserCurrentAsc = Helper.listPromoToListPromoDTO(promoUserCurrentAsc, user);
+
+        List<Promo> promoUserCurrentDesc = new LinkedList<>();
+        promoUserCurrentDesc.add(post2);
+        promoUserCurrentDesc.add(post1);
+        promoUserCurrentDesc.add(post3);
+        ListPromoDTO promoDTOUserCurrentDesc = Helper.listPromoToListPromoDTO(promoUserCurrentDesc, user);
+
+        ListPromoDTO promoDTOUserCurrentNull = Helper.listPromoToListPromoDTO(promoUser, user);
+
+        //Mock
+        Mockito.when(mockRepository.findUser(user.getUserId())).thenReturn(user);
+        Mockito.when(mockRepository.listPromoUsr(user.getUserId())).thenReturn(promoUser);
+
+        //Act
+        ListPromoDTO listPromoAscExpected = service.listPromo(user.getUserId(), orderAsc);
+        ListPromoDTO listPromoDescExpected = service.listPromo(user.getUserId(),orderDesc);
+        ListPromoDTO listPromoNullExpected = service.listPromo(user.getUserId(),orderNull);
+
+        // Assert
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(listPromoAscExpected, promoDTOUserCurrentAsc),
+                ()->Assertions.assertEquals(listPromoDescExpected, promoDTOUserCurrentDesc),
+                ()->Assertions.assertEquals(listPromoNullExpected, promoDTOUserCurrentNull)
+        );
+    }
+
+    @DisplayName("Verificar excepciones en listado de Promos de un usuario por no existencia de usuario.")
+    @Test
+    public void verifyNotExistenceUsuarioListPromos(){
+        //Arrange
+        String order = null;
+        User user = new User(10, "Vanesa", new LinkedList<User>(), new LinkedList<User>());
+        BadRequestException exceptionCurrent = new BadRequestException("Usuario "+user.getUserId()+" no encontrado");
+
+        //Act & Assert
+        BadRequestException exceptionExpected =  Assertions.assertThrows(BadRequestException.class, ()->service.listPromo(user.getUserId(), order));
+        Assertions.assertEquals(exceptionExpected, exceptionCurrent);
+    }
+
+    @DisplayName("Verificar excepciones en listado de Promos de un usuario por no hacer match con order.")
+    @Test
+    public void verifyNotMatchOrderInListPromos(){
+        //Arrange
+        String order = "asc_date";
+        User user = new User(1, "Vanesa", new LinkedList<User>(), new LinkedList<User>());
+        BadRequestException exceptionCurrent = new BadRequestException("order: "+order+" es inválido, solo acepta date_asc o date_desc.");
+
+        //Mock
+        Mockito.when(mockRepository.findUser(user.getUserId())).thenReturn(user);
+
+        //Act & Assert
+        BadRequestException exceptionExpected =  Assertions.assertThrows(BadRequestException.class, ()->service.listPromo(user.getUserId(), order));
+        Assertions.assertEquals(exceptionExpected, exceptionCurrent);
+    }
+
+    @DisplayName("Verificar que la cantidad de promos de un usuario sea correcta.")
+    @Test
+    public void verifyCorrectCountPromoUser(){
+        //Arrange
+        User user = new User(1, "Anibal", new LinkedList<User>(), new LinkedList<User>());
+
+        Product prod1 = new Product(1, "Silla Gamer","Silla", "Chip", "Negro","");
+        Promo post1 = new Promo(user.getUserId(),1, LocalDate.of(2021, 11, 26),3,1540.0, prod1, true, 10.0);
+
+        Product prod2 = new Product(2, "Silla Gamer 2","Silla", "Chip", "Negro","");
+        Promo post2 = new Promo(user.getUserId(),2, LocalDate.of(2021, 11, 28),2,2450.67, prod2, true, 10.0);
+
+        Product prod3 = new Product(3, "Silla Gamer 3","Silla", "Chip", "Negro","");
+        Promo post3 = new Promo(user.getUserId(),3, LocalDate.of(2021, 10, 29),100,2345.0, prod3, true, 10.0);
+
+        List<Promo> promoUser = new LinkedList<>();
+        promoUser.add(post1);
+        promoUser.add(post2);
+        promoUser.add(post3);
+
+        int countCurrent= 3;
+
+        //Mock
+        Mockito.when(mockRepository.findUser(user.getUserId())).thenReturn(user);
+        Mockito.when(mockRepository.listPromoUsr(user.getUserId())).thenReturn(promoUser);
+
+        //Act
+        CountDTO countDto = service.countPromos(user.getUserId());
+
+        // Assert
+        Assertions.assertEquals(countDto.getProductPromoCount(), countCurrent);
+    }
+
+    @DisplayName("Verificar existencia de un usuario al consultar la cantidad de Promos.")
+    @Test
+    public void verifyUserExistForCountPromos(){
+        //Arrange
+        User user = new User(6, "Vanesa", new LinkedList<User>(), new LinkedList<User>());
+
+        BadRequestException exceptionCurrent = new BadRequestException("Usuario "+user.getUserId()+" no encontrado");
+
+        //Act
+        BadRequestException exceptionExpected =  Assertions.assertThrows(BadRequestException.class, ()->service.countPromos(user.getUserId()));
+
+        //Assert
+        Assertions.assertEquals(exceptionExpected, exceptionCurrent);
+    }
+
+
 
 }

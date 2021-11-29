@@ -154,11 +154,11 @@ public class SocialMeliService implements ISocialMeliService{
 
     @Override
     public MensajeDTO addPromo(PromoDTO promoDto) {
-        if(promoDto.getUserId()<=0)
+        if(repository.findUser(promoDto.getUserId())==null)
             throw new BadRequestException("Usuario "+promoDto.getUserId()+" invalido");
         if(promoDto.getIdPost()<=0)
             throw new BadRequestException("id_post debe ser un número mayor que cero.");
-        if(repository.containPost(promoDto.getIdPost())){
+        if(repository.containPromo(promoDto.getIdPost())){
             throw new BadRequestException("id_post promo existente.");
         }
         if(promoDto.getDate()==null)
