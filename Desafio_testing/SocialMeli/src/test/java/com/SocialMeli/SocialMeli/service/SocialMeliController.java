@@ -4,6 +4,7 @@ import com.SocialMeli.SocialMeli.dto.*;
 import com.SocialMeli.SocialMeli.exceptions.GlobalExceptionHandler;
 import com.SocialMeli.SocialMeli.exceptions.NotFoundException;
 import com.SocialMeli.SocialMeli.model.Buyer;
+import com.SocialMeli.SocialMeli.model.Post;
 import com.SocialMeli.SocialMeli.model.Seller;
 import com.SocialMeli.SocialMeli.repository.ISocialMeliRepository;
 import lombok.SneakyThrows;
@@ -299,6 +300,31 @@ public class SocialMeliController {
         // assert
         assertAll("msg", () -> assertEquals(exp.getUser_id(), act.getUser_id()),
                 () -> assertEquals(exp.getFollowers_count(), act.getFollowers_count()));
+    }
+
+
+    @Test
+    void T_0008() throws NotFoundException {
+        // arrange
+        Utils utils = new Utils();
+        String date = utils.returDate();
+        Buyer buy = utils.OkOrder();
+        Seller sell = new Seller("Raul", 23);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+        LocalDate date1 = LocalDate.parse(date, formatter);
+
+
+        ProductDTO prod = new ProductDTO(1, "mesa", "pino", "pa", "blanca", "coto");
+        PostDTO post = new PostDTO(1, 2, date1, prod, 100, 1000);
+        sell.getPosts().add(new PostDTO(1, 2, date1, prod, 100, 1000));
+        buy.getFollowed().add(sell);
+
+        // act
+        List<PostDTO> act = service.searchPost(buy.getUser_id(), "date_asc");
+
+
+        // assert
+        assertAll("posts", () -> assertEquals(date, act.get(0).getId_post()));
     }
 
 }
