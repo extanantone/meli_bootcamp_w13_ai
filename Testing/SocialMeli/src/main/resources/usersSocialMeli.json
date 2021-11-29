@@ -1,0 +1,22 @@
+[
+  {
+    "userName": "Leon Comprador",
+    "userId": 1,
+    "followersId": []
+  },
+  {
+    "userName": "Juan Comprador",
+    "userId": 2,
+    "followersId": []
+  },
+  {
+    "userName": "Manuel Vendedor",
+    "userId": 3,
+    "followersId": []
+  },
+  {
+    "userName": "Pedro Vendedor",
+    "userId": 4,
+    "followersId": []
+  }
+]
