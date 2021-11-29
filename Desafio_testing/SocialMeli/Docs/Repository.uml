@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.bootcamp.SocialMeli.Repository</OriginalElement>
+  <nodes>
+    <node x="0.0" y="346.0">com.bootcamp.SocialMeli.Repository.SocialRepository</node>
+    <node x="0.0" y="0.0">com.bootcamp.SocialMeli.Repository.ISocialRepository</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.bootcamp.SocialMeli.Repository.SocialRepository" target="com.bootcamp.SocialMeli.Repository.ISocialRepository">
+      <point x="0.0" y="-192.5" />
+      <point x="0.0" y="148.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="92.0" y="489.0" />
+  <SelectedNodes>
+    <node>com.bootcamp.SocialMeli.Repository.ISocialRepository</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

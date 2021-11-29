@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.bootcamp.SocialMeli.DTO</OriginalElement>
+  <nodes>
+    <node x="0.0" y="0.0">com.bootcamp.SocialMeli.DTO.PublicacionDTO</node>
+    <node x="332.0" y="689.0">com.bootcamp.SocialMeli.DTO.SeguidoresDTO</node>
+    <node x="0.0" y="965.0">com.bootcamp.SocialMeli.DTO.UsuarioDTO</node>
+    <node x="0.0" y="689.0">com.bootcamp.SocialMeli.DTO.PromoPubliCountDTO</node>
+    <node x="949.0" y="689.0">com.bootcamp.SocialMeli.DTO.PublicUserDTO</node>
+    <node x="256.0" y="965.0">com.bootcamp.SocialMeli.DTO.Errores</node>
+    <node x="602.0" y="0.0">com.bootcamp.SocialMeli.DTO.SeguidorDTO</node>
+    <node x="326.0" y="0.0">com.bootcamp.SocialMeli.DTO.DetallePublicacionDTO</node>
+    <node x="883.0" y="0.0">com.bootcamp.SocialMeli.DTO.PromoPublicacionesDTO</node>
+    <node x="656.0" y="689.0">com.bootcamp.SocialMeli.DTO.SeguidoresCountDTO</node>
+    <node x="31.0" y="479.0">com.bootcamp.SocialMeli.DTO.PromoPDTO</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.bootcamp.SocialMeli.DTO.PromoPDTO" target="com.bootcamp.SocialMeli.DTO.PublicacionDTO">
+      <point x="0.0" y="-82.5" />
+      <point x="0.0" y="214.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="226.5" y="242.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

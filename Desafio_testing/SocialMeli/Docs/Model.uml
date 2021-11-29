@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.bootcamp.SocialMeli.Model</OriginalElement>
+  <nodes>
+    <node x="300.0" y="0.0">com.bootcamp.SocialMeli.Model.DetallePublicacion</node>
+    <node x="0.0" y="689.0">com.bootcamp.SocialMeli.Model.Seguidor</node>
+    <node x="576.0" y="0.0">com.bootcamp.SocialMeli.Model.Usuario</node>
+    <node x="18.5" y="479.0">com.bootcamp.SocialMeli.Model.PromoPublicacion</node>
+    <node x="0.0" y="0.0">com.bootcamp.SocialMeli.Model.Publicacion</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.bootcamp.SocialMeli.Model.PromoPublicacion" target="com.bootcamp.SocialMeli.Model.Publicacion">
+      <point x="0.0" y="-82.5" />
+      <point x="0.0" y="214.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="130.5" y="130.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
