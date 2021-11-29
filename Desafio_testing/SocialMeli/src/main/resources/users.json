@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "user_name": "Juan123",
+    "is_seller": false
+  },
+  {
+    "id": 2,
+    "user_name": "pedro_8",
+    "is_seller": false
+  },
+  {
+    "id": 3,
+    "user_name": "lali_gon",
+    "is_seller": true
+  },
+  {
+    "id": 4,
+    "user_name": "ana-paula",
+    "is_seller": true
+  }
+]
