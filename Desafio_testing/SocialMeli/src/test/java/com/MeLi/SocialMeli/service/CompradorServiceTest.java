@@ -43,9 +43,10 @@ public class CompradorServiceTest {
 
         //arrange
         Comprador comprador = new Comprador(1,"Pedro");
-        Mockito.when(mockCompradorRepository.find(1)).thenReturn(Optional.of(comprador));
-
         Vendedor vendedor = new Vendedor(3,"Juan");
+
+        //mock
+        Mockito.when(mockCompradorRepository.find(1)).thenReturn(Optional.of(comprador));
         Mockito.when(mockVendedorRepository.find(3)).thenReturn(Optional.of(vendedor));
 
         //act
@@ -60,6 +61,7 @@ public class CompradorServiceTest {
 
         //act
         Mockito.when(mockCompradorRepository.find(5)).thenReturn(Optional.empty());
+
         //assert
         Assertions.assertThrows(NotFoundCompradorException.class, ()->compradorService.seguir(5,3));
     }
@@ -70,7 +72,7 @@ public class CompradorServiceTest {
         //arrange
         Comprador comprador = new Comprador(1,"Pedro");
 
-        //Act
+        //mock
         Mockito.when(mockCompradorRepository.find(1)).thenReturn(Optional.of(comprador));
         Mockito.when(mockVendedorRepository.find(1)).thenReturn(Optional.empty());
 
@@ -83,15 +85,16 @@ public class CompradorServiceTest {
     void if_unfollow_is_success() throws NotFoundVendedorException, NotFoundCompradorException {
 
         //arrange
-
         Comprador comprador = new Comprador(1,"Pedro");
-        Mockito.when(mockCompradorRepository.find(1)).thenReturn(Optional.of(comprador));
-
         Vendedor vendedor = new Vendedor(3,"Juan");
-        Mockito.when(mockVendedorRepository.find(3)).thenReturn(Optional.of(vendedor));
-        //act
 
+        //mock
+        Mockito.when(mockCompradorRepository.find(1)).thenReturn(Optional.of(comprador));
+        Mockito.when(mockVendedorRepository.find(3)).thenReturn(Optional.of(vendedor));
+
+        //act
         SeguimientoDTO resultado = compradorService.dejarSeguir(1,3);
+
         //assert
         assertEquals(comprador.getNombre() + " has dejado de seguir a " + vendedor.getNombre(), resultado.getMsj());
     }
@@ -99,7 +102,17 @@ public class CompradorServiceTest {
     @Test
     void if_unfollowed_not_exist() throws NotFoundVendedorException, NotFoundCompradorException{
 
+        //arrange
         Comprador comprador = new Comprador(1,"Pedro");
+
+        //mock
         Mockito.when(mockCompradorRepository.find(1)).thenReturn(Optional.of(comprador));
+        Mockito.when(mockVendedorRepository.find(1)).thenReturn(Optional.empty());
+
+        //assert
+        Assertions.assertThrows(NotFoundVendedorException.class, ()->compradorService.dejarSeguir(1,1));
     }
+
+    
+
 }
