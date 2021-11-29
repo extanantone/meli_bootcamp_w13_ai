@@ -2,6 +2,7 @@ package com.bootcamp.SocialMeli.integration;
 
 import com.bootcamp.SocialMeli.dto.DetalleProductoDTO;
 import com.bootcamp.SocialMeli.dto.PublicacionDTO;
+import com.bootcamp.SocialMeli.dto.UsuarioDTO;
 import com.bootcamp.SocialMeli.dto.response.ErrorDTO;
 import com.bootcamp.SocialMeli.dto.response.SuccessDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -81,41 +82,25 @@ public class UsersSMControllerIntegrationTest {
     }
 
     @Test
-    void testCreateAValidPostForAnExistingUser() throws Exception {
+    void testCreateANewUserThatNotExists() throws Exception{
         //Arrange
-        String successJson = writer.writeValueAsString(new SuccessDTO("Publicacion creada correctamente."));
+        String successJson = writer.writeValueAsString(new SuccessDTO("Usuario creado exitosamente"));
 
         ResultMatcher expectedStatus = status().isOk();
-        ResultMatcher expectedJson = content().json(successJson);
         ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
+        ResultMatcher expectedJson = content().json(successJson);
 
-        PublicacionDTO publicacionDTO = new PublicacionDTO();
-        publicacionDTO.setUserId(1);
-        publicacionDTO.setIdPost(15);
-        publicacionDTO.setDate(LocalDate.of(2021,11,10));
-        publicacionDTO.setCategory(102);
-        publicacionDTO.setPrice(550.0);
-        publicacionDTO.setDetail(new DetalleProductoDTO(6, "Teclado inalámbrico para PC", "normal","Genius","Black","Último en stock"));
-
-        String payloadJson = writer.writeValueAsString(publicacionDTO);
+        UsuarioDTO newUser = new UsuarioDTO(45, "Carlos Zambrano");
+        String newUserJson = writer.writeValueAsString(newUser);
 
         //Act and Assert
-        this.mockMvc.perform(post("/products/post")
+        this.mockMvc.perform(post("/users/new")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(payloadJson))
+                        .content(newUserJson))
                 .andDo(print())
                 .andExpect(expectedStatus)
                 .andExpect(expectedContentType)
                 .andExpect(expectedJson);
     }
 
-    @Test
-    void testCreateAValidPromoForAnExistingUser() throws Exception {
-
-    }
-
-    @Test
-    void testGetCantPromocionesFromASellerWithPromociones(){
-
-    }
 }

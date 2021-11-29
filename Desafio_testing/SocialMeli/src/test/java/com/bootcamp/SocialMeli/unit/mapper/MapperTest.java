@@ -2,9 +2,11 @@ package com.bootcamp.SocialMeli.unit.mapper;
 
 import com.bootcamp.SocialMeli.dto.DetalleProductoDTO;
 import com.bootcamp.SocialMeli.dto.PublicacionDTO;
+import com.bootcamp.SocialMeli.dto.response.InfoPromoDTO;
 import com.bootcamp.SocialMeli.dto.response.PublicacionesDTO;
 import com.bootcamp.SocialMeli.mapper.Mapper;
 import com.bootcamp.SocialMeli.model.Producto;
+import com.bootcamp.SocialMeli.model.Promocion;
 import com.bootcamp.SocialMeli.model.Publicacion;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +16,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class MapperTest {
-    //TODO testear el mapper
 
     private Mapper mapper;
 
@@ -78,22 +79,23 @@ public class MapperTest {
         );
     }
 
-    /*
     @Test
-    void convertionFromListPublicacionToPublicacionesDTOWithNullArguments(){
-        //TODO ver
+    void convertionFromPublicacionToInfoPromoDTOWithValidArguments(){
         //Arrange
-        Integer userId = 33;
+        Promocion promocion = new Promocion(15, LocalDate.now(), 1234.0, new Producto(), 111, true, 0.20);
 
-        List<Publicacion> listaPublicaciones = new ArrayList<>();
-        listaPublicaciones.add(pubZapasNike);
-        //listaPublicaciones.add(null);
-        //listaPublicaciones.add(new Publicacion());
-//        listaPublicaciones.add(new Publicacion());
+        //Act
+        InfoPromoDTO infoPromoDTOCurrent = mapper.publicacionToInfoPromoDTO(promocion);
 
-        //Act and Assert
-        Assertions.assertThrows(IllegalArgumentException.class, () -> mapper.listPublicacionToPublicacionesDTO(userId, listaPublicaciones));
-    }*/
-
-
+        //Assert
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(promocion.getIdPost(), infoPromoDTOCurrent.getIdPost()),
+                () -> Assertions.assertEquals(promocion.getDate(), infoPromoDTOCurrent.getDate()),
+                () -> Assertions.assertEquals(promocion.getPrice(), infoPromoDTOCurrent.getPrice()),
+                () -> Assertions.assertEquals(promocion.getCategory(), infoPromoDTOCurrent.getCategory()),
+                () -> Assertions.assertEquals(promocion.getHasPromo(), infoPromoDTOCurrent.getHasPromo()),
+                () -> Assertions.assertEquals(promocion.getDiscount(), infoPromoDTOCurrent.getDiscount())
+                //no se chequea el detail-producto (miembro a miembro) ya que se hace con ModelMapper
+        );
+    }
 }

@@ -31,7 +31,7 @@ public class SocialMeliRepository implements ISocialMeliRepository{
     private Map<Integer, Usuario> usuarios;
     private Map<Integer, Publicacion> publicaciones;
 
-    private final String jsonSource = ""; // develop/
+    private final String jsonSource = "develop/";
     private String SCOPE;
 
     public SocialMeliRepository() {

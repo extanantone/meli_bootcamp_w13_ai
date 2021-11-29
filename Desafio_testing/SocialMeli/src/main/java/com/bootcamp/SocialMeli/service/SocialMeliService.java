@@ -22,10 +22,8 @@ import java.util.stream.Collectors;
 public class SocialMeliService implements ISocialMeliService{
     private final Integer CANT_DAYS_OF_2_WEEKS = 14; //cantidad de dias en 2 semanas
 
-    //@Autowired
     private ISocialMeliRepository socialMeliRepository;
 
-   // @Autowired
     private Mapper mapper;
 
     public SocialMeliService(ISocialMeliRepository socialMeliRepository, Mapper mapper) {

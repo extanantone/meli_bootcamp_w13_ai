@@ -58,7 +58,7 @@ public class ProductsSMController {
     public ResponseEntity<?> getProductosEnPromocion(@Positive(message = "El ID debe ser mayor a cero.")
                                                      @NotNull(message = "El ID no puede estar vacío.")
                                                      @PathVariable("user_id") Integer userId,
-                                                     @Pattern(regexp = "date_asc|date_desc", message = "Los tipos validos de ordenamiento son date_asc y date_desc")
+                                                     @Pattern(regexp = "name_asc|name_desc", message = "Los tipos validos de ordenamiento son name_asc y name_desc")
                                                      @RequestParam(value = "order", required = false) String order){
         if(order == null){
             return new ResponseEntity<>(this.socialMeliService.getProductosEnPromocion(userId), HttpStatus.OK);
