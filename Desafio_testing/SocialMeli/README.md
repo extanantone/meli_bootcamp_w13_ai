@@ -56,6 +56,25 @@ Para ver la documentación completa de los EndPoints se puede acceder a la URL
  5. Se pueden repetir los ids de los productos.
  6. Cualquier usuario puede publicar posts.
 
+## Testing
+
+Se han agregado
+
+Validaciones
+Test unitarios
+Test de integración
+
+### En las validaciones se ha considerado:
+- los String no deben contener caracteres especiales -> sólo se permiten (letras del alfabeto inglés, numeros o guion bajo)
+- los Ids deben ser mayores a 0
+- Todos los datos deben estar presentes a excepción de las notas de los productos
+- El precio máximo de un producto es de 10.000.000$
+
+### ToDo 
+
+[] Pasar la responsabilidad de la generación de Ids a una clase nueva
+[] Refactorizar la cantidad de DTOs
+
 ## Creditos
 
 [David Alexander Orejuela Caicedo](https://github.com/daorejuela1)
