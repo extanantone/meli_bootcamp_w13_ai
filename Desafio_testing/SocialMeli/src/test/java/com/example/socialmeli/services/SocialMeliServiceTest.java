@@ -18,10 +18,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.util.comparator.Comparators;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -216,6 +214,13 @@ public class SocialMeliServiceTest {
         //Assert
         Mockito.verify(usuarioRepository, Mockito.atLeast(4)).findById(Mockito.anyInt());
         Assertions.assertEquals(expectativa, realidad);
+
+    }
+
+    @Test
+    @DisplayName("Verificar que el tipo de ordenamiento por fecha exista")
+    public void verifyThatTheTypeOfSortingByDateExists(){
+
 
     }
 
