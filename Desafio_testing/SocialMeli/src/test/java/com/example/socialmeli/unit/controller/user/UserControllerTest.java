@@ -1,10 +1,8 @@
 package com.example.socialmeli.unit.controller.user;
 
 import com.example.socialmeli.controller.user.UserController;
-import com.example.socialmeli.dto.post.UserPostDTO;
 import com.example.socialmeli.dto.user.FollowedListDTO;
 import com.example.socialmeli.dto.user.FollowerCountDTO;
-import com.example.socialmeli.dto.user.FollowerDTO;
 import com.example.socialmeli.dto.user.FollowerListDTO;
 import com.example.socialmeli.service.service.user.UserService;
 import org.junit.jupiter.api.Assertions;

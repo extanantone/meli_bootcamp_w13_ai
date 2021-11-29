@@ -56,12 +56,13 @@ class PostServiceTest
         userMap.put(follower.getUserId(), follower);
         userMap.put(followed.getUserId(), follower);
         Product blackChair = new Product(1, "Black chair", "Office", "Razer", "Black", "Good as new");
-        post1 = new Post(followed.getUserId(), 1, LocalDate.of(2021, 11, 11), blackChair, 10, 100000, false, 0 );
-        post2 = new Post(followed.getUserId(), 2, LocalDate.of(2021, 11, 12), blackChair, 10, 100000, false, 0 );
-        post3 = new Post(followed.getUserId(), 3, LocalDate.of(2021, 11, 10), blackChair, 10, 100000, false, 0 );
-        post4 = new Post(followed.getUserId(), 4, LocalDate.of(2021, 11, 13), blackChair, 10, 100000, false, 0 );
+        post1 = new Post(followed.getUserId(), 1, LocalDate.of(2021, 11, 11), blackChair, 10, 100000, false, 0);
+        post2 = new Post(followed.getUserId(), 2, LocalDate.of(2021, 11, 12), blackChair, 10, 100000, false, 0);
+        post3 = new Post(followed.getUserId(), 3, LocalDate.of(2021, 11, 10), blackChair, 10, 100000, false, 0);
+        post4 = new Post(followed.getUserId(), 4, LocalDate.of(2021, 11, 13), blackChair, 10, 100000, false, 0);
         postList = List.of(post1, post2, post3, post4);
     }
+
     //T-0005
     //Verificar que el tipo de ordenamiento por fecha exista (US-0009)
     @Test
@@ -69,7 +70,9 @@ class PostServiceTest
     {
         // Arrange
         ModelMapper modelMapper = new ModelMapper();
-        Type listType = new TypeToken<List<PostDTO>>(){}.getType();
+        Type listType = new TypeToken<List<PostDTO>>()
+        {
+        }.getType();
         List<PostDTO> expectedDTO = modelMapper.map(postList, listType);
         // Act & Mock
         Mockito.when(userRepository.usersMap()).thenReturn(userMap);

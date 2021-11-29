@@ -66,12 +66,12 @@ class PostRepositoryTest
         userMap.put(follower.getUserId(), follower);
         userMap.put(followed.getUserId(), follower);
         Product blackChair = new Product(1, "Black chair", "Office", "Razer", "Black", "Good as new");
-        post1 = new Post(followed.getUserId(), 1, LocalDate.of(2021, 11, 11), blackChair, 10, 100000, false, 0 );
-        post2 = new Post(followed.getUserId(), 2, LocalDate.of(2021, 11, 12), blackChair, 10, 100000, false, 0 );
-        post3 = new Post(followed.getUserId(), 3, LocalDate.of(2021, 11, 10), blackChair, 10, 100000, false, 0 );
-        post4 = new Post(followed.getUserId(), 4, LocalDate.of(2021, 11, 13), blackChair, 10, 100000, false, 0 );
-        oldPost1 = new Post(followed.getUserId(), 5, LocalDate.of(2021, 10, 13), blackChair, 10, 100000, false, 0 );
-        oldPost2 = new Post(followed.getUserId(), 6, LocalDate.of(2021, 10, 30), blackChair, 10, 100000, false, 0 );
+        post1 = new Post(followed.getUserId(), 1, LocalDate.of(2021, 11, 11), blackChair, 10, 100000, false, 0);
+        post2 = new Post(followed.getUserId(), 2, LocalDate.of(2021, 11, 12), blackChair, 10, 100000, false, 0);
+        post3 = new Post(followed.getUserId(), 3, LocalDate.of(2021, 11, 10), blackChair, 10, 100000, false, 0);
+        post4 = new Post(followed.getUserId(), 4, LocalDate.of(2021, 11, 13), blackChair, 10, 100000, false, 0);
+        oldPost1 = new Post(followed.getUserId(), 5, LocalDate.of(2021, 10, 13), blackChair, 10, 100000, false, 0);
+        oldPost2 = new Post(followed.getUserId(), 6, LocalDate.of(2021, 10, 30), blackChair, 10, 100000, false, 0);
 
         followed.addPost(post1);
         followed.addPost(post2);

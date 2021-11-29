@@ -21,8 +21,8 @@ public class FollowControllerHandlerException
                 "MethodArgumentNotValidException",
                 "Not Valid"
                 , ex.getFieldErrors().stream().map(
-                        error -> (error.getField() + " : " + error.getDefaultMessage()
-                        )).collect(Collectors.toList()));
+                error -> (error.getField() + " : " + error.getDefaultMessage()
+                )).collect(Collectors.toList()));
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 

@@ -3,7 +3,6 @@ package com.example.socialmeli.unit.controller.product.post;
 import com.example.socialmeli.controller.product.post.PostController;
 import com.example.socialmeli.dto.post.*;
 import com.example.socialmeli.service.service.product.post.PostService;
-import com.example.socialmeli.service.service.user.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

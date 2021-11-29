@@ -27,7 +27,8 @@ public class PostRepository implements IPostRepository
     private Clock clock;
 
     @Bean
-    public Clock clock() {
+    public Clock clock()
+    {
         return Clock.systemDefaultZone();
     }
 
@@ -98,7 +99,7 @@ public class PostRepository implements IPostRepository
 
         user = userMap.get(post.getUserId());
         if (!user.addPost(post))
-                return false;
+            return false;
 
         postList.add(post);
         return true;

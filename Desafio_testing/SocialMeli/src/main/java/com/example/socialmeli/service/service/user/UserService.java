@@ -1,17 +1,17 @@
 package com.example.socialmeli.service.service.user;
 
-import com.example.socialmeli.mapper.FollowerMapper;
 import com.example.socialmeli.dto.user.FollowedListDTO;
 import com.example.socialmeli.dto.user.FollowerCountDTO;
 import com.example.socialmeli.dto.user.FollowerListDTO;
 import com.example.socialmeli.exception.BadRequestException;
+import com.example.socialmeli.mapper.FollowerMapper;
 import com.example.socialmeli.model.User;
 import com.example.socialmeli.service.repository.user.IUserRepository;
 import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.modelmapper.ModelMapper;
 
 import java.util.Collection;
 import java.util.List;
@@ -47,14 +47,13 @@ public class UserService implements IUserService
                 followedOrder = userRepository.findFollowedOrderByNameAsc(userId);
             else
                 followedOrder = userRepository.findFollowedOrderByNameDesc(userId);
-        }
-        else
+        } else
         {
             followedOrder = user.getFollowed();
         }
         TypeMap<User, FollowedListDTO> typeMap = modelMapper.createTypeMap(User.class, FollowedListDTO.class);
         List<User> finalFollowedOrder = followedOrder;
-       typeMap.addMappings(mapper -> mapper.map(src -> followerMapper.userToFollowerDTO(finalFollowedOrder),
+        typeMap.addMappings(mapper -> mapper.map(src -> followerMapper.userToFollowerDTO(finalFollowedOrder),
                 FollowedListDTO::setFollowed));
         return modelMapper.map(user, FollowedListDTO.class);
     }
@@ -70,8 +69,7 @@ public class UserService implements IUserService
                 followersOrder = userRepository.findFollowersOrderByNameAsc(userId);
             else
                 followersOrder = userRepository.findFollowersOrderByNameDesc(userId);
-        }
-        else
+        } else
             followersOrder = user.getFollowers();
         ModelMapper modelMapper = new ModelMapper();
         TypeMap<User, FollowerListDTO> typeMap = modelMapper.createTypeMap(User.class, FollowerListDTO.class);

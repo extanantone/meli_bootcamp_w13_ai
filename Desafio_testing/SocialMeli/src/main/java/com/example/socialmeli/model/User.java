@@ -2,7 +2,6 @@ package com.example.socialmeli.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +27,7 @@ public class User
         this.followers = new LinkedList<>();
         this.posts = new LinkedList<>();
     }
+
     public User(String userName)
     {
         this.userId = globUserId++;
@@ -71,7 +71,8 @@ public class User
         return true;
     }
 
-    public static void resetId() {
+    public static void resetId()
+    {
         globUserId = 1;
     }
 }

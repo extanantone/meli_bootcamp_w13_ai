@@ -13,7 +13,7 @@ public class FollowerMapper
     public List<FollowerDTO> userToFollowerDTO(List<User> users)
     {
         List<FollowerDTO> followerDTOList = new LinkedList<>();
-        for (User user: users)
+        for (User user : users)
         {
             FollowerDTO followerDTO = new FollowerDTO();
             followerDTO.setUserId(user.getUserId());

@@ -1,7 +1,5 @@
 package com.example.socialmeli.dto.post;
 
-import com.example.socialmeli.dto.product.ProductDTO;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -9,7 +7,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 @Getter
 @Setter

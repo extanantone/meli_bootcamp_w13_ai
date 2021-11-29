@@ -161,7 +161,9 @@ class UserServiceTest
         // Arrange
         List<User> followedList = List.of(followed);
         ModelMapper modelMapper = new ModelMapper();
-        Type listType = new TypeToken<List<FollowerDTO>>(){}.getType();
+        Type listType = new TypeToken<List<FollowerDTO>>()
+        {
+        }.getType();
         List<FollowerDTO> expected = modelMapper.map(followedList, listType);
         follower.follow(followed);
         // Act & Mock
@@ -173,7 +175,7 @@ class UserServiceTest
         Mockito.verify(userRepository, Mockito.times(1)).usersMap();
         Mockito.verify(userRepository, Mockito.times(1)).findFollowedOrderByNameAsc(follower.getUserId());
         Mockito.verify(followerMapper, Mockito.times(1)).userToFollowerDTO(followedList);
-        Assertions.assertEquals(expected,  result.getFollowed());
+        Assertions.assertEquals(expected, result.getFollowed());
     }
 
     @Test
@@ -197,7 +199,9 @@ class UserServiceTest
         // Arrange
         List<User> followerList = List.of(follower);
         ModelMapper modelMapper = new ModelMapper();
-        Type listType = new TypeToken<List<FollowerDTO>>(){}.getType();
+        Type listType = new TypeToken<List<FollowerDTO>>()
+        {
+        }.getType();
         List<FollowerDTO> expected = modelMapper.map(followerList, listType);
         follower.follow(followed);
         // Act & Mock
@@ -209,7 +213,7 @@ class UserServiceTest
         Mockito.verify(userRepository, Mockito.times(1)).usersMap();
         Mockito.verify(userRepository, Mockito.times(1)).findFollowersOrderByNameAsc(followed.getUserId());
         Mockito.verify(followerMapper, Mockito.times(1)).userToFollowerDTO(followerList);
-        Assertions.assertEquals(expected,  result.getFollowers());
+        Assertions.assertEquals(expected, result.getFollowers());
     }
 
     @Test

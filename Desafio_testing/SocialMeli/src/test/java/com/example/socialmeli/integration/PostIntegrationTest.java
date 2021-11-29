@@ -1,19 +1,14 @@
 package com.example.socialmeli.integration;
 
-import com.example.socialmeli.dto.post.PostDTO;
-import com.example.socialmeli.dto.post.PromoPostDTO;
 import com.example.socialmeli.dto.post.UserPostDTO;
 import com.example.socialmeli.dto.post.UserPromoPostDTO;
 import com.example.socialmeli.dto.product.ProductDTO;
-import com.example.socialmeli.dto.user.FollowerDTO;
 import com.example.socialmeli.service.repository.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import io.swagger.v3.core.util.Json;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +22,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -65,7 +59,8 @@ public class PostIntegrationTest
     }
 
     @Test
-    public void testPostCreationWithValidStructureAndValidUser() throws Exception {
+    public void testPostCreationWithValidStructureAndValidUser() throws Exception
+    {
         LocalDate date = LocalDate.of(2021, 1, 1);
         ProductDTO detail = new ProductDTO();
         detail.setBrand("mario");
@@ -91,7 +86,8 @@ public class PostIntegrationTest
     }
 
     @Test
-    public void testPostCreationWithValidStructureAndInvalidUser() throws Exception {
+    public void testPostCreationWithValidStructureAndInvalidUser() throws Exception
+    {
         LocalDate date = LocalDate.of(2021, 1, 1);
         ProductDTO detail = new ProductDTO();
         detail.setBrand("mario");
@@ -117,7 +113,8 @@ public class PostIntegrationTest
     }
 
     @Test
-    public void testPromoPostCreationWithValidStructureAndValidUser() throws Exception {
+    public void testPromoPostCreationWithValidStructureAndValidUser() throws Exception
+    {
         LocalDate date = LocalDate.of(2021, 1, 1);
         ProductDTO detail = new ProductDTO();
         detail.setBrand("mario");

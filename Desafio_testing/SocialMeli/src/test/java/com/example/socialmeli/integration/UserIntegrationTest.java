@@ -1,8 +1,6 @@
 package com.example.socialmeli.integration;
 
-import com.example.socialmeli.dto.user.FollowedListDTO;
 import com.example.socialmeli.dto.user.FollowerDTO;
-import com.example.socialmeli.model.User;
 import com.example.socialmeli.service.repository.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -11,26 +9,19 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -63,13 +54,14 @@ public class UserIntegrationTest
     //US 0001
 
     @Test
-    public void testFollowUsersGivenAValidFollowerIdAndFollowedId() throws Exception {
+    public void testFollowUsersGivenAValidFollowerIdAndFollowedId() throws Exception
+    {
         FollowerDTO user2 = new FollowerDTO();
         user2.setUserName("BComprador 2");
         user2.setUserId(2);
 
         Map user2JSON = mapper.convertValue(user2, Map.class);
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}",1, 2))
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}", 1, 2))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.user_id").value(1))
@@ -100,7 +92,7 @@ public class UserIntegrationTest
     @Test
     public void testUnfollowUsersGivenAValidUserIdAndUserToUnfollowIdAndAlreadyFollowing() throws Exception
     {
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}",1, 2));
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}", 1, 2));
 
         this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/unfollow/{userIdToFollow}", 1, 2))
                 .andDo(MockMvcResultHandlers.print())
@@ -134,10 +126,10 @@ public class UserIntegrationTest
     @Test
     void testFollowersCountWithValidUserId() throws Exception
     {
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}",2, 1));
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}",3, 1));
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}", 2, 1));
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}", 3, 1));
 
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followers/count",1))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followers/count", 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.user_id").value(1))
@@ -148,7 +140,7 @@ public class UserIntegrationTest
     @Test
     void testFollowerCountWithInvalidUserId() throws Exception
     {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followers/count",22))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followers/count", 22))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.name").value("Acción no valida"))
@@ -158,10 +150,10 @@ public class UserIntegrationTest
     @Test
     void testFollowersListWithValidId() throws Exception
     {
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}",2, 1));
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}",3, 1));
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}", 2, 1));
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}", 3, 1));
 
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followers/list",1))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followers/list", 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.user_id").value(1))
@@ -172,7 +164,7 @@ public class UserIntegrationTest
     @Test
     void testFollowersListWithInvalidId() throws Exception
     {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followers/list",221))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followers/list", 221))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.name").value("Acción no valida"))
@@ -182,10 +174,10 @@ public class UserIntegrationTest
     @Test
     void testFollowedListWithValidId() throws Exception
     {
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}",1, 2));
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}",1, 3));
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}", 1, 2));
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/users/{userId}/follow/{userIdToFollow}", 1, 3));
 
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followed/list",1))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followed/list", 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.user_id").value(1))
@@ -196,7 +188,7 @@ public class UserIntegrationTest
     @Test
     void testFollowedListWithInvalidId() throws Exception
     {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followed/list",221))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followed/list", 221))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.name").value("Acción no valida"))

@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -71,17 +70,23 @@ public class UserRepository implements IUserRepository
     private List<User> getJsonData()
     {
         File file = null;
-        try {
+        try
+        {
             file = ResourceUtils.getFile("classpath:user.json");
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e)
+        {
             e.printStackTrace();
         }
         ObjectMapper objectMapper = new ObjectMapper();
-        TypeReference<List<User>> typeRef = new TypeReference<>() {};
+        TypeReference<List<User>> typeRef = new TypeReference<>()
+        {
+        };
         List<User> users = null;
-        try {
+        try
+        {
             users = objectMapper.readValue(file, typeRef);
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
         return users;

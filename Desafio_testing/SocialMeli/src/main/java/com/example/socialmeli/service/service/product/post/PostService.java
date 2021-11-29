@@ -4,8 +4,8 @@ import com.example.socialmeli.dto.post.*;
 import com.example.socialmeli.exception.BadRequestException;
 import com.example.socialmeli.model.Post;
 import com.example.socialmeli.model.User;
-import com.example.socialmeli.service.repository.user.IUserRepository;
 import com.example.socialmeli.service.repository.product.post.IPostRepository;
+import com.example.socialmeli.service.repository.user.IUserRepository;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -82,8 +82,7 @@ public class PostService implements IPostService
                 promoPost = postRepository.findPromoPostOrderByProductNameAsc(userId);
             else
                 promoPost = postRepository.findPromoPostsOrderByProductNameDesc(userId);
-        }
-        else
+        } else
         {
             promoPost = postRepository.findPromoPosts(userId);
         }
@@ -115,7 +114,9 @@ public class PostService implements IPostService
             orderedPosts = postRepository.findFollowedTwoWeeksBeforeOrderByDateDesc(userId);
         else
             orderedPosts = postRepository.findFollowedTwoWeeksBeforeOrderByDateAsc(userId);
-        Type listType = new TypeToken<List<PostDTO>>(){}.getType();
+        Type listType = new TypeToken<List<PostDTO>>()
+        {
+        }.getType();
         List<PostDTO> orderedPostDTO = modelMapper2.map(orderedPosts, listType);
         TypeMap<User, PostFollowedDTO> propertyMapper = modelMapper.createTypeMap(User.class, PostFollowedDTO.class);
         propertyMapper.addMappings(mapper -> mapper.map(src -> orderedPostDTO, PostFollowedDTO::setPosts));
