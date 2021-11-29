@@ -3,6 +3,9 @@ package integrationsTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.mercadolibre.socialmeli.SocialMeliApplication;
+import com.mercadolibre.socialmeli.controller.UserController;
+import com.mercadolibre.socialmeli.dto.FollowDTO;
 import com.mercadolibre.socialmeli.model.Follow;
 import com.mercadolibre.socialmeli.model.User;
 import com.mercadolibre.socialmeli.repository.SocialRepositoryImpl;
@@ -21,8 +24,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
-//@SpringBootTest(classes = UserController.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@SpringBootTest
+@SpringBootTest(classes = SocialMeliApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+//@SpringBootTest
 @AutoConfigureMockMvc
 public class UserControllerTestIntegration {
     @Autowired
@@ -58,16 +61,16 @@ public class UserControllerTestIntegration {
         order = "order_desc";
         follow = new Follow(1,2);
     }
-    /*
+
     @Test
     public void followToUser() throws Exception {
-        String endPoint = "/users/{user_id}/follow/{user_id_to_follow}";
-        Follow followUser = new Follow(1,2);
+        FollowDTO followUser = new FollowDTO(1,2);
+        String endPoint = String.format("/users/%s/follow/%s", followUser.getUserId(), followUser.getIdUserToFollow());
         String bodyJson = mapper.writeValueAsString(follow);
         String responseJson = mapper.writeValueAsString(followUser);
 
         MvcResult result = this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/users/{user_id}/follow/{user_id_to_follow}")
+                .perform(MockMvcRequestBuilders.post(endPoint)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(bodyJson))
                 .andDo(MockMvcResultHandlers.print())
@@ -75,6 +78,6 @@ public class UserControllerTestIntegration {
                 .andExpect(MockMvcResultMatchers.content()
                         .contentType("application/json")).andReturn();
         Assertions.assertEquals(responseJson, result.getResponse().getContentAsString());
-    }*/
+    }
 }
 

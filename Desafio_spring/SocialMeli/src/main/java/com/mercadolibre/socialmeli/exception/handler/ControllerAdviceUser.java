@@ -27,7 +27,7 @@ public class ControllerAdviceUser {
     @ExceptionHandler(FollowException.class)
     public ResponseEntity<ErrorDTO> get(FollowException e){
         return new ResponseEntity<>(
-                new ErrorDTO("Invalid User",
+                new ErrorDTO("FollowException",
                         e.getMessage()), HttpStatus.BAD_REQUEST
         );
     }
