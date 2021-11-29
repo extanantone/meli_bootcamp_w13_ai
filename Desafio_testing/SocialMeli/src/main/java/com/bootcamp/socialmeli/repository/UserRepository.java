@@ -1,6 +1,7 @@
 package com.bootcamp.socialmeli.repository;
 
 import com.bootcamp.socialmeli.exception.NotFoundUserException;
+import com.bootcamp.socialmeli.exception.NotPossibleFollowUserException;
 import com.bootcamp.socialmeli.exception.NotPossibleOperationException;
 import com.bootcamp.socialmeli.model.User;
 import org.springframework.stereotype.Repository;
@@ -40,10 +41,14 @@ public class UserRepository implements IUserRepository{
     @Override
     public void followUser(User user, User userToFollow) throws NotPossibleOperationException {
         if (user == null || userToFollow == null)   throw new NotFoundUserException();
-        if (user.getId() == userToFollow.getId())   throw new NotPossibleOperationException();
+        if (user.getId() == userToFollow.getId())   throw new NotPossibleFollowUserException();
 
-        user.addFollowed(userToFollow.getId());
-        userToFollow.addFollower(user.getId());
+        boolean isFollowed = user.getFollowedUserId().contains(userToFollow.getId());
+
+        if (!isFollowed) {
+            user.addFollowed(userToFollow.getId());
+            userToFollow.addFollower(user.getId());
+        }
     }
 
     @Override
@@ -78,8 +83,14 @@ public class UserRepository implements IUserRepository{
     @Override
     public void unfollowUser(User user, User userToUnfollow) throws NotPossibleOperationException{
         if (user == null || userToUnfollow == null) throw new NotFoundUserException();
-        user.removeFollowed(userToUnfollow.getId());
-        userToUnfollow.removeFollower(user.getId());
+        if (user.getId() == userToUnfollow.getId())   throw new NotPossibleFollowUserException();
+
+        boolean isFollowed = user.getFollowedUserId().contains(userToUnfollow.getId());
+
+        if (isFollowed) {
+            user.removeFollowed(userToUnfollow.getId());
+            userToUnfollow.removeFollower(user.getId());
+        }
     }
 
 }

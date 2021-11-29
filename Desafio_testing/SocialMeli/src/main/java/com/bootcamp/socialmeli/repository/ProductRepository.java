@@ -25,7 +25,7 @@ public class ProductRepository implements IProductRepository{
     public List<Post> getPost(int userId) {
         List<Post> postListFiltered = new ArrayList<>();
         //date corresponde al rango de fecha que quiero obtener los post
-        LocalDate date = LocalDate.now().minusMonths(2);
+        LocalDate date = LocalDate.now().minusWeeks(2);
 
         for (Post p : postList){
             boolean isInPeriod = p.getDate().isEqual(date) || p.getDate().isAfter(date);

@@ -13,6 +13,9 @@ import java.util.List;
 public class UserFollowedDTO extends UserDTO{
     private List<UserDTO> followed;
 
+    public UserFollowedDTO(int userId, String userName) {
+        super(userId, userName);
+    }
 
     public UserFollowedDTO(int userId, String userName, List<UserDTO> followed) {
         super(userId, userName);

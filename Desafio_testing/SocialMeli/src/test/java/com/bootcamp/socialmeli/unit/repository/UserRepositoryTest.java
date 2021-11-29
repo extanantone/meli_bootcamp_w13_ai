@@ -43,11 +43,18 @@ public class UserRepositoryTest {
         Assertions.assertEquals(userFollowedTest, currentUserFollowed);
     }
 
+    @Test
+    void shouldThrowExceptionWhenGetInvalidUserId() throws NotPossibleOperationException{
+        //Arrange
+        int invalidId = -999;
+        //Act & Assert
+        Assertions.assertThrows(NotFoundUserException.class, () -> userRepository.getUser(invalidId));
+    }
+
 
     @Test
     @DisplayName("Verifica que se pueda realizar un follow de un usuario con ID valido")
     void shouldFollowValidUserId() throws NotPossibleOperationException {
-        //Arrange
         //Act
         userRepository.followUser(userTest, userFollowedTest);
         //Assert
@@ -60,9 +67,14 @@ public class UserRepositoryTest {
 
     @Test
     void shouldNotFollowInvalidUserId(){
-        //Arrange
         //Act && Assert
         Assertions.assertThrows(NotPossibleOperationException.class, () -> userRepository.followUser(userTest, null));
+    }
+
+    @Test
+    void shouldNotFollowSameUserId(){
+        //Act && Assert
+        Assertions.assertThrows(NotPossibleOperationException.class, () -> userRepository.followUser(userTest, userTest));
     }
 
     @Test
@@ -80,16 +92,52 @@ public class UserRepositoryTest {
 
     @Test
     void shouldNotUnfollowValidUserId(){
-        //Arrange
         //Act && Assert
         Assertions.assertThrows(NotPossibleOperationException.class, () -> userRepository.unfollowUser(userTest, null));
     }
 
-
-    //Optional
     @Test
-    void shouldNotFollowUserAlreadyFollowed()throws NotPossibleOperationException{
-
+    void shouldNotUnfollowSameValidUserId(){
+        //Act && Assert
+        Assertions.assertThrows(NotPossibleOperationException.class, () -> userRepository.unfollowUser(userTest, userTest));
     }
 
+    @Test
+    void shouldReturnTotalUserFollowers() throws NotPossibleOperationException {
+        //Arrange
+        for (int i = 1; i <= 10; i++)   userFollowedTest.addFollower(i);
+        int totalFollowersExpected = 10;
+        //Act
+        int totalFollowersCurrent = userRepository.getTotalUserFollowers(userFollowedTest);
+        //Assert
+        Assertions.assertEquals(totalFollowersExpected, totalFollowersCurrent);
+    }
+
+    @Test
+    void shouldNotReturnTotalUserFollowers() throws NotPossibleOperationException {
+        //Arrange
+        int totalFollowersExpected = 1;
+        userFollowedTest.addFollowed(1);
+        //Act
+        int totalFollowersCurrent = userRepository.getTotalUserFollowers(userFollowedTest);
+        //Assert
+        Assertions.assertNotEquals(totalFollowersExpected, totalFollowersCurrent);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenGetTotalUserFollowers() throws NotPossibleOperationException {
+        //Arrange
+        User invalidUser = null;
+        //Act & Assert
+        Assertions.assertThrows(NotFoundUserException.class, () -> userRepository.getTotalUserFollowers(invalidUser));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenGetUserFollowers() throws NotPossibleOperationException {
+
+        //Arrange
+        int invalidId = -999;
+        //Act & Assert
+        Assertions.assertThrows(NotFoundUserException.class, () -> userRepository.getUsersFollowers(invalidId));
+    }
 }
