@@ -7,9 +7,9 @@ import javax.validation.constraints.NotNull;
 
 @Getter @Setter
 public class PostPromoDTORequest extends PostDTORequest {
-    @NotNull
+    @NotNull(message = "El campo no puede ser nulo")
     protected Boolean has_promo;
 
-    @NotNull
+    @NotNull(message = "El campo no puede ser nulo")
     protected Double discount;
 }

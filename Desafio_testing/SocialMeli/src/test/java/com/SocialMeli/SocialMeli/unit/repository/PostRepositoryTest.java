@@ -143,7 +143,7 @@ public class PostRepositoryTest {
         List<Post> postsByUser = postRepository.getByUserId(userId, date);
 
         //Assert
-        Assertions.assertEquals(1, postsByUser.size());
+        Assertions.assertEquals(2, postsByUser.size());
     }
     //---------------------------------------
 

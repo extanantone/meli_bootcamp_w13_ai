@@ -17,3 +17,4 @@ El especialista conoce los tiempos acotados con los que se cuenta para realizar 
  * - Se cambiaron los tipos de datos primitivos de los DTOs de request por wrappers con el fin de poder probar las vaidaciones NotNull
  * - Se agregaron Exceptions handler para mostrar las excepciones de validacion con un JSON
  * - Se agrego un DTO para poder retornar el detalle de validaciones que fallaron
+ * - Se creo 1 post de promo por defecto en los repositorios para poder probar desde los test de integracion
