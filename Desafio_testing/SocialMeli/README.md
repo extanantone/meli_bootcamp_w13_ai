@@ -2,6 +2,12 @@
 
 ### Organización del proyecto
 
+1. [Generalidades del proyecto](#item1)
+2. [Generalidades Testing](#item2)
+
+<a name = "item1"></a>
+### 1. Generalidades proyecto
+
 #### Paquetes
 <ul>
 <li><b>configuración</b>: Requerido para usar la libreria de ModelMapper</li>
@@ -75,9 +81,19 @@
 
   - **SpringConfig**
 
-    Siguiendo la guia de los docentes se añade la libreria **ObjectMapper** para facilitar el mapeo de clases de modelo a clases DTO. En esta clase se configura la libreria para crear el bean a utilizar en el código.
+    Siguiendo la guía de los docentes se añade la librería **ObjectMapper** para facilitar el mapeo de clases de modelo a clases DTO. En esta clase se configura la libreria para crear el bean a utilizar en el código.
+    
+<a name = "item2"></a>
+  ### 2. Generalidades testing
 
-  
+Para la entrega de requisitos de testing hay algunas particularidades:
+
+1. Se logró el 80% de coverage utilizando pruebas de integración; sin embargo, por error, se puso orden en la ejecución de los testing de
+integración para disminuir la carga y el tiempo de configuración de cada testing para aislarlos, esto se evitará en el futuro.
+2. Se realizó el control de formato de números con la estructura "10.000.000,00", sin embargo este campo se llamó precioString, debido a que posteriormente se eliminó de los requisitos del proyecto.
+Este campo puede ser observado en la clase PublicacionesDTO, en donde existen 2 campos de precio "precio" y "precioString", el control del máximo se hizo con dos métodos adicionales en la clase Utils.valValorString y Utils.cleanNumeric y un constructor personalizado para el caso de desear usar el precio String.
+
+
      
 
 
