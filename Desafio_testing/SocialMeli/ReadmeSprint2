@@ -4,6 +4,7 @@ Autor: Vanesa Belén Garro
 CONSIDERACIONES GENERALES:
     -Solo se realizaron test unitarios.
     -No se realizaron test de integración.
+    -Se realizaron test unitarios sobre RepositoryImpl, SocialMeliService y SocialmeliController.
 
 
 TEST con inconvenieste:
