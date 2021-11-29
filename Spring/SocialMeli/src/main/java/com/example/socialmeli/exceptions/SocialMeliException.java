@@ -15,7 +15,7 @@ public class SocialMeliException extends Exception{
 
         this.error = new ErrorDTO();
         error.setName(this.getClass().getSimpleName());
-        error.setDescription(messageError);
+        error.setMessage(messageError);
         this.status = status;
 
     }

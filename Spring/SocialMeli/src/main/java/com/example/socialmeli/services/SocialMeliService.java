@@ -126,7 +126,7 @@ public class SocialMeliService implements IService {
 
         Sorter sorter = MiFactory.getInstance(order == null ? "name_desc" : order);
 
-        return userRepository.findFollowers(userId).stream()
+        return userRepository.findFolloweds(userId).stream()
                 .map( u -> mapper.map(u, UserDTO.class))
                 .sorted( (u,b) -> sorter.sort(u,b))
                 .collect(Collectors.toList());

@@ -25,6 +25,7 @@ public class UsersController {
     }
 
     //US 0002
+
     @GetMapping("/{userId}/followers/count")
     public CountFollowersResponseDTO countFollowers(@PathVariable Integer userId) throws UserNotFoundException {
         return service.countFollowers(userId);
@@ -43,6 +44,7 @@ public class UsersController {
     }
 
     //US 0007
+
     @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
     public void unfollowUser(@PathVariable Integer userId, @PathVariable Integer userIdToUnfollow) throws UserNotFoundException, UserSelfUseException, UserAlreadyInUseException {
         service.unfollow(userId, userIdToUnfollow);
