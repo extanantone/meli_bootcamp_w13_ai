@@ -375,6 +375,7 @@ public class UserServiceTest {
             verify(repository, atLeastOnce()).getUsers();
 
             Comparator<UserDTO> comparator = Comparator.comparing(UserDTO::getUserName);
+            assert response != null;
             assertTrue(Comparators.isInOrder(response.getFollowedUsers(), comparator));
         }
 
@@ -604,6 +605,7 @@ public class UserServiceTest {
             List<PostsListDTO> response =
                     service.getFollowedSellersRecentPosts(userId, order).getBody();
 
+            assert response != null;
             for (PostsListDTO list : response) {
                 for (PostDTO post : list.getPosts()) {
                     assertTrue(isDateRecent(post.getDate()));

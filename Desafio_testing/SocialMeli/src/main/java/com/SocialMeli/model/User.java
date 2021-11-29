@@ -18,11 +18,11 @@ import java.util.List;
 public class User {
     private Integer id;
     private String userName;
-    private List<Integer> followers;
-    private List<Integer> followedUsers;
+    private List<Integer> followers = new ArrayList<>();
+    private List<Integer> followedUsers = new ArrayList<>();
     private boolean isSeller;
-    private List<Integer> posts;
-    private List<Integer> promoPosts;
+    private List<Integer> posts = new ArrayList<>();
+    private List<Integer> promoPosts = new ArrayList<>();
 
     public User(Integer id, String userName, boolean isSeller) {
         this.id = id;

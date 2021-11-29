@@ -36,7 +36,7 @@ public class UserService implements UserServiceI {
         return res;
     }
 
-    private boolean isUserIdValid(Integer userId) {
+    private boolean isUserIdValid(int userId) {
         if (userId > 0) {
             HashMap<Integer, User> usersList = repository.getUsers();
 
@@ -45,7 +45,7 @@ public class UserService implements UserServiceI {
     }
 
     @Override
-    public ResponseEntity<String> followUser(Integer userId, Integer userIdToFollow) {
+    public ResponseEntity<String> followUser(int userId, int userIdToFollow) {
         HashMap<Integer, User> usersList = repository.getUsers();
 
         if (userId != userIdToFollow && isUserIdValid(userId) && isUserIdValid(userIdToFollow)) {
@@ -68,7 +68,7 @@ public class UserService implements UserServiceI {
     }
 
     @Override
-    public ResponseEntity<String> unfollowUser(Integer userId, Integer userIdToUnfollow) {
+    public ResponseEntity<String> unfollowUser(int userId, int userIdToUnfollow) {
         HashMap<Integer, User> usersList = repository.getUsers();
 
         if (userId != userIdToUnfollow && isUserIdValid(userId) && isUserIdValid(userIdToUnfollow)) {
