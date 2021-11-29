@@ -6,6 +6,7 @@ import com.mercadolibre.socialmeli.service.ISocialService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/products")
@@ -18,7 +19,7 @@ public class ProductController {
     }
 
     @PostMapping("/post")
-    ResponseEntity<Boolean> addPublicationDTO(@RequestBody PublicationDTO publicationDTO){
+    ResponseEntity<Boolean> addPublicationDTO(@Valid @RequestBody PublicationDTO publicationDTO){
         Boolean publicationsAdd = socialService.addPublication(publicationDTO);
         if(!publicationsAdd) return new ResponseEntity<>(publicationsAdd, HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(publicationsAdd, HttpStatus.OK);
@@ -32,8 +33,9 @@ public class ProductController {
     }
 
     @GetMapping(value = "/followed/{user_id}/list",params = "order")
-    PublicationsFollowDTO sortPublicationsSellers(@PathVariable Integer user_id,
-                                           @RequestParam (defaultValue = "date_desc") String order){
+    PublicationsFollowDTO sortPublicationsSellers(
+           @PathVariable Integer user_id,
+           @RequestParam (defaultValue = "date_desc") String order){
         return socialService.sortPublicationsSellers(user_id,order);
     }
 

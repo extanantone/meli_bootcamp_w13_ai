@@ -14,4 +14,8 @@ import java.util.List;
 public class FollowersDTO extends UserDTO {
     List<UserDTO> followers;
 
+    public FollowersDTO(int id, String name, List<UserDTO> followers) {
+        super(id, name);
+        this.followers = followers;
+    }
 }

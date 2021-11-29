@@ -1,15 +1,10 @@
 package com.mercadolibre.socialmeli.model;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
 public class Publication {
     private int userId;
@@ -19,15 +14,12 @@ public class Publication {
     private int category;
     private double price;
 
-    @Override
-    public String toString() {
-        return "Publication{" +
-                "userId=" + userId +
-                ", id=" + id +
-                ", product=" + product +
-                ", date=" + date +
-                ", category=" + category +
-                ", price=" + price +
-                '}';
+    public Publication(int userId, int id, LocalDate date, Product product, int category, double price) {
+        this.userId = userId;
+        this.id = id;
+        this.date = date;
+        this.product = product;
+        this.category = category;
+        this.price = price;
     }
 }

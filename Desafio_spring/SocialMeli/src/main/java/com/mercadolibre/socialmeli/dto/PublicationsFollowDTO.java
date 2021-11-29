@@ -3,18 +3,20 @@ package com.mercadolibre.socialmeli.dto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
-@Getter
-@Setter
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PublicationsFollowDTO {
-    private int userId;
+    @NotNull(message = "El id del usuario a seguir no debe estar vacio")
+    private Integer userId;
+    @NotEmpty(message = "La lista de publicaciones no puede estar vacia")
     List<PublicationDTO> posts;
 
     @Override

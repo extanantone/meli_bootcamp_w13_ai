@@ -1,13 +1,11 @@
 package com.mercadolibre.socialmeli.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.util.List;
 
-@Getter
-@Setter
+@EqualsAndHashCode(callSuper = true) //TODO que hace esto
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Followers extends User{
@@ -18,10 +16,4 @@ public class Followers extends User{
         this.users = users;
     }
 
-    @Override
-    public String toString() {
-        return "Followers{" +
-                "users=" + users +
-                '}';
-    }
 }

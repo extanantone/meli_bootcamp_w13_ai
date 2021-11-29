@@ -15,9 +15,8 @@ public class SocialRepositoryImpl implements ISocialRepository{
     public SocialRepositoryImpl() {
         usuariosDefault();
     }
-
     final HashMap<Integer,User> users = new HashMap<>();
-    final HashMap<Integer,List<User>> followers = new HashMap<>();
+    final HashMap<Integer, List<User>> followers = new HashMap<>();
     final HashMap<Integer,List<User>> followed = new HashMap<>();
     final HashMap<Integer,List<Publication>> publications  = new HashMap<>();
     User user;
@@ -107,6 +106,7 @@ public class SocialRepositoryImpl implements ISocialRepository{
     //Cuantos me siguen
     @Override
     public Long countFollowers(int userIdFollow) {
+        if (!followers.containsKey(userIdFollow)) return 0L;
         return (long) followers.get(userIdFollow).size();
     }
 
@@ -126,12 +126,14 @@ public class SocialRepositoryImpl implements ISocialRepository{
             }
         }
         publicationsSellers.sort(Comparator.comparing(Publication ::getDate));
-        publicationsFollowed.setPublications(publicationsSellers);
+        publicationsFollowed.setPosts(publicationsSellers);
         return publicationsFollowed;
     }
 
     @Override
     public Boolean unFollowUser(int userId, int userIdUnfollow) {
+        //TODO no deberia lanzar acá una excepcion,
+        // si los usuarios no estan en la lista lanzarlo en el service
         try {
             followed.get(userId)
                     .removeIf(user -> user.getId()==userIdUnfollow);
@@ -148,11 +150,11 @@ public class SocialRepositoryImpl implements ISocialRepository{
         return getFollowers(userId, order, followers);
     }
 
-    private Followers getFollowers(int userId, String order, HashMap<Integer, List<User>> followeds) {
+    private Followers getFollowers(int userId, String order, HashMap<Integer, List<User>> follow) {
         user = findUserById(userId);
-        if(order.toUpperCase().equals(OrderEnumerator.NAME_DESC.toString())) followeds.get(userId).sort(Comparator.comparing(User ::getName).reversed());
-        else followeds.get(userId).sort(Comparator.comparing(User::getName));
-        return new Followers(user.getId(),user.getName(), followeds.get(userId));
+        if (order.toUpperCase().equals(OrderEnumerator.NAME_DESC.toString())) follow.get(user.getId()).sort(Comparator.comparing(User::getName).reversed());
+        else follow.get(userId).sort(Comparator.comparing(User::getName));
+        return new Followers(user.getId(),user.getName(), follow.get(userId));
     }
 
     @Override
@@ -165,14 +167,13 @@ public class SocialRepositoryImpl implements ISocialRepository{
         PublicationsFollowed publicationsFollowed = new PublicationsFollowed();
         List<Publication> publicationsSellers = new ArrayList<>();
         publicationsFollowed.setUserId(userId);
-        //TODO lanza nullPointer si no sigue a nadie
         for(User u : followed.get(userId)){
             if (publications.containsKey(u.getId())){
                 List<Publication> publication = new ArrayList<>(publications.get(u.getId()));
                 publicationsSellers.addAll(publication);
             }
         }
-        publicationsFollowed.setPublications(publicationsSellers);
+        publicationsFollowed.setPosts(publicationsSellers);
         if(order.toUpperCase().equals(OrderEnumerator.DATE_ASC.toString())) publicationsSellers.sort(Comparator.comparing(Publication ::getDate));
         else publicationsSellers.sort(Comparator.comparing(Publication ::getDate).reversed());
         return publicationsFollowed;
@@ -185,8 +186,10 @@ public class SocialRepositoryImpl implements ISocialRepository{
         users.put(4,new User(4,"Analia"));
     }
 
+    /*
     public void save(User user) {
         users.put(user.getId(),user);
     }
+    */
 
 }

@@ -34,7 +34,7 @@ public class MapperDTO {
     public PublicationsFollowDTO publicationsToPublicationsDTO(PublicationsFollowed publicationsFollowed){
         PublicationsFollowDTO publicationsFollowDTO = new PublicationsFollowDTO();
         List<PublicationDTO>publicationDTOS = new ArrayList<>();
-        for(Publication p : publicationsFollowed.getPublications()){
+        for(Publication p : publicationsFollowed.getPosts()){
             p.setUserId(0);
             publicationDTOS.add(modelMapper.map(p,PublicationDTO.class));
         }

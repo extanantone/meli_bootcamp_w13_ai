@@ -3,7 +3,6 @@ package integrationsTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.mercadolibre.socialmeli.controller.UserController;
 import com.mercadolibre.socialmeli.model.Follow;
 import com.mercadolibre.socialmeli.model.User;
 import com.mercadolibre.socialmeli.repository.SocialRepositoryImpl;
@@ -22,8 +21,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
-@SpringBootTest(classes = UserController.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-//@SpringBootTest
+//@SpringBootTest(classes = UserController.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest
 @AutoConfigureMockMvc
 public class UserControllerTestIntegration {
     @Autowired
@@ -54,21 +53,12 @@ public class UserControllerTestIntegration {
 
     @BeforeEach
     public void beforeEach(){
-        user = new User();
-        userToFollow = new User();
-        user.setId(1);
-        user.setName("Maga");
-        userToFollow.setId(2);
-        userToFollow.setName("Pepe");
-        // user = new User(1,"Pepe");
-        // userToFollow = new User(2,"Maggy");
+        user = new User(1, "Maga");
+        userToFollow = new User(2, "Pepe");
         order = "order_desc";
         follow = new Follow(1,2);
-        if(socialRepository.findUserById(user.getId())==null)
-            socialRepository.save(user);
-        if(socialRepository.findUserById(userToFollow.getId())==null)
-            socialRepository.save(userToFollow);
     }
+    /*
     @Test
     public void followToUser() throws Exception {
         String endPoint = "/users/{user_id}/follow/{user_id_to_follow}";
@@ -85,6 +75,6 @@ public class UserControllerTestIntegration {
                 .andExpect(MockMvcResultMatchers.content()
                         .contentType("application/json")).andReturn();
         Assertions.assertEquals(responseJson, result.getResponse().getContentAsString());
-    }
+    }*/
 }
 
