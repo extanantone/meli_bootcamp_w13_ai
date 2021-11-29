@@ -1,11 +1,9 @@
 package com.bootcamp.SocialMeli.service;
 
-import com.bootcamp.SocialMeli.dto.FollowedListDTO;
-import com.bootcamp.SocialMeli.dto.FollowerListDTO;
-import com.bootcamp.SocialMeli.dto.FollowersCountDTO;
-import com.bootcamp.SocialMeli.dto.UserDTO;
+import com.bootcamp.SocialMeli.dto.*;
 import com.bootcamp.SocialMeli.entity.Buyer;
 import com.bootcamp.SocialMeli.entity.Post;
+import com.bootcamp.SocialMeli.entity.Product;
 import com.bootcamp.SocialMeli.entity.Seller;
 import com.bootcamp.SocialMeli.exception.BadRequestException;
 import com.bootcamp.SocialMeli.exception.ExceptionSellerNotExist;
@@ -16,7 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -441,6 +442,119 @@ public class SocialMeliServiceTest {
             assertThrows(BadRequestException.class,
                     ()->userService.followed(userId,null));
             verify(mockUserRepository, atLeastOnce()).findBuyerById(userId);
+        }
+
+    }
+
+    @Nested
+    @DisplayName("T-0006 - T-0008")
+    class T0006_T0008 {
+        List<PostListDTO> listPost = new ArrayList<>();
+        PostListDTO postDTO1,postDTO2,postDTO3,postDTO4;
+
+        @BeforeEach
+        public void setUpT0006(){
+            LocalDate date1 = LocalDate.parse("26-11-2021", DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            LocalDate date2 = LocalDate.parse("20-11-2021", DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            LocalDate date3 = LocalDate.parse("16-11-2021", DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            LocalDate date4 = LocalDate.parse("01-10-2021", DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+            Product product1 = new Product(10, "TrackPad Inalámbrico", "Gamer", "Razer", "Green", "Sin Bateria");
+            Product product2 = new Product(11, "Monitor IPS 24CTN", "Office", "LG", "Gray", "Curvo");
+            Product product3 = new Product(12, "Impresora", "Inyect", "Epson", "Black", "Sin hojas");
+            Product product4 = new Product(13, "Teclado", "Ergonomic", "Genius", "White", "usado");
+
+            Post post1 = new Post(user3, 1, product1, date1, 8, 34.55, false, 0);
+            Post post2 = new Post(user3, 2, product2, date2, 7, 89.55, false, 0);
+            Post post3 = new Post(user4, 3, product3, date3, 6, 108.55, false, 0);
+            Post post4 = new Post(user4,4,product4,date4,9,32.0,false,0);
+
+            posts = Arrays.asList(post1,post2,post3,post4);
+
+            postDTO1 = new PostListDTO(3,date3,
+                    new ProductDTO(12, "Impresora", "Inyect", "Epson", "Black", "Sin hojas"),6, 108.55);
+            postDTO2 = new PostListDTO(2,date2,
+                    new ProductDTO(11, "Monitor IPS 24CTN", "Office", "LG", "Gray", "Curvo"),7, 89.55);
+            postDTO3 = new PostListDTO(1,date1,
+                    new ProductDTO(10, "TrackPad Inalámbrico", "Gamer", "Razer", "Green", "Sin Bateria"),8, 34.55);
+
+            user1.getFollowed().add(user3);
+            user1.getFollowed().add(user4);
+            user3.getFollowers().add(user1);
+            user4.getFollowers().add(user1);
+
+            user3.getPost().add(post1);
+            user3.getPost().add(post2);
+            user4.getPost().add(post3);
+            //T0008
+            user4.getPost().add(post4);
+        }
+
+        @DisplayName("T-0006 ordenamiento ListPostFollowed  ascendente por fecha ")
+        @Test
+        void orderAscListPostFollowedTest() {
+            //Arrange
+            int userId = 1;
+            String order = "name_asc";
+
+            listPost.add(postDTO1);
+            listPost.add(postDTO2);
+            listPost.add(postDTO3);
+
+            PostFollowedListDTO expected = new PostFollowedListDTO(userId,listPost);
+
+            when(mockUserRepository.findBuyerById(userId)).thenReturn(user1);
+            when(mockUserRepository.getPostsList()).thenReturn(posts);
+
+            //Act
+            PostFollowedListDTO actual = userService.followedSellersPost(userId, order);
+            //Assert
+            assertEquals(expected,actual);
+            verify(mockUserRepository, times(1)).findBuyerById(userId);
+            verify(mockUserRepository, times(1)).getPostsList();
+
+        }
+
+        @DisplayName("T-0006 ordenamiento ListPostFollowed  descendente por fecha ")
+        @Test
+        void orderDescListPostFollowedTest() {
+            //Arrange
+            int userId = 1;
+            String order = "name_desc";
+
+            List<PostListDTO> listPost = new ArrayList<>();
+
+            listPost.add(postDTO3);
+            listPost.add(postDTO2);
+            listPost.add(postDTO1);
+
+            PostFollowedListDTO expected = new PostFollowedListDTO(userId,listPost);
+
+            when(mockUserRepository.findBuyerById(userId)).thenReturn(user1);
+            when(mockUserRepository.getPostsList()).thenReturn(posts);
+
+            //Act
+            PostFollowedListDTO actual = userService.followedSellersPost(userId, order);
+            //Assert
+            assertEquals(expected,actual);
+            verify(mockUserRepository, times(1)).findBuyerById(userId);
+            verify(mockUserRepository, times(1)).getPostsList();
+        }
+
+        @DisplayName("T-0008")
+        @Test
+        void test() {
+            int userId = 1;
+
+            when(mockUserRepository.findBuyerById(userId)).thenReturn(user1);
+            when(mockUserRepository.getPostsList()).thenReturn(posts);
+            //Act
+            PostFollowedListDTO actual = userService.followedSellersPost(userId, null);
+            //Assert
+            assertEquals(3,actual.getPosts().stream()
+                    .filter(p -> p.getDate().isAfter(LocalDate.now().minusWeeks(2))).count());
+            verify(mockUserRepository, times(1)).findBuyerById(userId);
+            verify(mockUserRepository, times(1)).getPostsList();
         }
 
     }
