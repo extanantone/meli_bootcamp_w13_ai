@@ -2,23 +2,16 @@
 
 ### Documentacion
 
-Para la realizacion del Sprint 1 me base en la creacion de 3 modelos
-en los que se encuentra : *User*, *Post* y *Product*. <br>
-Para relacionar los *User* en forma de follows se utilizan dos propiedas dentro de user
-que corresponden a *LinkedList* una para los *followers* y otra para los  *followed* del
-*User*, se usa una mas para los *posts*.
-Adicional a esto se añadieron dos archivos *.json* para cargar datos, por medio de la 
-capa *repository*.<br>
+Para la realizacion del Sprint 2 se realizaron validations en los diferentes campos
+solicitados en la documentacion tecnica, para la parte de los tests unitarios se realizaron todos los requiridos,
+el bonus no fue realizado.<br>
 
-Se incluyeron *exceptions* para manejar los casos en los que se intentara acceder a users que no existen,
-crear posts a partir de users que no existen, crear post o users que ya existen, intentar dar *unfollow* a un user 
-que no esta siendo followed o intentar darse follow  a si mismo.<br>
-
-Los endpoints siguieron todas las metricas establecidas con las siguientes excepciones:
+Todos los test unitarios cumplen los requerimientos y pasan al ser ejecutados, con excepcion de dos casos:
 <ol>
-  <li>Los *User* no estan difirenciados entre vendedor y comprador.</li>
-  <li>Los resultados estan en lowerCamelCase.</li>
-  <li>los POST de creacion devuelven el objeto creado ademas del status esperado.</li>
+  <li>T-0005, cuando no existe el comando ingresado espera una excepcion el test, pero en mi caso no tenia la excepcion
+implementada en el metodo, asi que el test va a fallar.</li>
+  <li>T-0003, cuando no existe el comando ingresado espera una excepcion el test, pero en mi caso no tenia la excepcion
+implementada en el metodo, asi que el test va a fallar.</li>
 </ol>
 
 
