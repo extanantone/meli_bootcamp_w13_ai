@@ -3,6 +3,7 @@ package com.lgoyenechea.socialmeli.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor
 @Setter
 @Getter
+@AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PostCreationDTO {
 
@@ -26,7 +28,7 @@ public class PostCreationDTO {
     private Long userId;
 
     @NotEmpty(message = "{string.notempty}")
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private String date;
 
     @Valid

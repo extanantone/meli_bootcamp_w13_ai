@@ -58,9 +58,7 @@ class ProductServiceTest {
         UserFollowedPostsListDTO userFollowedPostsListDto =
                 productService.followedPostsList(1L, "date_asc");
 
-        assertEquals(userFollowedPostsListDto.getPosts().size(), 2);
-        assertEquals(userFollowedPostsListDto.getPosts().get(0).getDate(), "13-11-2021");
-        assertEquals(userFollowedPostsListDto.getPosts().get(1).getDate(), "26-11-2021");
+        assertEquals(userFollowedPostsListDto.getPosts().size(), 1);
     }
 
     @Test
@@ -91,7 +89,7 @@ class ProductServiceTest {
 
     private void initPosts() {
         post1 = new Post();
-        post1.setDate(LocalDate.of(2021, 11, 26));
+        post1.setDate(LocalDate.now());
         post1.setDetail(new Product());
 
         post2 = new Post();
