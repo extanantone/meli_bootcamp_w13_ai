@@ -1,0 +1,72 @@
+[
+  {
+    "userId" : 1,
+    "userName" : "david_castillo",
+    "name" : "david",
+    "lastName" : "castillo",
+    "followed" : [{
+      "userId" : 2,
+      "userName" : "lorena_castillo",
+      "name" : "lorena",
+      "lastName" : "castillo",
+      "followed" : [],
+      "followers" : [],
+      "posts" : [{
+        "userId": 2,
+        "postId": 1,
+        "date": "27-11-2021",
+        "detail": null,
+        "category": 100,
+        "price": 1500.50
+      },
+        {
+          "userId": 2,
+          "postId": 2,
+          "date": "28-11-2021",
+          "detail": null,
+          "category": 100,
+          "price": 1500.50
+        }
+      ]
+    }],
+    "followers" : [],
+    "posts" : []
+  },
+  {
+    "userId" : 2,
+    "userName" : "lorena_castillo",
+    "name" : "lorena",
+    "lastName" : "castillo",
+    "followed" : [],
+    "followers" : [],
+    "posts" : [{
+      "userId": 2,
+      "postId": 1,
+      "date": "27-11-2021",
+      "detail": {
+      },
+      "category": 100,
+      "price": 1500.50
+    },
+      {
+        "userId": 2,
+        "postId": 2,
+        "date": "28-11-2021",
+        "detail": {
+
+        },
+        "category": 100,
+        "price": 1500.50
+      }
+    ]
+  },
+  {
+    "userId" : 3,
+    "userName" : "luna_pachon",
+    "name" : "luna",
+    "lastName" : "pachon",
+    "followed" : [],
+    "followers" : [],
+    "posts" : []
+  }
+]
