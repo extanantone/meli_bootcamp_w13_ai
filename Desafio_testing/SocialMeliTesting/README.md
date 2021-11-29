@@ -49,6 +49,12 @@ Para detallar más mirá los diagramas en la carpeta de resources del proyecto.
 4. Modelo para almacenar los post con promoción.
 5. Modelo para almacenar las conexiones entre usuarios (quien sigue a quien).
 
+## Validadores ⚙️
+Se aplicaron validadores a los DTO que ingresaban por medio de Payloads en POST Request.
+Adicional a ello, se aplicaron validadores a los PathVariables con la clase import org.springframework.validation.annotation.Validated;
+La cual agrega un anotador a la clase del controlador y agrega a cada uno de los endpoints (declarados en la interface) los validadores
+correspondientes (p.e. Range, Pattern, etc) entre la declaración del PathVariable y el tipo de dato de la variable. 
+
 ## Ejecutando los Test ⚙️
 
 Estas pruebas se realizaron dentro de la capa de servicios, ya que ejecutan la lógica del negocio
@@ -56,6 +62,7 @@ necesaria para interpretar las pruebas especificadas en el siguiente documento:
 https://docs.google.com/document/d/1C9Jst8qLXTuPieumtqlUyvK7kQiqOcnq/edit
 
 T-0001
+Genera dos usuarios aleatorios y los almacena en el repositorio mockeado.
 Verificar que el usuario a seguir exista. (US-0001)
 Se cumple:
 Permite continuar con normalidad.
@@ -69,6 +76,7 @@ Test: public void followUserThatNotExist()
 ```
 T-0002
 Verificar que el usuario a dejar de seguir exista. (US-0007)
+Genera dos usuarios aleatorios y los almacena en el repositorio mockeado, luego elimina la conexion de seguimiento.
 Se cumple:
 Permite continuar con normalidad.
 ```
@@ -81,6 +89,7 @@ Test: public void unFollowUserThatNotExist()
 ```
 T-0003
 Verificar que el tipo de ordenamiento alfabético exista (US-0008)
+Genera dos usuarios aleatorios y los almacena en el repositorio mockeado.
 Se cumple:
 Permite continuar con normalidad.
 ```
@@ -88,17 +97,23 @@ Test: public void checkThatNameDescSensitiveCaseAlphabeticOrderTypeExist()
 ```
 No se cumple:
 Notifica la no existencia mediante una excepción.
+Genera un usuario aleatorios y toma su ID para provocar una excepción sobre el tipo de orden.
+
 ```
 Test: public void checkThatNameAscInsensitiveCaseAlphabeticOrderTypeNotExist()
 ```
 T-0004
 Verificar el correcto ordenamiento ascendente y descendente por nombre. (US-0008)
+Genera un usuario aleatorio, Luego genera una lista de seguidres aleatoria para simular un posible retorno del repositorio
+con Mockito, asi mismo, analiza si el tipo de orden es valido, y en caso positivo, retorna una respuesta.
+Cabe anotar que dentro del test se ordena la lista de seguidores generada aleatoriamente.
 Devuelve la lista ordenada según el criterio solicitado
 ```
 Test: public void checkThatNameDescSensitiveCaseAlphabeticOrderTypeExist()
 ```
 T-0005
 Verificar que el tipo de ordenamiento por fecha exista (US-0009)
+Genera un usuario y espera una excepción de orden no valido.
 Se cumple:
 Permite continuar con normalidad.
 ```
@@ -111,6 +126,9 @@ Test: public void checkThatDateOrderTypeNotExist()
 ```
 T-0006
 Verificar el correcto ordenamiento ascendente y descendente por fecha. (US-0009)
+Genera un usuario aleatorio, Luego genera una lista de seguidres aleatoria y una lista de productos aleatoria para simular un posible retorno del repositorio
+con Mockito, asi mismo, analiza si el tipo de orden es valido, y en caso positivo, retorna una respuesta.
+Cabe anotar que dentro del test se ordena la lista de productos por fecha generada aleatoriamente
 Devuelve la lista ordenada según el criterio solicitado
 ```
 Test: public void checkDateAscDateOrderTypeExistAndGetSortedList()
@@ -118,12 +136,15 @@ Test: public void checkDateAscDateOrderTypeExistAndGetSortedList()
 T-0007
 Verificar que la cantidad de seguidores de un determinado usuario sea correcta. (US-0002)
 Devuelve el cálculo correcto del total de la cantidad de seguidores que posee un usuario.
+Genera un usuario aleatorio, Luego genera una lista de seguidres aleatoria para simular un posible retorno del repositorio
+con Mockito, asi mismo, espera que el conteo de seguidores sea acertivo.
 ```
 Test: public void checkIfFollowersCountIsAssert()
 ```
 T-0008
 Verificar que la consulta de publicaciones realizadas en las últimas dos semanas de un determinado vendedor sean efectivamente de las últimas dos semanas. (US-0006)
 Devuelve únicamente los datos de las publicaciones que tengan fecha de publicación dentro de las últimas dos semanas a partir del día de la fecha.
+Este emplea el mismo metodo para el T-0006 ya que, desde el servicio, ya retorna los productos filtrados de menos de dos semanas.
 ```
 Test: public void checkDateAscDateOrderTypeExistAndGetSortedList()
 ```
@@ -218,7 +239,11 @@ Test: public void findIfPostExistsAndIsEqualsThanWereInserted()
 ```
 
 ##Test de integración:
-T-000
+T-0022
+Verificar si un usuario sigue exitosamente a otro.
+```
+Test: public void testFollowUserAndAnalyzeResponse()
+```
 
 ## Construido con 🛠️
 

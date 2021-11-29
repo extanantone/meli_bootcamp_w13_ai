@@ -4,6 +4,7 @@ import meli.bootcamp.socialmeli.dto.*;
 import meli.bootcamp.socialmeli.model.Post;
 import meli.bootcamp.socialmeli.model.PromoPost;
 import meli.bootcamp.socialmeli.model.UserFollow;
+import meli.bootcamp.socialmeli.service.ISocialMeliService;
 import meli.bootcamp.socialmeli.service.SocialMeliService;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import java.util.List;
 @Validated
 public class SocialController implements ISocialController{
     @Autowired
-    public SocialMeliService socialMeliService;
+    public ISocialMeliService socialMeliService;
 
     @Override
     public ResponseEntity<GenericResponseDTO> followUser(int user_id, int user_id_to_follow) {

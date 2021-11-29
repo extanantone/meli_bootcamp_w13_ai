@@ -29,13 +29,10 @@ public interface UserMapper {
     @InheritInverseConfiguration
     NewUserDTO userToNewUserDTO(User user);
 
-    /*
+
     @Mappings({
-            @Mapping(source= "userId", target = "userId"),
+            @Mapping(source= "userId", target = "userID"),
             @Mapping(source= "userName", target = "userName")
     })
     UserDTO userToUserDTO(User user);
-
-     */
-
 }

@@ -85,8 +85,9 @@ public class TestUtils {
 
     public static User createNewUserWithName(String name) {
         Random userId= new Random();
+        int a = 20;
         return new User(
-                userId.nextInt(4200-2100)-2100,
+                userId.nextInt(4200-2100)+2100,
                 name + "PErez21",
                 name,
                 "Perez",
