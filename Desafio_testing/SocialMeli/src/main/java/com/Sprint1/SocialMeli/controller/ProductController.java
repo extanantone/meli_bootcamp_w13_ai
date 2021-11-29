@@ -1,10 +1,12 @@
 package com.Sprint1.SocialMeli.controller;
 
-import com.Sprint1.SocialMeli.model.Post;
+import com.Sprint1.SocialMeli.dto.PostDTO;
 import com.Sprint1.SocialMeli.service.IProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/socialMeli/product")
@@ -20,7 +22,7 @@ public class ProductController {
 //      Dar de alta una nueva publicación
     @PostMapping("/post")
     public ResponseEntity<?> createPost (
-            @RequestBody Post post){
+            @RequestBody @Valid PostDTO post){
         this.productService.createPost(post);
         return new ResponseEntity<>(HttpStatus.OK);
     }

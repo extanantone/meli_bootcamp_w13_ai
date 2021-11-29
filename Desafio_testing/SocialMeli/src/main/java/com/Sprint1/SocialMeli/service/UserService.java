@@ -27,8 +27,8 @@ public class UserService implements IUserService{
 
     @Override
     public void followSeller(int user_id, int user_id_to_follow){
-        User userFollower = this.userRepository.findUser(user_id).orElseThrow();
-        User userFollowing = this.userRepository.findUser(user_id_to_follow).orElseThrow();
+        User userFollower = this.userRepository.findUser(user_id).orElseThrow(() -> new NotFoundException("El numero de ID: " + user_id + " no fue encontrado"));
+        User userFollowing = this.userRepository.findUser(user_id_to_follow).orElseThrow(() -> new NotFoundException("El numero de ID: " + user_id + " no fue encontrado"));
 
         if(userFollower == userFollowing){
             throw new NotFoundException("Un usuario no puede seguirse a si mismo");
@@ -47,7 +47,7 @@ public class UserService implements IUserService{
 
     @Override
     public FollowCountDTO followerCount (int user_id){
-        User user = this.userRepository.findUser(user_id).orElseThrow();
+        User user = this.userRepository.findUser(user_id).orElseThrow(() -> new NotFoundException("El numero de ID: " + user_id + " no fue encontrado"));
         return new FollowCountDTO(
                                                             user.getUser_id(),
                                                             user.getUser_name(),
@@ -57,7 +57,7 @@ public class UserService implements IUserService{
 
     @Override
     public FollowersListDTO followerList(int user_id, String order){
-        User user = this.userRepository.findUser(user_id).orElseThrow();
+        User user = this.userRepository.findUser(user_id).orElseThrow(() -> new NotFoundException("El numero de ID: " + user_id + " no fue encontrado"));
         FollowersListDTO userFollowersList = new FollowersListDTO(
                                                                 user.getUser_id(),
                                                                 user.getUser_name(),
@@ -88,7 +88,7 @@ public class UserService implements IUserService{
 
     @Override
     public FollowedListDTO followedList(int user_id, String order){
-        User user = this.userRepository.findUser(user_id).orElseThrow();
+        User user = this.userRepository.findUser(user_id).orElseThrow(() -> new NotFoundException("El numero de ID: " + user_id + " no fue encontrado"));
         FollowedListDTO userFollowedList = new FollowedListDTO(
                                                             user.getUser_id(),
                                                             user.getUser_name(),
@@ -117,8 +117,8 @@ public class UserService implements IUserService{
 
     @Override
     public void unfollowSeller(int user_id, int user_id_to_follow){
-        User user = this.userRepository.findUser(user_id).orElseThrow();
-        User userUnfollow = this.userRepository.findUser(user_id_to_follow).orElseThrow();
+        User user = this.userRepository.findUser(user_id).orElseThrow(() -> new NotFoundException("El numero de ID: " + user_id + " no fue encontrado"));
+        User userUnfollow = this.userRepository.findUser(user_id_to_follow).orElseThrow(() -> new NotFoundException("El numero de ID: " + user_id + " no fue encontrado"));
 
         if(user == userUnfollow){
             throw new NotFoundException("Un usuario no puede dejar de seguirse a si mismo");

@@ -6,10 +6,10 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode
+@Data @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode
 public class FollowerDTO  {
     public int user_id;
-    private String user_name;
+    public String user_name;
 
 
 

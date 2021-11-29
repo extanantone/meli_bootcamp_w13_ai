@@ -1,27 +1,48 @@
 package com.Sprint1.SocialMeli.model;
 
 
-import com.Sprint1.SocialMeli.dto.FollowerDTO;
+
 import com.Sprint1.SocialMeli.dto.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
-@Getter  @Setter @NoArgsConstructor @AllArgsConstructor
+
+@Data
+@NoArgsConstructor @AllArgsConstructor
 
 public class Post {
-    private int user_id;
-    private int id_post;
+    @Valid
+
+
+    @NotNull(message = "La id USER_ID no puede estar vacía.")
+    @Positive(message = "La id USER_ID debe ser mayor a cero.")
+    private Integer user_id;
+
+    @NotNull(message = "La id ID_POST no puede estar vacía.")
+    @Positive(message = "La id ID_POST debe ser mayor a cero.")
+    private Integer id_post;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
+    @NotNull(message = "La FECHA no puede estar vacía.")
     private LocalDate date;
+
+    @Valid
     private ProductDTO detail;
-    private int category;
-    private double price;
+
+    @NotNull(message = "El campo CATEGORY no puede estar vacío.")
+    private Integer category;
+
+    @NotNull(message = "El campo PRICE no puede estar vacío.")
+    @Max(value = 10000000, message = "El campo PRICE deber ser menor o igual a 10000000")
+    private Double price;
 
     @Override
     public String toString() {

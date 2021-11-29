@@ -1,15 +1,13 @@
 package com.Sprint1.SocialMeli.dto;
 
 import com.Sprint1.SocialMeli.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter @NoArgsConstructor
+@Data
+@NoArgsConstructor
 public class FollowersListDTO {
     private int user_id;
     private String user_name;

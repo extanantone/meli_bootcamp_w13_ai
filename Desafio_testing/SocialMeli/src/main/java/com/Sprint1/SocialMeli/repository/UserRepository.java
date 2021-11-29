@@ -1,7 +1,6 @@
 package com.Sprint1.SocialMeli.repository;
 
 import com.Sprint1.SocialMeli.exceptions.NotFoundException;
-import com.Sprint1.SocialMeli.model.Post;
 import com.Sprint1.SocialMeli.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,7 +10,6 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,18 +42,14 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public Optional<User> findUser (int user_id) {
+    public Optional<User> findUser (int user_id) throws NotFoundException{
         Optional<User> user = this.userList.stream()
                 .filter(p -> p.getUser_id() == user_id )
                 .findFirst();
-        if (!user.isPresent()){
-            throw new NotFoundException("El numero de ID: " + user_id + " no fue encontrado");
-        }
+//        if (true){
+//            throw new NotFoundException("El numero de ID: " + user_id + " no fue encontrado");
+//        }
         return user;
     }
-
-
-
-
 
 }

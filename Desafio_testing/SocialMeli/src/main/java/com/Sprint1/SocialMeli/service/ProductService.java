@@ -1,11 +1,9 @@
 package com.Sprint1.SocialMeli.service;
 
-import com.Sprint1.SocialMeli.dto.FollowedListDTO;
-import com.Sprint1.SocialMeli.dto.FollowerDTO;
-import com.Sprint1.SocialMeli.dto.PostDTO;
 import com.Sprint1.SocialMeli.dto.PostFollowedListDTO;
+import com.Sprint1.SocialMeli.exceptions.NotFoundException;
 import com.Sprint1.SocialMeli.mapper.PostMapper;
-import com.Sprint1.SocialMeli.model.Post;
+import com.Sprint1.SocialMeli.dto.PostDTO;
 import com.Sprint1.SocialMeli.model.User;
 import com.Sprint1.SocialMeli.repository.IUserRepository;
 import org.springframework.stereotype.Service;
@@ -26,7 +24,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public void createPost (Post post){
+    public void createPost (PostDTO post){
         User user = this.userRepository.findUser(post.getUser_id()).orElseThrow();
         user.getPost().add(post);
     }
@@ -35,7 +33,7 @@ public class ProductService implements IProductService{
     public PostFollowedListDTO postListFollowed(int user_id, String order) {
 
         //busco el usuario user_id que tengo que buscar sus seguidores
-        User user = this.userRepository.findUser(user_id).orElseThrow();
+        User user = this.userRepository.findUser(user_id).orElseThrow(() -> new NotFoundException("El numero de ID: " + user_id + " no fue encontrado"));
 
         List<PostDTO> postOrder = user.getFollowed().stream()
                 .map( u -> userRepository.findUser(u.getUser_id()))
@@ -45,11 +43,11 @@ public class ProductService implements IProductService{
                 .map(Optional::get)
                 .map(User::getPost)
                 .flatMap(List::stream)
-                .sorted(Comparator.comparing(Post::getDate))
+                .sorted(Comparator.comparing(PostDTO::getDate))
                 .collect(Collectors.toList())
                 .stream()
                 .filter(post -> twoWeeksAgoCheck(post.getDate()))
-                .sorted(Comparator.comparing(Post::getDate))
+                .sorted(Comparator.comparing(PostDTO::getDate))
                 .map(PostMapper::postToDTO)
                 .collect(Collectors.toList());
 
@@ -57,9 +55,9 @@ public class ProductService implements IProductService{
             return PostMapper.postDTOtoFollowedListDTO(user, postOrder);
         }
 
-        List<PostDTO> postOrderSorted = postOrder
+        List<com.Sprint1.SocialMeli.dto.PostDTO> postOrderSorted = postOrder
                 .stream()
-                .sorted(Comparator.comparing(PostDTO::getDate))
+                .sorted(Comparator.comparing(com.Sprint1.SocialMeli.dto.PostDTO::getDate))
                 .collect(Collectors.toList());
 
         if(order.equals("date_asc")) {

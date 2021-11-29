@@ -1,12 +1,10 @@
 package com.Sprint1.SocialMeli.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter @Setter @NoArgsConstructor
+@Data
+@NoArgsConstructor
 public class FollowCountDTO {
     private int user_id;
     private String user_name;

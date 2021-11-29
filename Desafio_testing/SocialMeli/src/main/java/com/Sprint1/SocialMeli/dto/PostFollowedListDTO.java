@@ -1,14 +1,13 @@
 package com.Sprint1.SocialMeli.dto;
 
-import com.Sprint1.SocialMeli.model.Post;
-import lombok.Getter;
+import com.Sprint1.SocialMeli.dto.PostDTO;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter @NoArgsConstructor
+@Data
+@NoArgsConstructor
 
 public class PostFollowedListDTO {
     private int user_id;
@@ -24,7 +23,7 @@ public class PostFollowedListDTO {
     public String toString() {
         return "{" +
                 "user_id=" + user_id +
-                ", postList=" + post +
+                ", post=" + post +
                 '}';
     }
 }
