@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2f594112-586a-4d92-9afd-2a85b9ea7f5d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/$PRODUCT_WORKSPACE_FILE$" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/docs/User Stories - León Reynos.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/SocialmeliApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/controllers/PostsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/controllers/UsersController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/dto/ErrorDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/dto/PostDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/dto/ProductDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/dto/UserDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/dto/response/CountFollowersResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/dto/response/CountPromosResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/dto/response/FollowedResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/dto/response/FollowersResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/dto/response/PostsResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/exceptions/InvalidPromoException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/exceptions/PostAlreadyExistException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/exceptions/PostNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/exceptions/SocialMeliException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/exceptions/UserAlreadyInUseException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/exceptions/UserNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/exceptions/UserSelfUseException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/exceptions/handler/SocialMeliExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/model/Post.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/model/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/repositories/IRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/repositories/PostRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/repositories/UsuarioRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/services/IService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/services/SocialMeliService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/utils/AlphaAscSorter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/utils/AlphaDescSorter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/utils/DateAscSorter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/utils/DateDescSorter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/utils/IntAscSorter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/utils/IntDescSorter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/utils/MiFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/java/com/example/socialmeli/utils/Sorter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/resources/postsSocialMeli.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/main/resources/usersSocialMeli.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/test/java/com/example/socialmeli/SocialmeliApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/test/java/com/example/socialmeli/controllers/PostControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/test/java/com/example/socialmeli/controllers/UsersControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/test/java/com/example/socialmeli/repositories/PostRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/test/java/com/example/socialmeli/repositories/UsuarioRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialMeli/src/test/java/com/example/socialmeli/services/SocialMeliServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Spring/SocialMeli_Testing/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Spring/SocialMeli_Testing/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Spring/SocialMeli_Testing/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Spring/SocialMeli_Testing/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Spring/SocialMeli_Testing/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Spring/SocialMeli_Testing/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Spring/SocialMeli_Testing/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Spring/SocialMeli_Testing/src/main/java/spring2/test/TestApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Spring/SocialMeli_Testing/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Spring/SocialMeli_Testing/src/test/java/spring2/test/TestApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/C3_P1_ClasesAbstractasInterfaces/src/Transaccion.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/C3_P1_ClasesAbstractasInterfaces/src/Transaccion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Ejercicio_Java_1/.idea/$PRODUCT_WORKSPACE_FILE$" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Ejercicio_Java_1/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Ejercicio_Java_1/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Ejercicio_Java_1/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Ejercicio_Java_1/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Ejercicio_Java_1/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Ejercicio_Java_1/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Ejercicio_Java_1/Ejercicio_1_TemperaturasGlobales.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Ejercicio_Java_1/src/bootcamp_jdmichiel/Temperaturas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/CalculadoraDeCalorias/src/main/java/bootcamp/demo/model/Ingrediente.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/CalculadoraDeCalorias/src/main/java/bootcamp/demo/model/Ingrediente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SocialMeli/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SocialMeli/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SocialMeli/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SocialMeli/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SocialMeli/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SocialMeli/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SocialMeli/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SocialMeli/src/main/java/bootcamp/SocialMeli/SocialMeliApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SocialMeli/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SocialMeli/src/test/java/bootcamp/SocialMeli/SocialMeliApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/Spring.md" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="21aeo3lhVg5OkICen9sZQeD9qAN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file enabled="true" id="idea.log" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2f594112-586a-4d92-9afd-2a85b9ea7f5d" name="Default Changelist" comment="" />
+      <created>1638183796872</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1638183796872</updated>
+      <workItem from="1638183798098" duration="10000" />
+      <workItem from="1638197466112" duration="61000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>
