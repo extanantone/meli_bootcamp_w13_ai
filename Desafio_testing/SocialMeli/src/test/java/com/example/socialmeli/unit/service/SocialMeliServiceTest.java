@@ -211,8 +211,112 @@ public class SocialMeliServiceTest {
         }
     }
 
+    @Nested
+    @DisplayName("Verificar el correcto ordenamiento ascendente y descendente por nombre. (US-0008)")
+    class TestThatCheckTheCorrectlyOrderASCandDESC{
+        @Test
+        @DisplayName("Devuelve la lista ordenada según el criterio solicitado ASC")
+        public void TestThatReturnTheListCorrectlyOrderASC() throws UserNotFoundException {
+            // Arrange
+            String order = "name_asc";
+            Integer userId = 1;
+            Integer followerOne = 2;
+            Integer followerTwo =3;
+
+            UserDTO followerDTOOne = new UserDTO();
+            followerDTOOne.setUserId(followerOne);
+            followerDTOOne.setUserName("followerOne");
+
+            UserDTO followerDTOTwo = new UserDTO();
+            followerDTOTwo.setUserId(followerTwo);
+            followerDTOTwo.setUserName("followerTwo");
+
+            List<UserDTO> followersDTOs = new ArrayList<>();
+            followersDTOs.add(followerDTOOne);
+            followersDTOs.add(followerDTOTwo);
+
+            FollowersResponseDTO expect = new FollowersResponseDTO();
+            expect.setUserId(userId);
+            expect.setUserName("user");
+            expect.setFollowers(followersDTOs);
+
+            // Mock
+            List<Integer> followersId = new ArrayList<>();
+            followersId.add(followerOne);
+            followersId.add(followerTwo);
+            User userMock = new User(userId, "user", followersId);
+            User followerMockOne = new User(followerOne, "followerOne", new ArrayList<>());
+            User followerMockTwo = new User(followerTwo, "followerTwo", new ArrayList<>());
+
+            // When
+            when(userRepository.findById(userId)).thenReturn(Optional.of(userMock));
+            when(userRepository.findById(followerOne)).thenReturn(Optional.of(followerMockOne));
+            when(userRepository.findById(followerTwo)).thenReturn(Optional.of(followerMockTwo));
+
+            //Act
+            FollowersResponseDTO current = socialMeliService.getFollowers(userId, order);
+
+            //Assert
+            Mockito.verify(userRepository, times(4)).findById(Mockito.anyInt());
+            Assertions.assertEquals(expect, current);
 
 
+
+        }
+
+        @Test
+        @DisplayName("Devuelve la lista ordenada según el criterio solicitado DESC")
+        public void TestThatReturnTheListCorrectlyOrderDESC() throws UserNotFoundException {
+            // Arrange
+            String order = "name_desc";
+            Integer userId = 1;
+            Integer followerOne = 2;
+            Integer followerTwo =3;
+
+            UserDTO followerDTOOne = new UserDTO();
+            followerDTOOne.setUserId(followerOne);
+            followerDTOOne.setUserName("followerOne");
+
+            UserDTO followerDTOTwo = new UserDTO();
+            followerDTOTwo.setUserId(followerTwo);
+            followerDTOTwo.setUserName("followerTwo");
+
+            List<UserDTO> followersDTOs = new ArrayList<>();
+            followersDTOs.add(followerDTOTwo);
+            followersDTOs.add(followerDTOOne);
+
+            FollowersResponseDTO expect = new FollowersResponseDTO();
+            expect.setUserId(userId);
+            expect.setUserName("user");
+            expect.setFollowers(followersDTOs);
+
+            // Mock
+            List<Integer> followersId = new ArrayList<>();
+            followersId.add(followerTwo);
+            followersId.add(followerOne);
+            User userMock = new User(userId, "user", followersId);
+            User followerMockOne = new User(followerOne, "followerOne", new ArrayList<>());
+            User followerMockTwo = new User(followerTwo, "followerTwo", new ArrayList<>());
+
+            // When
+            when(userRepository.findById(userId)).thenReturn(Optional.of(userMock));
+            when(userRepository.findById(followerOne)).thenReturn(Optional.of(followerMockOne));
+            when(userRepository.findById(followerTwo)).thenReturn(Optional.of(followerMockTwo));
+
+            //Act
+            FollowersResponseDTO current = socialMeliService.getFollowers(userId, order);
+
+            //Assert
+            Mockito.verify(userRepository, times(4)).findById(Mockito.anyInt());
+            Assertions.assertEquals(expect, current);
+
+
+
+        }
+
+
+
+    }
 
 
 }
