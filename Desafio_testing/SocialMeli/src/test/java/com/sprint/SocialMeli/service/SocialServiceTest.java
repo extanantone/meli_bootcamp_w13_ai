@@ -11,6 +11,7 @@ import com.sprint.SocialMeli.model.Seller;
 import com.sprint.SocialMeli.model.User;
 import com.sprint.SocialMeli.repository.SocialRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
