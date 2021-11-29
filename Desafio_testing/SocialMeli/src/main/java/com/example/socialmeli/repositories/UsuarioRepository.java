@@ -20,9 +20,11 @@ public class UsuarioRepository implements IRepository<User> {
     List<User> users;
 
     public UsuarioRepository(){
+        loadFromUsersFile();
+    }
 
+    public void loadFromUsersFile() {
         Properties properties =  new Properties();
-
         try {
             properties.load(new ClassPathResource("application.properties").getInputStream());
             String SCOPE = properties.getProperty("api.scope");
@@ -30,6 +32,7 @@ public class UsuarioRepository implements IRepository<User> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
     public static List<User>  loadFromFile(String SCOPE) {
 
@@ -68,16 +71,6 @@ public class UsuarioRepository implements IRepository<User> {
     @Override
     public void push(Post newElement) {
         throw new UnsupportedOperationException();
-    }
-
-    public void pushAll(List<User> users) {
-        for (User u: users){
-            this.users.add(u);
-        }
-    }
-
-    public void push(User newElement) {
-        this.users.add(newElement);
     }
 
     public void reset() { this.users = Collections.emptyList();}

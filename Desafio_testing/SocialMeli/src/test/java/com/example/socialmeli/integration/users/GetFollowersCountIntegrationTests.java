@@ -23,11 +23,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 public class GetFollowersCountIntegrationTests {
     @Autowired
     private MockMvc mockMvc;
-    private UsuarioRepository userRepository = new UsuarioRepository();
+    private UsuarioRepository userRepository;
 
     public GetFollowersCountIntegrationTests() throws JsonProcessingException {
         restoreUsersFile();
-        //para que se ejecute antes de que se instancie el mockMvc así no carga vacío el .json
+        this.userRepository = new UsuarioRepository();
     }
 
     @BeforeEach

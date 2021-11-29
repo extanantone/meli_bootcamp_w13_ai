@@ -24,11 +24,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class FollowIntegrationTests {
     @Autowired
     private MockMvc mockMvc;
-    private UsuarioRepository userRepository = new UsuarioRepository();
+    private UsuarioRepository userRepository;
 
     public FollowIntegrationTests() throws JsonProcessingException {
         restoreUsersFile();
-        //para que se ejecute antes de que se instancie el mockMvc así no carga vacío el .json
+        this.userRepository = new UsuarioRepository();
     }
 
     @BeforeEach

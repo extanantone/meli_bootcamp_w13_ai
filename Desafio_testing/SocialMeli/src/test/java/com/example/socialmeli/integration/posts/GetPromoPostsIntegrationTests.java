@@ -26,12 +26,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 public class GetPromoPostsIntegrationTests {
     @Autowired
     private MockMvc mockMvc;
-    private UsuarioRepository userRepository = new UsuarioRepository();
-    private PostRepository postRepository = new PostRepository();
+    private UsuarioRepository userRepository;
+    private PostRepository postRepository;
 
     public GetPromoPostsIntegrationTests() throws JsonProcessingException {
         restoreUsersFile();
         emptyPostsFile();
+        this.userRepository = new UsuarioRepository();
+        this.postRepository = new PostRepository();
     }
 
     @BeforeEach

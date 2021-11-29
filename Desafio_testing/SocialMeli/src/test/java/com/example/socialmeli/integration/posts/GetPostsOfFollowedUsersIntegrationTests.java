@@ -27,12 +27,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class GetPostsOfFollowedUsersIntegrationTests {
     @Autowired
     private MockMvc mockMvc;
-    private UsuarioRepository userRepository = new UsuarioRepository();
-    private PostRepository postRepository = new PostRepository();
+    private UsuarioRepository userRepository;
+    private PostRepository postRepository;
 
     public GetPostsOfFollowedUsersIntegrationTests() throws JsonProcessingException {
         restoreUsersFile();
         emptyPostsFile();
+        this.userRepository = new UsuarioRepository();
+        this.postRepository = new PostRepository();
     }
 
     @BeforeEach

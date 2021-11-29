@@ -1,14 +1,15 @@
 package com.example.socialmeli.unit.repository;
 
+import static com.example.socialmeli.TestUtilsFileHandling.writeToUsersFile;
 import static com.example.socialmeli.TestUtilsPreload.restoreUsersFile;
 import static com.example.socialmeli.TestUtilsGet.getUnsortedUserList;
 import com.example.socialmeli.model.User;
-import com.example.socialmeli.repositories.IRepository;
 import com.example.socialmeli.repositories.UsuarioRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,5 +46,25 @@ public class UserRepositoryTests {
         Optional<User> manuel = userRepository.findById(123);
 
         assertTrue(manuel.isEmpty());
+    }
+
+    @Test
+    public void loadsDataCorrectlyFromFile() throws JsonProcessingException {
+
+        User pivot = new User();
+        pivot.setUserId(19);
+        pivot.setUserName("Pivot");
+
+        writeToUsersFile(List.of(pivot));
+
+        this.userRepository.loadFromUsersFile();
+
+        List<User> users = this.userRepository.findAll();
+        User userInRepo = users.get(0);
+        assertAll(
+                () -> assertEquals(userInRepo.getUserId(), 19),
+                () -> assertEquals(userInRepo.getUserName(), "Pivot"),
+                () -> assertTrue(userInRepo.getFollowersId().isEmpty())
+        );
     }
 }
