@@ -262,17 +262,17 @@ public class SocialMeliServiceTest {
         vendedor.addFollower(2); //vendedor agregar seguidor
         comprador.addFollowed(1); //comprador agrega seguido
 
-        /*List<Publicacion> postList = new ArrayList<>(); //Creo lista de Post y agrego post de prueba
+        List<Publicacion> postList = new ArrayList<>(); //Creo lista de Post y agrego post de prueba
         Publicacion p1 = new Publicacion(1,1,1,1,LocalDate.now().minusDays(5),new Producto(1,"p1","t1","b1","c1","n1"));
         Publicacion p2 = new Publicacion(1,2,2,2,LocalDate.now().minusDays(10),new Producto(2,"p2","t2","b2","c2","n2"));
         Publicacion p3 = new Publicacion(1,3,3,3,LocalDate.now().minusDays(20),new Producto(3,"p3","t3","b3","c3","n3"));
         postList.add(p1);
         postList.add(p2);
-        postList.add(p3);*/ // Sirve para T-0006/8
+        postList.add(p3);
 
         //Mock
         Mockito.when(repository.getComprador(2)).thenReturn(comprador);
-        //Mockito.when(repository.getPublicaciones()).thenReturn(postList); // Sirve para T-0006/8
+        Mockito.when(repository.getPublicaciones()).thenReturn(postList);
 
         //Act
         service.serviceListadoPublicaciones(2,"date_asc");
