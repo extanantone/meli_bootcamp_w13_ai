@@ -179,7 +179,7 @@ public class UserServiceTest {
     }
 
 
-    void testFollowers (String  order,List<UserDto> expected) {
+    private void testFollowers (String  order,List<UserDto> expected) {
 
 
         users.get(0).addFollower(new UserDto(users.get(1)));
@@ -227,7 +227,7 @@ public class UserServiceTest {
 
 
 
-    void testFollowed(String  order, List<UserDto> expected) {
+    private void testFollowed(String  order, List<UserDto> expected) {
 
         users.get(0).addFollowed(new UserDto(users.get(1)));
         users.get(0).addFollowed(new UserDto(users.get(2)));

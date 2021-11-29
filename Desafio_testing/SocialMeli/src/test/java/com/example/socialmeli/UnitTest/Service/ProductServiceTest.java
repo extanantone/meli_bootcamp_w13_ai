@@ -139,7 +139,7 @@ public class ProductServiceTest {
 
 
 
-    void testDatePost(List<PostDto> postDto, String order) {
+    private void testDatePost(List<PostDto> postDto, String order) {
 
         Integer user2 = 2;
         Integer user3 = 3;

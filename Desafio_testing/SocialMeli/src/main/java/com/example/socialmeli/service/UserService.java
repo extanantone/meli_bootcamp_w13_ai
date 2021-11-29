@@ -51,7 +51,7 @@ public class UserService implements IUserService {
         }
 
         User user = userRepository.findById(userId).orElseThrow(() -> new BadRequestException("Usuario no encontrado con id:" + userId));;
-        User userDto = userRepository.findById(userIdToFollow).orElseThrow(() -> new BadRequestException("Usuario no encontrado con id:" + userId));;
+        User userDto = userRepository.findById(userIdToFollow).orElseThrow(() -> new BadRequestException("Usuario no encontrado con id:" + userIdToFollow));;
         userRepository.follow(user,userDto);
 
     }

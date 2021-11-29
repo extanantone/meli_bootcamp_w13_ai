@@ -19,7 +19,7 @@ import java.util.Optional;
 
 
 @Repository
-@Setter
+
 public class UserRepository implements IUserRepository{
 
     private List<User> users= new ArrayList<>();
@@ -66,7 +66,7 @@ public class UserRepository implements IUserRepository{
     public Optional<User> findById(Integer userId) {
 
         return users.stream()
-                .filter(x -> x.getUserId() == userId)
+                .filter(x -> x.getUserId().equals(userId))
                 .findFirst();
 
     }
