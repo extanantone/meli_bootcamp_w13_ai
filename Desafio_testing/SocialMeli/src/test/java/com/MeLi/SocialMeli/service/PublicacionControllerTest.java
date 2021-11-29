@@ -1,4 +1,4 @@
-package com.MeLi.SocialMeli.controller;
+package com.MeLi.SocialMeli.service;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
