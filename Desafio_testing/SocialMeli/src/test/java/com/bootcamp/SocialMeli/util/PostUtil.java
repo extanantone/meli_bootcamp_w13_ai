@@ -23,12 +23,12 @@ public class PostUtil {
     public static  Detail detail3 = new Detail(1,"Zapato","calzado","Racer","Rojo","Edicion limitada");
     public static Post post3= new Post(3,3,LocalDate.of(2021,11,5),detail1,10,25000);
 
-    private static List<Post> posts = new ArrayList<>();
+
 
     static ModelMapper mapper = new ModelMapper();
 
     public static List<Post> posts(){
-
+        List<Post> posts = new ArrayList<>();
         posts.add(post1);
         posts.add(post2);
         posts.add(post3);

@@ -27,6 +27,12 @@ public class UserRepository implements  IUserRepository{
 
     }
 
+    public void reset(){
+        this.seguidors.clear();
+        this.posts.clear();
+        this.promoPosts.clear();
+    }
+
     @Override
     public void setUser(User user) {
         users.add(user);

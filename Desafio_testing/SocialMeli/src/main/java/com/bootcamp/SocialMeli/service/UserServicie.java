@@ -108,9 +108,16 @@ public class UserServicie implements IUserService{
         List<UserDTO> userDTOSorder;
         if(order.equals("name_asc")){
             userDTOSorder= mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUserName)).collect(Collectors.toList());
-        }else{
+        }else if(order.equals("name_desc")){
             userDTOSorder= mesiguenDTO.getFollowers().stream().sorted(Comparator.comparing(UserDTO::getUserName).reversed()).collect(Collectors.toList());
+        }else
+        {
+            userDTOSorder = null;
         }
+        if(userDTOSorder == null){
+            throw new NullPointerException();
+        }
+
         mesiguenDTO.setFollowers(userDTOSorder);
 
         return mesiguenDTO;

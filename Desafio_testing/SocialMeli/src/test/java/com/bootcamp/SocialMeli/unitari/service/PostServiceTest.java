@@ -1,6 +1,7 @@
 package com.bootcamp.SocialMeli.unitari.service;
 
 import com.bootcamp.SocialMeli.dto.PublicacionesDTO;
+import com.bootcamp.SocialMeli.exception.NotFoundExceptionUsers;
 import com.bootcamp.SocialMeli.mapper.PostMater;
 import com.bootcamp.SocialMeli.model.User;
 import com.bootcamp.SocialMeli.repository.IUserRepository;
@@ -34,6 +35,19 @@ public class PostServiceTest {
         Mockito.reset();
     }
 
+    //T-0005 -1
+    @Test
+    void whenPublicacionesOrderThenExist(){
+
+        Assertions.assertDoesNotThrow(()->service.getPublicaciones(3,"date_asc"));
+    }
+    //T-0005 -2
+    @Test
+    void whenPublicacionesOrderThenException(){
+
+        Assertions.assertThrows(NullPointerException.class,()-> service.getPublicaciones(3,null));
+    }
+
     //T-0006 -1
     @Test
     void whengetPublicacionesOrderThenOrderFechaAscOK(){
@@ -55,10 +69,12 @@ public class PostServiceTest {
                 () -> Assertions.assertEquals(expected.getPosts().get(2).getDate(),current.getPosts().get(2).getDate())
         );
 
+        Mockito.verify(repository,Mockito.atLeastOnce()).getPosts(Mockito.any(Integer.class));
+
 
     }
 
-    //T-0006 -2
+    //T-0006 -2 T
     @Test
     void whengetPublicacionesOrderThenOrderFechaDescOK(){
 
@@ -78,12 +94,12 @@ public class PostServiceTest {
                 () -> Assertions.assertEquals(expected.getPosts().get(1).getDate(),current.getPosts().get(1).getDate()),
                 () -> Assertions.assertEquals(expected.getPosts().get(2).getDate(),current.getPosts().get(2).getDate())
         );
-
+        Mockito.verify(repository,Mockito.atLeastOnce()).getPosts(Mockito.any(Integer.class));
 
     }
 
     //T-0008
-    User userSeguidor = new User(1,"Juan");
+
     User userSeguido = new User(3,"Pedro");
     @Test
     void whengetPublicacionesThenDatenoOlderThan14Days(){
@@ -101,6 +117,11 @@ public class PostServiceTest {
         //Assert
 
         Assertions.assertEquals(2,current.getPosts().size());
+
+        Mockito.verify(repository,Mockito.atLeastOnce()).getPosts(Mockito.any(Integer.class));
+        Mockito.verify(repository,Mockito.atLeastOnce()).getUser(Mockito.any(Integer.class));
+        Mockito.verify(repository,Mockito.atLeastOnce()).getSegidor();
+        Mockito.verify(repository,Mockito.atLeast(3)).getPost(Mockito.any(Integer.class));
 
     }
 

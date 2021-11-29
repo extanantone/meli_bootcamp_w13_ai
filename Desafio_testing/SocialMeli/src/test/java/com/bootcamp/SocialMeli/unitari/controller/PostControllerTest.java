@@ -24,28 +24,4 @@ public class PostControllerTest {
     @InjectMocks
     PostController controller;
 
-
-    @Test
-    void whengetListPostOrderThenPublicacionesOk(){
-      //arrange
-      PublicacionesDTO expect = new PublicacionesDTO();
-      ResponseEntity<PublicacionesDTO> responseEntity = new ResponseEntity<>(expect, HttpStatus.OK);
-      //Mocks
-      Mockito.when(service.getPublicaciones(1,"name_asc")).thenReturn(expect);
-
-      //Assert
-      Assertions.assertEquals(responseEntity, controller.getListPostOrder(1,"name_asc"));
-
-    }
-
-    @Test
-    void whengetListPostOrderThenPublicacionesNoExe(){
-        //arrange
-
-        //Assert
-        Assertions.assertEquals(RuntimeException.class, controller.getListPostOrder(1,"name_asc"));
-
-    }
-
-
 }

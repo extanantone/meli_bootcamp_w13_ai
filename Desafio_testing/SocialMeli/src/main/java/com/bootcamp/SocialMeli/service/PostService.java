@@ -65,9 +65,16 @@ public class PostService implements IPostService {
 
             posts = iUserRepository.getPosts(id).stream().sorted(Comparator.comparing(Post::getDate)).collect(Collectors.toList());
 
-        }else{
+        }else if (order.equals("date_desc")){
             posts = iUserRepository.getPosts(id).stream().sorted(Comparator.comparing(Post::getDate).reversed()).collect(Collectors.toList());
+        }else{
+            posts = null;
         }
+
+        if(posts==null){
+            throw new NullPointerException();
+        }
+
         List<PostsDTO> postsDTOS = posts.stream().map(post -> PostMater.PostToPostsDTO(post)).collect(Collectors.toList());
 
         return new PublicacionesDTO(id,postsDTOS);

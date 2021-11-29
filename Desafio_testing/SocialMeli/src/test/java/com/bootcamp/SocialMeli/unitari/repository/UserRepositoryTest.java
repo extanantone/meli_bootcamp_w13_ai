@@ -6,9 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserRepositoryTest {
 
     UserRepository repository = new UserRepository();
@@ -20,6 +17,8 @@ public class UserRepositoryTest {
         User current = repository.getUser(1);
         //Asset
         Assertions.assertEquals(expect,current);
+
+
     }
 
     @Test
@@ -29,5 +28,25 @@ public class UserRepositoryTest {
         User current = repository.getUser(6);
         //Asset
         Assertions.assertNull(current);
+
     }
+
+    @Test
+    void whengetExisteSeguidorThenTrue(){
+
+        Assertions.assertFalse(repository.getExisteSeguidor(1,3));
+    }
+
+    @Test
+    void whencambiarTipoThenCambiaTipoVendedor(){
+
+        User user = new User(3,"Julian");
+        user.setTipo("Vendedor");
+
+        repository.cambiarTipo(3);
+
+        Assertions.assertEquals(user,repository.getUser(3) );
+    }
+
+
 }
