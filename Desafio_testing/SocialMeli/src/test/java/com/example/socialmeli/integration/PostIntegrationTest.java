@@ -1,7 +1,9 @@
 package com.example.socialmeli.integration;
 
 import com.example.socialmeli.dto.post.PostDTO;
+import com.example.socialmeli.dto.post.PromoPostDTO;
 import com.example.socialmeli.dto.post.UserPostDTO;
+import com.example.socialmeli.dto.post.UserPromoPostDTO;
 import com.example.socialmeli.dto.product.ProductDTO;
 import com.example.socialmeli.dto.user.FollowerDTO;
 import com.example.socialmeli.service.repository.user.UserRepository;
@@ -113,4 +115,34 @@ public class PostIntegrationTest
                 .andExpect(jsonPath("$.name").value("Acción no valida"))
                 .andExpect(jsonPath("$.description").value("Error: Post no valido"));
     }
+
+    @Test
+    public void testPromoPostCreationWithValidStructureAndValidUser() throws Exception {
+        LocalDate date = LocalDate.of(2021, 1, 1);
+        ProductDTO detail = new ProductDTO();
+        detail.setBrand("mario");
+        detail.setColor("blue");
+        detail.setNotes("None");
+        detail.setProductId(1);
+        detail.setType("game");
+        detail.setProductName("Nintendo");
+        UserPromoPostDTO promoPostDTO = new UserPromoPostDTO();
+        promoPostDTO.setUserId(1);
+        promoPostDTO.setIdPost(3);
+        promoPostDTO.setCategory(1);
+        promoPostDTO.setDate(date);
+        promoPostDTO.setDetail(detail);
+        promoPostDTO.setPrice(10.0);
+        promoPostDTO.setHasPromo(true);
+        promoPostDTO.setDiscount(0.1);
+
+        String body = mapper.writeValueAsString(promoPostDTO);
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/products/promo-post").contentType(MediaType.APPLICATION_JSON).content(body))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.user_id").value(1))
+                .andExpect(jsonPath("$.price").value(10.0))
+                .andExpect(jsonPath("$.has_promo").value(true));
+    }
+
 }
