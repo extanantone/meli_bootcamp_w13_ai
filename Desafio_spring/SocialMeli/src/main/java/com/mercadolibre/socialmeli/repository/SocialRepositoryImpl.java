@@ -75,17 +75,14 @@ public class SocialRepositoryImpl implements ISocialRepository{
     @Override // A quien sigo
     public Followers allFollowed(int idUser) {
         Followers followers = new Followers();
+        List<User> usersFolloweds = new ArrayList<>();
         User user;
         if(users.containsKey(idUser)){
             user = findUserById(idUser);
             followers.setId(user.getId());
             followers.setName(user.getName());
-            try{
-                List<User>users = followed.get(idUser);
-                followers.setUsers(users);
-            } catch (NullPointerException e){
-                return null;
-            }
+            if (followed.containsKey(user.getId())) usersFolloweds = followed.get(user.getId());
+            followers.setUsers(usersFolloweds);
         }
         return followers;
     }
