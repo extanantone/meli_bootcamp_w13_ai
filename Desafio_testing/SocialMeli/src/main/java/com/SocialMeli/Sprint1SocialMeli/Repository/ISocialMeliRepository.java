@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface ISocialMeliRepository {
 
-    void follow(Integer id_Comprador, Integer id_vendedor); // Para US-01 POST
-    void unFollow(Integer id_comprador, Integer id_vendedor); // Para US-07 POST
+    boolean follow(Integer id_Comprador, Integer id_vendedor); // Para US-01 POST
+    boolean unFollow(Integer id_comprador, Integer id_vendedor); // Para US-07 POST
 
     void newPost (Publicacion publicacion); // Para US-05 POST
 

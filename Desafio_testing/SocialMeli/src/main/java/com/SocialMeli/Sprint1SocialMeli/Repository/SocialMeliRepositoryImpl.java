@@ -34,21 +34,23 @@ public class SocialMeliRepositoryImpl implements ISocialMeliRepository {
     }
 
     @Override
-    public void follow(Integer id_comprador, Integer id_vendedor) {
+    public boolean follow(Integer id_comprador, Integer id_vendedor) {
             Comprador comprador = compradores.get(id_comprador);
             comprador.addFollowed(id_vendedor);
 
             Vendedor vendedor = vendedores.get(id_vendedor);
-            vendedor.addFollower(id_comprador); }
+            vendedor.addFollower(id_comprador);
+            return true;}
 
     @Override
-    public void unFollow(Integer id_comprador, Integer id_vendedor) {
+    public boolean unFollow(Integer id_comprador, Integer id_vendedor) {
 
         Comprador comprador = compradores.get(id_comprador);
         comprador.deleteFollowed(id_vendedor);
 
         Vendedor vendedor = vendedores.get(id_vendedor);
-        vendedor.deleteFollower(id_comprador); }
+        vendedor.deleteFollower(id_comprador);
+        return true;}
 
     @Override
     public void newPost(Publicacion publicacion) {
