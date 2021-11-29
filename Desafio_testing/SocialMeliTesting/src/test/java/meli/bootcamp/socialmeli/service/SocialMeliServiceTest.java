@@ -203,7 +203,7 @@ public class SocialMeliServiceTest {
         FollowedListDTO tempFollowedList= (FollowedListDTO) socialMeliService.getOrderedFollowersList(
                 user.getUserId(),
                 false,
-                "name_desc",
+                "name_asc",
                 true);
 
         //Assert
