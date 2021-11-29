@@ -1,0 +1,13 @@
+BOOTCAMP BACKEND JAVA SPRINT Nº 2 - TESTING
+Autor: Vanesa Belén Garro
+
+CONSIDERACIONES GENERALES:
+    -Solo se realizaron test unitarios.
+    -No se realizaron test de integración.
+
+
+TEST con inconvenieste:
+ - T-0005 Verificar que el tipo de ordenamiento alfabético exista
+ El test no pasa debido a que en la implementación del test espera una excepción cuando order es null, la cual el metodo
+ no la retorna porque se implemente que el endpoint no sea requerido @RequestParam(value = "order", required = false),
+ el service toma ese order, chequea que si es null no aplique orden y entregue los valores como los encuentra.

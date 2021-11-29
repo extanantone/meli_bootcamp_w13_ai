@@ -451,6 +451,7 @@ public class SocialMeliServiceTest {
         PromoDTO promoDTO = new PromoDTO(userId.getUserId(),1, LocalDate.of(2021, 11, 26),3,1540.0, prod, true, 10.0);
         Promo promo = Helper.promoDTOToPromo(promoDTO);
         //Mock
+        Mockito.when(mockRepository.findUser(userId.getUserId())).thenReturn(userId);
         Mockito.when(mockRepository.containPromo(promo.getIdPost())).thenReturn(false);
         Mockito.when(mockRepository.containProductPromo(userId.getUserId(), promo.getDetail().getProductId())).thenReturn(false);
 
