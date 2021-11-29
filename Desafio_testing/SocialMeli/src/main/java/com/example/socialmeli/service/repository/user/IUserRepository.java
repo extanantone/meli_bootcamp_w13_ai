@@ -9,6 +9,8 @@ public interface IUserRepository
 {
     Map<Integer, User> usersMap();
 
+    void deleteAll();
+
     List<User> findFollowersOrderByNameDesc(int userId);
 
     List<User> findFollowersOrderByNameAsc(int userId);

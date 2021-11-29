@@ -70,4 +70,8 @@ public class User
         this.posts.add(post);
         return true;
     }
+
+    public static void resetId() {
+        globUserId = 1;
+    }
 }
