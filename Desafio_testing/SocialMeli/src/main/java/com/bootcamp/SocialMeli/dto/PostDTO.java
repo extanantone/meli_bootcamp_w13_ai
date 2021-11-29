@@ -29,5 +29,5 @@ public class PostDTO {
     @NotNull(message = "El campo no puede estar vacío.")
     @DecimalMax(value = "10000000.000", message = "El precio máximo por producto es de 10.000.000")
     Double price;
-    
+
 }

@@ -1,9 +1,12 @@
 package com.bootcamp.SocialMeli.controller;
 import com.bootcamp.SocialMeli.dto.PostDTO;
+import com.bootcamp.SocialMeli.exception.BadRequestException;
 import com.bootcamp.SocialMeli.service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -37,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/products/post")
-    public ResponseEntity<?> post(@RequestBody PostDTO post)  {
+    public ResponseEntity<?> post(@RequestBody @Valid PostDTO post) throws BadRequestException {
         return new ResponseEntity<>(userService.newPost(post), HttpStatus.OK);
     }
 

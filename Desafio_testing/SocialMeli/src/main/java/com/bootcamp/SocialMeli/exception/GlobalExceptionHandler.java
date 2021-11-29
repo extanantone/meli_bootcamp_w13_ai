@@ -30,6 +30,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new TextResponseDTO(ex.getMessage()), new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<?> badRequestException(BadRequestException ex)
+    {
+        return new ResponseEntity<>(new TextResponseDTO(ex.getMessage()), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
 }
 
 
