@@ -32,13 +32,6 @@ public class SocialMeliService implements IService {
 
     ModelMapper mapper = new ModelMapper();
 
-    /*public SocialMeliService(UsuarioRepository userRepository, PostRepository postRepository) {
-        this.userRepository = userRepository;
-        this.postRepository = postRepository;
-    }*/
-
-    //  >>>> USER METHODS
-    //!depracted
     public User getUserById(Integer id) throws UserNotFoundException {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
@@ -190,7 +183,7 @@ public class SocialMeliService implements IService {
 
             PostsResponseDTO response = new PostsResponseDTO();
 
-            List<PostDTO> postsList = getFollowedList(id,null).stream().
+            List<PostDTO> postsList = getFollowedList(id,order).stream().
                     flatMap(user -> getUserPosts(user.getUserId()).stream()).
                     sorted( (u,b) -> sorter.sort(u,b) ).
                     filter(post ->

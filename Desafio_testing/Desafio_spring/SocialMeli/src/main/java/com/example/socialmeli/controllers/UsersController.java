@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
+@Valid
 public class UsersController {
-
     SocialMeliService service;
 
     public UsersController(SocialMeliService service) {

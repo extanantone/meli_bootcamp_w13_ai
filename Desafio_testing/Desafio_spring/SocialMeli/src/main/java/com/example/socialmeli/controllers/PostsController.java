@@ -12,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/products")
 public class PostsController {
-
     SocialMeliService service;
 
     public PostsController(SocialMeliService service) {
@@ -26,10 +26,9 @@ public class PostsController {
 
     //US 0005
     @PostMapping("/post")
-    public void loadPost(@RequestBody PostDTO newPost) throws PostAlreadyExistException, InvalidPromoException, UserNotFoundException {
+    public void loadPost(@RequestBody @Valid PostDTO newPost) throws PostAlreadyExistException, InvalidPromoException, UserNotFoundException {
         service.pushPost(newPost);
     }
-
 
     //US 0006
     @GetMapping("/followed/{userId}/list")
@@ -39,7 +38,7 @@ public class PostsController {
 
     //US 0010
     @PostMapping("/promo-post")
-    public void loadPromopost(@RequestBody PostDTO newPost) throws PostAlreadyExistException, InvalidPromoException, UserNotFoundException {
+    public void loadPromopost(@RequestBody @Valid PostDTO newPost) throws PostAlreadyExistException, InvalidPromoException, UserNotFoundException {
         if (!newPost.isHasPromo() || newPost.getDiscount() <= 0.0) {
             throw new InvalidPromoException(newPost.getIdPost());
         }
