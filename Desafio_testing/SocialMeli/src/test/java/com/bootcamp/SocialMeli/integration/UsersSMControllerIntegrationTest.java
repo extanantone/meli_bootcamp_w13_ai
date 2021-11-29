@@ -2,6 +2,7 @@ package com.bootcamp.SocialMeli.integration;
 
 import com.bootcamp.SocialMeli.dto.DetalleProductoDTO;
 import com.bootcamp.SocialMeli.dto.PublicacionDTO;
+import com.bootcamp.SocialMeli.dto.response.ErrorDTO;
 import com.bootcamp.SocialMeli.dto.response.SuccessDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -42,7 +43,7 @@ public class UsersSMControllerIntegrationTest {
     }
 
     @Test
-    void testGivenExistingUserAndSellerTheUserFollowsSeller() throws Exception {
+    void testGivenExistingUserAndSellerTheUserFollowsSellerSuccessfully() throws Exception {
         //Arrange
         String successJson = writer.writeValueAsString(new SuccessDTO("Followed successfully"));
 
@@ -59,7 +60,28 @@ public class UsersSMControllerIntegrationTest {
     }
 
     @Test
-    void createAValidPostForAnExistingUser() throws Exception {
+    void testGivenExistingSellerAndUserThatNotFollowUnfollowsHimThenError() throws Exception {
+        //Arrange
+        ErrorDTO error = new ErrorDTO();
+        error.setTipo("NotFollowException");
+        error.setMensaje("El usuario (ID 2) no es seguidor del vendedor (ID 4)");
+
+        String successJson = writer.writeValueAsString(error);
+
+        ResultMatcher expectedStatus = status().isBadRequest();
+        ResultMatcher expectedJson = content().json(successJson);
+        ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
+
+        //Act and Assert
+        this.mockMvc.perform(post("/users/{user_id}/unfollow/{user_id_to_follow}", 2, 4))
+                .andDo(print())
+                .andExpect(expectedStatus)
+                .andExpect(expectedContentType)
+                .andExpect(expectedJson);
+    }
+
+    @Test
+    void testCreateAValidPostForAnExistingUser() throws Exception {
         //Arrange
         String successJson = writer.writeValueAsString(new SuccessDTO("Publicacion creada correctamente."));
 
@@ -85,5 +107,15 @@ public class UsersSMControllerIntegrationTest {
                 .andExpect(expectedStatus)
                 .andExpect(expectedContentType)
                 .andExpect(expectedJson);
+    }
+
+    @Test
+    void testCreateAValidPromoForAnExistingUser() throws Exception {
+
+    }
+
+    @Test
+    void testGetCantPromocionesFromASellerWithPromociones(){
+
     }
 }

@@ -1,9 +1,11 @@
 package com.bootcamp.SocialMeli.unit.service;
 
+import com.bootcamp.SocialMeli.dto.UsuarioDTO;
 import com.bootcamp.SocialMeli.dto.response.*;
 import com.bootcamp.SocialMeli.exception.*;
 import com.bootcamp.SocialMeli.mapper.Mapper;
 import com.bootcamp.SocialMeli.model.Producto;
+import com.bootcamp.SocialMeli.model.Promocion;
 import com.bootcamp.SocialMeli.model.Publicacion;
 import com.bootcamp.SocialMeli.model.Usuario;
 import com.bootcamp.SocialMeli.repository.ISocialMeliRepository;
@@ -15,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -29,9 +30,10 @@ public class SocialMeliServiceTest {
     @InjectMocks
     private SocialMeliService service = new SocialMeliService(mockRepository, new Mapper());
 
-    private static Usuario userAlan, userNico, sellerEdwin, sellerLiso, userFrank, userCali, userChelo, sellerToto;
-    private static Producto camisetaBoca, samsungFit2, noteDell, zapasNike, noteLenovo, pendriveSanDisk;
+    private static Usuario userAlan, userNico, sellerEdwin, sellerLiso, userFrank, userCali, userChelo, sellerToto, sellerRojo;
+    private static Producto camisetaBoca, samsungFit2, noteDell, zapasNike, noteLenovo, pendriveSanDisk, pelotaNike, auriHyperx;
     private static Publicacion pubCamisetaBoca, pubSamsungFit2, pubNoteDell, pubZapasNike, pubNoteLenovo, pubSanDisk;
+    private static Promocion promoPelota, promoAuris;
 
     @BeforeEach
     public void setup(){
@@ -46,6 +48,7 @@ public class SocialMeliServiceTest {
         sellerEdwin = new Usuario(2, "Edwin Cardona");
         sellerLiso = new Usuario(4, "Lisandro Lopez");
         sellerToto = new Usuario(8, "Toto Salvio");
+        sellerRojo = new Usuario(9, "Marcos Rojo");
 
         //productos y publicaciones
         camisetaBoca = new Producto(2, "Camiseta Boca Juniors", "Camiseta deportiva", "Adidas", "Blue and Yellow", "Camiseta jugador oficial, talle XL");
@@ -61,6 +64,12 @@ public class SocialMeliServiceTest {
         pendriveSanDisk = new Producto(10, "Pendrive SanDisk", "Pendrives", "SanDisk Ultra Flair", "Grey","capacidad 16GB, 3.0");
         pubSanDisk = new Publicacion(6, LocalDate.of(2021, 10, 5), 100.2, pendriveSanDisk, 99);
 
+        //productos y promociones
+        pelotaNike = new Producto(16, "Pelota Nike Futbol Airlock Street X", "Pelota Futbol","Nike","White and Black","modelo Nike Airlock Street X, tamaño 5");
+        promoPelota = new Promocion(12, LocalDate.of(2021,11,29), 123.2, pelotaNike, 131, true, 0.2);
+        auriHyperx = new Producto(17,"Auriculares Gamer","Gamer","Hyperx","Black","modelo Cloud Flight S");
+        promoAuris = new Promocion(17, LocalDate.of(2021,11,3), 330.0,auriHyperx,210,true,0.15);
+
         //vinculos vendedores - publicaciones
         sellerEdwin.getPublicaciones().add(pubCamisetaBoca);
         sellerLiso.getPublicaciones().add(pubSamsungFit2);
@@ -68,6 +77,8 @@ public class SocialMeliServiceTest {
         sellerToto.getPublicaciones().add(pubNoteDell);
         sellerToto.getPublicaciones().add(pubNoteLenovo);
         sellerToto.getPublicaciones().add(pubSanDisk);
+        sellerRojo.getPublicaciones().add(promoPelota);
+        sellerRojo.getPublicaciones().add(promoAuris);
 
     }
 
@@ -321,11 +332,8 @@ public class SocialMeliServiceTest {
 
         sellerLiso.getSeguidores().addAll(List.of(userAlan, userFrank, userChelo, userCali));
 
-        when(mockRepository.buscarUsuario(idVendedor)).thenReturn(sellerLiso);
-
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> service.getSeguidores(idVendedor, orderNull));
-        verify(mockRepository, atLeastOnce()).buscarUsuario(idVendedor);
     }
 
     @Test
@@ -425,11 +433,8 @@ public class SocialMeliServiceTest {
 
         userAlan.getVendedoresSeguidos().addAll(List.of(sellerEdwin, sellerToto, sellerLiso));
 
-        when(mockRepository.buscarUsuario(idSeguidor)).thenReturn(userAlan);
-
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> service.getVendedoresSeguidos(idSeguidor, orderNull));
-        verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
     }
 
     @Test
@@ -543,11 +548,8 @@ public class SocialMeliServiceTest {
 
         userNico.getVendedoresSeguidos().addAll(List.of(sellerEdwin, sellerLiso, sellerToto));
 
-        when(mockRepository.buscarUsuario(idSeguidor)).thenReturn(userNico);
-
         //Act and Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> service.getPublicacionesSeguidos(idSeguidor, orderNull));
-        verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
     }
 
     //Verifica que la consulta de publicaciones sean de las últimas dos semanas.
@@ -582,6 +584,113 @@ public class SocialMeliServiceTest {
                 }}
         );
         verify(mockRepository, atLeastOnce()).buscarUsuario(idSeguidor);
+    }
+
+    @Test
+    void createAnUserThatAlreadyExistThenDuplicateIDException(){
+        //Arrange
+        Integer duplicateId = 1;
+        UsuarioDTO duplicateUser = new UsuarioDTO();
+        duplicateUser.setUserId(duplicateId);
+        duplicateUser.setUserName("Alan Varela");
+
+
+        //Act and Assert
+        when(mockRepository.buscarUsuario(duplicateId)).thenReturn(userAlan);
+        Assertions.assertThrows(DuplicateIDException.class, () -> service.crearUsuario(duplicateUser));
+        verify(mockRepository, atLeastOnce()).buscarUsuario(duplicateId);
+    }
+
+    @Test
+    void createAValidUserWithDifferentID(){
+        //Arrange
+        Integer validId = 99;
+        UsuarioDTO newUser = new UsuarioDTO();
+        newUser.setUserId(validId);
+        newUser.setUserName("Sebastian Villa");
+        SuccessDTO responseExpected= new SuccessDTO("Usuario creado exitosamente");
+
+        //Act
+        when(mockRepository.buscarUsuario(validId)).thenReturn(null);
+        SuccessDTO responseCurrent = service.crearUsuario(newUser);
+
+        //Assert
+        Assertions.assertEquals(responseExpected.getMensaje(), responseCurrent.getMensaje());
+        verify(mockRepository, atLeastOnce()).buscarUsuario(validId);
+        verify(mockRepository, times(1)).agregarUsuario(any());
+    }
+
+    @Test
+    void getCantPromocionesFromAValidSeller(){
+        //Arrange
+        Integer idVendedor = 9;
+
+        //Act
+        when(mockRepository.buscarUsuario(idVendedor)).thenReturn(sellerRojo);
+        CantPromocionesDTO cantPromocionesDTOCurrent = service.getCantPromociones(idVendedor);
+
+        //Assert
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(sellerRojo.getUserId(), cantPromocionesDTOCurrent.getUserId()),
+                () -> Assertions.assertEquals(sellerRojo.getUserName(), cantPromocionesDTOCurrent.getUserName()),
+                () -> Assertions.assertEquals(2, cantPromocionesDTOCurrent.getPromoProductsCount())
+        );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idVendedor);
+    }
+
+    @Test
+    void getCantPromocionesFromAUserNotSellerThenUserNotSellerException(){
+        //Arrange
+        Integer idUser = 1;
+
+        //Act and Assert
+        when(mockRepository.buscarUsuario(idUser)).thenReturn(userAlan);
+        Assertions.assertThrows(UserNotSellerException.class, () -> service.getCantPromociones(idUser));
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idUser);
+    }
+
+    @Test
+    void getProductosEnPromocionFromAValidSellerOrderByNameDesc(){
+        //Arrange
+        Integer idVendedor = 9;
+
+        //Act
+        when(mockRepository.buscarUsuario(idVendedor)).thenReturn(sellerRojo);
+        PromocionesDTO promocionesDTOCurrent = service.getProductosEnPromocion(idVendedor, "name_desc");
+
+        //Assert
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(sellerRojo.getUserId(), promocionesDTOCurrent.getUserId()),
+                () -> Assertions.assertEquals(sellerRojo.getUserName(), promocionesDTOCurrent.getUserName()),
+                () -> {for(int i = 0; i < promocionesDTOCurrent.getPosts().size()-1; i++){
+                    String nameProd1 = promocionesDTOCurrent.getPosts().get(i).getDetail().getProductName();
+                    String nameProd2 = promocionesDTOCurrent.getPosts().get(i+1).getDetail().getProductName();
+                    Assertions.assertTrue(nameProd1.compareTo(nameProd2) > 0);
+                }}
+        );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idVendedor);
+    }
+
+    @Test
+    void getProductosEnPromocionFromAValidSellerOrderByNameAsc(){
+        //Arrange
+        Integer idVendedor = 9;
+
+        //Act
+        when(mockRepository.buscarUsuario(idVendedor)).thenReturn(sellerRojo);
+        PromocionesDTO promocionesDTOCurrent = service.getProductosEnPromocion(idVendedor, "name_asc");
+
+        //Assert
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(sellerRojo.getUserId(), promocionesDTOCurrent.getUserId()),
+                () -> Assertions.assertEquals(sellerRojo.getUserName(), promocionesDTOCurrent.getUserName()),
+                () -> {for(int i = 0; i < promocionesDTOCurrent.getPosts().size()-1; i++){
+                    String nameProd1 = promocionesDTOCurrent.getPosts().get(i).getDetail().getProductName();
+                    String nameProd2 = promocionesDTOCurrent.getPosts().get(i+1).getDetail().getProductName();
+                    Assertions.assertTrue(nameProd1.compareTo(nameProd2) < 0);
+                }}
+        );
+        verify(mockRepository, atLeastOnce()).buscarUsuario(idVendedor);
     }
 
 }

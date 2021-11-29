@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -116,9 +117,15 @@ public class GeneralExceptionHandler {
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 
-    //Excepcion que se genera cuando el RequestParam 'order' no es correcto
+    //Excepcion que se genera cuando el valor del RequestParam 'order' no es correcto
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorDTO> validarPathVariables(ConstraintViolationException ex){
+        return getErrorResponseEntity(ex.getClass().getSimpleName(), ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    //Excepcion que se genera cuando no está presente el parametro 'order' ya que es requerido
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ErrorDTO> solicitarRequestParamRequired(MissingServletRequestParameterException ex){
         return getErrorResponseEntity(ex.getClass().getSimpleName(), ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

@@ -46,10 +46,10 @@ public class UsersSMController {
                                            @NotNull(message = "El ID no puede estar vacío.")
                                            @PathVariable("user_id") Integer userId,
                                            @Pattern(regexp = "name_asc|name_desc", message = "Los tipos validos de ordenamiento son name_asc y name_desc")
-                                           @RequestParam(value = "order", required = false) String order){
-        if(order == null){
+                                           @RequestParam(value = "order", required = true) String order){
+       /* if(order == null){
             return new ResponseEntity<>(this.socialMeliService.getSeguidores(userId), HttpStatus.OK);
-        }
+        }*/
         return new ResponseEntity<>(this.socialMeliService.getSeguidores(userId, order), HttpStatus.OK);
     }
 
@@ -58,10 +58,10 @@ public class UsersSMController {
                                                    @NotNull(message = "El ID no puede estar vacío.")
                                                    @PathVariable("user_id") Integer userId,
                                                    @Pattern(regexp = "name_asc|name_desc", message = "Los tipos validos de ordenamiento son name_asc y name_desc")
-                                                   @RequestParam(value = "order", required = false) String order){
-        if(order == null){
+                                                   @RequestParam(value = "order", required = true) String order){
+        /*if(order == null){
             return new ResponseEntity<>(this.socialMeliService.getVendedoresSeguidos(userId), HttpStatus.OK);
-        }
+        }*/
         return new ResponseEntity<>(this.socialMeliService.getVendedoresSeguidos(userId, order), HttpStatus.OK);
     }
 

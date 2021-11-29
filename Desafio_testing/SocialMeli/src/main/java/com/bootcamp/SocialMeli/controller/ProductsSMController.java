@@ -35,10 +35,10 @@ public class ProductsSMController {
                                                       @NotNull(message = "El ID no puede estar vacío.")
                                                       @PathVariable("user_id") Integer userId,
                                                       @Pattern(regexp = "date_asc|date_desc", message = "Los tipos validos de ordenamiento son date_asc y date_desc")
-                                                      @RequestParam(value = "order", required = false) String order){
-        if(order == null){
+                                                      @RequestParam(value = "order", required = true) String order){
+        /*if(order == null){
             return new ResponseEntity<>(this.socialMeliService.getPublicacionesSeguidos(userId), HttpStatus.OK);
-        }
+        }*/
         return new ResponseEntity<>(this.socialMeliService.getPublicacionesSeguidos(userId, order), HttpStatus.OK);
     }
 

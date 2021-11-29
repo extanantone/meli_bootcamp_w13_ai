@@ -109,6 +109,9 @@ public class SocialMeliService implements ISocialMeliService{
      */
     @Override
     public SeguidoresDTO getSeguidores(Integer userId, String order) {
+        if(order == null){
+            throw new IllegalArgumentException("Argumento null en 'order'");
+        }
         SeguidoresDTO seguidoresDTO = getSeguidores(userId);
         if(order.equals("name_asc")){
             seguidoresDTO.getFollowers().sort(Comparator.comparing(UsuarioDTO::getUserName));
@@ -148,6 +151,9 @@ public class SocialMeliService implements ISocialMeliService{
      */
     @Override
     public SeguidosDTO getVendedoresSeguidos(Integer userId, String order) {
+        if(order == null){
+            throw new IllegalArgumentException("Argumento null en 'order'");
+        }
         SeguidosDTO seguidosDTO = getVendedoresSeguidos(userId);
         if(order.equals("name_asc")){
             seguidosDTO.getFollowed().sort(Comparator.comparing(UsuarioDTO::getUserName));
@@ -248,6 +254,9 @@ public class SocialMeliService implements ISocialMeliService{
      */
     @Override
     public PublicacionesDTO getPublicacionesSeguidos(Integer userId, String order) {
+        if(order == null){
+            throw new IllegalArgumentException("Argumento null en 'order'");
+        }
         PublicacionesDTO publicacionesDTO = getPublicacionesSeguidos(userId);
         if(order.equals("date_asc")){
             publicacionesDTO.getPosts().sort(Comparator.comparing(PublicacionDTO::getDate));
