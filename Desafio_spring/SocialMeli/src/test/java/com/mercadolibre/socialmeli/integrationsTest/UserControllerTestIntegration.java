@@ -1,10 +1,8 @@
-package integrationsTest;
+package com.mercadolibre.socialmeli.integrationsTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.mercadolibre.socialmeli.SocialMeliApplication;
-import com.mercadolibre.socialmeli.controller.UserController;
 import com.mercadolibre.socialmeli.dto.FollowDTO;
 import com.mercadolibre.socialmeli.model.Follow;
 import com.mercadolibre.socialmeli.model.User;
@@ -24,8 +22,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
-@SpringBootTest(classes = SocialMeliApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-//@SpringBootTest
+//@SpringBootTest(classes = SocialMeliApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest
 @AutoConfigureMockMvc
 public class UserControllerTestIntegration {
     @Autowired
