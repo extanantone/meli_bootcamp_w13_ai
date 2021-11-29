@@ -21,9 +21,9 @@ la funcionalidad requerida, por ejemplo si se requeria testear la accion "follow
 solo se realizo el test donde se ejecuta dicha accion en el service
 y no el controller (que de todas formas es testeado en la etapa de integración)
 
-Por una cuestión de tiempo no se fué 100% exhaustivo en los test de integración
+No se fué 100% exhaustivo en los test de integración
 con la verificación de todos los parámetros. Por ejemplo no se verificó que la lista
-de post devuelva los más de 15 atributos de cada post sino solamente el id.
+de post devuelva los 14 atributos de cada post sino solamente el id.
 
 ## Bugfix
 
@@ -38,3 +38,5 @@ Este bug fue identificado gracias al test unitario de la etapa
 ## Pruebas
 Se adjunto en este mismo directorio el archivo collection tipo JSON del que se pueden importar las pruebas realizadas en POSTMAN
 
+## Por mejorar
+Implementar el writer de ObjectMapper para convertir los objetos a strings. En los test de integración hechos estos fueron directamente hardcodeados en String.
