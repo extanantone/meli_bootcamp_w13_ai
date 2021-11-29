@@ -292,6 +292,8 @@ public class UserServiceTest {
             //if user followed don't exist, then throws exception and this test is successful.
             assertTrue(true);
         }
+
+//        NegocioException salida = Assertions.assertThrows(NegocioException.class,()->repo.quitarSeguidor(usuarioTest1,usuarioTest2));
     }
 
 
