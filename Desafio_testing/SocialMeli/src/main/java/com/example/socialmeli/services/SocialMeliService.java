@@ -56,7 +56,7 @@ public class SocialMeliService implements IService {
             throw new UserAlreadyInUseException(userToFollowId);
         }
 
-        this.getUserById(userToFollowId).getFollowersId().add(userId);
+        userToFollow.getFollowersId().add(userId);
     }
 
     public void unfollow(Integer userId , Integer userIdToUnfollow) throws UserNotFoundException, UserSelfUseException, UserAlreadyInUseException {

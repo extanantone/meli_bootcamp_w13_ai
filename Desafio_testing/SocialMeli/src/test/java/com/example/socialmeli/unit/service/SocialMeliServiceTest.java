@@ -45,43 +45,6 @@ public class SocialMeliServiceTest {
     @InjectMocks
     SocialMeliService socialMeliService;
 
-    @Test
-    void DemoTesting() throws UserNotFoundException {
-        // Arrange
-        String order = null;
-        Integer userId = 1;
-        Integer followerId = 2;
-
-        UserDTO followerDTO = new UserDTO();
-        followerDTO.setUserId(followerId);
-        followerDTO.setUserName("user");
-
-        List<UserDTO> followersDTOs = new ArrayList<>();
-        followersDTOs.add(followerDTO);
-
-        FollowersResponseDTO expect = new FollowersResponseDTO();
-        expect.setUserId(userId);
-        expect.setUserName("marco");
-        expect.setFollowers(followersDTOs);
-
-        // Mock
-        List<Integer> followersId = new ArrayList<>();
-        followersId.add(followerId);
-        User userMock = new User(userId, "marco", followersId);
-        User followerMock = new User(followerId, "user", new ArrayList<>());
-        // When
-        when(userRepository.findById(userId)).thenReturn(Optional.of(userMock));
-        when(userRepository.findById(followerId)).thenReturn(Optional.of(followerMock));
-
-        //Act
-        FollowersResponseDTO current = socialMeliService.getFollowers(userId, order);
-
-        //Assert
-        Mockito.verify(userRepository, times(2)).findById(Mockito.anyInt());
-        //Mockito.verify(userRepository, atLeastOnce()).findById(Mockito.anyInt());
-        Assertions.assertEquals(expect, current);
-    }
-
 
     @Nested
     @DisplayName("Verificar que el usuario a seguir exista. (US-0001)")
@@ -106,7 +69,7 @@ public class SocialMeliServiceTest {
             //Act
             try {
                 socialMeliService.follow(userMock.getUserId(),followerMock.getUserId());
-                Mockito.verify(userRepository, times(3)).findById(Mockito.anyInt());
+                Mockito.verify(userRepository, times(2)).findById(Mockito.anyInt());
                 Assertions.assertTrue(true);
             } catch (UserNotFoundException | UserSelfUseException | UserAlreadyInUseException e) {
                 e.printStackTrace();
@@ -247,6 +210,7 @@ public class SocialMeliServiceTest {
             Assertions.assertThrows(UserNotFoundException.class, () -> socialMeliService.getFollowers(userId,null));
         }
     }
+
 
 
 
