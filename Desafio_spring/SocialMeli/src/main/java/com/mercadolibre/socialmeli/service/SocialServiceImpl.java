@@ -45,17 +45,22 @@ public class SocialServiceImpl implements ISocialService{
 
     @Override
     public FollowersDTO allFollowers(Integer idUserFollow) {
-        UserDTO userFollow = this.getUserById(idUserFollow);
-        return mapperDTO.followersToFollowersDTO(socialRepository.allFollowers(userFollow.getId()));
+        UserDTO userFollower = this.getUserById(idUserFollow);
+        FollowersDTO userFollowers = mapperDTO.followersToFollowersDTO(socialRepository.allFollowers(userFollower.getId()));
+        if (userFollowers.getFollowers().isEmpty()){
+            String msg = "El usuario " + userFollowers.getName() + " con id " + userFollowers.getId() + " no tiene seguidores";
+            throw new FollowException(msg);
+        }
+        return userFollowers;
     }
 
     @Override
-    public FollowersDTO allFollowed(Integer idUser) throws NotFoundException {
+    public FollowersDTO allFollowed(Integer idUser) {
         UserDTO user = this.getUserById(idUser);
         FollowersDTO usersFolloweds = mapperDTO.followersToFollowersDTO(socialRepository.allFollowed(user.getId()));
-        if(usersFolloweds.getFollowers().size() == 0){
+        if(usersFolloweds.getFollowers().isEmpty()){
             String msg = "El usuario " + usersFolloweds.getName() + " con id " + usersFolloweds.getId() + " no sigue a nadie aún";
-            throw new NotFoundException(msg);
+            throw new FollowException(msg);
         }
         return usersFolloweds;
     }
