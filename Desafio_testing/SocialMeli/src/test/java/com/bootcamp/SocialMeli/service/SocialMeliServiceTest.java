@@ -2,6 +2,7 @@ package com.bootcamp.SocialMeli.service;
 
 import com.bootcamp.SocialMeli.dto.FollowedListDTO;
 import com.bootcamp.SocialMeli.dto.FollowerListDTO;
+import com.bootcamp.SocialMeli.dto.FollowersCountDTO;
 import com.bootcamp.SocialMeli.dto.UserDTO;
 import com.bootcamp.SocialMeli.entity.Buyer;
 import com.bootcamp.SocialMeli.entity.Post;
@@ -442,6 +443,31 @@ public class SocialMeliServiceTest {
             verify(mockUserRepository, atLeastOnce()).findBuyerById(userId);
         }
 
+    }
+
+    @Nested
+    @DisplayName("T-0007")
+    class T0007 {
+        @DisplayName("T-0007  cantidad de seguidores de un determinado usuario sea correcta. ")
+        @Test
+        void followersCountTest() {
+            //Arrange
+            int userId = 1;
+            int expectedValue = 2;
+
+            user1.getFollowed().add(user4);
+            user2.getFollowed().add(user4);
+            user4.getFollowers().add(user1);
+            user4.getFollowers().add(user2);
+
+            when(mockUserRepository.findSellerById(userId)).thenReturn(user4);
+            //Act
+            FollowersCountDTO actual = userService.count(userId);
+            //Assert
+            assertEquals(expectedValue, actual.getFollowers_count());
+            verify(mockUserRepository, times(1)).findSellerById(userId);
+
+        }
     }
 
 
