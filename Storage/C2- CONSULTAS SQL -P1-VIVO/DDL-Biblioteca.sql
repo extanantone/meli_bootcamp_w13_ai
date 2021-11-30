@@ -1,0 +1,337 @@
+-- MySQL Workbench Synchronization
+-- Generated: 2021-11-30 10:14
+-- Model: New Model
+-- Version: 1.0
+-- Project: Name of the project
+-- Author: Andres Felipe Morales Anaya
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+CREATE TABLE IF NOT EXISTS `biblioteca`.`LIBRO` (
+  `idLIBRO` INT(11) NOT NULL AUTO_INCREMENT,
+  `Editorial` VARCHAR(20) NOT NULL,
+  `Titulo` VARCHAR(45) NOT NULL,
+  `Area` VARCHAR(25) NOT NULL,
+  PRIMARY KEY (`idLIBRO`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `biblioteca`.`AUTOR` (
+  `idAUTOR` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Nacionalidad` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`idAUTOR`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `biblioteca`.`PRESTAMO` (
+  `idPRESTAMO` INT(11) NOT NULL AUTO_INCREMENT,
+  `IDLector` INT(11) NOT NULL,
+  `FechaPrestamo` DATETIME NOT NULL,
+  `FechaDevolucion` DATETIME NOT NULL,
+  `Devuelto` TINYINT(4) NULL DEFAULT 0,
+  `ESTUDIANTE_idESTUDIANTE` INT(11) NOT NULL,
+  PRIMARY KEY (`idPRESTAMO`, `ESTUDIANTE_idESTUDIANTE`),
+  INDEX `fk_PRESTAMO_ESTUDIANTE1_idx` (`ESTUDIANTE_idESTUDIANTE` ASC) VISIBLE,
+  CONSTRAINT `fk_PRESTAMO_ESTUDIANTE1`
+    FOREIGN KEY (`ESTUDIANTE_idESTUDIANTE`)
+    REFERENCES `biblioteca`.`ESTUDIANTE` (`idESTUDIANTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `biblioteca`.`ESTUDIANTE` (
+  `idESTUDIANTE` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Carrera` VARCHAR(45) NOT NULL,
+  `FechaNacimiento` DATETIME NOT NULL,
+  `Apellido` VARCHAR(45) NOT NULL,
+  `Direccion` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idESTUDIANTE`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `biblioteca`.`LIBROAUTOR` (
+  `idAUTOR` INT(11) NOT NULL,
+  `idLIBRO` INT(11) NOT NULL,
+  PRIMARY KEY (`idAUTOR`, `idLIBRO`),
+  INDEX `fk_AUTOR_has_LIBRO_LIBRO1_idx` (`idLIBRO` ASC) VISIBLE,
+  INDEX `fk_AUTOR_has_LIBRO_AUTOR_idx` (`idAUTOR` ASC) VISIBLE,
+  CONSTRAINT `fk_AUTOR_has_LIBRO_AUTOR`
+    FOREIGN KEY (`idAUTOR`)
+    REFERENCES `biblioteca`.`AUTOR` (`idAUTOR`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_AUTOR_has_LIBRO_LIBRO1`
+    FOREIGN KEY (`idLIBRO`)
+    REFERENCES `biblioteca`.`LIBRO` (`idLIBRO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `biblioteca`.`PRESTAMO_has_LIBRO` (
+  `PRESTAMO_idPRESTAMO` INT(11) NOT NULL,
+  `PRESTAMO_ESTUDIANTE_idESTUDIANTE` INT(11) NOT NULL,
+  `LIBRO_idLIBRO` INT(11) NOT NULL,
+  PRIMARY KEY (`PRESTAMO_idPRESTAMO`, `PRESTAMO_ESTUDIANTE_idESTUDIANTE`, `LIBRO_idLIBRO`),
+  INDEX `fk_PRESTAMO_has_LIBRO_LIBRO1_idx` (`LIBRO_idLIBRO` ASC) VISIBLE,
+  INDEX `fk_PRESTAMO_has_LIBRO_PRESTAMO1_idx` (`PRESTAMO_idPRESTAMO` ASC, `PRESTAMO_ESTUDIANTE_idESTUDIANTE` ASC) VISIBLE,
+  CONSTRAINT `fk_PRESTAMO_has_LIBRO_PRESTAMO1`
+    FOREIGN KEY (`PRESTAMO_idPRESTAMO` , `PRESTAMO_ESTUDIANTE_idESTUDIANTE`)
+    REFERENCES `biblioteca`.`PRESTAMO` (`idPRESTAMO` , `ESTUDIANTE_idESTUDIANTE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_PRESTAMO_has_LIBRO_LIBRO1`
+    FOREIGN KEY (`LIBRO_idLIBRO`)
+    REFERENCES `biblioteca`.`LIBRO` (`idLIBRO`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO biblioteca.AUTOR (Nombre, Nacionalidad) VALUES (
+	"Fernando Vallejo", "Colombiana"
+);
+
+INSERT INTO biblioteca.AUTOR (Nombre, Nacionalidad) VALUES (
+	"José Saramago", "Portugesa"
+);
+
+INSERT INTO biblioteca.AUTOR (Nombre, Nacionalidad) VALUES (
+	"Edgar Allan Poe", "Estadounidense"
+);
+
+INSERT INTO biblioteca.AUTOR (Nombre, Nacionalidad) VALUES (
+	"Julio Cortazar", "Argentino"
+);
+
+INSERT INTO biblioteca.AUTOR (Nombre, Nacionalidad) VALUES (
+	"Mario Mendoza", "Colombiana"
+);
+
+
+INSERT INTO biblioteca.ESTUDIANTE (idESTUDIANTE, Nombre, Carrera, FechaNacimiento, Apellido, Direccion) VALUES (
+    123,
+    'ANIBAL', 
+    'Ciencias de la computacion',
+    '2003-04-02',
+    'ANTONELLI',
+    'LOS ANGELES'
+);
+INSERT INTO biblioteca.ESTUDIANTE (idESTUDIANTE, Nombre, Carrera, FechaNacimiento, Apellido, Direccion) VALUES (
+    124,
+    'OSCAR VALLEJO',
+    'Ciencias de la vida',
+    '2001-04-02',
+    'GOMEZ',
+    'LOS ANGELES'
+);
+
+INSERT INTO biblioteca.ESTUDIANTE (idESTUDIANTE, Nombre, Carrera, FechaNacimiento, Apellido, Direccion) VALUES (
+    125,
+    'SANTIAGO ',
+    'Ciencias de la sociedad',
+    '2000-12-02',
+    'GUZMAN',
+    'LOS ANGELES'
+);
+
+INSERT INTO biblioteca.ESTUDIANTE (idESTUDIANTE, Nombre, Carrera, FechaNacimiento, Apellido, Direccion) VALUES (
+	412,
+    'FREDDY ',
+    'Ciencias de la sociedad',
+    '2002-04-02',
+    'MORALES',
+    'LOS ANGELES'
+);
+
+INSERT INTO biblioteca.ESTUDIANTE (idESTUDIANTE, Nombre, Carrera, FechaNacimiento, Apellido, Direccion) VALUES (
+	314,
+    'KAREN',
+    'Ciencias de la sociedad',
+    '2004-04-02',
+    'MORALES',
+    'LOS ANGELES'
+);
+
+INSERT INTO biblioteca.LIBRO (Editorial, Titulo, Area) VALUES (
+	'Planeta',
+    'Ensayo sobre la ceguera',
+    'Litertatura'
+);
+
+INSERT INTO biblioteca.LIBRO (Editorial, Titulo, Area) VALUES (
+	 'Salamandra',
+    'Rayuela',
+    'Novela'
+);
+
+INSERT INTO biblioteca.LIBRO (Editorial, Titulo, Area) VALUES (
+	 'Planeta',
+    'La melancolia de los feos',
+    'Ficcion'
+);
+
+INSERT INTO biblioteca.LIBRO (Editorial, Titulo, Area) VALUES (
+	'Salamandra',
+    'El Universo: Guía de viaje',
+    'Misterio'
+);
+
+INSERT INTO biblioteca.LIBRO (Editorial, Titulo, Area) VALUES (
+	'Alfagüara',
+    'La virgen de los sicarios',
+    'Novela'
+);
+
+-- MySQL Workbench Synchronization
+-- Generated: 2021-11-30 10:19
+-- Model: New Model
+-- Version: 1.0
+-- Project: Name of the project
+-- Author: Andres Felipe Morales Anaya
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+ALTER TABLE `biblioteca`.`PRESTAMO` 
+DROP FOREIGN KEY `fk_PRESTAMO_ESTUDIANTE1`;
+
+ALTER TABLE `biblioteca`.`LIBROAUTOR` 
+DROP FOREIGN KEY `fk_AUTOR_has_LIBRO_AUTOR`,
+DROP FOREIGN KEY `fk_AUTOR_has_LIBRO_LIBRO1`;
+
+ALTER TABLE `biblioteca`.`PRESTAMO_has_LIBRO` 
+DROP FOREIGN KEY `fk_PRESTAMO_has_LIBRO_LIBRO1`;
+
+ALTER TABLE `biblioteca`.`PRESTAMO` 
+CHANGE COLUMN `FechaDevolucion` `FechaDevolucion` DATETIME NULL DEFAULT NULL ;
+
+ALTER TABLE `biblioteca`.`PRESTAMO` 
+ADD CONSTRAINT `fk_PRESTAMO_ESTUDIANTE1`
+  FOREIGN KEY (`ESTUDIANTE_idESTUDIANTE`)
+  REFERENCES `biblioteca`.`ESTUDIANTE` (`idESTUDIANTE`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `biblioteca`.`LIBROAUTOR` 
+ADD CONSTRAINT `fk_AUTOR_has_LIBRO_AUTOR`
+  FOREIGN KEY (`idAUTOR`)
+  REFERENCES `biblioteca`.`AUTOR` (`idAUTOR`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_AUTOR_has_LIBRO_LIBRO1`
+  FOREIGN KEY (`idLIBRO`)
+  REFERENCES `biblioteca`.`LIBRO` (`idLIBRO`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `biblioteca`.`PRESTAMO_has_LIBRO` 
+DROP FOREIGN KEY `fk_PRESTAMO_has_LIBRO_PRESTAMO1`;
+
+ALTER TABLE `biblioteca`.`PRESTAMO_has_LIBRO` ADD CONSTRAINT `fk_PRESTAMO_has_LIBRO_PRESTAMO1`
+  FOREIGN KEY (`PRESTAMO_idPRESTAMO` , `PRESTAMO_ESTUDIANTE_idESTUDIANTE`)
+  REFERENCES `biblioteca`.`PRESTAMO` (`idPRESTAMO` , `ESTUDIANTE_idESTUDIANTE`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_PRESTAMO_has_LIBRO_LIBRO1`
+  FOREIGN KEY (`LIBRO_idLIBRO`)
+  REFERENCES `biblioteca`.`LIBRO` (`idLIBRO`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO biblioteca.PRESTAMO (IDLector, FechaPrestamo, ESTUDIANTE_idESTUDIANTE) VALUES (
+	123,
+    '2020-01-01',
+    123
+);
+
+INSERT INTO biblioteca.PRESTAMO (IDLector, FechaPrestamo, FechaDevolucion, ESTUDIANTE_idESTUDIANTE) VALUES (
+	124,
+    '2021-02-03',
+    '2021-03-02',
+    124
+);
+
+INSERT INTO biblioteca.PRESTAMO (IDLector, FechaPrestamo, ESTUDIANTE_idESTUDIANTE) VALUES (
+	125,
+    '2021-11-11',
+    125
+);
+
+INSERT INTO biblioteca.PRESTAMO (IDLector, FechaPrestamo, FechaDevolucion, ESTUDIANTE_idESTUDIANTE) VALUES (
+	124,
+    '2021-11-15',
+    '2021-11-20',
+    124
+);
+
+INSERT INTO biblioteca.PRESTAMO (IDLector, FechaPrestamo, ESTUDIANTE_idESTUDIANTE) VALUES (
+	123,
+    '2021-11-15',
+    123
+);
+	
+INSERT INTO biblioteca.LIBROAUTOR VALUES (
+	1,5
+);	
+
+
+INSERT INTO biblioteca.LIBROAUTOR VALUES (
+	2,1
+);	
+
+INSERT INTO biblioteca.LIBROAUTOR VALUES (
+	3,4
+);	
+
+INSERT INTO biblioteca.LIBROAUTOR VALUES (
+	4,2
+);	
+
+INSERT INTO biblioteca.LIBROAUTOR VALUES (
+	5,3
+);	
+
+INSERT INTO biblioteca.PRESTAMO_has_LIBRO VALUES(
+	1, 123, 1
+);
+
+INSERT INTO biblioteca.PRESTAMO_has_LIBRO VALUES(
+	2, 124, 2
+);
+
+INSERT INTO biblioteca.PRESTAMO_has_LIBRO VALUES(
+	3, 125, 1
+);
+
+INSERT INTO biblioteca.PRESTAMO_has_LIBRO VALUES(
+	4, 124, 3
+);
+INSERT INTO biblioteca.PRESTAMO_has_LIBRO VALUES(
+	5, 123, 5
+);
+
+
+
