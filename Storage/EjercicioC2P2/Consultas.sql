@@ -59,3 +59,4 @@ WHERE fecha_devolucion='2021-07-16';
 
 -- Listar los datos de los estudiantes cuya edad es mayor al promedio.
 SELECT * FROM biblioteca.alumno WHERE edad > (SELECT avg(edad) FROM biblioteca.alumno);
+
