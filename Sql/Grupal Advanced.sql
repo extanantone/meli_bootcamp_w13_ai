@@ -42,3 +42,15 @@ select e.*
 from Libro l inner join Prestamo p on l.idLibro=p.idLibro inner join Estudiante e on e.idLector=p.idLector
 WHERE l.titulo like '%Base de Datos%';
 
+select l.* 
+from Libro l, LibroAutor a, Autor au 
+where au.nombre = 'J.K. Rowling' and au.idAutor = a.idAutor and l.idLibro=a.idLibro;
+
+select l.titulo
+from Libro l inner join Prestamo p on p.idLibro = l.idLibro
+where p.FechaDevolución = '2021-07-16';
+
+select * from Estudiante where edad > (select avg(edad) from Estudiante);
+
+
+
