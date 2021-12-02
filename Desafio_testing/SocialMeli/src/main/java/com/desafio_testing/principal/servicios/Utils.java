@@ -20,8 +20,8 @@ public class Utils {
         if(!dato.matches("-?\\d{1,3}(\\.\\d{3})*(,\\d{1,2})?"))
             throw new NegocioException(EnumErrs.ERROR_PARSER.repMensaje(dato), EnumErrs.ERROR_PARSER.getCodigo());
 
-            String salida = dato.replace("\\.","");
-            salida = salida.replace(",","\\.");
+            String salida = dato.replaceAll("\\.","");
+            salida = salida.replaceAll(",","\\.");
             return Double.valueOf(salida);
     }
 
