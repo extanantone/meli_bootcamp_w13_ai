@@ -18,7 +18,7 @@ public class PostDTO {
     //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Valid
     @NotNull(message = "La ID no puede estar vacio")
-    @Positive(message = "El ID debe ser mayor a 0")
+
     private Integer userId;
     @NotNull(message = "El ID no puede estar vacio")
     @Positive(message = "El ID debe ser mayor a 0")
@@ -31,7 +31,7 @@ public class PostDTO {
     @NotNull(message = "El campo no puede estar vacio")
     private int category;
     @NotNull(message = "El campo no puede estar vacio")
-    @DecimalMax(value = "10000000",message ="El precio maximo por producto es de 10.000.000" )
+
     private double price;
     private boolean hasPromo = false;
     private double discount = 0.0;
