@@ -3,12 +3,13 @@ package com.example.socialmeli.dto.response;
 import com.example.socialmeli.dto.PostDTO;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
-@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PostsResponseDTO {
 
