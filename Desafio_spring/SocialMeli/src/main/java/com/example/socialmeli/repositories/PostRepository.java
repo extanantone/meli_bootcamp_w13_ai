@@ -67,7 +67,7 @@ public class PostRepository implements IRepository<Post> {
         return this.posts;
     }
 
-    public List<Object> findByUserId(Integer userId) {
+    public List<Post> findByUserId(Integer userId) {
         return this.posts.stream()
                 .filter(post -> post.getUserId().equals(userId))
                 .collect(Collectors.toList());
