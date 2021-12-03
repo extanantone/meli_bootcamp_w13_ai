@@ -1,6 +1,7 @@
 package com.meli.probandojpa.service;
 
 import com.meli.probandojpa.dto.StudentDTO;
+import com.meli.probandojpa.exceptio.UserDuplicateException;
 import com.meli.probandojpa.model.Student;
 import com.meli.probandojpa.repository.StudentRepository;
 import org.modelmapper.ModelMapper;
@@ -22,7 +23,7 @@ public class StudentService {
         Student student = studentRepository.findById(studentDTO.getId()).orElse(null);
 
         if (student != null) {
-            throw new RuntimeException("Ya existe el estudiante");
+            throw new UserDuplicateException(studentDTO.getId());
         }
 
 
