@@ -25,14 +25,14 @@ public class StudentMapper {
     }
 
     public static Student studentQualificationsToStudent(StudentQualificationsDTO dto) {
-        Student student = new Student();
-        student.setId(dto.getId());
-        student.setDni(dto.getDni());
-        student.setName(dto.getName());
-        student.setLastName(dto.getLastName());
-        student.setFirstExamQualification(dto.getFirstExamQualification());
-        student.setSecondExamQualification(dto.getSecondExamQualification());
-        student.setPracticalClassWork(dto.getPracticalClassWork());
-        return student;
+        Student s = new Student();
+        s.setId(dto.getId());
+        s.setDni(dto.getDni());
+        s.setName(dto.getName());
+        s.setLastName(dto.getLastName());
+        s.setFirstExamQualification(dto.getFirstExamQualification());
+        s.setSecondExamQualification(dto.getSecondExamQualification());
+        s.setPracticalClassWork(dto.getPracticalClassWork());
+        return s;
     }
 }
