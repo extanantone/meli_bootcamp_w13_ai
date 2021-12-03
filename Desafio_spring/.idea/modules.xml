@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Desafio_spring.iml" filepath="$PROJECT_DIR$/.idea/Desafio_spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SocialMeli/SocialMeli.iml" filepath="$PROJECT_DIR$/SocialMeli/SocialMeli.iml" />
+    </modules>
+  </component>
+</project>
