@@ -14,9 +14,11 @@ public class Serie {
     private int id;
 
     @CreationTimestamp
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createDateTime;
 
     @UpdateTimestamp
+    @Column(name = "update_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime updateDateTime;
 
     @Column(length = 500, nullable = false)

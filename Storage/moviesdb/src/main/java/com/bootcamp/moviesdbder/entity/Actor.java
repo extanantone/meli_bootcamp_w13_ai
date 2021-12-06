@@ -18,9 +18,11 @@ public class Actor {
     private Integer id;
 
     @CreationTimestamp
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createDateTime;
 
     @UpdateTimestamp
+    @Column(name = "update_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime updateDateTime;
 
     @Column(name = "first_name", nullable = false, length = 100)

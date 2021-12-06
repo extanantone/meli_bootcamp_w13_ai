@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Getter @Setter
@@ -19,9 +20,11 @@ public class Movie {
     private Long id;
 
     @CreationTimestamp
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createDateTime;
 
     @UpdateTimestamp
+    @Column(name = "update_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime updateDateTime;
 
     @Column(nullable = false, length = 500)

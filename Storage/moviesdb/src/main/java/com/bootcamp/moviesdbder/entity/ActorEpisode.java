@@ -3,11 +3,9 @@ package com.bootcamp.moviesdbder.entity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity(name = "actor_episode")
 public class ActorEpisode {
@@ -16,9 +14,11 @@ public class ActorEpisode {
     private int id;
 
     @CreationTimestamp
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createDateTime;
 
     @UpdateTimestamp
+    @Column(name = "update_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime updateDateTime;
 
     @ManyToOne

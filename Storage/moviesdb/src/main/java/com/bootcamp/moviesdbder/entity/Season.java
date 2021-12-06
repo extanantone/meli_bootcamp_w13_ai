@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "seasons")
@@ -14,9 +15,11 @@ public class Season {
     private int id;
 
     @CreationTimestamp
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createDateTime;
 
     @UpdateTimestamp
+    @Column(name = "update_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime updateDateTime;
 
     @Column(length = 500)
