@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "actors")
@@ -19,7 +22,9 @@ public class Actor {
     private long id;
 
     @Column(name = "create_at")
-    private LocalDate createAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    private Date createAt;
 
     @Column(name = "upload_at")
     private LocalDate uploadAt;
