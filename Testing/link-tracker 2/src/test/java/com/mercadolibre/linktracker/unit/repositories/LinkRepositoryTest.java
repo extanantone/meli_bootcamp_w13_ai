@@ -1,15 +1,10 @@
-package com.mercadolibre.linktracker.repositories.unit;
+package com.mercadolibre.linktracker.unit.repositories;
 
-import com.mercadolibre.linktracker.dto.LinkDTO;
-import com.mercadolibre.linktracker.repositories.LinkRepositoryImpl;
-import org.junit.jupiter.api.AfterEach;
+import com.mercadolibre.linktracker.unit.dto.LinkDTO;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class LinkRepositoryTest
 {
@@ -64,7 +59,6 @@ class LinkRepositoryTest
         // Arrange
         LinkDTO linkDTO = new LinkDTO();
         Optional<LinkDTO> optionalLinkDTO = Optional.of(linkDTO);
-        linkRepository.save(linkDTO);
         // Act
         linkRepository.delete(linkDTO);
         // Assert
