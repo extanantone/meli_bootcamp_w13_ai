@@ -14,10 +14,10 @@ public class Series {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private Timestamp createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     private Timestamp updatedAt;
 
     private String name;
