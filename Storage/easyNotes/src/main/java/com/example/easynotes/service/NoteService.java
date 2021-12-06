@@ -53,6 +53,6 @@ public class NoteService implements INoteService{
 
     @Override
     public void deleteNote(Long noteId) {
-
+        noteRepository.deleteById(noteId);
     }
 }

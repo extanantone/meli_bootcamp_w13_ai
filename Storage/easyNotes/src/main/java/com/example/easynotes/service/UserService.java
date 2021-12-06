@@ -59,9 +59,6 @@ public class UserService implements IUserService{
 
     @Override
     public UserResponseDTO getUserById(Long userId) {
-
-
-
         return null;
     }
 
