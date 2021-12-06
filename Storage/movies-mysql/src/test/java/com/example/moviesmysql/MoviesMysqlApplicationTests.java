@@ -1,0 +1,13 @@
+package com.example.moviesmysql;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class MoviesMysqlApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
