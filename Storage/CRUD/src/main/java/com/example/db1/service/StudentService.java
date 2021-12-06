@@ -33,7 +33,7 @@ public class StudentService {
             throw new BadRequestException("id ya existe");
         }
 
-        Student response = repository.save(student);
+         repository.save(student);
 
 
     }

@@ -3,6 +3,7 @@ package com.example.db1.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -18,4 +19,8 @@ public class Student {
     private float parcial2;
     @Column(name="TRABAJO_INTEGRADOR")
     private float trabajoIntegrador;
+
+    @OneToOne
+    Address address;
+
 }
