@@ -41,4 +41,9 @@ public class StudentService {
                 .map(s -> new StudentDTO(s.getId(), s.getDni(),s.getName(),s.getLastName())).collect(Collectors.toList());
     }
 
+    public void deleteStudents(long id){
+        stdRepo.deleteById(id );
+
+    }
+
 }
