@@ -1,14 +1,13 @@
 package com.example.easynotes.controller;
 
-import com.example.easynotes.dto.UserRequestDTO;
-import com.example.easynotes.dto.UserResponseDTO;
-import com.example.easynotes.dto.UserResponseWithCantNotesDTO;
-import com.example.easynotes.dto.UserResponseWithNotesDTO;
+import com.example.easynotes.dto.*;
 import com.example.easynotes.service.IUserService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -26,20 +25,19 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/allWithNotes")
+    @GetMapping("/all/notes")
     public List<UserResponseWithNotesDTO> getAllUsersWithNotes() {
         return userService.getAllUsersWithNotes();
     }
 
-    @GetMapping("/allWithCantNotes")
+    @GetMapping("/all/notes/cant")
     public List<UserResponseWithCantNotesDTO> getAllUsersWithCantNotes() {
         return userService.getAllUsersWithCantNotes();
     }
 
     @PostMapping()
-    public UserResponseDTO createUSer(
-            @Valid @RequestBody UserRequestDTO userRequestDTO) {
-        return userService.createUser(userRequestDTO);
+    public UserResponseDTO createUSer(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+        return userService.createUSer(userRequestDTO);
     }
 
     @GetMapping("/{id}")
@@ -50,6 +48,28 @@ public class UserController {
     @GetMapping("/{id}/notes")
     public UserResponseWithNotesDTO getUserWithNotesById(@PathVariable(value = "id") Long userId) {
         return userService.getUserWithNotesById(userId);
+    }
+
+    @GetMapping("like/lastName/{lastName}")
+    public List<UserResponseDTO> getUsersLastNameLike(@PathVariable(value = "lastName") String lastName) {
+        return userService.getUsersLastNameLike(lastName);
+    }
+
+    @GetMapping("/like/notes/title/{title}")
+    public @ResponseBody List<UserResponseWithNotesDTO> fetchResult(@PathVariable("title") String title) {
+        return userService.getUsersByNoteTitleLike(title);
+    }
+
+    @GetMapping("/afterDate/notes/createdAt/{date}")
+    public @ResponseBody List<UserResponseWithNotesDTO> fetchResult(@PathVariable("date") @DateTimeFormat(pattern="dd-MM-yyyy") Date date) {
+        return userService.getUsersByNoteCreatedAfterDate(date);
+    }
+
+    @PostMapping("/{id}/thank!/{noteId}")
+    public ResponseEntity<?> createGreat(@PathVariable(value = "id") Long userId,
+                                         @PathVariable(value = "noteId") Long noteId) {
+        userService.createThank(userId, noteId);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}/notes/cant")
@@ -68,4 +88,5 @@ public class UserController {
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();
     }
+
 }

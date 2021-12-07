@@ -1,5 +1,6 @@
 package com.example.easynotes.dto;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponseWithNotesDTO extends UserRequestDTO {
+        private Long id;
 
         @JsonProperty("author_notes")
         private Set<NoteResponseDTO> authorNotes;

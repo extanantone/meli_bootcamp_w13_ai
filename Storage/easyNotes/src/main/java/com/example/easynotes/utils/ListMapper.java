@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -28,6 +29,20 @@ public class ListMapper {
         return source
                 .stream()
                 .map(element -> modelMapper.map(element, targetClass))
+                .collect(Collectors.toList());
+    }
+
+    public <S, T> Set<T> mapSet(Set<S> source, Class<T> targetClass) {
+        return source
+                .stream()
+                .map(element -> modelMapper.map(element, targetClass))
+                .collect(Collectors.toSet());
+    }
+
+    public <S, T> List<Set<T>> mapListSet(List<Set<S>> source, Class<T> targetClass) {
+        return source
+                .stream()
+                .map(setOrigin -> this.mapSet(setOrigin, targetClass))
                 .collect(Collectors.toList());
     }
 }

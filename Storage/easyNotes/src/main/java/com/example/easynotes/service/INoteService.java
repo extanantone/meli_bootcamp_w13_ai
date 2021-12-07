@@ -1,10 +1,12 @@
 package com.example.easynotes.service;
 
+import com.example.easynotes.dto.ThankDTO;
 import com.example.easynotes.dto.NoteRequestDTO;
 import com.example.easynotes.dto.NoteResponseWithAuthorDTO;
 import com.example.easynotes.model.Note;
 
 import java.util.List;
+import java.util.Set;
 
 public interface INoteService {
 
@@ -17,4 +19,8 @@ public interface INoteService {
     NoteResponseWithAuthorDTO updateNote(Long noteId, Note noteDetailsDTO);
 
     void deleteNote(Long noteId);
+
+    void addReviser(Long id, Long authorId);
+
+    Set<ThankDTO> getThanks(Long id);
 }

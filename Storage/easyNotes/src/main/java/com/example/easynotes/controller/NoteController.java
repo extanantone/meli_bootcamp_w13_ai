@@ -1,8 +1,8 @@
 package com.example.easynotes.controller;
 
+import com.example.easynotes.dto.ThankDTO;
 import com.example.easynotes.dto.NoteRequestDTO;
 import com.example.easynotes.dto.NoteResponseWithAuthorDTO;
-//import com.example.easynotes.model.Note;
 import com.example.easynotes.model.Note;
 import com.example.easynotes.service.INoteService;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/note")
@@ -31,6 +32,11 @@ public class NoteController {
         return noteService.createNote(noteRequestDTO);
     }
 
+    @PostMapping("{id}/addReviser/{reviserId}")
+    public void createNote(@PathVariable Long id, @PathVariable Long reviserId) {
+        noteService.addReviser(id, reviserId);
+    }
+
     @GetMapping("/{id}")
     public NoteResponseWithAuthorDTO getNoteById(@PathVariable(value = "id") Long noteId) {
         return noteService.getNoteById(noteId);
@@ -45,5 +51,10 @@ public class NoteController {
     public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
         noteService.deleteNote(noteId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("{id}/thank")
+    public Set<ThankDTO> getThanks(@PathVariable(value = "id") Long id) {
+        return noteService.getThanks(id);
     }
 }
