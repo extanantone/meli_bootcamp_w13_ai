@@ -1,13 +1,11 @@
 package com.bootcamp.tutorials.controller;
 
 import com.bootcamp.tutorials.dto.request.InCreateTutorialDTO;
+import com.bootcamp.tutorials.dto.request.InUpdateTutorialDTO;
 import com.bootcamp.tutorials.dto.response.TutorialDTO;
 import com.bootcamp.tutorials.service.ITutorialService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -21,10 +19,16 @@ public class TutorialController {
         this.tutorialService = tutorialService;
     }
 
-    
+
     @PostMapping
     public ResponseEntity<TutorialDTO> createTutorial(@Valid @RequestBody InCreateTutorialDTO tutorialIn){
         var response = tutorialService.createTutorial(tutorialIn);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping
+    public ResponseEntity<TutorialDTO> updateTutorial(@Valid @RequestBody InUpdateTutorialDTO tutorialIn){
+        var response = tutorialService.updateTutorial(tutorialIn);
         return ResponseEntity.ok(response);
     }
 

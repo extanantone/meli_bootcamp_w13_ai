@@ -1,11 +1,15 @@
 package com.bootcamp.tutorials.service;
 
 import com.bootcamp.tutorials.dto.request.InCreateTutorialDTO;
+import com.bootcamp.tutorials.dto.request.InUpdateTutorialDTO;
 import com.bootcamp.tutorials.dto.response.TutorialDTO;
 import com.bootcamp.tutorials.entity.Tutorial;
+import com.bootcamp.tutorials.exception.tutorialException.NotFoundTutorialException;
 import com.bootcamp.tutorials.exception.tutorialException.TutorialAlreadyExistsException;
 import com.bootcamp.tutorials.repository.ITutorialRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class TutorialService implements ITutorialService{
@@ -28,5 +32,30 @@ public class TutorialService implements ITutorialService{
             var response = repository.save(new Tutorial(tutorialInDTO.getTitle(), tutorialInDTO.getDescription()));
             return new TutorialDTO(response.getId(), response.getTitle(), response.getDescription());
         }
+    }
+
+    @Override
+    public TutorialDTO updateTutorial(InUpdateTutorialDTO tutorialInDTO) {
+
+        var id = tutorialInDTO.getId();
+
+        var title = tutorialInDTO.getTitle();
+
+        var description = tutorialInDTO.getDescription();
+
+        var tutorial = repository.findTutorialById(id)
+                .orElseThrow( () -> new NotFoundTutorialException(id));
+
+        if(!Objects.isNull(title)){
+            tutorial.setTitle(title);
+        }
+
+        if(!Objects.isNull(description)){
+            tutorial.setDescription(description);
+        }
+
+        var response = repository.save(tutorial);
+
+        return new TutorialDTO(tutorial.getId(), tutorial.getTitle(), tutorial.getDescription());
     }
 }

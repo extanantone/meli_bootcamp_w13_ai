@@ -1,6 +1,7 @@
 package com.bootcamp.tutorials.exception;
 
 import com.bootcamp.tutorials.dto.response.ErrorDTO;
+import com.bootcamp.tutorials.exception.tutorialException.NotFoundTutorialException;
 import com.bootcamp.tutorials.exception.tutorialException.TutorialAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,12 +46,21 @@ public class TutorialsExceptionHandler {
     }
 
     @ExceptionHandler(TutorialAlreadyExistsException.class)
-    public ResponseEntity<ErrorDTO> PostAlreadyExists(TutorialAlreadyExistsException e) {
+    public ResponseEntity<ErrorDTO> TutorialAlreadyExists(TutorialAlreadyExistsException e) {
         return new ResponseEntity<>(
                 new ErrorDTO(
                         "Status Code 409: Tutorial_already_exists",
                         e.getMessage() ),
                 HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(NotFoundTutorialException.class)
+    public ResponseEntity<ErrorDTO> NotFoundTutorial(NotFoundTutorialException e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "Status Code 404: Tutorial_not_found",
+                        e.getMessage() ),
+                HttpStatus.NOT_FOUND);
     }
 
 }

@@ -12,4 +12,6 @@ public interface ITutorialRepository extends JpaRepository<Tutorial,Long> {
 
     Optional<Tutorial> findTutorialByTitleAndDescription(String title, String description);
 
+    Optional<Tutorial> findTutorialById(Long id);
+
 }
