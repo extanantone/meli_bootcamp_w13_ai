@@ -2,14 +2,13 @@ package com.bootcamp.tutorials.controller;
 
 import com.bootcamp.tutorials.dto.request.InCreateTutorialDTO;
 import com.bootcamp.tutorials.dto.request.InUpdateTutorialDTO;
+import com.bootcamp.tutorials.dto.response.DeleteTutorialsDTO;
 import com.bootcamp.tutorials.dto.response.TutorialDTO;
 import com.bootcamp.tutorials.service.ITutorialService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
@@ -45,5 +44,14 @@ public class TutorialController {
         return ResponseEntity.ok(tutorialService.getTutorialById(id));
     }
 
+    @DeleteMapping
+    public ResponseEntity<DeleteTutorialsDTO> deleteAllTutorials(){
+        return ResponseEntity.ok(tutorialService.deleteAllTutorials());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DeleteTutorialsDTO> deleteTutorialById(@PathVariable Long id){
+        return ResponseEntity.ok(tutorialService.deleteTutorialById(id));
+    }
 
 }

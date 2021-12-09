@@ -2,6 +2,7 @@ package com.bootcamp.tutorials.service;
 
 import com.bootcamp.tutorials.dto.request.InCreateTutorialDTO;
 import com.bootcamp.tutorials.dto.request.InUpdateTutorialDTO;
+import com.bootcamp.tutorials.dto.response.DeleteTutorialsDTO;
 import com.bootcamp.tutorials.dto.response.TutorialDTO;
 import com.bootcamp.tutorials.entity.Tutorial;
 import com.bootcamp.tutorials.exception.tutorialException.NotFoundTutorialException;
@@ -78,7 +79,23 @@ public class TutorialService implements ITutorialService{
 
         var tutorial = repository.findTutorialById(id)
                 .orElseThrow( () -> new NotFoundTutorialException(id));
-
         return new TutorialDTO(tutorial.getId(), tutorial.getTitle(), tutorial.getDescription());
+    }
+
+    @Override
+    public DeleteTutorialsDTO deleteAllTutorials() {
+        repository.deleteAll();
+        return new DeleteTutorialsDTO();
+    }
+
+    @Override
+    public DeleteTutorialsDTO deleteTutorialById(Long id) {
+
+        var tutorial = repository.findTutorialById(id)
+                .orElseThrow( () -> new NotFoundTutorialException(id));
+
+        repository.delete(tutorial);
+
+        return new DeleteTutorialsDTO(tutorial.getId());
     }
 }
