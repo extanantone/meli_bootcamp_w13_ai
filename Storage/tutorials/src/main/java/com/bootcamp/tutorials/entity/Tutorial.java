@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Getter @Setter
 @Entity
@@ -42,5 +43,18 @@ public class Tutorial {
         this();
         this.title = title;
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tutorial tutorial = (Tutorial) o;
+        return title.equals(tutorial.title) && description.equals(tutorial.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description);
     }
 }

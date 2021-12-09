@@ -1,7 +1,9 @@
 package com.bootcamp.tutorials.repository;
 
 import com.bootcamp.tutorials.entity.Tutorial;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -35,9 +37,11 @@ public class TutorialRepositoryTest {
         String expected = "Tutorial Test";
 
 //        Act
-        var response = tutorialRepository.getTutorialByTitle(expected);
+        var response = tutorialRepository.findTutorialByTitle(expected).get();
 
 //        Assert
         Assertions.assertEquals(response.getTitle(),expected);
     }
+
+
 }

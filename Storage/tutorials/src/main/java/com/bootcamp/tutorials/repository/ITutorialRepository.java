@@ -3,9 +3,13 @@ package com.bootcamp.tutorials.repository;
 import com.bootcamp.tutorials.entity.Tutorial;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 
 public interface ITutorialRepository extends JpaRepository<Tutorial,Long> {
 
-    Tutorial getTutorialByTitle(String title);
+    Optional<Tutorial> findTutorialByTitle(String title);
+
+    Optional<Tutorial> findTutorialByTitleAndDescription(String title, String description);
 
 }
