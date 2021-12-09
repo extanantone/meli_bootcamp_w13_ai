@@ -9,7 +9,9 @@ import com.bootcamp.tutorials.exception.tutorialException.TutorialAlreadyExistsE
 import com.bootcamp.tutorials.repository.ITutorialRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class TutorialService implements ITutorialService{
@@ -55,6 +57,27 @@ public class TutorialService implements ITutorialService{
         }
 
         var response = repository.save(tutorial);
+
+        return new TutorialDTO(tutorial.getId(), tutorial.getTitle(), tutorial.getDescription());
+    }
+
+    @Override
+    public List<TutorialDTO> getAllTutorials() {
+
+        var tutorials = repository.findAll();
+
+        var response = tutorials.stream().map(tutorial ->
+                new TutorialDTO(tutorial.getId(), tutorial.getTitle(), tutorial.getDescription()))
+                .collect(Collectors.toList());
+
+        return response;
+    }
+
+    @Override
+    public TutorialDTO getTutorialById(Long id) {
+
+        var tutorial = repository.findTutorialById(id)
+                .orElseThrow( () -> new NotFoundTutorialException(id));
 
         return new TutorialDTO(tutorial.getId(), tutorial.getTitle(), tutorial.getDescription());
     }

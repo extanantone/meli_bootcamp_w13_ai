@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tutorials")
@@ -30,6 +33,16 @@ public class TutorialController {
     public ResponseEntity<TutorialDTO> updateTutorial(@Valid @RequestBody InUpdateTutorialDTO tutorialIn){
         var response = tutorialService.updateTutorial(tutorialIn);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TutorialDTO>> getAllTutorials(){
+        return ResponseEntity.ok(tutorialService.getAllTutorials());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TutorialDTO> getTutorialById(@PathVariable Long id){
+        return ResponseEntity.ok(tutorialService.getTutorialById(id));
     }
 
 
