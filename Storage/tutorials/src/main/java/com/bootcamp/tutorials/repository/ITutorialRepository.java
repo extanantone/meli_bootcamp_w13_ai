@@ -2,6 +2,7 @@ package com.bootcamp.tutorials.repository;
 
 import com.bootcamp.tutorials.entity.Tutorial;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,16 +16,14 @@ public interface ITutorialRepository extends JpaRepository<Tutorial,Long> {
 
     Optional<Tutorial> findTutorialById(Long id);
 
-    /**
-     * Debe probarse, aún no estoy seguro de lo que hace
-     * @return
-     */
+
     Optional<List<Tutorial>> findTutorialsByPublishedTrue();
 
     /**
-     * Debe probarse, aún no estoy seguro de lo que hace
+     * Dañado Debe Arreglarse
+     * @param word
      * @return
      */
-    Optional<List<Tutorial>> findTutorialsByTitleContains(String phrase);
+    Optional<List<Tutorial>> findTutorialsByTitleContains(String word);
 
 }

@@ -27,4 +27,6 @@ public interface ITutorialService {
 
     List<TutorialDTO> getPublishedTutorials();
 
+    List<TutorialDTO> getTutorialsThatContain(String word);
+
 }

@@ -23,13 +23,13 @@ public class InUpdateTutorialDTO {
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Size(max = 500, min = 1, message = "must be equals or less than 500 characters")
-    @Pattern(regexp = "([A-Z]|[0-9])[\\\\s|[0-9]|A-Z|a-z|ñ|ó|í|á|é|ú|Á|Ó|É|Í|Ú|(\\ )]*$"
+    @Pattern(regexp = "([A-Z]|[0-9]|[a-z])[\\\\s|[0-9]|A-Z|a-z|ñ|ó|í|á|é|ú|Á|Ó|É|Í|Ú|(\\ )]*$"
             , message = "must not have special characters")
     private String title;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Size(max = 2000, message = "must be equals or less than 2000 characters")
-    @Pattern(regexp = "([A-Z]|[0-9])[\\\\s|[0-9]|A-Z|a-z|ñ|ó|í|á|é|ú|Á|Ó|É|Í|Ú|(\\ )]*$"
+    @Pattern(regexp = "([A-Z]|[0-9]|[a-z])[\\\\s|[0-9]|A-Z|a-z|ñ|ó|í|á|é|ú|Á|Ó|É|Í|Ú|(\\ )]*$"
             , message = "must not have special characters")
     private String description;
 

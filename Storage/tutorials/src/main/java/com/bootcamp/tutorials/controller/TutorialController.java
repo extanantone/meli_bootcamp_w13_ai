@@ -69,4 +69,9 @@ public class TutorialController {
         return ResponseEntity.ok(tutorialService.getPublishedTutorials());
     }
 
+    @GetMapping(params = "tittle")
+    public ResponseEntity<List<TutorialDTO>> getTutorialsThatContains(@RequestParam String tittle){
+        return ResponseEntity.ok(tutorialService.getTutorialsThatContain(tittle));
+    }
+
 }

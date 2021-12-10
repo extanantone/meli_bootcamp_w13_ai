@@ -144,4 +144,19 @@ public class TutorialService implements ITutorialService{
 
         return new ArrayList<TutorialDTO>();
     }
+
+    @Override
+    public List<TutorialDTO> getTutorialsThatContain(String word) {
+
+        var tutorialsResponse = repository.findTutorialsByTitleContains(word);
+
+        if(tutorialsResponse.isPresent()){
+            var response = tutorialsResponse.get().stream().map(tutorial ->
+                    new TutorialDTO(tutorial.getId(), tutorial.getTitle(), tutorial.getDescription()))
+                    .collect(Collectors.toList());
+            return response;
+        }
+
+        return new ArrayList<TutorialDTO>();
+    }
 }
