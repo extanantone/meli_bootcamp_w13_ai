@@ -36,7 +36,7 @@ public class Tutorial {
     private Date updateDateTime;
 
     public Tutorial() {
-        this.published = true;
+        this.published = false;
     }
 
     public Tutorial(String title, String description) {

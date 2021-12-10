@@ -3,6 +3,8 @@ package com.bootcamp.tutorials.exception;
 import com.bootcamp.tutorials.dto.response.ErrorDTO;
 import com.bootcamp.tutorials.exception.tutorialException.NotFoundTutorialException;
 import com.bootcamp.tutorials.exception.tutorialException.TutorialAlreadyExistsException;
+import com.bootcamp.tutorials.exception.tutorialException.TutorialAlreadyPublishedException;
+import com.bootcamp.tutorials.exception.tutorialException.TutorialNotPublishedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -61,6 +63,24 @@ public class TutorialsExceptionHandler {
                         "Status Code 404: Tutorial_not_found",
                         e.getMessage() ),
                 HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TutorialAlreadyPublishedException.class)
+    public ResponseEntity<ErrorDTO> PublishTutorialException(TutorialAlreadyPublishedException e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "Status Code 400: Tutorial_published_already",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TutorialNotPublishedException.class)
+    public ResponseEntity<ErrorDTO> PublishTutorialException(TutorialNotPublishedException e) {
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        "Status Code 400: Tutorial_Not_published_yet",
+                        e.getMessage() ),
+                HttpStatus.BAD_REQUEST);
     }
 
 }

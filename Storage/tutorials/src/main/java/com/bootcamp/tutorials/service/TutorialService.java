@@ -7,6 +7,8 @@ import com.bootcamp.tutorials.dto.response.TutorialDTO;
 import com.bootcamp.tutorials.entity.Tutorial;
 import com.bootcamp.tutorials.exception.tutorialException.NotFoundTutorialException;
 import com.bootcamp.tutorials.exception.tutorialException.TutorialAlreadyExistsException;
+import com.bootcamp.tutorials.exception.tutorialException.TutorialAlreadyPublishedException;
+import com.bootcamp.tutorials.exception.tutorialException.TutorialNotPublishedException;
 import com.bootcamp.tutorials.repository.ITutorialRepository;
 import org.springframework.stereotype.Service;
 
@@ -98,4 +100,34 @@ public class TutorialService implements ITutorialService{
 
         return new DeleteTutorialsDTO(tutorial.getId());
     }
+
+    @Override
+    public TutorialDTO publishTutorial(Long id) {
+
+        var tutorial = repository.findTutorialById(id)
+                .orElseThrow( () -> new NotFoundTutorialException(id));
+
+        if(tutorial.getPublished())
+            throw new TutorialAlreadyPublishedException(id);
+
+        tutorial.setPublished(true);
+        var response = repository.save(tutorial);
+        return new TutorialDTO(response.getId(), response.getTitle(), response.getDescription());
+    }
+
+    @Override
+    public TutorialDTO unpublishTutorial(Long id) {
+
+        var tutorial = repository.findTutorialById(id)
+                .orElseThrow( () -> new NotFoundTutorialException(id));
+
+        if(!tutorial.getPublished())
+            throw new TutorialNotPublishedException(id);
+
+        tutorial.setPublished(false);
+        var response = repository.save(tutorial);
+        return new TutorialDTO(response.getId(), response.getTitle(), response.getDescription());
+    }
+
+
 }

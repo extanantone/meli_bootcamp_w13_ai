@@ -21,4 +21,8 @@ public interface ITutorialService {
 
     DeleteTutorialsDTO deleteTutorialById(Long id);
 
+    TutorialDTO publishTutorial(Long id);
+
+    TutorialDTO unpublishTutorial(Long id);
+
 }
