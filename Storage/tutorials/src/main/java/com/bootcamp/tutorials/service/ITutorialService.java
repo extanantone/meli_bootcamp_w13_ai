@@ -25,4 +25,6 @@ public interface ITutorialService {
 
     TutorialDTO unpublishTutorial(Long id);
 
+    List<TutorialDTO> getPublishedTutorials();
+
 }

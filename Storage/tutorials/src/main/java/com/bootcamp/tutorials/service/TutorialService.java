@@ -12,6 +12,7 @@ import com.bootcamp.tutorials.exception.tutorialException.TutorialNotPublishedEx
 import com.bootcamp.tutorials.repository.ITutorialRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -129,5 +130,18 @@ public class TutorialService implements ITutorialService{
         return new TutorialDTO(response.getId(), response.getTitle(), response.getDescription());
     }
 
+    @Override
+    public List<TutorialDTO> getPublishedTutorials() {
 
+        var tutorialsResponse = repository.findTutorialsByPublishedTrue();
+
+        if(tutorialsResponse.isPresent()){
+            var response  = tutorialsResponse.get().stream().map(tutorial ->
+                    new TutorialDTO(tutorial.getId(), tutorial.getTitle(), tutorial.getDescription()))
+                    .collect(Collectors.toList());
+            return response;
+        }
+
+        return new ArrayList<TutorialDTO>();
+    }
 }

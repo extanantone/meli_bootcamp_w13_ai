@@ -54,7 +54,7 @@ public class TutorialController {
         return ResponseEntity.ok(tutorialService.deleteTutorialById(id));
     }
 
-    @PutMapping("/publish/{id}")
+    @PutMapping("/published/{id}")
     public ResponseEntity<TutorialDTO> publishTutorial(@PathVariable Long id){
         return ResponseEntity.ok(tutorialService.publishTutorial(id));
     }
@@ -62,6 +62,11 @@ public class TutorialController {
     @PutMapping("/unpublish/{id}")
     public ResponseEntity<TutorialDTO> unpublishTutorial(@PathVariable Long id){
         return ResponseEntity.ok(tutorialService.unpublishTutorial(id));
+    }
+
+    @GetMapping("/published/")
+    public ResponseEntity<List<TutorialDTO>> getPublishedTutorials(){
+        return ResponseEntity.ok(tutorialService.getPublishedTutorials());
     }
 
 }
