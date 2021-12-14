@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class RomanNumbersController {
     @GetMapping("/{num}")
     public static String romanFromDecimal(@PathVariable Integer num){
-        //TODO: input validation
+        if (num < 0) {
+            return "Number should be positive";
+        }
         return RomanNumbersService.getRomanFromDecimal(num);
     }
 }
