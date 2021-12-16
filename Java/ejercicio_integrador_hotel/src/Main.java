@@ -16,11 +16,7 @@ public class Main {
         Localizador localizador1=new Localizador(viajero1,plan1);
         repostiorio.agregar(localizador1);
 
-
-
-
-
-
         System.out.println(reserva1.getDetalle()+ "; El precio total es de: "+reserva1.getPrecio());
+        System.out.println();
     }
 }

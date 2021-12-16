@@ -1,4 +1,4 @@
-package repository;
+package com.mercadolibre.starwars.repository;
 
 import com.mercadolibre.starwars.dto.CharacterDTO;
 import com.mercadolibre.starwars.repositories.CharacterRepositoryImpl;

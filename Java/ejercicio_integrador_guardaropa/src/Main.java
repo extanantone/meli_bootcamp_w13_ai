@@ -10,19 +10,20 @@ public class Main {
         GuardaRopa unGuardaRopa = new GuardaRopa();
 
         Prenda prenda = new Prenda("ADIDAS", "UltraBoost");
-        List<Prenda> prendasEdu = Arrays.asList(prenda,
+        List<Prenda> prendasEdu = Arrays.asList(
                 new Prenda("ADIDAS", "Messi"),
                 new Prenda("Nike", "CR7"),
                 new Prenda("Puma", "Bolt"));
 
         Integer keyPrendaGuardada = unGuardaRopa.guardarPrendas(prendasEdu);
+        Integer keyPrendaGuardada2 = unGuardaRopa.guardarPrendas(Arrays.asList(prenda));
 
         unGuardaRopa.mostrarPrendas();
 
-        List<Prenda> prendas = unGuardaRopa.devolverPrendas(keyPrendaGuardada);
+        //List<Prenda> prendas = unGuardaRopa.devolverPrendas(keyPrendaGuardada);
 
-        unGuardaRopa.mostrarPrendas();
+        //unGuardaRopa.mostrarPrendas();
 
-        //System.out.println(unGuardaRopa.getDiccionario());
+        System.out.println(unGuardaRopa.getDiccionario());
     }
 }

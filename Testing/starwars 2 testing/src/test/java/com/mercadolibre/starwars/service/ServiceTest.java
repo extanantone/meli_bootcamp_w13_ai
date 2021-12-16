@@ -1,4 +1,4 @@
-package service;
+package com.mercadolibre.starwars.service;
 
 import com.mercadolibre.starwars.dto.CharacterDTO;
 import com.mercadolibre.starwars.repositories.CharacterRepository;
