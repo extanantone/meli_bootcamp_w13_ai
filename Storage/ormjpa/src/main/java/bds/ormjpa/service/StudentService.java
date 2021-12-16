@@ -1,20 +1,20 @@
 package bds.ormjpa.service;
 
 import bds.ormjpa.dtos.StudentDTO;
+import bds.ormjpa.dtos.StudentIdDTO;
 import bds.ormjpa.model.Student;
-import bds.ormjpa.repositories.ImplStudentRepository;
 import bds.ormjpa.repositories.StudentRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StudentService {
-    ImplStudentRepository studentRepository;
+    StudentRepository studentRepository;
 
-    public StudentService(ImplStudentRepository studentRepository){
+    public StudentService(StudentRepository studentRepository){
         this.studentRepository = studentRepository;
     }
 
-    public Long addStudent(StudentDTO studentDTO){
-        studentRepository.addStudent(new Student(studentDTO));
+    public StudentIdDTO addStudent(StudentDTO studentDTO){
+        return new StudentIdDTO(studentRepository.save(new Student(studentDTO)).getId());
     }
 }
