@@ -1,10 +1,16 @@
-package ruiz_facundo.movies.entity;
+package demo.movies.entity;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
+@Table(name = "series")
+@Getter
+@Setter
 public class Serie {
 
     @Id
@@ -21,6 +27,10 @@ public class Serie {
     @ManyToOne
     @JoinColumn(name = "genre_id")
     Genre genre;
+
+    @OneToMany
+    @JoinColumn(name = "serie_id")
+    private Set<Seasons> seasons;
 
 
 

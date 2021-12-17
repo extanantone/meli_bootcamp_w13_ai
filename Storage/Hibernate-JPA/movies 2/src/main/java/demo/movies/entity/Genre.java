@@ -1,19 +1,24 @@
-package ruiz_facundo.movies.entity;
+package demo.movies.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "genres")
+@Getter
+@Setter
 public class Genre {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @Column(name = "name")
     private String name;
+
     private int ranking;
     private boolean active;
 
